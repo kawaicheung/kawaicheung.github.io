@@ -1,0 +1,600 @@
+<html>
+  <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Squada+One&family=Syne+Mono&display=swap" rel="stylesheet">
+    <style>
+
+    :root {
+      --cubbie-blue: #052778;
+      --cubbie-red: #bb1a21;
+      --white: #fff;
+
+      --blur-label-amt: 0.2px;
+      --blur-type-amt: 0.4px;
+    }
+
+      body {
+        background-color: var(--white);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      @keyframes animate-in {
+        0% {
+          transform: scale(0.9) rotate(-5deg);
+          opacity: 1;
+        }
+        50% {
+          transform: scale(1.1) rotate(-5deg);
+          opacity: 1;
+        }
+        100% {
+          transform: scale(1) rotate(-5deg);
+          opacity: 1;
+        }
+      }
+      @keyframes animate-in-second {
+        0% {
+          transform: scale(0.9) rotate(8deg);
+          opacity: 1;
+        }
+        50% {
+          transform: scale(1.1) rotate(8deg);
+          opacity: 1;
+        }
+        100% {
+          transform: scale(1) rotate(8deg);
+          opacity: 1;
+        }
+      }
+
+      .handcoded {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        font-family: Helvetica Neue;
+        font-size: 14px;
+        padding-right: 10px;
+        font-weight: bold;
+        color: #222;
+      }
+      .subject {
+        position: absolute;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-family: Helvetica Neue;
+        font-size: 14px;
+        padding-right: 10px;
+        font-weight: bold;
+        color: #222;
+      }
+      .author {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        font-family: Helvetica Neue;
+        font-size: 14px;
+        padding-right: 10px;
+        color: #666;
+      }
+      .ticket-1 {
+        animation-name: animate-in;
+        animation-duration: 500ms;
+        animation-fill-mode: forwards;
+        animation-delay: 200ms;
+        opacity: 0;
+        width: 200px;
+        border: dotted 1px var(--white);
+        border-left-color: #ccc;
+        border-right: none;
+        padding: 0px;
+        box-shadow: 1px -1px 26px 0px rgba(0,0,0,0.2);
+        -webkit-box-shadow: 1px -1px 26px 0px rgba(0,0,0,0.2);
+        -moz-box-shadow: 1px -1px 26px 0px rgba(0,0,0,0.2);
+        transform: rotate(-5deg);
+      }
+      .ticket-1:last-child {
+        animation-name: animate-in-second;
+        animation-delay: 240ms;
+        transform: rotate(8deg);
+        margin-top: 60px;
+      }
+      .ticket-2 {
+        background-color: var(--white);
+        padding-top: 10px;
+      }
+      .ticket-3 {
+        background: rgb(187,170,128);
+        background: linear-gradient(0deg, rgba(187,170,128,1) 0%, rgba(158,137,85,1) 30%, rgba(154,136,90,1) 100%);
+        padding: 8px 9px 0px 7px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .box-1 {
+        position: relative;
+        background-color: var(--white);
+        width: 100%;
+        height: 160px;
+        border-radius: 2px;
+        box-shadow: 1px -1px 26px 0px rgba(0,0,0,0.12);
+        -webkit-box-shadow: 1px -1px 26px 0px rgba(0,0,0,0.12);
+        -moz-box-shadow: 1px -1px 26px 0px rgba(0,0,0,0.12);
+        background: rgb(255,255,255);
+        background: linear-gradient(342deg, rgba(255,255,255,1) 0%, rgba(245,245,245,1) 93%, rgba(255,255,255,1) 100%);
+      }
+      .game {
+        position: absolute;
+        bottom:0;
+        left:0;
+        text-transform: uppercase;
+        color: var(--cubbie-blue);
+        font-family: helvetica;
+        font-size: 16px;
+        margin:0 0 4px 8px;
+        filter: blur(var(--blur-label-amt));
+      }
+      .aisle-row-seat-wrapper {
+        display: flex;
+        justify-content: space-between;
+        margin: 4px;
+      }
+      .aisle-row-seat {
+        margin: 0 4px;
+      }
+      .location-number {
+        font-family: 'Syne Mono', monospace;
+        filter: blur(var(--blur-type-amt));
+        color: #777;
+        font-size: 20px;
+        text-align: right;
+      }
+      .location-name {
+        text-transform: uppercase;
+        color: var(--cubbie-blue);
+        font-family: helvetica;
+        font-weight: bold;
+        font-size: 12px;
+        filter: blur(var(--blur-label-amt));
+      
+      }
+      .box-seat {
+        text-align: center;
+        text-transform: uppercase;
+        font-family: 'Syne Mono', monospace;
+        font-size: 20px;
+        filter: blur(var(--blur-type-amt));
+        line-height: 22px;
+        color: #777;
+      }
+      .wrigley-field {
+        margin-top: 4px;
+        font-family: Squada One, Helvetica;
+        letter-spacing: 2px;
+        transform: scale(1,1.1);
+        text-transform: uppercase;
+        color: var(--white);
+        font-size: 28px;
+        filter: blur(var(--blur-label-amt));
+      }
+      .year {
+        margin-top: 0px;
+        font-family: Squada One, Helvetica;
+        letter-spacing: 2px;
+        transform: scale(1,1.1);
+        text-transform: uppercase;
+        color: var(--white);
+        font-size: 28px;
+        filter: blur(var(--blur-label-amt));
+      }
+      .cubs-1 {
+        margin-top: 4px;
+        height: 130px;
+        width: 130px;
+        border-radius: 50%;
+        background-color: var(--white);
+        padding: 5px 6px 6px 5px;
+        box-sizing: border-box;
+        box-shadow: 1px -1px 26px 0px rgba(0,0,0,0.17);
+        -webkit-box-shadow: 1px -1px 26px 0px rgba(0,0,0,0.17);
+        -moz-box-shadow: 1px -1px 26px 0px rgba(0,0,0,0.17);
+      }
+      .cubs-2 {
+        height: 100%;
+        width: 100%;
+        border-radius: 50%;
+        background-color: var(--cubbie-blue);
+        padding: 16px;
+        box-sizing: border-box;
+        z-index: 5;
+      }
+      .cubs-3 {
+        height: 100%;
+        width: 100%;
+        border-radius: 50%;
+        background-color: var(--white);
+        box-sizing: border-box;
+        padding: 4px;
+      }
+      .cubs-4 {
+        height: 100%;
+        width: 100%;
+        border-radius: 50%;
+        box-sizing: border-box;
+        padding: 16px;
+        background: conic-gradient(
+          var(--cubbie-red) 0deg 57deg,
+          var(--white) 57deg 122deg,
+          var(--cubbie-red) 122deg 360deg
+        );
+      }
+      .cubs-5 {
+        height: 100%;
+        width: 100%;
+        border-radius: 50%;
+        background-color: var(--white);
+        box-sizing: border-box;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+      }
+      .u {
+        position: absolute;
+        background-color: var(--cubbie-red);
+        width: 16px;
+        height: 20px;
+        border-bottom-left-radius: 4px;
+        border-bottom-right-radius: 4px;
+        left: 6px;
+        display: flex;
+        justify-content: center;
+      }
+      .u-cut {
+        background-color: var(--white);
+        width: 3px;
+        height: 15px;
+      }
+      .b {
+        position: absolute;
+        background-color: var(--cubbie-red);
+        width: 16px;
+        height: 20px;
+        border-top-right-radius: 4px;
+        border-bottom-right-radius: 4px;
+        left: 25px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        align-items: center;
+      }
+      .b-hole {
+        width: 3px;
+        height: 3px;
+        border-top-right-radius: 1px;
+        border-bottom-right-radius: 1px;
+        background-color: var(--white);
+      }
+      .b-cut {
+        position: absolute;
+        width: 3px;
+        height: 3px;
+        background-color: var(--white);
+        top: 8px;
+        right: -2px;
+        transform: rotate(45deg);
+
+      }
+      .s {
+        position: absolute;
+        background-color: var(--cubbie-red);
+        width: 16px;
+        height: 20px;
+        border-radius: 4px;
+        left: 44px;			
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        align-items: center;
+      }
+      .s-hole {
+        width: 3px;
+        height: 3px;
+        border-top-right-radius: 1px;
+        border-bottom-right-radius: 1px;
+        background-color: var(--white);
+      }
+      .s-line-1 {
+        position: absolute;
+        width: 8px;
+        height: 1px;
+        background-color: var(--white);
+        top: 7px;
+        right: 0;
+        transform: rotate(3deg);
+      }
+      .s-line-2 {
+        position: absolute;
+        width: 8px;
+        height: 1px;
+        background-color: var(--white);
+        top: 12px;
+        left: 0;
+        transform: rotate(3deg);
+      }
+      .reg {
+        color: var(--cubbie-blue);
+        text-transform: uppercase;
+        font-family: Helvetica;
+        font-weight: bold;
+        font-size: 9px;
+        position: absolute;
+        bottom: 4px;
+        right: -10px;
+      }
+      .c-cut-1 {
+        position: absolute;
+        background-color: var(--white);
+        width: 17px;
+        height: 13px;
+        top: 4px;
+        right: -15px;
+        transform:rotate(-40deg);
+
+      }
+      .c-cut-2 {
+        position: absolute;
+        background-color: var(--white);
+        width: 17px;
+        height: 13px;
+        top: 28px;
+        right: -16px;
+        transform:rotate(40deg);
+      }
+
+      .c-cut-3 {
+        position: absolute;
+        background-color: var(--white);
+        width: 18px;
+        height: 20px;
+        top: 12px;
+        right: -16px;
+      }
+      .vs {
+        margin: 4px 0;
+        text-transform: uppercase;
+        color: var(--white);
+        font-family: helvetica;
+        font-weight: bold;
+          transform: scale(1.2, 1);
+        font-size: 12px;
+        filter: blur(var(--blur-label-amt));
+      }
+      .box-2 {
+        background-color: var(--white);
+        width: 100%;
+        height: 68px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        border-top-left-radius: 2px;
+        border-top-right-radius: 2px;
+        box-shadow: 1px -1px 26px 0px rgba(0,0,0,0.12);
+        -webkit-box-shadow: 1px -1px 26px 0px rgba(0,0,0,0.12);
+        -moz-box-shadow: 1px -1px 26px 0px rgba(0,0,0,0.12);
+        background: rgb(255,255,255);
+        background: linear-gradient(342deg, rgba(255,255,255,1) 0%, rgba(245,245,245,1) 93%, rgba(255,255,255,1) 100%);
+      }
+      .against {
+        text-align: center;
+        text-transform: uppercase;
+        font-family: 'Syne Mono', monospace;
+        filter: blur(var(--blur-type-amt));
+        font-size: 20px;
+        color: #777;
+      }
+      .admit-one {
+        text-transform: uppercase;
+        color: var(--cubbie-blue);
+        font-family: helvetica;
+        font-weight: bold;
+        transform: scale(1.4, 1);
+        font-size: 11px;
+        filter: blur(var(--blur-label-amt));
+        padding-bottom: 2px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="handcoded">
+      Handcoded
+    </div>
+    <div class="subject">
+      Two for Friday
+    </div>
+    <div class="author">
+      Ka Wai Cheung
+    </div>
+
+    <div class="ticket-1">
+      <div class="ticket-2">
+        <div class="ticket-3">
+          <div class="box-1">
+            <div class="game">
+              Game
+            </div>
+            <div class="aisle-row-seat-wrapper">
+              <div class="aisle-row-seat">
+                <div class="location-number">
+                  &nbsp;116
+                </div>
+                <div class="location-name">
+                  Aisle
+                </div>
+              </div>
+              <div class="aisle-row-seat">
+                <div class="location-number">
+                  8
+                </div>
+                <div class="location-name">
+                  Row
+                </div>
+              </div>
+              <div class="aisle-row-seat">
+                <div class="location-number">
+                  5
+                </div>
+                <div class="location-name">
+                  Seat
+                </div>
+              </div>
+            </div>
+            <div class="box-seat">
+              Box Seat<br><br>
+              D&nbsp;&nbsp;&nbsp;&nbsp;3-25448<br>
+              &nbsp;&nbsp;$13.00<br>
+              28&nbsp;
+            </div>
+          </div>
+          <div class="wrigley-field">
+            Wrigley Field
+          </div>
+          <div class="year">
+            1990
+          </div>
+          <div class="cubs-1">
+            <div class="cubs-2">
+              <div class="cubs-3">
+                <div class="cubs-4">
+                  <div class="cubs-5">
+                    <div class="u">
+                      <div class="u-cut"></div>
+                    </div>
+                    <div class="b">
+                      <div class="b-hole"></div>
+                      <div class="b-hole"></div>
+                      <div class="b-cut"></div>
+                    </div>
+                    <div class="s">
+                      <div class="s-hole"></div>
+                      <div class="s-hole"></div>
+                      <div class="s-line-1"></div>
+                      <div class="s-line-2"></div>
+                    </div>
+                    <div class="reg">
+                      &#174;
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="vs">
+            &mdash; vs &mdash;
+          </div>
+          <div class="box-2">
+            <div class="against">
+              Philadel.<br>
+              Jun. 8,1990
+            </div>
+            <div class="admit-one">
+              &mdash; Admit One &mdash;
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="ticket-1">
+      <div class="ticket-2">
+        <div class="ticket-3">
+          <div class="box-1">
+            <div class="game">
+              Game
+            </div>
+            <div class="aisle-row-seat-wrapper">
+              <div class="aisle-row-seat">
+                <div class="location-number">
+                  &nbsp;116
+                </div>
+                <div class="location-name">
+                  Aisle
+                </div>
+              </div>
+              <div class="aisle-row-seat">
+                <div class="location-number">
+                  8
+                </div>
+                <div class="location-name">
+                  Row
+                </div>
+              </div>
+              <div class="aisle-row-seat">
+                <div class="location-number">
+                  6
+                </div>
+                <div class="location-name">
+                  Seat
+                </div>
+              </div>
+            </div>
+            <div class="box-seat">
+              Box Seat<br><br>
+              D&nbsp;&nbsp;&nbsp;&nbsp;3-25448<br>
+              &nbsp;&nbsp;$13.00<br>
+              28&nbsp;
+            </div>
+          </div>
+          <div class="wrigley-field">
+            Wrigley Field
+          </div>
+          <div class="year">
+            1990
+          </div>
+          <div class="cubs-1">
+            <div class="cubs-2">
+              <div class="cubs-3">
+                <div class="cubs-4">
+                  <div class="cubs-5">
+                    <div class="u">
+                      <div class="u-cut"></div>
+                    </div>
+                    <div class="b">
+                      <div class="b-hole"></div>
+                      <div class="b-hole"></div>
+                      <div class="b-cut"></div>
+                    </div>
+                    <div class="s">
+                      <div class="s-hole"></div>
+                      <div class="s-hole"></div>
+                      <div class="s-line-1"></div>
+                      <div class="s-line-2"></div>
+                    </div>
+                    <div class="reg">
+                      &#174;
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="vs">
+            &mdash; vs &mdash;
+          </div>
+          <div class="box-2">
+            <div class="against">
+              Philadel.<br>
+              Jun. 8,1990
+            </div>
+            <div class="admit-one">
+              &mdash; Admit One &mdash;
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
