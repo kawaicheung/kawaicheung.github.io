@@ -1,0 +1,858 @@
+<html>
+<head>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Squada+One&display=swap" rel="stylesheet">
+	<style>
+    :root {
+      --color--scoreboard: #716c6b;
+      --color--scoreboard-middle: #827d7b;
+      --color--sky: #e2dcd4;
+      --color--scoreboard-text: #f7f5f4;
+
+      --blur-text: blur(0.3px);
+
+      --px--scoreboard-width: 972px;
+      --px--scoreboard-height: 350px;
+      --px--scoreboard-header-height: 20px;
+
+      --font--scoreboard: Bebas Neue;
+      --font--scoreboard-alt: Squada One;
+    }
+		body {
+			background-color: #fff;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+		.handcoded {
+			position: absolute;
+			top: 20px;
+			left: 20px;
+			font-family: Helvetica Neue;
+			font-size: 14px;
+			padding-right: 10px;
+			font-weight: bold;
+			color: #222;
+		}		
+		.subject {
+			position: absolute;
+			top: 20px;
+			left: 50%;
+			transform: translateX(-50%);
+			font-family: Helvetica Neue;
+			font-size: 14px;
+			padding-right: 10px;
+			font-weight: bold;
+			color: #222;
+		}
+		.author {
+			position: absolute;
+			top: 20px;
+			right: 20px;
+			font-family: Helvetica Neue;
+			font-size: 14px;
+			padding-right: 10px;
+			color: #666;
+		}
+
+    /* Scoreboard Picture */
+		.picture {
+			position: relative;
+      background-color: var(--color--sky);
+			width: 100%;
+      height: 600px;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+		}
+
+    /* Cloud background */
+    .cloud-wrapper {
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      filter: blur(14px);
+    }
+    .cloud {
+      position: absolute;
+      border-radius: 50%;
+      background-color: #000;
+    }
+    .cloud-1 {
+      top: 0;  left: 100px;  width: 230px; height: 10px;
+    }
+    .cloud-2 {
+      top: 140px;  left: 220px;  width: 240px; height: 328px;
+    }
+    .cloud-3 {
+      top: 28%;  left: 10%;  width: 30px; height: 80px;
+    }
+    .cloud-4 {
+      top: 20%;  left: 10%;  width: 140px; height: 28px;
+    }
+    .cloud-5 {
+      top: 20%;  left: 10%;  width: 140px; height: 28px;
+    }
+
+    .scoreboard-wrapper {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      display: flex;
+			align-items: center;
+			justify-content: center;
+      font-size: 10px;
+    }
+
+
+    .scoreboard-side {
+      background-color: green;
+      width: 2em;
+			height: var(--px--scoreboard-height);
+    }
+   
+		.scoreboard {
+      position: relative;
+			background-color: var(--color--scoreboard);
+			width: var(--px--scoreboard-width);
+			height: var(--px--scoreboard-height);
+			border-top-left-radius: 6px;
+			border-top-right-radius: 6px;
+			display: flex;
+      justify-content: space-between;
+      font-family: var(--font--scoreboard);
+      color: var(--color--scoreboard-text);  
+      transform: perspective(153em) rotateZ(0deg) rotateX(14deg) rotateY(-26deg);
+		}
+
+		.s-header {
+      position: absolute;
+			width: 70%;
+      left: 50%;
+      transform: translateX(-50%);
+      height: 23;
+			top: calc(var(--px--scoreboard-header-height) * -1);
+			background-color: var(--color--scoreboard);
+			border-top-left-radius: var(--px--scoreboard-header-height);;
+			border-top-right-radius: var(--px--scoreboard-header-height);;
+		}
+
+    /* 14 groups of 20 + 17 extra on top */
+    .s-league {
+      width: 38%;
+      position: relative;
+    }
+    .s-info-wrapper {
+      flex: 1;
+      height: calc(100% + var(--px--scoreboard-header-height));
+      margin-top: calc(var(--px--scoreboard-header-height) * -1);
+      z-index: 1;  
+      padding: 0 1px;
+      display: flex;
+      background: rgb(100,97,96);
+      background: linear-gradient(0deg, rgba(100,97,96,1) 0%, rgba(113,108,107,1) 17%, rgba(113,108,107,1) 66%, rgba(75,71,70,1) 100%);   
+    }
+
+    .s-info {    
+      flex: 1;
+      background-color: var(--color--scoreboard);
+    }
+
+    .umpires {
+      padding-top: 0.3em;
+      font-size: 3em;
+      margin: 0;
+      text-align: center;
+      transform: scale(1.36,1);
+      line-height: .8;
+      letter-spacing: 0.04em;
+      filter: var(--blur-text);  
+    }
+
+    .league-text {
+      margin-top: 0.6em;
+      transform: scale(1, 1.1);
+      font-size: 4.8em;
+      letter-spacing: 0.05em;
+      filter: var(--blur-text);  
+      line-height: 1em;  
+    }
+		.national {
+      padding-left: 1em;
+		}
+		.american {
+      padding-right: 1em;
+		}
+    .innings {
+      position: absolute;
+      font-size: 2.4em;
+      letter-spacing: 0.07em;
+      transform: scale(1.36,1);
+      top: 2em;
+      right: 3.2em;
+    }
+    .umpire-bases {
+      display: flex;
+      justify-content: space-around;
+    }
+
+    .umpire-bases > div {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .base-text {
+      margin-top: 0.05em;
+      font-size: 2em;
+      line-height: 0.8;
+    }
+
+    .base-text.plate {
+      transform: scale(1.2,1);
+    }
+
+    .base-text > sup {
+      font-size: 0.5em;
+    }
+
+    .umpire-number {
+      font-size: 2em;
+    }
+
+    .batter,
+    .ball-strike,
+    .out {
+      display: flex;
+      width: 100%;
+      justify-content: space-around;
+    }
+
+    .ball-strike {
+      padding-top: 1.8em;
+    }
+
+    .out {
+      padding-top: 1.8em;
+    }
+    
+    .batter > div,
+    .ball-strike > div,
+    .out > div  {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      position: relative;
+      padding-top: 2em;
+    }
+
+    .batter > div {
+      padding-top: 2.8em;
+    }
+    
+    .batter-text,
+    .ball-text,
+    .strike-text,
+    .out-text {
+      font-size: 1.9em;
+      transform: scale(1.2,1);
+      position: absolute;
+      top: 0;
+    }
+
+    .batter-text {
+      font-size: 2.4em;
+      transform: scale(1.36,1);
+    }
+    .info-marquee-squares-wrapper {
+      display: flex;
+    }
+
+    .info-marquee-squares-wrapper > *:not(:last-child) {
+      margin-right: 0.4em;
+    }
+
+    .info-marquee-square {
+      height: 4em;
+      width: 2.8em;
+      background: rgb(113,108,107);
+      background: linear-gradient(0deg, rgba(113,108,107,1) 0%, rgba(113,108,107,1) 85%, rgba(77,72,71,1) 100%);
+    }
+
+    .box-scores {
+      font-size: 1.9em;
+      filter: var(--blur-text);
+      width: 100%;
+      position: relative;
+    }
+
+    .bottom-line-1 {
+      position: absolute;
+      background-color: var(--color--scoreboard);
+      bottom: 0;
+      left: 2%;
+    }
+
+    .day {
+      display: inline-block;
+      padding-left: 1em;
+    }
+
+
+    .box-scores > div {
+      display: flex;
+      margin-bottom: 0.08em;
+    }
+    .pc-holder {
+      position: relative;
+      width: 8%;
+      flex: 0 0 auto;
+      margin-right: 0.16em;
+      border-left: solid 1px #333;
+      border-right: dotted 1px #333;
+      border-bottom: dotted 1px #666;
+      background: rgb(113,108,107);
+      background: linear-gradient(0deg, rgba(113,108,107,1) 0%, rgba(113,108,107,1) 95%, rgba(77,72,71,1) 100%);
+    }
+
+    .pc-holder.p,
+    .pc-holder.c {
+      background: none;
+      border-color: transparent;
+    }
+
+    .pc-holder.p > div, 
+    .pc-holder.c > div {
+      position: absolute;
+      font-size: 1.2em;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%) scale(1.8,1);
+    }
+
+    .hide {
+      opacity: 0;
+    }
+    .inning-set {
+      display: flex;
+      justify-content: space-evenly;
+      width: 100%;
+    }
+    .inning-set > div {
+      flex: 1;
+      margin-right: 0.16em;
+      border-left: solid 1px #333;
+      border-right: dotted 1px #333;
+      border-bottom: dotted 1px #666;
+      background: rgb(113,108,107);
+      background: linear-gradient(0deg, rgba(113,108,107,1) 0%, rgba(113,108,107,1) 95%, rgba(77,72,71,1) 100%);
+      text-align: center;
+    }
+    .inning-set > div:last-child {
+      margin-right: 0;
+    }
+    .inning-set > div > span {
+      display: block;
+      transform: scale(1.5,1);
+    }
+    .inning-set > div > span.ten {
+      transform: scale(1.3,1);
+    }
+    .box-scores .team {
+      width: 22%;
+      flex: 0 0 auto;
+      margin-right: 0.4em; 
+      border-left: solid 1px #333;
+      border-right: dotted 1px #333;
+      border-bottom: dotted 1px #666;
+      background: rgb(113,108,107);
+      background: linear-gradient(0deg, rgba(113,108,107,1) 0%, rgba(113,108,107,1) 95%, rgba(77,72,71,1) 100%);
+
+    }
+    .box-scores .boston {
+      letter-spacing: 0.08em;
+    }
+    .box-scores .cubs {
+      letter-spacing: 0.24em;
+    }
+    .box-scores .sox {
+      letter-spacing: 0.24em;
+    }
+    .box-scores .detroit {
+      letter-spacing: 0.1em;
+    }
+    .box-scores .stlouis {
+      letter-spacing: 0.1em;
+    }
+    .box-scores .philadelphia {
+      letter-spacing: -0.003em;
+    }
+    .box-scores .washington {
+      letter-spacing: 0.03em;
+    }
+    .box-scores .brooklyn {
+      letter-spacing: 0.04em;
+    }
+    .box-scores .newyork {
+      letter-spacing: 0.06em;
+    }
+    .box-scores .cleveland {
+      letter-spacing: 0.05em;
+    }
+    .box-scores .cincinnati {
+      letter-spacing: 0em;
+    }
+
+	</style>
+</head>
+<body>
+	<div class="handcoded">
+		Handcoded
+	</div>
+	<div class="subject">
+		Wrigley Field Scoreboard (c1938)
+	</div>
+	<div class="author">
+		Ka Wai Cheung
+	</div>
+	<div class="picture">
+    <div class="cloud-wrapper">
+      <div class="cloud cloud-1"></div>
+      <div class="cloud cloud-2"></div>
+      <div class="cloud cloud-3"></div>
+      <div class="cloud cloud-4"></div>
+      <div class="cloud cloud-5"></div>
+      <div class="cloud cloud-6"></div>
+      <div class="cloud cloud-7"></div>
+    </div>
+    <div class="scoreboard-wrapper">
+      <div class="scoreboard">
+        <div class="s-header"></div>
+        <div class="s-league national">
+          <div class="league-text">National</div>
+          <div class="innings">Innings</div>
+          <div class="box-scores">
+            <div class="bottom-line-1">
+              <span>Philadelphia</span>
+              <span class="day">Thu</span>
+              <span class="day">Fri</span>
+              <span class="day">Sat</span>
+            </div>
+            <div>
+              <div class="pc-holder p">
+                <div>P.</div>
+              </div>
+              <div class="pc-holder c">
+                <div>C.</div>
+              </div>
+              <div class="team hide"></div>
+              <div class="inning-set">
+                <div><span class="inning">1</span></div>
+                <div><span class="inning">2</span></div>
+                <div><span class="inning">3</span></div>
+                <div><span class="inning">4</span></div>
+                <div><span class="inning">5</span></div>
+                <div><span class="inning">6</span></div>
+                <div><span class="inning">7</span></div>
+                <div><span class="inning">8</span></div>
+                <div><span class="inning">9</span></div>
+                <div><span class="inning ten">10</span></div>
+              </div>
+            </div>
+            <div>
+              <div class="pc-holder"></div>
+              <div class="pc-holder"></div>
+              <div class="team boston">Boston</div>
+              <div class="inning-set">
+                <div>0</div>
+                <div>0</div>
+                <div>3</div>
+                <div>1</div>
+                <div>0</div>
+                <div>0</div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+              </div>
+            </div>
+            <div>
+              <div class="pc-holder"></div>
+              <div class="pc-holder"></div>
+              <div class="team cubs">Cubs</div>
+              <div class="inning-set">
+                <div>0</div>
+                <div>0</div>
+                <div>0</div>
+                <div>1</div>
+                <div>0</div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+              </div>
+            </div>
+            <div>
+              <div class="pc-holder"></div>
+              <div class="pc-holder"></div>
+              <div class="team newyork">New York</div>
+              <div class="inning-set">
+                <div>0</div>
+                <div>0</div>
+                <div>0</div>
+                <div>0</div>
+                <div>0</div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+              </div>
+            </div>
+            <div>
+              <div class="pc-holder"></div>
+              <div class="pc-holder"></div>
+              <div class="team pittsburgh">Pittsburgh</div>
+              <div class="inning-set">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+              </div>
+            </div>
+            <div>
+              <div class="pc-holder"></div>
+              <div class="pc-holder"></div>
+              <div class="team philadelphia">Philadelphia</div>
+              <div class="inning-set">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+              </div>
+            </div>
+            <div>
+              <div class="pc-holder"></div>
+              <div class="pc-holder"></div>
+              <div class="team stlouis">St.Louis</div>
+              <div class="inning-set">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+              </div>
+            </div>
+            <div>
+              <div class="pc-holder"></div>
+              <div class="pc-holder"></div>
+              <div class="team brooklyn">Brooklyn</div>
+              <div class="inning-set">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+              </div>
+            </div>
+            <div>
+              <div class="pc-holder"></div>
+              <div class="pc-holder"></div>
+              <div class="team cincinnati">Cincinnati</div>
+              <div class="inning-set">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+              </div>
+            </div>
+            <div>
+              <div class="pc-holder hide"></div>
+              <div class="pc-holder hide"></div>
+              <div class="team hide">&nbsp;</div>
+              <div class="inning-set">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+              </div>
+            </div>
+          </div>
+        </div>   
+        <div class="s-info-wrapper">
+          <div class="s-info">
+            <div class="umpires">
+              Umpires
+            </div>
+            <div class="umpire-bases">
+              <div>
+                <div class="base-text plate">Plate</div>
+                <div class="umpire-number">8</div>
+              </div>
+              <div>
+                <div class="base-text">1<sup>st</sup></div>
+                <div class="umpire-number">10</div>
+              </div>
+              <div>
+                <div class="base-text">2<sup>nd</sup></div>
+                <div class="umpire-number"></div>
+              </div>
+              <div>
+                <div class="base-text">3<sup>rd</sup></div>
+                <div class="umpire-number">13</div>
+              </div>
+            </div>
+            <div class="batter">
+              <div>
+                <div class="batter-text">Batter</div>
+                <div class="info-marquee-squares-wrapper">
+                  <div class="info-marquee-square"></div>
+                  <div class="info-marquee-square"></div>
+                </div>
+              </div>
+            </div>
+            <div class="ball-strike">
+              <div>
+                <div class="ball-text">Ball</div>
+                <div class="info-marquee-square"></div>
+              </div>
+              <div>
+                <div class="info-marquee-square"></div>
+              </div>
+              <div>
+                <div class="strike-text">Strike</div>
+                <div class="info-marquee-square"></div>
+              </div>
+            </div>
+            <div class="out">
+              <div>
+                <div class="out-text">Out</div>
+                <div class="info-marquee-square"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="s-league american">
+          <div class="league-text">American</div>
+          <div class="innings">Innings</div>
+          <div class="box-scores">
+            <div>
+              <div class="pc-holder p">
+                <div>P.</div>
+              </div>
+              <div class="pc-holder c">
+                <div>C.</div>
+              </div>
+              <div class="team hide"></div>
+              <div class="inning-set">
+                <div><span class="inning">1</span></div>
+                <div><span class="inning">2</span></div>
+                <div><span class="inning">3</span></div>
+                <div><span class="inning">4</span></div>
+                <div><span class="inning">5</span></div>
+                <div><span class="inning">6</span></div>
+                <div><span class="inning">7</span></div>
+                <div><span class="inning">8</span></div>
+                <div><span class="inning">9</span></div>
+                <div><span class="inning ten">10</span></div>
+              </div>
+            </div>
+            <div>
+              <div class="pc-holder"></div>
+              <div class="pc-holder"></div>
+              <div class="team sox">Sox</div>
+              <div class="inning-set">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+              </div>
+            </div>
+            <div>
+              <div class="pc-holder"></div>
+              <div class="pc-holder"></div>
+              <div class="team washington">Washington</div>
+              <div class="inning-set">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+              </div>
+            </div>
+            <div>
+              <div class="pc-holder"></div>
+              <div class="pc-holder"></div>
+              <div class="team detroit">Detroit</div>
+              <div class="inning-set">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+              </div>
+            </div>
+            <div>
+              <div class="pc-holder"></div>
+              <div class="pc-holder"></div>
+              <div class="team boston">Boston</div>
+              <div class="inning-set">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+              </div>
+            </div>
+            <div>
+              <div class="pc-holder"></div>
+              <div class="pc-holder"></div>
+              <div class="team cleveland">Cleveland</div>
+              <div class="inning-set">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+              </div>
+            </div>
+            <div>
+              <div class="pc-holder"></div>
+              <div class="pc-holder"></div>
+              <div class="team newyork">New York</div>
+              <div class="inning-set">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+              </div>
+            </div>
+            <div>
+              <div class="pc-holder"></div>
+              <div class="pc-holder"></div>
+              <div class="team stlouis">St.Louis</div>
+              <div class="inning-set">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+              </div>
+            </div>
+            <div>
+              <div class="pc-holder"></div>
+              <div class="pc-holder"></div>
+              <div class="team philadelphia">Philadelphia</div>
+              <div class="inning-set">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+              </div>
+            </div>
+            <div>
+              <div class="pc-holder hide"></div>
+              <div class="pc-holder hide"></div>
+              <div class="team hide">&nbsp;</div>
+              <div class="inning-set">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
