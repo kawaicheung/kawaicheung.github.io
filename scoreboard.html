@@ -159,7 +159,29 @@
     .s-info {    
       flex: 1;
       background-color: var(--color--scoreboard);
+      position: relative;
     }
+
+    .bottom-line-1 {
+      position: absolute;
+      background-color: var(--color--scoreboard);
+      bottom: 6.8%;
+      width: 100%;
+      font-size: 2em;
+      display: flex;
+      justify-content: center;
+    }
+
+    .bottom-line-1 > span:first-child {
+      letter-spacing: 0.08em;
+    }
+
+
+    .day {
+      display: inline-block;
+      padding-left: 1em;
+    }
+
 
     .umpires {
       padding-top: 0.3em;
@@ -290,23 +312,26 @@
       position: relative;
     }
 
-    .bottom-line-1 {
-      position: absolute;
-      background-color: var(--color--scoreboard);
-      bottom: 0;
-      left: 2%;
-    }
-
-    .day {
-      display: inline-block;
-      padding-left: 1em;
-    }
-
-
     .box-scores > div {
       display: flex;
       margin-bottom: 0.08em;
     }
+
+    .ledge {
+      position: absolute;
+      height: 2em;
+      width: 105%;
+      border-bottom: solid 0.1em var(--color--scoreboard);
+      transform: translateX(-50%);
+      left: 50%;
+      bottom: 0;
+      box-shadow: 0px 15px 10px -15px #333;   
+    }
+
+    .ledge.top {
+      bottom: 1.1em;
+    }
+
     .pc-holder {
       position: relative;
       width: 8%;
@@ -436,11 +461,9 @@
           <div class="league-text">National</div>
           <div class="innings">Innings</div>
           <div class="box-scores">
-            <div class="bottom-line-1">
-              <span>Philadelphia</span>
-              <span class="day">Thu</span>
-              <span class="day">Fri</span>
-              <span class="day">Sat</span>
+            <div class="ledge top">
+            </div>
+            <div class="ledge">
             </div>
             <div>
               <div class="pc-holder p">
@@ -468,16 +491,16 @@
               <div class="pc-holder"></div>
               <div class="team boston">Boston</div>
               <div class="inning-set">
-                <div>0</div>
-                <div>0</div>
-                <div>3</div>
-                <div>1</div>
-                <div>0</div>
-                <div>0</div>
                 <div></div>
                 <div></div>
                 <div></div>
                 <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div>4</div>
               </div>
             </div>
             <div>
@@ -485,16 +508,16 @@
               <div class="pc-holder"></div>
               <div class="team cubs">Cubs</div>
               <div class="inning-set">
-                <div>0</div>
-                <div>0</div>
-                <div>0</div>
-                <div>1</div>
-                <div>0</div>
                 <div></div>
                 <div></div>
                 <div></div>
                 <div></div>
                 <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div>5</div>
               </div>
             </div>
             <div>
@@ -620,6 +643,10 @@
         </div>   
         <div class="s-info-wrapper">
           <div class="s-info">
+             <div class="bottom-line-1">
+              <span>Tomorrow</span>
+              <span>&nbsp;&nbsp;St. Louis</span>
+            </div>
             <div class="umpires">
               Umpires
             </div>
@@ -675,6 +702,10 @@
           <div class="league-text">American</div>
           <div class="innings">Innings</div>
           <div class="box-scores">
+            <div class="ledge top">
+            </div>
+            <div class="ledge">
+            </div>
             <div>
               <div class="pc-holder p">
                 <div>P.</div>
