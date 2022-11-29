@@ -5,8 +5,8 @@
 	<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Squada+One&display=swap" rel="stylesheet">
 	<style>
     :root {
-      --color--scoreboard: #716c6b;
-      --color--scoreboard-middle: #827d7b;
+      --color--scoreboard: #485b61;
+      --color--scoreboard-middle: #485b61;
       --color--sky: #e2dcd4;
       --color--scoreboard-text: #f7f5f4;
 
@@ -124,8 +124,10 @@
 			display: flex;
       justify-content: space-between;
       font-family: var(--font--scoreboard);
-      color: var(--color--scoreboard-text);  
-      transform: perspective(153em) rotateZ(0deg) rotateX(14deg) rotateY(-26deg);
+      color: var(--color--scoreboard-text);
+
+      text-shadow: 0px 0px 2px rgba(0,0,0,0.3);  
+      /* transform: perspective(180em) rotateZ(0deg) rotateX(14deg) rotateY(-26deg); */
 		}
 
 		.s-header {
@@ -152,8 +154,8 @@
       z-index: 1;  
       padding: 0 1px;
       display: flex;
-      background: rgb(100,97,96);
-      background: linear-gradient(0deg, rgba(100,97,96,1) 0%, rgba(113,108,107,1) 17%, rgba(113,108,107,1) 66%, rgba(75,71,70,1) 100%);   
+      background: var(--color--scoreboard);
+      background: linear-gradient(0deg, rgba(72,91,97,1) 0%, rgba(72,91,97,1) 95%, rgba(62,71,74,1) 100%);  
     }
 
     .s-info {    
@@ -165,11 +167,18 @@
     .bottom-line-1 {
       position: absolute;
       background-color: var(--color--scoreboard);
-      bottom: 6.8%;
-      width: 100%;
+      bottom: 6.6%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 90%;
+      white-space: nowrap;
       font-size: 2em;
       display: flex;
+      color: #d8b97b;
       justify-content: center;
+      border-left: solid 1px rgba(0,0,0,0.3);
+      border-top: solid 1px rgba(0,0,0,0.3);
+      box-shadow: inset 0 0 1px rgba(0,0,0,0.3);
     }
 
     .bottom-line-1 > span:first-child {
@@ -182,24 +191,27 @@
       padding-left: 1em;
     }
 
+    .hole {
+      background-color: #222;
+      box-sizing: content-box;
+    }
+
 
     .umpires {
       padding-top: 0.3em;
-      font-size: 3em;
+      font-size: 2.8em;
       margin: 0;
       text-align: center;
       transform: scale(1.36,1);
       line-height: .8;
       letter-spacing: 0.04em;
-      filter: var(--blur-text);  
     }
 
     .league-text {
       margin-top: 0.6em;
       transform: scale(1, 1.1);
       font-size: 4.8em;
-      letter-spacing: 0.05em;
-      filter: var(--blur-text);  
+      letter-spacing: 0.05em;  
       line-height: 1em;  
     }
 		.national {
@@ -224,11 +236,11 @@
     .umpire-bases > div {
       display: flex;
       flex-direction: column;
-      align-items: center;
+      align-items: center; 
     }
 
     .base-text {
-      margin-top: 0.05em;
+      margin: 0.05em 0;
       font-size: 2em;
       line-height: 0.8;
     }
@@ -243,6 +255,13 @@
 
     .umpire-number {
       font-size: 2em;
+      height: 100%;
+      border-left: solid 1px rgba(0,0,0,0.3);
+      border-top: solid 1px rgba(0,0,0,0.3);
+      box-shadow: inset 0 0 1px rgba(0,0,0,0.3);
+      width: 0.7em;
+      line-height: 0.8;
+      text-align: center;
     }
 
     .batter,
@@ -259,6 +278,10 @@
 
     .out {
       padding-top: 1.8em;
+    }
+
+    .batter {
+      margin-top: 1em;
     }
     
     .batter > div,
@@ -301,13 +324,13 @@
     .info-marquee-square {
       height: 4em;
       width: 2.8em;
-      background: rgb(113,108,107);
-      background: linear-gradient(0deg, rgba(113,108,107,1) 0%, rgba(113,108,107,1) 85%, rgba(77,72,71,1) 100%);
+      border-left: solid 1px rgba(0,0,0,0.3);
+      border-top: solid 1px rgba(0,0,0,0.3);
+      box-shadow: inset 0 0 12px rgba(0,0,0,0.3);
     }
 
     .box-scores {
       font-size: 1.9em;
-      filter: var(--blur-text);
       width: 100%;
       position: relative;
     }
@@ -324,8 +347,8 @@
       border-bottom: solid 0.1em var(--color--scoreboard);
       transform: translateX(-50%);
       left: 50%;
-      bottom: 0;
-      box-shadow: 0px 15px 10px -15px #333;   
+      bottom: -.2em;
+      box-shadow: -5px 15px 8px -15px rgba(0,0,0,.6);   
     }
 
     .ledge.top {
@@ -337,24 +360,26 @@
       width: 8%;
       flex: 0 0 auto;
       margin-right: 0.16em;
-      border-left: solid 1px #333;
-      border-right: dotted 1px #333;
-      border-bottom: dotted 1px #666;
-      background: rgb(113,108,107);
-      background: linear-gradient(0deg, rgba(113,108,107,1) 0%, rgba(113,108,107,1) 95%, rgba(77,72,71,1) 100%);
+      border-left: solid 1px rgba(0,0,0,0.3);
+      border-top: solid 1px rgba(0,0,0,0.5);
+      /*background: linear-gradient(0deg, rgba(113,108,107,1) 0%, rgba(113,108,107,1) 95%, rgba(77,72,71,1) 100%);*/
+      box-shadow: inset 0 0 3px rgba(0,0,0,0.3);
+      display: flex;
+      justify-content: center;
     }
 
     .pc-holder.p,
     .pc-holder.c {
       background: none;
       border-color: transparent;
+      box-shadow: none;
     }
 
     .pc-holder.p > div, 
     .pc-holder.c > div {
       position: absolute;
       font-size: 1.2em;
-      top: 0;
+      top: -0.15em;
       left: 50%;
       transform: translateX(-50%) scale(1.8,1);
     }
@@ -370,11 +395,10 @@
     .inning-set > div {
       flex: 1;
       margin-right: 0.16em;
-      border-left: solid 1px #333;
-      border-right: dotted 1px #333;
-      border-bottom: dotted 1px #666;
-      background: rgb(113,108,107);
-      background: linear-gradient(0deg, rgba(113,108,107,1) 0%, rgba(113,108,107,1) 95%, rgba(77,72,71,1) 100%);
+      border-left: solid 1px rgba(0,0,0,0.3);
+      border-top: solid 1px rgba(0,0,0,0.5);
+      /*background: linear-gradient(0deg, rgba(113,108,107,1) 0%, rgba(113,108,107,1) 95%, rgba(77,72,71,1) 100%);*/
+      box-shadow: inset 0 0 3px rgba(0,0,0,0.3);
       text-align: center;
     }
     .inning-set > div:last-child {
@@ -391,12 +415,9 @@
       width: 22%;
       flex: 0 0 auto;
       margin-right: 0.4em; 
-      border-left: solid 1px #333;
-      border-right: dotted 1px #333;
-      border-bottom: dotted 1px #666;
-      background: rgb(113,108,107);
-      background: linear-gradient(0deg, rgba(113,108,107,1) 0%, rgba(113,108,107,1) 95%, rgba(77,72,71,1) 100%);
-
+      border-left: solid 1px rgba(0,0,0,0.3);
+      border-top: solid 1px rgba(0,0,0,0.5);
+      box-shadow: inset 0 0 3px rgba(0,0,0,0.3);
     }
     .box-scores .boston {
       letter-spacing: 0.08em;
@@ -487,37 +508,37 @@
               </div>
             </div>
             <div>
-              <div class="pc-holder"></div>
-              <div class="pc-holder"></div>
+              <div class="pc-holder">7</div>
+              <div class="pc-holder">4</div>
               <div class="team boston">Boston</div>
               <div class="inning-set">
+                <div>0</div>
+                <div>1</div>
+                <div>0</div>
+                <div>0</div>
+                <div>0</div>
                 <div></div>
                 <div></div>
                 <div></div>
                 <div></div>
                 <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div>4</div>
               </div>
             </div>
             <div>
-              <div class="pc-holder"></div>
-              <div class="pc-holder"></div>
+              <div class="pc-holder">22</div>
+              <div class="pc-holder">5</div>
               <div class="team cubs">Cubs</div>
               <div class="inning-set">
+                <div>0</div>
+                <div>0</div>
+                <div>3</div>
+                <div>1</div>
+                <div>0</div>
                 <div></div>
                 <div></div>
                 <div></div>
                 <div></div>
                 <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div>5</div>
               </div>
             </div>
             <div>
@@ -525,11 +546,11 @@
               <div class="pc-holder"></div>
               <div class="team newyork">New York</div>
               <div class="inning-set">
-                <div>0</div>
-                <div>0</div>
-                <div>0</div>
-                <div>0</div>
-                <div>0</div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
                 <div></div>
                 <div></div>
                 <div></div>
@@ -549,9 +570,9 @@
                 <div></div>
                 <div></div>
                 <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
+                <div class="hole"></div>
+                <div class="hole"></div>
+                <div class="hole"></div>
               </div>
             </div>
             <div>
@@ -602,7 +623,7 @@
                 <div></div>
                 <div></div>
                 <div></div>
-                <div></div>
+                <div>5</div>
               </div>
             </div>
             <div>
@@ -619,7 +640,7 @@
                 <div></div>
                 <div></div>
                 <div></div>
-                <div></div>
+                <div>2</div>
               </div>
             </div>
             <div>
@@ -636,7 +657,7 @@
                 <div></div>
                 <div></div>
                 <div></div>
-                <div></div>
+                <div class="hole"></div>
               </div>
             </div>
           </div>
@@ -800,11 +821,11 @@
               <div class="pc-holder"></div>
               <div class="team cleveland">Cleveland</div>
               <div class="inning-set">
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
+                <div>1</div>
+                <div>0</div>
+                <div>0</div>
+                <div>2</div>
+                <div>0</div>
                 <div></div>
                 <div></div>
                 <div></div>
@@ -817,11 +838,11 @@
               <div class="pc-holder"></div>
               <div class="team newyork">New York</div>
               <div class="inning-set">
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
+                <div>0</div>
+                <div>2</div>
+                <div>0</div>
+                <div>1</div>
+                <div>1</div>
                 <div></div>
                 <div></div>
                 <div></div>
@@ -843,7 +864,7 @@
                 <div></div>
                 <div></div>
                 <div></div>
-                <div></div>
+                <div>6</div>
               </div>
             </div>
             <div>
@@ -860,7 +881,7 @@
                 <div></div>
                 <div></div>
                 <div></div>
-                <div></div>
+                <div>10</div>
               </div>
             </div>
             <div>
@@ -871,13 +892,13 @@
                 <div></div>
                 <div></div>
                 <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
+                <div class="hole"></div>
+                <div class="hole"></div>
+                <div class="hole"></div>
+                <div class="hole"></div>
+                <div class="hole"></div>
+                <div class="hole"></div>
+                <div class="hole"></div>
               </div>
             </div>
           </div>
