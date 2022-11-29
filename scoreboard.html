@@ -7,8 +7,9 @@
     :root {
       --color--scoreboard: #485b61;
       --color--scoreboard-middle: #485b61;
-      --color--sky: #e2dcd4;
+      --color--sky: #d3e1e8;
       --color--scoreboard-text: #f7f5f4;
+      --color--scoreboard-hole: #212729;
 
       --blur-text: blur(0.3px);
 
@@ -77,13 +78,10 @@
     .cloud {
       position: absolute;
       border-radius: 50%;
-      background-color: #000;
+      background-color: #fff;
     }
     .cloud-1 {
       top: 0;  left: 100px;  width: 230px; height: 10px;
-    }
-    .cloud-2 {
-      top: 140px;  left: 220px;  width: 240px; height: 328px;
     }
     .cloud-3 {
       top: 28%;  left: 10%;  width: 30px; height: 80px;
@@ -102,11 +100,11 @@
       top: 0;
       left: 0;
       display: flex;
+      flex-direction: column;
 			align-items: center;
 			justify-content: center;
       font-size: 10px;
     }
-
 
     .scoreboard-side {
       background-color: green;
@@ -125,10 +123,17 @@
       justify-content: space-between;
       font-family: var(--font--scoreboard);
       color: var(--color--scoreboard-text);
-
       text-shadow: 0px 0px 2px rgba(0,0,0,0.3);  
-      /* transform: perspective(180em) rotateZ(0deg) rotateX(14deg) rotateY(-26deg); */
+      /*transform: perspective(380em) rotateZ(0deg) rotateX(14deg) rotateY(-26deg);*/
 		}
+
+    .scoreboard-bottom {
+      background-color: var(--color--scoreboard-hole);
+      height: 2em;
+      border-bottom-left-radius: 50%;
+      border-bottom-right-radius: 50%;
+      width: var(--px--scoreboard-width);
+    }
 
 		.s-header {
       position: absolute;
@@ -167,7 +172,7 @@
     .bottom-line-1 {
       position: absolute;
       background-color: var(--color--scoreboard);
-      bottom: 6.6%;
+      bottom: 1em;
       left: 50%;
       transform: translateX(-50%);
       width: 90%;
@@ -175,7 +180,7 @@
       font-size: 2em;
       display: flex;
       color: #d8b97b;
-      justify-content: center;
+      justify-content: space-around;
       border-left: solid 1px rgba(0,0,0,0.3);
       border-top: solid 1px rgba(0,0,0,0.3);
       box-shadow: inset 0 0 1px rgba(0,0,0,0.3);
@@ -185,6 +190,16 @@
       letter-spacing: 0.08em;
     }
 
+    .bottom-line-1 > div {
+      flex: 1;
+      margin-right: 0.16em;
+      border-left: solid 1px rgba(0,0,0,0.3);
+      border-top: solid 1px rgba(0,0,0,0.5);
+      /*background: linear-gradient(0deg, rgba(113,108,107,1) 0%, rgba(113,108,107,1) 95%, rgba(77,72,71,1) 100%);*/
+      box-shadow: inset 0 0 3px rgba(0,0,0,0.3);
+      text-align: center;
+    }
+
 
     .day {
       display: inline-block;
@@ -192,7 +207,7 @@
     }
 
     .hole {
-      background-color: #222;
+      background-color: var(--color--scoreboard-hole);
       box-sizing: content-box;
     }
 
@@ -211,22 +226,46 @@
       margin-top: 0.6em;
       transform: scale(1, 1.1);
       font-size: 4.8em;
-      letter-spacing: 0.05em;  
+      letter-spacing: 0.08em;  
       line-height: 1em;  
     }
 		.national {
-      padding-left: 1em;
+      margin-left: 1em;
 		}
 		.american {
-      padding-right: 1em;
+      margin-right: 1em;
 		}
+
+    .windows {
+      position: absolute;
+      display: flex;
+      height: 2em;
+      top: 3.2em;
+      right: 0;
+      border-left: solid 1px rgba(0,0,0,0.3);
+      border-top: solid 1px rgba(0,0,0,0.3);
+      box-shadow: inset 0 0 3px rgba(0,0,0,0.3);
+    }
+
+    .windows > div {
+      width: 3.7em;
+      height: 2em;
+      margin-right: 0.5em;
+      right: 0;
+      background-color: var(--color--scoreboard-hole);
+    }
+
+    .windows > div:last-child {
+      margin-right: 0.2em;
+    }
+
     .innings {
       position: absolute;
-      font-size: 2.4em;
+      font-size: 2.6em;
       letter-spacing: 0.07em;
       transform: scale(1.36,1);
-      top: 2em;
-      right: 3.2em;
+      top: 1.92em;
+      right: 2.5em;
     }
     .umpire-bases {
       display: flex;
@@ -479,6 +518,13 @@
       <div class="scoreboard">
         <div class="s-header"></div>
         <div class="s-league national">
+          <div class="windows">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
           <div class="league-text">National</div>
           <div class="innings">Innings</div>
           <div class="box-scores">
@@ -589,7 +635,7 @@
                 <div></div>
                 <div></div>
                 <div></div>
-                <div></div>
+                <div>8</div>
               </div>
             </div>
             <div>
@@ -606,7 +652,7 @@
                 <div></div>
                 <div></div>
                 <div></div>
-                <div></div>
+                <div>3</div>
               </div>
             </div>
             <div>
@@ -664,9 +710,12 @@
         </div>   
         <div class="s-info-wrapper">
           <div class="s-info">
-             <div class="bottom-line-1">
-              <span>Tomorrow</span>
-              <span>&nbsp;&nbsp;St. Louis</span>
+            <div class="bottom-line-1">
+              <div>Vis</div>
+              <div>3</div>
+              <div>Hits</div>
+              <div>6</div>
+              <div>Cubs</div>
             </div>
             <div class="umpires">
               Umpires
@@ -720,6 +769,12 @@
           </div>
         </div>
         <div class="s-league american">
+          <div class="windows">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
           <div class="league-text">American</div>
           <div class="innings">Innings</div>
           <div class="box-scores">
@@ -817,8 +872,8 @@
               </div>
             </div>
             <div>
-              <div class="pc-holder"></div>
-              <div class="pc-holder"></div>
+              <div class="pc-holder">23</div>
+              <div class="pc-holder">5</div>
               <div class="team cleveland">Cleveland</div>
               <div class="inning-set">
                 <div>1</div>
@@ -834,8 +889,8 @@
               </div>
             </div>
             <div>
-              <div class="pc-holder"></div>
-              <div class="pc-holder"></div>
+              <div class="pc-holder">7</div>
+              <div class="pc-holder">8</div>
               <div class="team newyork">New York</div>
               <div class="inning-set">
                 <div>0</div>
@@ -903,6 +958,8 @@
             </div>
           </div>
         </div>
+      </div>
+      <div class="scoreboard-bottom">
       </div>
     </div>
   </div>
