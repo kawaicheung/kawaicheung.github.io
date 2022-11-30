@@ -5,9 +5,9 @@
 	<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Squada+One&display=swap" rel="stylesheet">
 	<style>
     :root {
-      --color--scoreboard: #485b61;
-      --color--scoreboard-middle: #485b61;
-      --color--sky: #d3e1e8;
+      --color--scoreboard: #666;
+      --color--scoreboard-middle: #68434d;
+      --color--sky: #efefef;
       --color--scoreboard-text: #f7f5f4;
       --color--scoreboard-hole: #212729;
 
@@ -66,6 +66,7 @@
 			display: flex;
 			flex-direction: column;
 			align-items: center;
+      overflow: hidden;
 		}
 
     /* Cloud background */
@@ -104,12 +105,28 @@
 			align-items: center;
 			justify-content: center;
       font-size: 10px;
+      /*transform: perspective(380em) rotateZ(0deg) rotateX(14deg) rotateY(-26deg);*/
     }
 
     .scoreboard-side {
-      background-color: green;
-      width: 2em;
+      position: absolute;
+      right: 0;
+      top: 1.4em;
+      padding-top: 1em;
+      box-sizing: border-box;
+      background-color: var(--color--scoreboard);
+      width: 3em;
 			height: var(--px--scoreboard-height);
+      transform: translateX(100%) skew(0, 45deg) rotateZ(0deg) rotateX(0deg);
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .scoreboard-side > div {
+      height: 3em;
+      background-color: var(--color--scoreboard-hole);
+      margin: 0 0.4em 1em 0.4em;
     }
    
 		.scoreboard {
@@ -124,15 +141,44 @@
       font-family: var(--font--scoreboard);
       color: var(--color--scoreboard-text);
       text-shadow: 0px 0px 2px rgba(0,0,0,0.3);  
-      /*transform: perspective(380em) rotateZ(0deg) rotateX(14deg) rotateY(-26deg);*/
+      z-index: 1;
 		}
 
     .scoreboard-bottom {
       background-color: var(--color--scoreboard-hole);
-      height: 2em;
+      height: 4em;
       border-bottom-left-radius: 50%;
       border-bottom-right-radius: 50%;
       width: var(--px--scoreboard-width);
+      margin-top: -6em;
+    }
+
+    .scoreboard-pillars {
+      width: var(--px--scoreboard-width);
+      height: 4em;
+      display: flex;
+      justify-content: space-between;
+      z-index: 1;
+    }
+
+    .scoreboard-pillars > div {
+      width: 1.5em;
+      height: 16em;
+      background-color: var(--color--scoreboard);
+
+      box-shadow: inset 0px 4em 8px -2.9em rgba(0,0,0,0.3);
+    }
+
+    .scoreboard-pillars > div:first-child {
+      margin-left: 4em;
+      border-right: solid 2px rgba(0,0,0,0.3); 
+      height: 12em; 
+    }
+
+    .scoreboard-pillars > div:last-child {
+      margin-right: 4em;
+      border-left: solid 2px rgba(0,0,0,0.3);  
+      height: 12em; 
     }
 
 		.s-header {
@@ -160,7 +206,7 @@
       padding: 0 1px;
       display: flex;
       background: var(--color--scoreboard);
-      background: linear-gradient(0deg, rgba(72,91,97,1) 0%, rgba(72,91,97,1) 95%, rgba(62,71,74,1) 100%);  
+      box-shadow: 0 0 2px rgba(0,0,0,0.3);
     }
 
     .s-info {    
@@ -253,6 +299,10 @@
       margin-right: 0.5em;
       right: 0;
       background-color: var(--color--scoreboard-hole);
+    }
+
+    .windows > div.covered {
+      background-color: var(--color--scoreboard);
     }
 
     .windows > div:last-child {
@@ -365,8 +415,32 @@
       width: 2.8em;
       border-left: solid 1px rgba(0,0,0,0.3);
       border-top: solid 1px rgba(0,0,0,0.3);
-      box-shadow: inset 0 0 12px rgba(0,0,0,0.3);
+      box-shadow: inset 0 0 4px rgba(0,0,0,0.3);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
+
+    .info-marquee-square > div {
+      display: flex;
+    }
+
+    .info-marquee-square > div > div {
+      display: flex;
+      width: 0.4em;
+      height: 0.4em;
+      margin: 0.04em;
+      border-radius: 50%;
+      box-shadow: inset 0 0.5px 2px rgba(0,0,0,0.18);
+    }
+    .info-marquee-square > div > div.lit {
+      background-color: #fff;
+      box-shadow: inset 0 1px 2px rgba(0,0,0,0.2);
+    }
+    .info-marquee-square > div > div.blank {
+      box-shadow: none;
+    }
+
 
     .box-scores {
       font-size: 1.9em;
@@ -400,7 +474,7 @@
       flex: 0 0 auto;
       margin-right: 0.16em;
       border-left: solid 1px rgba(0,0,0,0.3);
-      border-top: solid 1px rgba(0,0,0,0.5);
+      border-top: solid 1px rgba(0,0,0,0.4);
       /*background: linear-gradient(0deg, rgba(113,108,107,1) 0%, rgba(113,108,107,1) 95%, rgba(77,72,71,1) 100%);*/
       box-shadow: inset 0 0 3px rgba(0,0,0,0.3);
       display: flex;
@@ -420,7 +494,7 @@
       font-size: 1.2em;
       top: -0.15em;
       left: 50%;
-      transform: translateX(-50%) scale(1.8,1);
+      transform: translateX(-50%) scale(1.4,1);
     }
 
     .hide {
@@ -435,7 +509,7 @@
       flex: 1;
       margin-right: 0.16em;
       border-left: solid 1px rgba(0,0,0,0.3);
-      border-top: solid 1px rgba(0,0,0,0.5);
+      border-top: solid 1px rgba(0,0,0,0.4);
       /*background: linear-gradient(0deg, rgba(113,108,107,1) 0%, rgba(113,108,107,1) 95%, rgba(77,72,71,1) 100%);*/
       box-shadow: inset 0 0 3px rgba(0,0,0,0.3);
       text-align: center;
@@ -455,7 +529,7 @@
       flex: 0 0 auto;
       margin-right: 0.4em; 
       border-left: solid 1px rgba(0,0,0,0.3);
-      border-top: solid 1px rgba(0,0,0,0.5);
+      border-top: solid 1px rgba(0,0,0,0.4);
       box-shadow: inset 0 0 3px rgba(0,0,0,0.3);
     }
     .box-scores .boston {
@@ -516,6 +590,15 @@
     </div>
     <div class="scoreboard-wrapper">
       <div class="scoreboard">
+        <div class="scoreboard-side">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
         <div class="s-header"></div>
         <div class="s-league national">
           <div class="windows">
@@ -742,28 +825,370 @@
               <div>
                 <div class="batter-text">Batter</div>
                 <div class="info-marquee-squares-wrapper">
-                  <div class="info-marquee-square"></div>
-                  <div class="info-marquee-square"></div>
+                  <div class="info-marquee-square">
+                    <div>
+                      <div></div>
+                      <div class="lit"></div>
+                      <div class="lit"></div>
+                      <div class="lit"></div>
+                      <div></div>
+                    </div>
+                    <div>
+                      <div class="lit"></div>
+                      <div class="blank"></div>
+                      <div></div>
+                      <div></div>
+                      <div class="lit"></div>
+                    </div>
+                    <div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div class="lit"></div>
+                    </div>
+                    <div>
+                      <div></div>
+                      <div></div>
+                      <div class="lit"></div>
+                      <div class="lit"></div>
+                      <div></div>
+                    </div>
+                    <div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div class="lit"></div>
+                    </div>
+                    <div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div class="lit"></div>
+                    </div>
+                    <div>
+                      <div class="lit"></div>
+                      <div class="blank"></div>
+                      <div></div>
+                      <div></div>
+                      <div class="lit"></div>
+                    </div>
+                    <div>
+                      <div></div>
+                      <div class="lit"></div>
+                      <div class="lit"></div>
+                      <div class="lit"></div>
+                      <div></div>
+                    </div>
+                  </div>
+                 <div class="info-marquee-square">
+                    <div>
+                      <div></div>
+                      <div></div>
+                      <div class="lit"></div>
+                      <div></div>
+                      <div></div>
+                    </div>
+                    <div>
+                      <div></div>
+                      <div class="blank"></div>
+                      <div class="lit"></div>
+                      <div></div>
+                      <div></div>
+                    </div>
+                    <div>
+                      <div></div>
+                      <div></div>
+                      <div class="lit"></div>
+                      <div></div>
+                      <div></div>
+                    </div>
+                    <div>
+                      <div></div>
+                      <div></div>
+                      <div class="lit"></div>
+                      <div></div>
+                      <div></div>
+                    </div>
+                    <div>
+                      <div></div>
+                      <div></div>
+                      <div class="lit"></div>
+                      <div></div>
+                      <div></div>
+                    </div>
+                    <div>
+                      <div></div>
+                      <div></div>
+                      <div class="lit"></div>
+                      <div></div>
+                      <div></div>
+                    </div>
+                    <div>
+                      <div></div>
+                      <div class="blank"></div>
+                      <div class="lit"></div>
+                      <div></div>
+                      <div></div>
+                    </div>
+                    <div>
+                      <div></div>
+                      <div></div>
+                      <div class="lit"></div>
+                      <div></div>
+                      <div></div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
             <div class="ball-strike">
               <div>
                 <div class="ball-text">Ball</div>
-                <div class="info-marquee-square"></div>
+                 <div class="info-marquee-square">
+                    <div>
+                      <div></div>
+                      <div></div>
+                      <div class="lit"></div>
+                      <div></div>
+                      <div></div>
+                    </div>
+                    <div>
+                      <div></div>
+                      <div class="blank"></div>
+                      <div class="lit"></div>
+                      <div></div>
+                      <div></div>
+                    </div>
+                    <div>
+                      <div></div>
+                      <div></div>
+                      <div class="lit"></div>
+                      <div></div>
+                      <div></div>
+                    </div>
+                    <div>
+                      <div></div>
+                      <div></div>
+                      <div class="lit"></div>
+                      <div></div>
+                      <div></div>
+                    </div>
+                    <div>
+                      <div></div>
+                      <div></div>
+                      <div class="lit"></div>
+                      <div></div>
+                      <div></div>
+                    </div>
+                    <div>
+                      <div></div>
+                      <div></div>
+                      <div class="lit"></div>
+                      <div></div>
+                      <div></div>
+                    </div>
+                    <div>
+                      <div></div>
+                      <div class="blank"></div>
+                      <div class="lit"></div>
+                      <div></div>
+                      <div></div>
+                    </div>
+                    <div>
+                      <div></div>
+                      <div></div>
+                      <div class="lit"></div>
+                      <div></div>
+                      <div></div>
+                    </div>
+                  </div>
               </div>
               <div>
-                <div class="info-marquee-square"></div>
+                 <div class="info-marquee-square">
+                    <div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                    </div>
+                    <div>
+                      <div></div>
+                      <div class="blank"></div>
+                      <div></div>
+                      <div class="blank"></div>
+                      <div></div>
+                    </div>
+                     <div>
+                      <div></div>
+                      <div class="blank"></div>
+                      <div></div>
+                      <div class="blank"></div>
+                      <div></div>
+                    </div>
+                    <div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                    </div>
+                    <div>
+                      <div></div>
+                      <div class="blank"></div>
+                      <div></div>
+                      <div class="blank"></div>
+                      <div></div>
+                    </div>
+                    <div>
+                      <div></div>
+                      <div class="blank"></div>
+                      <div></div>
+                      <div class="blank"></div>
+                      <div></div>
+                    </div>
+                    <div>
+                      <div></div>
+                      <div class="blank"></div>
+                      <div class="blank"></div>
+                      <div class="blank"></div>
+                      <div></div>
+                    </div>
+                    <div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                    </div>
+                  </div>
               </div>
               <div>
                 <div class="strike-text">Strike</div>
-                <div class="info-marquee-square"></div>
+                 <div class="info-marquee-square">
+                    <div>
+                      <div></div>
+                      <div class="lit"></div>
+                      <div class="lit"></div>
+                      <div class="lit"></div>
+                      <div></div>
+                    </div>
+                    <div>
+                      <div class="lit"></div>
+                      <div class="blank"></div>
+                      <div></div>
+                      <div></div>
+                      <div class="lit"></div>
+                    </div>
+                    <div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div class="lit"></div>
+                    </div>
+                    <div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div class="lit"></div>
+                      <div class="blank"></div>
+                    </div>
+                    <div>
+                      <div></div>
+                      <div></div>
+                      <div class="lit"></div>
+                      <div></div>
+                      <div></div>
+                    </div>
+                    <div>
+                      <div></div>
+                      <div class="lit"></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                    </div>
+                    <div>
+                      <div class="lit"></div>
+                      <div class="blank"></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                    </div>
+                    <div>
+                      <div class="lit"></div>
+                      <div class="lit"></div>
+                      <div class="lit"></div>
+                      <div class="lit"></div>
+                      <div class="lit"></div>
+                    </div>
+                  </div>
               </div>
             </div>
             <div class="out">
               <div>
                 <div class="out-text">Out</div>
-                <div class="info-marquee-square"></div>
+                 <div class="info-marquee-square">
+                    <div>
+                      <div class="blank"></div>
+                      <div></div>
+                      <div class="lit"></div>
+                      <div></div>
+                      <div class="blank"></div>
+                    </div>
+                    <div>
+                      <div></div>
+                      <div class="blank"></div>
+                      <div class="lit"></div>
+                      <div class="blank"></div>
+                      <div></div>
+                    </div>
+                    <div>
+                      <div class="blank"></div>
+                      <div class="blank"></div>
+                      <div class="lit"></div>
+                      <div class="blank"></div>
+                      <div></div>
+                    </div>
+                    <div>
+                      <div class="blank"></div>
+                      <div class="blank"></div>
+                      <div class="lit"></div>
+                      <div></div>
+                      <div class="blank"></div>
+                    </div>
+                    <div>
+                      <div class="blank"></div>
+                      <div class="blank"></div>
+                      <div class="lit"></div>
+                      <div class="blank"></div>
+                      <div></div>
+                    </div>
+                    <div>
+                      <div class="blank"></div>
+                      <div></div>
+                      <div class="lit"></div>
+                      <div class="blank"></div>
+                      <div></div>
+                    </div>
+                    <div>
+                      <div></div>
+                      <div class="blank"></div>
+                      <div class="lit"></div>
+                      <div class="blank"></div>
+                      <div></div>
+                    </div>
+                    <div>
+                      <div></div>
+                      <div></div>
+                      <div class="lit"></div>
+                      <div></div>
+                      <div></div>
+                    </div>
+                  </div>
               </div>
             </div>
           </div>
@@ -772,7 +1197,7 @@
           <div class="windows">
             <div></div>
             <div></div>
-            <div></div>
+            <div class="covered"></div>
             <div></div>
           </div>
           <div class="league-text">American</div>
@@ -959,8 +1384,15 @@
           </div>
         </div>
       </div>
+      <div class="scoreboard-pillars">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
       <div class="scoreboard-bottom">
       </div>
+
     </div>
   </div>
 </body>
