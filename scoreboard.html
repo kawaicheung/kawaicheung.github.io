@@ -6,7 +6,7 @@
 	<style>
     :root {
       --color--scoreboard: #666;
-      --color--scoreboard-middle: #68434d;
+      --color--scoreboard-side: #4e4e4e;
       --color--sky: #efefef;
       --color--scoreboard-text: #f7f5f4;
       --color--scoreboard-hole: #212729;
@@ -105,28 +105,45 @@
 			align-items: center;
 			justify-content: center;
       font-size: 10px;
-      /*transform: perspective(380em) rotateZ(0deg) rotateX(14deg) rotateY(-26deg);*/
+      transform: perspective(380em) rotateZ(0deg) rotateX(14deg) rotateY(-26deg);
     }
 
     .scoreboard-side {
       position: absolute;
       right: 0;
-      top: 1.4em;
+      top: 1.8em;
       padding-top: 1em;
       box-sizing: border-box;
-      background-color: var(--color--scoreboard);
-      width: 3em;
+      background-color: var(--color--scoreboard-side);
+      width: 2.4em;
 			height: var(--px--scoreboard-height);
-      transform: translateX(100%) skew(0, 45deg) rotateZ(0deg) rotateX(0deg);
+      transform: translateX(100%) skew(0, 55deg) rotateZ(0deg) rotateX(0deg);
       z-index: 2;
       display: flex;
       flex-direction: column;
     }
 
-    .scoreboard-side > div {
-      height: 3em;
+    .scoreboard-side > div.top-3-windows {
+      margin: 2em 0.4em 0 0.4em;
+    }
+
+    .scoreboard-side > div.top-3-windows > div {
+      height: 2.6em;
+      margin-bottom: 0.5em;
+    }
+
+    .scoreboard-side > div.bottom-4-windows {
+      margin: 1.6em 0.4em 0 0.4em;
+    }
+
+    .scoreboard-side > div.bottom-4-windows > div {
+
+      height: 3.4em;
+      margin-bottom: 1.6em;
+    }
+
+    .scoreboard-side > div > div {
       background-color: var(--color--scoreboard-hole);
-      margin: 0 0.4em 1em 0.4em;
     }
    
 		.scoreboard {
@@ -146,11 +163,12 @@
 
     .scoreboard-bottom {
       background-color: var(--color--scoreboard-hole);
-      height: 4em;
-      border-bottom-left-radius: 50%;
-      border-bottom-right-radius: 50%;
+      height: 8em;
+      margin-left: 6em;
       width: var(--px--scoreboard-width);
-      margin-top: -6em;
+      margin-top: -5.4em;
+      border-bottom-right-radius: 50%;
+      border-bottom-left-radius: 90%;
     }
 
     .scoreboard-pillars {
@@ -591,13 +609,17 @@
     <div class="scoreboard-wrapper">
       <div class="scoreboard">
         <div class="scoreboard-side">
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
+          <div class="top-3-windows">
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+          <div class="bottom-4-windows">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
         </div>
         <div class="s-header"></div>
         <div class="s-league national">
