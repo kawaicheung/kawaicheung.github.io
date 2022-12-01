@@ -5,10 +5,10 @@
 	<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Squada+One&display=swap" rel="stylesheet">
 	<style>
     :root {
-      --color--scoreboard: #666;
-      --color--scoreboard-right-side: #4e4e4e;
+      --color--scoreboard: #6d444e;
+      --color--scoreboard-right-side: #52333a;
       --color--scoreboard-left-side: #333;
-      --color--sky: #efefef;
+      --color--sky: #b5cfe8;
       --color--scoreboard-text: #f7f5f4;
       --color--scoreboard-hole: #212729;
 
@@ -16,7 +16,7 @@
 
       --px--scoreboard-width: 972px;
       --px--scoreboard-height: 350px;
-      --px--scoreboard-header-height: 20px;
+      --px--scoreboard-header-height: 2em;
 
       --font--scoreboard: Bebas Neue;
       --font--scoreboard-alt: Squada One;
@@ -61,13 +61,14 @@
     /* Scoreboard Picture */
 		.picture {
 			position: relative;
-      background-color: var(--color--sky);
 			width: 100%;
       height: 600px;
 			display: flex;
 			flex-direction: column;
 			align-items: center;
       overflow: hidden;
+      background: rgb(225,242,245);
+      background: radial-gradient(circle, rgba(225,242,245,1) 0%, rgba(148,187,233,1) 100%);
 		}
 
     /* Cloud background */
@@ -112,12 +113,12 @@
     .scoreboard-left-side {
       position: absolute;
       left: 0em;
-      top: 0.8em;
+      top: 1em;
       padding-top: 1em;
       box-sizing: border-box;
       background-color: red;
       background-color: var(--color--scoreboard-left-side);
-      width: 2.4em;
+      width: 2.8em;
       height: var(--px--scoreboard-height);
       transform: skew(0, 35deg);
       display: flex;
@@ -164,7 +165,6 @@
    
 		.scoreboard {
       position: relative;
-			background-color: var(--color--scoreboard);
 			width: var(--px--scoreboard-width);
 			height: var(--px--scoreboard-height);
 			border-top-left-radius: 6px;
@@ -224,15 +224,19 @@
       height: 23;
 			top: calc(var(--px--scoreboard-header-height) * -1);
 			background-color: var(--color--scoreboard);
-			border-top-left-radius: var(--px--scoreboard-header-height);;
-			border-top-right-radius: var(--px--scoreboard-header-height);;
+			border-top-left-radius: var(--px--scoreboard-header-height);
+			border-top-right-radius: var(--px--scoreboard-header-height);
+      border-right-color: var(--color--scoreboard-right-side);
+      border-right-style: solid;
+      border-right-width: 1px;
 		}
 
     /* 14 groups of 20 + 17 extra on top */
     .s-league {
       width: 38%;
       position: relative;
-      background-color: var(--color--scoreboard);
+      background: rgb(83,63,68);
+      background: linear-gradient(0deg, rgba(83,63,68,1) 0%, rgba(109,68,78,1) 82%, rgba(109,68,78,1) 100%);
     }
     .s-info-wrapper {
       flex: 1;
@@ -243,18 +247,21 @@
       display: flex;
       background: var(--color--scoreboard);
       box-shadow: 0 0 2px rgba(0,0,0,0.3);
+      background: rgb(100,63,72);
+      background: linear-gradient(167deg, rgba(100,63,72,1) 0%, rgba(73,51,56,1) 50%, rgba(100,63,72,1) 100%);
     }
 
     .s-info {    
       flex: 1;
-      background-color: var(--color--scoreboard);
       position: relative;
+      background: rgb(83,63,68);
+      background: linear-gradient(0deg, rgba(83,63,68,1) 0%, rgba(109,68,78,1) 82%, rgba(109,68,78,1) 100%);
     }
 
     .bottom-line-1 {
       position: absolute;
       background-color: var(--color--scoreboard);
-      bottom: 0.7em;
+      bottom: 1em;
       left: 50%;
       transform: translateX(-50%);
       width: 90%;
@@ -313,9 +320,11 @@
     }
 		.national {
       padding-left: 1em;
+      border-top-left-radius: 1em;
 		}
 		.american {
       padding-right: 1em;
+      border-top-right-radius: 1em;
 		}
 
     .windows {
@@ -606,10 +615,10 @@
 </head>
 <body>
 	<div class="handcoded">
-		Handcoded
+		Life Imitates Code
 	</div>
 	<div class="subject">
-		Wrigley Field Scoreboard (c1938)
+		Wrigley Field Scoreboard - 1938
 	</div>
 	<div class="author">
 		Ka Wai Cheung
