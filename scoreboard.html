@@ -6,7 +6,8 @@
 	<style>
     :root {
       --color--scoreboard: #666;
-      --color--scoreboard-side: #4e4e4e;
+      --color--scoreboard-right-side: #4e4e4e;
+      --color--scoreboard-left-side: #333;
       --color--sky: #efefef;
       --color--scoreboard-text: #f7f5f4;
       --color--scoreboard-hole: #212729;
@@ -108,13 +109,28 @@
       transform: perspective(380em) rotateZ(0deg) rotateX(14deg) rotateY(-26deg);
     }
 
-    .scoreboard-side {
+    .scoreboard-left-side {
+      position: absolute;
+      left: 0em;
+      top: 0.8em;
+      padding-top: 1em;
+      box-sizing: border-box;
+      background-color: red;
+      background-color: var(--color--scoreboard-left-side);
+      width: 2.4em;
+      height: var(--px--scoreboard-height);
+      transform: skew(0, 35deg);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .scoreboard-right-side {
       position: absolute;
       right: 0;
       top: 1.8em;
       padding-top: 1em;
       box-sizing: border-box;
-      background-color: var(--color--scoreboard-side);
+      background-color: var(--color--scoreboard-right-side);
       width: 2.4em;
 			height: var(--px--scoreboard-height);
       transform: translateX(100%) skew(0, 55deg) rotateZ(0deg) rotateX(0deg);
@@ -123,26 +139,26 @@
       flex-direction: column;
     }
 
-    .scoreboard-side > div.top-3-windows {
+    .scoreboard-right-side > div.top-3-windows {
       margin: 2em 0.4em 0 0.4em;
     }
 
-    .scoreboard-side > div.top-3-windows > div {
+    .scoreboard-right-side > div.top-3-windows > div {
       height: 2.6em;
       margin-bottom: 0.5em;
     }
 
-    .scoreboard-side > div.bottom-4-windows {
+    .scoreboard-right-side > div.bottom-4-windows {
       margin: 1.6em 0.4em 0 0.4em;
     }
 
-    .scoreboard-side > div.bottom-4-windows > div {
+    .scoreboard-right-side > div.bottom-4-windows > div {
 
       height: 3.4em;
       margin-bottom: 1.6em;
     }
 
-    .scoreboard-side > div > div {
+    .scoreboard-right-side > div > div {
       background-color: var(--color--scoreboard-hole);
     }
    
@@ -163,12 +179,13 @@
 
     .scoreboard-bottom {
       background-color: var(--color--scoreboard-hole);
-      height: 8em;
-      margin-left: 6em;
-      width: var(--px--scoreboard-width);
-      margin-top: -5.4em;
-      border-bottom-right-radius: 50%;
-      border-bottom-left-radius: 90%;
+      height: 9em;
+      margin-left: 5em;
+      width: calc(var(--px--scoreboard-width) - 0.3em);
+      margin-top: -6.1em;
+      border-bottom-right-radius: 130%;
+      border-bottom-left-radius: 115%;
+      transform: rotate(1.2deg);
     }
 
     .scoreboard-pillars {
@@ -215,6 +232,7 @@
     .s-league {
       width: 38%;
       position: relative;
+      background-color: var(--color--scoreboard);
     }
     .s-info-wrapper {
       flex: 1;
@@ -236,7 +254,7 @@
     .bottom-line-1 {
       position: absolute;
       background-color: var(--color--scoreboard);
-      bottom: 1em;
+      bottom: 0.7em;
       left: 50%;
       transform: translateX(-50%);
       width: 90%;
@@ -294,10 +312,10 @@
       line-height: 1em;  
     }
 		.national {
-      margin-left: 1em;
+      padding-left: 1em;
 		}
 		.american {
-      margin-right: 1em;
+      padding-right: 1em;
 		}
 
     .windows {
@@ -608,7 +626,10 @@
     </div>
     <div class="scoreboard-wrapper">
       <div class="scoreboard">
-        <div class="scoreboard-side">
+        <div class="scoreboard-left-side">
+
+        </div>
+        <div class="scoreboard-right-side">
           <div class="top-3-windows">
             <div></div>
             <div></div>
