@@ -69,7 +69,6 @@
       overflow: hidden;
       background: rgb(225,242,245);
       background: radial-gradient(circle, rgba(225,242,245,1) 0%, rgba(148,187,233,1) 100%);
-		  border: solid 1px pink;
     }
 
     .scoreboard-wrapper {
@@ -135,6 +134,38 @@
     .scoreboard-right-side > div > div {
       background-color: var(--color--scoreboard-hole);
     }
+
+    .standings {
+      position: absolute;
+      top: -10em;
+      left: 52%;
+      transform: translateX(-50%);
+      width: calc(var(--px--scoreboard-width) * 0.3);
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .national-line {
+      height: 20em;
+      width: 3em;
+      border-right: solid 1px rgba(0,0,0,0.2);
+      border-radius: 10% 10% 33% 10% / 10% 0% 75% 10% 
+    }
+
+    .flag-pole {
+      width: 0.6em;
+      height: 20em;
+      left: calc(50% + 5em);
+      background: rgb(102,102,102);
+      background: linear-gradient(90deg, rgba(102,102,102,0.6) 0%, rgba(254,254,254,1) 7%, rgba(255,255,255,1) 49%, rgba(244,244,244,1) 90%, rgba(102,102,102,0.4) 100%);
+    }
+
+    .american-line {
+      height: 20em;
+      width: 3em;
+      border-right: solid 1px rgba(0,0,0,0.2);
+      border-radius: 10% 10% 33% 10% / 50% 0% 75% 10% 
+    }
    
 		.scoreboard {
       position: relative;
@@ -154,11 +185,43 @@
     .scoreboard-bottom {
       margin-top: -7.5em;
       margin-left: 5.2em;
-background: rgb(25,25,25);
-background: linear-gradient(0deg, rgba(25,25,25,1) 0%, rgba(51,47,48,1) 100%);
+      background: rgb(25,25,25);
+      background: linear-gradient(0deg, rgba(25,25,25,1) 0%, rgba(51,47,48,1) 100%);
       height: 9em;
       width: calc(var(--px--scoreboard-width) - 0.6em);
-      border-radius: 0% 0% 38% 70% / 10% 10% 36% 53% ;
+      border-radius: 0% 0% 38% 70% / 10% 10% 36% 53%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .scoreboard-bottom > div {
+      flex: 1;
+      height: 100%;
+      margin-bottom: 1em;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+
+    .scoreboard-bottom > div > div {
+      background: rgb(34,34,34);
+      background: linear-gradient(90deg, rgba(34,34,34,1) 0%, rgba(109,68,78,0.2) 49%, rgba(34,34,34,1) 100%);
+      height: 0.6em;
+      margin-bottom: 1.2em;
+    }
+
+    .scoreboard-bottom > div:first-child > div {
+      height: 0.4em;
+      margin-bottom: 2.8em;
+      transform: rotate(5deg);
+      width: 75%;
+    }
+
+    .scoreboard-bottom > div:last-child > div {
+      height: 0.4em;
+      margin-bottom: 2em;
+      transform: rotate(-3deg);
     }
 
     .scoreboard-pillars {
@@ -184,11 +247,62 @@ background: linear-gradient(0deg, rgba(25,25,25,1) 0%, rgba(51,47,48,1) 100%);
 
     .scoreboard-pillars > div:nth-child(2) {
       margin-right: 11em;
+      width: 1.2em;
+    }
+
+    .scoreboard-pillars > div:nth-child(3) {
+      width: 1.2em;
     }
 
     .scoreboard-pillars > div:last-child {
       margin-right: 5em;
+      height: 14em; 
+    }
+
+    .scoreboard-pillars-2 {
+      position: absolute;
+      bottom: 10em;
+      left: calc(50% + 4em);
+      transform: translateX(-50%);
+      width: var(--px--scoreboard-width);
+      height: 4em;
+      display: flex;
+      justify-content: space-between;
+      z-index: 1;
+    }
+
+    .scoreboard-pillars-2 > div {
+      width: 1em;
+      height: 16em;
+      background-color: #3a3133;
+      border-right: solid 0.4em rgba(0,0,0,0.3); 
+      box-shadow: inset 0em 6em 3.4em -2.9em rgba(0,0,0,0.5);
+    }
+
+    .scoreboard-pillars-2 > div:first-child {
+      margin-left: 4em;
+      margin-right: 8em;
+      margin-top: 1.6em;
       height: 12em; 
+    }
+
+    .scoreboard-pillars-2 > div:nth-child(2) {
+      margin-top: 3.6em;
+      width: 1.2em;
+      height: 6em; 
+    }
+
+    .scoreboard-pillars-2 > div:nth-child(3) {
+      margin-top: 3.6em;
+      margin-left: 12em;
+      width: 1.2em;
+      height: 6em; 
+    }
+
+    .scoreboard-pillars-2 > div:last-child {
+      margin-top: 2.6em;
+      margin-right: 5em;
+      height: 9em; 
     }
 
 		.s-header {
@@ -292,17 +406,17 @@ background: linear-gradient(0deg, rgba(25,25,25,1) 0%, rgba(51,47,48,1) 100%);
       line-height: 1em;  
     }
 		.national {
-      padding-left: 1em;
+      padding-left: 1.5em;
       border-top-left-radius: 1em;
 		}
 		.american {
-      padding-right: 1em;
+      padding-right: 1.5em;
       border-top-right-radius: 1em;
       border-right: solid 0.1em var(--color--scoreboard-right-side);
 		}
 
     .american > .windows {
-      right: 1em;
+      right: 1.5em;
     }
 
     .windows {
@@ -480,11 +594,11 @@ background: linear-gradient(0deg, rgba(25,25,25,1) 0%, rgba(51,47,48,1) 100%);
       position: absolute;
       height: 2em;
       width: 105%;
-      border-bottom: solid 0.1em var(--color--scoreboard);
+      border-bottom: solid 0.1em #543f44;
       transform: translateX(-50%);
       left: 50%;
       bottom: -.2em;
-      box-shadow: -5px 15px 8px -15px rgba(0,0,0,.6);   
+      box-shadow: -5px 15px 8px -15px rgba(0,0,0,.8);   
     }
 
     .ledge.top {
@@ -589,6 +703,15 @@ background: linear-gradient(0deg, rgba(25,25,25,1) 0%, rgba(51,47,48,1) 100%);
       letter-spacing: 0em;
     }
 
+    .bleachers {
+      position: absolute;
+      width: 100%;
+      height: 25em;
+      background-color: transparent;
+      bottom: -20em;
+      clip-path: polygon(20% 0%, 80% 0%, 100% 100%, 0% 100%);
+    }
+
 	</style>
 </head>
 <body>
@@ -603,6 +726,11 @@ background: linear-gradient(0deg, rgba(25,25,25,1) 0%, rgba(51,47,48,1) 100%);
 	</div>
 	<div class="picture">
     <div class="scoreboard-wrapper">
+      <div class="standings">
+        <div class="national-line"></div>
+        <div class="flag-pole"></div>
+        <div class="american-line"></div>
+      </div>
       <div class="scoreboard">
         <div class="scoreboard-left-side">
 
@@ -1411,8 +1539,27 @@ background: linear-gradient(0deg, rgba(25,25,25,1) 0%, rgba(51,47,48,1) 100%);
         <div></div>
         <div></div>
       </div>
-      <div class="scoreboard-bottom">
+      <div class="scoreboard-pillars-2">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
       </div>
+      <div class="scoreboard-bottom">
+        <div>
+           <div></div>
+        </div>
+        <div>
+           <div></div>
+           <div></div>
+        </div>
+        <div>
+           <div></div>
+        </div>
+      </div>
+
+    <div class="bleachers">
+    </div>
     </div>
   </div>
 </body>
