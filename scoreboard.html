@@ -5,12 +5,16 @@
 	<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Squada+One&display=swap" rel="stylesheet">
 	<style>
     :root {
-      --color--scoreboard: #6d444e;
-      --color--scoreboard-right-side: #52333a;
+      --color--scoreboard: rgba(109,68,78,1);
+      --color--scoreboard-right-side: rgba(82,51,58,1);
       --color--scoreboard-left-side: #333;
       --color--sky: #b5cfe8;
       --color--scoreboard-text: #f7f5f4;
       --color--scoreboard-hole: #212729;
+
+      --color--scoreboard-top: rgba(109,68,78,1);
+      --color--scoreboard-bottom: rgba(83,63,68,1);
+      --color--scoreboard-middle: rgba(109,68,78,1);
 
       --blur-text: blur(0.3px);
 
@@ -145,7 +149,7 @@
       justify-content: space-between;
     }
 
-    .national-line {
+    .national-flag-line {
       height: 20em;
       width: 3em;
       border-right: solid 1px rgba(0,0,0,0.2);
@@ -160,7 +164,7 @@
       background: linear-gradient(90deg, rgba(102,102,102,0.6) 0%, rgba(254,254,254,1) 7%, rgba(255,255,255,1) 49%, rgba(244,244,244,1) 90%, rgba(102,102,102,0.4) 100%);
     }
 
-    .american-line {
+    .american-flag-line {
       height: 20em;
       width: 3em;
       border-right: solid 1px rgba(0,0,0,0.2);
@@ -318,13 +322,19 @@
       border-right: solid 0.2em var(--color--scoreboard-right-side);
 		}
 
+
     /* 14 groups of 20 + 17 extra on top */
     .s-league {
       width: 38%;
       position: relative;
-      background: rgb(83,63,68);
-      background: linear-gradient(0deg, rgba(83,63,68,1) 0%, rgba(109,68,78,1) 82%, rgba(109,68,78,1) 100%);
     }
+
+    .s-league.national {
+      padding-left: 1.5em;
+      border-top-left-radius: 1em;
+      background: linear-gradient(0deg, var(--color--scoreboard-bottom) 0%, var(--color--scoreboard-middle) 52%, var(--color--scoreboard-top) 100%);
+    }
+
     .s-info-wrapper {
       flex: 1;
       height: calc(100% + var(--px--scoreboard-header-height));
@@ -333,16 +343,21 @@
       padding: 0 1px;
       display: flex;
       background: var(--color--scoreboard);
-      box-shadow: 0 0 2px rgba(0,0,0,0.3);
-      background: rgb(100,63,72);
-      background: linear-gradient(167deg, rgba(100,63,72,1) 0%, rgba(73,51,56,1) 50%, rgba(100,63,72,1) 100%);
+      box-shadow: 0 0 2px rgba(0,0,0,0.4);
     }
+
+    .s-league.american {
+      padding-right: 1.5em;
+      border-top-right-radius: 1em;
+      border-right: solid 0.1em var(--color--scoreboard-right-side);
+      background: linear-gradient(0deg, var(--color--scoreboard-bottom) 0%, var(--color--scoreboard-middle) 82%, var(--color--scoreboard-top) 100%);
+    }
+
 
     .s-info {    
       flex: 1;
       position: relative;
-      background: rgb(83,63,68);
-      background: linear-gradient(0deg, rgba(83,63,68,1) 0%, rgba(109,68,78,1) 82%, rgba(109,68,78,1) 100%);
+      background: linear-gradient(0deg, var(--color--scoreboard-bottom) 0%, var(--color--scoreboard-middle) 52%, var(--color--scoreboard-top) 100%);
     }
 
     .bottom-line-1 {
@@ -384,7 +399,7 @@
 
     .hole {
       background-color: var(--color--scoreboard-hole);
-      box-sizing: content-box;
+
     }
 
 
@@ -405,15 +420,6 @@
       letter-spacing: 0.08em;  
       line-height: 1em;  
     }
-		.national {
-      padding-left: 1.5em;
-      border-top-left-radius: 1em;
-		}
-		.american {
-      padding-right: 1.5em;
-      border-top-right-radius: 1em;
-      border-right: solid 0.1em var(--color--scoreboard-right-side);
-		}
 
     .american > .windows {
       right: 1.5em;
@@ -435,11 +441,15 @@
       height: 2em;
       margin-right: 0.5em;
       right: 0;
+      box-sizing: border-box;
       background-color: var(--color--scoreboard-hole);
+      border-left: solid 1.6em var(--color--scoreboard-left-side);
+      border-top: solid 1.6em transparent;
     }
 
     .windows > div.covered {
       background-color: var(--color--scoreboard);
+      border: none;
     }
 
     .windows > div:last-child {
@@ -594,7 +604,7 @@
       position: absolute;
       height: 2em;
       width: 105%;
-      border-bottom: solid 0.1em #543f44;
+      border-bottom: solid 0.1em var(--color--scoreboard-bottom);
       transform: translateX(-50%);
       left: 50%;
       bottom: -.2em;
@@ -727,9 +737,9 @@
 	<div class="picture">
     <div class="scoreboard-wrapper">
       <div class="standings">
-        <div class="national-line"></div>
+        <div class="national-flag-line"></div>
         <div class="flag-pole"></div>
-        <div class="american-line"></div>
+        <div class="american-flag-line"></div>
       </div>
       <div class="scoreboard">
         <div class="scoreboard-left-side">
