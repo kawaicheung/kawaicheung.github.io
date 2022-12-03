@@ -16,11 +16,16 @@
       --color--scoreboard-bottom: rgba(83,63,68,1);
       --color--scoreboard-middle: rgba(109,68,78,1);
 
+      --color--sky-outer: rgba(203,187,233,1);
+      --color--sky-inner: rgba(225,242,245,1);
+
       --blur-text: blur(0.3px);
 
       --px--scoreboard-width: 972px;
       --px--scoreboard-height: 350px;
       --px--scoreboard-header-height: 2em;
+      --px--scoreboard-clock-stand-height: 2.6em;
+      --em--scoreboard-clock: 13em;
 
       --font--scoreboard: Bebas Neue;
       --font--scoreboard-alt: Squada One;
@@ -72,7 +77,7 @@
 			align-items: center;
       overflow: hidden;
       background: rgb(225,242,245);
-      background: radial-gradient(circle, rgba(225,242,245,1) 0%, rgba(148,187,233,1) 100%);
+      background: radial-gradient(circle, var(--color--sky-inner) 0%, var(--color--sky-outer) 100%);
     }
 
     .scoreboard-wrapper {
@@ -84,6 +89,7 @@
 			align-items: center;
 			justify-content: center;
       font-size: 10px;
+      top: 7em;
       transform: perspective(380em) rotateZ(0deg) rotateX(14deg) rotateY(-26deg);
     }
 
@@ -142,7 +148,7 @@
     .standings {
       position: absolute;
       top: -10em;
-      left: 52%;
+      left: 55%;
       transform: translateX(-50%);
       width: calc(var(--px--scoreboard-width) * 0.3);
       display: flex;
@@ -157,9 +163,8 @@
     }
 
     .flag-pole {
-      width: 0.6em;
+      width: 0.8em;
       height: 20em;
-      left: calc(50% + 5em);
       background: rgb(102,102,102);
       background: linear-gradient(90deg, rgba(102,102,102,0.6) 0%, rgba(254,254,254,1) 7%, rgba(255,255,255,1) 49%, rgba(244,244,244,1) 90%, rgba(102,102,102,0.4) 100%);
     }
@@ -211,20 +216,20 @@
     .scoreboard-bottom > div > div {
       background: rgb(34,34,34);
       background: linear-gradient(90deg, rgba(34,34,34,1) 0%, rgba(109,68,78,0.2) 49%, rgba(34,34,34,1) 100%);
-      height: 0.6em;
-      margin-bottom: 1.2em;
+      height: 1em;
+      margin-bottom: 0.9em;
     }
 
     .scoreboard-bottom > div:first-child > div {
-      height: 0.4em;
+      height: 0.8em;
       margin-bottom: 2.8em;
       transform: rotate(5deg);
       width: 75%;
     }
 
     .scoreboard-bottom > div:last-child > div {
-      height: 0.4em;
-      margin-bottom: 2em;
+      height: 0.6em;
+      margin-bottom: 2.8em;
       transform: rotate(-3deg);
     }
 
@@ -287,7 +292,7 @@
       margin-left: 4em;
       margin-right: 8em;
       margin-top: 1.6em;
-      height: 12em; 
+      height: 8em; 
     }
 
     .scoreboard-pillars-2 > div:nth-child(2) {
@@ -314,7 +319,7 @@
 			width: 70%;
       left: 50%;
       transform: translateX(-50%);
-      height: 23;
+      height: 100%;
 			top: calc(var(--px--scoreboard-header-height) * -1);
 			background-color: var(--color--scoreboard);
 			border-top-left-radius: var(--px--scoreboard-header-height);
@@ -322,6 +327,147 @@
       border-right: solid 0.2em var(--color--scoreboard-right-side);
 		}
 
+    .s-clock-stand {
+      position: absolute;
+      width: 18%;
+      left: 50%;
+      transform: translateX(-50%);
+      height: 100%;
+      top: calc((var(--px--scoreboard-clock-stand-height) + var(--px--scoreboard-header-height)) * -1);
+      background-color: var(--color--scoreboard);
+      border-top-left-radius: var(--px--scoreboard-clock-stand-height);
+      border-top-right-radius: var(--px--scoreboard-clock-stand-height);
+      border-right: solid 0.2em var(--color--scoreboard-right-side);
+    }
+
+    .s-clock {
+      position: absolute; 
+      left: 50%;
+      box-sizing: border-box;
+      transform: translateX(-50%);
+      width: var(--em--scoreboard-clock);
+      height: var(--em--scoreboard-clock);
+      background-color: #fff;
+      border-radius: 40em;
+      top: calc((var(--px--scoreboard-header-height) + var(--em--scoreboard-clock)) * -1);
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.1em;
+      box-shadow:  0 0 0.2em rgba(0,0,0,1);
+      border-right: solid 0.1em var(--color--scoreboard);
+    }
+
+    .s-clock .hour-hand-wrapper {
+      width: 1em;
+      height: 100%;
+      left: 50%;
+      transform: translateX(-50%) rotate(93deg);
+      position: absolute;
+      filter: drop-shadow(1em 0 0.1em rgba(0,0,0,0.2));
+    }
+
+    .s-clock .hour-hand-wrapper > div {
+      height: 40%;
+      width: 100%;
+      background-color: var(--color--scoreboard);
+      top: 20%;
+      position: absolute;
+      clip-path: polygon(35% 0%, 65% 0%, 100% 100%, 0% 100%);
+    }
+
+    .s-clock .minute-hand-wrapper {
+      width: 1em;
+      height: 100%;
+      left: 50%;
+      transform: translateX(-50%) rotate(36deg);
+      position: absolute;
+      filter: drop-shadow(1em 0 0.1em rgba(0,0,0,0.2));
+    }
+
+    .s-clock .minute-hand-wrapper > div {
+      height: 50%;
+      width: 100%;
+      background-color: var(--color--scoreboard);
+      top: 1em;
+      position: absolute;
+      clip-path: polygon(35% 0%, 65% 0%, 100% 100%, 0% 100%);
+    }
+
+    .s-clock .clock-knub {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translateX(-50%) translateY(-50%);
+      border-radius: 50%;
+      width: 0.8em;
+      height: 0.8em;
+      background-color: var(--color--scoreboard);
+      box-shadow: inset -0.1em -0.1em 0.1em rgba(0,0,0,0.6);
+    }
+
+    .s-clock > div {
+      width: 100%;
+      height: 100%;
+      background-color: var(--color--scoreboard);
+      border-radius: 50%;
+      padding: 0.3em;
+      box-sizing: border-box;
+    }
+
+    .s-clock > div > div {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      box-sizing: border-box;
+      position: relative;
+      background: rgb(250,250,250);
+      background: radial-gradient(circle, rgba(230,230,230,1) 0%, rgba(255,255,255,1) 100%);
+    }
+
+    .s-clock-hand {
+      height: 100%;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: .4em 0;
+      box-sizing: border-box;
+    }
+
+    .s-clock-hand > div {
+      width: .7em;
+      height: .7em;
+      border-radius: 50%;
+      background-color: var(--color--scoreboard);
+    }
+
+    .s-clock-hand.h-12-6 {
+      transform: translateX(-50%) rotate(30deg);
+    }
+
+    .s-clock-hand.h-1-7 {
+      transform: translateX(-50%) rotate(60deg);
+    }
+
+    .s-clock-hand.h-2-8 {
+      transform: translateX(-50%) rotate(90deg);
+    }
+
+    .s-clock-hand.h-3-9 {
+      transform: translateX(-50%) rotate(120deg);
+    }
+
+    .s-clock-hand.h-4-10 {
+      transform: translateX(-50%) rotate(150deg);
+    }
+
+    .s-clock-hand.h-5-11 {
+      transform: translateX(-50%) rotate(180deg);
+    }
 
     /* 14 groups of 20 + 17 extra on top */
     .s-league {
@@ -342,8 +488,7 @@
       z-index: 1;  
       padding: 0 1px;
       display: flex;
-      background: var(--color--scoreboard);
-      box-shadow: 0 0 2px rgba(0,0,0,0.4);
+      background: var(--color--scoreboard-top);
     }
 
     .s-league.american {
@@ -352,7 +497,6 @@
       border-right: solid 0.1em var(--color--scoreboard-right-side);
       background: linear-gradient(0deg, var(--color--scoreboard-bottom) 0%, var(--color--scoreboard-middle) 82%, var(--color--scoreboard-top) 100%);
     }
-
 
     .s-info {    
       flex: 1;
@@ -399,9 +543,7 @@
 
     .hole {
       background-color: var(--color--scoreboard-hole);
-
     }
-
 
     .umpires {
       padding-top: 0.3em;
@@ -717,11 +859,22 @@
       position: absolute;
       width: 100%;
       height: 25em;
-      background-color: transparent;
+      background-color: var(--color--scoreboard-hole);
       bottom: -20em;
-      clip-path: polygon(20% 0%, 80% 0%, 100% 100%, 0% 100%);
+      display: flex;
+      clip-path: polygon(25.5% 0%, 80% 0%, 110% 100%, -20% 100%);
     }
 
+    .bleachers > div {
+      flex: 1;
+      margin-right: 1em;
+    }
+
+    .bleachers > div > div {
+      background-color: var(--color--scoreboard-hole);
+      height: 0.9em;
+      margin-bottom: 0.2em;
+    }
 	</style>
 </head>
 <body>
@@ -729,7 +882,7 @@
 		Life Imitates Code
 	</div>
 	<div class="subject">
-		Wrigley Field Scoreboard - 1938
+		Wrigley Field Scoreboard - 1941
 	</div>
 	<div class="author">
 		Ka Wai Cheung
@@ -743,7 +896,6 @@
       </div>
       <div class="scoreboard">
         <div class="scoreboard-left-side">
-
         </div>
         <div class="scoreboard-right-side">
           <div class="top-3-windows">
@@ -758,6 +910,44 @@
             <div></div>
           </div>
         </div>
+        <div class="s-clock">
+          <div>
+            <div>
+              <div class="minute-hand-wrapper">
+                <div></div>
+              </div>
+              <div class="hour-hand-wrapper">
+                <div></div>
+              </div>
+              <div class="clock-knub"></div>
+              <div class="s-clock-hand h-12-6">
+                <div></div>
+                <div></div>
+              </div>
+              <div class="s-clock-hand h-1-7">
+                <div></div>
+                <div></div>
+              </div>
+              <div class="s-clock-hand h-2-8">
+                <div></div>
+                <div></div>
+              </div>
+              <div class="s-clock-hand h-3-9">
+                <div></div>
+                <div></div>
+              </div>
+              <div class="s-clock-hand h-4-10">
+                <div></div>
+                <div></div>
+              </div>
+              <div class="s-clock-hand h-5-11">
+                <div></div>
+                <div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="s-clock-stand"></div>
         <div class="s-header"></div>
         <div class="s-league national">
           <div class="windows">
@@ -1046,58 +1236,58 @@
                     <div>
                       <div></div>
                       <div></div>
+                      <div></div>
+                      <div></div>
                       <div class="lit"></div>
-                      <div></div>
-                      <div></div>
                     </div>
                     <div>
                       <div></div>
                       <div class="blank"></div>
+                      <div></div>
                       <div class="lit"></div>
-                      <div></div>
-                      <div></div>
+                      <div class="lit"></div>
                     </div>
                     <div>
                       <div></div>
                       <div></div>
                       <div class="lit"></div>
                       <div></div>
-                      <div></div>
+                      <div class="lit"></div>
                     </div>
                     <div>
-                      <div></div>
                       <div></div>
                       <div class="lit"></div>
                       <div></div>
                       <div></div>
+                      <div class="lit"></div>
                     </div>
                     <div>
                       <div></div>
                       <div></div>
+                      <div></div>
+                      <div></div>
                       <div class="lit"></div>
-                      <div></div>
-                      <div></div>
                     </div>
                     <div>
                       <div></div>
                       <div></div>
+                      <div></div>
+                      <div></div>
                       <div class="lit"></div>
-                      <div></div>
-                      <div></div>
                     </div>
                     <div>
                       <div></div>
                       <div class="blank"></div>
+                      <div></div>
+                      <div></div>
                       <div class="lit"></div>
-                      <div></div>
-                      <div></div>
                     </div>
                     <div>
                       <div></div>
                       <div></div>
+                      <div></div>
+                      <div></div>
                       <div class="lit"></div>
-                      <div></div>
-                      <div></div>
                     </div>
                   </div>
                 </div>
@@ -1567,9 +1757,6 @@
            <div></div>
         </div>
       </div>
-
-    <div class="bleachers">
-    </div>
     </div>
   </div>
 </body>
