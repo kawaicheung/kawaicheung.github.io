@@ -1,1763 +1,2074 @@
 <html>
-<head>
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Squada+One&display=swap" rel="stylesheet">
-	<style>
-    :root {
-      --color--scoreboard: rgba(109,68,78,1);
-      --color--scoreboard-right-side: rgba(82,51,58,1);
-      --color--scoreboard-left-side: #333;
-      --color--sky: #b5cfe8;
-      --color--scoreboard-text: #f7f5f4;
-      --color--scoreboard-hole: #212729;
-
-      --color--scoreboard-top: rgba(109,68,78,1);
-      --color--scoreboard-bottom: rgba(83,63,68,1);
-      --color--scoreboard-middle: rgba(109,68,78,1);
-
-      --color--sky-outer: rgba(203,187,233,1);
-      --color--sky-inner: rgba(225,242,245,1);
-
-      --blur-text: blur(0.3px);
-
-      --px--scoreboard-width: 972px;
-      --px--scoreboard-height: 350px;
-      --px--scoreboard-header-height: 2em;
-      --px--scoreboard-clock-stand-height: 2.6em;
-      --em--scoreboard-clock: 13em;
-
-      --font--scoreboard: Bebas Neue;
-      --font--scoreboard-alt: Squada One;
-    }
-		body {
-			background-color: #fff;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-		}
-		.handcoded {
-			position: absolute;
-			top: 20px;
-			left: 20px;
-			font-family: Helvetica Neue;
-			font-size: 14px;
-			padding-right: 10px;
-			font-weight: bold;
-			color: #222;
-		}		
-		.subject {
-			position: absolute;
-			top: 20px;
-			left: 50%;
-			transform: translateX(-50%);
-			font-family: Helvetica Neue;
-			font-size: 14px;
-			padding-right: 10px;
-			font-weight: bold;
-			color: #222;
-		}
-		.author {
-			position: absolute;
-			top: 20px;
-			right: 20px;
-			font-family: Helvetica Neue;
-			font-size: 14px;
-			padding-right: 10px;
-			color: #666;
-		}
-
-    /* Scoreboard Picture */
-		.picture {
-			position: relative;
-			width: 100%;
-      height: 600px;
-			display: flex;
-			flex-direction: column;
-			align-items: center;
-      overflow: hidden;
-      background: rgb(225,242,245);
-      background: radial-gradient(circle, var(--color--sky-inner) 0%, var(--color--sky-outer) 100%);
-    }
-
-    .scoreboard-wrapper {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-			align-items: center;
-			justify-content: center;
-      font-size: 10px;
-      top: 7em;
-      transform: perspective(380em) rotateZ(0deg) rotateX(14deg) rotateY(-26deg);
-    }
-
-    .scoreboard-left-side {
-      position: absolute;
-      left: 0em;
-      top: 1em;
-      padding-top: 1em;
-      box-sizing: border-box;
-      background-color: var(--color--scoreboard-left-side);
-      width: 2.8em;
-      height: var(--px--scoreboard-height);
-      transform: skew(0, 30deg);
-      display: flex;
-      flex-direction: column;
-    }
-
-    .scoreboard-right-side {
-      position: absolute;
-      right: 0.1em;
-      top: 1.4em;
-      padding-top: 1em;
-      box-sizing: border-box;
-      background-color: var(--color--scoreboard-right-side);
-      width: 2.4em;
-			height: var(--px--scoreboard-height);
-      transform: translateX(100%) skew(0, 50deg) rotateZ(0deg) rotateX(0deg);
-      z-index: 2;
-      display: flex;
-      flex-direction: column;
-      border-right: solid 1px #000;
-    }
-
-    .scoreboard-right-side > div.top-3-windows {
-      margin: 2em 0.4em 0 0.4em;
-    }
-
-    .scoreboard-right-side > div.top-3-windows > div {
-      height: 2.6em;
-      margin-bottom: 0.5em;
-    }
-
-    .scoreboard-right-side > div.bottom-4-windows {
-      margin: 1.6em 0.4em 0 0.4em;
-    }
-
-    .scoreboard-right-side > div.bottom-4-windows > div {
-      height: 3.4em;
-      margin-bottom: 1.6em;
-    }
-
-    .scoreboard-right-side > div > div {
-      background-color: var(--color--scoreboard-hole);
-    }
-
-    .standings {
-      position: absolute;
-      top: -10em;
-      left: 55%;
-      transform: translateX(-50%);
-      width: calc(var(--px--scoreboard-width) * 0.3);
-      display: flex;
-      justify-content: space-between;
-    }
-
-    .national-flag-line {
-      height: 20em;
-      width: 3em;
-      border-right: solid 1px rgba(0,0,0,0.2);
-      border-radius: 10% 10% 33% 10% / 10% 0% 75% 10% 
-    }
-
-    .flag-pole {
-      width: 0.8em;
-      height: 20em;
-      background: rgb(102,102,102);
-      background: linear-gradient(90deg, rgba(102,102,102,0.6) 0%, rgba(254,254,254,1) 7%, rgba(255,255,255,1) 49%, rgba(244,244,244,1) 90%, rgba(102,102,102,0.4) 100%);
-    }
-
-    .american-flag-line {
-      height: 20em;
-      width: 3em;
-      border-right: solid 1px rgba(0,0,0,0.2);
-      border-radius: 10% 10% 33% 10% / 50% 0% 75% 10% 
-    }
-   
-		.scoreboard {
-      position: relative;
-			width: var(--px--scoreboard-width);
-			height: var(--px--scoreboard-height);
-			border-top-left-radius: 1em;
-			border-top-right-radius: 1em;
-      border-bottom: solid 0.2em var(--color--scoreboard-hole);
-			display: flex;
-      justify-content: space-between;
-      font-family: var(--font--scoreboard);
-      color: var(--color--scoreboard-text);
-      text-shadow: 0px 0px 2px rgba(0,0,0,0.3);  
-      z-index: 1;
-		}
-
-    .scoreboard-bottom {
-      margin-top: -7.5em;
-      margin-left: 5.2em;
-      background: rgb(25,25,25);
-      background: linear-gradient(0deg, rgba(25,25,25,1) 0%, rgba(51,47,48,1) 100%);
-      height: 9em;
-      width: calc(var(--px--scoreboard-width) - 0.6em);
-      border-radius: 0% 0% 38% 70% / 10% 10% 36% 53%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .scoreboard-bottom > div {
-      flex: 1;
-      height: 100%;
-      margin-bottom: 1em;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-    }
-
-    .scoreboard-bottom > div > div {
-      background: rgb(34,34,34);
-      background: linear-gradient(90deg, rgba(34,34,34,1) 0%, rgba(109,68,78,0.2) 49%, rgba(34,34,34,1) 100%);
-      height: 1em;
-      margin-bottom: 0.9em;
-    }
-
-    .scoreboard-bottom > div:first-child > div {
-      height: 0.8em;
-      margin-bottom: 2.8em;
-      transform: rotate(5deg);
-      width: 75%;
-    }
-
-    .scoreboard-bottom > div:last-child > div {
-      height: 0.6em;
-      margin-bottom: 2.8em;
-      transform: rotate(-3deg);
-    }
-
-    .scoreboard-pillars {
-      width: var(--px--scoreboard-width);
-      height: 4em;
-      display: flex;
-      justify-content: space-between;
-      z-index: 1;
-    }
-
-    .scoreboard-pillars > div {
-      width: 1em;
-      height: 16em;
-      background-color: var(--color--scoreboard);
-      border-right: solid 0.4em rgba(0,0,0,0.3); 
-      box-shadow: inset 0em 4em 1.4em -2.9em rgba(0,0,0,0.5);
-    }
-
-    .scoreboard-pillars > div:first-child {
-      margin-left: 4em;
-      height: 12em; 
-    }
-
-    .scoreboard-pillars > div:nth-child(2) {
-      margin-right: 11em;
-      width: 1.2em;
-    }
-
-    .scoreboard-pillars > div:nth-child(3) {
-      width: 1.2em;
-    }
-
-    .scoreboard-pillars > div:last-child {
-      margin-right: 5em;
-      height: 14em; 
-    }
-
-    .scoreboard-pillars-2 {
-      position: absolute;
-      bottom: 10em;
-      left: calc(50% + 4em);
-      transform: translateX(-50%);
-      width: var(--px--scoreboard-width);
-      height: 4em;
-      display: flex;
-      justify-content: space-between;
-      z-index: 1;
-    }
-
-    .scoreboard-pillars-2 > div {
-      width: 1em;
-      height: 16em;
-      background-color: #3a3133;
-      border-right: solid 0.4em rgba(0,0,0,0.3); 
-      box-shadow: inset 0em 6em 3.4em -2.9em rgba(0,0,0,0.5);
-    }
-
-    .scoreboard-pillars-2 > div:first-child {
-      margin-left: 4em;
-      margin-right: 8em;
-      margin-top: 1.6em;
-      height: 8em; 
-    }
-
-    .scoreboard-pillars-2 > div:nth-child(2) {
-      margin-top: 3.6em;
-      width: 1.2em;
-      height: 6em; 
-    }
-
-    .scoreboard-pillars-2 > div:nth-child(3) {
-      margin-top: 3.6em;
-      margin-left: 12em;
-      width: 1.2em;
-      height: 6em; 
-    }
-
-    .scoreboard-pillars-2 > div:last-child {
-      margin-top: 2.6em;
-      margin-right: 5em;
-      height: 9em; 
-    }
-
-		.s-header {
-      position: absolute;
-			width: 70%;
-      left: 50%;
-      transform: translateX(-50%);
-      height: 100%;
-			top: calc(var(--px--scoreboard-header-height) * -1);
-			background-color: var(--color--scoreboard);
-			border-top-left-radius: var(--px--scoreboard-header-height);
-			border-top-right-radius: var(--px--scoreboard-header-height);
-      border-right: solid 0.2em var(--color--scoreboard-right-side);
-		}
-
-    .s-clock-stand {
-      position: absolute;
-      width: 18%;
-      left: 50%;
-      transform: translateX(-50%);
-      height: 100%;
-      top: calc((var(--px--scoreboard-clock-stand-height) + var(--px--scoreboard-header-height)) * -1);
-      background-color: var(--color--scoreboard);
-      border-top-left-radius: var(--px--scoreboard-clock-stand-height);
-      border-top-right-radius: var(--px--scoreboard-clock-stand-height);
-      border-right: solid 0.2em var(--color--scoreboard-right-side);
-    }
-
-    .s-clock {
-      position: absolute; 
-      left: 50%;
-      box-sizing: border-box;
-      transform: translateX(-50%);
-      width: var(--em--scoreboard-clock);
-      height: var(--em--scoreboard-clock);
-      background-color: #fff;
-      border-radius: 40em;
-      top: calc((var(--px--scoreboard-header-height) + var(--em--scoreboard-clock)) * -1);
-      z-index: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0.1em;
-      box-shadow:  0 0 0.2em rgba(0,0,0,1);
-      border-right: solid 0.1em var(--color--scoreboard);
-    }
-
-    .s-clock .hour-hand-wrapper {
-      width: 1em;
-      height: 100%;
-      left: 50%;
-      transform: translateX(-50%) rotate(93deg);
-      position: absolute;
-      filter: drop-shadow(1em 0 0.1em rgba(0,0,0,0.2));
-    }
-
-    .s-clock .hour-hand-wrapper > div {
-      height: 40%;
-      width: 100%;
-      background-color: var(--color--scoreboard);
-      top: 20%;
-      position: absolute;
-      clip-path: polygon(35% 0%, 65% 0%, 100% 100%, 0% 100%);
-    }
-
-    .s-clock .minute-hand-wrapper {
-      width: 1em;
-      height: 100%;
-      left: 50%;
-      transform: translateX(-50%) rotate(36deg);
-      position: absolute;
-      filter: drop-shadow(1em 0 0.1em rgba(0,0,0,0.2));
-    }
-
-    .s-clock .minute-hand-wrapper > div {
-      height: 50%;
-      width: 100%;
-      background-color: var(--color--scoreboard);
-      top: 1em;
-      position: absolute;
-      clip-path: polygon(35% 0%, 65% 0%, 100% 100%, 0% 100%);
-    }
-
-    .s-clock .clock-knub {
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      transform: translateX(-50%) translateY(-50%);
-      border-radius: 50%;
-      width: 0.8em;
-      height: 0.8em;
-      background-color: var(--color--scoreboard);
-      box-shadow: inset -0.1em -0.1em 0.1em rgba(0,0,0,0.6);
-    }
-
-    .s-clock > div {
-      width: 100%;
-      height: 100%;
-      background-color: var(--color--scoreboard);
-      border-radius: 50%;
-      padding: 0.3em;
-      box-sizing: border-box;
-    }
-
-    .s-clock > div > div {
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      box-sizing: border-box;
-      position: relative;
-      background: rgb(250,250,250);
-      background: radial-gradient(circle, rgba(230,230,230,1) 0%, rgba(255,255,255,1) 100%);
-    }
-
-    .s-clock-hand {
-      height: 100%;
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      padding: .4em 0;
-      box-sizing: border-box;
-    }
-
-    .s-clock-hand > div {
-      width: .7em;
-      height: .7em;
-      border-radius: 50%;
-      background-color: var(--color--scoreboard);
-    }
-
-    .s-clock-hand.h-12-6 {
-      transform: translateX(-50%) rotate(30deg);
-    }
-
-    .s-clock-hand.h-1-7 {
-      transform: translateX(-50%) rotate(60deg);
-    }
-
-    .s-clock-hand.h-2-8 {
-      transform: translateX(-50%) rotate(90deg);
-    }
-
-    .s-clock-hand.h-3-9 {
-      transform: translateX(-50%) rotate(120deg);
-    }
-
-    .s-clock-hand.h-4-10 {
-      transform: translateX(-50%) rotate(150deg);
-    }
-
-    .s-clock-hand.h-5-11 {
-      transform: translateX(-50%) rotate(180deg);
-    }
-
-    /* 14 groups of 20 + 17 extra on top */
-    .s-league {
-      width: 38%;
-      position: relative;
-    }
-
-    .s-league.national {
-      padding-left: 1.5em;
-      border-top-left-radius: 1em;
-      background: linear-gradient(0deg, var(--color--scoreboard-bottom) 0%, var(--color--scoreboard-middle) 52%, var(--color--scoreboard-top) 100%);
-    }
-
-    .s-info-wrapper {
-      flex: 1;
-      height: calc(100% + var(--px--scoreboard-header-height));
-      margin-top: calc(var(--px--scoreboard-header-height) * -1);
-      z-index: 1;  
-      padding: 0 1px;
-      display: flex;
-      background: var(--color--scoreboard-top);
-    }
-
-    .s-league.american {
-      padding-right: 1.5em;
-      border-top-right-radius: 1em;
-      border-right: solid 0.1em var(--color--scoreboard-right-side);
-      background: linear-gradient(0deg, var(--color--scoreboard-bottom) 0%, var(--color--scoreboard-middle) 82%, var(--color--scoreboard-top) 100%);
-    }
-
-    .s-info {    
-      flex: 1;
-      position: relative;
-      background: linear-gradient(0deg, var(--color--scoreboard-bottom) 0%, var(--color--scoreboard-middle) 52%, var(--color--scoreboard-top) 100%);
-    }
-
-    .bottom-line-1 {
-      position: absolute;
-      background-color: var(--color--scoreboard);
-      bottom: 1em;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 90%;
-      white-space: nowrap;
-      font-size: 2em;
-      display: flex;
-      color: #d8b97b;
-      justify-content: space-around;
-      border-left: solid 1px rgba(0,0,0,0.3);
-      border-top: solid 1px rgba(0,0,0,0.3);
-      box-shadow: inset 0 0 1px rgba(0,0,0,0.3);
-    }
-
-    .bottom-line-1 > span:first-child {
-      letter-spacing: 0.08em;
-    }
-
-    .bottom-line-1 > div {
-      flex: 1;
-      margin-right: 0.16em;
-      border-left: solid 1px rgba(0,0,0,0.3);
-      border-top: solid 1px rgba(0,0,0,0.5);
-      /*background: linear-gradient(0deg, rgba(113,108,107,1) 0%, rgba(113,108,107,1) 95%, rgba(77,72,71,1) 100%);*/
-      box-shadow: inset 0 0 3px rgba(0,0,0,0.3);
-      text-align: center;
-    }
-
-
-    .day {
-      display: inline-block;
-      padding-left: 1em;
-    }
-
-    .hole {
-      background-color: var(--color--scoreboard-hole);
-    }
-
-    .umpires {
-      padding-top: 0.3em;
-      font-size: 2.8em;
-      margin: 0;
-      text-align: center;
-      transform: scale(1.36,1);
-      line-height: .8;
-      letter-spacing: 0.04em;
-    }
-
-    .league-text {
-      margin-top: 0.6em;
-      transform: scale(1, 1.1);
-      font-size: 4.8em;
-      letter-spacing: 0.08em;  
-      line-height: 1em;  
-    }
-
-    .american > .windows {
-      right: 1.5em;
-    }
-
-    .windows {
-      position: absolute;
-      display: flex;
-      height: 2em;
-      top: 3.2em;
-      right: 0;
-      border-left: solid 1px rgba(0,0,0,0.3);
-      border-top: solid 1px rgba(0,0,0,0.3);
-      box-shadow: inset 0 0 3px rgba(0,0,0,0.3);
-    }
-
-    .windows > div {
-      width: 3.7em;
-      height: 2em;
-      margin-right: 0.5em;
-      right: 0;
-      box-sizing: border-box;
-      background-color: var(--color--scoreboard-hole);
-      border-left: solid 1.6em var(--color--scoreboard-left-side);
-      border-top: solid 1.6em transparent;
-    }
-
-    .windows > div.covered {
-      background-color: var(--color--scoreboard);
-      border: none;
-    }
-
-    .windows > div:last-child {
-      margin-right: 0.2em;
-    }
-
-    .innings {
-      position: absolute;
-      font-size: 2.6em;
-      letter-spacing: 0.07em;
-      transform: scale(1.36,1);
-      top: 1.92em;
-      right: 2.5em;
-    }
-    .umpire-bases {
-      display: flex;
-      justify-content: space-around;
-    }
-
-    .umpire-bases > div {
-      display: flex;
-      flex-direction: column;
-      align-items: center; 
-    }
-
-    .base-text {
-      margin: 0.05em 0;
-      font-size: 2em;
-      line-height: 0.8;
-    }
-
-    .base-text.plate {
-      transform: scale(1.2,1);
-    }
-
-    .base-text > sup {
-      font-size: 0.5em;
-    }
-
-    .umpire-number {
-      font-size: 2em;
-      height: 100%;
-      border-left: solid 1px rgba(0,0,0,0.3);
-      border-top: solid 1px rgba(0,0,0,0.3);
-      box-shadow: inset 0 0 1px rgba(0,0,0,0.3);
-      width: 0.7em;
-      line-height: 0.8;
-      text-align: center;
-    }
-
-    .batter,
-    .ball-strike,
-    .out {
-      display: flex;
-      width: 100%;
-      justify-content: space-around;
-    }
-
-    .ball-strike {
-      padding-top: 1.8em;
-    }
-
-    .out {
-      padding-top: 1.8em;
-    }
-
-    .batter {
-      margin-top: 1em;
-    }
-    
-    .batter > div,
-    .ball-strike > div,
-    .out > div  {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-end;
-      position: relative;
-      padding-top: 2em;
-    }
-
-    .batter > div {
-      padding-top: 2.8em;
-    }
-    
-    .batter-text,
-    .ball-text,
-    .strike-text,
-    .out-text {
-      font-size: 1.9em;
-      transform: scale(1.2,1);
-      position: absolute;
-      top: 0;
-    }
-
-    .batter-text {
-      font-size: 2.4em;
-      transform: scale(1.36,1);
-    }
-    .info-marquee-squares-wrapper {
-      display: flex;
-    }
-
-    .info-marquee-squares-wrapper > *:not(:last-child) {
-      margin-right: 0.4em;
-    }
-
-    .info-marquee-square {
-      height: 4em;
-      width: 2.8em;
-      border-left: solid 1px rgba(0,0,0,0.3);
-      border-top: solid 1px rgba(0,0,0,0.3);
-      box-shadow: inset 0 0 4px rgba(0,0,0,0.3);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .info-marquee-square > div {
-      display: flex;
-    }
-
-    .info-marquee-square > div > div {
-      display: flex;
-      width: 0.4em;
-      height: 0.4em;
-      margin: 0.04em;
-      border-radius: 50%;
-      box-shadow: inset 0 0.5px 2px rgba(0,0,0,0.18);
-    }
-    .info-marquee-square > div > div.lit {
-      background-color: #fff;
-      box-shadow: inset 0 1px 2px rgba(0,0,0,0.2);
-    }
-    .info-marquee-square > div > div.blank {
-      box-shadow: none;
-    }
-
-
-    .box-scores {
-      font-size: 1.9em;
-      width: 100%;
-      position: relative;
-    }
-
-    .box-scores > div {
-      display: flex;
-      margin-bottom: 0.08em;
-    }
-
-    .ledge {
-      position: absolute;
-      height: 2em;
-      width: 105%;
-      border-bottom: solid 0.1em var(--color--scoreboard-bottom);
-      transform: translateX(-50%);
-      left: 50%;
-      bottom: -.2em;
-      box-shadow: -5px 15px 8px -15px rgba(0,0,0,.8);   
-    }
-
-    .ledge.top {
-      bottom: 1.1em;
-    }
-
-    .pc-holder {
-      position: relative;
-      width: 8%;
-      flex: 0 0 auto;
-      margin-right: 0.16em;
-      border-left: solid 1px rgba(0,0,0,0.3);
-      border-top: solid 1px rgba(0,0,0,0.4);
-      /*background: linear-gradient(0deg, rgba(113,108,107,1) 0%, rgba(113,108,107,1) 95%, rgba(77,72,71,1) 100%);*/
-      box-shadow: inset 0 0 3px rgba(0,0,0,0.3);
-      display: flex;
-      justify-content: center;
-    }
-
-    .pc-holder.p,
-    .pc-holder.c {
-      background: none;
-      border-color: transparent;
-      box-shadow: none;
-    }
-
-    .pc-holder.p > div, 
-    .pc-holder.c > div {
-      position: absolute;
-      font-size: 1.2em;
-      top: -0.15em;
-      left: 50%;
-      transform: translateX(-50%) scale(1.4,1);
-    }
-
-    .hide {
-      opacity: 0;
-    }
-    .inning-set {
-      display: flex;
-      justify-content: space-evenly;
-      width: 100%;
-    }
-    .inning-set > div {
-      flex: 1;
-      margin-right: 0.16em;
-      border-left: solid 1px rgba(0,0,0,0.3);
-      border-top: solid 1px rgba(0,0,0,0.4);
-      /*background: linear-gradient(0deg, rgba(113,108,107,1) 0%, rgba(113,108,107,1) 95%, rgba(77,72,71,1) 100%);*/
-      box-shadow: inset 0 0 3px rgba(0,0,0,0.3);
-      text-align: center;
-    }
-    .inning-set > div:last-child {
-      margin-right: 0;
-    }
-    .inning-set > div > span {
-      display: block;
-      transform: scale(1.5,1);
-    }
-    .inning-set > div > span.ten {
-      transform: scale(1.3,1);
-    }
-    .box-scores .team {
-      width: 22%;
-      flex: 0 0 auto;
-      margin-right: 0.4em; 
-      border-left: solid 1px rgba(0,0,0,0.3);
-      border-top: solid 1px rgba(0,0,0,0.4);
-      box-shadow: inset 0 0 3px rgba(0,0,0,0.3);
-    }
-    .box-scores .boston {
-      letter-spacing: 0.08em;
-    }
-    .box-scores .cubs {
-      letter-spacing: 0.24em;
-    }
-    .box-scores .sox {
-      letter-spacing: 0.24em;
-    }
-    .box-scores .detroit {
-      letter-spacing: 0.1em;
-    }
-    .box-scores .stlouis {
-      letter-spacing: 0.1em;
-    }
-    .box-scores .philadelphia {
-      letter-spacing: -0.003em;
-    }
-    .box-scores .washington {
-      letter-spacing: 0.03em;
-    }
-    .box-scores .brooklyn {
-      letter-spacing: 0.04em;
-    }
-    .box-scores .newyork {
-      letter-spacing: 0.06em;
-    }
-    .box-scores .cleveland {
-      letter-spacing: 0.05em;
-    }
-    .box-scores .cincinnati {
-      letter-spacing: 0em;
-    }
-
-    .bleachers {
-      position: absolute;
-      width: 100%;
-      height: 25em;
-      background-color: var(--color--scoreboard-hole);
-      bottom: -20em;
-      display: flex;
-      clip-path: polygon(25.5% 0%, 80% 0%, 110% 100%, -20% 100%);
-    }
-
-    .bleachers > div {
-      flex: 1;
-      margin-right: 1em;
-    }
-
-    .bleachers > div > div {
-      background-color: var(--color--scoreboard-hole);
-      height: 0.9em;
-      margin-bottom: 0.2em;
-    }
-	</style>
-</head>
-<body>
-	<div class="handcoded">
-		Life Imitates Code
-	</div>
-	<div class="subject">
-		Wrigley Field Scoreboard - 1941
-	</div>
-	<div class="author">
-		Ka Wai Cheung
-	</div>
-	<div class="picture">
-    <div class="scoreboard-wrapper">
-      <div class="standings">
-        <div class="national-flag-line"></div>
-        <div class="flag-pole"></div>
-        <div class="american-flag-line"></div>
-      </div>
-      <div class="scoreboard">
-        <div class="scoreboard-left-side">
+  <head>
+  	<link rel="preconnect" href="https://fonts.googleapis.com">
+  	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  	<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Squada+One&display=swap" rel="stylesheet">
+  	<style>
+      :root {
+        --color--scoreboard: rgba(109,68,78,1);
+        --color--scoreboard-right-side: rgba(82,51,58,1);
+        --color--scoreboard-left-side: #222;
+        --color--scoreboard-text: #f7f5f4;
+        --color--scoreboard-hole: #212729;
+
+        --color--scoreboard-top: rgba(109,68,78,1);
+        --color--scoreboard-bottom: rgba(83,63,68,1);
+        --color--scoreboard-middle: rgba(109,68,78,1);
+
+        --color--sky-outer: rgba(203,187,233,1);
+        --color--sky-inner: rgba(225,242,245,1);
+
+        --blur-text: blur(0.3px);
+
+        --px--scoreboard-width: 972px;
+        --px--scoreboard-height: 350px;
+        --px--scoreboard-header-height: 2em;
+        --px--scoreboard-clock-stand-height: 2.6em;
+        --em--scoreboard-clock: 13em;
+
+        --font--scoreboard: Bebas Neue;
+        --font--scoreboard-alt: Squada One;
+      }
+  		body {
+  			background-color: #fff;
+  			display: flex;
+  			align-items: center;
+  			justify-content: center;
+  		}
+  		.handcoded {
+  			position: absolute;
+  			top: 20px;
+  			left: 20px;
+  			font-family: Helvetica Neue;
+  			font-size: 14px;
+  			padding-right: 10px;
+  			font-weight: bold;
+  			color: #222;
+  		}		
+  		.subject {
+  			position: absolute;
+  			top: 20px;
+  			left: 50%;
+  			transform: translateX(-50%);
+  			font-family: Helvetica Neue;
+  			font-size: 14px;
+  			padding-right: 10px;
+  			font-weight: bold;
+  			color: #222;
+  		}
+  		.author {
+  			position: absolute;
+  			top: 20px;
+  			right: 20px;
+  			font-family: Helvetica Neue;
+  			font-size: 14px;
+  			padding-right: 10px;
+  			color: #666;
+  		}
+
+      /* Scoreboard Picture */
+  		.picture {
+  			position: relative;
+  			width: 100%;
+        height: 600px;
+  			display: flex;
+  			flex-direction: column;
+  			align-items: center;
+        overflow: hidden;
+        background: rgb(225,242,245);
+        background: radial-gradient(circle, var(--color--sky-inner) 0%, var(--color--sky-outer) 100%);
+      }
+
+      .scoreboard-wrapper {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+  			align-items: center;
+  			justify-content: center;
+        font-size: 10px;
+        top: 7em;
+        transform: perspective(380em) rotateZ(0deg) rotateX(14deg) rotateY(-26deg);
+      }
+
+      .scoreboard-left-side {
+        position: absolute;
+        left: 0em;
+        top: 0.7em;
+        padding-top: 1em;
+        box-sizing: border-box;
+        background-color: var(--color--scoreboard-left-side);
+        width: 2.8em;
+        height: calc(var(--px--scoreboard-height) + 0.3em);
+        transform: skew(0, 30deg);
+        display: flex;
+        flex-direction: column;
+      }
+
+      .scoreboard-right-side {
+        position: absolute;
+        right: 0.1em;
+        top: 1.4em;
+        padding-top: 1em;
+        box-sizing: border-box;
+        background-color: var(--color--scoreboard-right-side);
+        width: 2.4em;
+  			height: var(--px--scoreboard-height);
+        transform: translateX(100%) skew(0, 50deg) rotateZ(0deg) rotateX(0deg);
+        z-index: 2;
+        display: flex;
+        flex-direction: column;
+        border-right: solid 1px #000;
+      }
+
+      .scoreboard-right-side > div.top-3-windows {
+        margin: 2em 0.4em 0 0.4em;
+      }
+
+      .scoreboard-right-side > div.top-3-windows > div {
+        height: 2.6em;
+        margin-bottom: 0.5em;
+      }
+
+      .scoreboard-right-side > div.bottom-4-windows {
+        margin: 1.6em 0.4em 0 0.4em;
+      }
+
+      .scoreboard-right-side > div.bottom-4-windows > div {
+        height: 3.4em;
+        margin-bottom: 1.6em;
+      }
+
+      .scoreboard-right-side > div > div {
+        background-color: var(--color--scoreboard-hole);
+      }
+
+      .standings {
+        position: absolute;
+        top: -10em;
+        left: 51%;
+        transform: translateX(-50%);
+        width: calc(var(--px--scoreboard-width) * 0.3);
+        display: flex;
+        justify-content: space-between;
+      }
+
+      .national-flag-line {
+        height: 20em;
+        width: 3em;
+        border-right: solid 0.1em rgba(0,0,0,0.3);
+        border-radius: 10% 10% 33% 10% / 10% 0% 75% 10% 
+      }
+
+      .flag-pole {
+        width: 0.8em;
+        height: 20em;
+        background: rgb(102,102,102);
+        background: linear-gradient(90deg, rgba(102,102,102,0.6) 0%, rgba(254,254,254,1) 7%, rgba(255,255,255,1) 49%, rgba(244,244,244,1) 90%, rgba(102,102,102,0.4) 100%);
+      }
+
+
+      .american-flag-line {
+        height: 20em;
+        width: 3em;
+        border-right: solid 0.1em rgba(0,0,0,0.3);
+        border-radius: 10% 10% 33% 10% / 50% 0% 75% 10%;
+        position: relative;
+      }
+     
+      .american-flag-line .flag-1 {
+        filter: blur(0.4em);
+        position: absolute;
+        bottom: 4em;
+        left: 2.8em;
+        width: 8em;
+        height: 4em;
+        background-color: red;
+        clip-path: polygon(49% 34%, 64% 31%, 84% 23%, 100% 14%, 80% 36%, 98% 35%, 44% 67%, 0 100%, 0 0, 30% 28%);background: rgb(164,98,30);
+  background: linear-gradient(354deg, rgba(164,98,30,1) 0%, rgba(208,168,104,1) 7%, rgba(164,98,30,1) 22%, rgba(244,196,121,1) 63%);
+      }
+
+      .american-flag-line .flag-2 {
+        position: absolute;
+        filter: blur(0.4em);
+        bottom: 10.5em;
+        left: 2.9em;
+        width: 8em;
+        height: 4em;
+        background-color: red;
+        clip-path: polygon(53% 20%, 79% 23%, 100% 35%, 79% 44%, 100% 66%, 65% 63%, 29% 80%, 0 100%, 0 0, 20% 10%);
+  background: rgb(45,64,255);
+  background: linear-gradient(324deg, rgba(45,64,255,1) 0%, rgba(65,75,255,1) 13%, rgba(82,89,255,1) 29%, rgba(125,127,255,1) 40%, rgba(134,126,255,1) 77%, rgba(160,160,254,1) 86%);
+     }
+
+
+      .national-flag-line .flag-1 {
+        position: absolute;
+        bottom: 6em;
+        left: 2.8em;
+        width: 8em;
+        height: 4em;
+        filter: blur(0.4em);
+        background-color: red;
+        transform: rotate(1deg);
+        clip-path: polygon(61% 30%, 100% 52%, 78% 54%, 100% 85%, 79% 76%, 60% 73%, 29% 81%, 0 100%, 0 0, 31% 18%);
+  background: rgb(255,23,24);
+  background: linear-gradient(71deg, rgba(255,23,24,1) 0%, rgba(255,82,82,1) 7%, rgba(255,145,145,1) 18%, rgba(237,199,199,1) 29%, rgba(255,199,199,1) 51%, rgba(255,108,108,1) 74%, rgba(254,160,160,1) 83%);
+      }
+
+      .national-flag-line .flag-2 {
+        position: absolute;
+        bottom: 12em;
+        left: 3.1em;
+        width: 8em;
+        height: 4em;
+        filter: blur(0.4em);
+        transform: rotate(2deg);
+        clip-path: polygon(61% 30%, 100% 52%, 78% 54%, 100% 85%, 79% 76%, 60% 73%, 29% 81%, 0 100%, 0 0, 31% 18%);
+        background: rgb(255,255,255);
+        background: linear-gradient(124deg, rgba(255,255,255,1) 0%, rgba(213,210,235,1) 29%, rgba(174,160,199,1) 41%, rgba(213,199,237,1) 68%, rgba(255,255,255,1) 97%);
+      }
+
+      .national-flag-line .flag-3 {
+        position: absolute;
+        bottom: 18em;
+        left: 2.8em;
+        width: 8em;
+        height: 4em;
+        filter: blur(0.4em);
+        transform: rotate(-1deg);
+        background-color: red;
+        clip-path: polygon(61% 30%, 100% 52%, 78% 54%, 100% 85%, 79% 76%, 60% 73%, 29% 81%, 0 100%, 0 0, 31% 18%);
+  background: rgb(45,64,255);
+  background: linear-gradient(324deg, rgba(45,64,255,1) 0%, rgba(145,151,255,1) 13%, rgba(186,189,255,1) 29%, rgba(125,127,255,1) 40%, rgba(209,206,255,1) 77%, rgba(160,160,254,1) 86%);
+      }
+
+  		.scoreboard {
+        position: relative;
+  			width: var(--px--scoreboard-width);
+  			height: var(--px--scoreboard-height);
+  			border-top-left-radius: 1em;
+  			border-top-right-radius: 1em;
+        border-bottom: solid 0.2em var(--color--scoreboard-hole);
+  			display: flex;
+        justify-content: space-between;
+        font-family: var(--font--scoreboard);
+        color: var(--color--scoreboard-text);
+        text-shadow: 0px 0px 2px rgba(0,0,0,0.3);  
+        z-index: 1;
+  		}
+
+      .scoreboard-bottom {
+        margin-top: -7.5em;
+        margin-left: 5.2em;
+        background: rgb(25,25,25);
+        background: linear-gradient(0deg, rgba(25,25,25,1) 0%, rgba(51,47,48,1) 100%);
+        height: 9em;
+        width: calc(var(--px--scoreboard-width) - 0.6em);
+        border-radius: 0% 0% 38% 70% / 10% 10% 36% 53%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .scoreboard-bottom > div {
+        flex: 1;
+        height: 100%;
+        margin-bottom: 1em;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+      }
+
+      .scoreboard-bottom > div > div {
+        background: rgb(34,34,34);
+        background: linear-gradient(90deg, rgba(34,34,34,1) 0%, rgba(109,68,78,0.2) 49%, rgba(34,34,34,1) 100%);
+        height: 1em;
+        margin-bottom: 0.9em;
+      }
+
+      .scoreboard-bottom > div:first-child > div {
+        height: 0.8em;
+        margin-bottom: 2.8em;
+        transform: rotate(5deg);
+        width: 75%;
+      }
+
+      .scoreboard-bottom > div:last-child > div {
+        height: 0.6em;
+        margin-bottom: 2.8em;
+        transform: rotate(-3deg);
+      }
+
+      .scoreboard-pillars {
+        width: var(--px--scoreboard-width);
+        height: 4em;
+        display: flex;
+        justify-content: space-between;
+        z-index: 1;
+      }
+
+      .scoreboard-pillars > div {
+        width: 1em;
+        height: 16em;
+        background-color: var(--color--scoreboard);
+        border-right: solid 0.4em rgba(0,0,0,0.3); 
+        box-shadow: inset 0em 4em 1.4em -2.9em rgba(0,0,0,0.5);
+      }
+
+      .scoreboard-pillars > div:first-child {
+        margin-left: 4em;
+        height: 12em; 
+      }
+
+      .scoreboard-pillars > div:nth-child(2) {
+        margin-right: 11em;
+        width: 1.2em;
+      }
+
+      .scoreboard-pillars > div:nth-child(3) {
+        width: 1.2em;
+      }
+
+      .scoreboard-pillars > div:last-child {
+        margin-right: 5em;
+        height: 14em; 
+      }
+
+      .scoreboard-pillars-2 {
+        position: absolute;
+        bottom: 10em;
+        left: calc(50% + 4em);
+        transform: translateX(-50%);
+        width: var(--px--scoreboard-width);
+        height: 4em;
+        display: flex;
+        justify-content: space-between;
+        z-index: 1;
+      }
+
+      .scoreboard-pillars-2 > div {
+        width: 1em;
+        height: 16em;
+        background-color: #3a3133;
+        border-right: solid 0.4em rgba(0,0,0,0.3); 
+        box-shadow: inset 0em 6em 3.4em -2.9em rgba(0,0,0,0.5);
+      }
+
+      .scoreboard-pillars-2 > div:first-child {
+        margin-left: 4em;
+        margin-right: 8em;
+        margin-top: 1.6em;
+        height: 8em; 
+      }
+
+      .scoreboard-pillars-2 > div:nth-child(2) {
+        margin-top: 3.6em;
+        width: 1.2em;
+        height: 6em; 
+      }
+
+      .scoreboard-pillars-2 > div:nth-child(3) {
+        margin-top: 3.6em;
+        margin-left: 12em;
+        width: 1.2em;
+        height: 6em; 
+      }
+
+      .scoreboard-pillars-2 > div:last-child {
+        margin-top: 2.6em;
+        margin-right: 5em;
+        height: 9em; 
+      }
+
+  		.s-header {
+        position: absolute;
+  			width: 70%;
+        left: 50%;
+        transform: translateX(-50%);
+        height: 100%;
+  			top: calc(var(--px--scoreboard-header-height) * -1);
+  			background-color: var(--color--scoreboard);
+  			border-top-left-radius: var(--px--scoreboard-header-height);
+  			border-top-right-radius: var(--px--scoreboard-header-height);
+        border-right: solid 0.2em var(--color--scoreboard-right-side);
+  		}
+
+      .s-clock-stand {
+        position: absolute;
+        width: 18%;
+        left: 50%;
+        transform: translateX(-50%);
+        height: 100%;
+        top: calc((var(--px--scoreboard-clock-stand-height) + var(--px--scoreboard-header-height)) * -1);
+        background-color: var(--color--scoreboard);
+        border-top-left-radius: var(--px--scoreboard-clock-stand-height);
+        border-top-right-radius: var(--px--scoreboard-clock-stand-height);
+        border-right: solid 0.2em var(--color--scoreboard-right-side);
+      }
+
+      .s-clock {
+        position: absolute; 
+        left: 50%;
+        box-sizing: border-box;
+        transform: translateX(-50%);
+        width: var(--em--scoreboard-clock);
+        height: var(--em--scoreboard-clock);
+        background-color: #fff;
+        border-radius: 40em;
+        top: calc((var(--px--scoreboard-header-height) + var(--em--scoreboard-clock)) * -1);
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.1em;
+        box-shadow:  0 0 0.2em rgba(0,0,0,1);
+        border-right: solid 0.1em var(--color--scoreboard);
+      }
+
+      .s-clock .hour-hand-wrapper {
+        width: 1em;
+        height: 100%;
+        left: 50%;
+        transform: translateX(-50%) rotate(93deg);
+        position: absolute;
+        filter: drop-shadow(1em 0 0.1em rgba(0,0,0,0.2));
+      }
+
+      .s-clock .hour-hand-wrapper > div {
+        height: 40%;
+        width: 100%;
+        background-color: var(--color--scoreboard);
+        top: 20%;
+        position: absolute;
+        clip-path: polygon(35% 0%, 65% 0%, 100% 100%, 0% 100%);
+      }
+
+      .s-clock .minute-hand-wrapper {
+        width: 1em;
+        height: 100%;
+        left: 50%;
+        transform: translateX(-50%) rotate(36deg);
+        position: absolute;
+        filter: drop-shadow(1em 0 0.1em rgba(0,0,0,0.2));
+      }
+
+      .s-clock .minute-hand-wrapper > div {
+        height: 50%;
+        width: 100%;
+        background-color: var(--color--scoreboard);
+        top: 1em;
+        position: absolute;
+        clip-path: polygon(35% 0%, 65% 0%, 100% 100%, 0% 100%);
+      }
+
+      .s-clock .clock-knub {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translateX(-50%) translateY(-50%);
+        border-radius: 50%;
+        width: 0.8em;
+        height: 0.8em;
+        background-color: var(--color--scoreboard);
+        box-shadow: inset -0.1em -0.1em 0.1em rgba(0,0,0,0.6);
+      }
+
+      .s-clock > div {
+        width: 100%;
+        height: 100%;
+        background-color: var(--color--scoreboard);
+        border-radius: 50%;
+        padding: 0.3em;
+        box-sizing: border-box;
+      }
+
+      .s-clock > div > div {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        box-sizing: border-box;
+        position: relative;
+        background: rgb(250,250,250);
+        background: radial-gradient(circle, rgba(230,230,230,1) 0%, rgba(255,255,255,1) 100%);
+      }
+
+      .s-clock-hand {
+        height: 100%;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: .4em 0;
+        box-sizing: border-box;
+      }
+
+      .s-clock-hand > div {
+        width: .7em;
+        height: .7em;
+        border-radius: 50%;
+        background-color: var(--color--scoreboard);
+      }
+
+      .s-clock-hand.h-12-6 {
+        transform: translateX(-50%) rotate(30deg);
+      }
+
+      .s-clock-hand.h-1-7 {
+        transform: translateX(-50%) rotate(60deg);
+      }
+
+      .s-clock-hand.h-2-8 {
+        transform: translateX(-50%) rotate(90deg);
+      }
+
+      .s-clock-hand.h-3-9 {
+        transform: translateX(-50%) rotate(120deg);
+      }
+
+      .s-clock-hand.h-4-10 {
+        transform: translateX(-50%) rotate(150deg);
+      }
+
+      .s-clock-hand.h-5-11 {
+        transform: translateX(-50%) rotate(180deg);
+      }
+
+      /* 14 groups of 20 + 17 extra on top */
+      .s-league {
+        width: 38%;
+        position: relative;
+      }
+
+      .s-league.national {
+        padding-left: 1.5em;
+        border-top-left-radius: 1em;
+        background: linear-gradient(0deg, var(--color--scoreboard-bottom) 0%, var(--color--scoreboard-middle) 52%, var(--color--scoreboard-top) 100%);
+      }
+
+      .s-info-wrapper {
+        flex: 1;
+        height: calc(100% + var(--px--scoreboard-header-height));
+        margin-top: calc(var(--px--scoreboard-header-height) * -1);
+        z-index: 1;  
+        padding: 0 1px;
+        display: flex;   
+        background: linear-gradient(0deg, var(--color--scoreboard-bottom) 0%, var(--color--scoreboard-middle) 42%, var(--color--scoreboard-top) 100%);
+      }
+
+      .s-league.american {
+        padding-right: 1.5em;
+        border-top-right-radius: 1em;
+        border-right: solid 0.1em var(--color--scoreboard-right-side);
+        background: linear-gradient(0deg, var(--color--scoreboard-bottom) 0%, var(--color--scoreboard-middle) 82%, var(--color--scoreboard-top) 100%);
+      }
+
+      .s-info {    
+        flex: 1;
+        position: relative;
+        background: linear-gradient(0deg, var(--color--scoreboard-bottom) 0%, var(--color--scoreboard-middle) 52%, var(--color--scoreboard-top) 100%);
+      }
+
+      .bottom-line-1 {
+        position: absolute;
+        background-color: var(--color--scoreboard);
+        bottom: 1em;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 90%;
+        white-space: nowrap;
+        font-size: 2em;
+        display: flex;
+        color: #d8b97b;
+        justify-content: space-around;
+        border-left: solid 1px rgba(0,0,0,0.3);
+        border-top: solid 1px rgba(0,0,0,0.3);
+        box-shadow: inset 0 0 1px rgba(0,0,0,0.3);
+      }
+
+      .bottom-line-1 > span:first-child {
+        letter-spacing: 0.08em;
+      }
+
+      .bottom-line-1 > div {
+        flex: 1;
+        margin-right: 0.16em;
+        border-left: solid 1px rgba(0,0,0,0.3);
+        border-top: solid 1px rgba(0,0,0,0.5);
+        /*background: linear-gradient(0deg, rgba(113,108,107,1) 0%, rgba(113,108,107,1) 95%, rgba(77,72,71,1) 100%);*/
+        box-shadow: inset 0 0 3px rgba(0,0,0,0.3);
+        text-align: center;
+      }
+
+
+      .day {
+        display: inline-block;
+        padding-left: 1em;
+      }
+
+      .hole {
+        background-color: var(--color--scoreboard-hole);
+      }
+
+      .umpires {
+        padding-top: 0.3em;
+        font-size: 2.8em;
+        margin: 0;
+        text-align: center;
+        transform: scale(1.36,1);
+        line-height: .8;
+        letter-spacing: 0.04em;
+      }
+
+      .league-text {
+        margin-top: 0.6em;
+        transform: scale(1, 1.1);
+        font-size: 4.8em;
+        letter-spacing: 0.08em;  
+        line-height: 1em;  
+      }
+
+      .american > .windows {
+        right: 1.5em;
+      }
+
+      .windows {
+        position: absolute;
+        display: flex;
+        height: 2em;
+        top: 3.2em;
+        right: 0;
+        border-left: solid 1px rgba(0,0,0,0.3);
+        border-top: solid 1px rgba(0,0,0,0.3);
+        box-shadow: inset 0 0 3px rgba(0,0,0,0.3);
+      }
+
+      .windows > div {
+        width: 3.7em;
+        height: 2em;
+        margin-right: 0.5em;
+        right: 0;
+        box-sizing: border-box;
+        background-color: var(--color--scoreboard-hole);
+        border-left: solid 1.6em var(--color--scoreboard-left-side);
+        border-top: solid 1.6em transparent;
+      }
+
+      .windows > div.covered {
+        background-color: var(--color--scoreboard);
+        border: none;
+      }
+
+      .windows > div:last-child {
+        margin-right: 0.2em;
+      }
+
+      .innings {
+        position: absolute;
+        font-size: 2.6em;
+        letter-spacing: 0.07em;
+        transform: scale(1.36,1);
+        top: 1.92em;
+        right: 2.5em;
+      }
+      .umpire-bases {
+        display: flex;
+        justify-content: space-around;
+      }
+
+      .umpire-bases > div {
+        display: flex;
+        flex-direction: column;
+        align-items: center; 
+      }
+
+      .base-text {
+        margin: 0.05em 0;
+        font-size: 2em;
+        line-height: 0.8;
+      }
+
+      .base-text.plate {
+        transform: scale(1.2,1);
+      }
+
+      .base-text > sup {
+        font-size: 0.5em;
+      }
+
+      .umpire-number {
+        font-size: 2em;
+        height: 100%;
+        border-left: solid 1px rgba(0,0,0,0.3);
+        border-top: solid 1px rgba(0,0,0,0.3);
+        box-shadow: inset 0 0 1px rgba(0,0,0,0.3);
+        width: 0.7em;
+        line-height: 0.8;
+        text-align: center;
+      }
+
+      .batter,
+      .ball-strike,
+      .out {
+        display: flex;
+        width: 100%;
+        justify-content: space-around;
+      }
+
+      .ball-strike {
+        padding-top: 1.8em;
+      }
+
+      .out {
+        padding-top: 1.8em;
+      }
+
+      .batter {
+        margin-top: 1em;
+      }
+      
+      .batter > div,
+      .ball-strike > div,
+      .out > div  {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-end;
+        position: relative;
+        padding-top: 2em;
+      }
+
+      .batter > div {
+        padding-top: 2.8em;
+      }
+      
+      .batter-text,
+      .ball-text,
+      .strike-text,
+      .out-text {
+        font-size: 1.9em;
+        transform: scale(1.2,1);
+        position: absolute;
+        top: 0;
+      }
+
+      .batter-text {
+        font-size: 2.4em;
+        transform: scale(1.36,1);
+      }
+      .info-marquee-squares-wrapper {
+        display: flex;
+      }
+
+      .info-marquee-squares-wrapper > *:not(:last-child) {
+        margin-right: 0.4em;
+      }
+
+      .info-marquee-square {
+        height: 4em;
+        width: 2.8em;
+        border-left: solid 1px rgba(0,0,0,0.3);
+        border-top: solid 1px rgba(0,0,0,0.3);
+        box-shadow: inset 0 0 4px rgba(0,0,0,0.3);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .info-marquee-square > div {
+        display: flex;
+      }
+
+      .info-marquee-square > div > div {
+        display: flex;
+        width: 0.4em;
+        height: 0.4em;
+        margin: 0.04em;
+        border-radius: 50%;
+        box-shadow: inset 0 0.5px 2px rgba(0,0,0,0.18);
+      }
+      .info-marquee-square > div > div.lit {
+        background-color: #fff;
+        box-shadow: inset 0 1px 2px rgba(0,0,0,0.2);
+      }
+      .info-marquee-square > div > div.blank {
+        box-shadow: none;
+      }
+
+
+      .box-scores {
+        font-size: 1.9em;
+        width: 100%;
+        position: relative;
+      }
+
+      .box-scores > div {
+        display: flex;
+        margin-bottom: 0.08em;
+      }
+
+      .ledge {
+        position: absolute;
+        height: 2em;
+        width: 105%;
+        border-bottom: solid 0.1em var(--color--scoreboard-bottom);
+        transform: translateX(-50%);
+        left: 50%;
+        bottom: -.2em;
+        box-shadow: -5px 15px 8px -15px rgba(0,0,0,.8);   
+      }
+
+      .ledge.top {
+        bottom: 1.1em;
+      }
+
+      .pc-holder {
+        position: relative;
+        width: 8%;
+        flex: 0 0 auto;
+        margin-right: 0.16em;
+        border-left: solid 1px rgba(0,0,0,0.3);
+        border-top: solid 1px rgba(0,0,0,0.4);
+        /*background: linear-gradient(0deg, rgba(113,108,107,1) 0%, rgba(113,108,107,1) 95%, rgba(77,72,71,1) 100%);*/
+        box-shadow: inset 0 0 3px rgba(0,0,0,0.3);
+        display: flex;
+        justify-content: center;
+      }
+
+      .pc-holder.p,
+      .pc-holder.c {
+        background: none;
+        border-color: transparent;
+        box-shadow: none;
+      }
+
+      .pc-holder.p > div, 
+      .pc-holder.c > div {
+        position: absolute;
+        font-size: 1.2em;
+        top: -0.15em;
+        left: 50%;
+        transform: translateX(-50%) scale(1.4,1);
+      }
+
+      .hide {
+        opacity: 0;
+      }
+      .inning-set {
+        display: flex;
+        justify-content: space-evenly;
+        width: 100%;
+      }
+      .inning-set > div {
+        flex: 1;
+        margin-right: 0.16em;
+        border-left: solid 1px rgba(0,0,0,0.3);
+        border-top: solid 1px rgba(0,0,0,0.4);
+        /*background: linear-gradient(0deg, rgba(113,108,107,1) 0%, rgba(113,108,107,1) 95%, rgba(77,72,71,1) 100%);*/
+        box-shadow: inset 0 0 3px rgba(0,0,0,0.3);
+        text-align: center;
+      }
+      .inning-set > div:last-child {
+        margin-right: 0;
+      }
+      .inning-set > div > span {
+        display: block;
+        transform: scale(1.5,1);
+      }
+      .inning-set > div > span.ten {
+        transform: scale(1.3,1);
+      }
+      .box-scores .team {
+        width: 22%;
+        flex: 0 0 auto;
+        margin-right: 0.4em; 
+        border-left: solid 1px rgba(0,0,0,0.3);
+        border-top: solid 1px rgba(0,0,0,0.4);
+        box-shadow: inset 0 0 3px rgba(0,0,0,0.3);
+      }
+      .box-scores .boston {
+        letter-spacing: 0.08em;
+      }
+      .box-scores .cubs {
+        letter-spacing: 0.24em;
+      }
+      .box-scores .sox {
+        letter-spacing: 0.24em;
+      }
+      .box-scores .detroit {
+        letter-spacing: 0.1em;
+      }
+      .box-scores .stlouis {
+        letter-spacing: 0.1em;
+      }
+      .box-scores .philadelphia {
+        letter-spacing: -0.003em;
+      }
+      .box-scores .washington {
+        letter-spacing: 0.03em;
+      }
+      .box-scores .brooklyn {
+        letter-spacing: 0.04em;
+      }
+      .box-scores .newyork {
+        letter-spacing: 0.06em;
+      }
+      .box-scores .cleveland {
+        letter-spacing: 0.05em;
+      }
+      .box-scores .cincinnati {
+        letter-spacing: 0em;
+      }
+
+      .fencing {
+        position: absolute;      
+        bottom: -8em;
+        left: calc(50% - 7em);
+        display: flex;
+      }
+
+      .fencing-0 {
+        width: 31em;
+        height: 15em;
+        background-color: var(--color--scoreboard-hole);
+        display: flex;  
+        background-color: transparent;
+        background-image:
+          repeating-linear-gradient(45deg, rgba(0, 0, 0, 0),rgba(0, 0, 0, 0) 0.5em, rgba(0, 0, 0, 0.3) 0.5em, rgba(0, 0, 0, 0.3) 0.6em),
+          repeating-linear-gradient(-45deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0) 0.5em, rgba(0, 0, 0, 0.3) 0.5em, rgba(0, 0, 0, 0.3) 0.6em);
+        background-size: 0.8em 0.8em, 0.8em 0.8em;
+        transform: rotateZ(1deg);
+        display: flex;
+        flex-direction: column;
+      }
+
+      .fencing-0-h-bar {
+        height: 0.3em;
+        width: 100%;
+        margin-top: 0.2em;
+        background: rgb(25,25,25);
+        background: linear-gradient(180deg, rgba(25,25,25,1) 0%, rgba(112,91,96,1) 0%, rgba(25,25,25,1) 100%);
+      }    
+
+      .fencing-0-vertical-wrapper {
+        position: relative;
+        height: 100%;
+      }
+
+      .fencing-0-v-bar-1 {
+        position: absolute;
+        top: 0;
+        right: 13em;
+        width: 0.3em;
+        height: 100%;
+        margin-top: -0.6em;
+        transform: rotate(-1deg);
+        background: rgb(25,25,25);
+        background: linear-gradient(90deg, rgba(25,25,25,1) 0%, rgba(112,91,96,1) 0%, rgba(25,25,25,1) 100%);
+      }
+
+      .fencing-0-v-bar-2 {
+        position: absolute;
+        top: 0;
+        right: 23em;
+        width: 0.3em;
+        height: 100%;
+        margin-top: -0.6em;
+        transform: rotate(-1deg);
+        background: rgb(25,25,25);
+        background: linear-gradient(90deg, rgba(25,25,25,1) 0%, rgba(112,91,96,1) 0%, rgba(25,25,25,1) 100%);
+      }
+
+      .fencing-1 {
+        position: absolute;
+        width: 19em;
+        height: 15em;
+        right: -19em;
+        top: -0.2em;
+        background-color: var(--color--scoreboard-hole);
+        display: flex;  
+        background-color: transparent;
+        background-image:
+          repeating-linear-gradient(45deg, rgba(0, 0, 0, 0),rgba(0, 0, 0, 0) 0.5em, rgba(0, 0, 0, 0.3) 0.5em, rgba(0, 0, 0, 0.3) 0.6em),
+          repeating-linear-gradient(-45deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0) 0.5em, rgba(0, 0, 0, 0.3) 0.5em, rgba(0, 0, 0, 0.3) 0.6em);
+        background-size: 0.8em 0.8em, 0.8em 0.8em;
+        transform: rotateZ(-3deg);
+        display: flex;
+        flex-direction: column;
+      }
+
+      .fencing-1-vertical-wrapper {
+        position: relative;
+        height: 100%;
+      }
+
+      .fencing-1-h-bar {
+        height: 0.3em;
+        width: 100%;
+        margin-top: 0.2em;
+        background: rgb(25,25,25);
+        background: linear-gradient(180deg, rgba(25,25,25,1) 0%, rgba(112,91,96,1) 0%, rgba(25,25,25,1) 100%);
+      }
+
+      .fencing-1-v-bar-1 {
+        position: absolute;
+        top: 0;
+        right: 0.8em;
+        width: 0.3em;
+        height: 100%;
+        margin-top: -0.6em;
+        background: rgb(25,25,25);
+        transform: rotateZ(3deg);
+        background: linear-gradient(90deg, rgba(25,25,25,1) 0%, rgba(112,91,96,1) 0%, rgba(25,25,25,1) 100%);
+      }
+
+      .fencing-1-v-bar-2 {
+        position: absolute;
+        top: 0;
+        right: 1.8em;
+        width: 0.3em;
+        height: 100%;
+        margin-top: -0.6em;
+        background: rgb(25,25,25);
+        transform: rotateZ(3deg);
+        background: linear-gradient(90deg, rgba(25,25,25,1) 0%, rgba(112,91,96,1) 0%, rgba(25,25,25,1) 100%);
+      }
+
+      .fencing-1-v-bar-3 {
+        position: absolute;
+        top: 0;
+        right: 9em;
+        width: 0.3em;
+        height: 100%;
+        margin-top: -0.6em;
+        background: rgb(25,25,25);
+        transform: rotateZ(3deg);
+        background: linear-gradient(90deg, rgba(25,25,25,1) 0%, rgba(112,91,96,1) 0%, rgba(25,25,25,1) 100%);
+      }
+
+      .fencing-1-v-bar-4 {
+        position: absolute;
+        top: 0;
+        right: 10em;
+        width: 0.3em;
+        height: 100%;
+        margin-top: -0.6em;
+        background: rgb(25,25,25);
+        transform: rotateZ(3deg);
+        background: linear-gradient(90deg, rgba(25,25,25,1) 0%, rgba(112,91,96,1) 0%, rgba(25,25,25,1) 100%);
+      }
+
+      .fencing-1-v-bar-5 {
+        position: absolute;
+        top: 0;
+        right: 16.5em;
+        width: 0.3em;
+        height: 100%;
+        margin-top: -0.6em;
+        background: rgb(25,25,25);
+        transform: rotateZ(3deg);
+        background: linear-gradient(90deg, rgba(25,25,25,1) 0%, rgba(112,91,96,1) 0%, rgba(25,25,25,1) 100%);
+      }
+
+      .fencing-2 {
+        position: absolute;
+        right: calc(-19em + -23em);
+        top: 3.8em;
+        width: 23em;
+        height: 15em;
+        background-color: var(--color--scoreboard-hole);
+        display: flex;  
+        background-color: transparent;
+        background-image:
+          repeating-linear-gradient(45deg, rgba(0, 0, 0, 0),rgba(0, 0, 0, 0) 0.5em, rgba(0, 0, 0, 0.3) 0.5em, rgba(0, 0, 0, 0.3) 0.6em),
+          repeating-linear-gradient(-45deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0) 0.5em, rgba(0, 0, 0, 0.3) 0.5em, rgba(0, 0, 0, 0.3) 0.6em);
+        background-size: 0.8em 0.8em, 0.8em 0.8em;
+        transform: skew(0,20deg);
+        display: flex;
+        flex-direction: column;
+      }
+
+      .fencing-2-h-bar {
+        height: 0.3em;
+        width: 100%;
+        margin-top: 0.2em;
+        background: rgb(25,25,25);
+        background: linear-gradient(180deg, rgba(25,25,25,1) 0%, rgba(112,91,96,1) 0%, rgba(25,25,25,1) 100%);
+      }
+
+      .fencing-2-vertical-wrapper {
+        position: relative;
+        height: 100%;
+      }
+
+      .fencing-2-v-bar-1 {
+        position: absolute;
+        top: 0;
+        left: 6.8em;
+        width: 0.3em;
+        height: 100%;
+        margin-top: -0.6em;
+        background: rgb(25,25,25);
+        background: linear-gradient(90deg, rgba(25,25,25,1) 0%, rgba(112,91,96,1) 0%, rgba(25,25,25,1) 100%);
+      }
+
+      .fencing-3 {
+        position: absolute;
+        top: 5em;
+        right: calc(-19em + -21em + 0em);
+        width: 20em;
+        height: 15em;
+        background-color: var(--color--scoreboard-hole);
+        display: flex;  
+        background-color: transparent;
+        background-image:
+          repeating-linear-gradient(45deg, rgba(0, 0, 0, 0),rgba(0, 0, 0, 0) 0.5em, rgba(0, 0, 0, 0.3) 0.5em, rgba(0, 0, 0, 0.3) 0.6em),
+          repeating-linear-gradient(-45deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0) 0.5em, rgba(0, 0, 0, 0.3) 0.5em, rgba(0, 0, 0, 0.3) 0.6em);
+        background-size: 0.8em 0.8em, 0.8em 0.8em;
+        display: flex;
+        flex-direction: column;
+        transform: skew(0, -20deg);
+        border-top-right-radius: 2em;
+        border-top: solid 0.3em rgb(25,25,25);
+        border-right: solid 0.4em rgb(25,25,25);
+      }
+
+       .fencing-3-v-bar-1 {
+        position: absolute;
+        top: 0;
+        left: 9.8em;
+        width: 0.3em;
+        height: 100%;
+        margin-top: -0.6em;
+        background: rgb(25,25,25);
+        background: linear-gradient(90deg, rgba(25,25,25,1) 0%, rgba(112,91,96,1) 0%, rgba(25,25,25,1) 100%);
+      }
+
+  	</style>
+  </head>
+  <body>
+  	<div class="handcoded">
+  		Life Imitates Code
+  	</div>
+  	<div class="subject">
+  		Wrigley Field Scoreboard - 1941
+  	</div>
+  	<div class="author">
+  		Ka Wai Cheung
+  	</div>
+  	<div class="picture">
+      <div class="scoreboard-wrapper">
+        <div class="standings">
+          <div class="national-flag-line">
+            <div class="flag-1"></div>
+            <div class="flag-2"></div>
+            <div class="flag-3"></div>
+          </div>
+          <div class="flag-pole"></div>
+          <div class="american-flag-line">
+            <div class="flag-1"></div>
+            <div class="flag-2"></div>
+          </div>
         </div>
-        <div class="scoreboard-right-side">
-          <div class="top-3-windows">
-            <div></div>
-            <div></div>
-            <div></div>
+        <div class="scoreboard">
+          <div class="scoreboard-left-side">
           </div>
-          <div class="bottom-4-windows">
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-          </div>
-        </div>
-        <div class="s-clock">
-          <div>
-            <div>
-              <div class="minute-hand-wrapper">
-                <div></div>
-              </div>
-              <div class="hour-hand-wrapper">
-                <div></div>
-              </div>
-              <div class="clock-knub"></div>
-              <div class="s-clock-hand h-12-6">
-                <div></div>
-                <div></div>
-              </div>
-              <div class="s-clock-hand h-1-7">
-                <div></div>
-                <div></div>
-              </div>
-              <div class="s-clock-hand h-2-8">
-                <div></div>
-                <div></div>
-              </div>
-              <div class="s-clock-hand h-3-9">
-                <div></div>
-                <div></div>
-              </div>
-              <div class="s-clock-hand h-4-10">
-                <div></div>
-                <div></div>
-              </div>
-              <div class="s-clock-hand h-5-11">
-                <div></div>
-                <div></div>
-              </div>
+          <div class="scoreboard-right-side">
+            <div class="top-3-windows">
+              <div></div>
+              <div></div>
+              <div></div>
+            </div>
+            <div class="bottom-4-windows">
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
             </div>
           </div>
-        </div>
-        <div class="s-clock-stand"></div>
-        <div class="s-header"></div>
-        <div class="s-league national">
-          <div class="windows">
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
+          <div class="s-clock">
+            <div>
+              <div>
+                <div class="minute-hand-wrapper">
+                  <div></div>
+                </div>
+                <div class="hour-hand-wrapper">
+                  <div></div>
+                </div>
+                <div class="clock-knub"></div>
+                <div class="s-clock-hand h-12-6">
+                  <div></div>
+                  <div></div>
+                </div>
+                <div class="s-clock-hand h-1-7">
+                  <div></div>
+                  <div></div>
+                </div>
+                <div class="s-clock-hand h-2-8">
+                  <div></div>
+                  <div></div>
+                </div>
+                <div class="s-clock-hand h-3-9">
+                  <div></div>
+                  <div></div>
+                </div>
+                <div class="s-clock-hand h-4-10">
+                  <div></div>
+                  <div></div>
+                </div>
+                <div class="s-clock-hand h-5-11">
+                  <div></div>
+                  <div></div>
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="league-text">National</div>
-          <div class="innings">Innings</div>
-          <div class="box-scores">
-            <div class="ledge top">
+          <div class="s-clock-stand"></div>
+          <div class="s-header"></div>
+          <div class="s-league national">
+            <div class="windows">
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
             </div>
-            <div class="ledge">
+            <div class="league-text">National</div>
+            <div class="innings">Innings</div>
+            <div class="box-scores">
+              <div class="ledge top">
+              </div>
+              <div class="ledge">
+              </div>
+              <div>
+                <div class="pc-holder p">
+                  <div>P.</div>
+                </div>
+                <div class="pc-holder c">
+                  <div>C.</div>
+                </div>
+                <div class="team hide"></div>
+                <div class="inning-set">
+                  <div><span class="inning">1</span></div>
+                  <div><span class="inning">2</span></div>
+                  <div><span class="inning">3</span></div>
+                  <div><span class="inning">4</span></div>
+                  <div><span class="inning">5</span></div>
+                  <div><span class="inning">6</span></div>
+                  <div><span class="inning">7</span></div>
+                  <div><span class="inning">8</span></div>
+                  <div><span class="inning">9</span></div>
+                  <div><span class="inning ten">10</span></div>
+                </div>
+              </div>
+              <div>
+                <div class="pc-holder">7</div>
+                <div class="pc-holder">4</div>
+                <div class="team boston">Boston</div>
+                <div class="inning-set">
+                  <div>0</div>
+                  <div>1</div>
+                  <div>0</div>
+                  <div>0</div>
+                  <div>0</div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                </div>
+              </div>
+              <div>
+                <div class="pc-holder">22</div>
+                <div class="pc-holder">5</div>
+                <div class="team cubs">Cubs</div>
+                <div class="inning-set">
+                  <div>0</div>
+                  <div>0</div>
+                  <div>3</div>
+                  <div>1</div>
+                  <div>0</div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                </div>
+              </div>
+              <div>
+                <div class="pc-holder"></div>
+                <div class="pc-holder"></div>
+                <div class="team newyork">New York</div>
+                <div class="inning-set">
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                </div>
+              </div>
+              <div>
+                <div class="pc-holder"></div>
+                <div class="pc-holder"></div>
+                <div class="team pittsburgh">Pittsburgh</div>
+                <div class="inning-set">
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                </div>
+              </div>
+              <div>
+                <div class="pc-holder"></div>
+                <div class="pc-holder"></div>
+                <div class="team philadelphia">Philadelphia</div>
+                <div class="inning-set">
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div>8</div>
+                </div>
+              </div>
+              <div>
+                <div class="pc-holder"></div>
+                <div class="pc-holder"></div>
+                <div class="team stlouis">St.Louis</div>
+                <div class="inning-set">
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div>3</div>
+                </div>
+              </div>
+              <div>
+                <div class="pc-holder"></div>
+                <div class="pc-holder"></div>
+                <div class="team brooklyn">Brooklyn</div>
+                <div class="inning-set">
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div>5</div>
+                </div>
+              </div>
+              <div>
+                <div class="pc-holder"></div>
+                <div class="pc-holder"></div>
+                <div class="team cincinnati">Cincinnati</div>
+                <div class="inning-set">
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div>2</div>
+                </div>
+              </div>
+              <div>
+                <div class="pc-holder hide"></div>
+                <div class="pc-holder hide"></div>
+                <div class="team hide">&nbsp;</div>
+                <div class="inning-set">
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div class="hole"></div>
+                </div>
+              </div>
             </div>
-            <div>
-              <div class="pc-holder p">
-                <div>P.</div>
-              </div>
-              <div class="pc-holder c">
-                <div>C.</div>
-              </div>
-              <div class="team hide"></div>
-              <div class="inning-set">
-                <div><span class="inning">1</span></div>
-                <div><span class="inning">2</span></div>
-                <div><span class="inning">3</span></div>
-                <div><span class="inning">4</span></div>
-                <div><span class="inning">5</span></div>
-                <div><span class="inning">6</span></div>
-                <div><span class="inning">7</span></div>
-                <div><span class="inning">8</span></div>
-                <div><span class="inning">9</span></div>
-                <div><span class="inning ten">10</span></div>
-              </div>
-            </div>
-            <div>
-              <div class="pc-holder">7</div>
-              <div class="pc-holder">4</div>
-              <div class="team boston">Boston</div>
-              <div class="inning-set">
-                <div>0</div>
-                <div>1</div>
-                <div>0</div>
-                <div>0</div>
-                <div>0</div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-              </div>
-            </div>
-            <div>
-              <div class="pc-holder">22</div>
-              <div class="pc-holder">5</div>
-              <div class="team cubs">Cubs</div>
-              <div class="inning-set">
-                <div>0</div>
-                <div>0</div>
+          </div>   
+          <div class="s-info-wrapper">
+            <div class="s-info">
+              <div class="bottom-line-1">
+                <div>Vis</div>
                 <div>3</div>
-                <div>1</div>
-                <div>0</div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
+                <div>Hits</div>
+                <div>6</div>
+                <div>Cubs</div>
               </div>
-            </div>
-            <div>
-              <div class="pc-holder"></div>
-              <div class="pc-holder"></div>
-              <div class="team newyork">New York</div>
-              <div class="inning-set">
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
+              <div class="umpires">
+                Umpires
               </div>
-            </div>
-            <div>
-              <div class="pc-holder"></div>
-              <div class="pc-holder"></div>
-              <div class="team pittsburgh">Pittsburgh</div>
-              <div class="inning-set">
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div class="hole"></div>
-                <div class="hole"></div>
-                <div class="hole"></div>
+              <div class="umpire-bases">
+                <div>
+                  <div class="base-text plate">Plate</div>
+                  <div class="umpire-number">8</div>
+                </div>
+                <div>
+                  <div class="base-text">1<sup>st</sup></div>
+                  <div class="umpire-number">10</div>
+                </div>
+                <div>
+                  <div class="base-text">2<sup>nd</sup></div>
+                  <div class="umpire-number"></div>
+                </div>
+                <div>
+                  <div class="base-text">3<sup>rd</sup></div>
+                  <div class="umpire-number">13</div>
+                </div>
               </div>
-            </div>
-            <div>
-              <div class="pc-holder"></div>
-              <div class="pc-holder"></div>
-              <div class="team philadelphia">Philadelphia</div>
-              <div class="inning-set">
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div>8</div>
-              </div>
-            </div>
-            <div>
-              <div class="pc-holder"></div>
-              <div class="pc-holder"></div>
-              <div class="team stlouis">St.Louis</div>
-              <div class="inning-set">
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div>3</div>
-              </div>
-            </div>
-            <div>
-              <div class="pc-holder"></div>
-              <div class="pc-holder"></div>
-              <div class="team brooklyn">Brooklyn</div>
-              <div class="inning-set">
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div>5</div>
-              </div>
-            </div>
-            <div>
-              <div class="pc-holder"></div>
-              <div class="pc-holder"></div>
-              <div class="team cincinnati">Cincinnati</div>
-              <div class="inning-set">
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div>2</div>
-              </div>
-            </div>
-            <div>
-              <div class="pc-holder hide"></div>
-              <div class="pc-holder hide"></div>
-              <div class="team hide">&nbsp;</div>
-              <div class="inning-set">
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div class="hole"></div>
-              </div>
-            </div>
-          </div>
-        </div>   
-        <div class="s-info-wrapper">
-          <div class="s-info">
-            <div class="bottom-line-1">
-              <div>Vis</div>
-              <div>3</div>
-              <div>Hits</div>
-              <div>6</div>
-              <div>Cubs</div>
-            </div>
-            <div class="umpires">
-              Umpires
-            </div>
-            <div class="umpire-bases">
-              <div>
-                <div class="base-text plate">Plate</div>
-                <div class="umpire-number">8</div>
-              </div>
-              <div>
-                <div class="base-text">1<sup>st</sup></div>
-                <div class="umpire-number">10</div>
-              </div>
-              <div>
-                <div class="base-text">2<sup>nd</sup></div>
-                <div class="umpire-number"></div>
-              </div>
-              <div>
-                <div class="base-text">3<sup>rd</sup></div>
-                <div class="umpire-number">13</div>
-              </div>
-            </div>
-            <div class="batter">
-              <div>
-                <div class="batter-text">Batter</div>
-                <div class="info-marquee-squares-wrapper">
-                  <div class="info-marquee-square">
-                    <div>
-                      <div></div>
-                      <div class="lit"></div>
-                      <div class="lit"></div>
-                      <div class="lit"></div>
-                      <div></div>
+              <div class="batter">
+                <div>
+                  <div class="batter-text">Batter</div>
+                  <div class="info-marquee-squares-wrapper">
+                    <div class="info-marquee-square">
+                      <div>
+                        <div></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div class="lit"></div>
+                        <div class="blank"></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+                      </div>
+                      <div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+                      </div>
+                      <div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+                      </div>
+                      <div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+                      </div>
+                      <div>
+                        <div class="lit"></div>
+                        <div class="blank"></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+                      </div>
+                      <div>
+                        <div></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div></div>
+                      </div>
                     </div>
-                    <div>
-                      <div class="lit"></div>
-                      <div class="blank"></div>
-                      <div></div>
-                      <div></div>
-                      <div class="lit"></div>
-                    </div>
-                    <div>
-                      <div></div>
-                      <div></div>
-                      <div></div>
-                      <div></div>
-                      <div class="lit"></div>
-                    </div>
-                    <div>
-                      <div></div>
-                      <div></div>
-                      <div class="lit"></div>
-                      <div class="lit"></div>
-                      <div></div>
-                    </div>
-                    <div>
-                      <div></div>
-                      <div></div>
-                      <div></div>
-                      <div></div>
-                      <div class="lit"></div>
-                    </div>
-                    <div>
-                      <div></div>
-                      <div></div>
-                      <div></div>
-                      <div></div>
-                      <div class="lit"></div>
-                    </div>
-                    <div>
-                      <div class="lit"></div>
-                      <div class="blank"></div>
-                      <div></div>
-                      <div></div>
-                      <div class="lit"></div>
-                    </div>
-                    <div>
-                      <div></div>
-                      <div class="lit"></div>
-                      <div class="lit"></div>
-                      <div class="lit"></div>
-                      <div></div>
-                    </div>
-                  </div>
-                 <div class="info-marquee-square">
-                    <div>
-                      <div></div>
-                      <div></div>
-                      <div></div>
-                      <div></div>
-                      <div class="lit"></div>
-                    </div>
-                    <div>
-                      <div></div>
-                      <div class="blank"></div>
-                      <div></div>
-                      <div class="lit"></div>
-                      <div class="lit"></div>
-                    </div>
-                    <div>
-                      <div></div>
-                      <div></div>
-                      <div class="lit"></div>
-                      <div></div>
-                      <div class="lit"></div>
-                    </div>
-                    <div>
-                      <div></div>
-                      <div class="lit"></div>
-                      <div></div>
-                      <div></div>
-                      <div class="lit"></div>
-                    </div>
-                    <div>
-                      <div></div>
-                      <div></div>
-                      <div></div>
-                      <div></div>
-                      <div class="lit"></div>
-                    </div>
-                    <div>
-                      <div></div>
-                      <div></div>
-                      <div></div>
-                      <div></div>
-                      <div class="lit"></div>
-                    </div>
-                    <div>
-                      <div></div>
-                      <div class="blank"></div>
-                      <div></div>
-                      <div></div>
-                      <div class="lit"></div>
-                    </div>
-                    <div>
-                      <div></div>
-                      <div></div>
-                      <div></div>
-                      <div></div>
-                      <div class="lit"></div>
+                   <div class="info-marquee-square">
+                      <div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div></div>
+                        <div class="blank"></div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div></div>
+                        <div class="blank"></div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
+              <div class="ball-strike">
+                <div>
+                  <div class="ball-text">Ball</div>
+                   <div class="info-marquee-square">
+                      <div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div></div>
+                        <div class="blank"></div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div></div>
+                        <div class="blank"></div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                    </div>
+                </div>
+                <div>
+                   <div class="info-marquee-square">
+                      <div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div></div>
+                        <div class="blank"></div>
+                        <div></div>
+                        <div class="blank"></div>
+                        <div></div>
+                      </div>
+                       <div>
+                        <div></div>
+                        <div class="blank"></div>
+                        <div></div>
+                        <div class="blank"></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div></div>
+                        <div class="blank"></div>
+                        <div></div>
+                        <div class="blank"></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div></div>
+                        <div class="blank"></div>
+                        <div></div>
+                        <div class="blank"></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div></div>
+                        <div class="blank"></div>
+                        <div class="blank"></div>
+                        <div class="blank"></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                    </div>
+                </div>
+                <div>
+                  <div class="strike-text">Strike</div>
+                   <div class="info-marquee-square">
+                      <div>
+                        <div></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div class="lit"></div>
+                        <div class="blank"></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+                      </div>
+                      <div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+                      </div>
+                      <div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+                        <div class="blank"></div>
+                      </div>
+                      <div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div></div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div class="lit"></div>
+                        <div class="blank"></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                      </div>
+                    </div>
+                </div>
+              </div>
+              <div class="out">
+                <div>
+                  <div class="out-text">Out</div>
+                   <div class="info-marquee-square">
+                      <div>
+                        <div class="blank"></div>
+                        <div></div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div class="blank"></div>
+                      </div>
+                      <div>
+                        <div></div>
+                        <div class="blank"></div>
+                        <div class="lit"></div>
+                        <div class="blank"></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div class="blank"></div>
+                        <div class="blank"></div>
+                        <div class="lit"></div>
+                        <div class="blank"></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div class="blank"></div>
+                        <div class="blank"></div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div class="blank"></div>
+                      </div>
+                      <div>
+                        <div class="blank"></div>
+                        <div class="blank"></div>
+                        <div class="lit"></div>
+                        <div class="blank"></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div class="blank"></div>
+                        <div></div>
+                        <div class="lit"></div>
+                        <div class="blank"></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div></div>
+                        <div class="blank"></div>
+                        <div class="lit"></div>
+                        <div class="blank"></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                    </div>
+                </div>
+              </div>
             </div>
-            <div class="ball-strike">
-              <div>
-                <div class="ball-text">Ball</div>
-                 <div class="info-marquee-square">
-                    <div>
-                      <div></div>
-                      <div></div>
-                      <div class="lit"></div>
-                      <div></div>
-                      <div></div>
-                    </div>
-                    <div>
-                      <div></div>
-                      <div class="blank"></div>
-                      <div class="lit"></div>
-                      <div></div>
-                      <div></div>
-                    </div>
-                    <div>
-                      <div></div>
-                      <div></div>
-                      <div class="lit"></div>
-                      <div></div>
-                      <div></div>
-                    </div>
-                    <div>
-                      <div></div>
-                      <div></div>
-                      <div class="lit"></div>
-                      <div></div>
-                      <div></div>
-                    </div>
-                    <div>
-                      <div></div>
-                      <div></div>
-                      <div class="lit"></div>
-                      <div></div>
-                      <div></div>
-                    </div>
-                    <div>
-                      <div></div>
-                      <div></div>
-                      <div class="lit"></div>
-                      <div></div>
-                      <div></div>
-                    </div>
-                    <div>
-                      <div></div>
-                      <div class="blank"></div>
-                      <div class="lit"></div>
-                      <div></div>
-                      <div></div>
-                    </div>
-                    <div>
-                      <div></div>
-                      <div></div>
-                      <div class="lit"></div>
-                      <div></div>
-                      <div></div>
-                    </div>
-                  </div>
-              </div>
-              <div>
-                 <div class="info-marquee-square">
-                    <div>
-                      <div></div>
-                      <div></div>
-                      <div></div>
-                      <div></div>
-                      <div></div>
-                    </div>
-                    <div>
-                      <div></div>
-                      <div class="blank"></div>
-                      <div></div>
-                      <div class="blank"></div>
-                      <div></div>
-                    </div>
-                     <div>
-                      <div></div>
-                      <div class="blank"></div>
-                      <div></div>
-                      <div class="blank"></div>
-                      <div></div>
-                    </div>
-                    <div>
-                      <div></div>
-                      <div></div>
-                      <div></div>
-                      <div></div>
-                      <div></div>
-                    </div>
-                    <div>
-                      <div></div>
-                      <div class="blank"></div>
-                      <div></div>
-                      <div class="blank"></div>
-                      <div></div>
-                    </div>
-                    <div>
-                      <div></div>
-                      <div class="blank"></div>
-                      <div></div>
-                      <div class="blank"></div>
-                      <div></div>
-                    </div>
-                    <div>
-                      <div></div>
-                      <div class="blank"></div>
-                      <div class="blank"></div>
-                      <div class="blank"></div>
-                      <div></div>
-                    </div>
-                    <div>
-                      <div></div>
-                      <div></div>
-                      <div></div>
-                      <div></div>
-                      <div></div>
-                    </div>
-                  </div>
-              </div>
-              <div>
-                <div class="strike-text">Strike</div>
-                 <div class="info-marquee-square">
-                    <div>
-                      <div></div>
-                      <div class="lit"></div>
-                      <div class="lit"></div>
-                      <div class="lit"></div>
-                      <div></div>
-                    </div>
-                    <div>
-                      <div class="lit"></div>
-                      <div class="blank"></div>
-                      <div></div>
-                      <div></div>
-                      <div class="lit"></div>
-                    </div>
-                    <div>
-                      <div></div>
-                      <div></div>
-                      <div></div>
-                      <div></div>
-                      <div class="lit"></div>
-                    </div>
-                    <div>
-                      <div></div>
-                      <div></div>
-                      <div></div>
-                      <div class="lit"></div>
-                      <div class="blank"></div>
-                    </div>
-                    <div>
-                      <div></div>
-                      <div></div>
-                      <div class="lit"></div>
-                      <div></div>
-                      <div></div>
-                    </div>
-                    <div>
-                      <div></div>
-                      <div class="lit"></div>
-                      <div></div>
-                      <div></div>
-                      <div></div>
-                    </div>
-                    <div>
-                      <div class="lit"></div>
-                      <div class="blank"></div>
-                      <div></div>
-                      <div></div>
-                      <div></div>
-                    </div>
-                    <div>
-                      <div class="lit"></div>
-                      <div class="lit"></div>
-                      <div class="lit"></div>
-                      <div class="lit"></div>
-                      <div class="lit"></div>
-                    </div>
-                  </div>
-              </div>
+          </div>
+          <div class="s-league american">
+            <div class="windows">
+              <div></div>
+              <div></div>
+              <div class="covered"></div>
+              <div></div>
             </div>
-            <div class="out">
+            <div class="league-text">American</div>
+            <div class="innings">Innings</div>
+            <div class="box-scores">
+              <div class="ledge top">
+              </div>
+              <div class="ledge">
+              </div>
               <div>
-                <div class="out-text">Out</div>
-                 <div class="info-marquee-square">
-                    <div>
-                      <div class="blank"></div>
-                      <div></div>
-                      <div class="lit"></div>
-                      <div></div>
-                      <div class="blank"></div>
-                    </div>
-                    <div>
-                      <div></div>
-                      <div class="blank"></div>
-                      <div class="lit"></div>
-                      <div class="blank"></div>
-                      <div></div>
-                    </div>
-                    <div>
-                      <div class="blank"></div>
-                      <div class="blank"></div>
-                      <div class="lit"></div>
-                      <div class="blank"></div>
-                      <div></div>
-                    </div>
-                    <div>
-                      <div class="blank"></div>
-                      <div class="blank"></div>
-                      <div class="lit"></div>
-                      <div></div>
-                      <div class="blank"></div>
-                    </div>
-                    <div>
-                      <div class="blank"></div>
-                      <div class="blank"></div>
-                      <div class="lit"></div>
-                      <div class="blank"></div>
-                      <div></div>
-                    </div>
-                    <div>
-                      <div class="blank"></div>
-                      <div></div>
-                      <div class="lit"></div>
-                      <div class="blank"></div>
-                      <div></div>
-                    </div>
-                    <div>
-                      <div></div>
-                      <div class="blank"></div>
-                      <div class="lit"></div>
-                      <div class="blank"></div>
-                      <div></div>
-                    </div>
-                    <div>
-                      <div></div>
-                      <div></div>
-                      <div class="lit"></div>
-                      <div></div>
-                      <div></div>
-                    </div>
-                  </div>
+                <div class="pc-holder p">
+                  <div>P.</div>
+                </div>
+                <div class="pc-holder c">
+                  <div>C.</div>
+                </div>
+                <div class="team hide"></div>
+                <div class="inning-set">
+                  <div><span class="inning">1</span></div>
+                  <div><span class="inning">2</span></div>
+                  <div><span class="inning">3</span></div>
+                  <div><span class="inning">4</span></div>
+                  <div><span class="inning">5</span></div>
+                  <div><span class="inning">6</span></div>
+                  <div><span class="inning">7</span></div>
+                  <div><span class="inning">8</span></div>
+                  <div><span class="inning">9</span></div>
+                  <div><span class="inning ten">10</span></div>
+                </div>
+              </div>
+              <div>
+                <div class="pc-holder"></div>
+                <div class="pc-holder"></div>
+                <div class="team sox">Sox</div>
+                <div class="inning-set">
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                </div>
+              </div>
+              <div>
+                <div class="pc-holder"></div>
+                <div class="pc-holder"></div>
+                <div class="team washington">Washington</div>
+                <div class="inning-set">
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                </div>
+              </div>
+              <div>
+                <div class="pc-holder"></div>
+                <div class="pc-holder"></div>
+                <div class="team detroit">Detroit</div>
+                <div class="inning-set">
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                </div>
+              </div>
+              <div>
+                <div class="pc-holder"></div>
+                <div class="pc-holder"></div>
+                <div class="team boston">Boston</div>
+                <div class="inning-set">
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                </div>
+              </div>
+              <div>
+                <div class="pc-holder">23</div>
+                <div class="pc-holder">5</div>
+                <div class="team cleveland">Cleveland</div>
+                <div class="inning-set">
+                  <div>1</div>
+                  <div>0</div>
+                  <div>0</div>
+                  <div>2</div>
+                  <div>0</div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                </div>
+              </div>
+              <div>
+                <div class="pc-holder">7</div>
+                <div class="pc-holder">8</div>
+                <div class="team newyork">New York</div>
+                <div class="inning-set">
+                  <div>0</div>
+                  <div>2</div>
+                  <div>0</div>
+                  <div>1</div>
+                  <div>1</div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                </div>
+              </div>
+              <div>
+                <div class="pc-holder"></div>
+                <div class="pc-holder"></div>
+                <div class="team stlouis">St.Louis</div>
+                <div class="inning-set">
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div>6</div>
+                </div>
+              </div>
+              <div>
+                <div class="pc-holder"></div>
+                <div class="pc-holder"></div>
+                <div class="team philadelphia">Philadelphia</div>
+                <div class="inning-set">
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div>10</div>
+                </div>
+              </div>
+              <div>
+                <div class="pc-holder hide"></div>
+                <div class="pc-holder hide"></div>
+                <div class="team hide">&nbsp;</div>
+                <div class="inning-set">
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="s-league american">
-          <div class="windows">
-            <div></div>
-            <div></div>
-            <div class="covered"></div>
-            <div></div>
+        <div class="scoreboard-pillars">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+        <div class="scoreboard-pillars-2">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+        <div class="scoreboard-bottom">
+          <div>
+             <div></div>
           </div>
-          <div class="league-text">American</div>
-          <div class="innings">Innings</div>
-          <div class="box-scores">
-            <div class="ledge top">
-            </div>
-            <div class="ledge">
-            </div>
-            <div>
-              <div class="pc-holder p">
-                <div>P.</div>
-              </div>
-              <div class="pc-holder c">
-                <div>C.</div>
-              </div>
-              <div class="team hide"></div>
-              <div class="inning-set">
-                <div><span class="inning">1</span></div>
-                <div><span class="inning">2</span></div>
-                <div><span class="inning">3</span></div>
-                <div><span class="inning">4</span></div>
-                <div><span class="inning">5</span></div>
-                <div><span class="inning">6</span></div>
-                <div><span class="inning">7</span></div>
-                <div><span class="inning">8</span></div>
-                <div><span class="inning">9</span></div>
-                <div><span class="inning ten">10</span></div>
-              </div>
-            </div>
-            <div>
-              <div class="pc-holder"></div>
-              <div class="pc-holder"></div>
-              <div class="team sox">Sox</div>
-              <div class="inning-set">
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-              </div>
-            </div>
-            <div>
-              <div class="pc-holder"></div>
-              <div class="pc-holder"></div>
-              <div class="team washington">Washington</div>
-              <div class="inning-set">
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-              </div>
-            </div>
-            <div>
-              <div class="pc-holder"></div>
-              <div class="pc-holder"></div>
-              <div class="team detroit">Detroit</div>
-              <div class="inning-set">
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-              </div>
-            </div>
-            <div>
-              <div class="pc-holder"></div>
-              <div class="pc-holder"></div>
-              <div class="team boston">Boston</div>
-              <div class="inning-set">
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-              </div>
-            </div>
-            <div>
-              <div class="pc-holder">23</div>
-              <div class="pc-holder">5</div>
-              <div class="team cleveland">Cleveland</div>
-              <div class="inning-set">
-                <div>1</div>
-                <div>0</div>
-                <div>0</div>
-                <div>2</div>
-                <div>0</div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-              </div>
-            </div>
-            <div>
-              <div class="pc-holder">7</div>
-              <div class="pc-holder">8</div>
-              <div class="team newyork">New York</div>
-              <div class="inning-set">
-                <div>0</div>
-                <div>2</div>
-                <div>0</div>
-                <div>1</div>
-                <div>1</div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-              </div>
-            </div>
-            <div>
-              <div class="pc-holder"></div>
-              <div class="pc-holder"></div>
-              <div class="team stlouis">St.Louis</div>
-              <div class="inning-set">
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div>6</div>
-              </div>
-            </div>
-            <div>
-              <div class="pc-holder"></div>
-              <div class="pc-holder"></div>
-              <div class="team philadelphia">Philadelphia</div>
-              <div class="inning-set">
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div>10</div>
-              </div>
-            </div>
-            <div>
-              <div class="pc-holder hide"></div>
-              <div class="pc-holder hide"></div>
-              <div class="team hide">&nbsp;</div>
-              <div class="inning-set">
-                <div></div>
-                <div></div>
-                <div></div>
-                <div class="hole"></div>
-                <div class="hole"></div>
-                <div class="hole"></div>
-                <div class="hole"></div>
-                <div class="hole"></div>
-                <div class="hole"></div>
-                <div class="hole"></div>
-              </div>
-            </div>
+          <div>
+             <div></div>
+             <div></div>
+          </div>
+          <div>
+             <div></div>
           </div>
         </div>
-      </div>
-      <div class="scoreboard-pillars">
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-      </div>
-      <div class="scoreboard-pillars-2">
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-      </div>
-      <div class="scoreboard-bottom">
-        <div>
-           <div></div>
-        </div>
-        <div>
-           <div></div>
-           <div></div>
-        </div>
-        <div>
-           <div></div>
+        <div class="fencing">
+          <div class="fencing-0">
+            <div class="fencing-0-h-bar"></div>
+            <div class="fencing-0-vertical-wrapper">
+             <div class="fencing-0-v-bar-1"></div>
+             <div class="fencing-0-v-bar-2"></div>
+           </div>
+           </div>
+          <div class="fencing-1">
+            <div class="fencing-1-h-bar"></div>
+            <div class="fencing-1-vertical-wrapper">
+              <div class="fencing-1-v-bar-1"></div>
+              <div class="fencing-1-v-bar-2"></div>
+              <div class="fencing-1-v-bar-3"></div>
+              <div class="fencing-1-v-bar-4"></div>
+              <div class="fencing-1-v-bar-5"></div>
+           </div>
+          </div>
+          <div class="fencing-2">
+            <div class="fencing-2-h-bar"></div>
+            <div class="fencing-2-vertical-wrapper">
+              <div class="fencing-2-v-bar-1"></div>
+            </div>
+          </div>
+          <div class="fencing-3">
+            <div class="fencing-3-h-bar"></div>
+            <div class="fencing-3-vertical-wrapper">
+              <div class="fencing-3-v-bar-1"></div>
+            </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</body>
+  </body>
 </html>
