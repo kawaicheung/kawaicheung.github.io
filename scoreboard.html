@@ -5,7 +5,6 @@
   	<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Squada+One&display=swap" rel="stylesheet">
   	<style>
       :root {
-        --color--scoreboard: rgba(109,68,78,1);
         --color--scoreboard-right-side: rgba(82,51,58,1);
         --color--scoreboard-left-side: #222;
         --color--scoreboard-text: #f7f5f4;
@@ -15,8 +14,8 @@
         --color--scoreboard-bottom: rgba(83,63,68,1);
         --color--scoreboard-middle: rgba(109,68,78,1);
 
-        --color--sky-outer: rgba(203,187,233,1);
-        --color--sky-inner: rgba(225,242,245,1);
+        --color--sky-outer:#428cbe;
+        --color--sky-inner: #acd2e7;
 
         --blur-text: blur(0.3px);
 
@@ -75,9 +74,9 @@
   			flex-direction: column;
   			align-items: center;
         overflow: hidden;
-        background: rgb(225,242,245);
-        background: radial-gradient(circle, var(--color--sky-inner) 0%, var(--color--sky-outer) 100%);
-      }
+  background: rgb(66,140,190);
+background: linear-gradient(180deg, rgba(66,140,190,1) 0%, rgba(172,210,231,1) 82%);
+    }
 
       .scoreboard-wrapper {
         position: absolute;
@@ -88,7 +87,7 @@
   			align-items: center;
   			justify-content: center;
         font-size: 10px;
-        top: 7em;
+        top: 6.6em;
         transform: perspective(380em) rotateZ(0deg) rotateX(14deg) rotateY(-26deg);
       }
 
@@ -147,9 +146,9 @@
       .standings {
         position: absolute;
         top: -10em;
-        left: 51%;
+        left: 54%;
         transform: translateX(-50%);
-        width: calc(var(--px--scoreboard-width) * 0.3);
+        width: calc(var(--px--scoreboard-width) * 0.34);
         display: flex;
         justify-content: space-between;
       }
@@ -158,7 +157,9 @@
         height: 20em;
         width: 3em;
         border-right: solid 0.1em rgba(0,0,0,0.3);
-        border-radius: 10% 10% 33% 10% / 10% 0% 75% 10% 
+        border-radius: 10% 10% 33% 10% / 10% 0% 75% 10%;
+
+        position: relative;
       }
 
       .flag-pole {
@@ -312,7 +313,7 @@
       .scoreboard-pillars > div {
         width: 1em;
         height: 16em;
-        background-color: var(--color--scoreboard);
+        background-color: var(--color--scoreboard-top);
         border-right: solid 0.4em rgba(0,0,0,0.3); 
         box-shadow: inset 0em 4em 1.4em -2.9em rgba(0,0,0,0.5);
       }
@@ -389,7 +390,7 @@
         transform: translateX(-50%);
         height: 100%;
   			top: calc(var(--px--scoreboard-header-height) * -1);
-  			background-color: var(--color--scoreboard);
+  			background-color: var(--color--scoreboard-top);
   			border-top-left-radius: var(--px--scoreboard-header-height);
   			border-top-right-radius: var(--px--scoreboard-header-height);
         border-right: solid 0.2em var(--color--scoreboard-right-side);
@@ -402,7 +403,7 @@
         transform: translateX(-50%);
         height: 100%;
         top: calc((var(--px--scoreboard-clock-stand-height) + var(--px--scoreboard-header-height)) * -1);
-        background-color: var(--color--scoreboard);
+        background-color: var(--color--scoreboard-top);
         border-top-left-radius: var(--px--scoreboard-clock-stand-height);
         border-top-right-radius: var(--px--scoreboard-clock-stand-height);
         border-right: solid 0.2em var(--color--scoreboard-right-side);
@@ -424,7 +425,7 @@
         justify-content: center;
         padding: 0.1em;
         box-shadow:  0 0 0.2em rgba(0,0,0,1);
-        border-right: solid 0.1em var(--color--scoreboard);
+        border-right: solid 0.1em var(--color--scoreboard-top);
       }
 
       .s-clock .hour-hand-wrapper {
@@ -439,7 +440,7 @@
       .s-clock .hour-hand-wrapper > div {
         height: 40%;
         width: 100%;
-        background-color: var(--color--scoreboard);
+        background-color: var(--color--scoreboard-top);
         top: 20%;
         position: absolute;
         clip-path: polygon(35% 0%, 65% 0%, 100% 100%, 0% 100%);
@@ -457,7 +458,7 @@
       .s-clock .minute-hand-wrapper > div {
         height: 50%;
         width: 100%;
-        background-color: var(--color--scoreboard);
+        background-color: var(--color--scoreboard-top);
         top: 1em;
         position: absolute;
         clip-path: polygon(35% 0%, 65% 0%, 100% 100%, 0% 100%);
@@ -471,14 +472,14 @@
         border-radius: 50%;
         width: 0.8em;
         height: 0.8em;
-        background-color: var(--color--scoreboard);
+        background-color: var(--color--scoreboard-top);
         box-shadow: inset -0.1em -0.1em 0.1em rgba(0,0,0,0.6);
       }
 
       .s-clock > div {
         width: 100%;
         height: 100%;
-        background-color: var(--color--scoreboard);
+        background-color: var(--color--scoreboard-top);
         border-radius: 50%;
         padding: 0.3em;
         box-sizing: border-box;
@@ -510,7 +511,7 @@
         width: .7em;
         height: .7em;
         border-radius: 50%;
-        background-color: var(--color--scoreboard);
+        background-color: var(--color--scoreboard-top);
       }
 
       .s-clock-hand.h-12-6 {
@@ -574,7 +575,7 @@
 
       .bottom-line-1 {
         position: absolute;
-        background-color: var(--color--scoreboard);
+        background-color: var(--color--scoreboard-top);
         bottom: 1em;
         left: 50%;
         transform: translateX(-50%);
@@ -658,7 +659,7 @@
       }
 
       .windows > div.covered {
-        background-color: var(--color--scoreboard);
+        background-color: var(--color--scoreboard-top);
         border: none;
       }
 
@@ -926,12 +927,12 @@
       .fencing {
         position: absolute;      
         bottom: -8em;
-        left: calc(50% - 7em);
+        left: calc(50% - 9em);
         display: flex;
       }
 
       .fencing-0 {
-        width: 31em;
+        width: 33em;
         height: 15em;
         background-color: var(--color--scoreboard-hole);
         display: flex;  
