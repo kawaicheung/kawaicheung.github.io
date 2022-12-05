@@ -187,16 +187,22 @@ background: linear-gradient(180deg, var(--color--sky-inner) 0%, var(--color--sky
      
         @keyframes flag-wave {
         0%   {      
-         clip-path: polygon(49% 34%, 64% 31%, 84% 23%, 100% 14%, 80% 36%, 98% 35%, 44% 67%, 0 100%, 0 0, 30% 28%);
-background: linear-gradient(133deg, rgba(227,227,227,1) 0%, rgba(157,157,157,1) 17%, rgba(199,199,199,1) 27%, rgba(136,136,136,1) 50%, rgba(173,173,173,1) 68%, rgba(187,187,187,1) 71%, rgba(116,116,116,1) 83%, rgba(208,208,208,1) 94%);    
+       clip-path: polygon(77% 38%, 100% 38%, 66% 47%, 100% 69%, 62% 65%, 38% 72%, 16% 85%, 0 100%, 0 0, 36% 24%);
+
+         background: linear-gradient(124deg, rgba(181,181,181,1) 0%, rgba(78,78,78,1) 5%, rgba(112,112,112,1) 11%, rgba(164,164,164,1) 12%, rgba(149,149,149,1) 16%, rgba(103,103,103,1) 20%, rgba(98,98,98,1) 26%, rgba(139,139,139,1) 35%, rgba(199,199,199,1) 40%, rgba(128,128,128,1) 45%, rgba(161,161,161,1) 47%, rgba(120,120,120,1) 55%, rgba(164,164,164,1) 62%, rgba(190,190,190,1) 67%, rgba(85,85,85,1) 74%, rgba(55,55,55,1) 80%, rgba(80,80,80,1) 83%, rgba(108,108,108,1) 88%, rgba(45,45,45,1) 93%, rgba(0,0,0,1) 100%);
+        }
+        30% {
+          clip-path: polygon(68% 41%, 100% 59%, 71% 57%, 99% 81%, 66% 74%, 45% 74%, 16% 85%, 0 100%, 0 8%, 32% 29%);
+        }
+        50% {
+          clip-path: polygon(59% 46%, 100% 67%, 69% 63%, 99% 81%, 66% 74%, 41% 72%, 17% 81%, 0 100%, 0 8%, 26% 29%);
         }
         70% {
-        clip-path: polygon(53% 20%, 79% 23%, 100% 35%, 79% 44%, 100% 66%, 65% 63%, 29% 80%, 0 100%, 0 0, 20% 10%);
-
-        }
+     clip-path: polygon(63% 41%, 100% 40%, 74% 50%, 100% 64%, 59% 66%, 35% 73%, 15% 83%, 0 100%, 0 4%, 41% 31%);   }
          100%   {      
-         clip-path: polygon(49% 34%, 64% 31%, 84% 23%, 100% 14%, 80% 36%, 98% 35%, 44% 67%, 0 100%, 0 0, 30% 28%);
-background: linear-gradient(133deg, rgba(227,227,227,1) 0%, rgba(157,157,157,1) 17%, rgba(199,199,199,1) 27%, rgba(136,136,136,1) 50%, rgba(173,173,173,1) 68%, rgba(187,187,187,1) 71%, rgba(116,116,116,1) 83%, rgba(208,208,208,1) 94%);  
+ clip-path: polygon(77% 38%, 100% 38%, 66% 47%, 100% 69%, 62% 65%, 38% 72%, 16% 85%, 0 100%, 0 0, 36% 24%);
+
+   background: linear-gradient(124deg, rgba(181,181,181,1) 0%, rgba(78,78,78,1) 5%, rgba(112,112,112,1) 11%, rgba(164,164,164,1) 12%, rgba(149,149,149,1) 16%, rgba(103,103,103,1) 20%, rgba(98,98,98,1) 26%, rgba(139,139,139,1) 35%, rgba(199,199,199,1) 40%, rgba(128,128,128,1) 45%, rgba(161,161,161,1) 47%, rgba(120,120,120,1) 55%, rgba(164,164,164,1) 62%, rgba(190,190,190,1) 67%, rgba(85,85,85,1) 74%, rgba(55,55,55,1) 80%, rgba(80,80,80,1) 83%, rgba(108,108,108,1) 88%, rgba(45,45,45,1) 93%, rgba(0,0,0,1) 100%);
         }
       }
       .american-flag-line .flag-1 {
@@ -207,7 +213,7 @@ background: linear-gradient(133deg, rgba(227,227,227,1) 0%, rgba(157,157,157,1) 
         width: 8em;
         height: 4em;
         animation-name: flag-wave;
-        animation-duration: 10s;
+        animation-duration: 2.4s;
         animation-timing-function: linear;
         animation-iteration-count: infinite;
 }
@@ -220,7 +226,7 @@ background: linear-gradient(133deg, rgba(227,227,227,1) 0%, rgba(157,157,157,1) 
         width: 8em;
         height: 4em;
         animation-name: flag-wave;
-        animation-duration: 7s;
+        animation-duration: 4.1s;
         animation-timing-function: linear;
         animation-iteration-count: infinite; 
      }
@@ -234,7 +240,7 @@ background: linear-gradient(133deg, rgba(227,227,227,1) 0%, rgba(157,157,157,1) 
         height: 4em;
         filter: blur(0.4em);
         animation-name: flag-wave;
-        animation-duration: 5s;
+        animation-duration: 2.7s;
         animation-timing-function: linear;
         animation-iteration-count: infinite; 
       }
@@ -248,7 +254,7 @@ background: linear-gradient(133deg, rgba(227,227,227,1) 0%, rgba(157,157,157,1) 
         filter: blur(0.4em);
         transform: rotate(2deg);
         animation-name: flag-wave;
-        animation-duration: 4.4s;
+        animation-duration: 3.4s;
         animation-timing-function: linear;
         animation-iteration-count: infinite; 
       }
@@ -850,7 +856,7 @@ height: 1em;
       }
       .info-marquee-square > div > div.lit {
         background-color: #fff;
-        box-shadow: inset 0 1px 2px rgba(0,0,0,0.2);
+        box-shadow: inset -0.05em -0.08em 0.1em rgba(0,0,0,0.5);
       }
       .info-marquee-square > div > div.blank {
         box-shadow: none;
@@ -1224,7 +1230,7 @@ height: 1em;
   		Life Imitates Code
   	</div>
   	<div class="subject">
-  		Wrigley Field Scoreboard - 1941
+  		Wrigley Field, 1941
   	</div>
   	<div class="author">
   		Ka Wai Cheung
