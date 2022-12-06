@@ -471,7 +471,6 @@ height: 1em;
         transform: translateX(-50%);
         width: var(--em--scoreboard-clock);
         height: var(--em--scoreboard-clock);
-        background-color: #fff;
         border-radius: 40em;
         top: calc((var(--px--scoreboard-header-height) + var(--em--scoreboard-clock)) * -1);
         z-index: 1;
@@ -487,10 +486,11 @@ height: 1em;
       @keyframes hour-hand-rotate {
         0%   {
           transform: translateX(-50%) rotate(0deg);
-          filter: drop-shadow(1em 0 0.1em rgba(0,0,0,0.2));
+          filter: drop-shadow(1em 0.5em 0.1em rgba(0,0,0,0.2));
         }
         100% {
           transform: translateX(-50%) rotate(150deg);
+          filter: drop-shadow(0em 0 0.1em rgba(0,0,0,0.1));
         }
       }
 
@@ -516,19 +516,69 @@ height: 1em;
       }
 
       @keyframes minute-hand-rotate {
-        0%   {
+        0% {
           transform: translateX(-50%) rotate(0deg);
+          filter: drop-shadow(1em 1em 0.1em rgba(0,0,0,0.2));
+        }
+        5% {
           filter: drop-shadow(1em 0 0.1em rgba(0,0,0,0.2));
         }
-
-        50% {
-          filter: drop-shadow(0em -1em 0.1em rgba(0,0,0,0.2));
+        10% {
+          filter: drop-shadow(0 -1em 0.1em rgba(0,0,0,0.2));
         }
-        75% {
+        15% {
           filter: drop-shadow(-1em 0 0.1em rgba(0,0,0,0.2));
         }
+        20% {
+          filter: drop-shadow(1em 0 0.1em rgba(0,0,0,0.2));
+        }
+        25% {
+          filter: drop-shadow(0.5em 0 0.1em rgba(0,0,0,0.2));
+        }
+        30% {
+          filter: drop-shadow(0 -1em 0.1em rgba(0,0,0,0.2));
+        }
+        35% {
+          filter: drop-shadow(0 0 0.1em rgba(0,0,0,0.2));
+        }
+        40% {
+          filter: drop-shadow(1em 0 0.1em rgba(0,0,0,0.2));
+        }
+        45% {
+          filter: drop-shadow(0 0 0.1em rgba(0,0,0,0.2));
+        }
+        50% {
+          filter: drop-shadow(-1em -1em 0.1em rgba(0,0,0,0.2));
+        }
+        55% {
+          filter: drop-shadow(0 0 0.1em rgba(0,0,0,0.2));
+        }
+        60% {
+          filter: drop-shadow(1em 0 0.1em rgba(0,0,0,0.2));
+        }
+        65% {
+          filter: drop-shadow(1em 0 0.1em rgba(0,0,0,0.2));
+        }
+        70% {
+          filter: drop-shadow(1em 0 0.1em rgba(0,0,0,0.2));
+        }
+        75% {
+          filter: drop-shadow(0 0 0.1em rgba(0,0,0,0.2));
+        }
+        80% {
+          filter: drop-shadow(-1em -1em 0.1em rgba(0,0,0,0.2));
+        }
+        85% {
+          filter: drop-shadow(0 0 0.1em rgba(0,0,0,0.2));
+        }
+        90% {
+          filter: drop-shadow(1em 0 0.1em rgba(0,0,0,0.2));
+        }
+        95% {
+          filter: drop-shadow(1em 0 0.1em rgba(0,0,0,0.2));
+        }
         100% {
-          transform: translateX(-50%) rotate(360deg);
+          transform: translateX(-50%) rotate(1800deg);
           filter: drop-shadow(1em 0 0.1em rgba(0,0,0,0.2));
         }
       }
@@ -541,10 +591,9 @@ height: 1em;
         position: absolute;
         filter: drop-shadow(1em 0 0.1em rgba(0,0,0,0.7));
         animation-name: minute-hand-rotate;
-        animation-duration: calc(var(--time--full-animation-duration) / 5);
+        animation-duration: var(--time--full-animation-duration);
         animation-timing-function: linear;
         animation-fill-mode: forwards;
-        animation-iteration-count: 5;
       }
 
       .s-clock .minute-hand-wrapper > div {
@@ -577,14 +626,25 @@ height: 1em;
         box-sizing: border-box;
       }
 
+       @keyframes clock-background {
+        0%   {
+        background-color: #fff;
+        }
+        100% {
+        background-color: #cfcfcf;
+        }
+      }
+
       .s-clock > div > div {
         width: 100%;
         height: 100%;
         border-radius: 50%;
         box-sizing: border-box;
         position: relative;
-        background: rgb(250,250,250);
-        background: radial-gradient(circle, rgba(230,230,230,1) 0%, rgba(255,255,255,1) 100%);
+        animation-name: clock-background;
+        animation-duration: var(--time--full-animation-duration);
+        animation-timing-function: linear;
+        animation-fill-mode: forwards;
       }
 
       .s-clock-hand {
