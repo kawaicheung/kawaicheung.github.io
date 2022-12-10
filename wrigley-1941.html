@@ -16,6 +16,7 @@
         --color--scoreboard-middle: #555;
         --color--scoreboard-bottom: #444;
         --color--scoreboard-inning-score-bg: #555;
+        --color--scoreboard-hits-bg: #444;
 
         --color--scoreboard-ledge: #444;
         --color--scoreboard-undercarriage: rgba(25,25,25,1);
@@ -407,7 +408,7 @@
         box-sizing: border-box;
       }
 
-       @keyframes clock-background {
+      @keyframes clock-background {
         0%   {
         background-color: #fff;
         }
@@ -722,6 +723,59 @@
         border-top: solid 1px rgba(0,0,0,0.5);
         box-shadow: inset 0 0 3px rgba(0,0,0,0.3);
         text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .bottom-line > div > span {
+        display: block;
+        width: 100%;
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        animation-name: placard-flip;
+        animation-duration: 0.5s;
+        animation-timing-function: ease-in;
+        animation-fill-mode: forwards;
+        animation-iteration-count: 1;
+        opacity: 0;
+        background-color: var(--color--scoreboard-hits-bg);
+      }
+
+      .vis-hits-1 {
+        animation-delay: calc(var(--time--full-animation-duration) * 0.15);
+      }
+      .vis-hits-2 {
+        animation-delay: calc(var(--time--full-animation-duration) * 0.25);
+      }
+      .vis-hits-3 {
+        animation-delay: calc(var(--time--full-animation-duration) * 0.45);
+      }
+      .vis-hits-4 {
+        animation-delay: calc(var(--time--full-animation-duration) * 0.55);
+      }
+      .vis-hits-5 {
+        animation-delay: calc(var(--time--full-animation-duration) * 0.65);
+      }
+
+      .cubs-hits-1 {
+        animation-delay: calc(var(--time--full-animation-duration) * 0.1);
+      }
+      .cubs-hits-2 {
+        animation-delay: calc(var(--time--full-animation-duration) * 0.3);
+      }
+      .cubs-hits-3 {
+        animation-delay: calc(var(--time--full-animation-duration) * 0.5);
+      }
+      .cubs-hits-4 {
+        animation-delay: calc(var(--time--full-animation-duration) * 0.6);
+      }
+      .cubs-hits-5 {
+        animation-delay: calc(var(--time--full-animation-duration) * 0.7);
+      }
+      .cubs-hits-6 {
+        animation-delay: calc(var(--time--full-animation-duration) * 0.9);
       }
 
       .hole {
@@ -1010,15 +1064,13 @@
         position: relative;
       }
 
-      @keyframes inning-flip {
+      @keyframes placard-flip {
         0% {
           top: -1.5em;
-          left: 0em;
           opacity: 1;
         }
         100% {
           top: 0em;
-          left: 0em;
           opacity: 1;
         }
       }
@@ -1032,15 +1084,16 @@
         transform: scale(1.1,1);
       }
 
+      /* The actual runs scored placard */
       .inning-set > div > span:not(.inning) {
         opacity: 0;
         display: block;
         width: 100%;
         background-color: var(--color--scoreboard-inning-score-bg);
         position: absolute;
-        animation-name: inning-flip;
+        animation-name: placard-flip;
         animation-duration: 0.5s;
-        animation-timing-function: linear;
+        animation-timing-function: ease-in;
         animation-fill-mode: forwards;
         animation-iteration-count: 1;
       }
@@ -1492,7 +1545,7 @@
                     <div class="team boston">Boston</div>
                     <div class="inning-set">
                       <div><span class="n-bos-i1">0</span></div>
-                      <div><span class="n-bos-i2">0</span></div>
+                      <div><span class="n-bos-i2">1</span></div>
                       <div><span class="n-bos-i3">2</span></div>
                       <div><span class="n-bos-i4">0</span></div>
                       <div><span class="n-bos-i5">0</span></div>
@@ -1510,13 +1563,13 @@
                     <div class="inning-set">
                       <div><span class="n-cub-i1">0</span></div>
                       <div><span class="n-cub-i2">0</span></div>
-                      <div><span class="n-cub-i3">3</span></div>
-                      <div><span class="n-cub-i4">1</span></div>
+                      <div><span class="n-cub-i3">4</span></div>
+                      <div><span class="n-cub-i4">0</span></div>
                       <div><span class="n-cub-i5">0</span></div>                      
                       <div><span class="n-cub-i6">0</span></div>  
-                      <div><span class="n-cub-i7">1</span></div>  
+                      <div><span class="n-cub-i7">2</span></div>  
                       <div><span class="n-cub-i8">0</span></div>  
-                      <div><span class="n-cub-i9">4</span></div>  
+                      <div><span class="n-cub-i9">2</span></div>  
                       <div><span></span></div>  
                     </div>
                   </div>
@@ -2035,9 +2088,22 @@
                   </div>
                   <div class="bottom-line">
                     <div>Vis</div>
-                    <div>3</div>
+                    <div>
+                      <span class="vis-hits-1">2</span>
+                      <span class="vis-hits-2">4</span>
+                      <span class="vis-hits-3">5</span>
+                      <span class="vis-hits-4">8</span>
+                      <span class="vis-hits-5">9</span>
+                    </div>
                     <div>Hits</div>
-                    <div>6</div>
+                    <div>
+                      <span class="cubs-hits-1">1</span>
+                      <span class="cubs-hits-2">5</span>
+                      <span class="cubs-hits-3">6</span>
+                      <span class="cubs-hits-4">7</span>
+                      <span class="cubs-hits-5">9</span>
+                      <span class="cubs-hits-6">12</span>
+                    </div>
                     <div>Cubs</div>
                   </div>
               </div>
@@ -2082,10 +2148,10 @@
                     <div class="team sox">Sox</div>
                     <div class="inning-set">
                       <div></div>
+                      <div>n</div>
                       <div></div>
                       <div></div>
-                      <div></div>
-                      <div></div>
+                      <div>g</div>
                       <div></div>
                       <div></div>
                       <div></div>
@@ -2100,10 +2166,10 @@
                     <div class="inning-set">
                       <div></div>
                       <div></div>
+                      <div>i</div>
                       <div></div>
                       <div></div>
-                      <div></div>
-                      <div></div>
+                      <div>a</div>
                       <div></div>
                       <div></div>
                       <div></div>
@@ -2113,15 +2179,15 @@
                   <div>
                     <div class="pc-holder"></div>
                     <div class="pc-holder"></div>
-                    <div class="team detroit">Detroit</div>
+                    <div class="team philadelphia">Philadelphia</div>
                     <div class="inning-set">
                       <div></div>
                       <div></div>
                       <div></div>
+                      <div>t</div>
                       <div></div>
                       <div></div>
-                      <div></div>
-                      <div></div>
+                      <div>m</div>
                       <div></div>
                       <div></div>
                       <div></div>
@@ -2136,10 +2202,10 @@
                       <div></div>
                       <div></div>
                       <div></div>
+                      <div>e</div>
                       <div></div>
                       <div></div>
-                      <div></div>
-                      <div></div>
+                      <div>e</div>
                       <div></div>
                       <div></div>
                     </div>
@@ -2198,7 +2264,7 @@
                   <div>
                     <div class="pc-holder"></div>
                     <div class="pc-holder"></div>
-                    <div class="team philadelphia">Philadelphia</div>
+                    <div class="team detroit">Detroit</div>
                     <div class="inning-set">
                       <div></div>
                       <div></div>
