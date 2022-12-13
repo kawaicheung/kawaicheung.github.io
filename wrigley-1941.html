@@ -47,7 +47,7 @@
         --font--scoreboard: Bebas Neue;
         --font--scoreboard-alt: Squada One;
 
-        --time--full-animation-duration: 60s;
+        --time--full-animation-duration: 30s;
       }
 
   		body {
@@ -90,6 +90,15 @@
         animation-fill-mode: forwards;
       }
 
+      /* Picture background (sky) */
+      @keyframes perspective-wrapper {
+        0% {opacity: 0;}
+        3% { opacity: 0; }
+        5% { opacity: 1; }
+        50% {opacity: 1;}
+        100% {opacity: 0.88;}
+      }
+
       .perspective-wrapper {
         position: absolute;
         width: 100%;
@@ -100,6 +109,12 @@
   			justify-content: center;
         top: 6.6em;
         transform: perspective(380em) rotateZ(0deg) rotateX(14deg) rotateY(-26deg);
+        animation-name: perspective-wrapper;
+        animation-duration: var(--time--full-animation-duration);
+        animation-timing-function: linear;
+        animation-fill-mode: forwards;
+        anim
+        opacity: 0;
       }
 
       .scoreboard-right-side > div.top-3-windows {
@@ -1537,9 +1552,8 @@
         top: 1em;
         right: 1em;
         z-index: 1;
-        font-size: 1.6em;
-        letter-spacing: 0.1em;
-        font-family: Bebas Neue;
+        font-size: 1.2em;
+        font-family: Helvetica Neue;
         opacity: 0.5;
       }
   	</style>
@@ -1547,7 +1561,7 @@
   <body>
   	<div class="picture">
       <div class="title">
-        Rainy Day at Wrigley, 1941
+        Rain Day at Wrigley, 1941
       </div>
       <div class="rain-wrapper">
         <div class="rain-1"></div>
@@ -1673,10 +1687,10 @@
                       <div><span class="n-bos-i3">2</span></div>
                       <div><span class="n-bos-i4">0</span></div>
                       <div><span class="n-bos-i5">0</span></div>
-                      <div><span class="n-bos-i6">3</span></div>
-                      <div><span class="n-bos-i7">1</span></div>
-                      <div><span class="n-bos-i8">0</span></div>
-                      <div><span class="n-bos-i9">0</span></div>
+                      <div><span class="n-bos-i6">0</span></div>
+                      <div><!--<span class="n-bos-i7">1</span>--></div>
+                      <div><!--<span class="n-bos-i8">0</span>--></div>
+                      <div><!--<span class="n-bos-i9">0</span>--></div>
                       <div><span></span></div>  
                     </div>
                   </div>
@@ -1690,10 +1704,10 @@
                       <div><span class="n-cub-i3">4</span></div>
                       <div><span class="n-cub-i4">0</span></div>
                       <div><span class="n-cub-i5">0</span></div>                      
-                      <div><span class="n-cub-i6">0</span></div>  
-                      <div><span class="n-cub-i7">2</span></div>  
-                      <div><span class="n-cub-i8">0</span></div>  
-                      <div><span class="n-cub-i9">2</span></div>  
+                      <div><!--<span class="n-cub-i6">0</span>--></div>  
+                      <div><!--<span class="n-cub-i7">2</span>--></div>  
+                      <div><!--<span class="n-cub-i8">0</span>--></div>  
+                      <div><!--<span class="n-cub-i9">2</span>--></div>  
                       <div><span></span></div>  
                     </div>
                   </div>
@@ -2216,17 +2230,17 @@
                       <span class="vis-hits-1">2</span>
                       <span class="vis-hits-2">4</span>
                       <span class="vis-hits-3">5</span>
-                      <span class="vis-hits-4">8</span>
-                      <span class="vis-hits-5">9</span>
+                      <!--<span class="vis-hits-4">8</span>
+                      <span class="vis-hits-5">9</span>-->
                     </div>
                     <div>Hits</div>
                     <div>
                       <span class="cubs-hits-1">1</span>
                       <span class="cubs-hits-2">5</span>
                       <span class="cubs-hits-3">6</span>
-                      <span class="cubs-hits-4">7</span>
-                      <span class="cubs-hits-5">9</span>
-                      <span class="cubs-hits-6">12</span>
+                     <!--  <span class="cubs-hits-4">7</span>
+                  <span class="cubs-hits-5">9</span>
+                      <span class="cubs-hits-6">12</span>-->
                     </div>
                     <div>Cubs</div>
                   </div>
