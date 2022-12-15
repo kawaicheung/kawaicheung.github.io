@@ -11,7 +11,7 @@
 
         --blur-text: blur(0.3px);
 
-        --px--picture-height: 600px;
+        --px--picture-height: 650px;
         --px--scoreboard-width: 972px;
         --px--scoreboard-height: 350px;
         --px--scoreboard-header-height: 2em;
@@ -95,11 +95,11 @@
       }
 
       .clock-light > div {
-        width: 0.22em;
-        height: 0.22em;
+        width: 0.23em;
+        height: 0.23em;
         border-radius: 50%;
         background-color: rgb(255, 252, 245);
-        box-shadow: -.03em -.1em .1em -.1em rgba(0,0,0,0.77) inset;
+        box-shadow: -.03em -.1em .18em -.1em rgba(0,0,0,0.77) inset;
       }
 
       .clock-light.light-0 { transform: translate(-50%,-50%) rotate(calc(4.44deg * 0)); }
@@ -200,7 +200,8 @@
         width: 16.1em;
         height: 16.1em;
         border-radius: 50%;
-        background-color: var(--color--clock-base);
+        background: rgb(71,70,122);
+        background: radial-gradient(circle, rgba(71,70,122,1) 0%, rgba(86,84,158,1) 50%, rgba(71,70,122,1) 100%);
         top: 50%;
         left: 50%;
         transform: translate(-50%,-50%);
@@ -208,7 +209,41 @@
         display: flex;
         flex-direction: column;
         align-items: center;
+        overflow: hidden;
       }      
+
+      .clock--ledge-1 {
+        position: absolute;
+        margin-top: 1.9em;
+        width: 64%;
+        height: 0.05em;
+        background: rgb(86,84,158);
+        background: linear-gradient(180deg, rgba(86,84,158,1) 0%, rgba(168,166,210,1) 33%, rgba(164,162,208,1) 76%, rgba(86,84,158,1) 100%);
+        opacity: 0.7;
+        box-shadow: 0 0.5em 0.1em 0em rgba(0,0,0,0.7);
+      }
+
+      .clock--ledge-2 {
+        position: absolute;
+        margin-top: 5.8em;
+        width: 64%;
+        height: 0.08em;
+        background: rgb(86,84,158);
+        background: linear-gradient(180deg, rgba(86,84,158,1) 0%, rgba(168,166,210,1) 33%, rgba(164,162,208,1) 76%, rgba(86,84,158,1) 100%);
+        opacity: 0.7;
+        box-shadow: 0 1em 0.1em 0em rgba(0,0,0,0.7);
+      }
+
+      .clock--ledge-3 {
+        position: absolute;
+        margin-top: 9.5em;
+        width: 64%;
+        height: 0.1em;
+        background: rgb(86,84,158);
+        background: linear-gradient(180deg, rgba(86,84,158,1) 0%, rgba(168,166,210,1) 33%, rgba(164,162,208,1) 76%, rgba(86,84,158,1) 100%);
+        opacity: 0.7;
+        box-shadow: 0 1em 0.1em 0em rgba(0,0,0,0.7);
+      }
       
       .elgin {
         display: flex;
@@ -282,6 +317,7 @@
       }
 
       .clock--dial-border-outer {
+        position: relative;
         margin-top: 0.5em;
         border: solid 0.1em #fff;
         border-radius: 0.1em;
@@ -295,12 +331,52 @@
       }
 
       .clock--dial-border-inner {
+        position: relative;
         border: solid 0.1em #fff;
         border-radius: 0.1em;
         width: 67%;
         height: 50%;
         box-sizing: border-box;
       }
+
+      /* Hides the rays from within the inner box */
+      .clock--dial-border-inner-cap {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background-color: var(--color--clock-base);
+      }
+
+      .clock--dial-minute-ray {
+        width: 0.1em;
+        height: 10em;
+        background-color: #fff;
+        position: absolute;
+        top: -3.8em;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+
+      .clock--dial-minute-ray.ray-1-7 {
+        transform: rotate(30deg) translateX(-50%);
+      }
+
+      .clock--dial-minute-ray.ray-2-8 {
+        transform: rotate(60deg) translateX(-50%);
+      }
+
+      .clock--dial-minute-ray.ray-3-9 {
+        transform: rotate(90deg) translateX(-50%);
+      }
+
+      .clock--dial-minute-ray.ray-4-10 {
+        transform: rotate(120deg) translateX(-50%);
+      }
+            
+      .clock--dial-minute-ray.ray-5-11 {
+        transform: rotate(150deg) translateX(-50%);
+      }
+     
       .clock--official-time {
         margin-top: 0.6em;
         color: #fff;
@@ -309,6 +385,27 @@
         font-size: 1.3em;
         letter-spacing: -0.02em;
         font-weight: 700;
+      }
+
+      .clock--official-time-ledge {
+        margin-top: 0.25em;
+        width: 100%;
+        height: 0.2em;
+        background: rgb(86,84,158);
+        background: linear-gradient(180deg, rgba(86,84,158,1) 0%, rgba(168,166,210,1) 33%, rgba(164,162,208,1) 76%, rgba(86,84,158,1) 100%);
+        opacity: 0.7;
+        box-shadow: 0 0.25em 0.1em 0.25em rgba(0,0,0,0.7);
+      }
+
+      .clock--small-circle-blue {
+        position: absolute;
+        bottom: 1em;
+        left: 52%;
+        width: 0.8em;
+        height: 0.8em;
+        border-radius: 50%;
+        background-color: var(--color--clock-base);
+        box-shadow: 0 0.25em 0.1em 0.1em rgba(0,0,0,0.7);
       }
 
       .pinwheel {
@@ -376,6 +473,9 @@
           <div class="clock--light-rim">
             <div class="clock--plate-for-lower-shadow"></div>
             <div class="clock--inner-plate">
+              <div class="clock--ledge-1"></div>
+              <div class="clock--ledge-2"></div>
+              <div class="clock--ledge-3"></div>
               <div class="elgin">
                 <div class="elgin-e"></div>
                 <div class="elgin-l"></div>
@@ -390,11 +490,21 @@
               </div>
               <div class="clock--dial-border-outer">
                 <div class="clock--dial-border-inner">
+                  <div class="clock--dial-minute-ray"></div>
+                  <div class="clock--dial-minute-ray ray-1-7"></div>
+                  <div class="clock--dial-minute-ray ray-2-8"></div>
+                  <div class="clock--dial-minute-ray ray-3-9"></div>
+                  <div class="clock--dial-minute-ray ray-4-10"></div>
+                  <div class="clock--dial-minute-ray ray-5-11"></div>
+                  <div class="clock--dial-border-inner-cap"></div>
                 </div>
               </div>
               <div class="clock--official-time">
                 Official Time
               </div>
+              <div class="clock--official-time-ledge">
+              </div>
+              <div class="clock--small-circle-blue"></div>
             </div>
             <div class="clock-light light-0"><div></div></div>
             <div class="clock-light light-1"><div></div></div>
