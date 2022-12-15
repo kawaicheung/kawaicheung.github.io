@@ -6,34 +6,8 @@
     
   	<style>
       :root {
-        --color--scoreboard-right-side: #3f3f3f;
-        --color--scoreboard-left-side: #232323;
-        --color--scoreboard-text: #f7f5f4;
-        --color--scoreboard-hole: #222;
-        --color--scoreboard-bottom-lip: #333;
-
-        --color--scoreboard-top: #666;
-        --color--scoreboard-middle: #555;
-        --color--scoreboard-bottom: #444;
-        --color--scoreboard-inning-score-bg: #555;
-        --color--scoreboard-hits-bg: #444;
-
-        --color--scoreboard-ledge: #444;
-        --color--scoreboard-undercarriage: rgba(25,25,25,1);
-        --color--scoreboard-undercarriage-studs: rgba(40,40,40,1);
-
-        --color--scoreboard-front-pillars: #555;
-        --color--scoreboard-front-pillars-right-side: rgba(65,65,65,1);
-        --color--scoreboard-front-pillars-shadow: rgba(45,45,45,1);
-
-        --color--scoreboard-back-pillars: rgba(25,25,25,1);
-        --color--scoreboard-back-pillars-right-side: rgba(0,0,0,0.3);
-        --color--scoreboard-back-pillars-shadow: rgba(0,0,0,0.3);
-
-        --color--sky-outer:#cfcfcf;
-        --color--sky-inner: #efefef;
-
-        --color--bottom-line: #efefef;
+       
+        --color--clock-base: #56549e;
 
         --blur-text: blur(0.3px);
 
@@ -92,8 +66,8 @@
       }
 
       .clock--border {
-        width: 14em;
-        height: 14em;
+        width: 17em;
+        height: 17em;
         border-radius: 50%;
         background-color: rgb(209, 209, 209);
         display: flex;
@@ -103,11 +77,11 @@
 
       .clock--light-rim {
         position: relative;
-        width: 13.95em;
-        height: 13.95em;
+        width: 16.9em;
+        height: 16.9em;
         border-radius: 50%;
-        background-color: #56549e;
-        box-shadow: 0 1em .5em -.7em rgba(0,0,0,0.75) inset;
+        background-color: var(--color--clock-base);
+        box-shadow: 0 0.8em 0em -.5em rgba(0,0,0,0.45) inset;
       }
 
       .clock-light {
@@ -121,8 +95,8 @@
       }
 
       .clock-light > div {
-        width: 0.2em;
-        height: 0.2em;
+        width: 0.22em;
+        height: 0.22em;
         border-radius: 50%;
         background-color: rgb(255, 252, 245);
         box-shadow: -.03em -.1em .1em -.1em rgba(0,0,0,0.77) inset;
@@ -212,41 +186,129 @@
 
       .clock--plate-for-lower-shadow {
         position: absolute;
-        width: 13.3em;
-        height: 13.3em;
+        width: 16.1em;
+        height: 16.1em;
         border-radius: 50%;
         top: 50%;
         left: 50%;
         transform: translate(-50%,-50%);
-        box-shadow: 0 0.3em 0.1em -0.1em rgba(0,0,0,0.5);
+        box-shadow: 0 0.3em 0.3em -0.1em rgba(0,0,0,0.8);
       }
 
       .clock--inner-plate {
         position: absolute;
-        width: 13.3em;
-        height: 13.3em;
+        width: 16.1em;
+        height: 16.1em;
         border-radius: 50%;
-        background-color: #56549e;
+        background-color: var(--color--clock-base);
         top: 50%;
         left: 50%;
         transform: translate(-50%,-50%);
-        box-shadow: 0 0.5em 0.1em -0.1em rgba(0,0,0,0.5) inset;
+        box-shadow: 0 0.8em 0.1em -0.1em rgba(0,0,0,0.5) inset;
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: center;
       }      
       
       .elgin {
+        display: flex;
+        margin-top: 3.5em;
       }
 
       .elgin-e {
-        width: 1.7em;
-        height: 1.7em;
+        width: 2.2em;
+        height: 2.2em;
         background-color: #fff;
-        border-top-left-radius: 0.1em;
-        border-bottom-left-radius: 0.1em;
+        border-top-left-radius: 0.05em;
+        border-bottom-left-radius: 0.05em;
         clip-path: polygon(0 0, 100% 0, 100% 22%, 22% 22%, 22% 40%, 98% 40%, 98% 60%, 22% 60%, 22% 78%, 100% 78%, 100% 100%, 0 100%);
+      }
+
+      .elgin-l {
+        width: 1.7em;
+        height: 2.2em;
+        background-color: #fff;
+        clip-path: polygon(0 0, 30% 0, 30% 78%, 100% 78%, 100% 100%, 0 100%);
+        margin-left: 0.35em;
+        border-radius: 0.1em;
+      }
+
+      .elgin-g {
+        width: 2.5em;
+        height: 2.2em;
+        margin-left: -0.15em;
+        overflow: hidden;
+        position: relative;
+      }
+
+      .elgin-g > .outer-curve {
+        position: absolute;
+        top: 0;
+        left: 0.15em;
+        width: 140%;
+        height: 100%;
+        border-top-left-radius: 50%;
+        border-bottom-left-radius: 50%;
+        background-color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .elgin-g > .inner-curve {
+        width: 65%;
+        height: 58%;
+        border-top-left-radius: 50%;
+        border-bottom-left-radius: 50%;
+        background-color: var(--color--clock-base);
+        clip-path: polygon(0 0,100% 0, 100% 50%, 65% 50%, 65% 100%, 0 100%);
+      }
+
+      .elgin-i {
+        width: 0.5em;
+        height: 2.2em;
+        background-color: #fff;
+        margin-left: 0.4em;
+        border-radius: 0.1em;
+      }
+
+      .elgin-n {
+        width: 2.3em;
+        height: 2.2em;
+        background-color: #fff;
+        clip-path: polygon(0 0, 23% 0, 80% 77%, 80% 0%, 100% 0%, 100% 100%, 77% 100%, 20% 23%, 20% 100%, 0 100%);
+        margin-left: 0.4em;
+        border-radius: 0.05em;
+      }
+
+      .clock--dial-border-outer {
+        margin-top: 0.5em;
+        border: solid 0.1em #fff;
+        border-radius: 0.1em;
+        width: 44%;
+        height: 32%;
+        box-sizing: border-box;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+      }
+
+      .clock--dial-border-inner {
+        border: solid 0.1em #fff;
+        border-radius: 0.1em;
+        width: 67%;
+        height: 50%;
+        box-sizing: border-box;
+      }
+      .clock--official-time {
+        margin-top: 0.6em;
+        color: #fff;
+        text-transform: uppercase;
+        font-family: Helvetica;
+        font-size: 1.3em;
+        letter-spacing: -0.02em;
+        font-weight: 700;
       }
 
       .pinwheel {
@@ -300,7 +362,7 @@
   	<div class="picture">
       <div class="picture-background"></div>
       <div class="scoreboard-wrapper">
-        <div class="pinwheel">
+        <!--<div class="pinwheel">
           <div class="pinwheel--arc-1"></div>
           <div class="pinwheel--arc-2"></div>
           <div class="pinwheel--arc-3"></div>
@@ -309,7 +371,7 @@
           <div class="pinwheel--arc-6"></div>
           <div class="pinwheel--arc-7"></div>
           <div class="pinwheel--arc-8"></div>
-        </div>
+        </div>-->
         <div class="clock--border">
           <div class="clock--light-rim">
             <div class="clock--plate-for-lower-shadow"></div>
@@ -317,9 +379,21 @@
               <div class="elgin">
                 <div class="elgin-e"></div>
                 <div class="elgin-l"></div>
-                <div class="elgin-g"></div>
+                <div class="elgin-g">
+                  <div class="elgin-g outer-curve">
+                    <div class="elgin-g inner-curve">
+                    </div>
+                  </div>
+                </div>
                 <div class="elgin-i"></div>
                 <div class="elgin-n"></div>
+              </div>
+              <div class="clock--dial-border-outer">
+                <div class="clock--dial-border-inner">
+                </div>
+              </div>
+              <div class="clock--official-time">
+                Official Time
               </div>
             </div>
             <div class="clock-light light-0"><div></div></div>
@@ -403,7 +477,6 @@
             <div class="clock-light light-78"><div></div></div>
             <div class="clock-light light-79"><div></div></div>
             <div class="clock-light light-80"><div></div></div>
-
           </div>
         </div>
       </div>
