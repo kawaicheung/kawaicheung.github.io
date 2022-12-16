@@ -9,11 +9,13 @@
        
         --color--clock-base: #56549e;
 
+        --color--scoreboard-orange: #f09651;
+
         --blur-text: blur(0.3px);
 
         --px--picture-height: 650px;
-        --px--scoreboard-width: 972px;
-        --px--scoreboard-height: 350px;
+        --px--scoreboard-width: 75.4em;
+        --px--scoreboard-height: 37.7em;
         --px--scoreboard-header-height: 2em;
         --px--scoreboard-clock-stand-height: 2.6em;
         --em--scoreboard-clock: 13em;
@@ -63,6 +65,7 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
+        position: relative;
       }
 
       .clock--border {
@@ -95,8 +98,8 @@
       }
 
       .clock-light > div {
-        width: 0.23em;
-        height: 0.23em;
+        width: 0.25em;
+        height: 0.25em;
         border-radius: 50%;
         background-color: rgb(255, 252, 245);
         box-shadow: -.03em -.1em .18em -.1em rgba(0,0,0,0.77) inset;
@@ -214,7 +217,7 @@
 
       .clock--ledge-1 {
         position: absolute;
-        margin-top: 1.9em;
+        margin-top: 2em;
         width: 64%;
         height: 0.05em;
         background: rgb(86,84,158);
@@ -243,6 +246,56 @@
         background: linear-gradient(180deg, rgba(86,84,158,1) 0%, rgba(168,166,210,1) 33%, rgba(164,162,208,1) 76%, rgba(86,84,158,1) 100%);
         opacity: 0.7;
         box-shadow: 0 1em 0.1em 0em rgba(0,0,0,0.7);
+      }
+
+      .clock--hour-hand {
+        position: absolute;
+        width: 2.8em;
+        height: 0.6em;
+        background-color: #fff;
+        top: 50%;
+        left: 45%;
+        z-index: 2;
+        transform: rotate(-39deg);
+        clip-path: polygon(0 0, 100% 20%, 100% 80%, 0 100%);
+        box-shadow: 0 2em 0.1em 2em rgba(0,0,0,0.7);
+      }
+
+      .clock--hour-hand--shadow {
+        position: absolute;
+        width: 2.8em;
+        height: 0.6em;
+        background-color: rgba(0,0,0,0.3);
+        top: 52%;
+        left: 45%;
+        z-index: 2;
+        transform: rotate(-39deg);
+        clip-path: polygon(0 0, 100% 20%, 100% 80%, 0 100%);
+        box-shadow: 0 2em 0.1em 2em rgba(0,0,0,0.7);
+      }  
+
+      .clock--minute-hand {
+        position: absolute;
+        width: 4em;
+        height: 0.6em;
+        background-color: #fff;
+        top: 60%;
+        left: 35%;
+        z-index: 2;
+        transform: rotate(108deg);
+        clip-path: polygon(0 0, 100% 30%, 100% 70%, 0 100%);
+      }
+
+      .clock--minute-hand--shadow {
+        position: absolute;
+        width: 4em;
+        height: 0.6em;
+        background-color: rgba(0,0,0,0.3);
+        top: 62%;
+        left: 35%;
+        z-index: 2;
+        transform: rotate(108deg);
+        clip-path: polygon(0 0, 100% 30%, 100% 70%, 0 100%);
       }
       
       .elgin {
@@ -335,7 +388,7 @@
         border: solid 0.1em #fff;
         border-radius: 0.1em;
         width: 67%;
-        height: 50%;
+        height: 52%;
         box-sizing: border-box;
       }
 
@@ -399,59 +452,177 @@
 
       .clock--small-circle-blue {
         position: absolute;
-        bottom: 1em;
-        left: 52%;
-        width: 0.8em;
-        height: 0.8em;
+        bottom: 6.5%;
+        left: 53%;
+        width: 0.7em;
+        height: 0.7em;
         border-radius: 50%;
         background-color: var(--color--clock-base);
         box-shadow: 0 0.25em 0.1em 0.1em rgba(0,0,0,0.7);
       }
 
-      .pinwheel {
-        position: relative;
-        width: 3.3em;
-        height: 3.3em;
-        background-color: red;
+      .clock--small-circle-green {
+        position: absolute;
+        top: 18%;
+        right: 21%;
+        width: 0.7em;
+        height: 0.7em;
         border-radius: 50%;
-        overflow: hidden;
+        background-color: #6a818e;
+        box-shadow: 0 0.25em 0.1em 0.1em rgba(0,0,0,0.7);
       }
 
-      .pinwheel--arc-1 {
-        position: absolute; 
-        width: 3.3em;
-        height: 3.3em;
-        background-color: green;
+      .clock--small-star-green {
+        position: absolute;
+        top: 16%;
+        left: 28%;
+        width: 1.1em;
+        height: 1.1em;
         border-radius: 50%;
-        transform-origin: top right;
-        transform: rotate(45deg);
+        background-color: #6a818e;
+        transform: rotate(-38deg);
+        box-shadow: 0 0.25em 0.1em 0.1em rgba(0,0,0,0.7);
+        clip-path: polygon(50% 0%, 63% 33%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
       }
-      .pinwheel--arc-2 {
-        position: absolute; 
-        width: 3.3em;
-        height: 3.3em;
-        background-color: white;
+
+      .clock--small-star-shadow {
+        position: absolute;
+        top: 17.2%;
+        left: 28.5%;
+        width: 1.1em;
+        height: 1.1em;
         border-radius: 50%;
-        transform-origin: bottom right;
-        transform: rotate(45deg);
+        background-color: rgba(0,0,0,0.5);
+        transform: rotate(-38deg);
+        box-shadow: 0 0.25em 0.1em 0.1em rgba(0,0,0,0.7);
+        clip-path: polygon(50% 0%, 63% 33%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
       }
-      .pinwheel--arc-3 {
-        position: absolute; 
-        width: 3.3em;
-        height: 3.3em;
-        background-color: green;
-        border-radius: 50%;
-        transform-origin: bottom left;
-        transform: rotate(45deg);
+      .scoreboard--main {
+        position: relative;
+        width: var(--px--scoreboard-width);
+        height: var(--px--scoreboard-height);
+        display: flex;
       }
-      .pinwheel--arc-4 {
-        position: absolute; 
-        width: 3.3em;
-        height: 3.3em;
-        background-color: white;
+
+      .main--orange-flank-1 {
+        width: 50%;
+        height: 100%;
+        background-color: var(--color--scoreboard-orange);
+        transform: rotate(-4deg) translateX(4%) translateY(3.8%);
+      }
+      .main--orange-flank-2 {
+        width: 50%;
+        height: 100%;
+        background-color: var(--color--scoreboard-orange);
+        transform: rotate(4deg) translateX(-4%) translateY(3.8%);
+      }
+
+      .light-towers {
+        position: absolute;
+        top: 0em;
+        width: var(--px--scoreboard-width);
+        height: 25em;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+      }
+
+      .light-towers > div {
+        width: 1.65em;
+        height: 100%;
+        background-color: #fff;
+      }
+
+      .light-towers > div:first-child,
+      .light-towers > div:nth-child(10) {
+        height: 9em;
+      }
+      .light-towers > div:nth-child(2),
+      .light-towers > div:nth-child(9) {
+        height: 11.5em;
+      }
+      .light-towers > div:nth-child(3),
+      .light-towers > div:nth-child(8) {
+        height: 14em;
+      }
+      .light-towers > div:nth-child(4),
+      .light-towers > div:nth-child(7) {
+        height: 17em;
+      }
+      .light-towers > div:nth-child(5),
+      .light-towers > div:nth-child(6) {
+        height: 24em;
+      }
+      .light-towers > div:first-child {
+        transform: rotate(-4deg);
+      }
+      .light-towers > div:nth-child(2) {
+        transform: rotate(-3deg);
+      }
+      .light-towers > div:nth-child(3) {
+        transform: rotate(-2deg);
+      }
+      .light-towers > div:nth-child(4) {
+        transform: rotate(-1deg);
+      }
+      .light-towers > div:nth-child(5) {
+        margin-right: 2em;
+        transform: rotate(-1deg);
+      }
+      .light-towers > div:nth-child(6) {
+        margin-left: 2em;
+        transform: rotate(1deg);
+      }
+      .light-towers > div:nth-child(7) {
+        transform: rotate(1deg);
+      }      
+      .light-towers > div:nth-child(8) {
+        transform: rotate(2deg);
+      }      
+      .light-towers > div:nth-child(9) {
+        transform: rotate(3deg);
+      }
+      .light-towers > div:nth-child(10) {
+        transform: rotate(4deg);
+      }
+
+      .pinwheel {
+        position: absolute;
+        width: 4em;
+        height:4em;
+        background-color: #000;
         border-radius: 50%;
-        transform-origin: top left;
-        transform: rotate(45deg);
+        overflow: hidden;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+      .light-towers > div:first-child > .pinwheel {
+        bottom: 25%;
+      }
+      .light-towers > div:nth-child(2) > .pinwheel {
+        bottom: 32%;
+      }
+      .light-towers > div:nth-child(3) > .pinwheel {
+        bottom: 38%;
+      }
+      .light-towers > div:nth-child(4) > .pinwheel {
+        bottom: 43%;
+      }
+      .light-towers > div:nth-child(5) > .pinwheel,
+      .light-towers > div:nth-child(6) > .pinwheel {
+        display: none;
+      }
+      .light-towers > div:nth-child(7) > .pinwheel {
+        bottom: 43%;
+      }      
+      .light-towers > div:nth-child(8) > .pinwheel {
+        bottom: 38%;
+      }      
+      .light-towers > div:nth-child(9) > .pinwheel {
+        bottom: 32%;
+      }
+      .light-towers > div:nth-child(10) > .pinwheel{
+        bottom: 25%;
       }
   	</style>
   </head>
@@ -459,16 +630,18 @@
   	<div class="picture">
       <div class="picture-background"></div>
       <div class="scoreboard-wrapper">
-        <!--<div class="pinwheel">
-          <div class="pinwheel--arc-1"></div>
-          <div class="pinwheel--arc-2"></div>
-          <div class="pinwheel--arc-3"></div>
-          <div class="pinwheel--arc-4"></div>
-          <div class="pinwheel--arc-5"></div>
-          <div class="pinwheel--arc-6"></div>
-          <div class="pinwheel--arc-7"></div>
-          <div class="pinwheel--arc-8"></div>
-        </div>-->
+        <div class="light-towers">
+          <div><div class="pinwheel"></div></div>
+          <div><div class="pinwheel"></div></div>
+          <div><div class="pinwheel"></div></div>
+          <div><div class="pinwheel"></div></div>
+          <div><div class="pinwheel"></div></div>
+          <div><div class="pinwheel"></div></div>
+          <div><div class="pinwheel"></div></div>
+          <div><div class="pinwheel"></div></div>
+          <div><div class="pinwheel"></div></div>
+          <div><div class="pinwheel"></div></div>
+        </div>
         <div class="clock--border">
           <div class="clock--light-rim">
             <div class="clock--plate-for-lower-shadow"></div>
@@ -476,6 +649,10 @@
               <div class="clock--ledge-1"></div>
               <div class="clock--ledge-2"></div>
               <div class="clock--ledge-3"></div>
+              <div class="clock--hour-hand--shadow"></div>
+              <div class="clock--minute-hand--shadow"></div>
+              <div class="clock--hour-hand"></div>
+              <div class="clock--minute-hand"></div>
               <div class="elgin">
                 <div class="elgin-e"></div>
                 <div class="elgin-l"></div>
@@ -505,6 +682,9 @@
               <div class="clock--official-time-ledge">
               </div>
               <div class="clock--small-circle-blue"></div>
+              <div class="clock--small-circle-green"></div>
+              <div class="clock--small-star-shadow"></div>
+              <div class="clock--small-star-green"></div>
             </div>
             <div class="clock-light light-0"><div></div></div>
             <div class="clock-light light-1"><div></div></div>
@@ -587,6 +767,12 @@
             <div class="clock-light light-78"><div></div></div>
             <div class="clock-light light-79"><div></div></div>
             <div class="clock-light light-80"><div></div></div>
+          </div>
+        </div>
+        <div class="scoreboard--main">
+          <div class="main--orange-flank-1">
+          </div>
+          <div class="main--orange-flank-2">
           </div>
         </div>
       </div>
