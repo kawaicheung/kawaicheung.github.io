@@ -437,7 +437,7 @@
         font-family: Helvetica;
         font-size: 1.3em;
         letter-spacing: -0.02em;
-        font-weight: 700;
+        font-weight: 600;
       }
 
       .clock--official-time-ledge {
@@ -615,7 +615,7 @@
       .light-tower--pinwheel {
         position: absolute;
         width: 4em;
-        height:4em;
+        height: 4em;
         background-color: #fff;
         border-radius: 50%;
         overflow: hidden;
@@ -623,8 +623,15 @@
         transform: translateX(-50%);
         border: solid 1px #fff;
         box-sizing: border-box;
-        box-shadow: 0em 0.1em 0.1em 0em rgba(0,0,0,.6) inset;
       }
+      .ltp-shade {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        box-shadow: 0em 0.1em 0.2em 0.1em rgba(0,0,0,.4) inset;
+      }
+
       .light-towers > div:first-child > .light-tower--pinwheel {
         bottom: 25%;
       }
@@ -636,10 +643,6 @@
       }
       .light-towers > div:nth-child(4) > .light-tower--pinwheel {
         bottom: 43%;
-      }
-      .light-towers > div:nth-child(5) > .light-tower--pinwheel,
-      .light-towers > div:nth-child(6) > .light-tower--pinwheel {
-        display: none;
       }
       .light-towers > div:nth-child(7) > .light-tower--pinwheel {
         bottom: 43%;
@@ -653,6 +656,34 @@
       .light-towers > div:nth-child(10) > .light-tower--pinwheel{
         bottom: 25%;
       }
+
+      .ltpc {
+        position: absolute;
+        background-color: red;
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        top: -50%;
+        transform-origin: bottom;
+        opacity: 1;
+        clip-path: polygon(0% 0%,50% 0%,50% 100%, 0% 100%);
+      }
+
+      .ltpc.white { background-color: #fff; }
+      .ltpc.blue { background-color: #61618f; }
+      .ltpc.red { background-color: #a6523e; }
+      .ltpc.light-blue { background-color: #82bdd8; }
+      .ltpc.green { background-color: #94c854; }
+      .ltpc.yellow { background-color: #f1e86b; }
+
+      .ltpc:nth-child(1) { transform: rotate(0deg);}
+      .ltpc:nth-child(2) { transform: rotate(45deg); }
+      .ltpc:nth-child(3) { transform: rotate(90deg); }
+      .ltpc:nth-child(4) { transform: rotate(135deg); }
+      .ltpc:nth-child(5) { transform: rotate(180deg); }
+      .ltpc:nth-child(6) { transform: rotate(225deg); }
+      .ltpc:nth-child(7) { transform: rotate(270deg); }
+      .ltpc:nth-child(8) { transform: rotate(315deg); }
   	</style>
   </head>
   <body>
@@ -664,61 +695,140 @@
             <div class="light-tower--cap">
               <div class="light-tower--cap-light"></div>
             </div>
-            <div class="light-tower--pinwheel"></div>
+            <div class="light-tower--pinwheel">
+              <div class="ltpc white"></div>
+              <div class="ltpc red"></div>
+              <div class="ltpc white"></div>
+              <div class="ltpc red"></div>
+              <div class="ltpc white"></div>
+              <div class="ltpc red"></div>
+              <div class="ltpc white"></div>
+              <div class="ltpc red"></div>
+              <div class="ltp-shade"></div>
+            </div>
+          </div>
+          <div>
+            <div class="light-tower--cap">
+              <div class="light-tower--cap-light"></div>
+            </div>            
+            <div class="light-tower--pinwheel">
+              <div class="ltpc white"></div>
+              <div class="ltpc green"></div>
+              <div class="ltpc white"></div>
+              <div class="ltpc green"></div>
+              <div class="ltpc white"></div>
+              <div class="ltpc green"></div>
+              <div class="ltpc white"></div>
+              <div class="ltpc green"></div>
+              <div class="ltpc white"></div>
+              <div class="ltp-shade"></div>
+            </div>
           </div>
           <div>
             <div class="light-tower--cap">
               <div class="light-tower--cap-light"></div>
             </div>
-            <div class="light-tower--pinwheel"></div>
+            <div class="light-tower--pinwheel">
+              <div class="ltpc white"></div>
+              <div class="ltpc red"></div>
+              <div class="ltpc white"></div>
+              <div class="ltpc red"></div>
+              <div class="ltpc white"></div>
+              <div class="ltpc red"></div>
+              <div class="ltpc white"></div>
+              <div class="ltpc red"></div>
+              <div class="ltp-shade"></div>
+            </div>
           </div>
           <div>
             <div class="light-tower--cap">
               <div class="light-tower--cap-light"></div>
             </div>
-            <div class="light-tower--pinwheel"></div>
+            <div class="light-tower--pinwheel">
+              <div class="ltpc white"></div>
+              <div class="ltpc blue"></div>
+              <div class="ltpc white"></div>
+              <div class="ltpc blue"></div>
+              <div class="ltpc white"></div>
+              <div class="ltpc blue"></div>
+              <div class="ltpc white"></div>
+              <div class="ltpc blue"></div>
+              <div class="ltp-shade"></div>
+            </div>
           </div>
           <div>
             <div class="light-tower--cap">
               <div class="light-tower--cap-light"></div>
             </div>
-            <div class="light-tower--pinwheel"></div>
           </div>
           <div>
             <div class="light-tower--cap">
               <div class="light-tower--cap-light"></div>
             </div>
-            <div class="light-tower--pinwheel"></div>
           </div>
           <div>
             <div class="light-tower--cap">
               <div class="light-tower--cap-light"></div>
             </div>
-            <div class="light-tower--pinwheel"></div>
+            <div class="light-tower--pinwheel">
+              <div class="ltpc white"></div>
+              <div class="ltpc light-blue"></div>
+              <div class="ltpc white"></div>
+              <div class="ltpc light-blue"></div>
+              <div class="ltpc white"></div>
+              <div class="ltpc light-blue"></div>
+              <div class="ltpc white"></div>
+              <div class="ltpc light-blue"></div>
+              <div class="ltp-shade"></div>
+            </div>
           </div>
           <div>
             <div class="light-tower--cap">
               <div class="light-tower--cap-light"></div>
             </div>
-            <div class="light-tower--pinwheel"></div>
+            <div class="light-tower--pinwheel">
+              <div class="ltpc white"></div>
+              <div class="ltpc yellow"></div>
+              <div class="ltpc white"></div>
+              <div class="ltpc yellow"></div>
+              <div class="ltpc white"></div>
+              <div class="ltpc yellow"></div>
+              <div class="ltpc white"></div>
+              <div class="ltpc yellow"></div>
+              <div class="ltp-shade"></div>
+            </div>
+          </div>
+          <div>
+            <div class="light-tower--cap">
+              <div class="light-tower--cap-light"></div>
+            </div>            
+            <div class="light-tower--pinwheel">
+              <div class="ltpc white"></div>
+              <div class="ltpc green"></div>
+              <div class="ltpc white"></div>
+              <div class="ltpc green"></div>
+              <div class="ltpc white"></div>
+              <div class="ltpc green"></div>
+              <div class="ltpc white"></div>
+              <div class="ltpc green"></div>
+              <div class="ltp-shade"></div>
+            </div>
           </div>
           <div>
             <div class="light-tower--cap">
               <div class="light-tower--cap-light"></div>
             </div>
-            <div class="light-tower--pinwheel"></div>
-          </div>
-          <div>
-            <div class="light-tower--cap">
-              <div class="light-tower--cap-light"></div>
+            <div class="light-tower--pinwheel">
+              <div class="ltpc white"></div>
+              <div class="ltpc red"></div>
+              <div class="ltpc white"></div>
+              <div class="ltpc red"></div>
+              <div class="ltpc white"></div>
+              <div class="ltpc red"></div>
+              <div class="ltpc white"></div>
+              <div class="ltpc red"></div>
+              <div class="ltp-shade"></div>
             </div>
-            <div class="light-tower--pinwheel"></div>
-          </div>
-          <div>
-            <div class="light-tower--cap">
-              <div class="light-tower--cap-light"></div>
-            </div>
-            <div class="light-tower--pinwheel"></div>
           </div>
         </div>
         <div class="clock--border">
