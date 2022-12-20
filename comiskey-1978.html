@@ -352,14 +352,14 @@
       }
 
       .elgin-g {
-        width: 2.5em;
+        width: 2.7em;
         height: 2.2em;
-        margin-left: -0.15em;
+        margin-left: -0.35em;
         overflow: hidden;
         position: relative;
       }
 
-      .elgin-g > .outer-curve {
+      .elgin-g--outer-curve {
         position: absolute;
         top: 0;
         left: 0.15em;
@@ -373,13 +373,13 @@
         justify-content: center;
       }
 
-      .elgin-g > .inner-curve {
-        width: 65%;
+      .elgin-g--inner-curve {
+        width: 70%;
         height: 58%;
         border-top-left-radius: 50%;
         border-bottom-left-radius: 50%;
         background-color: var(--color--clock);
-        clip-path: polygon(0 0,100% 0, 100% 50%, 65% 50%, 65% 100%, 0 100%);
+        clip-path: polygon(0 0,100% 0, 100% 50%, 57% 50%, 57% 100%, 0 100%);
       }
 
       .elgin-i {
@@ -397,6 +397,47 @@
         clip-path: polygon(0 0, 23% 0, 80% 77%, 80% 0%, 100% 0%, 100% 100%, 77% 100%, 20% 23%, 20% 100%, 0 100%);
         margin-left: 0.4em;
         border-radius: 0.05em;
+      }
+
+      .elgin-i-dot {
+        position: absolute;
+        width: 1.1em;
+        height: 1.3em;
+        border-radius: 50%;
+        top: 2em;
+        right: 5.35em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-top: solid 0.12em #fff;
+        border-right: solid 0.148em #fff;
+        border-left: solid 0.16em #fff;
+        border-bottom: solid 0.12em #fff;
+        box-sizing: border-box;
+      }
+
+      .elgin-i-dot--middle {
+        position: absolute;
+        width: 120%;
+        height: 0.2em;
+        left: -0.3em;
+        background-color: #fff;
+        border-top-right-radius: 65%;
+        border-top-left-radius: 15%;
+        border-bottom-right-radius: 65%;
+        border-bottom-left-radius: 15%;
+      }
+
+      .elgin-i-dot--middle-cut {
+        position: absolute;
+        width: 0.3em;
+        height: 0.2em;
+        right: -0.2em;
+        background-color: var(--color--clock);
+        border-top-right-radius: 65%;
+        border-top-left-radius: 15%;
+        border-bottom-right-radius: 65%;
+        border-bottom-left-radius: 15%;
       }
 
       .clock--dial-border-outer {
@@ -504,10 +545,10 @@
 
       .clock--small-star-green {
         position: absolute;
-        top: 16%;
+        top: 14.4%;
         left: 28%;
-        width: 1.1em;
-        height: 1.1em;
+        width: 1.2em;
+        height: 1.2em;
         border-radius: 50%;
         background-color: #6a818e;
         transform: rotate(-38deg);
@@ -517,7 +558,7 @@
 
       .clock--small-star-shadow {
         position: absolute;
-        top: 17.2%;
+        top: 16.2%;
         left: 28.5%;
         width: 1.1em;
         height: 1.1em;
@@ -1167,13 +1208,17 @@
                 <div class="elgin-e"></div>
                 <div class="elgin-l"></div>
                 <div class="elgin-g">
-                  <div class="elgin-g outer-curve">
-                    <div class="elgin-g inner-curve">
+                  <div class="elgin-g--outer-curve">
+                    <div class="elgin-g--inner-curve">
                     </div>
                   </div>
                 </div>
                 <div class="elgin-i"></div>
                 <div class="elgin-n"></div>
+                <div class="elgin-i-dot">
+                  <div class="elgin-i-dot--middle"></div>
+                  <div class="elgin-i-dot--middle-cut"></div>
+                </div>
               </div>
               <div class="clock--dial-border-outer">
                 <div class="clock--dial-border-inner">
