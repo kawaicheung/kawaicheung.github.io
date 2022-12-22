@@ -30,7 +30,7 @@
         --color--scoreboard-back-pillars-right-side: rgba(0,0,0,0.3);
         --color--scoreboard-back-pillars-shadow: rgba(0,0,0,0.3);
 
-        --color--sky-outer:#cfcfcf;
+        --color--sky-outer: #cfcfcf;
         --color--sky-inner: #efefef;
 
         --color--bottom-line: #efefef;
@@ -113,7 +113,6 @@
         animation-duration: var(--time--full-animation-duration);
         animation-timing-function: linear;
         animation-fill-mode: forwards;
-        anim
         opacity: 0;
       }
 
@@ -710,6 +709,8 @@
         flex: 1;
         position: relative;
         background-color: transparent;
+        border-left: solid 0.1em rgba(0,0,0,0.12);
+        border-right: solid 0.1em rgba(0,0,0,0.16);
       }
 
       .bottom-line {
@@ -809,13 +810,87 @@
       }
 
       .league-text {
-        margin-top: 0.6em;
-        transform: scale(1, 1.1);
-        font-size: 4.8em;
-        letter-spacing: 0.08em;  
-        line-height: 1em;  
+        margin-top: 3.2em;
+        margin-bottom: 1em;
+        display: flex;
+      }
+      .national .league-text {
+        margin-left: -0.3em;
       }
 
+      .league-text > div {
+        height: 3.6em;
+        background-color: var(--color--scoreboard-text);
+        border-radius: 0.1em;
+      }
+
+      .league-text > div.no-right-space {
+        margin-right: 0;
+      }
+
+      .league-text > .n {
+        width: 1.9em;
+        margin-right: 0.3em;
+        clip-path: polygon(0 0, 33% 0, 67% 45%, 67% 0, 100% 0, 100% 100%, 67% 100%, 33% 55%, 33% 100%, 0 100%);
+      }
+
+      .league-text > .a {
+        width: 2.2em;
+        margin-right: 0.4em;
+        clip-path: polygon(0 100%, 33% 0, 67% 0%, 100% 100%, 70% 100%, 50% 35%, 45% 63%, 68% 63%, 63% 80%, 37% 80%, 30% 100%);
+      }
+
+      .league-text > .t {
+        width: 2.1em;
+        margin-right: 0.3em;
+        clip-path: polygon(0 0, 100% 0, 100% 17%, 66% 17%, 66% 100%, 34% 100%, 34% 17%, 0 17%);
+      }
+
+      .league-text > .i {
+        width: 0.7em;
+        margin-right: 0.6em;
+      }
+
+      .league-text > .o {
+        width: 1.9em;
+        margin-right: 0.6em;
+        background-color: transparent;
+        border: solid 0.64em #fff;
+        border-radius: 0.5em;
+        box-sizing: border-box;
+      }
+      
+      .league-text > .l {
+        width: 1.6em;
+        clip-path: polygon(0 0, 40% 0, 40% 83%, 100% 83%, 100% 100%, 0 100%);
+      }
+
+      .league-text > .m {
+        width: 2.3em;
+        margin-left: -0.2em;
+        margin-right: 0.6em;
+        clip-path: polygon(0 0, 30% 0, 50% 40%, 70% 0, 100% 0, 100% 100%, 70% 100%, 70% 55%, 50% 90%, 30% 55%, 30% 100%, 0 100%);
+      }
+
+      .league-text > .e {
+        width: 1.8em;
+        margin-right: 0.6em;
+        clip-path: polygon(0 0, 100% 0, 100% 16%, 38% 16%, 38% 42%, 100% 42%, 100% 58%, 38% 58%, 38% 84%, 100% 84%, 100% 100%, 0 100%);
+      }
+
+      .league-text > .r {
+        width: 2.1em;
+        margin-right: 0.6em;
+        border-top-right-radius: 0.5em;
+        clip-path: polygon(0 0, 100% 0, 100% 54%, 95% 62%, 90% 63%, 85% 64%, 80% 67%, 100% 100%, 67% 100%, 42% 63%, 34% 63%, 34% 46%, 66% 46%, 66% 17%, 34% 17%, 34% 100%, 0 100%);
+      }
+
+      .league-text > .c {
+        width: 2em;
+        margin-right: 0.2em;
+        border-radius: 0.7em;
+        clip-path: polygon(0 0, 100% 0, 100% 28%, 65% 28%, 65% 20%, 60% 18%, 50% 17%, 40% 18%, 33% 20%, 33% 80%, 40% 82%, 50% 83%, 60% 82%, 65% 80%, 65% 68%, 100% 68%, 100% 100%, 0 100%);
+      }
       .american > .windows {
         right: 1.5em;
       }
@@ -1022,7 +1097,7 @@
       }
 
       .ledge.top {
-        bottom: 1.1em;
+        bottom: 1.17em;
       }
 
       .pc-holder {
@@ -1649,7 +1724,16 @@
                   <div></div>
                   <div></div>
                 </div>
-                <div class="league-text">National</div>
+                <div class="league-text">
+                  <div class="n"></div>
+                  <div class="a no-right-space"></div>
+                  <div class="t"></div>
+                  <div class="i"></div>
+                  <div class="o"></div>
+                  <div class="n"></div>
+                  <div class="a"></div>
+                  <div class="l"></div>
+                </div>
                 <div class="innings">Innings</div>
                 <div class="box-scores">
                   <div class="ledge top">
@@ -2252,7 +2336,16 @@
                   <div class="covered"></div>
                   <div></div>
                 </div>
-                <div class="league-text">American</div>
+                <div class="league-text">
+                  <div class="a"></div>
+                  <div class="m"></div>
+                  <div class="e"></div>
+                  <div class="r"></div>
+                  <div class="i"></div>
+                  <div class="c"></div>
+                  <div class="a"></div>
+                  <div class="n"></div>
+                </div>
                 <div class="innings">Innings</div>
                 <div class="box-scores">
                   <div class="ledge top">
@@ -2286,10 +2379,10 @@
                     <div class="team sox">Sox</div>
                     <div class="inning-set">
                       <div></div>
-                      <div>n</div>
                       <div></div>
                       <div></div>
-                      <div>g</div>
+                      <div></div>
+                      <div></div>
                       <div></div>
                       <div></div>
                       <div></div>
@@ -2304,10 +2397,10 @@
                     <div class="inning-set">
                       <div></div>
                       <div></div>
-                      <div>i</div>
                       <div></div>
                       <div></div>
-                      <div>a</div>
+                      <div></div>
+                      <div></div>
                       <div></div>
                       <div></div>
                       <div></div>
@@ -2322,10 +2415,10 @@
                       <div></div>
                       <div></div>
                       <div></div>
-                      <div>t</div>
                       <div></div>
                       <div></div>
-                      <div>m</div>
+                      <div></div>
+                      <div></div>
                       <div></div>
                       <div></div>
                       <div></div>
@@ -2340,10 +2433,10 @@
                       <div></div>
                       <div></div>
                       <div></div>
-                      <div>e</div>
                       <div></div>
                       <div></div>
-                      <div>e</div>
+                      <div></div>
+                      <div></div>
                       <div></div>
                       <div></div>
                     </div>
