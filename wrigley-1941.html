@@ -33,7 +33,7 @@
         --color--sky-outer: #cfcfcf;
         --color--sky-inner: #efefef;
 
-        --color--bottom-line: #efefef;
+        --color--bottom-line: #efefdf;
 
         --blur-text: blur(0.3px);
 
@@ -48,6 +48,15 @@
         --font--scoreboard-alt: Squada One;
 
         --time--full-animation-duration: 30s;
+
+        --text--clip-path--n: polygon(0 0, 33% 0, 67% 45%, 67% 0, 100% 0, 100% 100%, 67% 100%, 33% 55%, 33% 100%, 0 100%);
+        --text--clip-path--a: polygon(0 100%, 33% 0, 67% 0%, 100% 100%, 70% 100%, 50% 35%, 45% 63%, 68% 63%, 63% 80%, 37% 80%, 30% 100%);
+        --text--clip-path--t: polygon(0 0, 100% 0, 100% 17%, 66% 17%, 66% 100%, 34% 100%, 34% 17%, 0 17%);
+        --text--clip-path--l: polygon(0 0, 40% 0, 40% 83%, 100% 83%, 100% 100%, 0 100%);
+        --text--clip-path--m: polygon(0 0, 30% 0, 50% 40%, 70% 0, 100% 0, 100% 100%, 70% 100%, 70% 55%, 50% 90%, 30% 55%, 30% 100%, 0 100%);
+        --text--clip-path--e: polygon(0 0, 100% 0, 100% 16%, 38% 16%, 38% 42%, 100% 42%, 100% 58%, 38% 58%, 38% 84%, 100% 84%, 100% 100%, 0 100%);
+        --text--clip-path--r: polygon(0 0, 100% 0, 100% 54%, 95% 62%, 90% 63%, 85% 64%, 80% 67%, 100% 100%, 67% 100%, 42% 63%, 34% 63%, 34% 46%, 66% 46%, 66% 17%, 34% 17%, 34% 100%, 0 100%);
+        --text--clip-path--c: polygon(0 0, 100% 0, 100% 28%, 65% 28%, 65% 20%, 60% 18%, 50% 17%, 40% 18%, 33% 20%, 33% 80%, 40% 82%, 50% 83%, 60% 82%, 65% 80%, 65% 68%, 100% 68%, 100% 100%, 0 100%);
       }
 
   		body {
@@ -93,9 +102,8 @@
       /* Picture background (sky) */
       @keyframes perspective-wrapper {
         0% {opacity: 0;}
-        3% { opacity: 0; }
-        5% { opacity: 1; }
-        50% {opacity: 1;}
+        1% { opacity: 1; }
+        50% { opacity: 1; }
         100% {opacity: 0.88;}
       }
 
@@ -800,13 +808,53 @@
       }
 
       .umpires {
-        padding-top: 0.3em;
-        font-size: 2.8em;
+        padding-top: 0.9em;
+        padding-bottom: 0.3em;
         margin: 0;
-        text-align: center;
-        transform: scale(1.36,1);
-        line-height: .8;
-        letter-spacing: 0.04em;
+        height: 2.1em;
+        display: flex;
+        justify-content: center;
+      }
+
+      .umpires > div {
+        border-radius: 0.1em;
+        background-color: var(--color--scoreboard-text);
+        height: 100%;
+        margin-right: 0.3em;
+      }
+
+      .umpires > .u {
+        width: 1.4em;
+        border-bottom-left-radius: 0.5em;
+        border-bottom-right-radius: 0.5em;
+        clip-path: polygon(0 0, 33% 0, 33% 75%, 50% 80%, 67% 75%, 67% 0%, 100% 0%, 100% 100%, 0 100%);
+      }
+      .umpires > .m {
+        width: 1.7em;
+        clip-path: var(--text--clip-path--m);
+      }
+      .umpires > .p {
+        width: 1.4em;
+        border-top-right-radius: 0.5em;
+        clip-path: polygon(0 0, 100% 0, 100% 60%, 93% 63%, 86% 67%, 79% 70%, 33% 70%, 33% 50%, 67% 50%, 67% 20%, 33% 20%, 33% 100%, 0 100%);
+      }
+      .umpires > .i {
+        width: 0.5em;
+      }
+      .umpires > .r {
+        width: 1.4em;
+        border-top-right-radius: 0.5em;
+        clip-path: var(--text--clip-path--r);
+      }
+      .umpires > .e {
+        width: 1.2em;
+        clip-path: var(--text--clip-path--e);
+      }
+      .umpires > .s {
+        width: 1.4em;    
+        border-radius: 0.5em;
+        clip-path: polygon(0 0, 100% 0, 100% 35%, 67% 35%, 67% 20%, 33% 20%, 33% 30%, 90% 60%, 100% 75%, 100% 100%, 0 100%, 0 65%, 33% 65%, 33% 80%, 67% 80%, 67% 70%, 10% 40%, 0 25%);
+   
       }
 
       .league-text {
@@ -831,19 +879,19 @@
       .league-text > .n {
         width: 1.9em;
         margin-right: 0.3em;
-        clip-path: polygon(0 0, 33% 0, 67% 45%, 67% 0, 100% 0, 100% 100%, 67% 100%, 33% 55%, 33% 100%, 0 100%);
+        clip-path: var(--text--clip-path--n);
       }
 
       .league-text > .a {
         width: 2.2em;
         margin-right: 0.4em;
-        clip-path: polygon(0 100%, 33% 0, 67% 0%, 100% 100%, 70% 100%, 50% 35%, 45% 63%, 68% 63%, 63% 80%, 37% 80%, 30% 100%);
+        clip-path: var(--text--clip-path--a);
       }
 
       .league-text > .t {
         width: 2.1em;
         margin-right: 0.3em;
-        clip-path: polygon(0 0, 100% 0, 100% 17%, 66% 17%, 66% 100%, 34% 100%, 34% 17%, 0 17%);
+        clip-path: var(--text--clip-path--t);
       }
 
       .league-text > .i {
@@ -862,34 +910,34 @@
       
       .league-text > .l {
         width: 1.6em;
-        clip-path: polygon(0 0, 40% 0, 40% 83%, 100% 83%, 100% 100%, 0 100%);
+        clip-path: var(--text--clip-path--l);
       }
 
       .league-text > .m {
         width: 2.3em;
         margin-left: -0.2em;
         margin-right: 0.6em;
-        clip-path: polygon(0 0, 30% 0, 50% 40%, 70% 0, 100% 0, 100% 100%, 70% 100%, 70% 55%, 50% 90%, 30% 55%, 30% 100%, 0 100%);
+        clip-path: var(--text--clip-path--m);
       }
 
       .league-text > .e {
         width: 1.8em;
         margin-right: 0.6em;
-        clip-path: polygon(0 0, 100% 0, 100% 16%, 38% 16%, 38% 42%, 100% 42%, 100% 58%, 38% 58%, 38% 84%, 100% 84%, 100% 100%, 0 100%);
+        clip-path: var(--text--clip-path--e);
       }
 
       .league-text > .r {
         width: 2.1em;
         margin-right: 0.6em;
         border-top-right-radius: 0.5em;
-        clip-path: polygon(0 0, 100% 0, 100% 54%, 95% 62%, 90% 63%, 85% 64%, 80% 67%, 100% 100%, 67% 100%, 42% 63%, 34% 63%, 34% 46%, 66% 46%, 66% 17%, 34% 17%, 34% 100%, 0 100%);
+        clip-path: var(--text--clip-path--r);
       }
 
       .league-text > .c {
         width: 2em;
         margin-right: 0.2em;
         border-radius: 0.7em;
-        clip-path: polygon(0 0, 100% 0, 100% 28%, 65% 28%, 65% 20%, 60% 18%, 50% 17%, 40% 18%, 33% 20%, 33% 80%, 40% 82%, 50% 83%, 60% 82%, 65% 80%, 65% 68%, 100% 68%, 100% 100%, 0 100%);
+        clip-path: var(--text--clip-path--c);
       }
       .american > .windows {
         right: 1.5em;
@@ -1918,7 +1966,13 @@
               </div>   
               <div class="s-info">
                   <div class="umpires">
-                    Umpires
+                    <div class="u"></div>
+                    <div class="m"></div>
+                    <div class="p"></div>
+                    <div class="i"></div>
+                    <div class="r"></div>
+                    <div class="e"></div>
+                    <div class="s"></div>
                   </div>
                   <div class="umpire-bases">
                     <div>
