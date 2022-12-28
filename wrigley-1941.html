@@ -1,5 +1,6 @@
 <html>
   <head>
+    <title>Wrigley Field, 1941 | Ka Wai Cheung</title>
     <meta content="width=device-width, initial-scale=1" name="viewport"/>
   	<link rel="preconnect" href="https://fonts.googleapis.com">
   	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -41,6 +42,7 @@
 
         --blur: blur(0.2px);
 
+        --px--picture-width: 1280px;
         --px--picture-height: 600px;
         --px--scoreboard-width: 972px;
         --px--scoreboard-height: 350px;
@@ -63,8 +65,7 @@
         --text--clip-path--c: polygon(0 0, 100% 0, 100% 28%, 65% 28%, 65% 20%, 60% 18%, 50% 17%, 40% 18%, 33% 20%, 33% 80%, 40% 82%, 50% 83%, 60% 82%, 65% 80%, 65% 68%, 100% 68%, 100% 100%, 0 100%);
         --text--clip-path--u: polygon(0 0, 33% 0, 33% 75%, 50% 80%, 67% 75%, 67% 0%, 100% 0%, 100% 100%, 0 100%);
         --text--clip-path--p: polygon(0 0, 100% 0, 100% 60%, 93% 63%, 86% 67%, 79% 70%, 33% 70%, 33% 50%, 67% 50%, 67% 20%, 33% 20%, 33% 100%, 0 100%);
-        --text--clip-path--s: polygon(0 0, 100% 0, 100% 35%, 67% 35%, 67% 20%, 33% 20%, 
-        33% 30%, 90% 55%, 100% 67%, 100% 100%, 0 100%, 0 65%, 33% 65%, 33% 80%, 67% 80%, 67% 70%, 20% 50%, 10% 45%, 0 33%);
+        --text--clip-path--s: polygon(0 0, 100% 0, 100% 35%, 67% 35%, 67% 20%, 33% 20%, 33% 30%, 90% 55%, 100% 67%, 100% 100%, 0 100%, 0 65%, 33% 65%, 33% 80%, 67% 80%, 67% 70%, 20% 50%, 10% 45%, 0 33%);
         --text--clip-path--g: polygon(0 0, 100% 0, 100% 35%, 67% 35%, 67% 20%, 33% 20%, 33% 80%, 67% 80%, 67% 65%, 48% 65%, 48% 45%, 100% 45%, 100% 100%, 0 100%);
         --text--clip-path--b: polygon(0 0, 100% 0, 100% 45%, 90% 50%, 100% 55%, 100% 100%, 35% 100%, 35% 80%, 65% 80%, 65% 60%, 35% 60%, 35% 40%, 65% 40%, 65% 20%, 35% 20%, 35% 100%, 0 100%);
         --text--clip-path--k: polygon(0 0, 40% 0%, 40% 40%, 60% 0, 100% 0, 70% 46%, 100% 100%, 60% 100%, 40% 60%, 40% 100%, 0 100%);
@@ -84,7 +85,7 @@
       /* Scoreboard Picture */
   		.picture {
   			position: relative;
-  			width: 95vw;
+  			width: var(--px--picture-width);
         height: var(--px--picture-height);
         min-height: var(--px--picture-height);
   			display: flex;
@@ -92,8 +93,7 @@
   			align-items: center;
         overflow: hidden;
         font-size: 10px;
-        border: solid 1px #ccc;
-        filter: var(--blur);
+        border: solid 1px #999;
       }
 
       /* Picture background (sky) */
