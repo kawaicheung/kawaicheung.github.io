@@ -35,10 +35,7 @@
         --color--scoreboard-back-pillars-right-side: rgba(0,0,0,0.3);
         --color--scoreboard-back-pillars-shadow: rgba(0,0,0,0.3);
 
-        --color--sky-outer: #cfcfcf;
-        --color--sky-inner: #efefef;
-
-        --color--bottom-line: #efefdf;
+        --color--bottom-line: #bebebe;
 
         --blur: blur(0.2px);
 
@@ -53,7 +50,7 @@
         --font--scoreboard: Bebas Neue;
         --font--scoreboard-alt: Squada One;
 
-        --time--full-animation-duration: 30s;
+        --time--full-animation-duration: 20s;
 
         --text--clip-path--n: polygon(0 0, 33% 0, 67% 45%, 67% 0, 100% 0, 100% 100%, 67% 100%, 33% 55%, 33% 100%, 0 100%);
         --text--clip-path--a: polygon(0 100%, 33% 0, 67% 0%, 100% 100%, 70% 100%, 50% 35%, 45% 63%, 68% 63%, 63% 80%, 37% 80%, 30% 100%);
@@ -165,18 +162,29 @@
       .standings {
         position: absolute;
         top: -10em;
-        left: 54%;
+        left: 53%;
         width: calc(var(--px--scoreboard-width) * 0.34);
         transform: translateX(-50%);
         display: flex;
         justify-content: space-between;
       }
 
+      @keyframes flag-line {
+        0% {      
+          border-right: solid 0.1em rgba(0,0,0,0.24); 
+        }
+        100% {      
+          border-right: solid 0.1em rgba(0,0,0,0.5);
+        }
+      }
       .flag-line { 
         height: 20em;
         width: 3em;
-        border-right: solid 0.1em rgba(0,0,0,0.3);
-        position: relative;
+        position: relative;        
+        animation-name: flag-line;
+        animation-duration: var(--time--full-animation-duration);
+        animation-timing-function: linear;
+        animation-fill-mode: forwards;
       }
 
       .flag-line.national {
@@ -330,11 +338,11 @@
       @keyframes hour-hand-rotate {
         0%   {
           transform: translateX(-50%) rotate(30deg);
-          filter: drop-shadow(1em 1em 0.1em rgba(0,0,0,0.05));
+          filter: drop-shadow(0.46em 0.6em 0.1em rgba(0,0,0,0.2));
         }
         100% {
-          transform: translateX(-50%) rotate(120deg);
-          filter: drop-shadow(0.5em -0.5em 0.1em rgba(0,0,0,0.2));
+          transform: translateX(-50%) rotate(35deg);
+          filter: drop-shadow(0.6em 0.6em 0.1em rgba(0,0,0,0.02));
         }
       }
 
@@ -362,44 +370,11 @@
       @keyframes minute-hand-rotate {
         0% {
           transform: translateX(-50%) rotate(0deg);
-          filter: drop-shadow(1em 1em 0.1em rgba(0,0,0,0.05));
-        }
-        8.33% {
-          filter: drop-shadow(0.75em 0.25em 0.1em rgba(0,0,0,0.05));
-        }
-        16.67% {
-          filter: drop-shadow(-0.25em -0.5em 0.1em rgba(0,0,0,0.05));
-        }
-        25% {
-          filter: drop-shadow(-1em 0.25em 0.1em rgba(0,0,0,0.05));
-        }
-        33.33% {
-          filter: drop-shadow(1em 1em 0.1em rgba(0,0,0,0.05));
-        }
-        41.67% {
-          filter: drop-shadow(0.75em 0.25em 0.1em rgba(0,0,0,0.1));
-        }
-        50% {
-          filter: drop-shadow(-0.25em -0.5em 0.1em rgba(0,0,0,0.1));
-        }
-        58.33% {
-          filter: drop-shadow(-1em 0.25em 0.1em rgba(0,0,0,0.1));
-        }
-        66.67% {
-          filter: drop-shadow(1em 1em 0.1em rgba(0,0,0,0.15));
-        }
-        75% {
-          filter: drop-shadow(0.75em 0.25em 0.1em rgba(0,0,0,0.15));
-        }
-        83.33% {
-          filter: drop-shadow(-0.25em -0.5em 0.1em rgba(0,0,0,0.2));
-        }
-        91.67% {
-          filter: drop-shadow(-1em 0.25em 0.1em rgba(0,0,0,0.2));
+          filter: drop-shadow(0.6em 0.6em 0.1em rgba(0,0,0,0.2));
         }
         100% {
-          filter: drop-shadow(1em 1em 0.1em rgba(0,0,0,0.2));
-          transform: translateX(-50%) rotate(1080deg);
+          transform: translateX(-50%) rotate(60deg);
+          filter: drop-shadow(0.6em 0.6em 0.1em rgba(0,0,0,0.02));
         }
       }
 
@@ -635,13 +610,19 @@
         z-index: 1;
         filter: blur(0.02em);
       }
-
+      @keyframes scoreboard-front-pillars {
+        0% { box-shadow: inset 0em 4em 1.4em -3.9em var(--color--scoreboard-front-pillars-shadow); }
+        100% { box-shadow: inset 0em 4em 1.4em -1.9em var(--color--scoreboard-front-pillars-shadow); }
+      }
       .scoreboard-front-pillars > div {
         width: 1em;
         height: 16em;
         background-color: var(--color--scoreboard-front-pillars);
         border-right: solid 0.4em var(--color--scoreboard-front-pillars-right-side);
-        box-shadow: inset 0em 4em 1.4em -2.9em var(--color--scoreboard-front-pillars-shadow);
+        animation-name: scoreboard-front-pillars;
+        animation-duration: var(--time--full-animation-duration);
+        animation-timing-function: linear;
+        animation-fill-mode: forwards;
       }
 
       .scoreboard-front-pillars > div:first-child {
@@ -774,48 +755,7 @@
         top: 0;
         left: 50%;
         transform: translateX(-50%);
-        animation-name: placard-flip;
-        animation-duration: 0.5s;
-        animation-timing-function: ease-in;
-        animation-fill-mode: forwards;
-        animation-iteration-count: 1;
-        opacity: 0;
         background-color: var(--color--scoreboard-hits-bg);
-      }
-
-      .vis-hits-1 {
-        animation-delay: calc(var(--time--full-animation-duration) * 0.15);
-      }
-      .vis-hits-2 {
-        animation-delay: calc(var(--time--full-animation-duration) * 0.25);
-      }
-      .vis-hits-3 {
-        animation-delay: calc(var(--time--full-animation-duration) * 0.45);
-      }
-      .vis-hits-4 {
-        animation-delay: calc(var(--time--full-animation-duration) * 0.55);
-      }
-      .vis-hits-5 {
-        animation-delay: calc(var(--time--full-animation-duration) * 0.65);
-      }
-
-      .cubs-hits-1 {
-        animation-delay: calc(var(--time--full-animation-duration) * 0.1);
-      }
-      .cubs-hits-2 {
-        animation-delay: calc(var(--time--full-animation-duration) * 0.3);
-      }
-      .cubs-hits-3 {
-        animation-delay: calc(var(--time--full-animation-duration) * 0.5);
-      }
-      .cubs-hits-4 {
-        animation-delay: calc(var(--time--full-animation-duration) * 0.6);
-      }
-      .cubs-hits-5 {
-        animation-delay: calc(var(--time--full-animation-duration) * 0.7);
-      }
-      .cubs-hits-6 {
-        animation-delay: calc(var(--time--full-animation-duration) * 0.9);
       }
 
       .hole {
@@ -1414,17 +1354,13 @@
 
       /* The actual runs scored placard */
       .inning-set > div > span:not(.inning) {
-        opacity: 0;
         display: block;
         width: 100%;
         background-color: var(--color--scoreboard-inning-score-bg);
         position: absolute;
-        animation-name: placard-flip;
-        animation-duration: 0.5s;
-        animation-timing-function: ease-in;
-        animation-fill-mode: forwards;
-        animation-iteration-count: 1;
       }
+
+
 
       .n-bos-i1 {
         animation-delay: calc(var(--time--full-animation-duration) * 0.05);
@@ -1786,7 +1722,7 @@
         background-color: #fff;
         opacity: 0.4;
         animation-name: rain;
-        animation-duration: 1.2s;
+        animation-duration: 1s;
         animation-timing-function: ease-in;
         animation-iteration-count: infinite;
       }
@@ -1819,7 +1755,7 @@
         left: 90%;
       }
       .rain-wrapper > .rain-7 {
-        animation-delay: calc(var(--time--full-animation-duration) * .48);
+        animation-delay: calc(var(--time--full-animation-duration) * .38);
         animation-duration: 1.4s;
         height: 1.3em;
         left: 33%;
@@ -1834,17 +1770,17 @@
         left: 43%;
       }
       .rain-wrapper > .rain-10 {
-        animation-delay: calc(var(--time--full-animation-duration) * .57);
+        animation-delay: calc(var(--time--full-animation-duration) * .17);
         height: 0.6em;
         left: 63%;
       }
       .rain-wrapper > .rain-11 {
-        animation-delay: calc(var(--time--full-animation-duration) * .58);
+        animation-delay: calc(var(--time--full-animation-duration) * .34);
         animation-duration: 1.9s;
         left: 57%;
       }
       .rain-wrapper > .rain-12 {
-        animation-delay: calc(var(--time--full-animation-duration) * .55);
+        animation-delay: calc(var(--time--full-animation-duration) * .65);
         left: 77%;
       }
       .rain-wrapper > .rain-13 {
@@ -2587,17 +2523,13 @@
                   <div class="bottom-line">
                     <div>Vis</div>
                     <div>
-                      <span class="vis-hits-1">2</span>
-                      <span class="vis-hits-2">4</span>
-                      <span class="vis-hits-3">5</span>
+                      <span>5</span>
                       <!--<span class="vis-hits-4">8</span>
                       <span class="vis-hits-5">9</span>-->
                     </div>
                     <div>Hits</div>
                     <div>
-                      <span class="cubs-hits-1">1</span>
-                      <span class="cubs-hits-2">5</span>
-                      <span class="cubs-hits-3">6</span>
+                      <span>6</span>
                      <!--  <span class="cubs-hits-4">7</span>
                   <span class="cubs-hits-5">9</span>
                       <span class="cubs-hits-6">12</span>-->
