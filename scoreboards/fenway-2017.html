@@ -1,0 +1,342 @@
+<html>
+  <head>
+  	<link rel="preconnect" href="https://fonts.googleapis.com">
+  	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  	<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Squada+One&display=swap" rel="stylesheet">
+    <!-- Notes:
+    Fenway park image magnify twice. The actual px (e.g. 122 x 144 convert to .122em x .144em for 24em font size div)
+    -->
+  	<style>
+      :root {
+
+        --px--picture-width: 1209px;
+        --px--picture-height: 626px;
+        --px--scoreboard-width: 75.4em;
+        --px--scoreboard-height: 38.7em;
+
+        --color--scoreboard: #464a46;
+        --color--scoreboard-text: #f7fcfb;
+
+
+        --time--full-animation-duration: 20s;
+      }
+
+      .title {
+        margin-top: 1em;
+        font-size: 0.8em;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+        color: var(--color--title);
+      }
+
+      .title > span {
+        color: var(--color--title-faded);
+      }
+
+      .title > span > a {
+        color: inherit;
+      }
+
+  		body {
+  			background-color: #fff;
+  			display: flex;
+  			align-items: center;
+  			justify-content: center;
+        flex-direction: column;
+        height: 100vh;
+        margin: 0;
+        padding: 0;
+  		}
+
+      .picture {
+  			position: relative;
+  			width: var(--px--picture-width);
+        height: var(--px--picture-height);
+  			display: flex;
+  			flex-direction: column;
+  			align-items: center;
+        overflow: hidden;
+        font-size: 10px;
+        border: solid 1px #ccc;
+        background-color: var(--color--scoreboard);
+      }
+
+      .wall {
+        width: 100%;
+        height: 5.2em;
+        background-color: #314a42;
+        box-sizing: border-box;
+        border-bottom: solid 0.5em #000;
+      }
+
+      .scoreboard-top {
+        width: 100%;
+        height: 100%;
+        height: 2.04em;
+        background: rgb(96,122,107);
+        background: linear-gradient(180deg, rgba(96,122,107,1) 0%, rgba(95,140,130,1) 45%, rgba(151,191,184,1) 90%, rgba(151,191,184,1) 92%, rgba(132,171,164,1) 100%);
+        border-bottom: solid 0.2em #444;
+        filter: drop-shadow(0 0.1em 0.1em #333);
+      }
+
+      .scoreboard {
+        width: 100%;
+        position: relative;
+        box-sizing: border-box;
+        border-top: solid 1.35em var(--color--scoreboard-text);
+        border-left: solid 1.5em var(--color--scoreboard-text);
+        border-bottom: solid 1.4em var(--color--scoreboard-text);
+        flex: 1;
+        padding-top: 2.4em;
+      }
+
+      .fenway-park {
+        font-size: 24em;
+        display: flex;
+        justify-content: flex-start;
+      }
+
+      .fenway-park > div {
+        background-color: var(--color--scoreboard-text);
+      }
+
+      .fenway-park--f {
+        margin-left: 1.007em;
+        width: .116em;
+        height: .144em;
+        clip-path: polygon(0 0, 100% 0, 99% 19%, 24% 20%, 24% 39%, 74% 39%, 73% 57%, 24% 57%, 22% 100%, 0 100%);
+      }
+
+      .fenway-park--e {
+        margin-left: 0.145em;
+        width: .122em;
+        height: .146em;
+        clip-path: polygon(0 0, 100% 0, 99% 20%, 24% 20%, 24% 39%, 72% 39%, 72% 57%, 24% 57%, 22% 80%, 100% 80%, 100% 100%, 70% 100%, 0 99%);
+      }
+
+      .fenway-park--n {
+        margin-left: 0.153em;
+        width: .124em;
+        height: .146em;
+        clip-path: polygon(1% 0, 21% 0, 77% 60%, 76% 0, 100% 0, 100% 98%, 83% 98%, 24% 40%, 24% 100%, 0 100%, 0 70%);
+      }
+
+      .fenway-park--w {
+        margin-left: 0.147em;
+        width: .190em;
+        height: .146em;
+        clip-path: polygon(0 0, 15% 0, 28.75% 63%, 42.5% 0, 57.5% 0, 71.25% 63%, 85% 0, 100% 0, 
+        77.75% 100%, 64.75% 100%, 50% 40%, 35.25% 100%, 22.25% 100%);
+      }
+
+      .fenway-park--a {
+        margin-left: 0.125em;
+        width: .158em;
+        height: .144em;
+        clip-path: polygon(0 100%, 48% 0, 62% 0, 100% 100%, 80% 100%, 54% 30%, 41% 56%, 71% 56%, 75% 75%, 34% 75%, 20% 100%);
+      }
+
+      .fenway-park--a.a-2 {
+        margin-left: 0.11em;
+      }
+
+      .fenway-park--y {
+        margin-left: 0.11em;
+        width: .152em;
+        height: .144em;
+        clip-path: polygon(0 0, 24% 0, 50% 37%, 76% 0, 100% 0, 60% 54%, 60% 100%, 40% 99%, 40% 54%);
+      }
+
+      .fenway-park--p {
+        margin-left: 0.358em;
+        width: .129em;
+        height: .144em;
+        display: flex;
+        flex-direction: column;
+        background-color: transparent !important;
+        border-top-right-radius: 0.02em;
+      }   
+
+      .fenway-park--p > div:first-child {
+        width: 96%;
+        height: 58%;
+        border: solid 0.028em var(--color--scoreboard-text);
+        box-sizing: border-box;
+        border-top-left-radius: 0.005em;
+        border-top-right-radius: 0.038em;
+        border-bottom-right-radius: 0.038em;
+      }   
+
+      .fenway-park--p > div:last-child {
+        margin-top: -0.001em;
+        width: 100%;
+        height: 42%;
+        background-color: var(--color--scoreboard-text);
+        box-sizing: border-box;
+        clip-path: polygon(0 0, 22% 0, 22% 100%, 0 100%);
+      } 
+
+      .fenway-park--r {
+        margin-left: 0.146em;
+        width: .129em;
+        height: .144em;
+        display: flex;
+        flex-direction: column;
+        background-color: transparent !important;
+        border-top-right-radius: 0.02em;
+      }   
+
+      .fenway-park--r > div:first-child {
+        width: 98%;
+        height: 58%;
+        border: solid 0.028em var(--color--scoreboard-text);
+        box-sizing: border-box;
+        border-top-left-radius: 0.005em;
+        border-top-right-radius: 0.038em;
+        border-bottom-right-radius: 0.038em;
+      }   
+
+      .fenway-park--r > div:last-child {
+        margin-top: -0.001em;
+        width: 100%;
+        height: 42%;
+        background-color: var(--color--scoreboard-text);
+        box-sizing: border-box;
+        clip-path: polygon(0 0, 76% 0, 100% 100%, 76% 100%, 53% 0, 22% 0, 22% 100%, 0 100%);
+      }  
+      
+      .fenway-park--k {
+        margin-left: 0.158em;
+        width: .129em;
+        height: .144em;
+        clip-path: polygon(0 1%, 23% 1%, 23% 43%, 70% 0%, 99% 0, 58% 40%, 100% 100%, 77% 100%,
+        42% 50%, 23% 68%, 23% 100%, 0 100%);
+      }
+
+      .tb-line {
+        font-size: 24em;
+        display: flex;
+      }
+
+      .tb-line--tb {
+        width: .752em;
+        height: .174em;
+        background-color: var(--color--scoreboard);
+        box-shadow: 0.02em 0.02em 0.01em  0.01em rgba(0,0,0,0.3);
+        border-right: solid 0.002em rgba(255,255,255,0.1);
+      }
+
+      .tb-line > .inning {
+        width: .136em;
+        height: .174em;
+        box-shadow: 0.03em 0.01em 0.03em rgba(0,0,0,0.7) inset;
+        border-right: solid 1px rgba(255,255,255,0.05);
+      }
+
+      .scoreboard-texture-a  {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 9em;
+        width: 100%;
+        display: flex;
+      }
+      .scoreboard-texture-a > div {
+        margin-right: 0.1em;
+        opacity: 0.1;
+      }
+      .scoreboard-texture-a > div:first-child  {
+        width: 25em;
+        background: rgb(187,187,187);
+        background: linear-gradient(90deg, rgba(187,187,187,1) 0%, rgba(85,85,85,1) 10%, rgba(123,123,123,1) 12%, rgba(106,106,106,1) 14%, rgba(34,34,34,1) 16%, rgba(115,115,115,1) 18%, rgba(38,38,38,1) 19%, rgba(140,140,140,1) 24%, rgba(109,109,109,1) 26%, rgba(104,104,104,1) 43%, rgba(129,129,129,1) 45%, rgba(94,94,94,1) 47%, rgba(140,140,140,1) 49%, rgba(118,118,118,1) 52%, rgba(135,135,135,1) 100%);
+  
+      }
+      .scoreboard-texture-a > div:nth-child(2) {
+        width: 27.2em;
+        background: rgb(187,187,187);
+        background: linear-gradient(90deg, rgba(187,187,187,1) 4%, rgba(106,106,106,1) 10%, rgba(123,123,123,1) 12%, rgba(115,115,115,1) 18%, rgba(140,140,140,1) 23%, rgba(124,124,124,1) 32%, rgba(85,85,85,1) 36%, rgba(104,104,104,1) 43%, rgba(129,129,129,1) 44%, rgba(109,109,109,1) 45%, rgba(94,94,94,1) 47%, rgba(140,140,140,1) 49%, rgba(106,106,106,1) 57%, rgba(184,184,184,1) 63%, rgba(107,107,107,1) 82%, rgba(118,118,118,1) 85%, rgba(164,164,164,1) 87%, rgba(135,135,135,1) 88%);
+      }
+      .scoreboard-texture-a > div:nth-child(3) {
+        width: 16.2em;
+        background: rgb(187,187,187);
+        background: linear-gradient(90deg, rgba(187,187,187,1) 4%, rgba(106,106,106,1) 10%, rgba(123,123,123,1) 12%, rgba(115,115,115,1) 18%, rgba(140,140,140,1) 23%, rgba(124,124,124,1) 32%, rgba(85,85,85,1) 36%, rgba(104,104,104,1) 43%, rgba(129,129,129,1) 44%, rgba(109,109,109,1) 45%, rgba(94,94,94,1) 47%, rgba(140,140,140,1) 49%, rgba(106,106,106,1) 57%, rgba(184,184,184,1) 63%, rgba(107,107,107,1) 82%, rgba(118,118,118,1) 85%, rgba(164,164,164,1) 87%, rgba(135,135,135,1) 88%);
+      }
+      .scoreboard-texture-a > div:nth-child(4) {
+        width: 24em;
+        background: rgb(187,187,187);
+        background: linear-gradient(90deg, rgba(187,187,187,1) 4%, rgba(106,106,106,1) 10%, rgba(123,123,123,1) 12%, rgba(115,115,115,1) 18%, rgba(140,140,140,1) 23%, rgba(124,124,124,1) 32%, rgba(85,85,85,1) 36%, rgba(104,104,104,1) 43%, rgba(129,129,129,1) 44%, rgba(109,109,109,1) 45%, rgba(94,94,94,1) 47%, rgba(140,140,140,1) 49%, rgba(106,106,106,1) 57%, rgba(184,184,184,1) 63%, rgba(107,107,107,1) 82%, rgba(118,118,118,1) 85%, rgba(164,164,164,1) 87%, rgba(135,135,135,1) 88%);
+      }   
+      .scoreboard-texture-a > div:nth-child(5) {
+        width: 24em;
+        background: rgb(187,187,187);
+        background: linear-gradient(90deg, rgba(187,187,187,1) 4%, rgba(106,106,106,1) 10%, rgba(123,123,123,1) 12%, rgba(115,115,115,1) 18%, rgba(140,140,140,1) 23%, rgba(124,124,124,1) 32%, rgba(85,85,85,1) 36%, rgba(104,104,104,1) 43%, rgba(129,129,129,1) 44%, rgba(109,109,109,1) 45%, rgba(94,94,94,1) 47%, rgba(140,140,140,1) 49%, rgba(106,106,106,1) 57%, rgba(184,184,184,1) 63%, rgba(107,107,107,1) 82%, rgba(118,118,118,1) 85%, rgba(164,164,164,1) 87%, rgba(135,135,135,1) 88%);
+      }   
+            .scoreboard-texture-a > div:last-child {
+        flex: 1;
+        background: rgb(187,187,187);
+        background: linear-gradient(90deg, rgba(187,187,187,1) 4%, rgba(106,106,106,1) 10%, rgba(123,123,123,1) 12%, rgba(115,115,115,1) 18%, rgba(140,140,140,1) 23%, rgba(124,124,124,1) 32%, rgba(85,85,85,1) 36%, rgba(104,104,104,1) 43%, rgba(129,129,129,1) 44%, rgba(109,109,109,1) 45%, rgba(94,94,94,1) 47%, rgba(140,140,140,1) 49%, rgba(106,106,106,1) 57%, rgba(184,184,184,1) 63%, rgba(107,107,107,1) 82%, rgba(118,118,118,1) 85%, rgba(164,164,164,1) 87%, rgba(135,135,135,1) 88%);
+      } 
+      .warning-track {
+        background-color: #d3662c;
+        width: 100%;
+        height: 1em;
+      }
+      .grass {
+        background-color: #4a5c28;
+        width: 100%;
+        height: 3.2em;
+      }
+  	</style>
+  </head>
+  <body>
+  	<div class="picture">
+      <div class="wall"></div>
+      <div class="scoreboard-top"></div>
+      <div class="scoreboard">
+        <div class="scoreboard-texture-a">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+        <div class="fenway-park">
+          <div class="fenway-park--f"></div>
+          <div class="fenway-park--e"></div>
+          <div class="fenway-park--n"></div>
+          <div class="fenway-park--w"></div>
+          <div class="fenway-park--a"></div>
+          <div class="fenway-park--y"></div>
+          <div class="fenway-park--p">
+            <div></div>
+            <div></div>
+          </div>
+          <div class="fenway-park--a a-2"></div>
+          <div class="fenway-park--r">
+            <div></div>
+            <div></div>
+          </div>
+          <div class="fenway-park--k"></div>
+        </div>
+        <div class="tb-line">
+          <div class="tb-line--tb"></div>
+          <div class="inning"></div>
+          <div class="inning"></div>
+          <div class="inning"></div>
+          <div class="inning"></div>
+          <div class="inning"></div>
+          <div class="inning"></div>
+          <div class="inning"></div>
+          <div class="inning"></div>
+          <div class="inning"></div>
+        </div>
+      </div>
+      <div class="warning-track"></div>
+      <div class="grass"></div>
+    </div>
+    <div class="title">
+      <strong>The Green Monster, 2017</strong>.
+      <span><a href="index.html">Handcoded Scoreboards</a> by Ka Wai Cheung.</span>
+    </div>
+  </body>
+</html>
