@@ -1,11 +1,13 @@
+
 <html>
   <head>
+    <title>Wrigley Field, 1941 | Ka Wai Cheung</title>
     <meta content="width=device-width, initial-scale=1" name="viewport"/>
-  	<link rel="preconnect" href="https://fonts.googleapis.com">
-  	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  	<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Squada+One&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Squada+One&display=swap" rel="stylesheet">
     
-  	<style>
+    <style>
       :root {
         --color--title: #333;
         --color--title-faded: #666;
@@ -34,13 +36,11 @@
         --color--scoreboard-back-pillars-right-side: rgba(0,0,0,0.3);
         --color--scoreboard-back-pillars-shadow: rgba(0,0,0,0.3);
 
-        --color--sky-outer: #cfcfcf;
-        --color--sky-inner: #efefef;
+        --color--bottom-line: #bebebe;
 
-        --color--bottom-line: #efefdf;
+        --blur: blur(0.2px);
 
-        --blur-text: blur(0.3px);
-
+        --px--picture-width: 1280px;
         --px--picture-height: 600px;
         --px--scoreboard-width: 972px;
         --px--scoreboard-height: 350px;
@@ -51,7 +51,7 @@
         --font--scoreboard: Bebas Neue;
         --font--scoreboard-alt: Squada One;
 
-        --time--full-animation-duration: 30s;
+        --time--full-animation-duration: 20s;
 
         --text--clip-path--n: polygon(0 0, 33% 0, 67% 45%, 67% 0, 100% 0, 100% 100%, 67% 100%, 33% 55%, 33% 100%, 0 100%);
         --text--clip-path--a: polygon(0 100%, 33% 0, 67% 0%, 100% 100%, 70% 100%, 50% 35%, 45% 63%, 68% 63%, 63% 80%, 37% 80%, 30% 100%);
@@ -59,40 +59,39 @@
         --text--clip-path--l: polygon(0 0, 40% 0, 40% 83%, 100% 83%, 100% 100%, 0 100%);
         --text--clip-path--m: polygon(0 0, 30% 0, 50% 40%, 70% 0, 100% 0, 100% 100%, 70% 100%, 70% 55%, 50% 90%, 30% 55%, 30% 100%, 0 100%);
         --text--clip-path--e: polygon(0 0, 100% 0, 100% 16%, 38% 16%, 38% 42%, 100% 42%, 100% 58%, 38% 58%, 38% 84%, 100% 84%, 100% 100%, 0 100%);
-        --text--clip-path--r: polygon(0 0, 100% 0, 100% 54%, 95% 62%, 90% 63%, 85% 64%, 80% 67%, 100% 100%, 67% 100%, 42% 63%, 34% 63%, 34% 46%, 63% 46%, 
-        66% 42%, 66% 21%, 63% 17%, 34% 17%, 34% 100%, 0 100%);
+        --text--clip-path--r: polygon(0 0, 100% 0, 100% 54%, 95% 62%, 90% 63%, 85% 64%, 80% 67%, 100% 100%, 67% 100%, 42% 63%, 34% 63%, 34% 46%, 63% 46%, 66% 42%, 66% 21%, 63% 17%, 34% 17%, 34% 100%, 0 100%);
         --text--clip-path--c: polygon(0 0, 100% 0, 100% 28%, 65% 28%, 65% 20%, 60% 18%, 50% 17%, 40% 18%, 33% 20%, 33% 80%, 40% 82%, 50% 83%, 60% 82%, 65% 80%, 65% 68%, 100% 68%, 100% 100%, 0 100%);
         --text--clip-path--u: polygon(0 0, 33% 0, 33% 75%, 50% 80%, 67% 75%, 67% 0%, 100% 0%, 100% 100%, 0 100%);
         --text--clip-path--p: polygon(0 0, 100% 0, 100% 60%, 93% 63%, 86% 67%, 79% 70%, 33% 70%, 33% 50%, 67% 50%, 67% 20%, 33% 20%, 33% 100%, 0 100%);
-        --text--clip-path--s: polygon(0 0, 100% 0, 100% 35%, 67% 35%, 67% 20%, 33% 20%, 
-        33% 30%, 90% 55%, 100% 67%, 100% 100%, 0 100%, 0 65%, 33% 65%, 33% 80%, 67% 80%, 67% 70%, 20% 50%, 10% 45%, 0 33%);
-        --text--clip-path--g: polygon(0 0, 100% 0, 100% 35%, 67% 35%, 67% 20%, 33% 20%, 33% 80%,
-         67% 80%, 67% 65%, 48% 65%, 48% 45%, 100% 45%, 100% 100%, 0 100%);
-        
+        --text--clip-path--s: polygon(0 0, 100% 0, 100% 35%, 67% 35%, 67% 20%, 33% 20%, 33% 30%, 90% 55%, 100% 67%, 100% 100%, 0 100%, 0 65%, 33% 65%, 33% 80%, 67% 80%, 67% 70%, 20% 50%, 10% 45%, 0 33%);
+        --text--clip-path--g: polygon(0 0, 100% 0, 100% 35%, 67% 35%, 67% 20%, 33% 20%, 33% 80%, 67% 80%, 67% 65%, 48% 65%, 48% 45%, 100% 45%, 100% 100%, 0 100%);
+        --text--clip-path--b: polygon(0 0, 100% 0, 100% 45%, 90% 50%, 100% 55%, 100% 100%, 35% 100%, 35% 80%, 65% 80%, 65% 60%, 35% 60%, 35% 40%, 65% 40%, 65% 20%, 35% 20%, 35% 100%, 0 100%);
+        --text--clip-path--k: polygon(0 0, 40% 0%, 40% 40%, 60% 0, 100% 0, 70% 46%, 100% 100%, 60% 100%, 40% 60%, 40% 100%, 0 100%);
       }
 
-  		body {
-  			background-color: #fff;
-  			display: flex;
-  			align-items: center;
-  			justify-content: center;
+      body {
+        background-color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         flex-direction: column;
         height: 100vh;
         margin: 0;
         padding: 0;
-  		}
+      }
 
       /* Scoreboard Picture */
-  		.picture {
-  			position: relative;
-  			width: 95vw;
+      .picture {
+        position: relative;
+        width: var(--px--picture-width);
         height: var(--px--picture-height);
-  			display: flex;
-  			flex-direction: column;
-  			align-items: center;
+        min-height: var(--px--picture-height);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
         overflow: hidden;
         font-size: 10px;
-        border: solid 1px #ccc;
+        border: solid 1px #999;
       }
 
       /* Picture background (sky) */
@@ -106,7 +105,7 @@
         width: calc(100% + 1000px);
         height: calc(var(--px--picture-height) + 1800px);
         background: linear-gradient(-10deg, rgba(165,165,165,1) 0%, rgba(205,205,205,1) 8%,rgba(225,225,225,1) 21%, rgba(158,158,158,1) 45%, rgba(110,110,110,1) 100%);
-        animations-name: picture-background;
+        animation-name: picture-background;
         animation-duration: var(--time--full-animation-duration);
         animation-timing-function: linear;
         animation-fill-mode: forwards;
@@ -115,7 +114,8 @@
       /* Picture background (sky) */
       @keyframes perspective-wrapper {
         0% {opacity: 0;}
-        1% { opacity: 1; }
+        1% { opacity: 0; }
+        1.1% {opacity: 1; }
         50% { opacity: 1; }
         100% {opacity: 0.88;}
       }
@@ -126,15 +126,15 @@
         height: 100%;
         display: flex;
         flex-direction: column;
-  			align-items: center;
-  			justify-content: center;
+        align-items: center;
+        justify-content: center;
         top: 6.6em;
         transform: perspective(380em) rotateZ(0deg) rotateX(14deg) rotateY(-26deg);
-        animations-name: perspective-wrapper;
+        animation-name: perspective-wrapper;
         animation-duration: var(--time--full-animation-duration);
         animation-timing-function: linear;
         animation-fill-mode: forwards;
-        /*opacity: 0;*/
+        opacity: 0;
       }
 
       .scoreboard-right-side > div.top-3-windows {
@@ -163,18 +163,29 @@
       .standings {
         position: absolute;
         top: -10em;
-        left: 54%;
+        left: 53%;
         width: calc(var(--px--scoreboard-width) * 0.34);
         transform: translateX(-50%);
         display: flex;
         justify-content: space-between;
       }
 
+      @keyframes flag-line {
+        0% {      
+          border-right: solid 0.1em rgba(0,0,0,0.24); 
+        }
+        100% {      
+          border-right: solid 0.1em rgba(0,0,0,0.5);
+        }
+      }
       .flag-line { 
         height: 20em;
         width: 3em;
-        border-right: solid 0.1em rgba(0,0,0,0.3);
-        position: relative;
+        position: relative;        
+        animation-name: flag-line;
+        animation-duration: var(--time--full-animation-duration);
+        animation-timing-function: linear;
+        animation-fill-mode: forwards;
       }
 
       .flag-line.national {
@@ -217,7 +228,7 @@
         width: 8em;
         height: 4em;
         filter: blur(0.4em);
-        animations-name: flag-wave;
+        animation-name: flag-wave;
         animation-timing-function: linear;
         animation-iteration-count: infinite; 
       }
@@ -255,8 +266,8 @@
       }
 
       .scoreboard-wrapper {
-  			width: var(--px--scoreboard-width);
-  			height: var(--px--scoreboard-height);
+        width: var(--px--scoreboard-width);
+        height: var(--px--scoreboard-height);
         position: relative;
       }
 
@@ -269,14 +280,14 @@
         transform: skew(0, 30deg);
       }
 
-  		.scoreboard-front-side {
+      .scoreboard-front-side {
         position: relative;
-  			width: var(--px--scoreboard-width);
-  			height: var(--px--scoreboard-height);
+        width: var(--px--scoreboard-width);
+        height: var(--px--scoreboard-height);
         border-top-left-radius: 1em;
         border-top-right-radius: 1em;
         border-bottom: solid 0.2em var(--color--scoreboard-bottom-lip);
-  			display: flex;
+        display: flex;
         font-family: var(--font--scoreboard);
         color: var(--color--scoreboard-text);
         text-shadow: 0px 0px 32px rgba(0,0,0,0.3);  
@@ -287,7 +298,7 @@
           var(--color--scoreboard-middle) 52%, 
           var(--color--scoreboard-top) 100%
         );
-  		}
+      }
 
       .s-clock {
         position: absolute; 
@@ -305,7 +316,7 @@
         padding: 0.1em;
         box-shadow: 0 0 0.2em rgba(0,0,0,1);
         border-right: solid 0.1em var(--color--scoreboard-top);
-        animations-name: clock-background;
+        animation-name: clock-background;
         animation-duration: var(--time--full-animation-duration);
         animation-timing-function: linear;
         animation-fill-mode: forwards;
@@ -328,11 +339,11 @@
       @keyframes hour-hand-rotate {
         0%   {
           transform: translateX(-50%) rotate(30deg);
-          filter: drop-shadow(1em 1em 0.1em rgba(0,0,0,0.05));
+          filter: drop-shadow(0.46em 0.6em 0.1em rgba(0,0,0,0.2));
         }
         100% {
-          transform: translateX(-50%) rotate(120deg);
-          filter: drop-shadow(0.5em -0.5em 0.1em rgba(0,0,0,0.2));
+          transform: translateX(-50%) rotate(35deg);
+          filter: drop-shadow(0.6em 0.6em 0.1em rgba(0,0,0,0.02));
         }
       }
 
@@ -342,7 +353,7 @@
         left: 50%;
         position: absolute;
         filter: drop-shadow(1em 0 0.1em rgba(0,0,0,0.2));
-        animations-name: hour-hand-rotate;
+        animation-name: hour-hand-rotate;
         animation-duration: var(--time--full-animation-duration);
         animation-timing-function: linear;
         animation-fill-mode: forwards;
@@ -360,44 +371,11 @@
       @keyframes minute-hand-rotate {
         0% {
           transform: translateX(-50%) rotate(0deg);
-          filter: drop-shadow(1em 1em 0.1em rgba(0,0,0,0.05));
-        }
-        8.33% {
-          filter: drop-shadow(0.75em 0.25em 0.1em rgba(0,0,0,0.05));
-        }
-        16.67% {
-          filter: drop-shadow(-0.25em -0.5em 0.1em rgba(0,0,0,0.05));
-        }
-        25% {
-          filter: drop-shadow(-1em 0.25em 0.1em rgba(0,0,0,0.05));
-        }
-        33.33% {
-          filter: drop-shadow(1em 1em 0.1em rgba(0,0,0,0.05));
-        }
-        41.67% {
-          filter: drop-shadow(0.75em 0.25em 0.1em rgba(0,0,0,0.1));
-        }
-        50% {
-          filter: drop-shadow(-0.25em -0.5em 0.1em rgba(0,0,0,0.1));
-        }
-        58.33% {
-          filter: drop-shadow(-1em 0.25em 0.1em rgba(0,0,0,0.1));
-        }
-        66.67% {
-          filter: drop-shadow(1em 1em 0.1em rgba(0,0,0,0.15));
-        }
-        75% {
-          filter: drop-shadow(0.75em 0.25em 0.1em rgba(0,0,0,0.15));
-        }
-        83.33% {
-          filter: drop-shadow(-0.25em -0.5em 0.1em rgba(0,0,0,0.2));
-        }
-        91.67% {
-          filter: drop-shadow(-1em 0.25em 0.1em rgba(0,0,0,0.2));
+          filter: drop-shadow(0.6em 0.6em 0.1em rgba(0,0,0,0.2));
         }
         100% {
-          filter: drop-shadow(1em 1em 0.1em rgba(0,0,0,0.2));
-          transform: translateX(-50%) rotate(1080deg);
+          transform: translateX(-50%) rotate(60deg);
+          filter: drop-shadow(0.6em 0.6em 0.1em rgba(0,0,0,0.02));
         }
       }
 
@@ -408,7 +386,7 @@
         transform: translateX(-50%) rotate(36deg);
         position: absolute;
         filter: drop-shadow(1em 0 0.1em rgba(0,0,0,0.7));
-        animations-name: minute-hand-rotate;
+        animation-name: minute-hand-rotate;
         animation-duration: var(--time--full-animation-duration);
         animation-timing-function: linear;
         animation-fill-mode: forwards;
@@ -459,7 +437,7 @@
         border-radius: 50%;
         box-sizing: border-box;
         position: relative;
-        animations-name: clock-background;
+        animation-name: clock-background;
         animation-duration: var(--time--full-animation-duration);
         animation-timing-function: linear;
         animation-fill-mode: forwards;
@@ -508,19 +486,19 @@
         transform: translateX(-50%) rotate(180deg);
       }
 
-  		.s-header {
+      .s-header {
         position: absolute;
-  			width: 70%;
+        width: 70%;
         left: 50%;
         transform: translateX(-50%);
         height: calc(var(--px--scoreboard-header-height) + 0.1em);
-  			top: calc(var(--px--scoreboard-header-height) * -1);
-  			background-color: var(--color--scoreboard-top);
-  			border-top-left-radius: var(--px--scoreboard-header-height);
-  			border-top-right-radius: var(--px--scoreboard-header-height);
+        top: calc(var(--px--scoreboard-header-height) * -1);
+        background-color: var(--color--scoreboard-top);
+        border-top-left-radius: var(--px--scoreboard-header-height);
+        border-top-right-radius: var(--px--scoreboard-header-height);
         border-right: solid 0.2em var(--color--scoreboard-right-side);
         overflow: hidden;
-  		}
+      }
 
       .scoreboard-main {
         position: relative;
@@ -546,7 +524,7 @@
         width: 100%;
         height: 100%;background: rgb(231,231,231);
         background: linear-gradient(-5deg, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0) 70%);
-        animations-name: s-bg-transition;
+        animation-name: s-bg-transition;
         animation-duration: var(--time--full-animation-duration);
         animation-timing-function: linear;
         animation-fill-mode: forwards;
@@ -554,7 +532,7 @@
 
       .scoreboard-right-side {
         position: absolute;
-  			height: var(--px--scoreboard-height);
+        height: var(--px--scoreboard-height);
         width: 2.3em;
         right: 0.1em;
         top: 1.4em;
@@ -606,7 +584,7 @@
           var(--color--scoreboard-undercarriage) 100%);
         height: 1em;
         margin-bottom: 0.9em;
-        animations-name: scoreboard-undercarriage-studs;
+        animation-name: scoreboard-undercarriage-studs;
         animation-duration: var(--time--full-animation-duration);
         animation-timing-function: linear;
         animation-fill-mode: forwards;
@@ -633,13 +611,19 @@
         z-index: 1;
         filter: blur(0.02em);
       }
-
+      @keyframes scoreboard-front-pillars {
+        0% { box-shadow: inset 0em 4em 1.4em -3.9em var(--color--scoreboard-front-pillars-shadow); }
+        100% { box-shadow: inset 0em 4em 1.4em -1.9em var(--color--scoreboard-front-pillars-shadow); }
+      }
       .scoreboard-front-pillars > div {
         width: 1em;
         height: 16em;
         background-color: var(--color--scoreboard-front-pillars);
         border-right: solid 0.4em var(--color--scoreboard-front-pillars-right-side);
-        box-shadow: inset 0em 4em 1.4em -2.9em var(--color--scoreboard-front-pillars-shadow);
+        animation-name: scoreboard-front-pillars;
+        animation-duration: var(--time--full-animation-duration);
+        animation-timing-function: linear;
+        animation-fill-mode: forwards;
       }
 
       .scoreboard-front-pillars > div:first-child {
@@ -772,48 +756,7 @@
         top: 0;
         left: 50%;
         transform: translateX(-50%);
-        animations-name: placard-flip;
-        animation-duration: 0.5s;
-        animation-timing-function: ease-in;
-        animation-fill-mode: forwards;
-        animation-iteration-count: 1;
-        opacity: 0;
         background-color: var(--color--scoreboard-hits-bg);
-      }
-
-      .vis-hits-1 {
-        animation-delay: calc(var(--time--full-animation-duration) * 0.15);
-      }
-      .vis-hits-2 {
-        animation-delay: calc(var(--time--full-animation-duration) * 0.25);
-      }
-      .vis-hits-3 {
-        animation-delay: calc(var(--time--full-animation-duration) * 0.45);
-      }
-      .vis-hits-4 {
-        animation-delay: calc(var(--time--full-animation-duration) * 0.55);
-      }
-      .vis-hits-5 {
-        animation-delay: calc(var(--time--full-animation-duration) * 0.65);
-      }
-
-      .cubs-hits-1 {
-        animation-delay: calc(var(--time--full-animation-duration) * 0.1);
-      }
-      .cubs-hits-2 {
-        animation-delay: calc(var(--time--full-animation-duration) * 0.3);
-      }
-      .cubs-hits-3 {
-        animation-delay: calc(var(--time--full-animation-duration) * 0.5);
-      }
-      .cubs-hits-4 {
-        animation-delay: calc(var(--time--full-animation-duration) * 0.6);
-      }
-      .cubs-hits-5 {
-        animation-delay: calc(var(--time--full-animation-duration) * 0.7);
-      }
-      .cubs-hits-6 {
-        animation-delay: calc(var(--time--full-animation-duration) * 0.9);
       }
 
       .hole {
@@ -915,7 +858,7 @@
         width: 1.9em;
         margin-right: 0.6em;
         background-color: transparent;
-        border: solid 0.64em #fff;
+        border: solid 0.64em;
         border-radius: 0.5em;
         box-sizing: border-box;
       }
@@ -982,7 +925,7 @@
         margin-right: 0.5em;
         box-sizing: border-box;
         background-color: var(--color--scoreboard-hole);
-        animations-name: windows-shadow;
+        animation-name: windows-shadow;
         animation-duration: var(--time--full-animation-duration);
         animation-timing-function: linear;
         animation-fill-mode: forwards;
@@ -990,7 +933,7 @@
 
       .windows > div.covered {
         background-color: transparent;
-        animations-name: none;
+        animation-name: none;
         border-right: solid 0.1em transparent;
         border-left: solid 0.1em transparent;
         box-shadow: inset 0.1em 0.1em 0.2em rgba(0,0,0,0.3);
@@ -1121,17 +1064,20 @@
 
       .batter-text {
         top: 0.85em;
-        height: 1.6em;
+        height: 1.7em;
         display: flex;
       }
       
       .batter-text > div {
-        width: 1em;
-        margin-right: 0.2em;
+        width: 1.1em;
+        margin-right: 0.1em;
         background-color: var(--color--scoreboard-text);
       }
+
       .batter-text > .b {
-        clip-path: var(--text--clip-path--t);
+        border-top-right-radius: 0.35em;
+        border-bottom-right-radius: 0.35em;
+        clip-path: var(--text--clip-path--b);
       }
 
       .batter-text > .a {
@@ -1141,12 +1087,104 @@
       .batter-text > .t {
         clip-path: var(--text--clip-path--t);
       }
+
       .batter-text > .e {
         clip-path: var(--text--clip-path--e);
       }
+
       .batter-text > .r {
-        border-top-right-radius: 0.2em;
+        border-top-right-radius: 0.35em;
         clip-path: var(--text--clip-path--r);
+      }
+
+      .ball-text {
+        top: 0em;
+        height: 1.6em;
+        display: flex;
+      }
+
+      .ball-text > div {
+        width: 0.8em;
+        margin-right: 0.1em;
+        background-color: var(--color--scoreboard-text);
+      }
+
+      .ball-text > .b {
+        border-top-right-radius: 0.35em;
+        border-bottom-right-radius: 0.35em;
+        clip-path: var(--text--clip-path--b);
+      }
+
+      .ball-text > .a {
+        clip-path: var(--text--clip-path--a);
+      }     
+      
+      .ball-text > .l {
+        clip-path: var(--text--clip-path--l);
+      }
+
+      .out-text {
+        top: 0em;
+        height: 1.6em;
+        display: flex;
+      }
+
+      .out-text > div {
+        width: 0.8em;
+        margin-right: 0.1em;
+        background-color: var(--color--scoreboard-text);
+      }
+
+      .out-text > .o {
+        width: 0.9em;
+        background-color: transparent;
+        border: solid 0.32em;
+        border-radius: 0.5em;
+        box-sizing: border-box;
+      }
+
+      .out-text > .u {
+        clip-path: var(--text--clip-path--u);
+        border-bottom-left-radius: 0.4em;
+        border-bottom-right-radius: 0.4em;
+      }     
+      
+      .out-text > .t {
+        clip-path: var(--text--clip-path--t);
+      }
+
+      .strike-text {
+        top: 0em;
+        height: 1.6em;
+        display: flex;
+      }
+
+      .strike-text > div {
+        width: 0.8em;
+        margin-right: 0.05em;
+        background-color: var(--color--scoreboard-text);
+      }
+
+      .strike-text > .s {
+        border-radius: 0.3em;
+        clip-path: var(--text--clip-path--s);
+      }
+      
+      .strike-text > .t {
+        clip-path: var(--text--clip-path--t);
+      }
+      .strike-text > .r {
+        border-top-right-radius: 0.3em;
+        clip-path: var(--text--clip-path--r);
+      }
+      .strike-text > .i {
+        width: 0.35em;
+      }
+      .strike-text > .k {
+        clip-path: var(--text--clip-path--k);
+      }
+      .strike-text > .e {
+        clip-path: var(--text--clip-path--e);
       }
       .info-marquee-squares-wrapper {
         display: flex;
@@ -1298,7 +1336,7 @@
       @keyframes placard-flip {
         0% {
           top: -1.5em;
-          opacity: 1;
+          opacity: 0;
         }
         100% {
           top: 0em;
@@ -1317,17 +1355,13 @@
 
       /* The actual runs scored placard */
       .inning-set > div > span:not(.inning) {
-        opacity: 0;
         display: block;
         width: 100%;
         background-color: var(--color--scoreboard-inning-score-bg);
         position: absolute;
-        animations-name: placard-flip;
-        animation-duration: 0.5s;
-        animation-timing-function: ease-in;
-        animation-fill-mode: forwards;
-        animation-iteration-count: 1;
       }
+
+
 
       .n-bos-i1 {
         animation-delay: calc(var(--time--full-animation-duration) * 0.05);
@@ -1688,8 +1722,8 @@
         left: 40%;
         background-color: #fff;
         opacity: 0.4;
-        animations-name: rain;
-        animation-duration: 1.2s;
+        animation-name: rain;
+        animation-duration: 1s;
         animation-timing-function: ease-in;
         animation-iteration-count: infinite;
       }
@@ -1722,7 +1756,7 @@
         left: 90%;
       }
       .rain-wrapper > .rain-7 {
-        animation-delay: calc(var(--time--full-animation-duration) * .48);
+        animation-delay: calc(var(--time--full-animation-duration) * .38);
         animation-duration: 1.4s;
         height: 1.3em;
         left: 33%;
@@ -1737,17 +1771,17 @@
         left: 43%;
       }
       .rain-wrapper > .rain-10 {
-        animation-delay: calc(var(--time--full-animation-duration) * .57);
+        animation-delay: calc(var(--time--full-animation-duration) * .17);
         height: 0.6em;
         left: 63%;
       }
       .rain-wrapper > .rain-11 {
-        animation-delay: calc(var(--time--full-animation-duration) * .58);
+        animation-delay: calc(var(--time--full-animation-duration) * .34);
         animation-duration: 1.9s;
         left: 57%;
       }
       .rain-wrapper > .rain-12 {
-        animation-delay: calc(var(--time--full-animation-duration) * .55);
+        animation-delay: calc(var(--time--full-animation-duration) * .65);
         left: 77%;
       }
       .rain-wrapper > .rain-13 {
@@ -1774,10 +1808,10 @@
       .title > span > a {
         color: inherit;
       }
-  	</style>
+    </style>
   </head>
   <body>
-  	<div class="picture">
+    <div class="picture">
       <div class="rain-wrapper">
         <div class="rain-1"></div>
         <div class="rain-2"></div>
@@ -2226,7 +2260,12 @@
                   </div>
                   <div class="ball-strike">
                     <div>
-                      <div class="ball-text">Ball</div>
+                      <div class="ball-text">
+                        <div class="b"></div>
+                        <div class="a"></div>
+                        <div class="l"></div>
+                        <div class="l"></div>
+                      </div>
                       <div class="info-marquee-square">
                           <div>
                             <div></div>
@@ -2347,7 +2386,14 @@
                         </div>
                     </div>
                     <div>
-                      <div class="strike-text">Strike</div>
+                      <div class="strike-text">
+                        <div class="s"></div>
+                        <div class="t"></div>
+                        <div class="r"></div>
+                        <div class="i"></div>
+                        <div class="k"></div>
+                        <div class="e"></div>
+                      </div>
                       <div class="info-marquee-square">
                           <div>
                             <div></div>
@@ -2410,7 +2456,11 @@
                   </div>
                   <div class="out">
                     <div>
-                      <div class="out-text">Out</div>
+                      <div class="out-text">
+                        <div class="o"></div>
+                        <div class="u"></div>
+                        <div class="t"></div>
+                      </div>
                       <div class="info-marquee-square">
                           <div>
                             <div class="blank"></div>
@@ -2474,17 +2524,13 @@
                   <div class="bottom-line">
                     <div>Vis</div>
                     <div>
-                      <span class="vis-hits-1">2</span>
-                      <span class="vis-hits-2">4</span>
-                      <span class="vis-hits-3">5</span>
+                      <span>5</span>
                       <!--<span class="vis-hits-4">8</span>
                       <span class="vis-hits-5">9</span>-->
                     </div>
                     <div>Hits</div>
                     <div>
-                      <span class="cubs-hits-1">1</span>
-                      <span class="cubs-hits-2">5</span>
-                      <span class="cubs-hits-3">6</span>
+                      <span>6</span>
                      <!--  <span class="cubs-hits-4">7</span>
                   <span class="cubs-hits-5">9</span>
                       <span class="cubs-hits-6">12</span>-->
