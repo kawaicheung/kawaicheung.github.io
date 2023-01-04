@@ -13,7 +13,7 @@ body {
   justify-content: center;
 }
 
-div {
+body > div {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -23,19 +23,28 @@ div {
   text-align: center;
 }
 
+div.marquee {
+  border: dotted 0.2em rgba(0,150,0, 0.7);
+  padding: 2em;
+  border-radius: 1em;
+}
+
 h1 {
   font-size: 2em;
-  letter-spacing: -0.03em;
   font-weight: 900;
-  color: #222;
+  color: #333;
   margin: 0;
+  text-transform: uppercase;
 }
 
 h2 {
-  font-size: 1.4em;
+  font-size: 0.8em;
   margin: 0;
-  margin-top: 0.6em;
+  margin-top: 0.3em;
   font-weight: 300;
+  color: #333;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
 }
 
 p {
@@ -66,19 +75,28 @@ p.footer {
 p > strong {
   font-weight: 500;
 }
+
+a {
+  color: #333;
+}
+
+a:hover {
+  color: #000;
+}
 </style>
 
 </head>
   <body>
     <div>
-      <h1>Handcoded Scoreboards</h1>
-      <h2>A side project by Ka Wai Cheung</h2>
+      <div class="marquee">
+        <h1>Handcoded Scoreboards</h1>
+        <h2>A side project by Ka Wai Cheung</h2>
+      </div>
       <p>
         I've always appreciated the <strong>design and majesty of baseball 
-        scoreboards</strong>, particularly those in eras before my time.
-        I also love to create interesting things with limited
-        tools. So, here's my attempt to recreate some of my favorites
-        using just <strong>HTML and CSS</strong>. No images. No javascript. 
+        scoreboards</strong>, particularly in eras before my time.
+        I also love to create things with a limited set of
+        tools. So, here's my attempt at combining these two interests using only <strong>HTML and modern-day CSS</strong>. No images. No javascript. 
       </p>
       <ul>
         <li><a href="scoreboards/wrigley-1941.html">Wrigley Field, 1941</a></li>
