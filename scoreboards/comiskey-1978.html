@@ -2,7 +2,7 @@
   <head>
   	<link rel="preconnect" href="https://fonts.googleapis.com">
   	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  	<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Squada+One&display=swap" rel="stylesheet">
+  	<link href="https://fonts.googleapis.com/css2?family=News+Cycle:wght@400;700&display=swap" rel="stylesheet">
     
   	<style>
       :root {
@@ -24,8 +24,7 @@
         --px--scoreboard-clock-stand-height: 2.6em;
         --em--scoreboard-clock: 13em;
 
-        --font--scoreboard: Bebas Neue;
-        --font--scoreboard-alt: Squada One;
+        --font--speed-o-meter: 'News Cycle';
 
         --time--full-animation-duration: 20s;
       }
@@ -72,6 +71,7 @@
         justify-content: center;
         position: relative;
       }
+
       .pitch-o-meter {
         position: absolute;
         top: 0.6em;
@@ -81,13 +81,15 @@
         height: 4em;
         background-color: #5a77a2;
         display: flex;
-        align-items: flex-end;
-        justify-content: center;
-        display: flex;
         flex-direction: column;
+        align-items: center;
         color: #fff;
         text-transform: uppercase;
+        font-family: var(--font--speed-o-meter);
+        font-weight: 700;
+        letter-spacing: -0.05em;
       }
+
       .clock--border {
         position: relative;
         width: 17em;
@@ -97,6 +99,23 @@
         display: flex;
         align-items: flex-end;
         justify-content: center;
+      }
+
+      .clock--shadow-maker {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+      }
+
+      .clock--shadow-maker > div {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        box-shadow: 0 0.45em 0.2em 0.2em rgba(0,0,0,0.62);
+        clip-path: polygon(11% 50%, 89% 50%, 89% 100%, 79% 100%, 79% 50%, 21% 50%, 21% 100%, 11% 100%);
       }
 
       .clock--base {
@@ -117,7 +136,7 @@
         height: 16.9em;
         border-radius: 50%;
         background-color: var(--color--clock);
-        box-shadow: 0 0.8em 0em -.5em rgba(0,0,0,0.45) inset;
+        box-shadow: 0 0.8em 0em -.5em rgba(0,0,0,0.8) inset;
       }
 
       .clock-light {
@@ -591,7 +610,7 @@
         align-items: center;
         border: solid 1px #fff;
         box-sizing: border-box;
-        box-shadow: 0 0.3em 0.2em 0em rgba(0,0,0,0.3) inset;
+        box-shadow: 0 0.3em 0.2em 0em rgba(0,0,0,0.5) inset;
       }
 
       .light-towers > div:first-child,
@@ -681,37 +700,70 @@
         box-sizing: border-box;
       }
 
+      .light-tower--pinwheel--shadow-maker {
+        position: absolute;
+        top: 1.6em;
+        width: 4em;
+        height: 6em;
+        border-radius: 50%;
+        clip-path: polygon(30% 0, 70% 0, 70% 100%, 30% 100%);
+        display: flex;
+        justify-content: center;
+      }
+
+      .light-tower--pinwheel--shadow-maker > div {
+        width: 4em;
+        height: 4em;
+        border-radius: 50%;
+        box-shadow: 0em 0.8em 0.2em 0.1em rgba(0,0,0,.58);
+      }
+
       .ltp-shade {
         position: absolute;
         width: 100%;
         height: 100%;
         border-radius: 50%;
-        box-shadow: 0em 0.1em 0.2em 0.1em rgba(0,0,0,.4) inset;
+        box-shadow: 0em 0.1em 0.08em 0.03em rgba(0,0,0,.5) inset;
       }
 
-      .light-towers > div:first-child > .light-tower--pinwheel {
-        bottom: 32%;
+      .light-towers > div:first-child > .light-tower--pinwheel,
+      .light-towers > div:first-child > .light-tower--pinwheel--shadow-maker {
+        top: 27%;
       }
-      .light-towers > div:nth-child(2) > .light-tower--pinwheel {
-        bottom: 40%;
+  
+      .light-towers > div:nth-child(2) > .light-tower--pinwheel,
+      .light-towers > div:nth-child(2) > .light-tower--pinwheel--shadow-maker {
+        top: 28%;
       }
-      .light-towers > div:nth-child(3) > .light-tower--pinwheel {
-        bottom: 45%;
+
+      .light-towers > div:nth-child(3) > .light-tower--pinwheel,
+      .light-towers > div:nth-child(3) > .light-tower--pinwheel--shadow-maker {
+        top: 28.8%;
       }
-      .light-towers > div:nth-child(4) > .light-tower--pinwheel {
-        bottom: 47%;
+
+      .light-towers > div:nth-child(4) > .light-tower--pinwheel,
+      .light-towers > div:nth-child(4) > .light-tower--pinwheel--shadow-maker {
+        top: 31.6%;
       }
-      .light-towers > div:nth-child(7) > .light-tower--pinwheel {
-        bottom: 47%;
-      }      
-      .light-towers > div:nth-child(8) > .light-tower--pinwheel {
-        bottom: 45%;
-      }      
-      .light-towers > div:nth-child(9) > .light-tower--pinwheel {
-        bottom: 40%;
+
+      .light-towers > div:nth-child(7) > .light-tower--pinwheel,
+      .light-towers > div:nth-child(7) > .light-tower--pinwheel--shadow-maker {
+        top: 31.6%;
+      }     
+
+      .light-towers > div:nth-child(8) > .light-tower--pinwheel,
+      .light-towers > div:nth-child(8) > .light-tower--pinwheel--shadow-maker {
+        top: 28.8%;
       }
-      .light-towers > div:nth-child(10) > .light-tower--pinwheel{
-        bottom: 32%;
+
+      .light-towers > div:nth-child(9) > .light-tower--pinwheel,
+      .light-towers > div:nth-child(9) > .light-tower--pinwheel--shadow-maker {
+        top: 28%;
+      }
+
+      .light-towers > div:last-child > .light-tower--pinwheel,
+      .light-towers > div:last-child > .light-tower--pinwheel--shadow-maker {
+        top: 27%;
       }
 
       .ltpc {
@@ -773,11 +825,24 @@
         height: var(--px--scoreboard-height);
       }
 
+      .top-back-ledge {
+        position: absolute;
+        top: 5.8em;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 101%;
+        height: 0.4em;
+        border-bottom-right-radius: 40%;
+        border-bottom-left-radius: 20%;
+        background-color: #ccc;
+        box-shadow: 0 0.2em 0.05em 0.02em rgba(0,0,0,0.5);
+      }
+
       .main--orange-panel {
         width: 100%;
         height: 100%;
         display: flex;
-        background-color: var(--color--scoreboard-orange);
+        background: linear-gradient(90deg, rgba(246,175,120,1) 0%, rgba(240,150,81,1) 32%, rgba(248,146,67,1) 46%, rgba(240,150,81,1) 61%, rgba(246,175,120,1) 100%);
         clip-path: polygon(0 10%, 50% 0, 100% 10%, 96.5% 90%, 50% 100%, 3.5% 90%);
       }
 
@@ -812,12 +877,10 @@
         justify-content: center;
         flex-direction: column;
         width: 38%;
-        border: solid 1px red;
       }
 
       .main--ad-board > div:first-child {
         align-items: flex-end;
-        border: solid 1px red;
       }
 
       .main--ad-board > div:last-child {
@@ -829,6 +892,26 @@
         background-color: var(--color--the-board);
         width: 93.2%;
         height: 70%;
+      }
+
+      .side-ladder {
+        position: absolute;
+        height: 23em;
+        width: 1.14em;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        border-left: solid 0.1em #fff;
+        border-right: solid 0.1em #fff;
+        opacity: 0.7;
+        transform: rotate(0.5deg);
+      }
+
+      .side-ladder--step {
+        background: linear-gradient(180deg, rgba(252,252,252,1) 0%, rgba(186,186,186,1) 48%, rgba(242,242,242,1) 100%);
+        height: 0.1em;
+        width: 100%;
+        box-shadow: 0 0.3em 0.1em 0 rgba(0,0,0,0.5);
       }
 
       .main--overhead-light-1 {
@@ -960,173 +1043,12 @@
               <div class="ltpc red"></div>
               <div class="ltp-shade"></div>
             </div>
-            <div class="light-tower--duo-light-set-wrapper--top">
-              <div class="ltdl"><div></div><div></div></div>
-              <div class="ltdl"><div></div><div></div></div>
-              <div class="ltdl"><div></div><div></div></div>
-              <div class="ltdl"><div></div><div></div></div>
-              <div class="ltdl"><div></div><div></div></div>
-              <div class="ltdl"><div></div><div></div></div>
-              <div class="ltdl"><div></div><div></div></div>
-            </div>
-          </div>
-          <div>
-            <div class="light-tower--cap">
-              <div class="light-tower--cap-light"></div>
-            </div>            
-            <div class="light-tower--pinwheel">
-              <div class="ltpc white"></div>
-              <div class="ltpc green"></div>
-              <div class="ltpc white"></div>
-              <div class="ltpc green"></div>
-              <div class="ltpc white"></div>
-              <div class="ltpc green"></div>
-              <div class="ltpc white"></div>
-              <div class="ltpc green"></div>
-              <div class="ltpc white"></div>
-              <div class="ltp-shade"></div>
+            <div class="light-tower--pinwheel--shadow-maker">
+              <div></div>
             </div>
             <div class="light-tower--duo-light-set-wrapper--top">
               <div class="ltdl"><div></div><div></div></div>
               <div class="ltdl"><div></div><div></div></div>
-              <div class="ltdl"><div></div><div></div></div>
-              <div class="ltdl"><div></div><div></div></div>
-              <div class="ltdl"><div></div><div></div></div>
-              <div class="ltdl"><div></div><div></div></div>
-              <div class="ltdl"><div></div><div></div></div>
-            </div>
-          </div>
-          <div>
-            <div class="light-tower--cap">
-              <div class="light-tower--cap-light"></div>
-            </div>
-            <div class="light-tower--pinwheel">
-              <div class="ltpc white"></div>
-              <div class="ltpc red"></div>
-              <div class="ltpc white"></div>
-              <div class="ltpc red"></div>
-              <div class="ltpc white"></div>
-              <div class="ltpc red"></div>
-              <div class="ltpc white"></div>
-              <div class="ltpc red"></div>
-              <div class="ltp-shade"></div>
-            </div>            
-            <div class="light-tower--duo-light-set-wrapper--top">
-              <div class="ltdl"><div></div><div></div></div>
-              <div class="ltdl"><div></div><div></div></div>
-              <div class="ltdl"><div></div><div></div></div>
-              <div class="ltdl"><div></div><div></div></div>
-              <div class="ltdl"><div></div><div></div></div>
-              <div class="ltdl"><div></div><div></div></div>
-              <div class="ltdl"><div></div><div></div></div>
-            </div>
-          </div>
-          <div>
-            <div class="light-tower--cap">
-              <div class="light-tower--cap-light"></div>
-            </div>
-            <div class="light-tower--pinwheel">
-              <div class="ltpc white"></div>
-              <div class="ltpc blue"></div>
-              <div class="ltpc white"></div>
-              <div class="ltpc blue"></div>
-              <div class="ltpc white"></div>
-              <div class="ltpc blue"></div>
-              <div class="ltpc white"></div>
-              <div class="ltpc blue"></div>
-              <div class="ltp-shade"></div>
-            </div>
-            <div class="light-tower--duo-light-set-wrapper--top">
-              <div class="ltdl"><div></div><div></div></div>
-              <div class="ltdl"><div></div><div></div></div>
-              <div class="ltdl"><div></div><div></div></div>
-              <div class="ltdl"><div></div><div></div></div>
-              <div class="ltdl"><div></div><div></div></div>
-              <div class="ltdl"><div></div><div></div></div>
-              <div class="ltdl"><div></div><div></div></div>
-            </div>
-          </div>
-          <div>
-            <div class="light-tower--cap">
-              <div class="light-tower--cap-light"></div>
-            </div>
-            <div class="light-tower--duo-light-set-wrapper--top">
-              <div class="ltdl"><div></div><div></div></div>
-              <div class="ltdl"><div></div><div></div></div>
-              <div class="ltdl"><div></div><div></div></div>
-              <div class="ltdl"><div></div><div></div></div>
-              <div class="ltdl"><div></div><div></div></div>
-              <div class="ltdl"><div></div><div></div></div>
-              <div class="ltdl"><div></div><div></div></div>
-              <div class="ltdl"><div></div><div></div></div>
-              <div class="ltdl"><div></div><div></div></div>
-              <div class="ltdl"><div></div><div></div></div>
-              <div class="ltdl"><div></div><div></div></div>
-            </div>
-          </div>
-          <div>
-            <div class="light-tower--cap">
-              <div class="light-tower--cap-light"></div>
-            </div>
-            <div class="light-tower--duo-light-set-wrapper--top">
-              <div class="ltdl"><div></div><div></div></div>
-              <div class="ltdl"><div></div><div></div></div>
-              <div class="ltdl"><div></div><div></div></div>
-              <div class="ltdl"><div></div><div></div></div>
-              <div class="ltdl"><div></div><div></div></div>
-              <div class="ltdl"><div></div><div></div></div>
-              <div class="ltdl"><div></div><div></div></div>
-              <div class="ltdl"><div></div><div></div></div>
-              <div class="ltdl"><div></div><div></div></div>
-              <div class="ltdl"><div></div><div></div></div>
-              <div class="ltdl"><div></div><div></div></div>
-            </div>
-          </div>
-          <div>
-            <div class="light-tower--cap">
-              <div class="light-tower--cap-light"></div>
-            </div>
-            <div class="light-tower--pinwheel">
-              <div class="ltpc white"></div>
-              <div class="ltpc light-blue"></div>
-              <div class="ltpc white"></div>
-              <div class="ltpc light-blue"></div>
-              <div class="ltpc white"></div>
-              <div class="ltpc light-blue"></div>
-              <div class="ltpc white"></div>
-              <div class="ltpc light-blue"></div>
-              <div class="ltp-shade"></div>
-            </div>
-            <div class="light-tower--duo-light-set-wrapper--top">
-              <div class="ltdl"><div></div><div></div></div>
-              <div class="ltdl"><div></div><div></div></div>
-              <div class="ltdl"><div></div><div></div></div>
-              <div class="ltdl"><div></div><div></div></div>
-              <div class="ltdl"><div></div><div></div></div>
-              <div class="ltdl"><div></div><div></div></div>
-              <div class="ltdl"><div></div><div></div></div>
-              <div class="ltdl"><div></div><div></div></div>
-              <div class="ltdl"><div></div><div></div></div>
-              <div class="ltdl"><div></div><div></div></div>
-              <div class="ltdl"><div></div><div></div></div>
-            </div>
-          </div>
-          <div>
-            <div class="light-tower--cap">
-              <div class="light-tower--cap-light"></div>
-            </div>
-            <div class="light-tower--pinwheel">
-              <div class="ltpc white"></div>
-              <div class="ltpc yellow"></div>
-              <div class="ltpc white"></div>
-              <div class="ltpc yellow"></div>
-              <div class="ltpc white"></div>
-              <div class="ltpc yellow"></div>
-              <div class="ltpc white"></div>
-              <div class="ltpc yellow"></div>
-              <div class="ltp-shade"></div>
-            </div>
-            <div class="light-tower--duo-light-set-wrapper--top">
               <div class="ltdl"><div></div><div></div></div>
               <div class="ltdl"><div></div><div></div></div>
               <div class="ltdl"><div></div><div></div></div>
@@ -1153,9 +1075,296 @@
               <div class="ltpc green"></div>
               <div class="ltpc white"></div>
               <div class="ltpc green"></div>
+              <div class="ltpc white"></div>
               <div class="ltp-shade"></div>
             </div>
+            <div class="light-tower--pinwheel--shadow-maker">
+              <div></div>
+            </div>
             <div class="light-tower--duo-light-set-wrapper--top">
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+            </div>
+          </div>
+          <div>
+            <div class="light-tower--cap">
+              <div class="light-tower--cap-light"></div>
+            </div>
+            <div class="light-tower--pinwheel">
+              <div class="ltpc white"></div>
+              <div class="ltpc red"></div>
+              <div class="ltpc white"></div>
+              <div class="ltpc red"></div>
+              <div class="ltpc white"></div>
+              <div class="ltpc red"></div>
+              <div class="ltpc white"></div>
+              <div class="ltpc red"></div>
+              <div class="ltp-shade"></div>
+            </div>            
+            <div class="light-tower--pinwheel--shadow-maker">
+              <div></div>
+            </div>
+            <div class="light-tower--duo-light-set-wrapper--top">
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+            </div>
+          </div>
+          <div>
+            <div class="light-tower--cap">
+              <div class="light-tower--cap-light"></div>
+            </div>
+            <div class="light-tower--pinwheel">
+              <div class="ltpc white"></div>
+              <div class="ltpc blue"></div>
+              <div class="ltpc white"></div>
+              <div class="ltpc blue"></div>
+              <div class="ltpc white"></div>
+              <div class="ltpc blue"></div>
+              <div class="ltpc white"></div>
+              <div class="ltpc blue"></div>
+              <div class="ltp-shade"></div>
+            </div>
+            <div class="light-tower--pinwheel--shadow-maker">
+              <div></div>
+            </div>
+            <div class="light-tower--duo-light-set-wrapper--top">
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+            </div>
+          </div>
+          <div>
+            <div class="light-tower--cap">
+              <div class="light-tower--cap-light"></div>
+            </div>
+            <div class="light-tower--duo-light-set-wrapper--top">
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+            </div>
+          </div>
+          <div>
+            <div class="light-tower--cap">
+              <div class="light-tower--cap-light"></div>
+            </div>
+            <div class="light-tower--duo-light-set-wrapper--top">
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+            </div>
+          </div>
+          <div>
+            <div class="light-tower--cap">
+              <div class="light-tower--cap-light"></div>
+            </div>
+            <div class="light-tower--pinwheel">
+              <div class="ltpc white"></div>
+              <div class="ltpc light-blue"></div>
+              <div class="ltpc white"></div>
+              <div class="ltpc light-blue"></div>
+              <div class="ltpc white"></div>
+              <div class="ltpc light-blue"></div>
+              <div class="ltpc white"></div>
+              <div class="ltpc light-blue"></div>
+              <div class="ltp-shade"></div>
+            </div>
+            <div class="light-tower--pinwheel--shadow-maker">
+              <div></div>
+            </div>
+            <div class="light-tower--duo-light-set-wrapper--top">
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+            </div>
+          </div>
+          <div>
+            <div class="light-tower--cap">
+              <div class="light-tower--cap-light"></div>
+            </div>
+            <div class="light-tower--pinwheel">
+              <div class="ltpc white"></div>
+              <div class="ltpc yellow"></div>
+              <div class="ltpc white"></div>
+              <div class="ltpc yellow"></div>
+              <div class="ltpc white"></div>
+              <div class="ltpc yellow"></div>
+              <div class="ltpc white"></div>
+              <div class="ltpc yellow"></div>
+              <div class="ltp-shade"></div>
+            </div>
+            <div class="light-tower--pinwheel--shadow-maker">
+              <div></div>
+            </div>
+            <div class="light-tower--duo-light-set-wrapper--top">
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+            </div>
+          </div>
+          <div>
+            <div class="light-tower--cap">
+              <div class="light-tower--cap-light"></div>
+            </div>            
+            <div class="light-tower--pinwheel">
+              <div class="ltpc white"></div>
+              <div class="ltpc green"></div>
+              <div class="ltpc white"></div>
+              <div class="ltpc green"></div>
+              <div class="ltpc white"></div>
+              <div class="ltpc green"></div>
+              <div class="ltpc white"></div>
+              <div class="ltpc green"></div>
+              <div class="ltp-shade"></div>
+            </div>
+            <div class="light-tower--pinwheel--shadow-maker">
+              <div></div>
+            </div>
+            <div class="light-tower--duo-light-set-wrapper--top">
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
               <div class="ltdl"><div></div><div></div></div>
               <div class="ltdl"><div></div><div></div></div>
               <div class="ltdl"><div></div><div></div></div>
@@ -1184,7 +1393,17 @@
               <div class="ltpc red"></div>
               <div class="ltp-shade"></div>
             </div>
+            <div class="light-tower--pinwheel--shadow-maker">
+              <div></div>
+            </div>
             <div class="light-tower--duo-light-set-wrapper--top">
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
+              <div class="ltdl"><div></div><div></div></div>
               <div class="ltdl"><div></div><div></div></div>
               <div class="ltdl"><div></div><div></div></div>
               <div class="ltdl"><div></div><div></div></div>
@@ -1195,10 +1414,13 @@
           </div>
         </div>
         <div class="pitch-o-meter">
-          <div>Pitch-O-Meter</div>
-          <div>Speed-O-Meter</div>
+          <div>Pitch&nbsp;&nbsp;&nbsp;Meter</div>
+          <div>Speed&nbsp;&nbsp;&nbsp;Meter</div>
         </div>
         <div class="clock--border">
+          <div class="clock--shadow-maker">
+            <div></div>
+          </div>
           <div class="clock--base"></div>
           <div class="clock--light-rim">
             <div class="clock--plate-for-lower-shadow"></div>
@@ -1331,6 +1553,7 @@
           </div>
         </div>
         <div class="scoreboard--main">
+          <div class="top-back-ledge"></div>
           <div class="main--orange-panel">
             <div class="main--white-panel">
               <div class="main--ad-board">
@@ -1343,6 +1566,37 @@
                 </div>
               </div>
               <div class="main--the-board">
+                <div class="side-ladder">
+                  <div class="side-ladder--step"></div>
+                  <div class="side-ladder--step"></div>
+                  <div class="side-ladder--step"></div>
+                  <div class="side-ladder--step"></div>
+                  <div class="side-ladder--step"></div>
+                  <div class="side-ladder--step"></div>
+                  <div class="side-ladder--step"></div>
+                  <div class="side-ladder--step"></div>
+                  <div class="side-ladder--step"></div>
+                  <div class="side-ladder--step"></div>
+                  <div class="side-ladder--step"></div>
+                  <div class="side-ladder--step"></div>
+                  <div class="side-ladder--step"></div>
+                  <div class="side-ladder--step"></div>
+                  <div class="side-ladder--step"></div>
+                  <div class="side-ladder--step"></div>
+                  <div class="side-ladder--step"></div>
+                  <div class="side-ladder--step"></div>
+                  <div class="side-ladder--step"></div>
+                  <div class="side-ladder--step"></div>
+                  <div class="side-ladder--step"></div>
+                  <div class="side-ladder--step"></div>
+                  <div class="side-ladder--step"></div>
+                  <div class="side-ladder--step"></div>
+                  <div class="side-ladder--step"></div>
+                  <div class="side-ladder--step"></div>
+                  <div class="side-ladder--step"></div>
+                  <div class="side-ladder--step"></div>
+                  <div class="side-ladder--step"></div>
+                </div>
               </div>
             </div>
             <div class="main--overhead-light-prong-shadows">
