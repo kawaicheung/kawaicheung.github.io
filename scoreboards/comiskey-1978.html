@@ -58,7 +58,8 @@
         width: 100%;
         height: 100%;
         background: rgb(136,197,244);
-        background: linear-gradient(180deg, rgba(136,197,244,1) 6%, rgba(200,230,244,1) 100%); animation-name: picture-background;
+        background: linear-gradient(180deg, rgba(136,197,244,1) 6%, rgba(200,230,244,1) 100%); 
+        animation-name: picture-background;
       }
 
       .scoreboard-wrapper {
@@ -843,7 +844,7 @@
         height: 100%;
         display: flex;
         background: linear-gradient(90deg, rgba(246,175,120,1) 0%, rgba(240,150,81,1) 32%, rgba(248,146,67,1) 46%, rgba(240,150,81,1) 61%, rgba(246,175,120,1) 100%);
-        clip-path: polygon(0 10%, 50% 0, 100% 10%, 96.5% 90%, 50% 100%, 3.5% 90%);
+        clip-path: polygon(0 10%, 50% 0, 100% 10%, 96.5% 90%, 50% 90%, 3.5% 90%);
       }
 
       .main--white-panel {
@@ -890,30 +891,72 @@
       
       .main--the-board {
         background-color: var(--color--the-board);
-        width: 93.2%;
-        height: 70%;
+        width: 93.5%;
+        height: 74%;
+        position: relative;
       }
 
       .side-ladder {
         position: absolute;
-        height: 23em;
-        width: 1.14em;
+        height: 19em;
+        width: 1.02em;
         display: flex;
         flex-direction: column;
         justify-content: space-evenly;
         border-left: solid 0.1em #fff;
         border-right: solid 0.1em #fff;
         opacity: 0.7;
-        transform: rotate(0.5deg);
+        transform: rotate(0.3deg);
+        top: 0.4em;
+        left: -0.1em;
       }
 
       .side-ladder--step {
-        background: linear-gradient(180deg, rgba(252,252,252,1) 0%, rgba(186,186,186,1) 48%, rgba(242,242,242,1) 100%);
+        background: linear-gradient(180deg, rgba(252,252,252,1) 0%, rgba(186,186,186,1) 88%, rgba(242,242,242,1) 100%);
         height: 0.1em;
         width: 100%;
         box-shadow: 0 0.3em 0.1em 0 rgba(0,0,0,0.5);
       }
 
+      .soxogram-digital-wrapper {
+        display: flex;
+        flex-direction: column;
+        width: fit-content;
+        position: absolute;
+        top: 2em;
+        left: 1.4em;
+      }
+
+      .soxogram-digital-wrapper > div {
+        display: flex;
+        margin-bottom: 0.28em;
+      }
+
+      .soxogram-digital-wrapper .sdw--square {
+        background-color: rgba(0,0,0,0.3);
+        margin-right: 0.2em;
+        width: 1em;
+        height: 1.3em;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .soxogram-digital-wrapper .sdw--square > div {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 0.1em;
+      }
+
+      .soxogram-digital-wrapper .sdw--square > div > div {
+        width: 0.1em;
+        height: 0.1em;
+        margin-right: 0.1em;
+      }
+
+      .soxogram-digital-wrapper .sdw--square > div > div.lit {
+        background-color: yellow;
+      }
+      
       .main--overhead-light-1 {
         position: absolute;
         top: 3.3em;
@@ -1596,6 +1639,538 @@
                   <div class="side-ladder--step"></div>
                   <div class="side-ladder--step"></div>
                   <div class="side-ladder--step"></div>
+                </div>
+                <div class="soxogram-digital-wrapper">
+                  <div>
+                    <div class="sdw--square">
+                      <div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                      </div>
+                      <div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+                      </div>
+                      <div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+                      </div>
+                      <div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                      </div>
+                      <div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                    </div>
+                    <div class="sdw--square">
+                      <div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                      </div>
+                    </div>
+                    <div class="sdw--square">
+                      <div>
+                        <div></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                      </div>
+                      <div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                      </div>
+                      <div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                      </div>
+                    </div>
+                    <div class="sdw--square">
+                      <div>
+                        <div></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                      </div>
+                      <div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+                      </div>
+                      <div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+                      </div>
+                      <div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                      </div>
+                      <div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+                      </div>
+                      <div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+                      </div>
+                      <div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+                      </div>
+                    </div>
+                    <div class="sdw--square">
+                      <div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                      </div>
+                      <div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                      </div>
+                      <div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+                      </div>
+                      <div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+                      </div>
+                      <div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                      </div>
+                    </div>
+                    <div class="sdw--square">
+                      <div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                      </div>
+                      <div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                      </div>
+                      <div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                      </div>
+                    </div>
+                    <div class="sdw--square"></div>
+                    <div class="sdw--square"></div>
+                  </div>
+                  <div>
+                    <div class="sdw--square">
+                      <div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+                      </div>
+                      <div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+                      </div>
+                      <div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+                      </div>
+                    </div>
+                    <div class="sdw--square">
+                      <div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                      </div>
+                      <div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                      </div>
+                      <div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                      </div>
+                    </div>
+                    <div class="sdw--square">
+                      <div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                      </div>
+                      <div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                    </div>
+                    <div class="sdw--square"></div>
+                    <div class="sdw--square"></div>
+                    <div class="sdw--square"></div>
+                    <div class="sdw--square"></div>
+                    <div class="sdw--square"></div>
+                  </div>
+                  <div>
+                    <div class="sdw--square"></div>
+                    <div class="sdw--square"></div>
+                    <div class="sdw--square"></div>
+                    <div class="sdw--square"></div>
+                    <div class="sdw--square"></div>
+                    <div class="sdw--square"></div>
+                    <div class="sdw--square"></div>
+                    <div class="sdw--square"></div>
+                  </div>
+                  <div>
+                    <div class="sdw--square"></div>
+                    <div class="sdw--square"></div>
+                    <div class="sdw--square"></div>
+                    <div class="sdw--square"></div>
+                    <div class="sdw--square"></div>
+                    <div class="sdw--square"></div>
+                    <div class="sdw--square"></div>
+                    <div class="sdw--square"></div>
+                  </div>
+                  <div>
+                    <div class="sdw--square"></div>
+                    <div class="sdw--square"></div>
+                    <div class="sdw--square"></div>
+                    <div class="sdw--square"></div>
+                    <div class="sdw--square"></div>
+                    <div class="sdw--square"></div>
+                    <div class="sdw--square"></div>
+                    <div class="sdw--square"></div>
+                  </div>
+                  <div>
+                    <div class="sdw--square"></div>
+                    <div class="sdw--square"></div>
+                    <div class="sdw--square"></div>
+                    <div class="sdw--square"></div>
+                    <div class="sdw--square"></div>
+                    <div class="sdw--square"></div>
+                    <div class="sdw--square"></div>
+                    <div class="sdw--square"></div>
+                  </div>
+                  <div>
+                    <div class="sdw--square"></div>
+                    <div class="sdw--square"></div>
+                    <div class="sdw--square"></div>
+                    <div class="sdw--square"></div>
+                    <div class="sdw--square"></div>
+                    <div class="sdw--square"></div>
+                    <div class="sdw--square"></div>
+                    <div class="sdw--square"></div>
+                  </div>
+                  <div>
+                    <div class="sdw--square"></div>
+                    <div class="sdw--square"></div>
+                    <div class="sdw--square"></div>
+                    <div class="sdw--square"></div>
+                    <div class="sdw--square"></div>
+                    <div class="sdw--square"></div>
+                    <div class="sdw--square"></div>
+                    <div class="sdw--square"></div>
+                  </div>
                 </div>
               </div>
             </div>
