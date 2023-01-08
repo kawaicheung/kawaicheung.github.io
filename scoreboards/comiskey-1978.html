@@ -866,38 +866,67 @@
         height: 11em;
         width: 100%;
         display: flex;
-        justify-content: space-between;
       }
 
-      .main--ad-board > div {
+      .main--ad-board > .unocal-panel {
+        position: relative;
         font-family: Helvetica Neue, Helvetica;
         font-weight: 400;
-        margin-top: 1em;
-        font-size: 2.4em;
-        letter-spacing: 0em;
+        font-size: 2.55em;
+        letter-spacing: -0.03em;
         line-height: 1em;
         color: var(--color--the-board);
         display: flex;
-        align-items: center;
         justify-content: center;
         flex-direction: column;
-        width: 38%;
+        width: 28.8%;
+        padding-top: 1.5em;
+        padding-left: 1em;
       }
 
-      .main--ad-board > div:first-child {
-        margin-left: 1em;
-        margin-top: 1.7em;
+      .main--ad-board > .unocal-panel > .logo-76 {
+        position: absolute;
+        top: 38%;
+        left: 55%;
+        width: 2.3em;
+        height: 2.3em;
+        background-color: orange;
+        border-radius: 50%;
       }
 
       .main--ad-board > div:last-child {
         align-items: flex-start;
       }
       
+      .main--ad-board > .budweiser-panel {
+        position: relative;
+        font-family: Helvetica Neue, Helvetica;
+        font-weight: 400;
+        font-size: 2.55em;
+        letter-spacing: -0.03em;
+        line-height: 1em;
+        background-color: #444;
+        width: 35%;
+        clip-path: polygon(0 25%, 100% 25%, 100% 100%, 0 100%);
+      }
+
       .main--the-board {
         background-color: var(--color--the-board);
         width: 93.5%;
         height: 74%;
         position: relative;
+      }
+
+      .catwalk {
+        position: absolute;
+        top: -0.2em;
+        left: 0;
+        width: 100%;
+        height: 0.4em;
+        z-index: 1;
+        border-bottom: solid 0.1em rgba(0,0,0,0.8);
+        background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(208,217,255,1) 83%, rgba(59,70,138,1) 100%);
+        box-shadow: 0 0.8em 0em 0 rgba(0,0,0,0.4);
       }
 
       .side-ladder {
@@ -998,13 +1027,17 @@
       }
 
       .box-score > div > div:first-child {
-        width: 8.6em;
+        width: 7.4em;
         text-transform: uppercase;
         font-size: 1.2em;
         line-height: 1.3em;
         letter-spacing: 0.2em;
+        transform: scale(1.2, 1);
+        padding-left: 1em;
       }
-
+      .box-score > div > div.team {
+        box-shadow: 0 0.1em 0.2em 0 rgba(0,0,0,0.2);
+      }
       .box-score > div > div.inning {
          margin-left: 1.5em;
       }
@@ -1015,7 +1048,7 @@
 
       .main--overhead-light-1 {
         position: absolute;
-        top: 3.3em;
+        top: 3.2em;
         left: 0;
         width: 5.5em;
         height: 0.3em;
@@ -1035,7 +1068,7 @@
         background: rgb(249,249,249);
         background: linear-gradient(180deg, rgba(249,249,249,1) 50%, rgba(196,196,196,1) 100%);
         transform: rotate(-2deg);
-        box-shadow: 0 2em 0.2em 0 rgba(0,0,0,0.5);
+        box-shadow: 0 1.8em 0.2em 0 rgba(0,0,0,0.5);
       }
 
       .main--overhead-light-3 {
@@ -1047,7 +1080,7 @@
         border-top: solid 0.01em rgba(0,0,0,0.1);
         background: rgb(249,249,249);
         background: linear-gradient(180deg, rgba(249,249,249,1) 50%, rgba(196,196,196,1) 100%);
-        transform: rotate(-5.6deg);
+        transform: rotate(-5.4deg);
         box-shadow: 0 2em 0.2em 0 rgba(0,0,0,0.5);
       }
 
@@ -1078,7 +1111,7 @@
 
       .main--overhead-light-6 {
         position: absolute;
-        top: 3em;
+        top: 2.88em;
         right: 0em;
         width: 11em;
         height: 0.3em;
@@ -1092,7 +1125,7 @@
       .main--overhead-light-prong-shadows {
         position: absolute;
         width: 99.5%;
-        height: 5.3em;
+        height: 5.6em;
         top: 0;
         left: 50%;
         transform: translateX(-50%);
@@ -1105,9 +1138,8 @@
       .main--overhead-light-prong-shadows > div {
         height: 100%;
         width: 0.1em;
-        background: rgb(93,93,93);
-        background: linear-gradient(180deg, rgba(93,93,93,1) 0%, rgba(47,47,47,1) 68%, rgba(0,0,0,1) 100%);
-        opacity: 0.3;
+        background-color: rgba(0,0,0,0.1);
+        opacity: 1;
       }
 
       .title {
@@ -1799,12 +1831,18 @@
           <div class="main--orange-panel">
             <div class="main--white-panel">
               <div class="main--ad-board">
-                <div>
+                <div class="unocal-panel">
                   <span>Go With</span>
                   <span>The Spirit</span>
+                  <div class="logo-76">
+                  </div>
+                </div>
+                <div class="budweiser-panel">
                 </div>
               </div>
               <div class="main--the-board">
+                <div class="catwalk">
+                </div>
                 <div class="side-ladder">
                   <div class="side-ladder--step"></div>
                   <div class="side-ladder--step"></div>
@@ -5141,10 +5179,10 @@
                     <div class="rhe">H</div>
                     <div class="rhe">E</div>
                     <div class="rhe">P</div>
-                    <div class="rhe">l0</div>
+                    <div class="rhe">l&nbsp;G</div>
                   </div>
                   <div>
-                    <div>Milwaukee</div>
+                    <div class="team">Milwaukee</div>
                     <div></div>
                     <div></div>
                     <div></div>
@@ -5157,7 +5195,7 @@
                     <div></div>
                   </div>
                   <div>
-                    <div>White Sox</div>
+                    <div class="team">White Sox</div>
                     <div></div>
                     <div></div>
                     <div></div>
