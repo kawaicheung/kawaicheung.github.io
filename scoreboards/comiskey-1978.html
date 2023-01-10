@@ -883,7 +883,7 @@
         display: flex;
       }
 
-      .main--ad-board > .unocal-panel {
+      .unocal-panel {
         position: relative;
         font-family: Helvetica Neue, Helvetica;
         font-weight: 400;
@@ -899,7 +899,7 @@
         padding-left: 1em;
       }
 
-      .main--ad-board > .unocal-panel > .logo-76 {
+      .unocal-panel > .logo-76 {
         position: absolute;
         top: 38%;
         left: 59%;
@@ -910,6 +910,17 @@
         box-shadow: 0.01em 0.01em 0.01em 0.01em rgba(0,0,0,0.5);
       }
 
+      .unocal-panel--small-circle-white {
+        position: absolute;
+        bottom: 4.8%;
+        left: 49.5%;
+        width: 0.28em;
+        height: 0.28em;
+        border-radius: 50%;
+        background-color: rgb(239, 239, 239);
+        box-shadow: 0 0.08em 0.02em 0.02em rgba(0,0,0,0.4);
+      }
+
       .main--ad-board > div:last-child {
         align-items: flex-start;
       }
@@ -918,7 +929,7 @@
         position: relative;
         font-family: 'Passion One';
         font-weight: 400;
-        font-size: 2.4em;
+        font-size: 2.3em;
         letter-spacing: -0.03em;
         line-height: 0.72em;
         background-color: #402c3d;
@@ -929,9 +940,10 @@
       .main--ad-board > .budweiser-panel > span {
         position: absolute;
         top: 53%;
-        left: 38%;
+        left: 40%;
         color: #fff;
         text-transform: uppercase;
+        letter-spacing: 0.005em;
       }
 
       .main--the-board {
@@ -1048,26 +1060,42 @@
       
       .box-score > div {
         display: flex;
+        margin-bottom: 0.2em;
+      }
+
+      .box-score > div:last-child {
+        margin-bottom: 0em;
       }
 
       .box-score > div > div:first-child {
-        width: 7.4em;
+        width: 8.5em;
         text-transform: uppercase;
         font-size: 1.2em;
         line-height: 1.3em;
-        letter-spacing: 0.2em;
-        transform: scale(1.2, 1);
-        padding-left: 1em;
+        letter-spacing: 0.254em;
+        padding-left: 0.7em;
+        box-sizing: border-box;
       }
+
       .box-score > div > div.team {
         box-shadow: 0 0.1em 0.2em 0 rgba(0,0,0,0.2);
       }
+
       .box-score > div > div.inning {
-         margin-left: 1.5em;
+         padding-left: 1.53em;
+      }
+      .box-score > div > div.inning.inning-10{
+         padding-left: 1.18em;
+      }
+      .box-score > div > div.rhe {
+        padding-left: 1.9em;
       }
 
-      .box-score > div > div.rhe {
-         margin-left: 2em;
+      .box-score > div > div.inning-score {
+         margin-left: 0.55em;
+         background-color: rgba(0,0,0,0.5);
+         width: 1.5em;
+         height: 1.5em;
       }
 
       .main--overhead-light-1 {
@@ -1878,8 +1906,8 @@
                 <div class="unocal-panel">
                   <span>Go With</span>
                   <span>The Spirit</span>
-                  <div class="logo-76">
-                  </div>
+                  <div class="logo-76"></div>
+                  <div class="unocal-panel--small-circle-white"></div>
                 </div>
                 <div class="budweiser-panel">
                   <span>This Bud's<br>For You.</span>
@@ -5219,7 +5247,7 @@
                     <div class="inning">7</div>
                     <div class="inning">8</div>
                     <div class="inning">9</div>
-                    <div class="inning">l0</div>
+                    <div class="inning inning-10">l0</div>
                     <div class="rhe">R</div>
                     <div class="rhe">H</div>
                     <div class="rhe">E</div>
@@ -5228,29 +5256,29 @@
                   </div>
                   <div>
                     <div class="team">Milwaukee</div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
+                    <div class="inning-score"></div>
+                    <div class="inning-score"></div>
+                    <div class="inning-score"></div>
+                    <div class="inning-score"></div>
+                    <div class="inning-score"></div>
+                    <div class="inning-score"></div>
+                    <div class="inning-score"></div>
+                    <div class="inning-score"></div>
+                    <div class="inning-score"></div>
+                    <div class="inning-score"></div>
                   </div>
                   <div>
                     <div class="team">White Sox</div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
+                    <div class="inning-score"></div>
+                    <div class="inning-score"></div>
+                    <div class="inning-score"></div>
+                    <div class="inning-score"></div>
+                    <div class="inning-score"></div>
+                    <div class="inning-score"></div>
+                    <div class="inning-score"></div>
+                    <div class="inning-score"></div>
+                    <div class="inning-score"></div>
+                    <div class="inning-score"></div>
                   </div>
                 </div>
               </div>
