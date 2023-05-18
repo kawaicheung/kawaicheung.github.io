@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Ka Wai Cheung | I write, code, design, and build things for the web</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=News+Cycle:wght@400;700&family=Newsreader:wght@200;300;400;500;600;700&family=Bungee&family=Bungee+Shade&family=Orelega+One&family=Rubik:wght@700&display=swap');
+
+      :root {
+        --text-font: 'Newsreader';
+        --display-font: 'Bungee';
+        --small-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+        --text-color: rgba(0, 0, 0);
+        --dotted-border-color: rgba(58, 60, 66, 0.3);
+      }
+      * {
+        padding: 0;
+        margin: 0;
+      }
+
+      body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        font-size: 14px;
+      }
+
+      .main {
+        display: flex;
+        position: relative;
+        flex-direction: column;
+        align-items: center;
+        width: 80%;
+        max-width: 1120px;
+        margin-top: 12vh;
+        margin-bottom: 10vh;
+      }
+
+      h1 {
+        font-family: var(--text-font);
+        text-align: center;
+        width: 100%;
+        font-weight: 500;
+        font-size: 3.8em;
+        line-height: 1.05em;
+        color: #222;
+      }
+
+      .pronunciation {
+        font-family: var(--text-font);
+        text-align: center;
+        width: 100%;
+        font-weight: 300;
+        font-size: 1.8em;
+        margin: 0.4em 0 1.4em 0;
+        color: #222;
+      }
+
+      h2 {
+        font-family: var(--display-font);
+        text-align: center;
+        width: 100%;
+        font-weight: 300;
+        font-size: 2.4em;
+        line-height: 1.05em;
+        margin: 0 0 0.8em 0;
+        padding: 0.6em 0;
+        color: #222;
+        border-top: dotted 1px var(--dotted-border-color);
+        border-bottom: dotted 1px var(--dotted-border-color);
+      }
+
+      h5 {
+        font-family: var(--display-font);
+        font-size: 1em;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        transform: rotate(-1.8deg);
+        border: dotted 1px #666;
+        border-radius: 0.2em;
+        padding: 0 0.6em;
+        width: fit-content;
+        margin-left: -0.8em;
+        margin-bottom: 1.4em;
+        color: green;
+        background-color: lightgoldenrodyellow;
+      }
+
+      .grid-container {
+        display: grid;
+        grid-template-columns: 1.6fr 1fr;
+        gap: 4em;
+        width: 100%;
+        box-sizing: border-box;
+        padding: 1em 1em 0 1em;
+        font-family: var(--text-font);
+        font-size: 1.4em;
+        line-height: 1.5em;
+      }
+      
+      .grid-item .info {
+        font-family: var(--text-font);
+        display: block;
+        color: #444;
+        font-size: 0.8em;
+        padding: 0;
+        line-height: 1em;
+        margin: 0 0 0.3em 0;
+      }
+
+      p {
+        font-family: var(--text-font);
+        font-weight: 300;
+        margin-bottom: 1em;
+      }
+
+      p strong {
+        font-weight: 500;
+      }
+
+      ul {
+        list-style-type: none;
+        margin-bottom: 2em;
+      }
+
+      ul a {
+        color: green;
+        font-family: var(--text-font);
+        line-height: 0.4em;
+        font-weight: 500;
+      }
+
+      ul p {
+        font-family: var(--small-font);
+        font-size: 0.7em;
+        line-height: 1.4em;
+        color: #333;
+        font-weight: 400;
+      }
+
+      li {
+        margin-bottom: 1.2em;
+      }
+
+      .bio {
+        display: flex;
+        align-items: center;
+        border-top: dotted 1px var(--dotted-border-color);
+        padding-top: 1em;
+        gap: 2em;
+      }
+
+      .bio img.portrait {
+        width: 6em;
+        height: 6em;
+        border-radius: 6em;
+      }
+
+      .bio p {
+        font-size: 0.9em;
+        line-height: 1.4em;
+        color: #555;
+        font-weight: 300;
+      }
+
+    </style>
+  </head>
+  <body>
+    <div class="main">
+      <h1>
+        Hi, I&rsquo;m Ka Wai Cheung.
+      </h1>
+      <div class="pronunciation">
+        Pronounced Kuh-way (like &ldquo;away&rdquo; with a K)
+      </div>
+      <h2>
+        I <strong style="color:mediumseagreen;">write</strong>, 
+        <strong style="color:seagreen;">design</strong>, <strong style="color:green;">code</strong>, and 
+        <span style="white-space:nowrap;color:forestgreen;"><strong>build things</strong></span>
+        <span style="white-space:nowrap;">for the web.</span>
+      </h2>
+      <div class="grid-container">
+        <div class="grid-item philo">
+          <h5>How I work</h5>
+          <p>
+            <strong>I prefer making things on my own</strong> or working with a very small group of like-minded people, untethered from those
+            usual trappings of business. Meetings. Estimates. Formal processes. Org charts. Reviews. It's time you never get back,
+            better spent on the product.
+          </p>
+          <p>
+            <strong>I like to design directly in code</strong>. I view the frontend, backend, databases and all
+            the languages, tech, and tooling behind a product as one canvas, rather than a stack that requires you to
+            choose what you want to specialize in. I often switch between these layers during
+            a day of work to avoid the natural fatigue that comes from staring at the same code for too long.
+          </p>
+          <p>
+            <strong>I use as few tools as possible and try to build my own</strong>, 
+            specific to what I'm working on.
+            I'm an advocate for writing code generators to generate the tedious, yet trivial, parts of a codebase 
+            (Documentation, ORMs, CMS, API integration layers, etc.)
+          </p>
+          <p>
+            <strong>I prefer concreteness over abstraction in code</strong>. I avoid leaning
+            too heavily on interfaces, abstract classes, generics, and similar concepts. I find the mental
+            &ldquo;cost of carry&rdquo; outweighs the potential benefits of reuse, elegance, etc. that often never manifest. 
+          </p>
+          <p>
+            <strong>When a product is on its feet, I find planning, wireframing, and deciding all of the little details of a new feature up-front are a <em>waste of time</em></strong>. I prefer a few back and forths with the people I'm working with 
+            on a <a href="https://www.donedone.com">DoneDone</a> ticket, then getting right to building. At that point, I have enough to work on and a good general sense of how the feature should look and feel. The rest (including
+            unanticipated obstacles that wouldn't have been caught with more planning) are figured out in-flight.
+          </p>
+          <p>
+            <strong>I believe programming is as much like writing or making music as it is engineering</strong>. 
+            You can do it your own curious way and create
+            something just as valuable as someone who goes about it differently. One example: I've never practiced TDD 
+            or write unit tests. I find integration testing more valuable, and believe other &ldquo;practices&rdquo; (good naming, proper encapsulation, having
+            less people churn on a product) have the largest impact on ensuring safe code.
+          </p>
+          <div class="bio">
+            <img src="kawai-cheung-portrait.png" class="portrait" />
+            <p>
+              I was born and raised in and around Chicago and
+              currently live in San Francisco. When not working on the things described on this page, 
+              I spend most of my time with my wife and two kids. 
+            </p>
+          </div>
+        </div>
+        <div class="grid-item">
+          <h5>Writing</h5>
+          <ul>
+            <li>
+              <a href="https://leanpub.com/landing-on-a-great-name">Landing on a Great Name</a>
+              <span class="info">Leanpub, 2023</span>
+              <p>
+                Coming in 2023. A book on how I approach one of programming's most challenging problems 
+                using many examples from code I've written for DoneDone.
+              </p>
+            </li>
+            <li>
+              <a href="https://pragprog.com/titles/kcdc/the-developer-s-code/">The Developers' Code</a>
+              <span class="info">The Pragmatic Bookshelf, 2012</span>
+              <p>
+                Fifty quick chapters on various aspects of development&ndash;staying motivated,
+                dealing with complexity, working with clients, and more.
+              </p>
+            </li>
+            <li>
+              <a href="http://www.lifeimitatescode.com">Life Imitates Code</a>
+              <p>
+                Blog posts and essays I wrote on topics ranging from design, business, coding, teaching, and testing
+                from 2009 to 2016.
+              </p>
+            </li>
+            <li>
+              <a href="https://www.amazon.com/Flash-Application-Design-Solutions-Usability/dp/1590595947">Flash Application Design Solutions</a>
+              <span class="info">Apress, 2006</span>
+              <p>
+                Flash was my first true love when it comes to technology. This book explored designing usable Flash apps
+                during a time when it got a bad rap for not being very user-friendly.
+              </p>
+            </li>
+          </ul>
+          <h5>Things</h5>
+          <ul>
+            <li>
+              <a href="https://www.donedone.com">DoneDone</a>
+              <p>        
+              A task management and shared inbox tool for small and medium sized businesses. My proverbial &ldquo;baby&rdquo;&ndash;a product I created in 2009 and continue to design and build to this day.</p>
+            </li>
+            <li>
+              <a href="https://kawaicheung.github.io/scoreboards/">Handcoded Baseball Scoreboards</a>
+              <p>An ongoing pet project. My attempt to build realistic looking scoreboards, stetching the limits of HTML and CSS.</p>
+            </li>
+            <li>
+              <a href="https://www.youtube.com/playlist?list=PL_0hiGP3NeojDxJILYeLILioIYwIvDWH6">Real Code</a>
+              <p>A video series on some interesting design &amp; development challenges with DoneDone.</p>
+            </li>
+            <li>
+              <a href="https://shiftlistio.azurewebsites.net/">ShiftList</a>
+              <p>
+                Every developer has to build a to-do list once right? Here's mine. A simple, keyboard-friendly to-do list
+                with some interesting twists.
+              </p>
+            </li>
+            <li>
+              <a href="https://www.wearemammoth.com">We Are Mammoth</a>
+              <p>
+                A web development shop I co-founded in 2006. I left in 2017 to work exclusively on DoneDone. 
+                We did work for Second City, The Chicago Symphony Orchestra, &amp; the Starbucks (Red) Campaign to name a few.
+                I cherish being able to keep in touch with several WAMily members so many years later.
+              </p>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
