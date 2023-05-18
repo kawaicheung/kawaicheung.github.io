@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Ka Wai Cheung | I write, code, design, and build things for the web</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
       @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=News+Cycle:wght@400;700&family=Newsreader:wght@200;300;400;500;600;700&family=Bungee&family=Bungee+Shade&family=Orelega+One&family=Rubik:wght@700&display=swap');
@@ -13,6 +12,7 @@
         --text-color: rgba(0, 0, 0);
         --dotted-border-color: rgba(58, 60, 66, 0.3);
       }
+      
       * {
         padding: 0;
         margin: 0;
@@ -163,6 +163,25 @@
         font-weight: 300;
       }
 
+      @media only screen and (max-width: 767px) {
+
+        h1 {
+          font-size: 2.6em;
+        }
+
+        .pronunciation {
+          font-size: 1.6em;
+        }
+
+        .main {
+          width: 95%;
+        }
+        .grid-container {
+          display: flex;
+          flex-direction: column;
+        }
+      }
+
     </style>
   </head>
   <body>
@@ -202,7 +221,7 @@
           <p>
             <strong>I prefer concreteness over abstraction in code</strong>. I avoid leaning
             too heavily on interfaces, abstract classes, generics, and similar concepts. I find the mental
-            &ldquo;cost of carry&rdquo; outweighs the potential benefits of reuse, elegance, etc. that often never manifest. 
+            &ldquo;cost-of-carry&rdquo; outweighs the rarely-manifested promises of reuse, swappability, and elegance almost all the time. 
           </p>
           <p>
             <strong>When a product is on its feet, I find planning, wireframing, and deciding all of the little details of a new feature up-front are a <em>waste of time</em></strong>. I prefer a few back and forths with the people I'm working with 
