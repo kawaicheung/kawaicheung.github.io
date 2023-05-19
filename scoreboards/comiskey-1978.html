@@ -1172,28 +1172,29 @@
         left: 12.5em;
         font-weight: 700;
         flex-direction: column;
+        border: solid 1px red;
       }
       
       .box-score--small-circle-light-blue {
         position: absolute;
         top: 25%;
-        left: -1%;
-        width: 0.9em;
-        height: 0.9em;
+        left: -2%;
+        width: 0.7rem;
+        height: 0.7rem;
         border-radius: 50%;
         background-color: #6897db;
-        box-shadow: 0 0.05em 0.05em 0.05em rgba(0,0,0,0.2);
+        box-shadow: 0 0.05rem 0.05rem 0.05rem rgba(0,0,0,0.2);
       }
 
       .box-score--small-circle-blue {
         position: absolute;
         top: 18%;
         left: 20%;
-        width: 0.8em;
-        height: 0.8em;
+        width: 0.6rem;
+        height: 0.6rem;
         border-radius: 50%;
         background-color: var(--color--clock);
-        box-shadow: 0 0.2em 0.1em 0.1em rgba(0,0,0,0.4);
+        box-shadow: 0 0.2rem 0.08rem 0.08rem rgba(0,0,0,0.4);
       }
 
       .box-score > div {
@@ -1240,6 +1241,91 @@
          width: 1.5em;
          height: 1.5em;
       }
+
+      .lineups {
+        position: absolute;
+        right: 1.5em;
+        width: 10.5em;
+        height: 18em;
+        border: solid 1px blue;
+      }
+
+      .lineups--small-circle-light-blue {
+        position: absolute;
+        top: 5%;
+        left: -18%;
+        width: 0.7rem;
+        height: 0.7rem;
+        border-radius: 50%;
+        background-color: #6897db;
+        box-shadow: 0 0.05rem 0.05rem 0.05rem rgba(0,0,0,0.2);
+      }
+
+      .lineups--small-circle-blue-1 {
+        position: absolute;
+        top: 14%;
+        left: -10%;
+        width: 0.6rem;
+        height: 0.6rem;
+        border-radius: 50%;
+        background-color: var(--color--clock);
+        box-shadow: 0 0.2rem 0.04rem 0.04rem rgba(0,0,0,0.4);
+      }
+
+      .lineups--small-circle-blue-2 {
+        position: absolute;
+        top: 60%;
+        left: -16%;
+        width: 0.7rem;
+        height: 0.7rem;
+        border-radius: 50%;
+        background-color: var(--color--clock);
+        box-shadow: 0 0.2rem 0.04rem 0.04rem rgba(0,0,0,0.4);
+      }
+
+      .lineups--small-circle-blue-3 {
+        position: absolute;
+        bottom: -8%;
+        left: -12%;
+        width: 0.7rem;
+        height: 0.7rem;
+        border-radius: 50%;
+        background-color: var(--color--clock);
+        box-shadow: 0 0.2rem 0.04rem 0.04rem rgba(0,0,0,0.4);
+      }
+
+      .lineups--small-circle-blue-4 {
+        position: absolute;
+        bottom: -12%;
+        left: -2%;
+        width: 0.7rem;
+        height: 0.7rem;
+        border-radius: 50%;
+        background-color: var(--color--clock);
+        box-shadow: 0 0.2rem 0.04rem 0.04rem rgba(0,0,0,0.4);
+      }
+
+      .lineups-row {
+        display: flex;
+      }
+
+      .lineups-row.teams > div {
+        border: solid 1px green;
+        color: #fff;
+        font-size: 1.1em;
+        font-family: 'News Cycle';
+        text-transform: uppercase;
+        font-weight: 700;
+        letter-spacing: 0.15em;
+        width: 50%;
+      }
+
+      .lineups-row.players {
+        border: solid 1px red;
+        margin-bottom: 0.1em;
+        height: 1.35em;
+      }
+
 
       .main--overhead-light-1 {
         position: absolute;
@@ -5410,7 +5496,6 @@
                     </div>
                   </div>
                 </div>
-              <!--  
                 <div class="box-score">
                   <div class="box-score--small-circle-light-blue"></div>
                   <div class="box-score--small-circle-blue"></div>
@@ -5459,7 +5544,80 @@
                     <div class="inning-score"></div>
                   </div>
                 </div>
-              -->
+                <div class="lineups">
+                  <div class="lineups--small-circle-light-blue"></div>
+                  <div class="lineups--small-circle-blue-1"></div>
+                  <div class="lineups--small-circle-blue-2"></div>
+                  <div class="lineups--small-circle-blue-3"></div>
+                  <div class="lineups--small-circle-blue-4"></div>
+                  <div class="lineups-row teams">
+                      <div>Milw</div>
+                      <div>Chigo.</div>
+                  </div>
+                  <div class="lineups-row players">
+                      <div class="lineups-square-digital"></div>
+                      <div class="lineups-square-digital"></div>
+                      <div class="lineups-square-inning">1</div>
+                      <div class="lineups-square-digital"></div>
+                      <div class="lineups-square-digital"></div>
+                  </div>
+                  <div class="lineups-row players">
+                      <div class="lineups-square-digital"></div>
+                      <div class="lineups-square-digital"></div>
+                      <div class="lineups-square-inning">2</div>
+                      <div class="lineups-square-digital"></div>
+                      <div class="lineups-square-digital"></div>
+                  </div>
+                  <div class="lineups-row players">
+                      <div class="lineups-square-digital"></div>
+                      <div class="lineups-square-digital"></div>
+                      <div class="lineups-square-inning">3</div>
+                      <div class="lineups-square-digital"></div>
+                      <div class="lineups-square-digital"></div>
+                  </div>
+                  <div class="lineups-row players">
+                      <div class="lineups-square-digital"></div>
+                      <div class="lineups-square-digital"></div>
+                      <div class="lineups-square-inning">4</div>
+                      <div class="lineups-square-digital"></div>
+                      <div class="lineups-square-digital"></div>
+                  </div>
+                  <div class="lineups-row players">
+                      <div class="lineups-square-digital"></div>
+                      <div class="lineups-square-digital"></div>
+                      <div class="lineups-square-inning">5</div>
+                      <div class="lineups-square-digital"></div>
+                      <div class="lineups-square-digital"></div>
+                  </div>
+                  <div class="lineups-row players">
+                      <div class="lineups-square-digital"></div>
+                      <div class="lineups-square-digital"></div>
+                      <div class="lineups-square-inning">6</div>
+                      <div class="lineups-square-digital"></div>
+                      <div class="lineups-square-digital"></div>
+                  </div>
+                  <div class="lineups-row players">
+                      <div class="lineups-square-digital"></div>
+                      <div class="lineups-square-digital"></div>
+                      <div class="lineups-square-inning">7</div>
+                      <div class="lineups-square-digital"></div>
+                      <div class="lineups-square-digital"></div>
+                  </div>
+                  <div class="lineups-row players">
+                      <div class="lineups-square-digital"></div>
+                      <div class="lineups-square-digital"></div>
+                      <div class="lineups-square-inning">8</div>
+                      <div class="lineups-square-digital"></div>
+                      <div class="lineups-square-digital"></div>
+                  </div>
+                  <div class="lineups-row players">
+                      <div class="lineups-square-digital"></div>
+                      <div class="lineups-square-digital"></div>
+                      <div class="lineups-square-inning">9</div>
+                      <div class="lineups-square-digital"></div>
+                      <div class="lineups-square-digital"></div>
+                  </div>
+                </div>
               </div>
             </div>
             <div class="main--overhead-light-prong-shadows">
