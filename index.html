@@ -27,6 +27,10 @@
         color: var(--text-color);
       }
 
+      .nowrap {
+        white-space: nowrap;
+      }
+
       .main {
         display: flex;
         position: relative;
@@ -74,6 +78,7 @@
         margin-bottom: 0.2em;
         border-radius: 0.2rem;
         display: inline-block;
+        color: forestgreen;
         background-color: lightgoldenrodyellow;
       }
 
@@ -218,13 +223,13 @@
         <span style="white-space:nowrap;">Pronounced Kuh-way</span> <span style="white-space:nowrap;">(like &ldquo;away&rdquo; with a K)</span>
       </div>
       <h2>
-        I <strong style="color:forestgreen;">write</strong>, 
-        <strong style="color:forestgreen;">design</strong>, <strong style="color:forestgreen;">code</strong>, and 
-        <span style="white-space:nowrap;color:forestgreen;"><strong>make things</strong></span>
-        <span style="white-space:nowrap;">for the web.</span>
+        I <strong>write</strong>, 
+        <strong>design</strong>, <strong>code</strong>, and 
+        <span class="nowrap"><strong>make things</strong></span>
+        <span class="nowrap">for the web.</span>
       </h2>
       <div class="grid-container">
-        <div class="grid-item philo">
+        <div class="grid-item">
           <h5>How I work</h5>
           <p>
             <strong>I make things on my own</strong> or work with a very small group of like-minded people, untethered from the
