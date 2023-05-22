@@ -1285,7 +1285,7 @@
 
       .lineups--small-circle-blue-3 {
         position: absolute;
-        bottom: -8%;
+        bottom: -3%;
         left: -12%;
         width: 0.7rem;
         height: 0.7rem;
@@ -1296,7 +1296,7 @@
 
       .lineups--small-circle-blue-4 {
         position: absolute;
-        bottom: -12%;
+        bottom: -8%;
         left: -2%;
         width: 0.7rem;
         height: 0.7rem;
@@ -1322,7 +1322,7 @@
 
       .lineups-row.players {
         border: solid 1px red;
-        margin-bottom: 0.1em;
+        margin-bottom: 0.05em;
         height: 1.35em;
       }
 
@@ -1432,6 +1432,19 @@
         width: 101%;
         height: 5.8em;
         clip-path: polygon(0 0, 100% 0, 100% 45%, 50% 100%, 0 45%);
+      }
+
+      .bottom-ledge--walkway {
+        position: absolute;
+        z-index: 2;
+        width: 94%;
+        height: 4.5em;
+        bottom: 4em;
+        left: 50%;
+        border: solid 1px red;
+        transform: translateX(-50%);
+        background: rgb(0,0,0);
+        background: linear-gradient(180deg, rgba(0,0,0,0) 37%, rgba(0,0,0,1) 39%, rgba(71,71,71,1) 45%, rgba(36,36,36,1) 56%, rgba(0,0,0,0) 57%);
       }
 
       .bottom-ledge--shadow {
@@ -5639,7 +5652,10 @@
             </div>
           </div>
           <div class="bottom-ledge--shadow"></div>
-          <div class="bottom-ledge"></div>
+          <div class="bottom-ledge--walkway">
+          </div>
+          <div class="bottom-ledge">
+          </div>
           <div class="main--overhead-light-1"></div>
           <div class="main--overhead-light-2"></div>
           <div class="main--overhead-light-3"></div>
