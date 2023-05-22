@@ -407,19 +407,25 @@
         filter: blur(var(--blur-label-amt));
         padding-bottom: 2px;
       }
+
+      .title {
+        position: absolute;
+        bottom: 2em;
+        font-size: 0.8em;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+        color: var(--color--title);
+      }
+
+      .title > span {
+        color: var(--color--title-faded);
+      }
+
+      .title > span > a {
+        color: inherit;
+      }
     </style>
   </head>
   <body>
-    <div class="handcoded">
-      Handcoded
-    </div>
-    <div class="subject">
-      Two for Friday
-    </div>
-    <div class="author">
-      Ka Wai Cheung
-    </div>
-
     <div class="ticket-1">
       <div class="ticket-2">
         <div class="ticket-3">
@@ -595,6 +601,10 @@
           </div>
         </div>
       </div>
+    </div>
+    <div class="title">
+      <strong>Two for Friday, 1990</strong>.
+      <span><a href="index.html">Handcoded Scoreboards</a> by Ka Wai Cheung.</span>
     </div>
   </body>
 </html>
