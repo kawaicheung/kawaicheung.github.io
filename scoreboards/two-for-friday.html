@@ -2,7 +2,7 @@
   <head>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Squada+One&family=Syne+Mono&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Newsreader:wght@400;700&family=Squada+One&family=Syne+Mono&display=swap" rel="stylesheet">
     <style>
 
     :root {
@@ -12,80 +12,26 @@
 
       --blur-label-amt: 0.2px;
       --blur-type-amt: 0.4px;
+      --color--title-faded: #666;
     }
 
       body {
+        display: flex;
+        height: 100vh;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
+      div.ticket-frame {
         background-color: var(--white);
         display: flex;
         align-items: center;
         justify-content: center;
+        margin-bottom: 2em;
       }
 
-      @keyframes animate-in {
-        0% {
-          transform: scale(0.9) rotate(-5deg);
-          opacity: 1;
-        }
-        50% {
-          transform: scale(1.1) rotate(-5deg);
-          opacity: 1;
-        }
-        100% {
-          transform: scale(1) rotate(-5deg);
-          opacity: 1;
-        }
-      }
-      @keyframes animate-in-second {
-        0% {
-          transform: scale(0.9) rotate(8deg);
-          opacity: 1;
-        }
-        50% {
-          transform: scale(1.1) rotate(8deg);
-          opacity: 1;
-        }
-        100% {
-          transform: scale(1) rotate(8deg);
-          opacity: 1;
-        }
-      }
-
-      .handcoded {
-        position: absolute;
-        top: 20px;
-        left: 20px;
-        font-family: Helvetica Neue;
-        font-size: 14px;
-        padding-right: 10px;
-        font-weight: bold;
-        color: #222;
-      }
-      .subject {
-        position: absolute;
-        top: 20px;
-        left: 50%;
-        transform: translateX(-50%);
-        font-family: Helvetica Neue;
-        font-size: 14px;
-        padding-right: 10px;
-        font-weight: bold;
-        color: #222;
-      }
-      .author {
-        position: absolute;
-        top: 20px;
-        right: 20px;
-        font-family: Helvetica Neue;
-        font-size: 14px;
-        padding-right: 10px;
-        color: #666;
-      }
       .ticket-1 {
-        /*animation-name: animate-in;
-        animation-duration: 500ms;
-        animation-fill-mode: forwards;
-        animation-delay: 200ms;
-        opacity: 0;*/
         width: 200px;
         border: dotted 1px var(--white);
         border-left-color: #ccc;
@@ -97,8 +43,6 @@
         transform: rotate(-5deg);
       }
       .ticket-1.second {
-        /*animation-name: animate-in-second;
-        animation-delay: 240ms;*/
         transform: rotate(8deg);
         margin-top: 60px;
       }
@@ -409,11 +353,9 @@
       }
 
       .title {
-        position: absolute;
-        bottom: 2em;
-        font-size: 0.8em;
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-        color: var(--color--title);
+        margin-top: 1em;
+        font-size: 16px;
+        font-family: 'Newsreader';
       }
 
       .title > span {
@@ -426,177 +368,179 @@
     </style>
   </head>
   <body>
-    <div class="ticket-1">
-      <div class="ticket-2">
-        <div class="ticket-3">
-          <div class="box-1">
-            <div class="game">
-              Game
-            </div>
-            <div class="aisle-row-seat-wrapper">
-              <div class="aisle-row-seat">
-                <div class="location-number">
-                  &nbsp;116
+    <div class="ticket-frame">
+      <div class="ticket-1">
+        <div class="ticket-2">
+          <div class="ticket-3">
+            <div class="box-1">
+              <div class="game">
+                Game
+              </div>
+              <div class="aisle-row-seat-wrapper">
+                <div class="aisle-row-seat">
+                  <div class="location-number">
+                    &nbsp;116
+                  </div>
+                  <div class="location-name">
+                    Aisle
+                  </div>
                 </div>
-                <div class="location-name">
-                  Aisle
+                <div class="aisle-row-seat">
+                  <div class="location-number">
+                    8
+                  </div>
+                  <div class="location-name">
+                    Row
+                  </div>
+                </div>
+                <div class="aisle-row-seat">
+                  <div class="location-number">
+                    5
+                  </div>
+                  <div class="location-name">
+                    Seat
+                  </div>
                 </div>
               </div>
-              <div class="aisle-row-seat">
-                <div class="location-number">
-                  8
-                </div>
-                <div class="location-name">
-                  Row
-                </div>
-              </div>
-              <div class="aisle-row-seat">
-                <div class="location-number">
-                  5
-                </div>
-                <div class="location-name">
-                  Seat
-                </div>
+              <div class="box-seat">
+                Box Seat<br><br>
+                D&nbsp;&nbsp;&nbsp;&nbsp;3-25448<br>
+                &nbsp;&nbsp;$13.00<br>
+                28&nbsp;
               </div>
             </div>
-            <div class="box-seat">
-              Box Seat<br><br>
-              D&nbsp;&nbsp;&nbsp;&nbsp;3-25448<br>
-              &nbsp;&nbsp;$13.00<br>
-              28&nbsp;
+            <div class="wrigley-field">
+              Wrigley Field
             </div>
-          </div>
-          <div class="wrigley-field">
-            Wrigley Field
-          </div>
-          <div class="year">
-            1990
-          </div>
-          <div class="cubs-1">
-            <div class="cubs-2">
-              <div class="cubs-3">
-                <div class="cubs-4">
-                  <div class="cubs-5">
-                    <div class="u">
-                      <div class="u-cut"></div>
-                    </div>
-                    <div class="b">
-                      <div class="b-hole"></div>
-                      <div class="b-hole"></div>
-                      <div class="b-cut"></div>
-                    </div>
-                    <div class="s">
-                      <div class="s-hole"></div>
-                      <div class="s-hole"></div>
-                      <div class="s-line-1"></div>
-                      <div class="s-line-2"></div>
-                    </div>
-                    <div class="reg">
-                      &#174;
+            <div class="year">
+              1990
+            </div>
+            <div class="cubs-1">
+              <div class="cubs-2">
+                <div class="cubs-3">
+                  <div class="cubs-4">
+                    <div class="cubs-5">
+                      <div class="u">
+                        <div class="u-cut"></div>
+                      </div>
+                      <div class="b">
+                        <div class="b-hole"></div>
+                        <div class="b-hole"></div>
+                        <div class="b-cut"></div>
+                      </div>
+                      <div class="s">
+                        <div class="s-hole"></div>
+                        <div class="s-hole"></div>
+                        <div class="s-line-1"></div>
+                        <div class="s-line-2"></div>
+                      </div>
+                      <div class="reg">
+                        &#174;
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div class="vs">
-            &mdash; vs &mdash;
-          </div>
-          <div class="box-2">
-            <div class="against">
-              Philadel.<br>
-              Jun. 8,1990
+            <div class="vs">
+              &mdash; vs &mdash;
             </div>
-            <div class="admit-one">
-              &mdash; Admit One &mdash;
+            <div class="box-2">
+              <div class="against">
+                Philadel.<br>
+                Jun. 8,1990
+              </div>
+              <div class="admit-one">
+                &mdash; Admit One &mdash;
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="ticket-1 second">
-      <div class="ticket-2">
-        <div class="ticket-3">
-          <div class="box-1">
-            <div class="game">
-              Game
-            </div>
-            <div class="aisle-row-seat-wrapper">
-              <div class="aisle-row-seat">
-                <div class="location-number">
-                  &nbsp;116
+      <div class="ticket-1 second">
+        <div class="ticket-2">
+          <div class="ticket-3">
+            <div class="box-1">
+              <div class="game">
+                Game
+              </div>
+              <div class="aisle-row-seat-wrapper">
+                <div class="aisle-row-seat">
+                  <div class="location-number">
+                    &nbsp;116
+                  </div>
+                  <div class="location-name">
+                    Aisle
+                  </div>
                 </div>
-                <div class="location-name">
-                  Aisle
+                <div class="aisle-row-seat">
+                  <div class="location-number">
+                    8
+                  </div>
+                  <div class="location-name">
+                    Row
+                  </div>
+                </div>
+                <div class="aisle-row-seat">
+                  <div class="location-number">
+                    6
+                  </div>
+                  <div class="location-name">
+                    Seat
+                  </div>
                 </div>
               </div>
-              <div class="aisle-row-seat">
-                <div class="location-number">
-                  8
-                </div>
-                <div class="location-name">
-                  Row
-                </div>
-              </div>
-              <div class="aisle-row-seat">
-                <div class="location-number">
-                  6
-                </div>
-                <div class="location-name">
-                  Seat
-                </div>
+              <div class="box-seat">
+                Box Seat<br><br>
+                D&nbsp;&nbsp;&nbsp;&nbsp;3-25448<br>
+                &nbsp;&nbsp;$13.00<br>
+                28&nbsp;
               </div>
             </div>
-            <div class="box-seat">
-              Box Seat<br><br>
-              D&nbsp;&nbsp;&nbsp;&nbsp;3-25448<br>
-              &nbsp;&nbsp;$13.00<br>
-              28&nbsp;
+            <div class="wrigley-field">
+              Wrigley Field
             </div>
-          </div>
-          <div class="wrigley-field">
-            Wrigley Field
-          </div>
-          <div class="year">
-            1990
-          </div>
-          <div class="cubs-1">
-            <div class="cubs-2">
-              <div class="cubs-3">
-                <div class="cubs-4">
-                  <div class="cubs-5">
-                    <div class="u">
-                      <div class="u-cut"></div>
-                    </div>
-                    <div class="b">
-                      <div class="b-hole"></div>
-                      <div class="b-hole"></div>
-                      <div class="b-cut"></div>
-                    </div>
-                    <div class="s">
-                      <div class="s-hole"></div>
-                      <div class="s-hole"></div>
-                      <div class="s-line-1"></div>
-                      <div class="s-line-2"></div>
-                    </div>
-                    <div class="reg">
-                      &#174;
+            <div class="year">
+              1990
+            </div>
+            <div class="cubs-1">
+              <div class="cubs-2">
+                <div class="cubs-3">
+                  <div class="cubs-4">
+                    <div class="cubs-5">
+                      <div class="u">
+                        <div class="u-cut"></div>
+                      </div>
+                      <div class="b">
+                        <div class="b-hole"></div>
+                        <div class="b-hole"></div>
+                        <div class="b-cut"></div>
+                      </div>
+                      <div class="s">
+                        <div class="s-hole"></div>
+                        <div class="s-hole"></div>
+                        <div class="s-line-1"></div>
+                        <div class="s-line-2"></div>
+                      </div>
+                      <div class="reg">
+                        &#174;
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div class="vs">
-            &mdash; vs &mdash;
-          </div>
-          <div class="box-2">
-            <div class="against">
-              Philadel.<br>
-              Jun. 8,1990
+            <div class="vs">
+              &mdash; vs &mdash;
             </div>
-            <div class="admit-one">
-              &mdash; Admit One &mdash;
+            <div class="box-2">
+              <div class="against">
+                Philadel.<br>
+                Jun. 8,1990
+              </div>
+              <div class="admit-one">
+                &mdash; Admit One &mdash;
+              </div>
             </div>
           </div>
         </div>
