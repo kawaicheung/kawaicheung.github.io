@@ -1,13 +1,12 @@
-
 <html>
   <head>
     <title>Wrigley Field, 1941 | Ka Wai Cheung</title>
     <meta content="width=device-width, initial-scale=1" name="viewport"/>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Squada+One&display=swap" rel="stylesheet">
+  	<link rel="preconnect" href="https://fonts.googleapis.com">
+  	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  	<link href="https://fonts.googleapis.com/css2?family=Newsreader:wght@400;700&family=Bebas+Neue&family=Squada+One&display=swap" rel="stylesheet">
     
-    <style>
+  	<style>
       :root {
         --color--title: #333;
         --color--title-faded: #666;
@@ -69,26 +68,26 @@
         --text--clip-path--k: polygon(0 0, 40% 0%, 40% 40%, 60% 0, 100% 0, 70% 46%, 100% 100%, 60% 100%, 40% 60%, 40% 100%, 0 100%);
       }
 
-      body {
-        background-color: #fff;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+  		body {
+  			background-color: #fff;
+  			display: flex;
+  			align-items: center;
+  			justify-content: center;
         flex-direction: column;
         height: 100vh;
         margin: 0;
         padding: 0;
-      }
+  		}
 
       /* Scoreboard Picture */
-      .picture {
-        position: relative;
-        width: var(--px--picture-width);
+  		.picture {
+  			position: relative;
+  			width: var(--px--picture-width);
         height: var(--px--picture-height);
         min-height: var(--px--picture-height);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+  			display: flex;
+  			flex-direction: column;
+  			align-items: center;
         overflow: hidden;
         font-size: 10px;
         border: solid 1px #999;
@@ -104,7 +103,7 @@
         position: absolute;
         width: calc(100% + 1000px);
         height: calc(var(--px--picture-height) + 1800px);
-        background: linear-gradient(-10deg, rgba(165,165,165,1) 0%, rgba(205,205,205,1) 8%,rgba(225,225,225,1) 21%, rgba(158,158,158,1) 45%, rgba(110,110,110,1) 100%);
+        background: linear-gradient(-10deg, rgba(165,165,165,1) 0%, rgba(205,205,205,1) 8%,rgba(225,225,225,1) 21%, rgba(158,158,158,1) 45%, rgba(130,130,130,1) 100%);
         animation-name: picture-background;
         animation-duration: var(--time--full-animation-duration);
         animation-timing-function: linear;
@@ -126,8 +125,8 @@
         height: 100%;
         display: flex;
         flex-direction: column;
-        align-items: center;
-        justify-content: center;
+  			align-items: center;
+  			justify-content: center;
         top: 6.6em;
         transform: perspective(380em) rotateZ(0deg) rotateX(14deg) rotateY(-26deg);
         animation-name: perspective-wrapper;
@@ -266,8 +265,8 @@
       }
 
       .scoreboard-wrapper {
-        width: var(--px--scoreboard-width);
-        height: var(--px--scoreboard-height);
+  			width: var(--px--scoreboard-width);
+  			height: var(--px--scoreboard-height);
         position: relative;
       }
 
@@ -280,14 +279,14 @@
         transform: skew(0, 30deg);
       }
 
-      .scoreboard-front-side {
+  		.scoreboard-front-side {
         position: relative;
-        width: var(--px--scoreboard-width);
-        height: var(--px--scoreboard-height);
+  			width: var(--px--scoreboard-width);
+  			height: var(--px--scoreboard-height);
         border-top-left-radius: 1em;
         border-top-right-radius: 1em;
         border-bottom: solid 0.2em var(--color--scoreboard-bottom-lip);
-        display: flex;
+  			display: flex;
         font-family: var(--font--scoreboard);
         color: var(--color--scoreboard-text);
         text-shadow: 0px 0px 32px rgba(0,0,0,0.3);  
@@ -298,7 +297,7 @@
           var(--color--scoreboard-middle) 52%, 
           var(--color--scoreboard-top) 100%
         );
-      }
+  		}
 
       .s-clock {
         position: absolute; 
@@ -486,19 +485,19 @@
         transform: translateX(-50%) rotate(180deg);
       }
 
-      .s-header {
+  		.s-header {
         position: absolute;
-        width: 70%;
+  			width: 70%;
         left: 50%;
         transform: translateX(-50%);
         height: calc(var(--px--scoreboard-header-height) + 0.1em);
-        top: calc(var(--px--scoreboard-header-height) * -1);
-        background-color: var(--color--scoreboard-top);
-        border-top-left-radius: var(--px--scoreboard-header-height);
-        border-top-right-radius: var(--px--scoreboard-header-height);
+  			top: calc(var(--px--scoreboard-header-height) * -1);
+  			background-color: var(--color--scoreboard-top);
+  			border-top-left-radius: var(--px--scoreboard-header-height);
+  			border-top-right-radius: var(--px--scoreboard-header-height);
         border-right: solid 0.2em var(--color--scoreboard-right-side);
         overflow: hidden;
-      }
+  		}
 
       .scoreboard-main {
         position: relative;
@@ -532,7 +531,7 @@
 
       .scoreboard-right-side {
         position: absolute;
-        height: var(--px--scoreboard-height);
+  			height: var(--px--scoreboard-height);
         width: 2.3em;
         right: 0.1em;
         top: 1.4em;
@@ -1796,9 +1795,8 @@
 
       .title {
         margin-top: 1em;
-        font-size: 0.8em;
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-        color: var(--color--title);
+        font-size: 16px;
+        font-family: 'Newsreader';
       }
 
       .title > span {
@@ -1808,10 +1806,10 @@
       .title > span > a {
         color: inherit;
       }
-    </style>
+  	</style>
   </head>
   <body>
-    <div class="picture">
+  	<div class="picture">
       <div class="rain-wrapper">
         <div class="rain-1"></div>
         <div class="rain-2"></div>
