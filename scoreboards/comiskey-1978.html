@@ -1027,6 +1027,79 @@
         box-shadow: 0.01em 0.01em 0.01em 0.01em rgba(0,0,0,0.5);
       }
 
+      .unocal-panel .logo-76--seven-white {
+        position: absolute;
+        top: .56em;
+        left: .33em;
+        width: 1em;
+        height: 1.1em;
+        background-color: white;
+        clip-path: polygon(0 38%, 20% 0, 100% 0, 50% 100%, 0 100%, 35% 38%);
+      }
+
+      .unocal-panel .logo-76--seven-blue {
+        position: absolute;
+        top: .64em;
+        left: .42em;
+        width: 0.85em;
+        height: 0.93em;
+        background-color: #5e4c6d;
+        clip-path: polygon(4% 29%, 20% 0, 96% 0, 43% 100%, 6% 100%, 48% 29%);
+      }
+
+      .unocal-panel .logo-76--six-white {
+        position: absolute;
+        top: .42em;
+        left: 0.92em;
+        width: 1em;
+        height: 1.2em;
+        background-color: white;
+        clip-path: polygon(50% 0, 100% 0, 60% 50%, 0 80%);
+      }
+
+      .unocal-panel .logo-76--six-blue {
+        position: absolute;
+        top: .5em;
+        left: 0.98em;
+        width: 0.8em;
+        height: 1.1em;
+        background-color: #5e4c6d;
+        clip-path: polygon(63% 0, 98% 0, 60% 45%, 16.5% 64%);
+      }
+
+      .unocal-panel .logo-76--six-white-ellipse {
+        position: absolute;
+        top: 0.88em;
+        left: 0.96em;
+        width: 1.08em;
+        height: 0.78em;
+        background-color: white; 
+        clip-path: ellipse(50% 50% at 50% 50%);
+        transform: rotate(-37deg);
+      }
+
+      .unocal-panel .logo-76--six-blue-ellipse {
+        position: absolute;
+        top: 0.94em;
+        left: 1.05em;
+        width: .86em;
+        height: 0.64em;
+        background-color: #5e4c6d; 
+        clip-path: ellipse(50% 50% at 50% 50%);
+        transform: rotate(-32deg);
+      }
+
+      .unocal-panel .logo-76--six-white-ellipse-small {
+        position: absolute;
+        top: 1.12em;
+        left: 1.31em;
+        width: .34em;
+        height: 0.2em;
+        background-color: white; 
+        clip-path: ellipse(50% 50% at 50% 50%);
+        transform: rotate(-60deg);
+      }
+
       .unocal-panel--small-circle-white {
         position: absolute;
         bottom: 4.8%;
@@ -1147,7 +1220,7 @@
       }
 
       .soxogram-digital-wrapper .sdw--square {
-        background-color: rgba(0,0,0,0.3);
+        background-color: rgba(0,0,0,0.2);
         margin-right: 0.26em;
         width: 0.98em;
         height: 1.25em;
@@ -1173,7 +1246,29 @@
       }
 
       .soxogram-digital-wrapper .sdw--square > div > div.lit {
-        background-color: yellow;
+        background-color: #fabc4a;
+      }
+
+      .outta-town {
+        position: absolute;
+        top: 14.5em;
+        height: 3.5em;
+        width: 9.1em;
+        font-family: 'News Cycle';
+        font-size: 1.1em;
+        text-transform: uppercase;
+        color: #fff;
+        font-weight: 700;
+        letter-spacing: 0.15em;
+        background-color: red;
+      }
+
+      .outta-town.left {
+        left: 1em;
+      }
+
+      .outta-town.right {
+        right: 0.9em;
       }
 
       .box-score {
@@ -1244,7 +1339,7 @@
          padding-left: 1.18em;
       }
       .box-score > div > div.rhe {
-        padding-left: 2.1em;
+        padding-left: 2em;
       }
 
       .box-score > div > div.inning-score {
@@ -1256,8 +1351,8 @@
 
       .lineups {
         position: absolute;
-        right: 1.5em;
-        width: 9em;
+        right: 1em;
+        width: 10em;
         height: 18em;
       }
 
@@ -1340,10 +1435,10 @@
 
       .lineups-square-digital {
         background-color: rgba(0,0,0,0.1);
-        width: 1.6em;
+        width: 1.8em;
       }
 
-      .lineups-square-inning {
+      .lineups-square-order {
         display: flex;
         justify-content: center;
         align-items: center;
@@ -2264,7 +2359,15 @@
                 <div class="unocal-panel">
                   <span>Go With</span>
                   <span>The Spirit</span>
-                  <div class="logo-76"></div>
+                  <div class="logo-76">
+                    <div class="logo-76--seven-white"></div>
+                    <div class="logo-76--seven-blue"></div>
+                    <div class="logo-76--six-white"></div>
+                    <div class="logo-76--six-white-ellipse"></div>
+                    <div class="logo-76--six-blue"></div>
+                    <div class="logo-76--six-blue-ellipse"></div>
+                    <div class="logo-76--six-white-ellipse-small"></div>
+                  </div>
                   <div class="unocal-panel--small-circle-white"></div>
                 </div>
                 <div class="budweiser-panel">
@@ -5597,6 +5700,12 @@
                     </div>
                   </div>
                 </div>
+                <div class="outta-town left">
+                  INN
+                </div>
+                <div class="outta-town right">
+                  INN
+                </div>
                 <div class="box-score">
                   <div class="box-score--small-circle-light-blue"></div>
                   <div class="box-score--small-circle-blue"></div>
@@ -5658,63 +5767,63 @@
                   <div class="lineups-row players">
                       <div class="lineups-square-digital"></div>
                       <div class="lineups-square-digital"></div>
-                      <div class="lineups-square-inning">1</div>
+                      <div class="lineups-square-order">1</div>
                       <div class="lineups-square-digital"></div>
                       <div class="lineups-square-digital"></div>
                   </div>
                   <div class="lineups-row players">
                       <div class="lineups-square-digital"></div>
                       <div class="lineups-square-digital"></div>
-                      <div class="lineups-square-inning">2</div>
+                      <div class="lineups-square-order">2</div>
                       <div class="lineups-square-digital"></div>
                       <div class="lineups-square-digital"></div>
                   </div>
                   <div class="lineups-row players">
                       <div class="lineups-square-digital"></div>
                       <div class="lineups-square-digital"></div>
-                      <div class="lineups-square-inning">3</div>
+                      <div class="lineups-square-order">3</div>
                       <div class="lineups-square-digital"></div>
                       <div class="lineups-square-digital"></div>
                   </div>
                   <div class="lineups-row players">
                       <div class="lineups-square-digital"></div>
                       <div class="lineups-square-digital"></div>
-                      <div class="lineups-square-inning">4</div>
+                      <div class="lineups-square-order">4</div>
                       <div class="lineups-square-digital"></div>
                       <div class="lineups-square-digital"></div>
                   </div>
                   <div class="lineups-row players">
                       <div class="lineups-square-digital"></div>
                       <div class="lineups-square-digital"></div>
-                      <div class="lineups-square-inning">5</div>
+                      <div class="lineups-square-order">5</div>
                       <div class="lineups-square-digital"></div>
                       <div class="lineups-square-digital"></div>
                   </div>
                   <div class="lineups-row players">
                       <div class="lineups-square-digital"></div>
                       <div class="lineups-square-digital"></div>
-                      <div class="lineups-square-inning">6</div>
+                      <div class="lineups-square-order">6</div>
                       <div class="lineups-square-digital"></div>
                       <div class="lineups-square-digital"></div>
                   </div>
                   <div class="lineups-row players">
                       <div class="lineups-square-digital"></div>
                       <div class="lineups-square-digital"></div>
-                      <div class="lineups-square-inning">7</div>
+                      <div class="lineups-square-order">7</div>
                       <div class="lineups-square-digital"></div>
                       <div class="lineups-square-digital"></div>
                   </div>
                   <div class="lineups-row players">
                       <div class="lineups-square-digital"></div>
                       <div class="lineups-square-digital"></div>
-                      <div class="lineups-square-inning">8</div>
+                      <div class="lineups-square-order">8</div>
                       <div class="lineups-square-digital"></div>
                       <div class="lineups-square-digital"></div>
                   </div>
                   <div class="lineups-row players">
                       <div class="lineups-square-digital"></div>
                       <div class="lineups-square-digital"></div>
-                      <div class="lineups-square-inning">9</div>
+                      <div class="lineups-square-order">9</div>
                       <div class="lineups-square-digital"></div>
                       <div class="lineups-square-digital"></div>
                   </div>
