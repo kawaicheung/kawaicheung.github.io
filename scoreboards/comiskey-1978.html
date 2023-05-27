@@ -1113,6 +1113,17 @@
         box-shadow: 0 0.08em 0.02em 0.02em rgba(0,0,0,0.4);
       }
 
+      .unocal-panel--tiny-circle-white {
+        position: absolute;
+        bottom: 14%;
+        right: 18%;
+        width: 0.10em;
+        height: 0.12em;
+        border-radius: 50%;
+        background-color: rgb(119, 119, 119);
+        box-shadow: 0 0.02em 0.01em 0.01em rgba(0,0,0,0.4);
+      }
+
       .main--ad-board > div:last-child {
         align-items: flex-start;
       }
@@ -1126,6 +1137,59 @@
         background-color: #402c3d;
         width: 35%;
         clip-path: polygon(0 25%, 100% 25%, 100% 100%, 0 100%);
+      }
+
+      .budweiser-panel--small-circle-white {
+        position: absolute;
+        top: 25%;
+        left: 18.5%;
+        width: 0.35em;
+        height: 0.35em;
+        border-radius: 50%;
+        background-color: rgb(239, 239, 239);
+        box-shadow: 0 0.08em 0.02em 0.02em rgba(0,0,0,0.4);
+      }
+
+      .budweiser-panel--cup {
+        position: absolute;
+        top: 32%;
+        width: 2.4em;
+        height: 3em;
+        background-color: rgba(255,255,255,0.2);
+        border-radius: 21% 21% 48% 48% / 16% 16% 10% 10%;
+        clip-path: polygon(0 0%, 100% 0%, 96% 15%, 84% 100%, 16% 100%, 4% 15%);
+      }
+
+      .budweiser-panel--cup.one {
+        left: -2.8%;
+      }
+      
+      .budweiser-panel--cup.two {
+        left: 19%;
+      }
+      
+      .budweiser-panel--cup.three {
+        left: 73%;
+      }
+      
+      .budweiser-panel--cup.four {
+        left: 93.5%;
+      }
+
+       .budweiser-panel--cup.five {
+        top: -17%;
+        left: 50%;
+        transform: rotate(6deg);
+      }
+
+      .budweiser-panel--apostrophe {
+        position: absolute;
+        top: 50%;
+        right: 29.5%;
+        width: 0.32em;
+        height: 0.38em;
+        background-color: white;
+        clip-path: polygon(35% 0, 100% 0, 35% 100%, 0 100%);
       }
 
       .main--ad-board > .budweiser-panel > span {
@@ -2371,9 +2435,17 @@
                     <div class="logo-76--six-white-ellipse-small"></div>
                   </div>
                   <div class="unocal-panel--small-circle-white"></div>
+                  <div class="unocal-panel--tiny-circle-white"></div>
                 </div>
                 <div class="budweiser-panel">
-                  <span>This Bud's<br>For You.</span>
+                  <div class="budweiser-panel--cup one"></div>
+                  <div class="budweiser-panel--cup two"></div>
+                  <div class="budweiser-panel--cup three"></div>
+                  <div class="budweiser-panel--cup four"></div>
+                  <div class="budweiser-panel--cup five"></div>
+                  <div class="budweiser-panel--apostrophe"></div>
+                  <div class="budweiser-panel--small-circle-white"></div>
+                  <span>This Bud&nbsp;s<br>For You.</span>
                 </div>
                 <div class="winston-panel">
                   <div>
