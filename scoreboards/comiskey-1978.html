@@ -16,6 +16,8 @@
         --color--scoreboard-orange: #f09651;
         --color--the-board: #343263;
 
+        --color--roof-base: #301d2a;
+
         --blur-text: blur(0.3px);
 
         --px--picture-width: 1280px;
@@ -72,7 +74,7 @@
       }
 
       .left-field-stands > .roof-underside {
-        background-color: #301d2a;
+        background-color: var(--color--roof-base);
         position: absolute;
         width: 100%;
         height: 100%;
@@ -82,15 +84,175 @@
       }
 
       .right-field-stands {
-        filter: blur(0.1em);
         position: absolute;
         width: 16%;
         height: 100%;
         right: 0%;
       }
 
+      .right-field-stands > .chicago-flag-pole {
+        background: rgb(255,255,255);
+        background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(253,253,253,1) 56%, rgba(100,100,100,1) 100%);
+        transform: rotate(-0.4deg);
+        position: absolute;
+        width: 2em;
+        height: 10em;
+        top: 18%;
+        left: 18%;
+        clip-path: polygon(62% 35%, 67% 35%, 67% 100%, 62% 100%);
+      }
+
+      .right-field-stands > .american-flag-pole {
+        background: rgb(255,255,255);
+        background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(253,253,253,1) 56%, rgba(100,100,100,1) 100%);
+        transform: rotate(0.4deg);
+        position: absolute;
+        width: 2em;
+        height: 19em;
+        top: -2%;
+        right: 35%;
+        clip-path: polygon(62% 35%, 67% 35%, 67% 100%, 62% 100%);
+      }
+
+      .right-field-stands > .ru-beam {
+        position: absolute;
+        background-color: var(--color--roof-base);
+      }
+
+      .right-field-stands > .ru-beam.ru-beam-1 {
+        width: 0.16em;
+        height: 16em;
+        top: 24%;
+        left: 58%;
+        transform: rotate(-78.7deg);
+      }
+
+      .right-field-stands > .ru-beam.ru-beam-2 {
+        width: 0.2em;
+        height: 10em;
+        top: 31.6%;
+        left: 39%;
+        transform: rotate(-59deg);
+      }
+
+      .right-field-stands > .ru-beam.ru-beam-3 {
+        width: 0.2em;
+        height: 6em;
+        top: 40.6%;
+        right: 16%;
+        transform: rotate(-82deg);
+      }
+ 
+      .right-field-stands > .ru-beam.ru-beam-4 {
+        width: 0.13em;
+        height: 1em;
+        top: 36.8%;
+        left: 27%;
+      }
+
+      .right-field-stands > .ru-beam.ru-beam-5 {
+        width: 0.13em;
+        height: 2em;
+        top: 37.3%;
+        left: 39%;
+      }
+
+      .right-field-stands > .ru-beam.ru-beam-6 {
+        width: 0.13em;
+        height: 2.6em;
+        top: 38.3%;
+        left: 51%;
+      }
+
+      .right-field-stands > .ru-beam.ru-beam-7 {
+        width: 0.13em;
+        height: 2.1em;
+        top: 36.1%;
+        left: 33.3%;
+        transform: rotate(-104deg);
+      }
+
+      .right-field-stands > .ru-beam.ru-beam-8 {
+        width: 0.13em;
+        height: 2.4em;
+        top: 37.3%;
+        left: 45.4%;
+        transform: rotate(-121deg);
+      }
+
+      .right-field-stands > .ru-beam.ru-beam-9 {
+        width: 0.13em;
+        height: 3em;
+        top: 38.3%;
+        left: 56.8%;
+        transform: rotate(-133deg);
+      }
+
+      .right-field-stands > .ru-beam.ru-beam-10 {
+        width: 0.2em;
+        height: 12em;
+        top: 28.3%;
+        left: 72.8%;
+        transform: rotate(-97deg);
+      }
+
+      .right-field-stands > .ru-beam.ru-beam-11 {
+        width: 0.2em;
+        height: 12em;
+        top: 33.6%;
+        left: 96.8%;
+        transform: rotate(-97deg);
+      }
+
+      .right-field-stands > .ru-beam.ru-beam-12 {
+        width: 0.14em;
+        height: 4em;
+        top: 37.6%;
+        left: 73.8%;
+        transform: rotate(-148deg);
+      }
+
+      .right-field-stands > .ru-beam.ru-beam-13 {
+        width: 0.23em;
+        height: 6em;
+        top: 35.6%;
+        left: 79.8%;
+        transform: rotate(-136deg);
+      }
+
+      .right-field-stands > .ru-beam.ru-beam-14 {
+        width: 0.14em;
+        height: 5em;
+        top: 38.1%;
+        left: 80%;
+        transform: rotate(-34deg);
+      }
+
+      .right-field-stands > .ru-beam.ru-beam-15 {
+        width: 0.14em;
+        height: 4em;
+        top: 39.1%;
+        left: 87%;
+      }
+
+      .right-field-stands > .ru-beam.ru-beam-16 {
+        width: 0.14em;
+        height: 4em;
+        top: 39.5%;
+        left: 95%;
+        transform: rotate(39deg);
+      }
+
+      .right-field-stands > .ru-beam.ru-beam-17 {
+        width: 0.28em;
+        height: 4em;
+        top: 38.5%;
+        left: 97%;
+        transform: rotate(-53deg);
+      }
+
       .right-field-stands > .roof-underside {
-        background-color: #301d2a;
+        background-color: var(--color--roof-base);
         position: absolute;
         width: 100%;
         height: 100%;
@@ -100,23 +262,23 @@
       }
 
       .right-field-stands > .roof-pillar {
-        background-color: #301d2a;
+        background-color: var(--color--roof-base);
         position: absolute;
         width: 100%;
         height: 100%;
         top: 0;
         left: 0;
-        clip-path: polygon(62% 35%, 67% 35%, 67% 100%, 62% 100%);
+        clip-path: polygon(62% 35%, 68% 35%, 68% 100%, 62% 100%);
       }
 
       .right-field-stands > .upper-deck{
-        background-color: #301d2a;
+        background-color: var(--color--roof-base);
         position: absolute;
         width: 100%;
         height: 100%;
         top: 0;
         left: 0;
-        clip-path: polygon(0 84%, 100% 58%, 100% 82%);
+        clip-path: polygon(1% 81%, 100% 58%, 100% 82%, 1% 84%);
       }
 
       .scoreboard-wrapper {
@@ -130,6 +292,23 @@
         position: relative;
       }
 
+      .bleacher-wall {
+        position: absolute;
+        width: 100%;
+        bottom: 0;
+        height: 4em;
+        background: rgb(58,111,81);
+        background: linear-gradient(180deg, rgba(58,111,81,1) 0%, rgba(36,65,49,1) 100%);
+      }
+
+      .bleacher-wall--right-shadow {
+        position: absolute;
+        right: 0%;
+        width: 12em;
+        height: 100%;
+        background-color: rgba(0,0,0,0.4);
+        clip-path: polygon(0 0%, 100% 0, 100% 100%, 30% 100%);
+      }
 
       .clock--border {
         position: relative;
@@ -1694,6 +1873,7 @@
         width: 101%;
         height: 5.8em;
         clip-path: polygon(0 0, 100% 0, 100% 45%, 50% 100%, 0 45%);
+
       }
 
       .bottom-ledge--walkway {
@@ -1796,10 +1976,32 @@
   <body>
   	<div class="picture">
       <div class="picture-background"></div>
+      <div class="bleacher-wall">
+        <div class="bleacher-wall--right-shadow"></div>
+      </div>
       <div class="left-field-stands">
         <div class="roof-underside"></div>
       </div>
       <div class="right-field-stands">
+        <div class="ru-beam ru-beam-1"></div>
+        <div class="ru-beam ru-beam-2"></div>
+        <div class="ru-beam ru-beam-3"></div>
+        <div class="ru-beam ru-beam-4"></div>
+        <div class="ru-beam ru-beam-5"></div>
+        <div class="ru-beam ru-beam-6"></div>
+        <div class="ru-beam ru-beam-7"></div>
+        <div class="ru-beam ru-beam-8"></div>
+        <div class="ru-beam ru-beam-9"></div>
+        <div class="ru-beam ru-beam-10"></div>
+        <div class="ru-beam ru-beam-11"></div>
+        <div class="ru-beam ru-beam-12"></div>
+        <div class="ru-beam ru-beam-13"></div>
+        <div class="ru-beam ru-beam-14"></div>
+        <div class="ru-beam ru-beam-15"></div>
+        <div class="ru-beam ru-beam-16"></div>
+        <div class="ru-beam ru-beam-17"></div>
+        <div class="american-flag-pole"></div>
+        <div class="chicago-flag-pole"></div>
         <div class="roof-underside"></div>
         <div class="roof-pillar"></div>
         <div class="upper-deck"></div>
