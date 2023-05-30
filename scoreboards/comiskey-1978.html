@@ -9,11 +9,12 @@
         --color--title: #333;
         --color--title-faded: #666;
        
-        --color--clock: #56549e;
+        --color--clock: #343263;
         --color--clock-base: #22153c;
+        --color--unocal-76-blue: #3e3b8d;
 
         --color--scoreboard-orange: #f09651;
-        --color--the-board: #56549e;
+        --color--the-board: #343263;
 
         --blur-text: blur(0.3px);
 
@@ -58,7 +59,6 @@
         position: absolute;
         width: 100%;
         height: 100%;
-        background: rgb(136,197,244);
         background: linear-gradient(180deg, rgba(136,197,244,1) 6%, rgba(200,230,244,1) 100%); 
         animation-name: picture-background;
       }
@@ -296,8 +296,7 @@
         width: 16.1em;
         height: 16.1em;
         border-radius: 50%;
-        background: rgb(71,70,122);
-        background: radial-gradient(circle, rgba(71,70,122,1) 0%, rgba(86,84,158,1) 50%, rgba(71,70,122,1) 100%);
+        background: var(--color--the-board);
         top: 50%;
         left: 50%;
         transform: translate(-50%,-50%);
@@ -821,11 +820,11 @@
       }
 
       .ltpc.white { background-color: #fff; }
-      .ltpc.blue { background-color: #61618f; }
-      .ltpc.red { background-color: #a6523e; }
-      .ltpc.light-blue { background-color: #82bdd8; }
+      .ltpc.blue { background-color: #4c5ea4; }
+      .ltpc.red { background-color: #bf4427; }
+      .ltpc.light-blue { background-color: #6aaac8; }
       .ltpc.green { background-color: #94c854; }
-      .ltpc.yellow { background-color: #f1e86b; }
+      .ltpc.yellow { background-color: #e4ca5e; }
 
       .ltpc:nth-child(1) { transform: rotate(0deg);}
       .ltpc:nth-child(2) { transform: rotate(45deg); }
@@ -1024,7 +1023,7 @@
         left: 57.8%;
         width: 2.3em;
         height: 2.3em;
-        background-color: orange;
+        background-color: #fa9a40;
         border-radius: 50%;
         box-shadow: 0.01em 0.01em 0.01em 0.01em rgba(0,0,0,0.5);
       }
@@ -1045,7 +1044,7 @@
         left: .42em;
         width: 0.85em;
         height: 0.93em;
-        background-color: #5e4c6d;
+        background-color: var(--color--unocal-76-blue);
         clip-path: polygon(4% 29%, 20% 0, 96% 0, 43% 100%, 6% 100%, 48% 29%);
       }
 
@@ -1065,7 +1064,7 @@
         left: 0.98em;
         width: 0.8em;
         height: 1.1em;
-        background-color: #5e4c6d;
+        background-color: var(--color--unocal-76-blue);;
         clip-path: polygon(63% 0, 98% 0, 62% 45%, 16.5% 64%);
       }
 
@@ -1086,7 +1085,7 @@
         left: 1.07em;
         width: .86em;
         height: 0.62em;
-        background-color: #5e4c6d; 
+        background-color: var(--color--unocal-76-blue);; 
         clip-path: ellipse(50% 50% at 50% 50%);
         transform: rotate(-36deg);
       }
@@ -1134,7 +1133,7 @@
         font-weight: 400;
         font-size: 2.2em;
         line-height: 0.72em;
-        background-color: #402c3d;
+        background-color: #342f3d;
         width: 35%;
         clip-path: polygon(0 25%, 100% 25%, 100% 100%, 0 100%);
       }
@@ -1208,7 +1207,7 @@
 
       .winston-panel > div {
         margin-left: 4em;
-        background-color: #e2f7fc;
+        background-color: #bee5ee;
         width: 100%;
         height: 100%;
         clip-path: polygon(0 28%, 82% 40%, 80.5% 100%, 0 100%);
@@ -1227,12 +1226,17 @@
       .winston-panel--small-circle-white {
         position: absolute;
         top: 30%;
-        left: 18.5%;
+        left: 25.5%;
         width: 0.7em;
         height: 0.7em;
         border-radius: 50%;
         background-color: rgb(239, 239, 239);
-        box-shadow: 0 0.3em 0em 0.05em rgba(0,0,0,0.4);
+        box-shadow: 0 0.24em 0em 0.05em rgba(0,0,0,0.4);
+      }
+
+      .winston-panel--small-circle-white.two {
+        top: 37%;
+        left: 34.5%;
       }
 
       .main--the-board {
@@ -2521,6 +2525,7 @@
                   <div>
                     <span>Winston<br>Lights</span>
                     <div class="winston-panel--small-circle-white"></div>
+                    <div class="winston-panel--small-circle-white two"></div>
                   </div>
                 </div>
               </div>
