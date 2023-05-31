@@ -66,7 +66,7 @@
       }
 
       .left-field-stands {
-        filter: blur(0.1em);
+        /*filter: blur(0.1em);*/
         position: absolute;
         width: 17%;
         height: 100%;
@@ -80,10 +80,60 @@
         height: 100%;
         top: 0;
         left: 0;
-        clip-path: polygon(0 33.3%, 25% 34%, 25% 34.2%, 0 37%);
+        clip-path: polygon(0 33.3%, 21% 34%, 21% 34.2%, 0 37%);
+      }
+
+      .lu-beam {
+        position: absolute;
+        background-color: var(--color--roof-base);
+      }
+
+      .lu-beam-1 {
+        width: 0.14em;
+        height: 7em;
+        top: 31%;
+        left: 0%;
+        transform: rotate(68deg);
+      }
+
+      .lu-beam-2 {
+        width: 0.2em;
+        height: 7em;
+        top: 33.4%;
+        left: 5.3%;
+        transform: rotate(42deg);
+      }
+
+      .lu-beam-3 {
+        width: 0.12em;
+        height: 1.6em;
+        top: 36.2%;
+        left: 5.9%;
+        transform: rotate(-75deg);
+      }
+
+      .lu-beam-4 {
+        width: 0.12em;
+        height: 2.5em;
+        top: 37.2%;
+        left: 0%;
+      }
+
+      .lu-nub {
+        position: absolute;
+        width: 0.8em;
+        height: 0.8em;
+        clip-path: circle();
+        background-color: var(--color--roof-base);
+      }
+
+      .lu-nub-1 {
+        top: 36.7%;
+        left: -1%;
       }
 
       .right-field-stands {
+        filter: blur(0.07em);
         position: absolute;
         width: 16%;
         height: 100%;
@@ -114,12 +164,12 @@
         clip-path: polygon(62% 35%, 67% 35%, 67% 100%, 62% 100%);
       }
 
-      .right-field-stands > .ru-beam {
+      .ru-beam {
         position: absolute;
         background-color: var(--color--roof-base);
       }
 
-      .right-field-stands > .ru-beam.ru-beam-1 {
+      .ru-beam-1 {
         width: 0.16em;
         height: 16em;
         top: 24%;
@@ -127,7 +177,7 @@
         transform: rotate(-78.7deg);
       }
 
-      .right-field-stands > .ru-beam.ru-beam-2 {
+      .ru-beam-2 {
         width: 0.2em;
         height: 10em;
         top: 31.6%;
@@ -135,7 +185,7 @@
         transform: rotate(-59deg);
       }
 
-      .right-field-stands > .ru-beam.ru-beam-3 {
+      .ru-beam-3 {
         width: 0.2em;
         height: 6em;
         top: 40.6%;
@@ -143,28 +193,28 @@
         transform: rotate(-82deg);
       }
  
-      .right-field-stands > .ru-beam.ru-beam-4 {
+      .ru-beam-4 {
         width: 0.13em;
         height: 1em;
         top: 36.8%;
         left: 27%;
       }
 
-      .right-field-stands > .ru-beam.ru-beam-5 {
+      .ru-beam-5 {
         width: 0.13em;
         height: 2em;
         top: 37.3%;
         left: 39%;
       }
 
-      .right-field-stands > .ru-beam.ru-beam-6 {
+      .ru-beam-6 {
         width: 0.13em;
         height: 2.6em;
         top: 38.3%;
         left: 51%;
       }
 
-      .right-field-stands > .ru-beam.ru-beam-7 {
+      .ru-beam-7 {
         width: 0.13em;
         height: 2.1em;
         top: 36.1%;
@@ -172,7 +222,7 @@
         transform: rotate(-104deg);
       }
 
-      .right-field-stands > .ru-beam.ru-beam-8 {
+      .ru-beam-8 {
         width: 0.13em;
         height: 2.4em;
         top: 37.3%;
@@ -180,7 +230,7 @@
         transform: rotate(-121deg);
       }
 
-      .right-field-stands > .ru-beam.ru-beam-9 {
+      .ru-beam-9 {
         width: 0.13em;
         height: 3em;
         top: 38.3%;
@@ -188,7 +238,7 @@
         transform: rotate(-133deg);
       }
 
-      .right-field-stands > .ru-beam.ru-beam-10 {
+      .ru-beam-10 {
         width: 0.2em;
         height: 12em;
         top: 28.3%;
@@ -196,7 +246,7 @@
         transform: rotate(-97deg);
       }
 
-      .right-field-stands > .ru-beam.ru-beam-11 {
+      .ru-beam-11 {
         width: 0.2em;
         height: 12em;
         top: 33.6%;
@@ -204,15 +254,15 @@
         transform: rotate(-97deg);
       }
 
-      .right-field-stands > .ru-beam.ru-beam-12 {
+      .ru-beam-12 {
         width: 0.14em;
         height: 4em;
         top: 37.6%;
         left: 73.8%;
-        transform: rotate(-148deg);
+        transform: rotate(-142deg);
       }
 
-      .right-field-stands > .ru-beam.ru-beam-13 {
+      .ru-beam-13 {
         width: 0.23em;
         height: 6em;
         top: 35.6%;
@@ -220,7 +270,7 @@
         transform: rotate(-136deg);
       }
 
-      .right-field-stands > .ru-beam.ru-beam-14 {
+      .ru-beam-14 {
         width: 0.14em;
         height: 5em;
         top: 38.1%;
@@ -228,14 +278,14 @@
         transform: rotate(-34deg);
       }
 
-      .right-field-stands > .ru-beam.ru-beam-15 {
+      .ru-beam-15 {
         width: 0.14em;
         height: 4em;
         top: 39.1%;
         left: 87%;
       }
 
-      .right-field-stands > .ru-beam.ru-beam-16 {
+      .ru-beam-16 {
         width: 0.14em;
         height: 4em;
         top: 39.5%;
@@ -243,13 +293,139 @@
         transform: rotate(39deg);
       }
 
-      .right-field-stands > .ru-beam.ru-beam-17 {
+      .ru-beam-17 {
         width: 0.28em;
         height: 4em;
         top: 38.5%;
         left: 97%;
         transform: rotate(-53deg);
       }
+      
+      .ru-nub {
+        position: absolute;
+        width: 0.6em;
+        height: 0.6em;
+        clip-path: circle();
+        background-color: var(--color--roof-base);
+      }
+
+      .ru-nub-1 {
+        top: 35%;
+        left: 13%;
+      }
+      .ru-nub-2 {
+        top: 35.8%;
+        left: 24.8%;
+      }
+      .ru-nub-3 {
+        width: 0.7em;
+        height: 0.7em;
+        top: 36.5%;
+        left: 37%;
+      }
+      .ru-nub-4 {
+        width: 0.7em;
+        height: 0.7em;
+        top: 37.2%;
+        left: 49%;
+      }
+      .ru-nub-5 {
+        top: 39.9%;
+        left: 37.5%;
+      }
+      .ru-nub-6 {
+        width: 0.5em;
+        height: 0.5em;
+        top: 37.8%;
+        left: 26.2%;
+      }
+      .ru-nub-7 {
+        top: 42.2%;
+        left: 50%;
+      }
+      .ru-nub-8 {
+        width: 0.9em;
+        height: 0.9em;
+        top: 39.1%;
+        left: 72%;
+        clip-path: none;
+        border-radius: 0.3em;
+      }
+
+      .ru-railing-1 {
+        position: absolute;
+        width: 0.12em;
+        height: 22em;
+        top: 45.8%;
+        left: 53%;
+        transform: rotate(56deg);
+        background: rgb(255,255,255);
+        background: linear-gradient(0deg, rgba(255,255,255,1) 0%, rgba(250,250,250,1) 40%, rgba(133,133,133,1) 45%, rgba(176,176,176,1) 100%);      
+      }
+
+      .ru-railing-2 {
+        position: absolute;
+        width: 0.12em;
+        height: 22em;
+        top: 47.2%;
+        left: 53%;
+        transform: rotate(55.6deg);
+        background: rgb(255,255,255);
+        background: linear-gradient(0deg, rgba(255,255,255,1) 0%, rgba(250,250,250,1) 47%, rgba(133,133,133,1) 52%, rgba(176,176,176,1) 100%);      
+      }
+
+      .ru-railing-3 {
+        position: absolute;
+        width: 0.12em;
+        height: 18em;
+        top: 59.8%;
+        left: 52%;
+        transform: rotate(86deg);
+        background-color: #fff;
+      }
+
+      .ru-railing-4 {
+        position: absolute;
+        width: 0.12em;
+        height: 18em;
+        top: 61.2%;
+        left: 52.6%;
+        transform: rotate(86deg);
+        background-color: #fff;
+      }
+
+      .ru-catwalk-bottom {
+        position: absolute;
+        width: 13em;
+        height: 4em;background: rgb(101,101,101);
+background: linear-gradient(159deg, rgba(101,101,101,1) 0%, rgba(65,65,65,1) 41%, rgba(57,57,57,1) 100%);
+        top: 82%;
+        left: -10%;
+        clip-path: polygon(0 41%, 70% 0, 100% 0, 100% 20%, 0 100%);
+      }
+
+      .ru-catwalk-wall {
+        position: absolute;
+        width: 13em;
+        height: 3em;
+        background-color: #fff;
+        top: 79.4%;
+        left: -10%;
+        clip-path: polygon(0 60%, 100% 0%, 100% 40%, 0 100%);
+      }
+
+      .ru-ud-facade {
+        position: absolute;
+        width: 18em;
+        height: 1.8em;
+        top: 79.7%;
+        left: 0%;
+        transform: rotate(-3.5deg);
+        clip-path: polygon(0.5% 0, 100% 0, 100% 100%, 0 96%);
+        background: rgb(48,48,48);
+        background: linear-gradient(180deg, rgba(48,48,48,1) 0%, rgba(60,60,60,1) 27%, rgba(67,93,99,1) 30%, rgba(70,95,100,1) 63%, rgba(82,109,115,1) 64%, rgba(77,97,101,1) 65%, rgba(83,104,108,1) 88%, rgba(154,165,167,1) 90%, rgba(48,48,48,1) 100%);
+      }
+
 
       .right-field-stands > .roof-underside {
         background-color: var(--color--roof-base);
@@ -272,13 +448,92 @@
       }
 
       .right-field-stands > .upper-deck{
-        background-color: var(--color--roof-base);
         position: absolute;
         width: 100%;
         height: 100%;
         top: 0;
         left: 0;
-        clip-path: polygon(1% 81%, 100% 58%, 100% 82%, 1% 84%);
+        clip-path: polygon(1% 81%, 100% 59%, 100% 82%, 1% 84%);
+
+        background-color: var(--color--roof-base);
+        background: linear-gradient(-4.3deg, 
+          rgba(35,196,160,1) 0%, 
+          rgba(35,196,160,1) 1%, 
+          rgba(48,48,48,1) 1.5%, 
+          rgba(35,196,160,1) 2%,
+          rgba(35,196,160,1) 3%, 
+          rgba(48,48,48,1) 3.5%, 
+          rgba(35,196,160,1) 4%,
+          rgba(35,196,160,1) 5%, 
+          rgba(48,48,48,1) 5.5%, 
+          rgba(35,196,160,1) 6%,
+          rgba(35,196,160,1) 7%, 
+          rgba(48,48,48,1) 7.5%, 
+          rgba(35,196,160,1) 8%,
+          rgba(35,196,160,1) 9%, 
+          rgba(48,48,48,1) 9.5%, 
+          rgba(35,196,160,1) 10%,
+          rgba(35,196,160,1) 11%, 
+          rgba(48,48,48,1) 11.5%,
+          rgba(35,196,160,1) 12%,
+          rgba(35,196,160,1) 13%, 
+          rgba(48,48,48,1) 13.5%,
+          rgba(35,196,160,1) 14%,
+          rgba(35,196,160,1) 15%, 
+          rgba(48,48,48,1) 15.5%,
+          rgba(35,196,160,1) 16%,
+          rgba(35,196,160,1) 17%, 
+          rgba(48,48,48,1) 17.5%,
+          rgba(35,196,160,1) 18%,
+          rgba(35,196,160,1) 19%, 
+          rgba(48,48,48,1) 19.5%,
+          rgba(35,196,160,1) 20%,
+          rgba(35,196,160,1) 21%, 
+          rgba(48,48,48,1) 21.5%,
+          rgba(35,196,160,1) 22%,
+          rgba(35,196,160,1) 23%,
+          rgba(48, 48, 1, 1) 23.5%,
+          rgba(35, 196, 160, 1) 24%,
+          rgba(35, 196, 160, 1) 25%,
+          rgba(48, 48, 1, 1) 25.5%,
+          rgba(35, 196, 160, 1) 26%,
+          rgba(35, 196, 160, 1) 27%,
+          rgba(48, 48, 1, 1) 27.5%,
+          rgba(35, 196, 160, 1) 28%,
+          rgba(35, 196, 160, 1) 29%,
+          rgba(48, 48, 1, 1) 29.5%,
+          rgba(35, 196, 160, 1) 30%,
+          rgba(35, 196, 160, 1) 31%,
+          rgba(48, 48, 1, 1) 31.5%,
+          rgba(35, 196, 160, 1) 32%,
+          rgba(35, 196, 160, 1) 33%,
+          rgba(48, 48, 1, 1) 33.5%,
+          rgba(35, 196, 160, 1) 34%,
+          rgba(35, 196, 160, 1) 35%,
+          rgba(48, 48, 1, 1) 35.5%,
+          rgba(35, 196, 160, 1) 36%,
+          rgba(35, 196, 160, 1) 37%,
+          rgba(48, 48, 1, 1) 37.5%,
+          rgba(35, 196, 160, 1) 38%,
+          rgba(35, 196, 160, 1) 39%,
+          rgba(48, 48, 1, 1) 39.5%,
+          rgba(35, 196, 160, 1) 40%,
+          rgba(35, 196, 160, 1) 41%,
+          rgba(48, 48, 1, 1) 41.5%,
+          rgba(35, 196, 160, 1) 42%,
+          rgba(35, 196, 160, 1) 43%,
+          rgba(48, 48, 1, 1) 43.5%,
+          rgba(35, 196, 160, 1) 44%,
+          rgba(35, 196, 160, 1) 45%,
+          rgba(48, 48, 1, 1) 45.5%,
+          rgba(35, 196, 160, 1) 46%,
+          rgba(35, 196, 160, 1) 47%,
+          rgba(48, 48, 1, 1) 47.5%,
+          rgba(35, 196, 160, 1) 48%,
+          rgba(35, 196, 160, 1) 49%,
+          rgba(48, 48, 1, 1) 49.5%,
+          rgba(35, 196, 160, 1) 50%,
+          rgba(35, 196, 160, 1) 51%);
       }
 
       .scoreboard-wrapper {
@@ -298,7 +553,7 @@
         bottom: 0;
         height: 4em;
         background: rgb(58,111,81);
-        background: linear-gradient(180deg, rgba(58,111,81,1) 0%, rgba(36,65,49,1) 100%);
+        background: linear-gradient(180deg, rgba(58,111,81,1) 0%, rgba(36,85,49,1) 50%, rgba(36,65,49,1) 100%);
       }
 
       .bleacher-wall--right-shadow {
@@ -306,7 +561,7 @@
         right: 0%;
         width: 12em;
         height: 100%;
-        background-color: rgba(0,0,0,0.4);
+        background-color: rgba(0,0,0,0.7);
         clip-path: polygon(0 0%, 100% 0, 100% 100%, 30% 100%);
       }
 
@@ -1981,6 +2236,11 @@
       </div>
       <div class="left-field-stands">
         <div class="roof-underside"></div>
+        <div class="lu-beam lu-beam-1"></div>
+        <div class="lu-beam lu-beam-2"></div>
+        <div class="lu-beam lu-beam-3"></div>
+        <div class="lu-beam lu-beam-4"></div>
+        <div class="lu-nub lu-nub-1"></div>
       </div>
       <div class="right-field-stands">
         <div class="ru-beam ru-beam-1"></div>
@@ -2000,11 +2260,26 @@
         <div class="ru-beam ru-beam-15"></div>
         <div class="ru-beam ru-beam-16"></div>
         <div class="ru-beam ru-beam-17"></div>
+        <div class="ru-nub ru-nub-1"></div>
+        <div class="ru-nub ru-nub-2"></div>
+        <div class="ru-nub ru-nub-3"></div>
+        <div class="ru-nub ru-nub-4"></div>
+        <div class="ru-nub ru-nub-5"></div>
+        <div class="ru-nub ru-nub-6"></div>
+        <div class="ru-nub ru-nub-7"></div>
+        <div class="ru-nub ru-nub-8"></div>
+        <div class="ru-railing-1"></div>
+        <div class="ru-railing-2"></div>
         <div class="american-flag-pole"></div>
         <div class="chicago-flag-pole"></div>
         <div class="roof-underside"></div>
+        <div class="ru-catwalk-bottom"></div>
+        <div class="ru-catwalk-wall"></div>
         <div class="roof-pillar"></div>
         <div class="upper-deck"></div>
+        <div class="ru-railing-3"></div>
+        <div class="ru-railing-4"></div>
+        <div class="ru-ud-facade"></div>
       </div>
       <div class="scoreboard-wrapper">
         <div class="light-towers">
