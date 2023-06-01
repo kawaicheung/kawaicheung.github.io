@@ -133,7 +133,7 @@
       }
 
       .right-field-stands {
-        filter: blur(0.07em);
+        /*filter: blur(0.07em);*/
         position: absolute;
         width: 16%;
         height: 100%;
@@ -356,7 +356,7 @@
         position: absolute;
         width: 0.12em;
         height: 22em;
-        top: 45.8%;
+        top: 46.1%;
         left: 53%;
         transform: rotate(56deg);
         background: rgb(255,255,255);
@@ -367,9 +367,9 @@
         position: absolute;
         width: 0.12em;
         height: 22em;
-        top: 47.2%;
+        top: 47.5%;
         left: 53%;
-        transform: rotate(55.6deg);
+        transform: rotate(55deg);
         background: rgb(255,255,255);
         background: linear-gradient(0deg, rgba(255,255,255,1) 0%, rgba(250,250,250,1) 47%, rgba(133,133,133,1) 52%, rgba(176,176,176,1) 100%);      
       }
@@ -394,11 +394,54 @@
         background-color: #fff;
       }
 
+      .ru-railing-posts-1 {
+        position: absolute;
+        width: 17em;
+        height: 3em;
+        top: 75.3%;
+        left: 0.2%;
+        transform: rotate(-2deg);
+        display: flex;
+        justify-content: space-between;
+        clip-path: polygon(0 28%, 100% 8%, 100% 100%, 0 100%);
+      }
+
+      .ru-railing-posts-1 > div {
+        height: 100%;
+        width: 0.12em;
+        background-color: #fff;
+      }
+
+      .ru-railing-posts-2 {
+        position: absolute;
+        width: 17em;
+        height: 16em;
+        top: 51.3%;
+        left: 8%;
+        display: flex;
+        justify-content: space-between;
+        clip-path: polygon(0 83%, 100% 12%, 100% 25%, 0 100%);
+      }
+
+      .ru-railing-posts-2 > div {
+        height: 100%;
+        width: 0.12em;
+        background-color: #fff;
+      }
+ 
+      .ru-railing-posts-2 > div:nth-child(5),
+      .ru-railing-posts-2 > div:nth-child(6),
+      .ru-railing-posts-2 > div:nth-child(7),
+      .ru-railing-posts-2 > div:nth-child(8) {
+        background-color: rgba(0,0,0,0.4);
+      }
+
       .ru-catwalk-bottom {
         position: absolute;
         width: 13em;
-        height: 4em;background: rgb(101,101,101);
-background: linear-gradient(159deg, rgba(101,101,101,1) 0%, rgba(65,65,65,1) 41%, rgba(57,57,57,1) 100%);
+        height: 4em;
+        background: rgb(101,101,101);
+        background: linear-gradient(159deg, rgba(101,101,101,1) 0%, rgba(55,55,55,1) 41%, rgba(37,37,37,1) 100%);
         top: 82%;
         left: -10%;
         clip-path: polygon(0 41%, 70% 0, 100% 0, 100% 20%, 0 100%);
@@ -418,7 +461,7 @@ background: linear-gradient(159deg, rgba(101,101,101,1) 0%, rgba(65,65,65,1) 41%
         position: absolute;
         width: 18em;
         height: 1.8em;
-        top: 79.7%;
+        top: 79.3%;
         left: 0%;
         transform: rotate(-3.5deg);
         clip-path: polygon(0.5% 0, 100% 0, 100% 100%, 0 96%);
@@ -551,18 +594,19 @@ background: linear-gradient(159deg, rgba(101,101,101,1) 0%, rgba(65,65,65,1) 41%
         position: absolute;
         width: 100%;
         bottom: 0;
-        height: 4em;
+        height: 5em;
         background: rgb(58,111,81);
         background: linear-gradient(180deg, rgba(58,111,81,1) 0%, rgba(36,85,49,1) 50%, rgba(36,65,49,1) 100%);
+        clip-path: polygon(0 20%, 50% 30%, 95% 5%, 100% 0, 100% 100%, 0 100%);
       }
 
       .bleacher-wall--right-shadow {
         position: absolute;
         right: 0%;
-        width: 12em;
+        width: 13.5em;
         height: 100%;
         background-color: rgba(0,0,0,0.7);
-        clip-path: polygon(0 0%, 100% 0, 100% 100%, 30% 100%);
+        clip-path: polygon(0 0%, 100% 0, 100% 100%, 40% 100%);
       }
 
       .clock--border {
@@ -1652,7 +1696,7 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
         position: absolute;
         top: 48%;
         left: 39%;
-        font-size: 2.2em;
+        font-size: 2.3em;
         line-height: 0.85em;
         color: #bf4c48;
         font-family: 'DM Serif Display';
@@ -1672,6 +1716,67 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
       .winston-panel--small-circle-white.two {
         top: 37%;
         left: 34.5%;
+      }
+
+      .winston-panel--small-circle-white.three {
+        top: 87%;
+        left: 78.5%;
+      }
+
+      .winston-panel--cig-box--front {
+        position: absolute;
+        background-color: yellow;
+        width: 5.6em;
+        height: 6em;
+        top: 45%;
+        left: 77%;
+        clip-path: polygon(0 24%, 52% 0, 87% 100%, 25% 100%);
+      }
+
+      .winston-panel--cig-box--side {
+        position: absolute;
+        background-color: #900;
+        width: 3em;
+        height: 6em;
+        top: 45%;
+        left: 91%;
+        clip-path: polygon(0 0, 24% 10%, 80% 100%, 62% 100%);
+      }
+  
+      .winston-panel--cig-box--label {
+        position: absolute;
+        background-color: #fff;
+        border-top: solid 0.12em #900;
+        border-bottom: solid 0.12em #900;
+        width: 3.2em;
+        height: 2em;
+        top: 65%;
+        left: 80.4%;
+        transform: rotate(-22deg);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 0.1em 0;
+      }
+
+      .winston-panel--cig-box--label > span.winston {
+        color: #900;
+        display: block;
+        font-family: 'DM Serif Display';
+        transform: scale(1, 1.9);
+        letter-spacing: 0.05em;
+        font-size: 0.65em;
+      }
+
+      .winston-panel--cig-box--label > span.lights {
+        color: #900;
+        display: block;
+        font-family: 'Helvetica', sans-serif;
+        letter-spacing: 0;
+        margin-top: 0.2em;
+        font-size: 0.6em;
+        text-transform: uppercase;
       }
 
       .main--the-board {
@@ -1925,20 +2030,19 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
          height: 1.5em;
       }
 
-      .american-side {
+      .league-scores {
         position: absolute;
         width: 15.3em;
         height: 14em;
-        background-color: greenyellow;
+        background-color: rgba(0,0,0,0.1);
+      }
+
+      .league-scores.american-side {
         top: 20%;
         left: 18%;
       }
 
-      .national-side {
-        position: absolute;
-        width: 15.3em;
-        height: 14em;
-        background-color: greenyellow;
+      .league-scores.national-side {
         top: 20%;
         left: 60%;
       }
@@ -2363,9 +2467,29 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
         <div class="ru-catwalk-bottom"></div>
         <div class="ru-catwalk-wall"></div>
         <div class="roof-pillar"></div>
+
+        <div class="ru-railing-posts-2">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
         <div class="upper-deck"></div>
         <div class="ru-railing-3"></div>
         <div class="ru-railing-4"></div>
+        <div class="ru-railing-posts-1">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
         <div class="ru-ud-facade"></div>
       </div>
       <div class="scoreboard-wrapper">
@@ -3088,8 +3212,15 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
                 <div class="winston-panel">
                   <div>
                     <span>Winston<br>Lights</span>
+                    <div class="winston-panel--cig-box--front"></div>
+                    <div class="winston-panel--cig-box--side"></div>
+                    <div class="winston-panel--cig-box--label">
+                      <span class="winston">Winston</span>
+                      <span class="lights">Lights</span>
+                    </div>
                     <div class="winston-panel--small-circle-white"></div>
                     <div class="winston-panel--small-circle-white two"></div>
+                    <div class="winston-panel--small-circle-white three"></div>
                   </div>
                 </div>
               </div>
@@ -6477,9 +6608,9 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
                     <div class="inning-score"></div>
                   </div>
                 </div>
-                <div class="american-side">
+                <div class="league-scores american-side">
                 </div>
-                <div class="national-side">
+                <div class="league-scores national-side">
                 </div>
                 <div class="lineups">
                   <div class="lineups--small-circle-light-blue"></div>
