@@ -1719,13 +1719,13 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
       }
 
       .winston-panel--small-circle-white.three {
-        top: 87%;
+        top: 88%;
         left: 78.5%;
       }
 
       .winston-panel--cig-box--front {
         position: absolute;
-        background-color: yellow;
+        background-color: rgba(225,213,37,0.7);
         width: 5.6em;
         height: 6em;
         top: 45%;
@@ -1736,23 +1736,41 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
       .winston-panel--cig-box--side {
         position: absolute;
         background-color: #900;
-        width: 3em;
-        height: 6em;
-        top: 45%;
-        left: 91%;
-        clip-path: polygon(0 0, 24% 10%, 80% 100%, 62% 100%);
+        width: 0.6em;
+        height: 5.5em;
+        top: 47%;
+        left: 94.2%;
+        transform: skew(18deg, 22deg);
       }
   
       .winston-panel--cig-box--label {
         position: absolute;
-        background-color: #fff;
+        background-color: rgba(255,255,255,0.8);
         border-top: solid 0.12em #900;
         border-bottom: solid 0.12em #900;
-        width: 3.2em;
+        width: 3.4em;
         height: 2em;
-        top: 65%;
-        left: 80.4%;
-        transform: rotate(-22deg);
+        top: 65.6%;
+        left: 79.1%;
+        transform: rotate(-23deg);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 0.1em 0;
+        clip-path: polygon(7% 0, 100% 0, 95% 100%, 0 100%);
+      }
+
+      .winston-panel--cig-box--label-side {
+        position: absolute;
+        background-color: rgba(255,255,255,0.8);
+        border-top: solid 0.12em #900;
+        border-bottom: solid 0.12em #900;
+        width: 0.6em;
+        height: 2em;
+        top: 60%;
+        left: 93.9%;
+        transform: skew(18deg, 22deg);
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -1767,6 +1785,7 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
         transform: scale(1, 1.9);
         letter-spacing: 0.05em;
         font-size: 0.65em;
+        opacity: 0.7;
       }
 
       .winston-panel--cig-box--label > span.lights {
@@ -1777,6 +1796,7 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
         margin-top: 0.2em;
         font-size: 0.6em;
         text-transform: uppercase;
+        opacity: 0.5;
       }
 
       .main--the-board {
@@ -3218,6 +3238,7 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
                       <span class="winston">Winston</span>
                       <span class="lights">Lights</span>
                     </div>
+                    <div class="winston-panel--cig-box--label-side"></div>
                     <div class="winston-panel--small-circle-white"></div>
                     <div class="winston-panel--small-circle-white two"></div>
                     <div class="winston-panel--small-circle-white three"></div>
