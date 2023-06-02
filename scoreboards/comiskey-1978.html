@@ -351,6 +351,14 @@
         clip-path: none;
         border-radius: 0.3em;
       }
+      .ru-nub-9 {
+        width: 0.5em;
+        height: 0.5em;
+        top: 45.4%;
+        left: 85%;
+        clip-path: none;
+        border-radius: 0.3em;
+      }
 
       .ru-railing-1 {
         position: absolute;
@@ -460,7 +468,7 @@
       .ru-ud-facade {
         position: absolute;
         width: 18em;
-        height: 1.8em;
+        height: 1.9em;
         top: 79.3%;
         left: 0%;
         transform: rotate(-3.5deg);
@@ -469,6 +477,89 @@
         background: linear-gradient(180deg, rgba(48,48,48,1) 0%, rgba(60,60,60,1) 27%, rgba(67,93,99,1) 30%, rgba(70,95,100,1) 63%, rgba(82,109,115,1) 64%, rgba(77,97,101,1) 65%, rgba(83,104,108,1) 88%, rgba(154,165,167,1) 90%, rgba(48,48,48,1) 100%);
       }
 
+      .rl-beam {
+        position: absolute;
+        background-color: var(--color--roof-base);
+      }
+
+      .rl-beam-1 {
+        width: 3.4em;
+        height: 1.5em;
+        bottom: 15%;
+        left: 56%;
+        clip-path: polygon(0 0, 70% 0, 100% 100%, 30% 100%);
+      }
+
+      .rl-beam-2 {
+        width: 6em;
+        height: 0.8em;
+        bottom: 14.5%;
+        left: 65%;
+        clip-path: polygon(0 20%, 50% 0, 100% 0, 100% 70%, 0 90%);
+      }
+
+      .rl-beam-3 {
+        width: 2em;
+        height: 2.5em;
+        bottom: 13.5%;
+        left: 82%;
+
+        clip-path: polygon(25% 0, 75% 0, 100% 50%, 60% 55%, 60% 70%, 73% 80%, 
+          55% 100%,45% 100%,
+          35% 80%, 40% 75%, 40% 55%, 0% 50%);
+      }
+
+      .rl-beam-4 {
+        width: 6em;
+        height: 0.8em;
+        bottom: 17%;
+        left: 65%;
+      }
+
+      .rl-beam-5 {
+        width: 6em;
+        height: 0.3em;
+        bottom: 11.5%;
+        left: 65%;
+        transform: rotate(-2deg);
+        opacity: 0.6;
+      }
+
+      .rl-beam-6 {
+        width: 6em;
+        height: 0.3em;
+        bottom: 10.7%;
+        left: 65%;
+        transform: rotate(3deg);
+        opacity: 0.9;
+      }
+
+      .rl-beam-7 {
+        width: 9em;
+        height: 0.18em;
+        bottom: 14%;
+        left: 14%;
+        transform: rotate(3deg);
+        opacity: 0.9;
+      }
+
+      .rl-beam-8 {
+        width: 10.4em;
+        height: 0.04em;
+        bottom: 10.4%;
+        left: 19%;
+        transform: rotate(3deg);
+        opacity: 0.9;
+      }
+
+      .rl-beam-9 {
+        width: 10.4em;
+        height: 0.04em;
+        bottom: 10%;
+        left: 19%;
+        transform: rotate(3deg);
+        opacity: 0.9;
+      }
 
       .right-field-stands > .roof-underside {
         background-color: var(--color--roof-base);
@@ -1813,12 +1904,102 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
         top: -0.2em;
         left: 0;
         width: 100%;
-        height: 0.4em;
         z-index: 1;
+        height: 0.4em;
         border-bottom: solid 0.1em rgba(0,0,0,0.8);
         background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(208,217,255,1) 83%, rgba(59,70,138,1) 100%);
         box-shadow: 0 0.8em 0em 0 rgba(0,0,0,0.4);
       }
+
+      .catwalk-rail {
+        position: absolute;
+        top: 0em;
+        left: 0;
+        width: 100%;
+        height: 1em;
+        z-index: 2;
+        display: flex;
+        justify-content: space-between;
+      }
+
+      .catwalk-rail > div {
+        width: 0.15em;
+        background-color: #000;
+        height: 100%;
+        opacity: 0.5;
+        border-top-right-radius: 50%;
+        border-top-left-radius: 50%;
+      }
+
+      .catwalk-rail > div:nth-child(3) {
+        transform: rotate(-5deg);
+      }
+      .catwalk-rail > div:nth-child(4) {
+        transform: rotate(-5deg);
+      }
+      .catwalk-rail > div:nth-child(5) {
+        transform: rotate(-5deg);
+      }
+      .catwalk-rail > div:nth-child(6) {
+        transform: rotate(-5deg);
+      }
+      .catwalk-rail > div:nth-child(7) {
+        transform: rotate(-5deg);
+        margin-right: 0.2em;
+      }
+       
+      .catwalk-rail > div:nth-child(8) {
+        transform: rotate(-4deg);
+      }
+      .catwalk-rail > div:nth-child(9) {
+        transform: rotate(-4deg);
+      }
+      .catwalk-rail > div:nth-child(10) {
+        transform: rotate(-3deg);
+      }
+      .catwalk-rail > div:nth-child(11) {
+        transform: rotate(-3deg);
+      }
+      .catwalk-rail > div:nth-child(12) {
+        transform: rotate(-3deg);
+        margin-right: 0.2em;
+      }
+      .catwalk-rail > div:nth-child(18) {
+        transform: rotate(3deg);
+      }
+      .catwalk-rail > div:nth-child(19) {
+        transform: rotate(3deg);
+        margin-right: 0.3em;
+      }
+
+      .catwalk-rail > div:nth-child(20) {
+        transform: rotate(3deg);
+      }
+      .catwalk-rail > div:nth-child(21) {
+        transform: rotate(4deg);
+      }
+      .catwalk-rail > div:nth-child(22) {
+        transform: rotate(4deg);
+        margin-right: 0.3em;
+      }
+
+      .catwalk-rail > div:nth-child(23) {
+        transform: rotate(5deg);
+      }
+      .catwalk-rail > div:nth-child(34) {
+        transform: rotate(5deg);
+      }
+      .catwalk-rail > div:nth-child(25) {
+        transform: rotate(5deg);
+      }
+      .catwalk-rail > div:nth-child(26) {
+        transform: rotate(5deg);
+      }
+      .catwalk-rail > div:nth-child(27) {
+        transform: rotate(5deg);
+        margin-right: 0.2em;
+      }
+
 
       .side-ladder {
         position: absolute;
@@ -1900,6 +2081,7 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
 
       .soxogram-digital-wrapper .sdw--square > div > div.lit {
         background-color: #fabc4a;
+        box-shadow: 2px 2px 4px 0px #fabc4a;
       }
 
       .outta-town {
@@ -2479,6 +2661,7 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
         <div class="ru-nub ru-nub-6"></div>
         <div class="ru-nub ru-nub-7"></div>
         <div class="ru-nub ru-nub-8"></div>
+        <div class="ru-nub ru-nub-9"></div>
         <div class="ru-railing-1"></div>
         <div class="ru-railing-2"></div>
         <div class="american-flag-pole"></div>
@@ -2510,6 +2693,21 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
           <div></div>
           <div></div>
         </div>
+        <div class="rl-beam rl-beam-1"></div>
+        <div class="rl-beam rl-beam-2"></div>
+        <div class="rl-beam rl-beam-3"></div>
+        <div class="rl-beam rl-beam-4"></div>
+        <div class="rl-beam rl-beam-5"></div>
+        <div class="rl-beam rl-beam-6"></div>
+        <div class="rl-beam rl-beam-7"></div>
+        <div class="rl-beam rl-beam-8"></div>
+        <div class="rl-beam rl-beam-9"></div>
+        <div class="rl-beam rl-beam-10"></div>
+        <div class="rl-beam rl-beam-11"></div>
+        <div class="rl-beam rl-beam-12"></div>
+        <div class="rl-beam rl-beam-13"></div>
+        <div class="rl-beam rl-beam-14"></div>
+        <div class="rl-beam rl-beam-15"></div>
         <div class="ru-ud-facade"></div>
       </div>
       <div class="scoreboard-wrapper">
@@ -3246,7 +3444,36 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
                 </div>
               </div>
               <div class="main--the-board">
-                <div class="catwalk">
+                <div class="catwalk"></div>
+                <div class="catwalk-rail">
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
                 </div>
                 <div class="side-ladder">
                   <div class="side-ladder--step"></div>
