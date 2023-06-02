@@ -73,6 +73,16 @@
         left: 0%;
       }
 
+      .left-field-stands > .upper-deck {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        background-color: var(--color--roof-base);
+        clip-path: polygon(0 75%, 24.7% 80.8%, 24.5% 83.8%, 18.5% 85.2%, 0 84.4%);
+       }
+
       .left-field-stands > .roof-underside {
         background-color: var(--color--roof-base);
         position: absolute;
@@ -81,6 +91,18 @@
         top: 0;
         left: 0;
         clip-path: polygon(0 33.3%, 21% 34%, 21% 34.2%, 0 37%);
+      }
+
+      .lu-ud-facade {
+        position: absolute;
+        width: 5em;
+        height: 1.9em;
+        top: 80.4%;
+        left: 0%;
+        transform: rotate(3.5deg);
+        clip-path: polygon(0 0, 88% 0, 89.8% 100%, 0 100%);
+        background: rgb(48,48,48);
+        background: linear-gradient(180deg, rgba(48,48,48,1) 0%, rgba(60,60,60,1) 27%, rgba(67,93,99,1) 30%, rgba(70,95,100,1) 63%, rgba(82,109,115,1) 64%, rgba(77,97,101,1) 65%, rgba(83,104,108,1) 88%, rgba(154,165,167,1) 90%, rgba(48,48,48,1) 100%);
       }
 
       .lu-beam {
@@ -99,23 +121,23 @@
       .lu-beam-2 {
         width: 0.2em;
         height: 7em;
-        top: 33.4%;
-        left: 5.3%;
-        transform: rotate(42deg);
+        top: 32.9%;
+        left: 4.3%;
+        transform: rotate(47deg);
       }
 
       .lu-beam-3 {
         width: 0.12em;
         height: 1.6em;
         top: 36.2%;
-        left: 5.9%;
+        left: 5.5%;
         transform: rotate(-75deg);
       }
 
       .lu-beam-4 {
         width: 0.12em;
         height: 2.5em;
-        top: 37.2%;
+        top: 36%;
         left: 0%;
       }
 
@@ -130,6 +152,139 @@
       .lu-nub-1 {
         top: 36.7%;
         left: -1%;
+      }
+
+      .lu-railing-1 {
+        position: absolute;
+        width: 0.12em;
+        height: 11em;
+        top: 61.2%;
+        left: 0%;
+        transform: rotate(-53deg);
+        background: rgb(255,255,255);      
+      }
+
+      .lu-railing-2 {
+        position: absolute;
+        width: 0.12em;
+        height: 11em;
+        top: 62.8%;
+        left: 0%;
+        transform: rotate(-53deg);
+        background: rgb(255,255,255);      
+      }
+
+      .lu-railing-3 {
+        position: absolute;
+        width: 0.12em;
+        height: 9em;
+        top: 68.4%;
+        left: 0%;
+        transform: rotate(95deg);
+        background: rgb(255,255,255);      
+      }
+
+      .lu-railing-4 {
+        position: absolute;
+        width: 0.12em;
+        height: 9em;
+        top: 70.4%;
+        left: 0%;
+        transform: rotate(93deg);
+        background: rgb(255,255,255);       
+      }
+
+      .lu-railing-5 {
+        position: absolute;
+        width: 0.12em;
+        height: 16em;
+        top: 64.4%;
+        left: 60%;
+        transform: rotate(101deg);
+        background: rgb(255,255,255);       
+      }
+
+      .lu-railing-6 {
+        position: absolute;
+        width: 0.12em;
+        height: 16em;
+        top: 66.2%;
+        left: 60%;
+        transform: rotate(101deg);
+        background: rgb(255,255,255);       
+      }
+
+      .lu-railing-posts-3 {
+        position: absolute;
+        width: 12em;
+        height: 6em;
+        top: 75%;
+        left: 28%;
+        display: flex;
+        justify-content: space-between;
+        clip-path: polygon(0 18%, 100% 56%, 100% 100%, 0 50%);
+      }
+
+      .lu-railing-posts-3 > div {
+        height: 100%;
+        width: 0.12em;
+        background-color: #fff;
+      }
+
+      .lu-railing-posts-1 {
+        position: absolute;
+        width: 4.48em;
+        height: 6em;
+        top: 69.3%;
+        left: 0%;
+        display: flex;
+        justify-content: space-between;
+        clip-path: polygon(0 20%, 100% 71%, 100% 100%, 0 60%);
+      }
+
+      .lu-railing-posts-1 > div {
+        height: 100%;
+        width: 0.12em;
+        background-color: #fff;
+      }
+
+      .lu-railing-posts-2 {
+        position: absolute;
+        width: 4.49em;
+        height: 3em;
+        top: 76.8%;
+        left: -0.1%;
+        display: flex;
+        justify-content: space-between;
+        clip-path: polygon(0 0, 100% 6%, 100% 100%, 0 100%);
+      }
+
+      .lu-railing-posts-2 > div {
+        height: 100%;
+        width: 0.12em;
+        background-color: #fff;
+      }
+
+      .lu-catwalk-bottom {
+        position: absolute;
+        width: 16em;
+        height: 4em;
+        background: rgb(101,101,101);
+        background: linear-gradient(34deg, rgba(77,77,77,1) 0%, rgba(35,35,35,1) 81%, rgba(12,12,12,1) 100%);
+        top: 81.6%;
+        left: 18%;
+        clip-path: polygon(0 0, 100% 80%, 100% 100%, 40% 85%, 0 52%);
+      }
+
+      .lu-catwalk-wall {
+        position: absolute;
+        width: 18em;
+        height: 1em;
+        top: 83.4%;
+        left: 22%;
+        transform: rotate(11deg);
+        background: rgb(255,255,255);
+        background: linear-gradient(180deg, rgba(255,255,255,1) 2%, rgba(116,116,116,1) 10%, rgba(138,138,138,1) 15%, rgba(224,224,224,1) 26%, rgba(243,243,243,1) 35%, rgba(243,243,243,1) 42%, rgba(247,247,247,1) 100%);
       }
 
       .right-field-stands {
@@ -449,20 +604,22 @@
         width: 13em;
         height: 4em;
         background: rgb(101,101,101);
-        background: linear-gradient(159deg, rgba(101,101,101,1) 0%, rgba(55,55,55,1) 41%, rgba(37,37,37,1) 100%);
+        background: linear-gradient(159deg, rgba(77,77,77,1) 0%, rgba(45,45,45,1) 41%, rgba(12,12,12,1) 100%);
         top: 82%;
         left: -10%;
-        clip-path: polygon(0 41%, 70% 0, 100% 0, 100% 20%, 0 100%);
+        clip-path: polygon(0 41%, 60% 0, 100% 0, 100% 20%, 0 100%);
       }
 
       .ru-catwalk-wall {
         position: absolute;
         width: 13em;
-        height: 3em;
-        background-color: #fff;
-        top: 79.4%;
+        height: 1em;
+        background: rgb(255,255,255);
+        top: 80%;
         left: -10%;
-        clip-path: polygon(0 60%, 100% 0%, 100% 40%, 0 100%);
+        transform: rotate(-15deg);
+        background: rgb(255,255,255);
+        background: linear-gradient(180deg, rgba(255,255,255,1) 2%, rgba(116,116,116,1) 10%, rgba(138,138,138,1) 15%, rgba(224,224,224,1) 26%, rgba(243,243,243,1) 35%, rgba(243,243,243,1) 42%, rgba(247,247,247,1) 100%);
       }
 
       .ru-ud-facade {
@@ -504,9 +661,9 @@
         bottom: 13.5%;
         left: 82%;
 
-        clip-path: polygon(25% 0, 75% 0, 100% 50%, 60% 55%, 60% 70%, 73% 80%, 
-          55% 100%,45% 100%,
-          35% 80%, 40% 75%, 40% 55%, 0% 50%);
+        clip-path: polygon(25% 0, 75% 0, 100% 50%, 60% 55%, 60% 70%, 78% 80%, 
+          55% 100%, 45% 100%,
+          30% 80%, 40% 70%, 40% 55%, 0% 50%);
       }
 
       .rl-beam-4 {
@@ -685,9 +842,9 @@
         position: absolute;
         width: 100%;
         bottom: 0;
-        height: 5em;
-        background: rgb(58,111,81);
-        background: linear-gradient(180deg, rgba(58,111,81,1) 0%, rgba(36,85,49,1) 50%, rgba(36,65,49,1) 100%);
+        height: 5em;        
+        background: rgb(48,48,48);
+        background: linear-gradient(180deg, rgba(48,48,48,1) 0%, rgba(60,60,60,1) 1%, rgba(67,93,99,1) 30%, rgba(70,95,100,1) 63%, rgba(77,97,101,1) 65%, rgba(83,104,108,1) 100%);
         clip-path: polygon(0 20%, 50% 30%, 95% 5%, 100% 0, 100% 100%, 0 100%);
       }
 
@@ -2634,6 +2791,34 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
         <div class="lu-beam lu-beam-3"></div>
         <div class="lu-beam lu-beam-4"></div>
         <div class="lu-nub lu-nub-1"></div>
+        <div class="lu-railing-posts-1">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+         <div class="lu-railing-posts-3">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+        <div class="upper-deck"></div>
+        <div class="lu-catwalk-bottom"></div>
+        <div class="lu-catwalk-wall"></div>
+        <div class="lu-railing-1"></div>
+        <div class="lu-railing-2"></div>
+        <div class="lu-railing-3"></div>
+        <div class="lu-railing-4"></div>
+        <div class="lu-railing-5"></div>
+        <div class="lu-railing-6"></div>
+        <div class="lu-railing-posts-2">
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+        <div class="lu-ud-facade"></div>
       </div>
       <div class="right-field-stands">
         <div class="ru-beam ru-beam-1"></div>
@@ -2670,7 +2855,6 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
         <div class="ru-catwalk-bottom"></div>
         <div class="ru-catwalk-wall"></div>
         <div class="roof-pillar"></div>
-
         <div class="ru-railing-posts-2">
           <div></div>
           <div></div>
