@@ -56,7 +56,7 @@
         overflow: hidden;
         font-size: 12px;
         border: solid 1px #ccc;
-        border-radius: 5em;
+        border-radius: 2em;
       }
 
       .picture-background {
@@ -1521,12 +1521,11 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
         width: 100%;
         height: 100%;
         border-radius: 50%;
-        border-top: solid 1px #999;
-        border-left: solid 1px #999;
         top: -50%;
         transform-origin: bottom;
         opacity: 1;
-        clip-path: polygon(0% 0%,50% 0%,50% 100%, 0% 100%);
+        clip-path: polygon(0% 0%,20% 0%,50% 100%, 0% 100%);
+        box-shadow: 0 0.05em 0.2em 0.01em rgba(0,0,0,0.4);
       }
 
       .ltpc.white { background-color: #fff; }
@@ -1536,7 +1535,7 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
       .ltpc.green { background-color: #94c854; }
       .ltpc.yellow { background-color: #e4ca5e; }
 
-      .ltpc:nth-child(1) { transform: rotate(0deg);}
+      .ltpc:nth-child(1) { transform: rotate(0deg); }
       .ltpc:nth-child(2) { transform: rotate(45deg); }
       .ltpc:nth-child(3) { transform: rotate(90deg); }
       .ltpc:nth-child(4) { transform: rotate(135deg); }
@@ -1544,6 +1543,10 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
       .ltpc:nth-child(6) { transform: rotate(225deg); }
       .ltpc:nth-child(7) { transform: rotate(270deg); }
       .ltpc:nth-child(8) { transform: rotate(315deg); }
+      .ltpc:nth-child(9) { 
+        transform: rotate(0deg); 
+        clip-path: polygon(0% 40%,50% 100%, 0% 100%);
+      }
 
       .light-tower--duo-light-set-wrapper--top {
         display: flex;
@@ -2401,7 +2404,6 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
         top: 20.6%;
         width: 15.3em;
         height: 14em;
-        background-color: rgba(0,0,0,0.1);
         font-family: 'News Cycle';
         color: #fff;
         text-transform: uppercase;
@@ -2412,7 +2414,105 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
       }
 
       .league-scores.national-side {
-        left: 60%;
+        left: 60.5%;
+      }
+
+      .middle-section {
+        position: absolute;
+        top: 20.6%;
+        left: 39.9%;
+        width: 14.4em;
+        height: 14em;
+        font-family: 'News Cycle';
+        color: #fff;
+        text-transform: uppercase;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .middle-section > .at-bat-and-outs {
+        width: 100%;
+        height: 4em;
+      }
+
+      .middle-section > .balls-and-strikes {
+        width: 100%;
+        height: 6.2em;
+      }
+
+      .middle-section--small-circle-blue-1 {
+        position: absolute;
+        top: 30%;
+        left: 15%;
+        width: 0.62rem;
+        height: 0.62rem;
+        border-radius: 50%;
+        background-color: rgba(137, 148, 180, 0.7);
+        box-shadow: 0 0.2rem 0.04rem 0.04rem rgba(0,0,0,0.4);
+      }
+
+      .middle-section--small-circle-blue-2 {
+        position: absolute;
+        top: 41%;
+        left: 9%;
+        width: 0.56rem;
+        height: 0.56rem;
+        border-radius: 50%;
+        background-color: rgba(137, 148, 180, 0.7);
+        box-shadow: 0 0.2rem 0.04rem 0.04rem rgba(0,0,0,0.4);
+      }
+
+      .middle-section--small-circle-blue-3 {
+        position: absolute;
+        top: 60%;
+        left: 86%;
+        width: 0.56rem;
+        height: 0.56rem;
+        border-radius: 50%;
+        background-color: rgba(137, 148, 180, 0.7);
+        box-shadow: 0 0.2rem 0.04rem 0.04rem rgba(0,0,0,0.4);
+      }
+
+      .middle-section--small-circle-yellow-1 {
+        position: absolute;
+        top: 14%;
+        left: 52%;
+        width: 0.56rem;
+        height: 0.56rem;
+        border-radius: 50%;
+        background-color: var(--color--scores-yellow);
+        box-shadow: 0 0.2rem 0.04rem 0.04rem rgba(0,0,0,0.2);
+      }
+
+      .middle-section .label {
+        position: absolute;
+        font-family: 'News Cycle';
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        color: #fff;
+        text-transform: uppercase;
+        transform: scale(1, 0.9);
+        font-size: 1em;
+      }
+
+      .middle-section .label.at-bat {
+        top: 2%;
+        left: 23%;
+      }
+
+      .middle-section .label.outs {
+        top: 2%;
+        left: 58%;
+      }
+
+      .middle-section .label.balls {
+        top: 32%;
+        left: 23%;
+      }
+
+      .middle-section .label.strikes {
+        top: 32%;
+        left: 54%;
       }
 
       .league-name {
@@ -2478,7 +2578,7 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
         left: 6%;
         width: 1.5em;
         height: 1.5em;
-        background-color: rgba(0,0,0,1);
+        background-color: rgba(0,0,0,0.2);
       }
 
       .game-score--visitor-team {
@@ -2643,7 +2743,7 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
       }
 
       .lineups-square-digital {
-        background-color: rgba(0,0,0,0.1);
+        background-color: rgba(0,0,0,0.2);
         width: 1.8em;
       }
 
@@ -3153,6 +3253,7 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
               <div class="ltpc red"></div>
               <div class="ltpc white"></div>
               <div class="ltpc red"></div>
+              <div class="ltpc white"></div>
               <div class="ltp-shade"></div>
             </div>
             <div class="light-tower--pinwheel--shadow-maker">
@@ -3250,6 +3351,7 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
               <div class="ltpc red"></div>
               <div class="ltpc white"></div>
               <div class="ltpc red"></div>
+              <div class="ltpc white"></div>
               <div class="ltp-shade"></div>
             </div>            
             <div class="light-tower--pinwheel--shadow-maker">
@@ -3305,6 +3407,7 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
               <div class="ltpc blue"></div>
               <div class="ltpc white"></div>
               <div class="ltpc blue"></div>
+              <div class="ltpc white"></div>
               <div class="ltp-shade"></div>
             </div>
             <div class="light-tower--pinwheel--shadow-maker">
@@ -3487,6 +3590,7 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
               <div class="ltpc light-blue"></div>
               <div class="ltpc white"></div>
               <div class="ltpc light-blue"></div>
+              <div class="ltpc white"></div>
               <div class="ltp-shade"></div>
             </div>
             <div class="light-tower--pinwheel--shadow-maker">
@@ -3549,6 +3653,7 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
               <div class="ltpc yellow"></div>
               <div class="ltpc white"></div>
               <div class="ltpc yellow"></div>
+              <div class="ltpc white"></div>
               <div class="ltp-shade"></div>
             </div>
             <div class="light-tower--pinwheel--shadow-maker">
@@ -3606,6 +3711,7 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
               <div class="ltpc green"></div>
               <div class="ltpc white"></div>
               <div class="ltpc green"></div>
+              <div class="ltpc white"></div>
               <div class="ltp-shade"></div>
             </div>
             <div class="light-tower--pinwheel--shadow-maker">
@@ -3657,6 +3763,7 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
               <div class="ltpc red"></div>
               <div class="ltpc white"></div>
               <div class="ltpc red"></div>
+              <div class="ltpc white"></div>
               <div class="ltp-shade"></div>
             </div>
             <div class="light-tower--pinwheel--shadow-maker">
@@ -7365,6 +7472,43 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
                     <div class="game-score--inning-box"></div>
                     <div class="game-score--visitor-team">Minn</div>
                     <div class="game-score--home-team">Sea</div>
+                    <div class="game-score-box run">
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                    </div>
+                    <div class="game-score-box pitcher">
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                    </div>
+                    <div class="game-score-box first-game">
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="middle-section">
+                  <div class="middle-section--small-circle-blue-1"></div>
+                  <div class="middle-section--small-circle-blue-2"></div>
+                  <div class="middle-section--small-circle-blue-3"></div>
+                  <div class="middle-section--small-circle-yellow-1"></div>
+                  <div class="at-bat-and-outs">
+                    <div class="label at-bat">At Bat</div>
+                    <div class="label outs">Outs</div>
+                  </div>
+                  <div class="balls-and-strikes">
+                    <div class="label balls">Balls</div>
+                    <div class="label strikes">Strikes</div>
+                  </div>
+                  <div class="game-score">
+                    <div class="game-score--inning-box"></div>
+                    <div class="game-score--visitor-team">Oak</div>
+                    <div class="game-score--home-team">Calif.</div>
                     <div class="game-score-box run">
                       <div></div>
                       <div></div>
