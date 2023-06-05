@@ -17,6 +17,7 @@
         --color--the-board: #343263;
 
         --color--roof-base: #301d2a;
+        --color--scores-yellow: #ffe748;
 
         --blur-text: blur(0.3px);
 
@@ -2263,7 +2264,7 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
         position: absolute;
         font-size: 0.7em;
         letter-spacing: -0.004em;
-        color: #f2e0b9;
+        color: var(--color--scores-yellow);
       }
 
       .outta-town--r {
@@ -2288,7 +2289,7 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
 
       .outta-town--visitor-team {
         position: absolute;
-        color: #f2e0b9;
+        color: var(--color--scores-yellow);
         font-size: 0.9em;
         top: 23%;
         left: 23%;
@@ -2298,7 +2299,7 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
 
       .outta-town--home-team {
         position: absolute;
-        color: #f2e0b9;
+        color: var(--color--scores-yellow);
         font-size: 0.9em;
         top: 60%;
         left: 23%;
@@ -2399,6 +2400,9 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
         width: 15.3em;
         height: 14em;
         background-color: rgba(0,0,0,0.1);
+        font-family: 'News Cycle';
+        color: #fff;
+        text-transform: uppercase;
       }
 
       .league-scores.american-side {
@@ -2410,13 +2414,106 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
       }
 
       .league-name {
-        color: #fff;
-        font-family: 'News Cycle';
-        text-transform: uppercase;
         font-weight: 700;
         font-size: 0.8em;
-        letter-spacing: 0.4em;
-        padding-left: 1em;
+        letter-spacing: 0.5em;
+        padding-left: 1.3em;
+      }
+
+      .league-scores .r {
+        font-size: 1em;
+        position: absolute;
+        top: -1.7%;
+        font-weight: 700;
+        transform: scale(1, 0.9);
+        left: 55%;
+      }
+
+      .league-scores .p {
+        font-size: 1em;
+        position: absolute;
+        top: -1.7%;
+        font-weight: 700;
+        transform: scale(1, 0.9);
+        left: 72%;
+      }
+
+      .league-scores .first {
+        font-size: 1em;
+        position: absolute;
+        top: -1.7%;
+        font-weight: 700;
+        left: 88%;
+        color: var(--color--scores-yellow);
+        transform: scale(1, 0.9);
+        text-transform: none;
+      }
+
+      .league-scores .first > sup {
+        font-size: 0.4em;
+      }
+
+      .league-scores .inning {
+        font-size: 0.5em;
+        position: absolute;
+        font-weight: 700;
+        top: 8%;
+        left: 5%;
+        color: var(--color--scores-yellow);
+        letter-spacing: 0.25em;
+      }
+
+      .game-score {
+        position: relative;
+        border: solid 1px pink;
+        width: 100%;
+        height: 2.7em;
+      }
+
+      .game-score--inning-box {
+        position: absolute;
+        top: 22%;
+        left: 6%;
+        width: 1.5em;
+        height: 1.5em;
+        background-color: rgba(0,0,0,1);
+      }
+
+      .game-score--visitor-team {
+        position: absolute;
+        top: 10%;
+        left: 22%;
+        font-weight: 700;
+        color: var(--color--scores-yellow);
+        letter-spacing: 0.2em;
+        transform: scale(1, 0.9);
+        line-height: 1;
+
+      }
+
+      .game-score--home-team {
+        position: absolute;
+        top: 55%;
+        left: 22%;
+        font-weight: 700;
+        color: var(--color--scores-yellow);
+        letter-spacing: 0.2em;
+        line-height: 1;
+        transform: scale(1, 0.9);
+      }
+
+      .game-score--run-box {
+        position: absolute;
+        display: flex;
+      }
+
+      .game-score--run-box > div {
+        background-color: rgba(0,0,0,0.2);
+      }
+
+      .game-score--pitcher-box {
+        position: absolute;
+        display: flex;
       }
 
       .lineups {
@@ -2479,6 +2576,30 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
         border-radius: 50%;
         background-color: rgba(137, 148, 180, 0.5);
         box-shadow: 0 0.15rem 0.04rem 0.04rem rgba(0,0,0,0.4);
+      }
+
+      .lineups--star-blue {
+        position: absolute;
+        top: 30.4%;
+        left: -16%;
+        width: 1.4em;
+        height: 1.4em;
+        border-radius: 50%;
+        transform: rotate(35deg);
+        background-color: #4d5084;
+        clip-path: polygon(50% 0%, 63% 33%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+      }
+
+      .lineups--star-blue-shadow {
+        position: absolute;
+        top: 32.0%;
+        left: -16%;
+        width: 1.4em;
+        height: 1.4em;
+        border-radius: 50%;
+        transform: rotate(35deg);
+        background-color: rgb(0,0,0,0.4);
+        clip-path: polygon(50% 0%, 63% 33%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
       }
 
       .lineups-row {
@@ -7149,9 +7270,153 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
                 </div>
                 <div class="league-scores american-side">
                   <div class="league-name">American</div>
+                  <div class="r">R</div>
+                  <div class="p">P</div>
+                  <div class="first">l<sup>ST</sup></div>
+                  <div class="inning">Inning</div>
+                  <div class="game-score">
+                    <div class="game-score--inning-box"></div>
+                    <div class="game-score--visitor-team">N. Y.</div>
+                    <div class="game-score--home-team">Tor</div>
+                    <div class="game-score--run-box">
+                      <div></div>
+                      <div></div>
+                    </div>
+                    <div class="game-score--pitcher-box">
+                      <div></div>
+                      <div></div>
+                    </div>
+                    <div class="game-score--first-box">
+                      <div></div>
+                      <div></div>
+                    </div>
+                  </div>
+                  <div class="game-score">
+                    <div class="game-score--inning-box"></div>
+                    <div class="game-score--visitor-team">Balt</div>
+                    <div class="game-score--home-team">Bost</div>
+                    <div class="game-score--run-box">
+                      <div></div>
+                      <div></div>
+                    </div>
+                    <div class="game-score--pitcher-box">
+                      <div></div>
+                      <div></div>
+                    </div>
+                    <div class="game-score--first-box">
+                      <div></div>
+                      <div></div>
+                    </div>
+                  </div>
+                  <div class="game-score">
+                    <div class="game-score--inning-box"></div>
+                    <div class="game-score--visitor-team">Det</div>
+                    <div class="game-score--home-team">Kan Cy</div>
+                    <div class="game-score--run-box">
+                      <div></div>
+                      <div></div>
+                    </div>
+                    <div class="game-score--pitcher-box">
+                      <div></div>
+                      <div></div>
+                    </div>
+                    <div class="game-score--first-box">
+                      <div></div>
+                      <div></div>
+                    </div>
+                  </div>
+                  <div class="game-score">
+                    <div class="game-score--inning-box"></div>
+                    <div class="game-score--visitor-team">Minn</div>
+                    <div class="game-score--home-team">Sea</div>
+                    <div class="game-score--run-box">
+                      <div></div>
+                      <div></div>
+                    </div>
+                    <div class="game-score--pitcher-box">
+                      <div></div>
+                      <div></div>
+                    </div>
+                    <div class="game-score--first-box">
+                      <div></div>
+                      <div></div>
+                    </div>
+                  </div>
                 </div>
                 <div class="league-scores national-side">
                   <div class="league-name">National</div>
+                  <div class="r">R</div>
+                  <div class="p">P</div>
+                  <div class="first">l<sup>ST</sup></div>
+                  <div class="inning">Inning</div>
+                  <div class="game-score">
+                    <div class="game-score--inning-box"></div>
+                    <div class="game-score--visitor-team">Cubs</div>
+                    <div class="game-score--home-team">Mont</div>
+                    <div class="game-score--run-box">
+                      <div></div>
+                      <div></div>
+                    </div>
+                    <div class="game-score--pitcher-box">
+                      <div></div>
+                      <div></div>
+                    </div>
+                    <div class="game-score--first-box">
+                      <div></div>
+                      <div></div>
+                    </div>
+                  </div>
+                  <div class="game-score">
+                    <div class="game-score--inning-box"></div>
+                    <div class="game-score--visitor-team">St Lou</div>
+                    <div class="game-score--home-team">N. Y.</div>
+                    <div class="game-score--run-box">
+                      <div></div>
+                      <div></div>
+                    </div>
+                    <div class="game-score--pitcher-box">
+                      <div></div>
+                      <div></div>
+                    </div>
+                    <div class="game-score--first-box">
+                      <div></div>
+                      <div></div>
+                    </div>
+                  </div>
+                  <div class="game-score">
+                    <div class="game-score--inning-box"></div>
+                    <div class="game-score--visitor-team">Atl.</div>
+                    <div class="game-score--home-team">Houst</div>
+                    <div class="game-score--run-box">
+                      <div></div>
+                      <div></div>
+                    </div>
+                    <div class="game-score--pitcher-box">
+                      <div></div>
+                      <div></div>
+                    </div>
+                    <div class="game-score--first-box">
+                      <div></div>
+                      <div></div>
+                    </div>
+                  </div>
+                  <div class="game-score">
+                    <div class="game-score--inning-box"></div>
+                    <div class="game-score--visitor-team">Cinci</div>
+                    <div class="game-score--home-team">S. D.</div>
+                    <div class="game-score--run-box">
+                      <div></div>
+                      <div></div>
+                    </div>
+                    <div class="game-score--pitcher-box">
+                      <div></div>
+                      <div></div>
+                    </div>
+                    <div class="game-score--first-box">
+                      <div></div>
+                      <div></div>
+                    </div>
+                  </div>
                 </div>
                 <div class="lineups">
                   <div class="lineups--small-circle-light-blue"></div>
@@ -7159,6 +7424,8 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
                   <div class="lineups--small-circle-blue-2"></div>
                   <div class="lineups--small-circle-blue-3"></div>
                   <div class="lineups--small-circle-blue-4"></div>
+                  <div class="lineups--star-blue-shadow"></div>
+                  <div class="lineups--star-blue"></div>
                   <div class="lineups-row teams">
                       <div>Milw</div>
                       <div>Chigo.</div>
