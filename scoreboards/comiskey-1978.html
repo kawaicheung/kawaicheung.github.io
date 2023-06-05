@@ -2624,7 +2624,26 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
         width: 101%;
         height: 5.8em;
         clip-path: polygon(0 0, 100% 0, 100% 45%, 50% 100%, 0 45%);
+      }
 
+      .bottom-ledge--left-cap {
+        position: absolute;
+        top: 82.9%;
+        left: -0.5%;
+        background: rgb(41,41,41);
+        background: linear-gradient(180deg, rgba(41,41,41,1) 0%, rgba(154,154,154,1) 25%, rgba(246,246,246,1) 57%, rgba(255,255,255,1) 100%);
+        width: 3em;
+        height: 0.4em;
+      }
+
+      .bottom-ledge--right-cap {
+        position: absolute;
+        top: 82.9%;
+        right: -0.5%;
+        background: rgb(41,41,41);
+        background: linear-gradient(180deg, rgba(41,41,41,1) 0%, rgba(154,154,154,1) 25%, rgba(246,246,246,1) 57%, rgba(255,255,255,1) 100%);
+        width: 3em;
+        height: 0.4em;
       }
 
       .bottom-ledge--walkway {
@@ -2636,7 +2655,7 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
         left: 50%;
         transform: translateX(-50%);
         background: rgb(0,0,0);
-        background: linear-gradient(0deg, rgba(0,0,0,0) 33%, rgba(0,0,0,0.7) 49%, rgba(71,71,71,1) 55%, rgba(36,36,36,1) 62%, 
+        background: linear-gradient(0deg, rgba(0,0,0,0) 33%, rgba(0,0,0,0.7) 49%, rgba(51,51,71,1) 55%, rgba(36,36,36,1) 62%, 
           rgba(0,0,0,0) 66%);
         display: flex;
         flex-direction: column;
@@ -2720,6 +2739,24 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
         height: 0.4em;
         background: #000;
         opacity: 0.5;
+      }
+
+      .bottom-ledge--walkway .bottom-rail--extra {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        bottom: 5%;
+        width: 67%;
+        height: 2em;
+        display: flex;
+        justify-content: space-between;
+      }
+
+      .bottom-ledge--walkway .bottom-rail--extra div {
+        width: 0.12em;
+        height: 100%;
+        background-color: black;
+        opacity: 0.3;
       }
 
       .bottom-ledge--walkway .bottom-rail {
@@ -7254,6 +7291,40 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
               <div></div>
               <div></div>
             </div>
+            <div class="bottom-rail--extra">
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+            </div>
             <div class="bottom-rail--fence-line-1"></div>
             <div class="bottom-rail--fence-line-2"></div>
             <div class="bottom-rail--fence-line-3"></div>
@@ -7382,8 +7453,9 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
               <div></div>
             </div>
           </div>
-          <div class="bottom-ledge">
-          </div>
+          <div class="bottom-ledge"></div>
+          <div class="bottom-ledge--left-cap"></div>
+          <div class="bottom-ledge--right-cap"></div>
           <div class="main--overhead-light-1"></div>
           <div class="main--overhead-light-2"></div>
           <div class="main--overhead-light-3"></div>
