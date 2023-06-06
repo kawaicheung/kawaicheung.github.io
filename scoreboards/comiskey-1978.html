@@ -18,6 +18,7 @@
 
         --color--roof-base: #301d2a;
         --color--scores-yellow: #ffe748;
+        --color--digital-bulb-lit: #fabc4a;
 
         --blur-text: blur(0.3px);
 
@@ -2245,8 +2246,8 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
       }
 
       .soxogram-digital-wrapper .sdw--square > div > div.lit {
-        background-color: #fabc4a;
-        box-shadow: 2px 2px 4px 0px #fabc4a;
+        background-color: var(--color--digital-bulb-lit);
+        box-shadow: 2px 2px 4px 0px var(--color--digital-bulb-lit);
       }
 
       .outta-town {
@@ -2615,9 +2616,22 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
 
       .game-score-box > div {
         background-color: rgba(0,0,0,0.2);
-        width: 0.85em;
+        width: 0.78em;
         height: 1.05em;
         margin-bottom: 0.15em;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: repeat(6, 1fr);
+      }
+
+      .game-score-box > div > div.lit  {
+        border-radius: 1em;
+      }
+      
+      .game-score-box > div > div.lit {
+        background: rgb(250,188,74);
+        background: radial-gradient(circle, rgba(250,188,74,1) 0%, rgba(255,255,255,0) 100%);
+        border-radius: 1em;
       }
 
       .game-score-box.run {
@@ -7426,6 +7440,7 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
                     <div class="game-score--inning-box"></div>
                     <div class="game-score--visitor-team">Balt</div>
                     <div class="game-score--home-team">Bost</div>
+                   
                     <div class="game-score-box run">
                       <div></div>
                       <div></div>
@@ -7456,10 +7471,130 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
                       <div></div>
                     </div>
                     <div class="game-score-box pitcher">
-                      <div></div>
-                      <div></div>
-                      <div></div>
-                      <div></div>
+                      <div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+
+                        <div></div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+                      </div>
+                      <div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div></div>
+
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div></div>
+
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+
+                        <div></div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+                      </div>
                     </div>
                     <div class="game-score-box first-game">
                       <div></div>
@@ -7479,12 +7614,132 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
                       <div></div>
                     </div>
                     <div class="game-score-box pitcher">
-                      <div></div>
-                      <div></div>
-                      <div></div>
-                      <div></div>
+                      <div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div></div>
+
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div></div>
+
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div></div>
+                      </div>
+                       <div>
+                        <div></div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+
+                        <div></div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+
+                        <div></div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+
+                        <div></div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+
+                        <div></div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+
+                        <div></div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                       <div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+                        <div></div>
+
+                        <div></div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                      </div>
                     </div>
-                    <div class="game-score-box first-game">
+                    <div class="game-score-box first-game"> 
                       <div></div>
                       <div></div>
                       <div></div>
@@ -7593,9 +7848,102 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
                     </div>
                     <div class="game-score-box pitcher">
                       <div></div>
-                      <div></div>
-                      <div></div>
-                      <div></div>
+                      <div>
+                        <div></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div></div>
+
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+
+                      
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+         
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div></div>
+
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div></div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div></div>
+
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div></div>
+                      </div>
                     </div>
                     <div class="game-score-box first-game">
                       <div></div>
@@ -7615,10 +7963,132 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
                       <div></div>
                     </div>
                     <div class="game-score-box pitcher">
-                      <div></div>
-                      <div></div>
-                      <div></div>
-                      <div></div>
+                      <div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div></div>
+
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div></div>
+
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div></div>
+
+
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div></div>
+
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div></div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+
+                        <div></div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+
+                        <div></div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+
+                        <div></div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+
+                        <div></div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        
+                        <div></div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                      </div>
                     </div>
                     <div class="game-score-box first-game">
                       <div></div>
