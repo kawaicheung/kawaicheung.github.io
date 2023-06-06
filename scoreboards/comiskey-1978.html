@@ -2224,19 +2224,20 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
         margin-right: 0.26em;
         width: 0.98em;
         height: 1.25em;
-        display: flex;
-        flex-direction: column;
       }
 
       .soxogram-digital-wrapper .sdw--square > div {
         display: flex;
         justify-content: space-around;
         margin-bottom: 0.08em;
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        grid-template-rows: repeat(6, 1fr);
       }
 
       .soxogram-digital-wrapper .sdw--square > div > div {
-        width: 0.1em;
-        height: 0.1em;
+        width: 0.16em;
+        height: 0.16em;
         border-radius: 50%;
         background-color: rgba(0,0,0,0.2);
       }
@@ -2246,8 +2247,8 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
       }
 
       .soxogram-digital-wrapper .sdw--square > div > div.lit {
-        background-color: var(--color--digital-bulb-lit);
-        box-shadow: 2px 2px 4px 0px var(--color--digital-bulb-lit);
+        background: radial-gradient(circle, rgba(250,188,74,1) 20%, rgba(255,255,255,0) 100%);
+        box-shadow: 0 0 0.1em 0.01em rgba(250,188,74,0.6);
       }
 
       .outta-town {
@@ -2624,13 +2625,9 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
         grid-template-rows: repeat(6, 1fr);
       }
 
-      .game-score-box > div > div.lit  {
-        border-radius: 1em;
-      }
-      
       .game-score-box > div > div.lit {
-        background: rgb(250,188,74);
-        background: radial-gradient(circle, rgba(250,188,74,1) 0%, rgba(255,255,255,0) 100%);
+        background: radial-gradient(circle, rgba(250,188,74,1) 20%, rgba(255,255,255,0) 100%);
+        box-shadow: 0 0 0.1em 0.01em rgba(250,188,74,0.6);
         border-radius: 1em;
       }
 
@@ -4068,43 +4065,31 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
                         <div class="lit"></div>
                         <div class="lit"></div>
                         <div class="lit"></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div class="lit"></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div class="lit"></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div class="lit"></div>
                         <div class="lit"></div>
                         <div class="lit"></div>
                         <div class="lit"></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
@@ -4119,43 +4104,31 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div class="lit"></div>
                         <div class="lit"></div>
@@ -4170,43 +4143,31 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
                         <div class="lit"></div>
                         <div class="lit"></div>
                         <div class="lit"></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div class="lit"></div>
                         <div class="lit"></div>
                         <div class="lit"></div>
                         <div class="lit"></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div class="lit"></div>
                         <div class="lit"></div>
@@ -4221,43 +4182,31 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
                         <div class="lit"></div>
                         <div class="lit"></div>
                         <div class="lit"></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div class="lit"></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div class="lit"></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div class="lit"></div>
                         <div class="lit"></div>
                         <div class="lit"></div>
                         <div class="lit"></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div class="lit"></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div class="lit"></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
@@ -4272,43 +4221,31 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
                         <div class="lit"></div>
                         <div class="lit"></div>
                         <div class="lit"></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div class="lit"></div>
                         <div class="lit"></div>
                         <div class="lit"></div>
                         <div class="lit"></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div class="lit"></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div class="lit"></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div class="lit"></div>
                         <div class="lit"></div>
@@ -4323,43 +4260,31 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
                         <div class="lit"></div>
                         <div class="lit"></div>
                         <div class="lit"></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div class="lit"></div>
                         <div class="lit"></div>
                         <div class="lit"></div>
                         <div class="lit"></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div class="lit"></div>
                         <div class="lit"></div>
@@ -4374,43 +4299,31 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
@@ -4425,43 +4338,31 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
@@ -4479,43 +4380,31 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
                         <div class="lit"></div>
                         <div class="lit"></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div class="lit"></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div class="lit"></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div class="lit"></div>
                         <div class="lit"></div>
                         <div class="lit"></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div></div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
                         <div class="lit"></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
@@ -4530,43 +4419,31 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
                         <div class="lit"></div>
                         <div class="lit"></div>
                         <div class="lit"></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div class="lit"></div>
                         <div class="lit"></div>
                         <div class="lit"></div>
                         <div class="lit"></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div class="lit"></div>
                         <div class="lit"></div>
@@ -4581,43 +4458,31 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
                         <div class="lit"></div>
                         <div class="lit"></div>
                         <div class="lit"></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div class="lit"></div>
@@ -4632,43 +4497,31 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
                         <div></div>
                         <div></div>
                         <div class="lit"></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div class="lit"></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div class="lit"></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div class="lit"></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div class="lit"></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div class="lit"></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div class="lit"></div>
                         <div class="lit"></div>
@@ -4683,43 +4536,31 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
                         <div class="lit"></div>
                         <div class="lit"></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div class="lit"></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div class="lit"></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div class="lit"></div>
                         <div class="lit"></div>
                         <div class="lit"></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div></div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
                         <div class="lit"></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
@@ -4734,43 +4575,31 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
                         <div></div>
                         <div></div>
                         <div class="lit"></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div class="lit"></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
                         <div class="lit"></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div></div>
                         <div class="lit"></div>
                         <div></div>
                         <div class="lit"></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
                         <div class="lit"></div>
                         <div class="lit"></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div class="lit"></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
@@ -4785,43 +4614,31 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
@@ -4836,43 +4653,31 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
@@ -4890,43 +4695,31 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
                         <div class="lit"></div>
                         <div class="lit"></div>
                         <div class="lit"></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div class="lit"></div>
@@ -4941,43 +4734,31 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
                         <div class="lit"></div>
                         <div class="lit"></div>
                         <div class="lit"></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div class="lit"></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div class="lit"></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div class="lit"></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div class="lit"></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div class="lit"></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div class="lit"></div>
                         <div class="lit"></div>
@@ -4992,43 +4773,31 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
@@ -5043,43 +4812,31 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
@@ -5094,43 +4851,31 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
@@ -5145,43 +4890,31 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
@@ -5196,43 +4929,31 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
@@ -5247,43 +4968,31 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
@@ -5301,43 +5010,31 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
                         <div></div>
                         <div></div>
                         <div class="lit"></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div class="lit"></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div class="lit"></div>
                         <div></div>
                         <div class="lit"></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div class="lit"></div>
@@ -5352,43 +5049,31 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
                         <div class="lit"></div>
                         <div class="lit"></div>
                         <div class="lit"></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div class="lit"></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div class="lit"></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div class="lit"></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div class="lit"></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div class="lit"></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div class="lit"></div>
                         <div class="lit"></div>
@@ -5403,43 +5088,31 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
                         <div></div>
                         <div></div>
                         <div class="lit"></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div class="lit"></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div class="lit"></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div class="lit"></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div class="lit"></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div class="lit"></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div class="lit"></div>
                         <div class="lit"></div>
@@ -5454,43 +5127,31 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
                         <div class="lit"></div>
                         <div class="lit"></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div class="lit"></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div class="lit"></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div class="lit"></div>
                         <div class="lit"></div>
                         <div class="lit"></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div></div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
                         <div class="lit"></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
@@ -5505,43 +5166,31 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
@@ -5556,43 +5205,31 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
@@ -5607,43 +5244,31 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
@@ -5658,43 +5283,31 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
@@ -5712,43 +5325,31 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
                         <div class="lit"></div>
                         <div class="lit"></div>
                         <div class="lit"></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div class="lit"></div>
                         <div class="lit"></div>
                         <div class="lit"></div>
                         <div class="lit"></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div class="lit"></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div class="lit"></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div class="lit"></div>
                         <div class="lit"></div>
@@ -5763,43 +5364,31 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
                         <div class="lit"></div>
                         <div class="lit"></div>
                         <div class="lit"></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div class="lit"></div>
                         <div class="lit"></div>
                         <div class="lit"></div>
                         <div class="lit"></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div class="lit"></div>
                         <div class="lit"></div>
@@ -5814,43 +5403,31 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
                         <div class="lit"></div>
                         <div class="lit"></div>
                         <div class="lit"></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div class="lit"></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div class="lit"></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div class="lit"></div>
                         <div class="lit"></div>
                         <div class="lit"></div>
                         <div class="lit"></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div class="lit"></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div class="lit"></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
@@ -5865,43 +5442,31 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
                         <div class="lit"></div>
                         <div class="lit"></div>
                         <div class="lit"></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div class="lit"></div>
@@ -5916,43 +5481,31 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
                         <div class="lit"></div>
                         <div class="lit"></div>
                         <div class="lit"></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div class="lit"></div>
                         <div class="lit"></div>
                         <div class="lit"></div>
                         <div class="lit"></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div class="lit"></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div class="lit"></div>
-                      </div>
-                      <div>
                         <div class="lit"></div>
                         <div class="lit"></div>
                         <div class="lit"></div>
@@ -5967,43 +5520,31 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
@@ -6018,43 +5559,31 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
@@ -6069,43 +5598,31 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
@@ -6115,6 +5632,7 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
                     </div>
                   </div>
                   <div>
+
                     <div class="sdw--square">
                       <div>
                         <div></div>
@@ -6122,43 +5640,31 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
@@ -6173,43 +5679,31 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
@@ -6224,43 +5718,31 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
@@ -6275,43 +5757,31 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
@@ -6326,43 +5796,31 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
@@ -6377,43 +5835,31 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
@@ -6428,43 +5874,31 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
@@ -6479,43 +5913,31 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
@@ -6525,6 +5947,7 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
                     </div>
                   </div>
                   <div>
+
                     <div class="sdw--square">
                       <div>
                         <div></div>
@@ -6532,43 +5955,31 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
@@ -6583,43 +5994,31 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
@@ -6634,43 +6033,31 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
@@ -6685,43 +6072,31 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
@@ -6736,43 +6111,31 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
@@ -6787,43 +6150,31 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
@@ -6838,43 +6189,31 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
@@ -6889,43 +6228,31 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
@@ -6935,6 +6262,7 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
                     </div>
                   </div>
                   <div>
+
                     <div class="sdw--square">
                       <div>
                         <div></div>
@@ -6942,43 +6270,31 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
@@ -6993,43 +6309,31 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
@@ -7044,43 +6348,31 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
@@ -7095,43 +6387,31 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
@@ -7146,43 +6426,31 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
@@ -7197,43 +6465,31 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
@@ -7248,43 +6504,31 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
@@ -7299,43 +6543,31 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
                         <div></div>
-                      </div>
-                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
@@ -8083,7 +7315,7 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
-                        
+
                         <div></div>
                         <div class="lit"></div>
                         <div></div>
