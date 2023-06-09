@@ -2,7 +2,7 @@
   <head>
   	<link rel="preconnect" href="https://fonts.googleapis.com">
   	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  	<link href="https://fonts.googleapis.com/css2?family=Newsreader:wght@400;700&family=DM+Serif+Display&family=News+Cycle:wght@400;700&family=Passion+One&display=swap" rel="stylesheet">
+  	<link href="https://fonts.googleapis.com/css2?family=Newsreader:wght@400;700&family=Pinyon+Script&family=DM+Serif+Display&family=News+Cycle:wght@400;700&family=Passion+One&display=swap" rel="stylesheet">
     
   	<style>
       :root {
@@ -1867,9 +1867,138 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
         top: 32%;
         width: 2.4em;
         height: 3em;
-        background-color: rgba(255,255,255,0.2);
+        background-color: rgba(255,255,255,0.9);
         border-radius: 21% 21% 48% 48% / 16% 16% 10% 10%;
         clip-path: polygon(0 0%, 100% 0%, 96% 15%, 84% 100%, 16% 100%, 4% 15%);
+      }
+
+      .budweiser-panel--cup .red {
+        position: absolute;
+        top: 10%;
+        left: 0%;
+        width: 100%;
+        height: 84%;
+        background: linear-gradient(90deg, rgba(106,2,2,1) 0%, rgba(172,0,0,1) 100%);
+        clip-path: ellipse(119% 59% at 50% 41%);
+      }
+
+      .budweiser-panel--cup .red-curve {
+        position: absolute;
+        top: 11%;
+        left: 0%;
+        width: 100%;
+        height: 42%;
+        background: linear-gradient(90deg, rgba(106,2,2,1) 0%, rgba(172,0,0,1) 100%);
+        clip-path: ellipse(139% 59% at 50% 41%);
+      }
+
+      .budweiser-panel--cup .label {
+        position: absolute;
+        top: 49%;
+        left: 0%;
+        width: 100%;
+        height: 42%;
+        background: linear-gradient(83deg, rgba(255,255,255,1) 0%, rgba(193,193,193,1) 32%, rgba(255,255,255,1) 68%);
+        clip-path: ellipse(72% 59% at 50% 41%);
+      }
+
+
+      .budweiser-panel--cup .suds {
+        position: absolute;
+        top: 0%;
+        left: 0%;
+        width: 100%;
+        height: 84%;
+        background: rgb(255,255,255);
+        background: linear-gradient(-33deg, rgba(255,255,255,0) 0%, rgba(213,213,213,1) 19%, rgba(255,255,255,0.7) 78%, rgba(255,255,255,0) 100%);
+        border-radius: 21% 21% 48% 48% / 16% 16% 10% 10%;
+        clip-path: ellipse(89% 29% at 30% -7%);
+      }
+
+      .budweiser-panel--cup .seal {
+        position: absolute;
+        top: 28%;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 0.7em;
+        height: 0.7em;
+        background-color: #fff;
+        border-radius: 2em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .budweiser-panel--cup .seal-1 {
+        width: 0.5em;
+        height: 0.5em;
+        background-color: #fff;
+        border-radius: 2em;
+        background-color: #000099;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .budweiser-panel--cup .seal-2 {
+        width: 0.35em;
+        height: 0.35em;
+        background-color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transform: rotate(45deg);
+      }
+
+      .budweiser-panel--cup .seal-3 {
+        width: 0.16em;
+        height: 0.16em;
+        background-color: rgba(0,0,188,0.7);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .budweiser-panel--cup .flank {
+        position: absolute;
+        width: 0.8em;
+        height: 0.5em;
+        top: 32%;
+        left: 4%;
+        background-color: #fff;
+        transform: rotate(-30deg);
+        clip-path: polygon(10% 0, 100% 0, 100% 100%, 10% 100%, 10% 50%);
+      }
+
+      .budweiser-panel--cup .flank.right {
+        left: 60%;
+        transform: rotate(30deg);
+        clip-path: polygon(10% 0, 100% 0, 100% 100%, 10% 100%, 10% 50%);
+      }
+
+      .budweiser-panel--cup .budweiser {
+        position: absolute;
+        top: 51%;
+        left: 50%;
+        transform: translateX(-50%);
+        font-family: 'DM Serif Display';
+        font-size: 0.34em;
+        letter-spacing: 0.07em;
+        color: #000099;
+      }
+
+      .budweiser-panel--cup .lines {
+        position: absolute;
+        top: 72%;
+        left: 50%;
+        transform: translateX(-50%);
+        text-align: center;
+        font-family: 'Pinyon Script';
+        font-size: 0.1em;
+        line-height: 1em;
+        letter-spacing: 0.1em;
+        width: 70%;
+        color: #000099;
       }
 
       .budweiser-panel--cup.one {
@@ -1888,7 +2017,7 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
         left: 93.5%;
       }
 
-       .budweiser-panel--cup.five {
+      .budweiser-panel--cup.five {
         top: -17%;
         left: 50%;
         transform: rotate(6deg);
@@ -1911,6 +2040,16 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
         color: #fff;
         text-transform: uppercase;
         letter-spacing: -0.01em;
+      }
+
+      .budweiser-panel > span.anheuser {
+        position: absolute;
+        top: 87%;
+        left: 40%;
+        color: #fff;
+        text-transform: uppercase;
+        font-size: 0.16em;
+        letter-spacing: 0.02em;
       }
 
       .winston-panel {
@@ -2658,7 +2797,7 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
 
       .lineups--small-circle-blue-1 {
         position: absolute;
-        top: 14%;
+        top: 13%;
         left: -10%;
         width: 0.62rem;
         height: 0.62rem;
@@ -3983,14 +4122,92 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
                   <div class="unocal-panel--tiny-circle-white"></div>
                 </div>
                 <div class="budweiser-panel">
-                  <div class="budweiser-panel--cup one"></div>
-                  <div class="budweiser-panel--cup two"></div>
-                  <div class="budweiser-panel--cup three"></div>
-                  <div class="budweiser-panel--cup four"></div>
-                  <div class="budweiser-panel--cup five"></div>
+                  <div class="budweiser-panel--cup one">
+                    <div class="red"></div>
+                    <div class="label"></div>
+                    <div class="red-curve"></div>
+                    <div class="budweiser">Budweiser</div>
+                    <div class="lines">Brewed by our original all natural process using the
+                    Choicest Hops, Rice and Best Barely Malt</div>
+                    <div class="suds"></div>
+                    <div class="seal">
+                      <div class="seal-1">
+                        <div class="seal-2">
+                          <div class="seal-3">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="flank"></div>
+                    <div class="flank right"></div>
+                  </div>
+                  <div class="budweiser-panel--cup two">
+                    <div class="red"></div>
+                    <div class="label"></div>
+                    <div class="red-curve"></div>
+                    <div class="budweiser">Budweiser</div>
+                    <div class="lines">Brewed by our original all natural process using the
+                    Choicest Hops, Rice and Best Barely Malt</div>
+                    <div class="suds"></div>
+                    <div class="seal">
+                      <div class="seal-1">
+                        <div class="seal-2">
+                          <div class="seal-3">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="flank"></div>
+                    <div class="flank right"></div>
+                  </div>
+                  <div class="budweiser-panel--cup three">
+                    <div class="red"></div>
+                    <div class="label"></div>
+                    <div class="red-curve"></div>
+                    <div class="budweiser">Budweiser</div>
+                    <div class="lines">Brewed by our original all natural process using the
+                    Choicest Hops, Rice and Best Barely Malt</div>
+                    <div class="suds"></div>
+                    <div class="seal">
+                      <div class="seal-1">
+                        <div class="seal-2">
+                          <div class="seal-3">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="flank"></div>
+                    <div class="flank right"></div>
+                  </div>
+                  <div class="budweiser-panel--cup four">
+                    <div class="red"></div>
+                    <div class="label"></div>
+                    <div class="red-curve"></div>
+                    <div class="budweiser">Budweiser</div>
+                    <div class="lines">Brewed by our original all natural process using the
+                    Choicest Hops, Rice and Best Barely Malt</div>
+                    <div class="suds"></div>
+                    <div class="seal">
+                      <div class="seal-1">
+                        <div class="seal-2">
+                          <div class="seal-3">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="flank"></div>
+                    <div class="flank right"></div>
+                  </div>
+                  <div class="budweiser-panel--cup five">
+                    <div class="red"></div>
+                    <div class="label"></div>
+                    <div class="lines">Brewed by our original all natural process using the
+                    Choicest Hops, Rice and Best Barely Malt</div>
+                  </div>
                   <div class="budweiser-panel--apostrophe"></div>
                   <div class="budweiser-panel--small-circle-white"></div>
                   <span>This Bud&nbsp;s<br>For You.</span>
+                  <span class="anheuser">Anheuser Busch St Louis.</span>
                 </div>
                 <div class="winston-panel">
                   <div>
