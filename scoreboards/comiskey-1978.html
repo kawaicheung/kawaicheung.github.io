@@ -2609,12 +2609,69 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
         flex-direction: column;
       }
 
-      .middle-section > .at-bat-and-outs {
+      .at-bat-and-outs {
         width: 100%;
         height: 4em;
       }
 
-      .middle-section > .balls-and-strikes {
+      .at-bat-and-outs > .digital,
+      .balls-and-strikes > .digital {
+        position: absolute;
+        background-color: rgba(0,0,0,0.3);
+        width: 2.2em;
+        height: 1.4em;
+        display: flex;
+        gap: 0.3em;
+        padding: 0.02em;
+      }
+
+      .at-bat-and-outs > .digital > div,
+      .balls-and-strikes > .digital > div {
+        background-color: rgba(0,0,0,0.2);
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: repeat(6, 1fr);
+      }
+
+      .at-bat-and-outs > .digital > div > div,
+      .balls-and-strikes > .digital > div > div {
+        width: 0.21em;
+        height: 0.21em;
+        border-radius: 50%;
+        background-color: rgba(0,0,0,0.2);
+      }
+
+      .at-bat-and-outs > .digital > div > div.lit,
+      .balls-and-strikes > .digital > div > div.lit  {
+        background: radial-gradient(circle, rgba(250,188,74,1) 0%, rgba(255,255,255,0) 100%);
+        box-shadow: 0 0 0.1em 0.01em rgba(250,188,74,0.6);
+      }
+
+      .at-bat-and-outs > .digital.at-bat {
+        top: 1.8em;
+        left: 3.8em;
+      }
+
+      .at-bat-and-outs > .digital.outs {
+        top: 1.8em;
+        left: 9.2em;
+        width: 1em;
+      }
+
+      .balls-and-strikes > .digital.balls {
+        top: 6em;
+        left: 4.4em;
+        width: 1em;
+      }
+
+      .balls-and-strikes > .digital.strikes {
+        top: 6em;
+        left: 9.2em;
+        width: 1em;
+      }
+
+      .balls-and-strikes {
         width: 100%;
         height: 6.2em;
       }
@@ -8011,11 +8068,176 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
                   <div class="middle-section--small-circle-yellow-1"></div>
                   <div class="at-bat-and-outs">
                     <div class="label at-bat">At Bat</div>
+                    <div class="digital at-bat">
+                      <div>
+                        <div></div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+
+                        <div></div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+
+                        <div></div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+
+                        <div></div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+
+                        <div></div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+
+                        <div></div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+
+                      </div>
+
+                      <div>
+                        <div></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div></div>
+
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+                        
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div></div>
+                      </div>
+                    </div>
                     <div class="label outs">Outs</div>
+                    <div class="digital outs">
+                      <div>
+                        <div></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div></div>
+
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div></div>
+                      </div>
+                    </div>
                   </div>
                   <div class="balls-and-strikes">
                     <div class="label balls">Balls</div>
+                    <div class="digital balls">
+                      <div>
+                        <div></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div></div>
+
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div></div>
+                      </div>
+                    </div>
                     <div class="label strikes">Strikes</div>
+                    <div class="digital strikes">
+                      <div>
+                        <div></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div></div>
+
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div></div>
+                      </div>
+                    </div>
                   </div>
                   <div class="game-score">
                     <div class="game-score--inning-box"></div>
