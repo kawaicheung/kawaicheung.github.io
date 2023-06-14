@@ -2499,9 +2499,14 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
         box-shadow: 0 0.2rem 0.08rem 0.08rem rgba(0,0,0,0.4);
       }
 
+
       .box-score > div {
         display: flex;
-        margin-bottom: 0.2em;
+        margin-bottom: 0.4em;
+      }
+
+      .box-score > div.labels {
+        margin-bottom: 0.03em;
       }
 
       .box-score > div:last-child {
@@ -2519,7 +2524,7 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
       }
 
       .box-score > div > div.team {
-        box-shadow: 0 0.1em 0.2em 0 rgba(0,0,0,0.2);
+        box-shadow: inset 0 0.1em 0.2em 0 rgba(0,0,0,0.2);
       }
 
       .box-score > div > div.team > span {
@@ -2538,11 +2543,39 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
         padding-left: 2em;
       }
 
-      .box-score > div > div.inning-score {
-         margin-left: 0.55em;
-         background-color: rgba(0,0,0,0.3);
-         width: 1.5em;
-         height: 1.5em;
+      .inning-score {
+        margin-left: 0.55em;
+        background-color: rgba(0,0,0,0.3);
+        width: 1.5em;
+        height: 1.5em;
+        display: flex;
+        gap: 0.1em;
+        padding: 0.02em;
+      }
+
+      .inning-score > div {
+        background-color: rgba(0,0,0,0.2);
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: repeat(6, 1fr);
+      }
+
+      .inning-score > div > div {
+        width: 0.24em;
+        height: 0.24em;
+        border-radius: 50%;
+        background-color: rgba(0,0,0,0.2);
+      }
+
+      .inning-score > div > div.lit {
+        background: radial-gradient(circle, rgba(250,188,74,1) 0%, rgba(255,255,255,0) 100%);
+        box-shadow: 0 0 0.1em 0.01em rgba(250,188,74,0.6);
+      }
+
+      .inning-score > div:first-child {
+        grid-template-columns: repeat(1, 1fr);
+        width: 0.5em;
       }
 
       .league-scores {
@@ -2733,9 +2766,11 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
         left: 22%;
         font-weight: 700;
         color: var(--color--scores-yellow);
-        letter-spacing: 0.2em;
+        letter-spacing: 0.1em;
         transform: scale(1, 0.9);
         line-height: 1;
+        width: 4em;
+        box-shadow: inset -0.04em 0.08em 0.05em 0 rgba(0,0,0,0.26);
       }
 
       .game-score--home-team {
@@ -2744,9 +2779,11 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
         left: 22%;
         font-weight: 700;
         color: var(--color--scores-yellow);
-        letter-spacing: 0.2em;
+        letter-spacing: 0.1em;
         line-height: 1;
         transform: scale(1, 0.9);
+        width: 4em;
+        box-shadow: inset -0.04em 0.08em 0.05em 0 rgba(0,0,0,0.26);
       }
 
       .game-score-box {
@@ -6847,7 +6884,7 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
                 <div class="box-score">
                   <div class="box-score--small-circle-light-blue"></div>
                   <div class="box-score--small-circle-blue"></div>
-                  <div>
+                  <div class="labels">
                     <div></div>
                     <div class="inning">l</div>
                     <div class="inning">2</div>
@@ -6867,29 +6904,764 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
                   </div>
                   <div>
                     <div class="team"><span>Milwaukee</span></div>
-                    <div class="inning-score"></div>
-                    <div class="inning-score"></div>
-                    <div class="inning-score"></div>
-                    <div class="inning-score"></div>
-                    <div class="inning-score"></div>
-                    <div class="inning-score"></div>
-                    <div class="inning-score"></div>
-                    <div class="inning-score"></div>
-                    <div class="inning-score"></div>
-                    <div class="inning-score"></div>
+                    <div class="inning-score">
+                       <div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div></div>
+
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div></div>
+                      </div>
+                    </div>
+                    <div class="inning-score">
+                       <div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div></div>
+
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div></div>
+                      </div>
+                    </div>
+                    <div class="inning-score">
+                       <div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div></div>
+
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div></div>
+                      </div>
+                    </div>
+                    <div class="inning-score">
+                       <div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div></div>
+
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div></div>
+                      </div>
+                    </div>
+                    <div class="inning-score">
+                       <div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                    </div>
+                    <div class="inning-score">
+                       <div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                    </div>
+                    <div class="inning-score">
+                       <div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                    </div>
+                    <div class="inning-score">
+                       <div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                    </div>
+                    <div class="inning-score">
+                       <div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                    </div>
+                    <div class="inning-score">
+                       <div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                    </div>
                   </div>
                   <div>
                     <div class="team"><span>White Sox</span></div>
-                    <div class="inning-score"></div>
-                    <div class="inning-score"></div>
-                    <div class="inning-score"></div>
-                    <div class="inning-score"></div>
-                    <div class="inning-score"></div>
-                    <div class="inning-score"></div>
-                    <div class="inning-score"></div>
-                    <div class="inning-score"></div>
-                    <div class="inning-score"></div>
-                    <div class="inning-score"></div>
+                    <div class="inning-score">
+                       <div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div></div>
+
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div></div>
+                      </div>
+                    </div>
+                    <div class="inning-score">
+                       <div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div></div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+
+                        <div></div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+
+                        <div></div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+
+                        <div></div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+
+                        <div></div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+
+                        <div></div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                    </div>
+                    <div class="inning-score">
+                       <div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div></div>
+
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div></div>
+                      </div>
+                    </div>
+                    <div class="inning-score">
+                       <div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                    </div>
+                    <div class="inning-score">
+                       <div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                    </div>
+                    <div class="inning-score">
+                       <div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                    </div>
+                    <div class="inning-score">
+                       <div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                    </div>
+                    <div class="inning-score">
+                       <div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                    </div>
+                    <div class="inning-score">
+                       <div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                    </div>
+                    <div class="inning-score">
+                       <div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                    </div>
                   </div>
                 </div>
                 <div class="league-scores american-side">
