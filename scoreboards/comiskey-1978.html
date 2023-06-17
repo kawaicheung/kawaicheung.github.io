@@ -1210,12 +1210,12 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
       .clock--hour-hand {
         position: absolute;
         width: 2.8em;
-        height: 0.6em;
+        height: 0.5em;
         background-color: #fff;
         top: 50%;
-        left: 45%;
+        left: 45.5%;
         z-index: 2;
-        transform: rotate(-39deg);
+        transform: rotate(-12deg);
         clip-path: polygon(0 0, 100% 20%, 100% 80%, 0 100%);
         box-shadow: 0 2em 0.1em 2em rgba(0,0,0,0.7);
       }
@@ -1226,9 +1226,9 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
         height: 0.6em;
         background-color: rgba(0,0,0,0.3);
         top: 52%;
-        left: 45%;
+        left: 45.5%;
         z-index: 2;
-        transform: rotate(-39deg);
+        transform: rotate(-12deg);
         clip-path: polygon(0 0, 100% 20%, 100% 80%, 0 100%);
         box-shadow: 0 2em 0.1em 2em rgba(0,0,0,0.7);
       }  
@@ -2594,8 +2594,8 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
 
       .outta-town--inn {
         position: absolute;
-        font-size: 0.7em;
-        letter-spacing: -0.004em;
+        font-size: 0.6em;
+        letter-spacing: 0.1em;
         color: var(--color--scores-yellow);
       }
 
@@ -2723,11 +2723,11 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
          padding-left: 1.18em;
       }
       .box-score > div > div.rhe {
-        padding-left: 2em;
+        padding-left: 2.1em;
       }
 
       .inning-score {
-        margin-left: 0.55em;
+        margin-left: 0.52em;
         background-color: rgba(0,0,0,0.3);
         width: 1.5em;
         height: 1.5em;
@@ -2757,6 +2757,75 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
       }
 
       .inning-score > div:first-child {
+        grid-template-columns: repeat(1, 1fr);
+        width: 0.5em;
+      }
+
+      .rhp1g-box {
+        margin-left: 0.55em;
+        background-color: rgba(0,0,0,0.3);
+        width: 2.2em;
+        height: 1.5em;
+        display: flex;
+        gap: 0.2em;
+        padding: 0.02em;
+      }
+
+      .rhp1g-box > div {
+        background-color: rgba(0,0,0,0.2);
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: repeat(6, 1fr);
+      }
+
+      .rhp1g-box > div > div {
+        width: 0.24em;
+        height: 0.24em;
+        border-radius: 50%;
+        background-color: rgba(0,0,0,0.2);
+      }
+
+      .rhp1g-box > div > div.lit {
+        background: radial-gradient(circle, rgba(250,188,74,1) 0%, rgba(255,255,255,0) 100%);
+        box-shadow: 0 0 0.1em 0.01em rgba(250,188,74,0.3);
+      }
+
+      .e-box {
+        margin-left: 1em;
+        background-color: rgba(0,0,0,0.3);
+        width: 1.6em;
+        height: 1.5em;
+        display: flex;
+        gap: 0.2em;
+        padding: 0.02em;
+      }
+
+      .rhp1g-box.p {
+        margin-left: 0.8em;
+      }
+
+      .e-box > div {
+        background-color: rgba(0,0,0,0.2);
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: repeat(6, 1fr);
+      }
+
+      .e-box > div > div {
+        width: 0.24em;
+        height: 0.24em;
+        border-radius: 50%;
+        background-color: rgba(0,0,0,0.2);
+      }
+
+      .e-box > div > div.lit {
+        background: radial-gradient(circle, rgba(250,188,74,1) 0%, rgba(255,255,255,0) 100%);
+        box-shadow: 0 0 0.1em 0.01em rgba(250,188,74,0.3);
+      }
+
+      .e-box > div:first-child {
         grid-template-columns: repeat(1, 1fr);
         width: 0.5em;
       }
@@ -3037,7 +3106,36 @@ background: linear-gradient(90deg, rgba(52,50,99,1) 0%, rgba(35,34,71,1) 34%, rg
         left: 6%;
         width: 1.5em;
         height: 1.5em;
+        background-color: rgba(0,0,0,0.3);
+        display: flex;
+        gap: 0.1em;
+        padding: 0.02em;
+      }
+
+      .game-score--inning-box > div {
         background-color: rgba(0,0,0,0.2);
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: repeat(6, 1fr);
+      }
+
+      .game-score--inning-box > div > div {
+        width: 0.24em;
+        height: 0.24em;
+        border-radius: 50%;
+        background-color: rgba(0,0,0,0.2);
+      }
+
+      .game-score--inning-box > div > div.lit {
+        background: radial-gradient(circle, rgba(250,188,74,1) 0%, rgba(255,255,255,0) 100%);
+        box-shadow: 0 0 0.1em 0.01em rgba(250,188,74,0.3);
+      }
+
+      .game-score--inning-box > div:first-child {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(6, 1fr);
+        width: 0.5em;
       }
 
       .game-score--visitor-team {
@@ -7209,7 +7307,7 @@ background: linear-gradient(90deg, rgba(52,50,99,1) 0%, rgba(35,34,71,1) 34%, rg
                   <div>
                     <div class="team"><span>Milwaukee</span></div>
                     <div class="inning-score">
-                       <div>
+                      <div>
                         <div></div>
                         <div></div>
                         <div></div>
@@ -7584,6 +7682,283 @@ background: linear-gradient(90deg, rgba(52,50,99,1) 0%, rgba(35,34,71,1) 34%, rg
                         <div></div>
                         <div></div>
                         <div></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                    </div>
+                    <div class="rhp1g-box">
+                      <div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div></div>
+
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div></div>
+                      </div>
+                    </div>
+                    <div class="rhp1g-box">
+                      <div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div></div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+
+                        <div></div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+
+                        <div></div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+
+                        <div></div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+
+                        <div></div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+
+                        <div></div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                    </div>
+                    <div class="e-box">
+                      <div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div></div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+
+                        <div></div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+
+                        <div></div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+
+                        <div></div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+
+                        <div></div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+
+                        <div></div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                    </div>
+                    <div class="rhp1g-box p">
+                      <div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div></div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+
+                        <div></div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+
+                        <div></div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+
+                        <div></div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+
+                        <div></div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+
+                        <div></div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                    </div>
+                    <div class="rhp1g-box">
+                      <div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div></div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+
+                        <div></div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+
+                        <div></div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+
+                        <div></div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+
+                        <div></div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+
+                        <div></div>
+                        <div class="lit"></div>
                         <div></div>
                         <div></div>
                       </div>
@@ -7966,6 +8341,283 @@ background: linear-gradient(90deg, rgba(52,50,99,1) 0%, rgba(35,34,71,1) 34%, rg
                         <div></div>
                       </div>
                     </div>
+                    <div class="rhp1g-box">
+                      <div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div></div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                         <div></div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                         <div></div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                         <div></div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                    </div>
+                    <div class="rhp1g-box">
+                      <div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div></div>
+
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+                        <div></div>
+
+                        <div></div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+
+
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                      </div>
+                    </div>
+                    <div class="e-box">
+                      <div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div></div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+
+                        <div></div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+
+                        <div></div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+
+                        <div></div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+
+                        <div></div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+
+                        <div></div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                    </div>
+                    <div class="rhp1g-box p">
+                      <div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div></div>
+
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+                        <div></div>
+
+                        <div></div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+
+
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                      </div>
+                    </div>
+
+                    <div class="rhp1g-box">
+                      <div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div></div>
+
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+                        <div></div>
+
+                        <div></div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+
+
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                      </div>
+                    </div>
+
                   </div>
                 </div>
                 <div class="league-scores american-side">
@@ -7979,7 +8631,54 @@ background: linear-gradient(90deg, rgba(52,50,99,1) 0%, rgba(35,34,71,1) 34%, rg
                   <div class="first">l<sup>ST</sup></div>
                   <div class="inning">Inning</div>
                   <div class="game-score">
-                    <div class="game-score--inning-box"></div>
+                    <div class="game-score--inning-box">
+                      <div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div></div>
+
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div></div>
+                      </div>
+                    </div>
                     <div class="game-score--visitor-team">N. Y.</div>
                     <div class="game-score--home-team">Tor</div>
                     <div class="game-score-box run">
@@ -8002,10 +8701,55 @@ background: linear-gradient(90deg, rgba(52,50,99,1) 0%, rgba(35,34,71,1) 34%, rg
                     </div>
                   </div>
                   <div class="game-score">
-                    <div class="game-score--inning-box"></div>
+                    <div class="game-score--inning-box">
+                      <div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div></div>
+
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div></div>
+
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div></div>
+                      </div>
+                    </div>
                     <div class="game-score--visitor-team">Balt</div>
                     <div class="game-score--home-team">Bost</div>
-                   
                     <div class="game-score-box run">
                       <div></div>
                       <div></div>
@@ -8026,7 +8770,58 @@ background: linear-gradient(90deg, rgba(52,50,99,1) 0%, rgba(35,34,71,1) 34%, rg
                     </div>
                   </div>
                   <div class="game-score">
-                    <div class="game-score--inning-box"></div>
+                    <div class="game-score--inning-box">
+                      <div>
+                        <div class="lit"></div>
+                        <div></div>
+
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+
+                        <div class="lit"></div>
+                        <div></div>
+
+                        <div class="lit"></div>
+                        <div></div>
+
+                        <div class="lit"></div>
+                        <div></div>
+
+                        <div class="lit"></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div></div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+                      </div>
+                    </div>
                     <div class="game-score--visitor-team">Det</div>
                     <div class="game-score--home-team">Kan Cy</div>
                     <div class="game-score-box run">
@@ -8169,7 +8964,58 @@ background: linear-gradient(90deg, rgba(52,50,99,1) 0%, rgba(35,34,71,1) 34%, rg
                     </div>
                   </div>
                   <div class="game-score">
-                    <div class="game-score--inning-box"></div>
+                    <div class="game-score--inning-box">
+                      <div>
+                        <div class="lit"></div>
+                        <div></div>
+
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+
+                        <div class="lit"></div>
+                        <div></div>
+
+                        <div class="lit"></div>
+                        <div></div>
+
+                        <div class="lit"></div>
+                        <div></div>
+                        
+                        <div class="lit"></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div></div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+                      </div>
+                    </div>
                     <div class="game-score--visitor-team">Minn</div>
                     <div class="game-score--home-team">Sea</div>
                     <div class="game-score-box run">
@@ -8650,7 +9496,53 @@ background: linear-gradient(90deg, rgba(52,50,99,1) 0%, rgba(35,34,71,1) 34%, rg
                   <div class="first">l<sup>ST</sup></div>
                   <div class="inning">Inning</div>
                   <div class="game-score">
-                    <div class="game-score--inning-box"></div>
+                    <div class="game-score--inning-box">
+                      <div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                    </div>
                     <div class="game-score--visitor-team">Cubs</div>
                     <div class="game-score--home-team">Mont</div>
                     <div class="game-score-box run">
@@ -8673,7 +9565,53 @@ background: linear-gradient(90deg, rgba(52,50,99,1) 0%, rgba(35,34,71,1) 34%, rg
                     </div>
                   </div>
                   <div class="game-score">
-                    <div class="game-score--inning-box"></div>
+                    <div class="game-score--inning-box">
+                      <div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>                        
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div></div>
+
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div></div>
+
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div></div>
+                      </div>
+                    </div>
                     <div class="game-score--visitor-team">St Lou</div>
                     <div class="game-score--home-team">N. Y.</div>
                     <div class="game-score-box run">
@@ -8696,7 +9634,58 @@ background: linear-gradient(90deg, rgba(52,50,99,1) 0%, rgba(35,34,71,1) 34%, rg
                     </div>
                   </div>
                   <div class="game-score">
-                    <div class="game-score--inning-box"></div>
+                    <div class="game-score--inning-box">
+                      <div>
+                        <div class="lit"></div>
+                        <div></div>
+
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+
+                        <div class="lit"></div>
+                        <div></div>
+
+                        <div class="lit"></div>
+                        <div></div>
+
+                        <div class="lit"></div>
+                        <div></div>
+
+                        <div class="lit"></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div></div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+                      </div>
+                    </div>
                     <div class="game-score--visitor-team">Atl.</div>
                     <div class="game-score--home-team">Houst</div>
                     <div class="game-score-box run">
@@ -8812,7 +9801,58 @@ background: linear-gradient(90deg, rgba(52,50,99,1) 0%, rgba(35,34,71,1) 34%, rg
                     </div>
                   </div>
                   <div class="game-score">
-                    <div class="game-score--inning-box"></div>
+                    <div class="game-score--inning-box">
+                      <div>
+                        <div class="lit"></div>
+                        <div></div>
+
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+
+                        <div class="lit"></div>
+                        <div></div>
+
+                        <div class="lit"></div>
+                        <div></div>
+
+                        <div class="lit"></div>
+                        <div></div>
+
+                        <div class="lit"></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div></div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+                      </div>
+                    </div>
                     <div class="game-score--visitor-team">Cinci</div>
                     <div class="game-score--home-team">S. D.</div>
                     <div class="game-score-box run">
