@@ -75,6 +75,29 @@
         left: 0%;
       }
 
+      .left-field-stands > .chicago-flag-pole {
+        background: rgb(255,255,255);
+        background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(253,253,253,1) 56%, rgba(100,100,100,1) 100%);
+        transform: rotate(-0.4deg);
+        position: absolute;
+        width: 2em;
+        height: 9em;
+        top: 18%;
+        left: 1%;
+        clip-path: polygon(62% 35%, 67% 35%, 67% 100%, 62% 100%);
+      }
+
+      .left-field-stands > .chicago-flag {
+        position: absolute;
+        width: 3.5em;
+        height: 2.2em;
+        top: 23%;
+        left: 8%;
+        background-color: red;
+        clip-path: polygon(0% 0%, 35% 5%, 67% 20%, 78% 30%, 74% 50%, 80% 90%, 60% 75%, 30% 79%, 0% 92%);
+      }
+
+
       .left-field-stands > .upper-deck {
         position: absolute;
         width: 100%;
@@ -388,6 +411,28 @@ background: linear-gradient(90deg, rgba(153,190,178,1) 0%, rgba(32,45,40,1) 0%, 
         right: 0%;
       }
 
+      .right-field-stands > .american-flag-pole {
+        background: rgb(255,255,255);
+        background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(253,253,253,1) 56%, rgba(100,100,100,1) 100%);
+        transform: rotate(0.4deg);
+        position: absolute;
+        width: 2em;
+        height: 19em;
+        top: -2%;
+        right: 35%;
+        clip-path: polygon(62% 35%, 67% 35%, 67% 100%, 62% 100%);
+      }
+
+      .right-field-stands > .american-flag {
+        position: absolute;
+        width: 3em;
+        height: 3em;
+        top: 10%;
+        right: 21%;
+        background-color: red;
+        clip-path: polygon(0% 0%, 75% 42%, 90% 55%, 100% 70%, 90% 100%, 70% 84%, 55% 80%, 45% 75%, 5% 78%);
+      }
+
       .right-field-stands > .chicago-flag-pole {
         background: rgb(255,255,255);
         background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(253,253,253,1) 56%, rgba(100,100,100,1) 100%);
@@ -400,16 +445,14 @@ background: linear-gradient(90deg, rgba(153,190,178,1) 0%, rgba(32,45,40,1) 0%, 
         clip-path: polygon(62% 35%, 67% 35%, 67% 100%, 62% 100%);
       }
 
-      .right-field-stands > .american-flag-pole {
-        background: rgb(255,255,255);
-        background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(253,253,253,1) 56%, rgba(100,100,100,1) 100%);
-        transform: rotate(0.4deg);
+      .right-field-stands > .chicago-flag {
         position: absolute;
-        width: 2em;
-        height: 19em;
-        top: -2%;
-        right: 35%;
-        clip-path: polygon(62% 35%, 67% 35%, 67% 100%, 62% 100%);
+        width: 1.5em;
+        height: 2.8em;
+        top: 25%;
+        right: 65.6%;
+        background-color: red;
+        clip-path: polygon(0% 0%, 75% 42%, 90% 55%, 100% 70%, 90% 100%, 70% 84%, 55% 80%, 45% 75%, 5% 78%);
       }
 
       .ru-beam {
@@ -595,7 +638,7 @@ background: linear-gradient(90deg, rgba(153,190,178,1) 0%, rgba(32,45,40,1) 0%, 
         width: 0.9em;
         height: 0.9em;
         top: 39.1%;
-        left: 72%;
+        left: 73.6%;
         clip-path: none;
         border-radius: 0.3em;
       }
@@ -2073,7 +2116,7 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
 
       .budweiser-panel--cup .seal-overhang {
         position: absolute;
-        top: 18%;
+        top: 16%;
         left: 50%;
         transform: translateX(-50%);
         width: 1.6em;
@@ -2087,11 +2130,11 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
 
       .budweiser-panel--cup .seal {
         position: absolute;
-        top: 30%;
+        top: 24%;
         left: 50%;
         transform: translateX(-50%);
-        width: 0.7em;
-        height: 0.7em;
+        width: 0.88em;
+        height: 0.88em;
         background-color: #fff;
         border-radius: 2em;
         display: flex;
@@ -2100,8 +2143,8 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
       }
 
       .budweiser-panel--cup .seal-1 {
-        width: 0.5em;
-        height: 0.5em;
+        width: 0.6em;
+        height: 0.6em;
         background-color: #fff;
         border-radius: 2em;
         background-color: #000099;
@@ -2111,8 +2154,8 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
       }
 
       .budweiser-panel--cup .seal-2 {
-        width: 0.35em;
-        height: 0.35em;
+        width: 0.48em;
+        height: 0.48em;
         background-color: #fff;
         display: flex;
         align-items: center;
@@ -2131,19 +2174,33 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
 
       .budweiser-panel--cup .flank {
         position: absolute;
-        width: 0.8em;
-        height: 0.5em;
-        top: 32%;
-        left: 4%;
+        width: 0.65em;
+        height: 0.45em;
+        top: 34%;
+        left: 6%;
         background-color: #fff;
-        transform: rotate(-30deg);
-        clip-path: polygon(10% 0, 100% 0, 100% 100%, 10% 100%, 10% 50%);
+        transform: rotate(-20deg);
+        clip-path: polygon(20% 0, 100% 0, 100% 100%, 20% 100%, 0% 50%);
       }
 
       .budweiser-panel--cup .flank.right {
-        left: 60%;
-        transform: rotate(30deg);
-        clip-path: polygon(10% 0, 100% 0, 100% 100%, 10% 100%, 10% 50%);
+        left: 67%;
+        transform: rotate(200deg);
+      }
+
+      .budweiser-panel--cup .seal-wrap {
+        position: absolute;
+        width: 0.5em;
+        height: 0.6em;
+        top: 21%;
+        left: 14%;
+        background-color: #fff;
+        clip-path: polygon(0 0,25% 75%,95% 90%, 60% 10%);
+      }
+
+      .budweiser-panel--cup .seal-wrap.right {
+        transform: scaleX(-1);
+        left: 64%;
       }
 
       .budweiser-panel--cup .budweiser {
@@ -3719,6 +3776,8 @@ background: linear-gradient(90deg, rgba(52,50,99,1) 0%, rgba(35,34,71,1) 34%, rg
         <div class="bleacher-wall--right-shadow"></div>
       </div>
       <div class="left-field-stands">
+        <div class="chicago-flag-pole"></div>
+        <div class="chicago-flag"></div>
         <div class="roof-underside"></div>
         <div class="lu-beam lu-beam-1"></div>
         <div class="lu-beam lu-beam-2"></div>
@@ -3795,7 +3854,13 @@ background: linear-gradient(90deg, rgba(52,50,99,1) 0%, rgba(35,34,71,1) 34%, rg
         <div class="ru-railing-1"></div>
         <div class="ru-railing-2"></div>
         <div class="american-flag-pole"></div>
+        <div class="american-flag">
+            
+        </div>
         <div class="chicago-flag-pole"></div>
+        <div class="chicago-flag">
+            
+        </div>
         <div class="roof-underside"></div>
         <div class="ru-catwalk-bottom"></div>
         <div class="ru-catwalk-wall"></div>
@@ -4578,7 +4643,6 @@ background: linear-gradient(90deg, rgba(52,50,99,1) 0%, rgba(35,34,71,1) 34%, rg
                     <div class="lines">Brewed by our original all natural process using the
                     Choicest Hops, Rice and Best Barely Malt</div>
                     <div class="suds"></div>
-                    <div class="seal-overhang"></div>
                     <div class="seal">
                       <div class="seal-1">
                         <div class="seal-2">
@@ -4589,6 +4653,9 @@ background: linear-gradient(90deg, rgba(52,50,99,1) 0%, rgba(35,34,71,1) 34%, rg
                     </div>
                     <div class="flank"></div>
                     <div class="flank right"></div>
+                    <div class="seal-wrap"></div>
+                    <div class="seal-wrap right"></div>
+                    <div class="seal-overhang"></div>
                   </div>
                   <div class="budweiser-panel--cup two">
                     <div class="red"></div>
@@ -4598,7 +4665,6 @@ background: linear-gradient(90deg, rgba(52,50,99,1) 0%, rgba(35,34,71,1) 34%, rg
                     <div class="lines">Brewed by our original all natural process using the
                     Choicest Hops, Rice and Best Barely Malt</div>
                     <div class="suds"></div>
-                    <div class="seal-overhang"></div>
                     <div class="seal">
                       <div class="seal-1">
                         <div class="seal-2">
@@ -4609,6 +4675,9 @@ background: linear-gradient(90deg, rgba(52,50,99,1) 0%, rgba(35,34,71,1) 34%, rg
                     </div>
                     <div class="flank"></div>
                     <div class="flank right"></div>
+                    <div class="seal-wrap"></div>
+                    <div class="seal-wrap right"></div>
+                    <div class="seal-overhang"></div>
                   </div>
                   <div class="budweiser-panel--cup three">
                     <div class="red"></div>
@@ -4618,7 +4687,6 @@ background: linear-gradient(90deg, rgba(52,50,99,1) 0%, rgba(35,34,71,1) 34%, rg
                     <div class="lines">Brewed by our original all natural process using the
                     Choicest Hops, Rice and Best Barely Malt</div>
                     <div class="suds"></div>
-                    <div class="seal-overhang"></div>
                     <div class="seal">
                       <div class="seal-1">
                         <div class="seal-2">
@@ -4629,6 +4697,9 @@ background: linear-gradient(90deg, rgba(52,50,99,1) 0%, rgba(35,34,71,1) 34%, rg
                     </div>
                     <div class="flank"></div>
                     <div class="flank right"></div>
+                    <div class="seal-wrap"></div>
+                    <div class="seal-wrap right"></div>
+                    <div class="seal-overhang"></div>
                   </div>
                   <div class="budweiser-panel--cup four">
                     <div class="red"></div>
@@ -4638,7 +4709,6 @@ background: linear-gradient(90deg, rgba(52,50,99,1) 0%, rgba(35,34,71,1) 34%, rg
                     <div class="lines">Brewed by our original all natural process using the
                     Choicest Hops, Rice and Best Barely Malt</div>
                     <div class="suds"></div>
-                    <div class="seal-overhang"></div>
                     <div class="seal">
                       <div class="seal-1">
                         <div class="seal-2">
@@ -4649,6 +4719,9 @@ background: linear-gradient(90deg, rgba(52,50,99,1) 0%, rgba(35,34,71,1) 34%, rg
                     </div>
                     <div class="flank"></div>
                     <div class="flank right"></div>
+                    <div class="seal-wrap"></div>
+                    <div class="seal-wrap right"></div>
+                    <div class="seal-overhang"></div>
                   </div>
                   <div class="budweiser-panel--cup five">
                     <div class="red"></div>
