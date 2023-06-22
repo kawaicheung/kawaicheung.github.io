@@ -39,10 +39,10 @@
         filter: sepia(0%);
       }
       20% {
-        filter: sepia(0%);
+        filter: sepia(20%);
       }
       100% {
-        filter: sepia(0%);
+        filter: sepia(60%);
       }
     }
 
@@ -68,7 +68,7 @@
         overflow: hidden;
         font-size: 12px;
         border: solid 1px #ccc;
-        animation: bleed-in 8s forwards;
+        animation: bleed-in 10s forwards;
       }
 
       .picture-background {
@@ -2027,7 +2027,7 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
 
       .unocal-panel--small-circle-white {
         position: absolute;
-        bottom: 5%;
+        bottom: 7%;
         left: 51.5%;
         width: 0.28em;
         height: 0.28em;
@@ -2693,7 +2693,7 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
         font-size: 0.9em;
         top: 23%;
         left: 23%;
-        letter-spacing: 0.14em;
+        letter-spacing: 0.1em;
         transform: scale(1, 0.9);
         background: linear-gradient(177deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0) 12%);
       }
@@ -2704,7 +2704,7 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
         font-size: 0.9em;
         top: 60%;
         left: 23%;
-        letter-spacing: 0.14em;
+        letter-spacing: 0.1em;
         transform: scale(1, 0.9);
         background: linear-gradient(177deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0) 12%);
       }
@@ -2715,6 +2715,40 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
 
       .outta-town.right {
         right: 0.9em;
+      }
+
+      .outta-town--box {
+        position: absolute;
+        display: flex;
+        width: 1.8em;
+        height: 2.4em; 
+        top: 29%;
+        flex-wrap: wrap;
+        justify-content: space-between;
+      }
+
+      .outta-town--box > div {
+        background-color: rgba(0,0,0,0.3);
+        width: 0.78em;
+        height: 1.05em;
+        margin-bottom: 0.15em;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: repeat(6, 1fr);
+      }
+
+      .outta-town--box > div > div.lit {
+        background: radial-gradient(circle, rgba(250,188,74,1) 20%, rgba(255,255,255,0) 100%);
+        box-shadow: 0 0 0.1em 0.01em rgba(250,188,74,0.6);
+        border-radius: 1em;
+      }
+
+      .outta-town--box.run {
+        left: 52%;
+      }
+
+      .outta-town--box.pitcher {
+        left: 78%;
       }
 
       .outta-town--inning-box {
@@ -3282,7 +3316,7 @@ background: linear-gradient(90deg, rgba(52,50,99,1) 0%, rgba(35,34,71,1) 34%, rg
       }
 
       .game-score-box > div {
-        background-color: rgba(0,0,0,0.2);
+        background-color: rgba(0,0,0,0.3);
         width: 0.78em;
         height: 1.05em;
         margin-bottom: 0.15em;
@@ -3299,12 +3333,10 @@ background: linear-gradient(90deg, rgba(52,50,99,1) 0%, rgba(35,34,71,1) 34%, rg
 
       .game-score-box.run {
         left: 50%;
-
       }
 
       .game-score-box.pitcher {
         left: 68%;
-
       }
 
       .game-score-box.first-game {
@@ -3594,7 +3626,7 @@ background: linear-gradient(90deg, rgba(52,50,99,1) 0%, rgba(35,34,71,1) 34%, rg
         z-index: 2;
         width: 94%;
         height: 5em;
-        bottom: 3.65em;
+        bottom: 3.35em;
         left: 50%;
         transform: translateX(-50%);
         background: rgb(0,0,0);
@@ -7396,7 +7428,7 @@ background: linear-gradient(90deg, rgba(52,50,99,1) 0%, rgba(35,34,71,1) 34%, rg
                   <div class="outta-town--inn">Inn.</div>
                   <div class="outta-town--r">R</div>
                   <div class="outta-town--p">P</div>
-                   <div class="outta-town--inning-box">
+                  <div class="outta-town--inning-box">
                       <div>
                         <div class="lit"></div>
                         <div></div>
@@ -7450,12 +7482,144 @@ background: linear-gradient(90deg, rgba(52,50,99,1) 0%, rgba(35,34,71,1) 34%, rg
                     </div>
                   <div class="outta-town--visitor-team">Clev</div>
                   <div class="outta-town--home-team">Tex.</div>
+                  <div class="outta-town--box run">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                  </div>
+                  <div class="outta-town--box pitcher">
+                      <div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div></div>
+
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div></div>
+
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div></div>
+
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div></div>
+                      </div>
+                      <div>
+                        <div></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div></div>
+
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+
+                        <div></div>
+                        <div></div>
+                        <div class="lit"></div>
+                        <div></div>
+
+                        <div></div>
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+
+                        <div class="lit"></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                      </div>
+                  </div>
                 </div>
                 <div class="outta-town right">
                   <div class="outta-town--inn">Inn.</div>
                   <div class="outta-town--r">R</div>
                   <div class="outta-town--p">P</div>
-                   <div class="outta-town--inning-box">
+                  <div class="outta-town--inning-box">
                       <div>
                         <div class="lit"></div>
                         <div></div>
@@ -7509,6 +7673,18 @@ background: linear-gradient(90deg, rgba(52,50,99,1) 0%, rgba(35,34,71,1) 34%, rg
                     </div>
                   <div class="outta-town--visitor-team">Pitt</div>
                   <div class="outta-town--home-team">Phil</div>
+                   <div class="outta-town--box run">
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                    </div>
+                    <div class="outta-town--box pitcher">
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                    </div>
                 </div>
                 <div class="box-score">
                   <div class="box-score--small-circle-light-blue"></div>
@@ -8074,60 +8250,65 @@ background: linear-gradient(90deg, rgba(52,50,99,1) 0%, rgba(35,34,71,1) 34%, rg
                     </div>
                     <div class="rhp1g-box p">
                       <div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+
+                        <div class="lit"></div>
                         <div></div>
                         <div></div>
                         <div></div>
+
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div></div>
+
                         <div></div>
                         <div></div>
                         <div></div>
+                        <div class="lit"></div>
+
                         <div></div>
                         <div></div>
                         <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
+                        <div class="lit"></div>
+
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
                         <div></div>
                       </div>
                       <div>
                         <div></div>
                         <div class="lit"></div>
-                        <div></div>
+                        <div class="lit"></div>
                         <div></div>
 
-                        <div></div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
+                        <div class="lit"></div>
 
-                        <div></div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
+                        <div class="lit"></div>
 
-                        <div></div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
+                        <div class="lit"></div>
 
-                        <div></div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
+                        <div class="lit"></div>
 
                         <div></div>
                         <div class="lit"></div>
-                        <div></div>
+                        <div class="lit"></div>
                         <div></div>
                       </div>
                     </div>
@@ -8192,7 +8373,7 @@ background: linear-gradient(90deg, rgba(52,50,99,1) 0%, rgba(35,34,71,1) 34%, rg
                     </div>
                   </div>
                   <div>
-                    <div class="team"><span>White Sox</span></div>
+                    <div class="team"><span>White<span style="padding-left:0.2em;">S</span>o<span style="transform:rotate(3deg);display:inline-block;">x</span></span></div>
                     <div class="inning-score">
                        <div>
                         <div></div>
@@ -8725,29 +8906,34 @@ background: linear-gradient(90deg, rgba(52,50,99,1) 0%, rgba(35,34,71,1) 34%, rg
                     </div>
                     <div class="rhp1g-box p">
                       <div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+
                         <div></div>
                         <div></div>
                         <div></div>
+                        <div class="lit"></div>
+
+                        <div></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
+                        <div></div>
+
                         <div></div>
                         <div></div>
                         <div></div>
+                        <div class="lit"></div>
+
+                        <div class="lit"></div>
                         <div></div>
                         <div></div>
+                        <div class="lit"></div>
+
                         <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
+                        <div class="lit"></div>
+                        <div class="lit"></div>
                         <div></div>
                       </div>
                       <div>
@@ -8761,26 +8947,25 @@ background: linear-gradient(90deg, rgba(52,50,99,1) 0%, rgba(35,34,71,1) 34%, rg
                         <div></div>
                         <div class="lit"></div>
 
-                        <div></div>
-                        <div></div>
-                        <div class="lit"></div>
-                        <div></div>
-
-                        <div></div>
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
+                        <div class="lit"></div>
 
                         <div class="lit"></div>
                         <div></div>
                         <div></div>
+                        <div class="lit"></div>
+
+                        <div class="lit"></div>
                         <div></div>
+                        <div></div>
+                        <div class="lit"></div>
 
-
+                        <div></div>
                         <div class="lit"></div>
                         <div class="lit"></div>
-                        <div class="lit"></div>
-                        <div class="lit"></div>
+                        <div></div>
                       </div>
                     </div>
 
@@ -8906,7 +9091,7 @@ background: linear-gradient(90deg, rgba(52,50,99,1) 0%, rgba(35,34,71,1) 34%, rg
                         <div></div>
                       </div>
                     </div>
-                    <div class="game-score--visitor-team">N. Y.</div>
+                    <div class="game-score--visitor-team">&nbsp;N. Y.</div>
                     <div class="game-score--home-team">Tor</div>
                     <div class="game-score-box run">
                       <div></div>
@@ -8975,8 +9160,8 @@ background: linear-gradient(90deg, rgba(52,50,99,1) 0%, rgba(35,34,71,1) 34%, rg
                         <div></div>
                       </div>
                     </div>
-                    <div class="game-score--visitor-team">Balt</div>
-                    <div class="game-score--home-team">Bost</div>
+                    <div class="game-score--visitor-team">&nbsp;Balt</div>
+                    <div class="game-score--home-team">&nbsp;Bost</div>
                     <div class="game-score-box run">
                       <div></div>
                       <div></div>
@@ -9050,7 +9235,7 @@ background: linear-gradient(90deg, rgba(52,50,99,1) 0%, rgba(35,34,71,1) 34%, rg
                       </div>
                     </div>
                     <div class="game-score--visitor-team">Det</div>
-                    <div class="game-score--home-team">Kan Cy</div>
+                    <div class="game-score--home-team">Kan <span style="transform:rotate(-3deg);display:inline-block;">Cy</span></div>
                     <div class="game-score-box run">
                       <div></div>
                       <div></div>
@@ -9243,8 +9428,8 @@ background: linear-gradient(90deg, rgba(52,50,99,1) 0%, rgba(35,34,71,1) 34%, rg
                         <div class="lit"></div>
                       </div>
                     </div>
-                    <div class="game-score--visitor-team">Minn</div>
-                    <div class="game-score--home-team">Sea</div>
+                    <div class="game-score--visitor-team">&nbsp;Minn</div>
+                    <div class="game-score--home-team">&nbsp;Sea</div>
                     <div class="game-score-box run">
                       <div></div>
                       <div></div>
@@ -9568,8 +9753,8 @@ background: linear-gradient(90deg, rgba(52,50,99,1) 0%, rgba(35,34,71,1) 34%, rg
                   </div>
                   <div class="game-score">
                     <div class="game-score--inning-box"></div>
-                    <div class="game-score--visitor-team">Oak</div>
-                    <div class="game-score--home-team">Calif.</div>
+                    <div class="game-score--visitor-team">&nbsp;Oak</div>
+                    <div class="game-score--home-team"><span style="letter-spacing:0.2em;">Calif.</span></div>
                     <div class="game-score-box run">
                       <div></div>
                       <div></div>
@@ -9770,8 +9955,8 @@ background: linear-gradient(90deg, rgba(52,50,99,1) 0%, rgba(35,34,71,1) 34%, rg
                         <div></div>
                       </div>
                     </div>
-                    <div class="game-score--visitor-team">Cubs</div>
-                    <div class="game-score--home-team">Mont</div>
+                    <div class="game-score--visitor-team">&nbsp;Cubs</div>
+                    <div class="game-score--home-team"><span style="letter-spacing:0.2em">Mont</span></div>
                     <div class="game-score-box run">
                       <div></div>
                       <div></div>
@@ -9840,7 +10025,7 @@ background: linear-gradient(90deg, rgba(52,50,99,1) 0%, rgba(35,34,71,1) 34%, rg
                       </div>
                     </div>
                     <div class="game-score--visitor-team">St Lou</div>
-                    <div class="game-score--home-team">N. Y.</div>
+                    <div class="game-score--home-team">&nbsp;&nbsp;N. Y.</div>
                     <div class="game-score-box run">
                       <div></div>
                       <div></div>
@@ -9913,7 +10098,7 @@ background: linear-gradient(90deg, rgba(52,50,99,1) 0%, rgba(35,34,71,1) 34%, rg
                         <div class="lit"></div>
                       </div>
                     </div>
-                    <div class="game-score--visitor-team">Atl.</div>
+                    <div class="game-score--visitor-team">&nbsp;Atl.</div>
                     <div class="game-score--home-team">Houst</div>
                     <div class="game-score-box run">
                       <div></div>
@@ -10081,7 +10266,7 @@ background: linear-gradient(90deg, rgba(52,50,99,1) 0%, rgba(35,34,71,1) 34%, rg
                       </div>
                     </div>
                     <div class="game-score--visitor-team">Cinci</div>
-                    <div class="game-score--home-team">S. D.</div>
+                    <div class="game-score--home-team">&nbsp;S.&nbsp;&nbsp;D.</div>
                     <div class="game-score-box run">
                       <div></div>
                       <div></div>
