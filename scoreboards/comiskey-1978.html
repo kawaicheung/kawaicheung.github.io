@@ -68,6 +68,7 @@
         overflow: hidden;
         font-size: 12px;
         border: solid 1px #ccc;
+        
         animation: bleed-in 10s forwards;
       }
 
@@ -2132,12 +2133,26 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
         transform: translateX(-50%);
         width: 1.6em;
         height: 0.45em;
-        background: #fff;
+        background: #efefef;
         border-top-left-radius: 50%;
         border-top-right-radius: 50%;
         clip-path: polygon(0 0, 100% 0%, 90% 100%, 10% 100%);
       }
 
+      .budweiser-panel--cup .seal-overhang-inner {
+        position: absolute;
+        top: 16%;
+        left: 50%;
+        transform: translateX(-50%) scale(0.8);
+        width: 1.6em;
+        height: 0.45em;
+        border-top-left-radius: 50%;
+        border-top-right-radius: 50%;
+        clip-path: polygon(0 0, 100% 0%, 90% 100%, 10% 100%);
+        opacity: 0.3;
+background: rgb(176,218,244);
+background: linear-gradient(180deg, rgba(176,218,244,1) 19%, rgba(255,251,254,1) 25%, rgba(176,218,244,1) 36%, rgba(176,218,244,1) 51%, rgba(218,241,255,1) 56%, rgba(176,218,244,1) 100%);
+      }
 
       .budweiser-panel--cup .seal {
         position: absolute;
@@ -2146,7 +2161,7 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
         transform: translateX(-50%);
         width: 0.88em;
         height: 0.88em;
-        background-color: #fff;
+        background-color: #efefef;
         border-radius: 2em;
         display: flex;
         align-items: center;
@@ -2154,34 +2169,17 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
       }
 
       .budweiser-panel--cup .seal-1 {
-        width: 0.6em;
-        height: 0.6em;
+        width: 0.65em;
+        height: 0.65em;
         background-color: #fff;
         border-radius: 2em;
         background-color: #000099;
         display: flex;
         align-items: center;
         justify-content: center;
+background: radial-gradient(circle, rgba(176,218,244,1) 29%, rgba(255,251,254,1) 45%, rgba(176,218,244,1) 56%, rgba(176,218,244,1) 61%, rgba(218,241,255,1) 76%, rgba(176,218,244,1) 100%);
       }
 
-      .budweiser-panel--cup .seal-2 {
-        width: 0.48em;
-        height: 0.48em;
-        background-color: #fff;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transform: rotate(45deg);
-      }
-
-      .budweiser-panel--cup .seal-3 {
-        width: 0.16em;
-        height: 0.16em;
-        background-color: rgba(0,0,188,0.7);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
 
       .budweiser-panel--cup .flank {
         position: absolute;
@@ -2189,9 +2187,28 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
         height: 0.45em;
         top: 34%;
         left: 6%;
-        background-color: #fff;
+        background-color: #efefef;
         transform: rotate(-20deg);
         clip-path: polygon(20% 0, 100% 0, 100% 100%, 20% 100%, 0% 50%);
+      }
+
+      .budweiser-panel--cup .flank-inner {
+        position: absolute;
+        width: 0.65em;
+        height: 0.45em;
+        top: 34%;
+        left: 6%;
+        opacity: 0.7;
+        background: linear-gradient(90deg, rgba(176,218,244,1) 19%, rgba(255,251,254,1) 25%, rgba(176,218,244,1) 35%, rgba(176,218,244,1) 38%, rgba(218,241,255,1) 56%, rgba(176,218,244,1) 61%);
+        transform: rotate(-20deg) scale(0.7);
+        clip-path: polygon(20% 0, 100% 0, 100% 100%, 20% 100%, 0% 50%);
+      }
+
+      .budweiser-panel--cup .flank-inner.right {
+        left: 67%;
+        transform: rotate(200deg);
+        background: rgb(176,218,244);
+background: linear-gradient(90deg, rgba(176,218,244,1) 19%, rgba(255,251,254,1) 25%, rgba(176,218,244,1) 36%, rgba(176,218,244,1) 51%, rgba(218,241,255,1) 56%, rgba(176,218,244,1) 100%);
       }
 
       .budweiser-panel--cup .flank.right {
@@ -2205,7 +2222,7 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
         height: 0.6em;
         top: 21%;
         left: 14%;
-        background-color: #fff;
+        background-color: #efefef;
         clip-path: polygon(0 0,25% 75%,95% 90%, 60% 10%);
       }
 
@@ -2332,9 +2349,9 @@ background: linear-gradient(283deg, rgba(52,50,99,1) 0%, rgba(51,50,115,1) 30%, 
 
       .winston-panel > div > span {
         position: absolute;
-        top: 48%;
-        left: 39%;
-        font-size: 2.3em;
+        top: 45%;
+        left: 24%;
+        font-size: 2.8em;
         line-height: 0.85em;
         color: #bf4c48;
         font-family: 'DM Serif Display';
@@ -4727,17 +4744,16 @@ background: linear-gradient(90deg, rgba(52,50,99,1) 0%, rgba(35,34,71,1) 34%, rg
                     <div class="suds"></div>
                     <div class="seal">
                       <div class="seal-1">
-                        <div class="seal-2">
-                          <div class="seal-3">
-                          </div>
-                        </div>
                       </div>
                     </div>
                     <div class="flank"></div>
+                    <div class="flank-inner"></div>
                     <div class="flank right"></div>
+                    <div class="flank-inner right"></div>
                     <div class="seal-wrap"></div>
                     <div class="seal-wrap right"></div>
                     <div class="seal-overhang"></div>
+                    <div class="seal-overhang-inner"></div>
                   </div>
                   <div class="budweiser-panel--cup two">
                     <div class="red"></div>
@@ -4749,17 +4765,16 @@ background: linear-gradient(90deg, rgba(52,50,99,1) 0%, rgba(35,34,71,1) 34%, rg
                     <div class="suds"></div>
                     <div class="seal">
                       <div class="seal-1">
-                        <div class="seal-2">
-                          <div class="seal-3">
-                          </div>
-                        </div>
                       </div>
                     </div>
                     <div class="flank"></div>
+                    <div class="flank-inner"></div>
                     <div class="flank right"></div>
+                    <div class="flank-inner right"></div>
                     <div class="seal-wrap"></div>
                     <div class="seal-wrap right"></div>
                     <div class="seal-overhang"></div>
+                    <div class="seal-overhang-inner"></div>
                   </div>
                   <div class="budweiser-panel--cup three">
                     <div class="red"></div>
@@ -4771,17 +4786,16 @@ background: linear-gradient(90deg, rgba(52,50,99,1) 0%, rgba(35,34,71,1) 34%, rg
                     <div class="suds"></div>
                     <div class="seal">
                       <div class="seal-1">
-                        <div class="seal-2">
-                          <div class="seal-3">
-                          </div>
-                        </div>
                       </div>
                     </div>
                     <div class="flank"></div>
+                    <div class="flank-inner"></div>
                     <div class="flank right"></div>
+                    <div class="flank-inner right"></div>
                     <div class="seal-wrap"></div>
                     <div class="seal-wrap right"></div>
                     <div class="seal-overhang"></div>
+                    <div class="seal-overhang-inner"></div>
                   </div>
                   <div class="budweiser-panel--cup four">
                     <div class="red"></div>
@@ -4793,17 +4807,16 @@ background: linear-gradient(90deg, rgba(52,50,99,1) 0%, rgba(35,34,71,1) 34%, rg
                     <div class="suds"></div>
                     <div class="seal">
                       <div class="seal-1">
-                        <div class="seal-2">
-                          <div class="seal-3">
-                          </div>
-                        </div>
                       </div>
                     </div>
                     <div class="flank"></div>
+                    <div class="flank-inner"></div>
                     <div class="flank right"></div>
+                    <div class="flank-inner right"></div>
                     <div class="seal-wrap"></div>
                     <div class="seal-wrap right"></div>
                     <div class="seal-overhang"></div>
+                    <div class="seal-overhang-inner"></div>
                   </div>
                   <div class="budweiser-panel--cup five">
                     <div class="red"></div>
@@ -4814,14 +4827,14 @@ background: linear-gradient(90deg, rgba(52,50,99,1) 0%, rgba(35,34,71,1) 34%, rg
                   <div class="budweiser-panel--apostrophe"></div>
                   <div class="budweiser-panel--small-circle-white"></div>
                   <span>This Bud&nbsp;s<br>For You.</span>
-                  <span class="anheuser">Anheuser Busch St Louis.</span>
+                  <span class="anheuser">Ka Wai Cheung Was Here</span>
                 </div>
                 <div class="winston-panel">
                   <div>
-                    <div class="the-dude">
+                   <!-- <div class="the-dude">
                       <div class="helmet"></div>
                       <div class="hair"></div>
-                    </div>
+                    </div>-->
                     <span>Winston<br>Lights</span>
                     <div class="winston-panel--cig-box--front"></div>
                     <div class="winston-panel--cig-box--side"></div>
