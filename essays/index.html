@@ -62,6 +62,11 @@
 		font-weight: 800;
 		margin-bottom: 2.4rem;
 	}
+
+	h2 > span {
+		font: inherit;
+		white-space: nowrap;
+	}
 	
 	h3 {
 		font-size: 1.2rem;
@@ -109,8 +114,10 @@
 			flex-direction: column;
 		}
 
-		
-		span {
+		.main > div > div {
+			width: auto;
+		}
+		li > span {
 			display: none;
 		}
 	}
@@ -120,7 +127,7 @@
   <body>
     <div class="main">
     	<h1><a href="/">kawaicheung.io</a>&nbsp;/&nbsp;<a href="http://www.lifeimitatescode.com/">lifeimitatescode.com</a></h1>
-			<h2>Essays by Ka Wai Cheung</h2>
+			<h2>Essays by <span>Ka Wai Cheung</span></h2>
 			<div>
 				<div>
 					<h3>about building software</h3>
