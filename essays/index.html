@@ -15,14 +15,14 @@
 	}
 	
 	.main {
-		margin: 3rem 0 8rem 10%;
+		margin: 2rem 0 8rem 3rem;
 		display: flex;
 		flex-direction: column;
 	}
 
 	.main > div {
 		display: flex;
-		gap: 1rem;
+		gap: 2rem;
 	}
 
 	.main > div > div {
@@ -32,8 +32,6 @@
 	a {
 		font-size: inherit;
 		color: #c00;
-		text-decoration: none;
-		border-bottom: solid 1px #c00;
 	}
 	
 	a:hover {
@@ -58,7 +56,7 @@
 	
 	h2 {
 		opacity: 0.9;
-		font-size: 2.4rem;
+		font-size: 2rem;
 		font-weight: 800;
 		margin-bottom: 2.4rem;
 	}
@@ -72,7 +70,7 @@
 		font-size: 1.2rem;
 		letter-spacing: -0.02rem;
 		margin-bottom: 1.2rem;
-		font-weight: 600;
+		font-weight: 700;
 	}
 	
 	ul {
@@ -82,6 +80,8 @@
 	li {
 	  margin-bottom: 0.8rem;
 	  list-style: none;
+	  display: flex;
+	  align-items: center;
 	}
 	
 	li span {
@@ -91,6 +91,7 @@
 		padding: 0.1rem 0.4rem;
 		border-radius: 0.2rem;
 		margin-left: 0.5rem;
+		border: solid 1px #ccc;
 	}
 	
 	strong {
@@ -103,7 +104,7 @@
 	  font-style: italic;
 	}
 	
-	@media only screen and (max-width: 768px) {
+	@media only screen and (max-width: 992px) {
 		.main {
 			margin: 2rem auto 0 auto;
 			width: 90%;
@@ -130,7 +131,7 @@
 			<h2>Essays by <span>Ka Wai Cheung</span></h2>
 			<div>
 				<div>
-					<h3>about building software</h3>
+					<h3>on building software</h3>
 					<ul>
 						<li><a href="https://docs.google.com/document/d/1UDoDaPYbXZCbNZmOsMZhV3n5fugCIQlrg71_s1dSorM/edit?usp=sharing">The thing to think about with feature gating</a><span>Dec 2023</span></li>
 						<li><a href="https://docs.google.com/document/d/1FalBXUg0O36XrHqYibIeP3NUToT9WwGZaROhMRxdbpU/edit?usp=sharing">Why cache invalidation is actually hard</a><span>Dec 2023</span></li>
