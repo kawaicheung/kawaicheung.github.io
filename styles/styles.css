@@ -183,7 +183,6 @@ body > div p img.side-icon {
   width: 1.4rem;
   left: -2.8rem;
   top: 0.4rem;
-  transform: rotate(-10deg);
   border-radius: 4rem;
   border: solid 1px var(--color--border-line);
 }
