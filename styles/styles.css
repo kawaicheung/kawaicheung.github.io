@@ -253,7 +253,8 @@ div.essay-list > ul > li > span {
   body > nav {
     padding: 0;
     right: 4vw;
-    top: 0.5rem;
+    top: inherit;
+    bottom: 0.5rem;
     width: auto;
     border-left: none;
   }
@@ -317,5 +318,8 @@ div.essay-list > ul > li > span {
   }
   body > div.home p img.side-icon {
     display: none;
+  }
+  body > div.home ul {
+    align-items: flex-end;
   }
 }
