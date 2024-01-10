@@ -250,6 +250,7 @@ div.essay-list > ul > li > span {
     bottom: 0rem;
     width: auto;
     border-left: none;
+    background-color: transparent;
   }
   body > nav ul {
     display: none;
