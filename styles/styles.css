@@ -242,19 +242,12 @@ div.essay-list > ul > li > span {
   body {
     margin-left: 4vw;
     margin-right: 4vw;
-    /* z-index: 1;
-		position: fixed;
-		width: 5rem;
-		top: 0;
-		right: 0rem;
-		border-left: solid 1px var(--color--border-line);
-		padding: 3rem 2rem 1rem 1rem;*/
   }
   body > nav {
     padding: 0;
     right: 4vw;
     top: inherit;
-    bottom: 0.5rem;
+    bottom: 0rem;
     width: auto;
     border-left: none;
   }
@@ -268,6 +261,7 @@ div.essay-list > ul > li > span {
   body > div a.header-link {
     font-size: 1rem;
     letter-spacing: -0.01rem;
+    margin-top: 2rem;
   }
   body > div a.header-link:hover {
     background-color: var(--color--header-link-hover-bg);
