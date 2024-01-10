@@ -240,12 +240,12 @@ div.essay-list > ul > li > span {
 }
 @media only screen and (max-width: 992px) {
   body {
-    margin-left: 4vw;
-    margin-right: 4vw;
+    margin-left: 1rem;
+    margin-right: 1rem;
   }
   body > nav {
     padding: 0;
-    right: 4vw;
+    right: 1rem;
     top: inherit;
     bottom: 0rem;
     width: auto;
@@ -298,7 +298,7 @@ div.essay-list > ul > li > span {
     margin-bottom: 1rem;
   }
   body > div.home h1 {
-    font-size: 1.8rem;
+    font-size: 1.6rem;
   }
   body > div.home h2 {
     font-size: 1.6rem;
