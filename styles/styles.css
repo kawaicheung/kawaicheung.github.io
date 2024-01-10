@@ -317,4 +317,7 @@ div.essay-list > ul > li > span {
   body > div.home ul {
     align-items: flex-end;
   }
+  div.essay-list > ul {
+    margin-left: 0rem;
+  }
 }
