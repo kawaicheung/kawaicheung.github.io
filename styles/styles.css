@@ -90,6 +90,10 @@ body > div.home ul li a {
 body > div.home ul li a:hover {
   font-weight: 600;
 }
+body > div.home p {
+  font-size: 0.9rem;
+  line-height: 1.4rem;
+}
 body > div {
   display: flex;
   width: 34rem;
