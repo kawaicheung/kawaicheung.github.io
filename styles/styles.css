@@ -134,6 +134,9 @@ body > div h2 {
   -webkit-background-clip: text !important;
   -webkit-text-fill-color: rgba(0, 0, 0, 0) !important;
 }
+body > div h2 div.tag {
+  
+}
 body > div h2.blue {
   background: linear-gradient(135deg, blue 0, skyblue 60%, blue 90%);
 }
