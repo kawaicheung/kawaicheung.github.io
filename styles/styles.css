@@ -126,6 +126,7 @@ body > div a.header-link:hover {
 }
 body > div h2 {
   width: fit-content;
+  position: relative;
   font-size: 2.4rem;
   letter-spacing: -0.05rem;
   font-weight: 800;
@@ -142,6 +143,8 @@ body > div h2 div.tag {
   transform: translateX(90%);
   background: #44a344;
   -webkit-text-fill-color: white;
+  color: white;
+  width: fit-content;
   padding: 0.1rem 0.3rem;
   font-size: 0.6rem;
   letter-spacing: -0.01rem;
