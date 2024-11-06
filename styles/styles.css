@@ -125,6 +125,7 @@ body > div a.header-link:hover {
   background-color: var(--color--header-link-hover-bg);
 }
 body > div h2 {
+  width: fit-content;
   font-size: 2.4rem;
   letter-spacing: -0.05rem;
   font-weight: 800;
@@ -135,7 +136,17 @@ body > div h2 {
   -webkit-text-fill-color: rgba(0, 0, 0, 0) !important;
 }
 body > div h2 div.tag {
-  
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: translateX(90%);
+  background: #44a344;
+  -webkit-text-fill-color: white;
+  padding: 0.1rem 0.3rem;
+  font-size: 0.6rem;
+  letter-spacing: -0.01rem;
+  font-weight: 500;
+  rotate: -5deg;
 }
 body > div h2.blue {
   background: linear-gradient(135deg, blue 0, skyblue 60%, blue 90%);
