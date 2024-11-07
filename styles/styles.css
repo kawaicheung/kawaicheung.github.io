@@ -241,19 +241,19 @@ strong {
   font: inherit;
   font-weight: 600;
 }
-div.essay-list {
+div.just-a-list {
   margin-bottom: 1rem;
 }
-div.essay-list > ul {
+div.just-a-list > ul {
   margin-left: 0.6rem;
 }
-div.essay-list > ul > li {
+div.just-a-list > ul > li {
   font-size: 0.8rem;
   font-family: var(--fonts-serif);
   margin-bottom: 0.4rem;
   letter-spacing: -0.01rem;
 }
-div.essay-list > ul > li > span {
+div.just-a-list > ul > li > span {
   padding-left: 4px;
   font-family: var(--fonts-system);
   font-size: 0.55rem;
@@ -338,7 +338,7 @@ div.essay-list > ul > li > span {
   body > div.home ul {
     align-items: flex-end;
   }
-  div.essay-list > ul {
+  div.just-a-list > ul {
     margin-left: 0rem;
   }
 }
