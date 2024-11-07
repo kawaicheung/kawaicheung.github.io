@@ -245,16 +245,16 @@ strong {
 div.essay-list {
   margin-bottom: 1rem;
 }
-ul {
+body > div > ul {
   margin-left: 0.6rem;
 }
-ul > li {
+body > div> ul > li {
   font-size: 0.8rem;
   font-family: var(--fonts-serif);
   margin-bottom: 0.4rem;
   letter-spacing: -0.01rem;
 }
-ul > li > span {
+body > div > ul > li > span {
   padding-left: 4px;
   font-family: var(--fonts-system);
   font-size: 0.55rem;
