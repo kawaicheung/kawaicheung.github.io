@@ -207,6 +207,7 @@ body > div p img.side-icon {
   border-radius: 4rem;
   border: solid 1px var(--color--border-line);
 }
+
 hr {
   margin: 0.6rem 0 2rem 0;
   width: 30%;
@@ -244,16 +245,16 @@ strong {
 div.essay-list {
   margin-bottom: 1rem;
 }
-div.essay-list > ul {
+ul {
   margin-left: 0.6rem;
 }
-div.essay-list > ul > li {
+ul > li {
   font-size: 0.8rem;
   font-family: var(--fonts-serif);
   margin-bottom: 0.4rem;
   letter-spacing: -0.01rem;
 }
-div.essay-list > ul > li > span {
+ul > li > span {
   padding-left: 4px;
   font-family: var(--fonts-system);
   font-size: 0.55rem;
