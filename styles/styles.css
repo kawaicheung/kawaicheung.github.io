@@ -249,12 +249,8 @@ div.just-a-list {
   margin-bottom: 1rem;
 }
 div.just-a-list > ul {
-  margin-left: 0.6rem;
-}
-div.just-a-list > ul li::before {
-  content: "-"; 
-  color: #666;   
-  margin-right: 0.3rem; 
+  margin-left: 1.2rem;
+  list-style-type: circle;
 }
 
 div.just-a-list > ul > li {
