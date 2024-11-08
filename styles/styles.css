@@ -241,12 +241,21 @@ strong {
   font: inherit;
   font-weight: 600;
 }
+strike {
+  font: inherit;
+}
+
 div.just-a-list {
   margin-bottom: 1rem;
 }
 div.just-a-list > ul {
   margin-left: 0.6rem;
 }
+div.just-a-list > ul li::before {
+  content: "→"; /* Unicode arrow symbol */
+  margin-right: 8px; /* Space between arrow and text */
+}
+
 div.just-a-list > ul > li {
   font-size: 0.8rem;
   font-family: var(--fonts-serif);
