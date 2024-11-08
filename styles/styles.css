@@ -252,8 +252,9 @@ div.just-a-list > ul {
   margin-left: 0.6rem;
 }
 div.just-a-list > ul li::before {
-  content: "→"; /* Unicode arrow symbol */
-  margin-right: 8px; /* Space between arrow and text */
+  content: "-"; 
+  color: #666;   
+  margin-right: 0.3rem; 
 }
 
 div.just-a-list > ul > li {
