@@ -344,7 +344,4 @@ div.just-a-list > ul > li > span {
   body > div.home ul {
     align-items: flex-end;
   }
-  div.just-a-list > ul {
-    margin-left: 0rem;
-  }
 }
