@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Season</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#f6f4eb">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="season-logo.png" type="image/png">
+    <link rel="apple-touch-icon" href="season-logo.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="goals.css">
+  </head>
+  <body>
+    <div class="header-container">
+      <svg enable-background="new 0 0 616.93 146.36" viewBox="0 0 616.93 146.36" xmlns="http://www.w3.org/2000/svg" height="22.5" width="94.5">
+        <path fill="#101010" d="m20.76 31.49c0 11.29 7.38 18.24 25.62 29.53l15.85 9.77c14.98 9.12 24.32 18.89 24.32 34.96 0 25.19-20.63 40.17-41.69 40.17-22.37 0-37.13-15.63-43.86-36.05l18.02-10.42c7.6 28.01 20.63 37.35 32.14 37.35 12.38 0 21.28-7.38 21.28-19.98 0-11.51-3.47-18.67-20.41-29.1l-19.98-12.37c-14.11-8.69-25.62-18.02-25.62-35.18 0-21.28 18.24-39.74 47.34-39.74 11.07 0 21.5 1.52 28.45 4.56l-4.34 31.7c-10.22-18.45-23.9-26.05-37.14-26.05-12.16 0-19.98 7.82-19.98 20.85z">
+        </path>
+        <path fill="#101010" d="m178.85 108.57.43 34.53h-80.13c4.78-12.59 5.65-22.58 5.65-34.31v-72.53c0-11.73-.87-21.71-5.65-34.31h80.13l-.87 33.66c-10.21-17.59-20.19-27.14-49.94-27.14h-4.34c-.65 9.12-.87 18.46-.87 27.79v30.84h5.43c20.19 0 28.88-3.26 39.09-15.42v36.05c-10.21-10.86-18.89-14.33-39.09-14.33h-5.43v35.4c0 9.55.22 18.24 1.3 27.79h3.91c29.75 0 38-8.69 50.38-28.02z">
+        </path>
+        <path fill="#101010" d="m264.45 143.1c1.09-3.04 1.95-8.9 1.95-15.42 0-5.65-.65-11.73-2.17-17.16l-3.91-13.03h-41.26l-3.91 13.03c-1.74 5.65-2.61 12.16-2.61 17.81 0 6.08.87 11.51 2.82 14.77h-25.41c7.17-8.47 11.51-18.02 16.5-33.66l33.68-107.49h10.21l33.88 107.49c4.99 15.63 8.9 25.41 15.63 33.66zm-8.08-51.9-18.67-62.76-18.9 62.76z">
+        </path>
+        <path fill="#101010" d="m322.17 31.49c0 11.29 7.38 18.24 25.62 29.53l15.85 9.77c14.98 9.12 24.32 18.89 24.32 34.96 0 25.19-20.63 40.17-41.69 40.17-22.37 0-37.13-15.63-43.86-36.05l18.02-10.42c7.6 28.01 20.63 37.35 32.14 37.35 12.38 0 21.28-7.38 21.28-19.98 0-11.51-3.47-18.67-20.41-29.1l-19.98-12.38c-14.11-8.69-25.62-18.02-25.62-35.18 0-21.28 18.24-39.74 47.34-39.74 11.07 0 21.5 1.52 28.45 4.56l-4.34 31.7c-10.21-18.46-23.89-26.06-37.13-26.06-12.18.02-19.99 7.84-19.99 20.87z">
+        </path>
+        <path fill="#101010" d="m402.73 72.74c0-40.6 20.2-72.74 54.07-72.74 28.88 0 51.68 29.97 51.68 74.05 0 40.39-20.41 72.31-54.07 72.31-29.31 0-51.68-29.53-51.68-73.62zm85.56 10.64c0-50.16-16.5-75.13-36.7-75.13-19.98 0-28.66 20.63-28.66 54.72 0 43.86 14.33 75.13 36.48 75.13 19.97.01 28.88-22.79 28.88-54.72z">
+        </path>
+        <path fill="#101010" d="m617.93 1.95c-4.56 12.59-6.3 20.63-6.3 32.35v108.8h-13.25l-61.23-112.05v79.69c0 11.73 1.3 19.76 5.86 32.35h-20.19c4.34-12.59 6.08-20.63 6.08-32.35v-78.38c0-10.86-1.3-22.15-6.08-30.4h28.23c-1.3 2.39-1.95 4.78-1.95 6.95 0 3.91 1.74 7.82 4.56 13.03l49.73 90.77v-78.4c0-11.73-1.3-19.76-5.86-32.35h20.4z">
+        </path>
+      </svg>
+      <div class="header-options">
+        <div id="rd-chat-btn">
+          <div class="green-dot"></div>
+          <img src="img/alejandra.png" class="rd-image">
+        </div>
+        <div class="menu-item" id="ai-chat-btn">
+          <svg width="44" height="44" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M21 15C21 15.5304 20.7893 16.0391 20.4142 16.4142C20.0391 16.7893 19.5304 17 19 17H7L3 21V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H19C19.5304 3 20.0391 3.21071 20.4142 3.58579C20.7893 3.96086 21 4.46957 21 5V15Z" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="menu-item" id="more-menu-btn">
+          <svg width="44" height="44" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path fill="#000" d="M13 12C13 11.4477 12.5523 11 12 11C11.4477 11 11 11.4477 11 12C11 12.5523 11.4477 13 12 13C12.5523 13 13 12.5523 13 12Z" />
+            <path fill="#000" d="M6 12C6 11.4477 5.55229 11 5 11C4.44772 11 4 11.4477 4 12C4 12.5523 4.44772 13 5 13C5.55229 13 6 12.5523 6 12Z" />
+            <path fill="#000" d="M20 12C20 11.4477 19.5523 11 19 11C18.4477 11 18 11.4477 18 12C18 12.5523 18.4477 13 19 13C19.5523 13 20 12.5523 20 12Z" />
+          </svg>
+        </div>
+      </div>
+    </div>
+    <main>
+      <div class="win-container">
+        <h1>Welcome back, Michelle!</h1>
+        <p>
+          You've done <strong>five straight days</strong> of exercise. 
+          Consider skipping your run today and resting. But keep it up!
+        </p>
+        <div class="timeline" id="timeline">
+          <div class="line"></div>
+          <div class="dot pulse appt-summary-btn" data-appointment-date="2024-12-12"></div>
+          <div class="dot pulse appt-summary-btn" data-appointment-date="2025-02-15"></div>
+          <div class="dot pulse appt-summary-btn" data-appointment-date="2025-03-02"></div>
+          <div class="dot pulse appt-summary-btn" data-appointment-date="2025-04-12"></div>
+          <div class="dot pulse appt-summary-btn" data-appointment-date="2025-05-21"></div>
+          <div class="dot pulse appt-summary-btn" data-appointment-date="2025-07-11"></div>
+          <div class="dot today"></div>
+          <div class="dot" data-appointment-date="2025-08-05"></div>
+        </div>
+        <div class="cta-button appt-summary-btn">
+          <span>July 11 post-visit report</span>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1 12C1 12 5 4 12 4C19 4 23 12 23 12C23 12 19 20 12 20C5 20 1 12 1 12Z" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15Z" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </div>
+    </main>
+    <div class="bottom-panel">
+      <div class="bottom-panel-header">
+        <span class="bottom-panel-question">How are your goals going?</span>
+      </div>
+      <div class="bottom-panel-content">
+        <div class="bottom-panel-grid">
+          <div class="bottom-panel-square main">
+            <div class="weight-goal-headline">Weight goal</div>
+            <div class="weight-display">
+              <div class="current-weight">
+                <span class="weight-number">195</span>
+                <span class="weight-unit">lbs</span>
+              </div>
+              <div class="weight-chart">
+                <svg width="120" height="80" viewBox="0 0 120 80">
+                  <!-- Y-axis labels -->
+                  <text x="5" y="15" font-family="var(--font-family--sans-serif)" font-size="8" fill="#666">200</text>
+                  <text x="5" y="35" font-family="var(--font-family--sans-serif)" font-size="8" fill="#666">195</text>
+                  <text x="5" y="55" font-family="var(--font-family--sans-serif)" font-size="8" fill="#666">190</text>
+                  
+                  <!-- Y-axis line -->
+                  <line x1="25" y1="10" x2="25" y2="60" stroke="#ccc" stroke-width="1"/>
+                  
+                  <!-- X-axis line -->
+                  <line x1="25" y1="60" x2="110" y2="60" stroke="#ccc" stroke-width="1"/>
+                  
+                  <!-- Bars -->
+                  <rect x="30" y="45" width="8" height="15" fill="#FF4D4D"/>
+                  <rect x="42" y="40" width="8" height="20" fill="#FF944D"/>
+                  <rect x="54" y="35" width="8" height="25" fill="#FFD84D"/>
+                  <rect x="66" y="30" width="8" height="30" fill="#66CC66"/>
+                  <rect x="78" y="25" width="8" height="35" fill="#4CAF50"/>
+                  <rect x="90" y="20" width="8" height="40" fill="#2196F3"/>
+                  <rect x="102" y="15" width="8" height="45" fill="#9C27B0"/>
+                </svg>
+              </div>
+            </div>
+            <div class="weight-caption">You're two pounds from your goal!</div>
+          </div>
+          <div class="bottom-panel-square square square-1 goals-logging-btn">Saying "no" to work treats?</div>
+          <div class="bottom-panel-square square square-2 goals-logging-btn">Drinking 64oz of water a day?</div>
+          <div class="bottom-panel-square square square-3 goals-logging-btn">Exercising 15-20 min, 5 days per week?</div>
+          <div class="bottom-panel-square square square-4 goals-logging-btn">Not eating while watching TV?</div>
+        </div>
+      </div>
+    </div>
+    <!-- More menu -->
+    <div class="popup" id="more-menu">
+      <div class="popup-content more">
+        <div class="close" id="more-menu-close-btn">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M18 6L6 18" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M6 6L18 18" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="chicklets">
+          <div class="chicklet log-meal">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M23 19A2 2 0 0 1 21 21H3A2 2 0 0 1 1 19V8A2 2 0 0 1 3 6H7L9 3H15L17 6H21A2 2 0 0 1 23 8Z" stroke="#666" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="12" cy="13" r="4" stroke="#666" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span>Capture meal</span>
+          </div>
+          <div class="chicklet meal-ideas">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="#666" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M2 17L12 22L22 17" stroke="#666" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M2 12L12 17L22 12" stroke="#666" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span>Meal ideas</span>
+          </div>
+          <div class="chicklet progress-check">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M22 11.08V12A10 10 0 1 1 5.68 3.49" stroke="#666" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M22 4L12 14.01L9 11.01" stroke="#666" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span>Progress check</span>
+          </div>
+          <div class="chicklet snack-help">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 2L13.09 8.26L20 9L13.09 9.74L12 16L10.91 9.74L4 9L10.91 8.26L12 2Z" stroke="#666" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span>Snack help</span>
+          </div>
+          <div class="chicklet grocery-list">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M20 21V19C20 17.9391 19.5786 16.9217 18.8284 16.1716C18.0783 15.4214 17.0609 15 16 15H8C6.93913 15 5.92172 15.4214 5.17157 16.1716C4.42143 16.9217 4 17.9391 4 19V21" stroke="#666" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M12 11C14.2091 11 16 9.20914 16 7C16 4.79086 14.2091 3 12 3C9.79086 3 8 4.79086 8 7C8 9.20914 9.79086 11 12 11Z" stroke="#666" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span>Account Settings</span>
+          </div>
+          <div class="chicklet more">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="12" cy="12" r="1" fill="#666"/>
+              <circle cx="6" cy="12" r="1" fill="#666"/>
+              <circle cx="18" cy="12" r="1" fill="#666"/>
+            </svg>
+            <span>More</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Chat: Season Assistant -->
+    <div class="popup" id="ai-chat">
+      <div class="popup-content ai-chat">
+        <div class="close" id="ai-chat-close-btn">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M18 6L6 18" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M6 6L18 18" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="chat-container">
+          <div class="chat-header">
+            <div class="ai-profile">
+              <div class="ai-info">
+                <h3>Season Assistant</h3>
+              </div>
+              <div class="chicklets">
+              </div>
+            </div>
+          </div>
+          <div class="chat-messages">
+            <div class="message ai-message">
+              <div class="message-content">
+                <p>Hi Michelle! How are you feeling today? Any questions about your nutrition plan?</p>
+              </div>
+              <span class="message-time">2:30 PM</span>
+            </div>
+            <div class="message user-message">
+              <div class="message-content">
+                <p>Hi Jamie! I've been following the meal plan you gave me, but I'm still feeling tired in the afternoons. Any suggestions?</p>
+              </div>
+              <span class="message-time">2:32 PM</span>
+            </div>
+            <div class="message ai-message">
+              <div class="message-content">
+                <p>That's great that you're following the plan! Afternoon fatigue is common. Let's look at your protein intake at breakfast - are you getting at least 20g of protein in the morning?</p>
+              </div>
+              <span class="message-time">2:35 PM</span>
+            </div>
+            <div class="message user-message">
+              <div class="message-content">
+                <p>I'm not sure. I'll check my protein intake.</p>
+              </div>
+              <span class="message-time">2:45 PM</span>
+            </div>
+            <div class="message ai-message">
+              <div class="message-content">
+                <p>OK sounds good. Get back to me in a few days and we'll see how you're doing.</p>
+              </div>
+              <span class="message-time">3:10 PM</span>
+            </div>
+          </div>
+          <div class="chat-input">
+            <div class="input-container">
+              <textarea placeholder="Ask Season anything..." class="message-input"></textarea>
+              <button class="send-button">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M22 2L11 13" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M22 2L15 22L11 13L2 9L22 2Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Chat: RD -->
+    <div class="popup" id="rd-chat">
+      <div class="popup-content rd-chat">
+        <div class="close" id="rd-chat-close-btn">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M18 6L6 18" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M6 6L18 18" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="chat-container">
+          <div class="chat-header">
+            <div class="rd-profile">
+              <img src="img/alejandra.png" alt="Alejandra Sanchez, RD" class="rd-avatar">
+              <div class="rd-info">
+                <h3>Alejandra Sanchez, RD</h3>
+                <span class="status">Online</span>
+              </div>
+            </div>
+          </div>
+          <div class="chat-messages">
+            <div class="message rd-message">
+              <div class="message-content">
+                <p>Hi Michelle! How are you feeling today? Any questions about your nutrition plan?</p>
+              </div>
+              <span class="message-time">2:30 PM</span>
+            </div>
+            <div class="message user-message">
+              <div class="message-content">
+                <p>Hi Jamie! I've been following the meal plan you gave me, but I'm still feeling tired in the afternoons. Any suggestions?</p>
+              </div>
+              <span class="message-time">2:32 PM</span>
+            </div>
+            <div class="message rd-message">
+              <div class="message-content">
+                <p>That's great that you're following the plan! Afternoon fatigue is common. Let's look at your protein intake at breakfast - are you getting at least 20g of protein in the morning?</p>
+              </div>
+              <span class="message-time">2:35 PM</span>
+            </div>
+            <div class="message user-message">
+              <div class="message-content">
+                <p>I'm not sure. I'll check my protein intake.</p>
+              </div>
+              <span class="message-time">2:45 PM</span>
+            </div>
+            <div class="message rd-message">
+              <div class="message-content">
+                <p>OK sounds good. Get back to me in a few days and we'll see how you're doing.</p>
+              </div>
+              <span class="message-time">3:10 PM</span>
+            </div>
+          </div>
+          <div class="chat-input">
+            <div class="input-container">
+              <textarea placeholder="Talk to Alejandra..." class="message-input"></textarea>
+              <button class="send-button">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M22 2L11 13" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M22 2L15 22L11 13L2 9L22 2Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Appointment summary -->
+    <div class="popup" id="appt-summary">
+      <div class="popup-content appt-summary">
+        <div class="close" id="appt-summary-close-btn">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M18 6L6 18" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M6 6L18 18" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h2>MM/DD post-visit report</h2>
+        <div class="content">
+          <p>Michelle met with <strong>Jamie Rivera, RD</strong>, a registered dietitian, for a comprehensive nutrition consultation. The primary focus of the session was to assess Michelle’s current eating habits, energy levels, and long-term health goals. Jamie began by reviewing Michelle’s medical history and recent lab results, which showed slightly elevated cholesterol levels and mild iron deficiency.</p>
+          <p>During the consultation, Michelle described her typical daily intake, which often includes a light breakfast, a rushed lunch, and a late, carb-heavy dinner. Jamie noted that Michelle tends to <em>skip meals</em> when under stress and frequently relies on coffee to manage fatigue. These habits may be contributing to her reported afternoon energy crashes and difficulty sleeping.</p>
+          <p><strong>Key recommendations</strong> included increasing protein intake at breakfast, incorporating iron-rich foods such as leafy greens and lentils, and reducing processed snacks high in added sugars. Jamie also emphasized the importance of staying hydrated and <em>establishing consistent meal times</em> throughout the day to support blood sugar stability.</p>
+          <p>Michelle expressed interest in improving her overall energy and focusing on nutrition that supports hormonal balance. Jamie provided a sample meal plan and suggested tracking meals and energy levels over the next two weeks. The dietitian also recommended basic supplements: a gentle iron tablet and a vitamin D3 capsule, pending follow-up lab confirmation.</p>
+          <p>A follow-up appointment was scheduled for four weeks later to assess progress and make any necessary adjustments. Michelle left the session with a clearer understanding of how her dietary choices affect her daily functioning and long-term wellness.</p>
+        </div>
+      </div>
+    </div>
+    <!-- Goals logging -->
+    <div class="popup" id="goals-logging">
+      <div class="popup-content goals-logging">
+        <div class="close" id="goals-logging-close-btn">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M18 6L6 18" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M6 6L18 18" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h2>Something about Goals</h2>
+        <p>This is the popup content.</p>
+      </div>
+    </div>
+  </body>
+  <script>
+
+  // Wait for DOM to be fully loaded
+
+  // Usage example - replace your original code with this:
+  document.addEventListener('DOMContentLoaded', () => {
+    const modalConfigs = [
+      {
+        openBtnSelector: '#more-menu-btn',
+        modalId: 'more-menu',
+        closeBtnId: 'more-menu-close-btn'
+      },
+      {
+        openBtnSelector: '#ai-chat-btn',
+        modalId: 'ai-chat',
+        closeBtnId: 'ai-chat-close-btn'
+      },
+      {
+        openBtnSelector: '#rd-chat-btn',
+        modalId: 'rd-chat',
+        closeBtnId: 'rd-chat-close-btn'
+      },
+      {
+        openBtnSelector: '.appt-summary-btn',
+        modalId: 'appt-summary',
+        closeBtnId: 'appt-summary-close-btn'
+      },
+      {
+        openBtnSelector: '.goals-logging-btn',
+        modalId: 'goals-logging',
+        closeBtnId: 'goals-logging-close-btn'
+      }
+    ];
+    
+    initializeModals(modalConfigs);
+  });
+
+
+  // Reusable method to set up modal/popup toggle functionality
+  function setupModalToggle(config) {
+    const { openBtnSelector, modalId, closeBtnId } = config;
+    
+    const openBtn = document.querySelectorAll(openBtnSelector);
+    const modal = document.getElementById(modalId);
+    const closeBtn = document.getElementById(closeBtnId);
+    
+    openBtn.forEach(btn => {
+      btn.addEventListener('click', () => {
+        modal.style.display = 'block';
+      });
+    });
+    
+    closeBtn.addEventListener('click', () => {
+      modal.style.display = 'none';
+    });
+    
+    // Close modal when clicking on the background (popup area)
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        modal.style.display = 'none';
+      }
+    });
+  }
+
+  // Initialize multiple modals at once
+  function initializeModals(modalConfigs) {
+    modalConfigs.forEach(config => setupModalToggle(config));
+  }
+
+
+  // Function to position timeline dots
+  function setupTimeline() {
+    const line = timeline.querySelector('.line');
+    const dots = timeline.querySelectorAll('.dot');
+    const viewportWidth = window.innerWidth;
+    const sidePadding = 24;
+    
+    if (dots.length === 0) return;
+
+    // Generate labels for dots
+    dots.forEach(dot => {
+      const dateStr = dot.getAttribute('data-appointment-date');
+      const isToday = dot.classList.contains('today');
+      
+      // Create label span if it doesn't exist
+      const labelSpan = document.createElement('span');
+      labelSpan.className = 'label';
+      dot.appendChild(labelSpan);
+      
+      // Set label text
+      if (isToday) {
+        labelSpan.textContent = 'Today';
+      } else if (dateStr) {
+        // Parse as local date to avoid timezone issues
+        const [year, month, day] = dateStr.split('-').map(Number);
+        const date = new Date(year, month - 1, day); // month is 0-indexed
+        const options = { month: 'short', day: 'numeric' };
+        labelSpan.textContent = date.toLocaleDateString('en-US', options);
+      }
+    });
+
+    const dotWidth = dots[0].offsetWidth;
+    
+    // Distance from 3rd-to-last to last dot (subtract dot width as a way to do 50% X translation from both ends
+    // (e.g. 2 * 1/2 dot width)
+    const finalThreeSpan = viewportWidth - (2 * sidePadding) - dotWidth; 
+    const regularSpacing = viewportWidth * 0.5; // 50% viewport for earlier dots
+    
+    // Get today's date for comparison
+    const today = new Date();
+    
+    // Position each dot
+    dots.forEach((dot, index) => {
+      let leftPosition;
+
+      const isLastThreeDots = index >= dots.length - 3;
+      const isToday = dot.classList.contains('today');
+      
+      if (isToday && index > 0 && index < dots.length - 1) {
+        // Special positioning for "Today" dot based on date interpolation
+        const prevDot = dots[index - 1];
+        const nextDot = dots[index + 1];
+        
+        const prevDateStr = prevDot.getAttribute('data-appointment-date');
+        const nextDateStr = nextDot.getAttribute('data-appointment-date');
+        
+        if (prevDateStr && nextDateStr) {
+          // Parse dates as local dates to avoid timezone issues
+          const [prevYear, prevMonth, prevDay] = prevDateStr.split('-').map(Number);
+          const [nextYear, nextMonth, nextDay] = nextDateStr.split('-').map(Number);
+          const prevDate = new Date(prevYear, prevMonth - 1, prevDay);
+          const nextDate = new Date(nextYear, nextMonth - 1, nextDay);
+          
+          // Calculate proportional position based on actual dates
+          const totalDays = (nextDate - prevDate) / (1000 * 60 * 60 * 24);
+          const todayDays = (today - prevDate) / (1000 * 60 * 60 * 24);
+          const dateRatio = Math.max(0, Math.min(1, todayDays / totalDays)); // Clamp between 0 and 1
+          
+          // Get the positions of the previous and next dots
+          let prevPosition, nextPosition;
+          
+          if (index - 1 >= dots.length - 3) {
+            // Previous dot is in final 3
+            const prevFinalIndex = (index - 1) - (dots.length - 3);
+            if (dots.length >= 4) {
+              const earlierDotsEnd = (dots.length - 3) * regularSpacing + sidePadding;
+              prevPosition = earlierDotsEnd + (prevFinalIndex * (finalThreeSpan / 2));
+            } else {
+              prevPosition = sidePadding + (prevFinalIndex * (finalThreeSpan / (Math.max(dots.length - 1, 1))));
+            }
+          } else {
+            prevPosition = sidePadding + ((index - 1) * regularSpacing);
+          }
+          
+          if (index + 1 >= dots.length - 3) {
+            // Next dot is in final 3
+            const nextFinalIndex = (index + 1) - (dots.length - 3);
+            if (dots.length >= 4) {
+              const earlierDotsEnd = (dots.length - 3) * regularSpacing + sidePadding;
+              nextPosition = earlierDotsEnd + (nextFinalIndex * (finalThreeSpan / 2));
+            } else {
+              nextPosition = sidePadding + (nextFinalIndex * (finalThreeSpan / (Math.max(dots.length - 1, 1))));
+            }
+          } else {
+            nextPosition = sidePadding + ((index + 1) * regularSpacing);
+          }
+          
+          // Interpolate position based on date ratio
+          leftPosition = prevPosition + (dateRatio * (nextPosition - prevPosition));
+        } else {
+          // Fallback: position at 50% between previous and next dots
+          let prevPosition, nextPosition;
+          
+          // Calculate prev position
+          if (index - 1 >= dots.length - 3) {
+            const prevFinalIndex = (index - 1) - (dots.length - 3);
+            if (dots.length >= 4) {
+              const earlierDotsEnd = (dots.length - 3) * regularSpacing + sidePadding;
+              prevPosition = earlierDotsEnd + (prevFinalIndex * (finalThreeSpan / 2));
+            } else {
+              prevPosition = sidePadding + (prevFinalIndex * (finalThreeSpan / (Math.max(dots.length - 1, 1))));
+            }
+          } else {
+            prevPosition = sidePadding + ((index - 1) * regularSpacing);
+          }
+          
+          // Calculate next position
+          if (index + 1 >= dots.length - 3) {
+            const nextFinalIndex = (index + 1) - (dots.length - 3);
+            if (dots.length >= 4) {
+              const earlierDotsEnd = (dots.length - 3) * regularSpacing + sidePadding;
+              nextPosition = earlierDotsEnd + (nextFinalIndex * (finalThreeSpan / 2));
+            } else {
+              nextPosition = sidePadding + (nextFinalIndex * (finalThreeSpan / (Math.max(dots.length - 1, 1))));
+            }
+          } else {
+            nextPosition = sidePadding + ((index + 1) * regularSpacing);
+          }
+          
+          // Position at 50% between prev and next
+          leftPosition = prevPosition + (0.5 * (nextPosition - prevPosition));
+        }
+      } else if (isLastThreeDots) {
+        // Final 3 dots: evenly space them across the finalThreeSpan
+        const finalDotIndex = index - (dots.length - 3); // 0, 1, or 2
+        
+        if (dots.length >= 4) {
+          // If there are 4+ dots, calculate where the final 3 should start
+          const earlierDotsEnd = (dots.length - 3) * regularSpacing + sidePadding;
+          leftPosition = earlierDotsEnd + (finalDotIndex * (finalThreeSpan / 2));
+        } else {
+          // If there are 3 or fewer dots total, just space them across the viewport
+          leftPosition = sidePadding + (finalDotIndex * (finalThreeSpan / (Math.max(dots.length - 1, 1))));
+        }
+      } else {
+        // Earlier dots: space at regular intervals, starting from sidePadding
+        leftPosition = sidePadding + (index * regularSpacing);
+      }
+      
+      dot.style.left = `${leftPosition}px`;
+    });
+    
+    // Calculate total timeline width
+    let totalWidth;
+    if (dots.length >= 4) {
+      const earlierDotsEnd = (dots.length - 3) * regularSpacing;
+      totalWidth = earlierDotsEnd + viewportWidth;
+    } else {
+      totalWidth = viewportWidth;
+    }
+    
+    line.style.width = `${totalWidth}px`;
+  }
+
+  // Run on page load
+  window.addEventListener('load', () => {
+    setupTimeline();
+    
+    // Your existing scroll to end - this will show the final 3 dots
+    const scrollDiv = document.getElementById('timeline');
+    scrollDiv.scrollLeft = scrollDiv.scrollWidth;
+  });
+
+  // Recalculate on window resize
+  window.addEventListener('resize', () => {
+    setupTimeline();
+    // Re-scroll to the end after resize
+    const timeline = document.getElementById('timeline');
+    timeline.scrollLeft = timeline.scrollWidth;
+  });
+
+  // Handle win-container animation on scroll (separate from timeline setup)
+  window.addEventListener('scroll', () => {
+    const winContainer = document.querySelector('.win-container');
+    const bottomPanel = document.querySelector('.bottom-panel');
+    
+    if (!winContainer || !bottomPanel) return;
+    
+    // Get initial rotation value on first run
+    if (typeof window.initialBottomPanelRotation === 'undefined') {
+      const computedStyle = window.getComputedStyle(bottomPanel);
+      const rotateValue = computedStyle.getPropertyValue('rotate');
+      window.initialBottomPanelRotation = rotateValue ? parseFloat(rotateValue) : 0;
+    }
+    
+    const bottomPanelHeight = bottomPanel.offsetHeight;
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    
+    // Calculate scroll progress based on bottom panel height
+    const scrollProgress = Math.min(scrollTop / bottomPanelHeight, 1);
+    
+    // Calculate transform and opacity values for win-container
+    const translateY = scrollProgress * -20; // Move up 20vh
+    const opacity = 1 - (scrollProgress / 0.8); // Fade from 1 to 0 over first 70% of scroll
+    
+    // Calculate rotation for bottom-panel (progress from initial value to 0)
+    const currentRotation = window.initialBottomPanelRotation * Math.max(0, (1 - (scrollProgress / 0.8)));
+    
+    // Apply the transformations
+    winContainer.style.transform = `translateY(${translateY}vh)`;
+    winContainer.style.opacity = opacity;
+    bottomPanel.style.rotate = `${currentRotation}deg`;
+  });
+  </script>
+</html>
