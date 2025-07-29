@@ -13,7 +13,7 @@
       "purpose": "maskable"
     }
   ],
-  "start_url": "/goals.html",
+  "start_url": "/clients/season/goals.html",
   "display": "standalone",
   "scope": "/",
   "description": "Season.",
