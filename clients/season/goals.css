@@ -176,10 +176,18 @@
   --color--season-raspberry: rgba(183, 89, 95, 1);
   --color--season-blood-orange: rgba(224, 79, 52, 1);
 
+  --color--s2--green: #5FD564;
+  --color--s2--blue: #84C5E6;
+  --color--s2--yellow: #E3B740;
+  --color--s2--red: #FEA69A;
+  --color--s2--purple: #B5B8F2;
+  --color--s2--gray: #B5BEC8;
+
   --padding--sides: 1.5rem;
 
   --height--header: 5rem;
   --height--bottom-panel-header: 4rem;
+  --height--footer: 4.5rem;
 
   --timeline--color: rgb(255, 191, 0);
   --timeline--color-bulb: var(--color--season-salmon);
@@ -206,7 +214,7 @@ main {
   align-items: center;
   justify-content: center;
   width: 100vw;
-  height: calc(100vh - (2 * var(--height--bottom-panel-header)));
+  height: calc(100vh - (2 * var(--height--bottom-panel-header)) - var(--height--footer));
   overflow-x: hidden;
 }
 
@@ -412,7 +420,7 @@ main {
 
 .cta-button {
   margin-top: 2rem;
-  background: var(--color--season-pecan);
+  background: var(--color--s2--red);
   color: var(--color--black);
   font-family: var(--font-family--sans-serif);
   padding: 1rem 2rem;
@@ -432,14 +440,16 @@ main {
   overflow-x: hidden;
   position: relative;
   background: var(--color--white);
+  color: var(--color--black);
   border-top-left-radius: 2rem;
   border-top-right-radius: 2rem;
-  width: 100%;
+  /* Explicitly doing 1/2 padding sides...on two sides */
+  width: calc(100% - (2 *  var(--padding--sides) / 2));
   height: calc(100vh - 1.5 * var(--height--header));
   box-shadow: 0 0 10px rgba(0,0,0,0.10);
   z-index: 100;
-  rotate: var(--timeline--angle);
   transform-origin: top left;
+  margin: 0 calc(var(--padding--sides) / 2);
 
   .bottom-panel-header {
     height: var(--height--bottom-panel-header);
@@ -456,6 +466,7 @@ main {
   
   .bottom-panel-content {
     padding: 1.5rem var(--padding--sides);
+    padding-top: 1rem;
     flex: 1 1 auto;
     display: flex;
     flex-direction: column;
@@ -557,10 +568,10 @@ main {
 }
 
 .square { aspect-ratio: 1 / 1; }
-.square-1 { background: var(--color--season-olive); }
-.square-2 { background: var(--color--season-raspberry); }
-.square-3 { background: var(--color--season-hazelnut); }
-.square-4 { background: var(--color--season-blood-orange); }
+.square-1 { background: var(--color--s2--purple); }
+.square-2 { background: var(--color--s2--green); }
+.square-3 { background: var(--color--s2--red); }
+.square-4 { background: var(--color--s2--yellow); }
 
 .popup {
   position: fixed;
@@ -657,7 +668,7 @@ main {
 
     &.ai-chat {
       bottom: var(--padding--sides);
-      background-color: var(--color--season-olive);
+      background-color: var(--color--s2--green);
       margin-top: var(--height--header);
       height: 80vh;
       overflow-y: hidden;
@@ -845,7 +856,7 @@ main {
 
     &.rd-chat {
       bottom: var(--padding--sides);
-      background-color: var(--color--blue);
+      background-color: var(--color--s2--blue);
       margin-top: var(--height--header);
       height: 80vh;
       overflow-y: hidden;
@@ -1113,5 +1124,63 @@ main {
   100% {
     opacity: 0;
     transform: translate(-50%, -50%) scale(2.2);
+  }
+}
+
+.footer {
+  box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  height: var(--height--footer);
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: var(--color--white);
+  border-top: 1px solid var(--color--black);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  .footer-menu {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 0 1rem;
+    
+    .footer-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      color: var(--color--black);
+      transition: color 0.2s ease;
+      padding: 0.5rem;
+      border-radius: 0.5rem;
+      min-width: 4rem;
+      
+      &:hover {
+        color: var(--color--season-raspberry);
+      }
+      
+      &:active {
+        transform: scale(0.95);
+      }
+      
+      svg {
+        width: 1.5rem;
+        height: 1.5rem;
+        margin-bottom: 0.25rem;
+      }
+      
+      span {
+        font-family: var(--font-family--sans-serif);
+        font-size: 0.75rem;
+        font-weight: 400;
+        text-align: center;
+        line-height: 1;
+      }
+    }
   }
 }
