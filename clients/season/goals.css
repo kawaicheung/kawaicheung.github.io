@@ -841,7 +841,7 @@ main {
               width: 40px;
               height: 40px;
               border-radius: 50%;
-              background-color: var(--color--season-olive);
+              background-color: var(--color--s2--green);
               border: none;
               display: flex;
               align-items: center;
@@ -1175,7 +1175,7 @@ main {
       min-width: 4rem;
       
       &:hover {
-        color: var(--color--season-raspberry);
+        color: var(--color--black);
       }
       
       &:active {
