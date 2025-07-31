@@ -224,8 +224,8 @@ main {
   0% {
     height: calc(100vh - var(--height--footer));
   }
-  95% {
-    height: calc(100vh - var(--height--bottom-panel-header) - var(--height--footer) - 0.5rem);
+  92% {
+    height: calc(100vh - var(--height--bottom-panel-header) - var(--height--footer) - 1rem);
   }
   100% {
     height: calc(100vh - var(--height--bottom-panel-header) - var(--height--footer));
