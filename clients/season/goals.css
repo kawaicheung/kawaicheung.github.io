@@ -1137,6 +1137,7 @@ main {
       }
     }
 
+    &.weight-goal-logging,
     &.goals-1-logging,
     &.goals-2-logging,
     &.goals-3-logging,
