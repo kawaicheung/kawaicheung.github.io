@@ -309,13 +309,78 @@
             <path d="M6 6L18 18" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </div>
-        <h2>Aug 11 pre-visit summary</h2>
-        <div class="content">
-          <p>Michelle met with <strong>Jamie Rivera, RD</strong>, a registered dietitian, for a comprehensive nutrition consultation. The primary focus of the session was to assess Michelle’s current eating habits, energy levels, and long-term health goals. Jamie began by reviewing Michelle’s medical history and recent lab results, which showed slightly elevated cholesterol levels and mild iron deficiency.</p>
-          <p>During the consultation, Michelle described her typical daily intake, which often includes a light breakfast, a rushed lunch, and a late, carb-heavy dinner. Jamie noted that Michelle tends to <em>skip meals</em> when under stress and frequently relies on coffee to manage fatigue. These habits may be contributing to her reported afternoon energy crashes and difficulty sleeping.</p>
-          <p><strong>Key recommendations</strong> included increasing protein intake at breakfast, incorporating iron-rich foods such as leafy greens and lentils, and reducing processed snacks high in added sugars. Jamie also emphasized the importance of staying hydrated and <em>establishing consistent meal times</em> throughout the day to support blood sugar stability.</p>
-          <p>Michelle expressed interest in improving her overall energy and focusing on nutrition that supports hormonal balance. Jamie provided a sample meal plan and suggested tracking meals and energy levels over the next two weeks. The dietitian also recommended basic supplements: a gentle iron tablet and a vitamin D3 capsule, pending follow-up lab confirmation.</p>
-          <p>A follow-up appointment was scheduled for four weeks later to assess progress and make any necessary adjustments. Michelle left the session with a clearer understanding of how her dietary choices affect her daily functioning and long-term wellness.</p>
+        
+        <div class="pre-visit-summary-content">
+          <!-- Div 1: Header with title and recipient -->
+          <div class="summary-header">Your pre-visit summary for 8/11</div>
+          <!-- Div 2: Provider info with avatar -->
+          <div class="summary-to">
+            <span class="to">To:</span>
+            <img src="img/alejandra.png" alt="Alejandra Sanchez, RD" class="avatar">
+            <div class="rd-info">
+              <div class="rd-name">Alejandra Sanchez, RD</div>
+              <div class="rd-title">Registered Dietitian</div>
+            </div>
+          </div>
+
+          <div class="sending-on">
+            <span>Will be sent Aug 11 @ 9am</span>
+            <div class="audit-button">Edit</div>
+          </div>
+
+          <!-- Main scrollable content area -->
+          <div class="summary-content">
+            <div class="content-section">
+              <h3 class="section-title">Current Health Status</h3>
+              <p class="section-text">Michelle has been experiencing consistent energy fluctuations throughout the day, particularly noticeable afternoon crashes around 2-3 PM. Recent lab work shows slightly elevated cholesterol and mild iron deficiency.</p>
+              <ul class="section-list">
+                <li>Afternoon energy crashes (2-3 PM daily)</li>
+                <li>Elevated cholesterol levels (LDL: 145 mg/dL)</li>
+                <li>Mild iron deficiency (ferritin: 18 ng/mL)</li>
+                <li>Irregular sleep patterns affecting morning energy</li>
+              </ul>
+            </div>
+            
+            <div class="content-section">
+              <h3 class="section-title">Dietary Patterns & Concerns</h3>
+              <p class="section-text">Current eating habits include skipping breakfast 3-4 times per week, rushed lunches, and late dinners that are typically carb-heavy. Michelle tends to rely heavily on coffee for energy management.</p>
+              <ul class="section-list">
+                <li>Frequent breakfast skipping (3-4x per week)</li>
+                <li>Rushed lunch breaks with processed foods</li>
+                <li>Late dinners (after 8 PM) with high carb content</li>
+                <li>Excessive caffeine consumption (4-5 cups daily)</li>
+                <li>Stress-induced meal skipping patterns</li>
+              </ul>
+            </div>
+            
+            <div class="content-section">
+              <h3 class="section-title">Goals for Upcoming Visit</h3>
+              <p class="section-text">The primary focus will be addressing energy stability through improved meal timing and nutrient density. We'll also work on strategies for better meal planning despite a busy schedule.</p>
+              <ul class="section-list">
+                <li>Establish consistent breakfast routine with 20g+ protein</li>
+                <li>Implement meal prep strategies for busy weekdays</li>
+                <li>Address iron deficiency through dietary modifications</li>
+                <li>Create sustainable evening meal timing</li>
+                <li>Reduce caffeine dependency gradually</li>
+              </ul>
+            </div>
+            
+            <div class="content-section">
+              <h3 class="section-title">Progress Since Last Visit</h3>
+              <p class="section-text">Michelle has successfully implemented several recommendations from our previous session, including regular hydration tracking and incorporating more leafy greens into her diet.</p>
+              <ul class="section-list">
+                <li>Consistent water intake tracking (64+ oz daily)</li>
+                <li>Added spinach/kale to smoothies 4x per week</li>
+                <li>Reduced late-night snacking by 60%</li>
+                <li>Started taking recommended vitamin D supplement</li>
+                <li>Improved meal timing on weekends</li>
+              </ul>
+            </div>
+          </div>
+          
+          <!-- Footer with audit button -->
+          <div class="summary-footer">
+          </div>
         </div>
       </div>
     </div>
@@ -454,26 +519,37 @@
     openBtn.forEach(btn => {
       btn.addEventListener('click', () => {
         modal.style.display = 'block';
+        disableHtmlScroll();
       });
     });
     
     closeBtn.addEventListener('click', () => {
       modal.style.display = 'none';
+      enableHtmlScroll();
+
     });
     
     // Close modal when clicking on the background (popup area)
     modal.addEventListener('click', (e) => {
       if (e.target === modal) {
         modal.style.display = 'none';
+        enableHtmlScroll();
       }
     });
+  }
+
+  function enableHtmlScroll() {
+    document.documentElement.classList.remove('no-scroll');
+  }
+
+  function disableHtmlScroll() {
+    document.documentElement.classList.add('no-scroll');
   }
 
   // Initialize multiple modals at once
   function initializeModals(modalConfigs) {
     modalConfigs.forEach(config => setupModalToggle(config));
   }
-
 
   // Function to position timeline dots
   function setupTimeline() {
