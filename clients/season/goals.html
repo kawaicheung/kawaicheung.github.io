@@ -48,21 +48,20 @@
         </p>
         <div class="timeline" id="timeline">
           <div class="line"></div>
-          <div class="dot pulse appt-summary-btn" data-appointment-date="2024-12-12"></div>
-          <div class="dot pulse appt-summary-btn" data-appointment-date="2025-02-15"></div>
-          <div class="dot pulse appt-summary-btn" data-appointment-date="2025-03-02"></div>
-          <div class="dot pulse appt-summary-btn" data-appointment-date="2025-04-12"></div>
-          <div class="dot pulse appt-summary-btn" data-appointment-date="2025-05-21"></div>
-          <div class="dot pulse appt-summary-btn" data-appointment-date="2025-07-11"></div>
+          <div class="dot pulse appt-report-btn" data-appointment-date="2024-12-12"></div>
+          <div class="dot pulse appt-report-btn" data-appointment-date="2025-02-15"></div>
+          <div class="dot pulse appt-report-btn" data-appointment-date="2025-03-02"></div>
+          <div class="dot pulse appt-report-btn" data-appointment-date="2025-04-12"></div>
+          <div class="dot pulse appt-report-btn" data-appointment-date="2025-05-21"></div>
+          <div class="dot pulse appt-report-btn" data-appointment-date="2025-07-11"></div>
           <div class="dot today"></div>
-          <div class="dot" data-appointment-date="2025-08-05"></div>
+          <div class="dot" data-appointment-date="2025-08-11"></div>
         </div>
-        <div class="cta-button appt-summary-btn">
+        <div class="cta-button appt-report-btn">
           <span>July 11 post-visit report</span>
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M1 12C1 12 5 4 12 4C19 4 23 12 23 12C23 12 19 20 12 20C5 20 1 12 1 12Z" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15Z" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
+        </div>
+        <div class="cta-button pre-visit-summary-btn">
+          <span>Aug 11 pre-visit summary</span>
         </div>
       </div>
     </main>
@@ -72,7 +71,7 @@
       </div>
       <div class="bottom-panel-content">
         <div class="bottom-panel-grid">
-          <div class="bottom-panel-square main-square">
+          <div class="bottom-panel-square main-square weight-goal-logging-btn">
             <div class="weight-goal-headline">Weight goal</div>
             <div class="weight-display">
               <div class="current-weight">
@@ -105,10 +104,10 @@
             </div>
             <div class="weight-caption">You're two pounds from your goal!</div>
           </div>
-          <div class="bottom-panel-square square square-1 goals-logging-btn">Saying "no" to work treats?</div>
-          <div class="bottom-panel-square square square-2 goals-logging-btn">Drinking 64oz of water a day?</div>
-          <div class="bottom-panel-square square square-3 goals-logging-btn">Exercising 15-20 min, 5 days per week?</div>
-          <div class="bottom-panel-square square square-4 goals-logging-btn">Not eating while watching TV?</div>
+          <div class="bottom-panel-square square square-1 goals-1-logging-btn">Saying "no" to work treats?</div>
+          <div class="bottom-panel-square square square-2 goals-2-logging-btn">Drinking 64oz of water a day?</div>
+          <div class="bottom-panel-square square square-3 goals-3-logging-btn">Exercising 15-20 min, 5 days per week?</div>
+          <div class="bottom-panel-square square square-4 goals-4-logging-btn">Not eating while watching TV?</div>
         </div>
       </div>
     </div>
@@ -153,61 +152,7 @@
       </div>
     </div>
     <!-- More menu -->
-    <div class="popup" id="more-menu">
-      <div class="popup-content more">
-        <div class="close" id="more-menu-close-btn">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M18 6L6 18" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M6 6L18 18" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </div>
-        <div class="chicklets">
-          <div class="chicklet log-meal">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M23 19A2 2 0 0 1 21 21H3A2 2 0 0 1 1 19V8A2 2 0 0 1 3 6H7L9 3H15L17 6H21A2 2 0 0 1 23 8Z" stroke="#666" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              <circle cx="12" cy="13" r="4" stroke="#666" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            <span>Capture meal</span>
-          </div>
-          <div class="chicklet meal-ideas">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="#666" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M2 17L12 22L22 17" stroke="#666" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M2 12L12 17L22 12" stroke="#666" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            <span>Meal ideas</span>
-          </div>
-          <div class="chicklet progress-check">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M22 11.08V12A10 10 0 1 1 5.68 3.49" stroke="#666" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M22 4L12 14.01L9 11.01" stroke="#666" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            <span>Progress check</span>
-          </div>
-          <div class="chicklet snack-help">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M12 2L13.09 8.26L20 9L13.09 9.74L12 16L10.91 9.74L4 9L10.91 8.26L12 2Z" stroke="#666" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            <span>Snack help</span>
-          </div>
-          <div class="chicklet grocery-list">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M20 21V19C20 17.9391 19.5786 16.9217 18.8284 16.1716C18.0783 15.4214 17.0609 15 16 15H8C6.93913 15 5.92172 15.4214 5.17157 16.1716C4.42143 16.9217 4 17.9391 4 19V21" stroke="#666" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M12 11C14.2091 11 16 9.20914 16 7C16 4.79086 14.2091 3 12 3C9.79086 3 8 4.79086 8 7C8 9.20914 9.79086 11 12 11Z" stroke="#666" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            <span>Account Settings</span>
-          </div>
-          <div class="chicklet more">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="12" cy="12" r="1" fill="#666"/>
-              <circle cx="6" cy="12" r="1" fill="#666"/>
-              <circle cx="18" cy="12" r="1" fill="#666"/>
-            </svg>
-            <span>More</span>
-          </div>
-        </div>
-      </div>
-    </div>
+   
     <!-- Chat: Season Assistant -->
     <div class="popup" id="ai-chat">
       <div class="popup-content ai-chat">
@@ -339,9 +284,9 @@
       </div>
     </div>
     <!-- Appointment summary -->
-    <div class="popup" id="appt-summary">
-      <div class="popup-content appt-summary">
-        <div class="close" id="appt-summary-close-btn">
+    <div class="popup" id="appt-report">
+      <div class="popup-content appt-report">
+        <div class="close" id="appt-report-close-btn">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M18 6L6 18" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             <path d="M6 6L18 18" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -357,16 +302,87 @@
         </div>
       </div>
     </div>
-    <!-- Goals logging -->
-    <div class="popup" id="goals-logging">
-      <div class="popup-content goals-logging">
-        <div class="close" id="goals-logging-close-btn">
+    <!-- Pre-visit summary -->
+    <div class="popup" id="pre-visit-summary">
+      <div class="popup-content pre-visit-summary">
+        <div class="close" id="pre-visit-summary-close-btn">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M18 6L6 18" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             <path d="M6 6L18 18" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </div>
-        <h2>Something about Goals</h2>
+        <h2>Aug 11 pre-visit summary</h2>
+        <div class="content">
+          <p>Michelle met with <strong>Jamie Rivera, RD</strong>, a registered dietitian, for a comprehensive nutrition consultation. The primary focus of the session was to assess Michelle’s current eating habits, energy levels, and long-term health goals. Jamie began by reviewing Michelle’s medical history and recent lab results, which showed slightly elevated cholesterol levels and mild iron deficiency.</p>
+          <p>During the consultation, Michelle described her typical daily intake, which often includes a light breakfast, a rushed lunch, and a late, carb-heavy dinner. Jamie noted that Michelle tends to <em>skip meals</em> when under stress and frequently relies on coffee to manage fatigue. These habits may be contributing to her reported afternoon energy crashes and difficulty sleeping.</p>
+          <p><strong>Key recommendations</strong> included increasing protein intake at breakfast, incorporating iron-rich foods such as leafy greens and lentils, and reducing processed snacks high in added sugars. Jamie also emphasized the importance of staying hydrated and <em>establishing consistent meal times</em> throughout the day to support blood sugar stability.</p>
+          <p>Michelle expressed interest in improving her overall energy and focusing on nutrition that supports hormonal balance. Jamie provided a sample meal plan and suggested tracking meals and energy levels over the next two weeks. The dietitian also recommended basic supplements: a gentle iron tablet and a vitamin D3 capsule, pending follow-up lab confirmation.</p>
+          <p>A follow-up appointment was scheduled for four weeks later to assess progress and make any necessary adjustments. Michelle left the session with a clearer understanding of how her dietary choices affect her daily functioning and long-term wellness.</p>
+        </div>
+      </div>
+    </div>
+    <!-- Weight goal logging -->
+    <div class="popup" id="weight-goal-logging">
+      <div class="popup-content weight-goal-logging">
+        <div class="close" id="weight-goal-logging-close-btn">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M18 6L6 18" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M6 6L18 18" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div> 
+        <h2>Something about Goals 1</h2>
+        <p>This is the popup content.</p>
+      </div>
+    </div>
+    <!-- Goals 1 logging -->
+    <div class="popup" id="goals-1-logging">
+      <div class="popup-content goals-1-logging">
+        <div class="close" id="goals-1-logging-close-btn">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M18 6L6 18" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M6 6L18 18" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div> 
+        <h2>Something about Goals 1</h2>
+        <p>This is the popup content.</p>
+      </div>
+    </div>
+    <!-- Goals 2 logging -->
+    <div class="popup" id="goals-2-logging">
+      <div class="popup-content goals-2-logging">
+        <div class="close" id="goals-2-logging-close-btn">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M18 6L6 18" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M6 6L18 18" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div> 
+        <h2>Something about Goals 2</h2>
+        <p>This is the popup content.</p>
+      </div>
+    </div>
+    <!-- Goals 3 logging -->
+    <div class="popup" id="goals-3-logging">
+      <div class="popup-content goals-3-logging">
+        <div class="close" id="goals-3-logging-close-btn">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M18 6L6 18" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M6 6L18 18" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div> 
+        <h2>Something about Goals 3</h2>
+        <p>This is the popup content.</p>
+      </div>
+    </div>
+    <!-- Goals 4 logging -->
+    <div class="popup" id="goals-4-logging">
+      <div class="popup-content goals-4-logging">
+        <div class="close" id="goals-4-logging-close-btn">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M18 6L6 18" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M6 6L18 18" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div> 
+        <h2>Something about Goals 4</h2>
         <p>This is the popup content.</p>
       </div>
     </div>
@@ -379,11 +395,6 @@
   document.addEventListener('DOMContentLoaded', () => {
     const modalConfigs = [
       {
-        openBtnSelector: '#more-menu-btn',
-        modalId: 'more-menu',
-        closeBtnId: 'more-menu-close-btn'
-      },
-      {
         openBtnSelector: '#ai-chat-btn',
         modalId: 'ai-chat',
         closeBtnId: 'ai-chat-close-btn'
@@ -394,14 +405,34 @@
         closeBtnId: 'rd-chat-close-btn'
       },
       {
-        openBtnSelector: '.appt-summary-btn',
-        modalId: 'appt-summary',
-        closeBtnId: 'appt-summary-close-btn'
+        openBtnSelector: '.appt-report-btn',
+        modalId: 'appt-report',
+        closeBtnId: 'appt-report-close-btn'
       },
       {
-        openBtnSelector: '.goals-logging-btn',
-        modalId: 'goals-logging',
-        closeBtnId: 'goals-logging-close-btn'
+        openBtnSelector: '.pre-visit-summary-btn',
+        modalId: 'pre-visit-summary',
+        closeBtnId: 'pre-visit-summary-close-btn'
+      },
+      {
+        openBtnSelector: '.goals-1-logging-btn',
+        modalId: 'goals-1-logging',
+        closeBtnId: 'goals-1-logging-close-btn'
+      },
+      {
+        openBtnSelector: '.goals-2-logging-btn',
+        modalId: 'goals-2-logging',
+        closeBtnId: 'goals-2-logging-close-btn'
+      },
+      {
+        openBtnSelector: '.goals-3-logging-btn',
+        modalId: 'goals-3-logging',
+        closeBtnId: 'goals-3-logging-close-btn'
+      },
+      {
+        openBtnSelector: '.goals-4-logging-btn',
+        modalId: 'goals-4-logging',
+        closeBtnId: 'goals-4-logging-close-btn'
       }
     ];
     
