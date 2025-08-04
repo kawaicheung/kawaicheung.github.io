@@ -436,6 +436,23 @@ main {
   }
 }
 
+.timeline-scroll-animation {
+  animation: scrollToEnd 2.4s ease-out forwards;
+  animation-delay: 0.4s;
+}
+
+@keyframes scrollToEnd {
+  0% {
+    right: 0;
+  }
+  85% {
+    right: calc(100% + 50px); /* Goes a bit too far */
+  }
+  100% {
+    right: 100%; /* Snaps back to actual end */
+  }
+}
+
 .cta-button {
   margin-top: 2rem;
   background: var(--color--s2--green);
