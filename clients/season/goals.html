@@ -57,9 +57,9 @@
           <div class="dot today"></div>
           <div class="dot" data-appointment-date="2025-08-11"></div>
         </div>
-        <div class="cta-button appt-report-btn">
+        <!--<div class="cta-button appt-report-btn">
           <span>July 11 post-visit report</span>
-        </div>
+        </div>-->
         <div class="cta-button pre-visit-summary-btn">
           <span>Aug 11 pre-visit summary</span>
         </div>
@@ -72,7 +72,6 @@
       <div class="bottom-panel-content">
         <div class="bottom-panel-grid">
           <div class="bottom-panel-square main-square weight-goal-logging-btn">
-            <div class="weight-goal-headline">Weight goal</div>
             <div class="weight-display">
               <div class="current-weight">
                 <span class="weight-number">195</span>
@@ -538,9 +537,9 @@
     
     initializeGoalCalendars();
     initializeSaveButtons();
+    initializeBottomPanelClick();
     initializeModals(modalConfigs);
   });
-
 
   // Reusable method to set up modal/popup toggle functionality
   function setupModalToggle(config) {
@@ -878,6 +877,32 @@
         enableHtmlScroll();
       });
     });
+  }
+
+  function initializeBottomPanelClick() {
+    const bottomPanelHeader = document.querySelector('.bottom-panel-header');
+            
+    if (bottomPanelHeader) {
+      bottomPanelHeader.addEventListener('click', () => {
+          // Add bounce animation class
+          bottomPanelHeader.classList.add('bounce-animation');
+          
+          // Remove the animation class after animation completes
+          setTimeout(() => {
+              bottomPanelHeader.classList.remove('bounce-animation');
+          }, 500);
+          
+          // Smooth scroll to bottom
+          // Method 1: Simple scroll to bottom
+          window.scrollTo({
+              top: document.documentElement.scrollHeight,
+              behavior: 'smooth'
+          });
+          
+          // Alternative Method 2: More precise control with custom easing
+          // scrollToBottomWithCustomEasing();
+      });
+    }
   }
 
   </script>

@@ -188,6 +188,12 @@
   --color--s2--purple: #B5B8F2;
   --color--s2--gray: #B5BEC8;
 
+  --color--s2--green-dark: #419b45;
+  --color--s2--blue-dark: #5688a1;
+  --color--s2--yellow-dark: #a88427;
+  --color--s2--red-dark: #cc6e64;
+  --color--s2--purple-dark: #7a7cb5;
+
   --padding--sides: 1.5rem;
 
   --height--header: 5rem;
@@ -485,7 +491,12 @@ main {
   z-index: 100;
   transform-origin: top left;
   margin: 0 calc(var(--padding--sides) / 2);
-  
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 
   .bottom-panel-header {
     height: var(--height--bottom-panel-header);
@@ -545,19 +556,6 @@ main {
   position: relative;
   padding: 1rem;
   grid-column: span 2;
-
-  .weight-goal-headline {
-    position: absolute;
-    top: 1rem;
-    left: 50%;
-    transform: translateX(-50%);
-    font-family: var(--font-family--sans-serif);
-    font-size: 0.8rem;
-    font-weight: 600;
-    letter-spacing: 0.02rem;
-    text-transform: uppercase;
-    color: #333;
-  }
 
   .weight-display {
     display: flex;
@@ -1200,6 +1198,8 @@ main {
           padding: 0.5rem var(--padding--sides);
           background-color: var(--color--warning);
           color: var(--color--white);
+          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+          z-index: 1;
 
           span {
             flex: 1;
@@ -1434,8 +1434,6 @@ main {
         justify-content: center;
         
         .save-writeup-btn {
-          background: var(--color--s2--green);
-          color: var(--color--black);
           font-family: var(--font-family--sans-serif);
           padding: 1rem 2rem;
           border-radius: 99rem;
@@ -1458,10 +1456,41 @@ main {
       }
     }
 
-    &.goals-1-logging { background: var(--color--s2--purple); }
-    &.goals-2-logging { background: var(--color--s2--green); }
-    &.goals-3-logging { background: var(--color--s2--red); }
-    &.goals-4-logging { background: var(--color--s2--yellow); }
+    &.goals-1-logging { 
+      background: var(--color--s2--purple); 
+      
+      .save-writeup-btn {
+        background: var(--color--s2--purple-dark); 
+        color: var(--color--white);
+      }
+    }
+
+    &.goals-2-logging { 
+      background: var(--color--s2--green); 
+
+      .save-writeup-btn {
+        background: var(--color--s2--green-dark); 
+        color: var(--color--white);
+      }
+    }
+
+    &.goals-3-logging { 
+      background: var(--color--s2--red); 
+
+      .save-writeup-btn {
+        background: var(--color--s2--red-dark); 
+        color: var(--color--white);
+      }
+    }
+
+    &.goals-4-logging { 
+      background: var(--color--s2--yellow); 
+
+      .save-writeup-btn {
+        background: var(--color--s2--yellow-dark); 
+        color: var(--color--white);
+      }
+    }
 
     .close {
       position: absolute;
