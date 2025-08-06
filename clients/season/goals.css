@@ -205,6 +205,8 @@
   --timeline--height: 96px;
   --timeline--dot-size: 2rem;
   --timeline--angle: -4deg;
+
+  --easing--pop-in: cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 
 body {
@@ -231,18 +233,6 @@ main {
   animation: shrinkMainHeight 0.3s ease-in-out 0.5s forwards;
 }
 
-@keyframes shrinkMainHeight {
-  0% {
-    height: calc(100vh - var(--height--footer));
-  }
-  92% {
-    height: calc(100vh - var(--height--bottom-panel-header) - var(--height--footer) - 1rem);
-  }
-  100% {
-    height: calc(100vh - var(--height--bottom-panel-header) - var(--height--footer));
-  }
-}
-
 .appointment-soon {
   position: fixed;
   top: 0;
@@ -260,7 +250,7 @@ main {
   color: var(--color--white);
   font-size: 1.5rem;
   padding: 2rem;
-  animation: appointmentSoonAnim 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+  animation: popIn 0.8s var(--easing--pop-in) forwards;
 
   .rd-avatar {
     width: 80px;
@@ -301,6 +291,7 @@ main {
     cursor: pointer;
     transition: all 0.2s ease;
     animation: throb 1s ease-in-out infinite;
+    color: var(--color--black);
   } 
 
   .no-thanks-btn {
@@ -519,17 +510,6 @@ main {
   animation-delay: 0.4s;
 }
 
-@keyframes scrollToEnd {
-  0% {
-    right: 0;
-  }
-  85% {
-    right: calc(100% + 50px); /* Goes a bit too far */
-  }
-  100% {
-    right: 100%; /* Snaps back to actual end */
-  }
-}
 
 .cta-button {
   margin-top: 2rem;
@@ -690,7 +670,7 @@ main {
   display: none;
   z-index: 10000;
   padding: 0 calc(var(--padding--sides) * 0.5);
-  background-color: rgba(255,255,255,0.3);
+  background-color: rgba(255,255,255,0.25);
 
   .popup-content {
     position: absolute;
@@ -701,7 +681,7 @@ main {
     width: calc(100% - var(--padding--sides));
     transform: scale(0.9);
     overflow-x: hidden;
-    animation: popIn 0.25s ease-in forwards;
+    animation: popIn 0.75s var(--easing--pop-in) forwards;
     box-shadow: 0 0 10px rgba(0,0,0,0.05);
 
     &.more {
@@ -1583,36 +1563,6 @@ main {
   }
 }
 
-@keyframes popIn {
-  0% {
-    transform: scale(0.9) translateY(20px);
-    opacity: 0;
-  }
-  50% {
-    transform: scale(1.05) translateY(0);
-    opacity: 1;
-  }
-  100% {
-    transform: scale(1);
-    opacity: 1;
-  }
-}
-
-@keyframes timeline-today-pulse {
-  0% {
-    opacity: 0.7;
-    transform: translate(-50%, -50%) scale(1);
-  }
-  70% {
-    opacity: 0;
-    transform: translate(-50%, -50%) scale(2.2);
-  }
-  100% {
-    opacity: 0;
-    transform: translate(-50%, -50%) scale(2.2);
-  }
-}
-
 .footer {
   box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
   position: fixed;
@@ -1671,7 +1621,31 @@ main {
   }
 }
 
-@keyframes appointmentSoonAnim {
+@keyframes shrinkMainHeight {
+  0% {
+    height: calc(100vh - var(--height--footer));
+  }
+  92% {
+    height: calc(100vh - var(--height--bottom-panel-header) - var(--height--footer) - 1rem);
+  }
+  100% {
+    height: calc(100vh - var(--height--bottom-panel-header) - var(--height--footer));
+  }
+}
+
+@keyframes scrollToEnd {
+  0% {
+    right: 0;
+  }
+  85% {
+    right: calc(100% + 50px); /* Goes a bit too far */
+  }
+  100% {
+    right: 100%; /* Snaps back to actual end */
+  }
+}
+
+@keyframes popIn {
   0% {
     opacity: 0;
     transform: scale(0.8);
@@ -1679,6 +1653,21 @@ main {
   100% {
     opacity: 1;
     transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes timeline-today-pulse {
+  0% {
+    opacity: 0.7;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  70% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(2.2);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(2.2);
   }
 }
 

@@ -532,10 +532,10 @@
       }
     ];
     
+    initializeModals(modalConfigs);
     initializeGoalCalendars();
     initializeSaveButtons();
     initializeBottomPanelClick();
-    initializeModals(modalConfigs);
     initializeAppointmentSoon();
   });
 
@@ -549,6 +549,7 @@
     
     openBtn.forEach(btn => {
       btn.addEventListener('click', () => {
+        console.log('clicked');
         modal.style.display = 'block';
         disableHtmlScroll();
       });
