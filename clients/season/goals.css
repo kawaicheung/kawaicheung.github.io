@@ -1458,6 +1458,11 @@ main {
       }
     }
 
+    &.goals-1-logging { background: var(--color--s2--purple); }
+    &.goals-2-logging { background: var(--color--s2--green); }
+    &.goals-3-logging { background: var(--color--s2--red); }
+    &.goals-4-logging { background: var(--color--s2--yellow); }
+
     .close {
       position: absolute;
       top: 1rem;
