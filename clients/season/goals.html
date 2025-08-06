@@ -405,7 +405,7 @@
             <path d="M6 6L18 18" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </div> 
-        <h2>Saying "no" to work treats?</h2>
+        <div class="goal-title">Did you stay away from work treats today?</div>
         <div class="goal-calendar-container">
           <div class="goal-calendar" id="goal-calendar-1"></div>
         </div>
@@ -426,7 +426,7 @@
             <path d="M6 6L18 18" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </div> 
-        <h2>Drinking 64oz of water a day?</h2>
+        <div class="goal-title">Were you able to drink 64oz of water today?</div>
         <div class="goal-calendar-container">
           <div class="goal-calendar" id="goal-calendar-2"></div>
         </div>
@@ -447,7 +447,7 @@
             <path d="M6 6L18 18" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </div> 
-        <h2>Exercising 15-20 min, 5 days per week?</h2>
+        <div class="goal-title">How has exercising 15-20 min gone for you today?</div>
         <div class="goal-calendar-container">
           <div class="goal-calendar" id="goal-calendar-3"></div>
         </div>
@@ -468,7 +468,7 @@
             <path d="M6 6L18 18" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </div> 
-        <h2>Not eating while watching TV?</h2>
+        <div class="goal-title">Were you watching TV without eating today?</div>
         <div class="goal-calendar-container">
           <div class="goal-calendar" id="goal-calendar-4"></div>
         </div>
@@ -827,10 +827,11 @@
         const isSelected = index === days.length - 1; // Start with today selected
         
         dayElement.innerHTML = `
-          <div class="day-circle ${isToday ? 'today' : ''} ${isSelected ? 'selected' : ''}"></div>
-          <div class="day-label">
-            <div>${date.toLocaleDateString('en-US', { month: 'short' })}</div>
-            <div>${date.getDate()}</div>
+          <div class="day-circle ${isToday ? 'today' : ''} ${isSelected ? 'selected' : ''}">
+            <div class="day-label">
+              <div>${date.toLocaleDateString('en-US', { month: 'short' })}</div>
+              <div>${date.getDate()}</div>
+            </div>
           </div>
         `;
         
