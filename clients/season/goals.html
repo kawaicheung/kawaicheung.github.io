@@ -798,6 +798,10 @@
     bottomPanel.style.rotate = `${currentRotation}deg`;
   });
 
+  function toLocalDateOnly(date) {
+    return new Date(date.getFullYear(), date.getMonth(), date.getDate());
+  }
+
   // Goal calendar functionality
   function initializeGoalCalendars() {
     const goalIds = [1, 2, 3, 4];
@@ -810,8 +814,9 @@
       
       // Generate calendar days
       const days = [];
-      let currentDate = new Date(startDate);
-      
+      let currentDate = toLocalDateOnly(startDate);
+      const today = toLocalDateOnly(new Date());
+
       while (currentDate <= today) {
         days.push(new Date(currentDate));
         currentDate.setDate(currentDate.getDate() + 1);
