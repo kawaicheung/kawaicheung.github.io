@@ -309,85 +309,141 @@
       </div>
     </div>
     <!-- Pre-visit summary -->
-    <div class="popup" id="pre-visit-summary">
-      <div class="popup-content pre-visit-summary">
-        <div class="close" id="pre-visit-summary-close-btn">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M18 6L6 18" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M6 6L18 18" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </div>
-        
-        <div class="pre-visit-summary-content">
-          <!-- Div 1: Header with title and recipient -->
-          <div class="summary-header">Your pre-visit summary for 8/11</div>
-          <!-- Div 2: Provider info with avatar -->
-          <div class="summary-to">
-            <span class="to">To:</span>
-            <img src="img/alejandra.png" alt="Alejandra Sanchez, RD" class="avatar">
-            <div class="rd-info">
-              <div class="rd-name">Alejandra Sanchez, RD</div>
-              <div class="rd-title">Registered Dietitian</div>
-            </div>
-          </div>
-
-          <div class="sending-on">
-            <span>Will be sent Aug 11 @ 9am</span>
-            <div class="audit-button">Edit</div>
-          </div>
-
-          <!-- Main scrollable content area -->
-          <div class="summary-content">
-            <div class="content-section">
-              <h3 class="section-title">Current Health Status</h3>
-              <p class="section-text">Michelle has been experiencing consistent energy fluctuations throughout the day, particularly noticeable afternoon crashes around 2-3 PM. Recent lab work shows slightly elevated cholesterol and mild iron deficiency.</p>
-              <ul class="section-list">
-                <li>Afternoon energy crashes (2-3 PM daily)</li>
-                <li>Elevated cholesterol levels (LDL: 145 mg/dL)</li>
-                <li>Mild iron deficiency (ferritin: 18 ng/mL)</li>
-                <li>Irregular sleep patterns affecting morning energy</li>
-              </ul>
-            </div>
-            
-            <div class="content-section">
-              <h3 class="section-title">Dietary Patterns & Concerns</h3>
-              <p class="section-text">Current eating habits include skipping breakfast 3-4 times per week, rushed lunches, and late dinners that are typically carb-heavy. Michelle tends to rely heavily on coffee for energy management.</p>
-              <ul class="section-list">
-                <li>Frequent breakfast skipping (3-4x per week)</li>
-                <li>Rushed lunch breaks with processed foods</li>
-                <li>Late dinners (after 8 PM) with high carb content</li>
-                <li>Excessive caffeine consumption (4-5 cups daily)</li>
-                <li>Stress-induced meal skipping patterns</li>
-              </ul>
-            </div>
-            
-            <div class="content-section">
-              <h3 class="section-title">Goals for Upcoming Visit</h3>
-              <p class="section-text">The primary focus will be addressing energy stability through improved meal timing and nutrient density. We'll also work on strategies for better meal planning despite a busy schedule.</p>
-              <ul class="section-list">
-                <li>Establish consistent breakfast routine with 20g+ protein</li>
-                <li>Implement meal prep strategies for busy weekdays</li>
-                <li>Address iron deficiency through dietary modifications</li>
-                <li>Create sustainable evening meal timing</li>
-                <li>Reduce caffeine dependency gradually</li>
-              </ul>
-            </div>
-            
-            <div class="content-section">
-              <h3 class="section-title">Progress Since Last Visit</h3>
-              <p class="section-text">Michelle has successfully implemented several recommendations from our previous session, including regular hydration tracking and incorporating more leafy greens into her diet.</p>
-              <ul class="section-list">
-                <li>Consistent water intake tracking (64+ oz daily)</li>
-                <li>Added spinach/kale to smoothies 4x per week</li>
-                <li>Reduced late-night snacking by 60%</li>
-                <li>Started taking recommended vitamin D supplement</li>
-                <li>Improved meal timing on weekends</li>
-              </ul>
-            </div>
-          </div>
+<!-- Pre-visit summary -->
+<div class="popup" id="pre-visit-summary">
+  <div class="popup-content pre-visit-summary">
+    <div class="close" id="pre-visit-summary-close-btn">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M18 6L6 18" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M6 6L18 18" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    
+    <div class="pre-visit-summary-content">
+      <!-- Header -->
+      <div class="summary-header">Your pre-visit summary for 8/11</div>
+      
+      <!-- Provider info -->
+      <div class="summary-to">
+        <span class="to">To:</span>
+        <img src="img/alejandra.png" alt="Alejandra Sanchez, RD" class="avatar">
+        <div class="rd-info">
+          <div class="rd-name">Alejandra Sanchez, RD</div>
+          <div class="rd-title">Registered Dietitian</div>
         </div>
       </div>
+
+      <!-- Status bar with edit/save button -->
+      <div class="sending-on">
+        <span>Will be sent Aug 11 @ 9am</span>
+        <div class="audit-button" id="edit-summary-btn">Edit</div>
+      </div>
+
+      <!-- Original summary content -->
+      <div class="summary-content" id="summary-content">
+        <div class="content-section">
+          <h3 class="section-title">Current Health Status</h3>
+          <p class="section-text">Michelle has been experiencing consistent energy fluctuations throughout the day, particularly noticeable afternoon crashes around 2-3 PM. Recent lab work shows slightly elevated cholesterol and mild iron deficiency.</p>
+          <ul class="section-list">
+            <li>Afternoon energy crashes (2-3 PM daily)</li>
+            <li>Elevated cholesterol levels (LDL: 145 mg/dL)</li>
+            <li>Mild iron deficiency (ferritin: 18 ng/mL)</li>
+            <li>Irregular sleep patterns affecting morning energy</li>
+          </ul>
+        </div>
+        
+        <div class="content-section">
+          <h3 class="section-title">Dietary Patterns & Concerns</h3>
+          <p class="section-text">Current eating habits include skipping breakfast 3-4 times per week, rushed lunches, and late dinners that are typically carb-heavy. Michelle tends to rely heavily on coffee for energy management.</p>
+          <ul class="section-list">
+            <li>Frequent breakfast skipping (3-4x per week)</li>
+            <li>Rushed lunch breaks with processed foods</li>
+            <li>Late dinners (after 8 PM) with high carb content</li>
+            <li>Excessive caffeine consumption (4-5 cups daily)</li>
+            <li>Stress-induced meal skipping patterns</li>
+          </ul>
+        </div>
+        
+        <div class="content-section">
+          <h3 class="section-title">Goals for Upcoming Visit</h3>
+          <p class="section-text">The primary focus will be addressing energy stability through improved meal timing and nutrient density. We'll also work on strategies for better meal planning despite a busy schedule.</p>
+          <ul class="section-list">
+            <li>Establish consistent breakfast routine with 20g+ protein</li>
+            <li>Implement meal prep strategies for busy weekdays</li>
+            <li>Address iron deficiency through dietary modifications</li>
+            <li>Create sustainable evening meal timing</li>
+            <li>Reduce caffeine dependency gradually</li>
+          </ul>
+        </div>
+        
+        <div class="content-section">
+          <h3 class="section-title">Progress Since Last Visit</h3>
+          <p class="section-text">Michelle has successfully implemented several recommendations from our previous session, including regular hydration tracking and incorporating more leafy greens into her diet.</p>
+          <ul class="section-list">
+            <li>Consistent water intake tracking (64+ oz daily)</li>
+            <li>Added spinach/kale to smoothies 4x per week</li>
+            <li>Reduced late-night snacking by 60%</li>
+            <li>Started taking recommended vitamin D supplement</li>
+            <li>Improved meal timing on weekends</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Edit form (hidden by default) -->
+      <div class="edit-form" id="edit-form">
+        <div class="edit-section">
+          <h3>Current Health Status</h3>
+          <textarea id="health-status">Michelle has been experiencing consistent energy fluctuations throughout the day, particularly noticeable afternoon crashes around 2-3 PM. Recent lab work shows slightly elevated cholesterol and mild iron deficiency.
+
+- Afternoon energy crashes (2-3 PM daily)
+- Elevated cholesterol levels (LDL: 145 mg/dL)  
+- Mild iron deficiency (ferritin: 18 ng/mL)
+- Irregular sleep patterns affecting morning energy</textarea>
+        </div>
+        
+        <div class="edit-section">
+          <h3>Dietary Patterns & Concerns</h3>
+          <textarea id="dietary-patterns">Current eating habits include skipping breakfast 3-4 times per week, rushed lunches, and late dinners that are typically carb-heavy. Michelle tends to rely heavily on coffee for energy management.
+
+- Frequent breakfast skipping (3-4x per week)
+- Rushed lunch breaks with processed foods
+- Late dinners (after 8 PM) with high carb content
+- Excessive caffeine consumption (4-5 cups daily)
+- Stress-induced meal skipping patterns</textarea>
+        </div>
+        
+        <div class="edit-section">
+          <h3>Goals for Upcoming Visit</h3>
+          <textarea id="visit-goals">The primary focus will be addressing energy stability through improved meal timing and nutrient density. We'll also work on strategies for better meal planning despite a busy schedule.
+
+- Establish consistent breakfast routine with 20g+ protein
+- Implement meal prep strategies for busy weekdays
+- Address iron deficiency through dietary modifications
+- Create sustainable evening meal timing
+- Reduce caffeine dependency gradually</textarea>
+        </div>
+        
+        <div class="edit-section">
+          <h3>Progress Since Last Visit</h3>
+          <textarea id="progress-update">Michelle has successfully implemented several recommendations from our previous session, including regular hydration tracking and incorporating more leafy greens into her diet.
+
+- Consistent water intake tracking (64+ oz daily)
+- Added spinach/kale to smoothies 4x per week
+- Reduced late-night snacking by 60%
+- Started taking recommended vitamin D supplement
+- Improved meal timing on weekends</textarea>
+        </div>
+      </div>
+
+      <!-- Regenerating state (hidden by default) -->
+      <div class="regenerating-state" id="regenerating-state">
+        <div class="regenerating-spinner"></div>
+        <div class="regenerating-text">Regenerating summary...</div>
+        <div class="regenerating-subtext">This will take just a moment</div>
+      </div>
     </div>
+  </div>
+</div>
     <!-- Weight goal logging -->
     <div class="popup" id="weight-goal-logging">
       <div class="popup-content weight-goal-logging">
@@ -537,6 +593,7 @@
     initializeSaveButtons();
     initializeBottomPanelClick();
     initializeAppointmentSoon();
+    initializePreVisitSummaryEdit(); 
   });
 
   // Reusable method to set up modal/popup toggle functionality
@@ -921,6 +978,82 @@
       });
     }
   }
+
+  // Initialize pre-visit summary edit functionality
+function initializePreVisitSummaryEdit() {
+  const editBtn = document.getElementById('edit-summary-btn');
+  const summaryContent = document.getElementById('summary-content');
+  const editForm = document.getElementById('edit-form');
+  const regeneratingState = document.getElementById('regenerating-state');
+  
+  let isEditing = false;
+  
+  editBtn.addEventListener('click', () => {
+    if (!isEditing) {
+      // Switch to edit mode
+      switchToEditMode();
+    } else {
+      // Save and regenerate
+      saveAndRegenerate();
+    }
+  });
+  
+  function switchToEditMode() {
+    // Fade out summary content
+    summaryContent.classList.add('fade-out');
+    
+    setTimeout(() => {
+      summaryContent.style.display = 'none';
+      editForm.style.display = 'flex';
+      editForm.classList.add('fade-in');
+      
+      // Change button text
+      editBtn.textContent = 'Save';
+      editBtn.style.backgroundColor = 'var(--color--s2--green)';
+      isEditing = true;
+    }, 300);
+  }
+  
+  function saveAndRegenerate() {
+    // Fade out edit form
+    editForm.classList.add('fade-out');
+    
+    setTimeout(() => {
+      editForm.style.display = 'none';
+      regeneratingState.style.display = 'flex';
+      regeneratingState.classList.add('fade-in');
+      
+      // Hide the edit button during regeneration
+      editBtn.style.display = 'none';
+      
+      // Simulate regeneration process (3 seconds)
+      setTimeout(() => {
+        // Hide regenerating state
+        regeneratingState.classList.add('fade-out');
+        
+        setTimeout(() => {
+          regeneratingState.style.display = 'none';
+          summaryContent.style.display = 'block';
+          summaryContent.classList.remove('fade-out');
+          summaryContent.classList.add('fade-in');
+          
+          // Show and reset button
+          editBtn.style.display = 'block';
+          editBtn.textContent = 'Edit';
+          editBtn.style.backgroundColor = 'var(--color--s2--blue)';
+          isEditing = false;
+          
+          // Clean up classes
+          setTimeout(() => {
+            summaryContent.classList.remove('fade-in');
+            editForm.classList.remove('fade-out');
+            regeneratingState.classList.remove('fade-out', 'fade-in');
+          }, 300);
+        }, 300);
+      }, 3000);
+    }, 300);
+  }
+}
 
   </script>
 </html>
