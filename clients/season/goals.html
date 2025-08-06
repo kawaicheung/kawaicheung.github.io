@@ -406,8 +406,16 @@
             <path d="M6 6L18 18" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </div> 
-        <h2>Something about Goals 1</h2>
-        <p>This is the popup content.</p>
+        <h2>Saying "no" to work treats?</h2>
+        <div class="goal-calendar-container">
+          <div class="goal-calendar" id="goal-calendar-1"></div>
+        </div>
+        <div class="goal-writeup-container">
+          <textarea class="goal-writeup" id="goal-writeup-1" placeholder="How did it go today?"></textarea>
+        </div>
+        <div class="goal-footer">
+          <button class="save-writeup-btn" data-goal="1">Save this write-up</button>
+        </div>
       </div>
     </div>
     <!-- Goals 2 logging -->
@@ -419,8 +427,16 @@
             <path d="M6 6L18 18" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </div> 
-        <h2>Something about Goals 2</h2>
-        <p>This is the popup content.</p>
+        <h2>Drinking 64oz of water a day?</h2>
+        <div class="goal-calendar-container">
+          <div class="goal-calendar" id="goal-calendar-2"></div>
+        </div>
+        <div class="goal-writeup-container">
+          <textarea class="goal-writeup" id="goal-writeup-2" placeholder="How did it go today?"></textarea>
+        </div>
+        <div class="goal-footer">
+          <button class="save-writeup-btn" data-goal="2">Save this write-up</button>
+        </div>
       </div>
     </div>
     <!-- Goals 3 logging -->
@@ -432,8 +448,16 @@
             <path d="M6 6L18 18" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </div> 
-        <h2>Something about Goals 3</h2>
-        <p>This is the popup content.</p>
+        <h2>Exercising 15-20 min, 5 days per week?</h2>
+        <div class="goal-calendar-container">
+          <div class="goal-calendar" id="goal-calendar-3"></div>
+        </div>
+        <div class="goal-writeup-container">
+          <textarea class="goal-writeup" id="goal-writeup-3" placeholder="How did it go today?"></textarea>
+        </div>
+        <div class="goal-footer">
+          <button class="save-writeup-btn" data-goal="3">Save this write-up</button>
+        </div>
       </div>
     </div>
     <!-- Goals 4 logging -->
@@ -445,8 +469,16 @@
             <path d="M6 6L18 18" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </div> 
-        <h2>Something about Goals 4</h2>
-        <p>This is the popup content.</p>
+        <h2>Not eating while watching TV?</h2>
+        <div class="goal-calendar-container">
+          <div class="goal-calendar" id="goal-calendar-4"></div>
+        </div>
+        <div class="goal-writeup-container">
+          <textarea class="goal-writeup" id="goal-writeup-4" placeholder="How did it go today?"></textarea>
+        </div>
+        <div class="goal-footer">
+          <button class="save-writeup-btn" data-goal="4">Save this write-up</button>
+        </div>
       </div>
     </div>
   </body>
@@ -504,6 +536,8 @@
       }
     ];
     
+    initializeGoalCalendars();
+    initializeSaveButtons();
     initializeModals(modalConfigs);
   });
 
@@ -764,5 +798,87 @@
     winContainer.style.opacity = opacity;
     bottomPanel.style.rotate = `${currentRotation}deg`;
   });
+
+  // Goal calendar functionality
+  function initializeGoalCalendars() {
+    const goalIds = [1, 2, 3, 4];
+    const today = new Date();
+    const startDate = new Date('2025-07-11');
+    
+    goalIds.forEach(goalId => {
+      const calendar = document.getElementById(`goal-calendar-${goalId}`);
+      const textarea = document.getElementById(`goal-writeup-${goalId}`);
+      
+      // Generate calendar days
+      const days = [];
+      let currentDate = new Date(startDate);
+      
+      while (currentDate <= today) {
+        days.push(new Date(currentDate));
+        currentDate.setDate(currentDate.getDate() + 1);
+      }
+      
+      // Render calendar days
+      days.forEach((date, index) => {
+        const dayElement = document.createElement('div');
+        dayElement.className = 'calendar-day';
+        dayElement.dataset.date = date.toISOString().split('T')[0];
+        
+        const isToday = date.toDateString() === today.toDateString();
+        const isSelected = index === days.length - 1; // Start with today selected
+        
+        dayElement.innerHTML = `
+          <div class="day-circle ${isToday ? 'today' : ''} ${isSelected ? 'selected' : ''}"></div>
+          <div class="day-label">
+            <div>${date.toLocaleDateString('en-US', { month: 'short' })}</div>
+            <div>${date.getDate()}</div>
+          </div>
+        `;
+        
+        // Add click handler
+        dayElement.addEventListener('click', () => {
+          // Remove selected class from all days
+          calendar.querySelectorAll('.day-circle').forEach(circle => {
+            circle.classList.remove('selected');
+          });
+          
+          // Add selected class to clicked day
+          dayElement.querySelector('.day-circle').classList.add('selected');
+          
+          // Update placeholder text
+          const isClickedToday = date.toDateString() === today.toDateString();
+          textarea.placeholder = isClickedToday ? 
+            'How did it go today?' : 
+            `How did it go on ${date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}?`;
+          
+          // Clear textarea content (in a real app, you'd load saved content)
+          textarea.value = '';
+        });
+        
+        calendar.appendChild(dayElement);
+      });
+      
+      // Scroll to end (today)
+      calendar.scrollLeft = calendar.scrollWidth;
+    });
+  }
+
+  // Save button handlers
+  function initializeSaveButtons() {
+    document.querySelectorAll('.save-writeup-btn').forEach(button => {
+      button.addEventListener('click', (e) => {
+        const goalId = e.target.dataset.goal;
+        const modal = document.getElementById(`goals-${goalId}-logging`);
+        
+        // In a real app, you'd save the data here
+        console.log(`Saving writeup for goal ${goalId}`);
+        
+        // Hide modal
+        modal.style.display = 'none';
+        enableHtmlScroll();
+      });
+    });
+  }
+
   </script>
 </html>
