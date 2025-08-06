@@ -7,6 +7,11 @@
   --color--base-font: #222;
   --color--header-link-hover-bg: rgba(255,0,0,0.08);
 }
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
 * {
   margin: 0;
   padding: 0;
