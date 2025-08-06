@@ -301,7 +301,7 @@ main {
     cursor: pointer;
     transition: all 0.2s ease;
     animation: throb 1s ease-in-out infinite;
-  }
+  } 
 
   .no-thanks-btn {
     position: absolute;
