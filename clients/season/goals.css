@@ -243,6 +243,79 @@ main {
   }
 }
 
+.appointment-soon {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: calc(100vw - 2rem);
+  height: calc(100vh - 2rem);
+  z-index: 1001;
+  margin: 1rem;
+  border-radius: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color--blue);
+  color: var(--color--white);
+  font-size: 1.5rem;
+  padding: 2rem;
+  animation: appointmentSoonAnim 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+
+  .rd-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--color--white);
+  }
+
+  h2 {
+    font-size: 3rem;
+    font-weight: 300;
+    letter-spacing: -0.1rem;
+    line-height: 1;
+    margin-bottom: 1rem;
+    font-family: var(--font-family--serif);
+    text-align: center;
+  }
+
+  p {
+    font-size: 1.4rem;
+    font-weight: 300;
+    letter-spacing: -0.04rem;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+    font-family: var(--font-family--serif);
+    text-align: center;
+  }
+
+  .cta-btn {
+    font-family: var(--font-family--sans-serif);
+    padding: 1rem 2rem;
+    border-radius: 99rem;
+    font-size: 1.1rem;
+    letter-spacing: -0.02rem;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    animation: throb 1s ease-in-out infinite;
+  }
+
+  .no-thanks-btn {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: var(--font-family--sans-serif);
+    font-size: 1rem;
+    color: var(--color--white);
+    width: fit-content;
+    white-space: nowrap;
+  }
+}
+
 .header-container {
   position: fixed;
   top: 0;
@@ -274,27 +347,26 @@ main {
       cursor: pointer;
       background: var(--color--white);
       border: 1px solid var(--color--gray--dark);
-    }
 
-    .green-dot {
-      position: absolute;
-      top: 0;
-      right: 0;
-      width: 12px;
-      height: 12px;
-      border-radius: 8px;
-      background-color: var(--color--success);
-      border: 2px solid var(--color--white);
-    }
+      .green-dot {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 12px;
+        height: 12px;
+        border-radius: 8px;
+        background-color: var(--color--success);
+        border: 2px solid var(--color--white);
+      }
 
-    .rd-image {
-      width: 100%;
-      aspect-ratio: 1/1;
-      border-radius: 99rem;
-      object-fit: cover;
-      padding: 4px;
+      .rd-image {
+        width: 100%;
+        aspect-ratio: 1/1;
+        border-radius: 99rem;
+        object-fit: cover;
+        padding: 4px;
+      }
     }
-
     .menu-item {
       padding: 8px;
     }
@@ -1596,5 +1668,25 @@ main {
         line-height: 1;
       }
     }
+  }
+}
+
+@keyframes appointmentSoonAnim {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes throb {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
   }
 }
