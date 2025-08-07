@@ -163,13 +163,13 @@
   --font-family--sans-serif: "GT-America-Standard", sans-serif;
 
   --color--white: #fff;
-  --color--black: #101010;
+  --color--black: #000000;
   --color--yellow-paper: #fdfae6;
   --color--gray--light: #f0f0f0;
   --color--gray--medium: #ccc;
   --color--gray--dark: #333;
   --color--pink: rgb(248, 229, 217);
-  --color--blue: rgb(72, 95, 129);
+  --color--s3--season-dark-blue: rgb(72, 95, 129);
   --color--sky-blue: rgb(232,243,255);
   --color--success: #090;
   --color--warning: #c00;
@@ -180,6 +180,21 @@
   --color--season-hazelnut: rgba(199, 121, 85, 1);
   --color--season-raspberry: rgba(183, 89, 95, 1);
   --color--season-blood-orange: rgba(224, 79, 52, 1);
+
+
+  --color--s3--pink: #f374ae;
+  --color--s3--pink-dark: #960D4B;
+
+  --color--s3--blue: #afdedc;
+  --color--s3--blue-dark: #3B918D;
+
+  --color--s3--orange: #f5bb00;
+  --color--s3--orange-dark: #291F00;
+
+  --color--s3--green: #9cd08f;
+  --color--s3--green-dark: #3E7330;
+
+  --color--s3--season-light-blue: #aad3ff;
 
   --color--s2--green: #5FD564;
   --color--s2--blue: #84C5E6;
@@ -248,9 +263,10 @@ main {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: var(--color--blue);
+  background-color: var(--color--s3--season-light-blue);
+  border: solid 1px var(--color--gray--medium);
   gap: 1rem;
-  color: var(--color--white);
+  color: var(--color--black);
   font-size: 1.5rem;
   padding: 2rem;
   animation: popIn 0.5s var(--easing--pop-in) forwards;
@@ -292,14 +308,15 @@ main {
     cursor: pointer;
     transition: all 0.2s ease;
     animation: throb 1.4s ease-in-out infinite;
-    color: var(--color--black);
+    color: var(--color--white);
+    background-color: var(--color--s3--season-dark-blue);
     width: 100%;
   } 
 
   .no-thanks-btn {
     font-family: var(--font-family--sans-serif);
     font-size: 1rem;
-    color: var(--color--white);
+    color: var(--color--s3--season-dark-blue);
     width: fit-content;
     white-space: nowrap;
   }
@@ -433,10 +450,7 @@ main {
     display: flex;
     align-items: center;
     justify-content: center;
-
-    &.pulse {
-      background-color: var(--color--white);
-    }
+    background-color: var(--color--white);
 
     &.pulse::before {
       content: '';
@@ -473,19 +487,8 @@ main {
 
     &.today {
       background: var(--timeline--color-bulb);
+      z-index: 100;
 
-      &::before {
-        content: '';
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        width: 120%;
-        height: 120%;
-        transform: translate(-50%, -50%);
-        border-radius: 50%;
-        border: solid 2px var(--timeline--color);
-        z-index: 0;
-      }
     }
 
     .label {
@@ -517,8 +520,10 @@ main {
 
 .cta-button {
   margin-top: 2rem;
-  background: var(--color--s2--green);
-  color: var(--color--black);
+  background: var(--color--s3--season-dark-blue);
+  border: solid 1px var(--color--gray--medium);
+  box-shadow: var(--box-shadow--standard);
+  color: var(--color--white);
   font-family: var(--font-family--sans-serif);
   padding: 1rem 2rem;
   border-radius: 99rem;
@@ -659,10 +664,10 @@ main {
 }
 
 .square { aspect-ratio: 1 / 1; }
-.square-1 { background: var(--color--s2--purple); }
-.square-2 { background: var(--color--s2--green); }
-.square-3 { background: var(--color--s2--red); }
-.square-4 { background: var(--color--s2--yellow); }
+.square-1 { background: var(--color--s3--blue); }
+.square-2 { background: var(--color--s3--green); }
+.square-3 { background: var(--color--s3--pink); }
+.square-4 { background: var(--color--s3--orange); }
 
 .popup {
   position: fixed;
@@ -680,14 +685,14 @@ main {
   .popup-content {
     position: absolute;
     border-radius: 2rem;
-    border: 2px solid var(--color--gray--medium);
+    border: 1px solid var(--color--gray--medium);
     padding: var(--padding--sides);
     padding-bottom: 0;
     width: calc(100% - var(--padding--sides));
     transform: scale(0.9);
     overflow-x: hidden;
-    animation: popIn 0.5s var(--easing--pop-in) forwards;
-    box-shadow: 0 0 10px rgba(0,0,0,0.05);
+    animation: popInAndUp 0.5s var(--easing--pop-in) forwards;
+    box-shadow: var(--box-shadow--standard);
 
     &.more {
       background-color: var(--color--white);
@@ -1107,7 +1112,7 @@ main {
               width: 40px;
               height: 40px;
               border-radius: 50%;
-              background-color: var(--color--blue);
+              background-color: var(--color--s3--season-dark-blue);
               border: none;
               display: flex;
               align-items: center;
@@ -1478,9 +1483,9 @@ main {
       flex-direction: column;
       
       .goal-title {
-        font-family: var(--font-family--sans-serif);
-        font-size: 1.2rem;
-        font-weight: 600;
+        font-family: var(--font-family--serif);
+        font-size: 1.4rem;
+        font-weight: 500;
         letter-spacing: -0.05rem;
         color: var(--color--black);
         text-align: left;
@@ -1490,14 +1495,15 @@ main {
       
       .goal-calendar-container {
         position: relative;
-        margin-bottom: 2.4rem;
+        margin-bottom: 2rem;
 
         .goal-calendar {
-
+          position: relative;
+          background-color: rgba(255,255,255,0.5);
           width: calc(100% + 2 * var(--padding--sides));
           margin-left: calc(-1 * var(--padding--sides));
           margin-right: calc(-1 * var(--padding--sides));
-          padding: 0.5rem var(--padding--sides);
+          padding: 1rem var(--padding--sides);
           display: flex;
           gap: 0.5rem;
           overflow-x: auto;
@@ -1519,14 +1525,14 @@ main {
             cursor: pointer;
             position: relative;
 
-            &::before {
+            &::after {
               content: '';
               position: absolute;
               top: 50%;
               left: 0;
               right: 0;
               height: 1px;
-              border-top: 3px dotted var(--timeline--color);
+              border-top: 3px dotted red;
               margin-left: calc(-1 * var(--padding--sides));
               transform: translateY(-50%);
               z-index: -1;
@@ -1579,8 +1585,8 @@ main {
         flex: 1;
         width: 100%;
         height: 100%;
-        border-radius: 0.5rem;
-        background: transparent;
+        border-radius: 1rem;
+        background: var(--color--white);
         padding: 1rem;
         font-family: var(--font-family--sans-serif);
         font-size: 1rem;
@@ -1588,14 +1594,12 @@ main {
         resize: vertical;
         outline: none;
         margin-bottom: 1rem;
+        border: none;
         
         &::placeholder {
-          color: rgba(0, 0, 0, 0.5);
+          color: var(--color--gray--dark);
         }
         
-        &:focus {
-          border-color: var(--color--s2--green);
-        }
       }
     
       .goal-footer {
@@ -1627,37 +1631,101 @@ main {
     }
 
     &.goals-1-logging { 
-      border-color: var(--color--s2--purple); 
+      background-color: var(--color--s3--blue);
+
+      .day-circle {
+        border-color: var(--color--s3--blue-dark) !important;
+      }
+
+      .calendar-day::after {
+        border-top: 3px dotted var(--color--s3--blue-dark) !important;
+      }
+
+      .today {
+        background-color: var(--color--s3--blue-dark) !important;
+
+        * {
+          color: var(--color--white) !important;
+        }
+      }
       
       .save-writeup-btn {
-        background: var(--color--s2--purple-dark); 
+        background: var(--color--s3--blue-dark); 
         color: var(--color--white);
       }
     }
 
     &.goals-2-logging { 
-      border-color: var(--color--s2--green); 
+      background-color: var(--color--s3--green);
+
+      .day-circle {
+        border-color: var(--color--s3--green-dark) !important;
+      }
+
+      .calendar-day::after {
+        border-top: 3px dotted var(--color--s3--green-dark) !important;
+      }
+
+      .today {
+        background-color: var(--color--s3--green-dark) !important;
+
+        * {
+          color: var(--color--white) !important;
+        }
+      }
 
       .save-writeup-btn {
-        background: var(--color--s2--green-dark); 
+        background: var(--color--s3--green-dark); 
         color: var(--color--white);
       }
     }
 
     &.goals-3-logging { 
-      border-color: var(--color--s2--red); 
+      background-color: var(--color--s3--pink);
+
+      .day-circle {
+        border-color: var(--color--s3--pink-dark) !important;
+      }
+
+      .calendar-day::after {
+        border-top: 3px dotted var(--color--s3--pink-dark) !important;
+      }
+
+      .today {
+        background-color: var(--color--s3--pink-dark) !important;
+
+        * {
+          color: var(--color--white) !important;
+        }
+      }
 
       .save-writeup-btn {
-        background: var(--color--s2--red-dark); 
+        background: var(--color--s3--pink-dark); 
         color: var(--color--white);
       }
     }
 
     &.goals-4-logging { 
-      border-color: var(--color--s2--yellow); 
+      background-color: var(--color--s3--orange);
+
+      .day-circle {
+        border-color: var(--color--s3--orange-dark) !important;
+      }
+
+      .calendar-day::after {
+        border-top: 3px dotted var(--color--s3--orange-dark) !important;
+      }
+
+      .today {
+        background-color: var(--color--s3--orange-dark) !important;
+
+        * {
+          color: var(--color--white) !important;
+        }
+      }
 
       .save-writeup-btn {
-        background: var(--color--s2--yellow-dark); 
+        background: var(--color--s3--orange-dark); 
         color: var(--color--white);
       }
     }
@@ -1696,7 +1764,7 @@ main {
       align-items: center;
       justify-content: center;
       text-decoration: none;
-      color: var(--color--blue);
+      color: var(--color--s3--season-dark-blue);
       transition: color 0.2s ease;
       padding: 0.5rem;
       border-radius: 0.5rem;
@@ -1751,10 +1819,21 @@ main {
   }
 }
 
-@keyframes popIn {
+@keyframes popInAndUp {
   0% {
     opacity: 0;
     transform: scale(1) translateY(50%);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes popIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
   }
   100% {
     opacity: 1;
