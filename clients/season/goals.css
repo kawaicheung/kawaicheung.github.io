@@ -155,7 +155,11 @@
  }
 
 .no-scroll {
-  overflow: hidden;
+  overflow: hidden !important;
+}
+
+.hidden {
+  display: none !important;
 }
 
  :root {
@@ -1256,6 +1260,7 @@ main {
           justify-content: space-between;
           font-size: 0.9rem;
           font-weight: 500;
+          min-height: 3rem;
           margin-left: calc(-1 * var(--padding--sides));
           margin-right: calc(-1 * var(--padding--sides));
           padding: 0.5rem var(--padding--sides);
@@ -1279,8 +1284,11 @@ main {
             border: none;
             cursor: pointer;
             text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             letter-spacing: -0.02rem;
-            
+            height: 100%;
           }
         }
         
