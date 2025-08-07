@@ -1555,9 +1555,10 @@ main {
               justify-content: center;
               background-color: var(--color--white);
               border: 2px solid var(--timeline--color);
+              transition: transform 0.2s ease;
               
               &.selected {
-                background-color: var(--color--s2--green);
+                transform: scale(1.12);
               }
               
               &.today {
