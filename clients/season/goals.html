@@ -609,6 +609,42 @@
         console.log('clicked');
         modal.style.display = 'block';
         disableHtmlScroll();
+
+        // Scroll goal calendars to the right when goal popups open
+        if (modalId.includes('goals-') && modalId.includes('-logging')) {
+          const goalNumber = modalId.match(/goals-(\d+)-logging/)[1];
+          const calendar = document.getElementById(`goal-calendar-${goalNumber}`);
+          
+          if (calendar) {
+          // Use setTimeout to ensure the modal is fully displayed before scrolling
+          setTimeout(() => {
+            // Find the 'today' element within this calendar
+            const todayElement = calendar.querySelector('.day-circle.today');
+            
+            if (todayElement) {
+              // Get the parent day element
+              const todayDay = todayElement.closest('.calendar-day');
+              
+              // Calculate the position to center 'today' in the viewport
+              const calendarRect = calendar.getBoundingClientRect();
+              const todayRect = todayDay.getBoundingClientRect();
+              
+              // Calculate the offset of today relative to the calendar's scroll container
+              const todayOffsetLeft = todayDay.offsetLeft;
+              const todayWidth = todayRect.width;
+              const calendarWidth = calendarRect.width;
+              
+              // Calculate scroll position to center today
+              const scrollToCenter = todayOffsetLeft - (calendarWidth / 2) + (todayWidth / 2);
+              
+              calendar.scrollLeft = scrollToCenter;
+            } else {
+              // Fallback: scroll to the end if no today element found
+              calendar.scrollLeft = calendar.scrollWidth;
+            }
+          }, 100);
+        }
+        }
       });
     });
     
@@ -934,8 +970,6 @@
         calendar.appendChild(dayElement);
       });
       
-      // Scroll to end (today)
-      calendar.scrollLeft = calendar.scrollWidth;
     });
   }
 
