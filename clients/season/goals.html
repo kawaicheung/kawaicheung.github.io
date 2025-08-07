@@ -50,8 +50,8 @@
       <div class="win-container">
         <h1>Welcome back, Michelle!</h1>
         <p>
-          You've done <strong>five straight days</strong> of exercise. 
-          Consider skipping your run today and resting. But keep it up!
+          You've done <strong>5 straight days</strong> of exercise. 
+          Consider skipping your run today and rest. But keep it up!
         </p>
         <div class="timeline" id="timeline">
           <div class="line"></div>
@@ -665,7 +665,10 @@
         const [year, month, day] = dateStr.split('-').map(Number);
         const date = new Date(year, month - 1, day); // month is 0-indexed
         const options = { month: 'short', day: 'numeric' };
-        labelSpan.textContent = date.toLocaleDateString('en-US', options);
+        const parts = date.toLocaleDateString('en-US', options).split(' ');
+
+        labelSpan.innerHTML = `${parts[0]}<br>${parts[1]}`;
+
       }
     });
 
