@@ -472,7 +472,7 @@
         </div>
         <textarea class="goal-writeup" id="goal-writeup-1" placeholder="How did it go today?"></textarea>
         <div class="goal-footer">
-          <button class="save-writeup-btn" data-goal="1">Save this write-up</button>
+          <button class="save-writeup-btn" data-goal="1">Save</button>
         </div>
       </div>
     </div>
@@ -866,6 +866,7 @@
   function initializeGoalCalendars() {
     const goalIds = [1, 2, 3, 4];
     const today = new Date();
+    const endDate = new Date('2025-08-11');
     const startDate = new Date('2025-07-11');
     
     goalIds.forEach(goalId => {
@@ -877,7 +878,7 @@
       let currentDate = toLocalDateOnly(startDate);
       const today = toLocalDateOnly(new Date());
 
-      while (currentDate <= today) {
+      while (currentDate <= endDate) {
         days.push(new Date(currentDate));
         currentDate.setDate(currentDate.getDate() + 1);
       }
@@ -889,7 +890,17 @@
         dayElement.dataset.date = date.toISOString().split('T')[0];
         
         const isToday = date.toDateString() === today.toDateString();
-        const isSelected = index === days.length - 1; // Start with today selected
+        const beforeToday = date < today;
+        const afterToday = date > today;
+        const isSelected = isToday;
+
+
+        if (date < today) {
+          // 55% chance of being logged
+          if (Math.random() < 0.75) {
+            dayElement.classList.add('logged');
+          }
+        }
         
         dayElement.innerHTML = `
           <div class="day-circle ${isToday ? 'today' : ''} ${isSelected ? 'selected' : ''}">
