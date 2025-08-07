@@ -1507,7 +1507,6 @@ main {
 
         .goal-calendar {
           position: relative;
-          background-color: rgba(255,255,255,0.5);
           width: calc(100% + 2 * var(--padding--sides));
           margin-left: calc(-1 * var(--padding--sides));
           margin-right: calc(-1 * var(--padding--sides));
@@ -1540,7 +1539,7 @@ main {
               left: 0;
               right: 0;
               height: 1px;
-              border-top: 3px dotted red;
+              border-top: 2px solid red;
               margin-left: calc(-1 * var(--padding--sides));
               transform: translateY(-50%);
               z-index: -1;
@@ -1658,7 +1657,7 @@ main {
       }
 
       .calendar-day::after {
-        border-top: 3px dotted var(--color--s3--blue-dark) !important;
+        border-top-color: var(--color--s3--blue-dark) !important;
       }
 
       .today {
@@ -1683,7 +1682,7 @@ main {
       }
 
       .calendar-day::after {
-        border-top: 3px dotted var(--color--s3--green-dark) !important;
+        border-top-color: var(--color--s3--green-dark) !important;
       }
 
       .today {
@@ -1708,7 +1707,7 @@ main {
       }
 
       .calendar-day::after {
-        border-top: 3px dotted var(--color--s3--pink-dark) !important;
+        border-top-color: var(--color--s3--pink-dark) !important;
       }
 
       .today {
@@ -1733,7 +1732,7 @@ main {
       }
 
       .calendar-day::after {
-        border-top: 3px dotted var(--color--s3--orange-dark) !important;
+        border-top-color: var(--color--s3--orange-dark) !important;
       }
 
       .today {

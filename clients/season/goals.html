@@ -594,6 +594,9 @@
     initializeBottomPanelClick();
     initializeAppointmentSoon();
     initializePreVisitSummaryEdit(); 
+    setTimeout(() => {
+      applyCalendarScrollScaling();
+    }, 100);
   });
 
   // Reusable method to set up modal/popup toggle functionality
@@ -973,6 +976,52 @@
     });
   }
 
+  function applyCalendarScrollScaling() {
+    const calendars = document.querySelectorAll('.goal-calendar');
+    
+    calendars.forEach(calendar => {
+      const updateScaling = () => {
+        const calendarRect = calendar.getBoundingClientRect();
+        const calendarCenter = calendarRect.left + calendarRect.width / 2;
+        const dayCircles = calendar.querySelectorAll('.day-circle');
+        
+        dayCircles.forEach(circle => {
+          const circleRect = circle.getBoundingClientRect();
+          const circleCenter = circleRect.left + circleRect.width / 2;
+          
+          // Calculate distance from calendar center
+          const distanceFromCenter = Math.abs(circleCenter - calendarCenter);
+          const maxDistance = calendarRect.width / 2;
+          
+          // Normalize distance (0 = center, 1 = edge)
+          const normalizedDistance = Math.min(distanceFromCenter / maxDistance, 1);
+          
+          // Calculate scale (1.15 at center, 0.8 at edges)
+          const minScale = 0.8;
+          const maxScale = 1.2;
+          const scale = maxScale - (normalizedDistance * (maxScale - minScale));
+          
+          // Apply the transform and opacity
+          circle.style.transform = `scale(${scale})`;
+        });
+      };
+      
+      // Initial scaling
+      updateScaling();
+      
+      // Update scaling on scroll with throttling for performance
+      let scrollTimeout;
+      calendar.addEventListener('scroll', () => {
+        if (scrollTimeout) {
+          clearTimeout(scrollTimeout);
+        }
+        scrollTimeout = setTimeout(updateScaling, 10);
+      });
+      
+      // Update on window resize
+      window.addEventListener('resize', updateScaling);
+    });
+  }
   // Save button handlers
   function initializeSaveButtons() {
     document.querySelectorAll('.save-writeup-btn').forEach(button => {
@@ -1029,7 +1078,7 @@
   }
 
   // Initialize pre-visit summary edit functionality
-function initializePreVisitSummaryEdit() {
+  function initializePreVisitSummaryEdit() {
   const editBtn = document.getElementById('edit-summary-btn');
   const summaryContent = document.getElementById('summary-content');
   const editForm = document.getElementById('edit-form');
@@ -1103,6 +1152,7 @@ function initializePreVisitSummaryEdit() {
     }, 300);
   }
 }
+
 
   </script>
 </html>
