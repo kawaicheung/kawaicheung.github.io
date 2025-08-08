@@ -62,7 +62,7 @@
           <div class="dot pulse appt-report-btn" data-appointment-date="2025-05-21"></div>
           <div class="dot pulse appt-report-btn" data-appointment-date="2025-07-11"></div>
           <div class="dot today"></div>
-          <div class="dot" data-appointment-date="2025-08-11"></div>
+          <div class="dot" data-appointment-date="2025-08-15"></div>
         </div>
         <!--<div class="cta-button appt-report-btn">
           <span>July 11 post-visit report</span>
@@ -618,35 +618,27 @@
           const goalNumber = modalId.match(/goals-(\d+)-logging/)[1];
           const calendar = document.getElementById(`goal-calendar-${goalNumber}`);
           
-          if (calendar) {
-          // Use setTimeout to ensure the modal is fully displayed before scrolling
-          setTimeout(() => {
-            // Find the 'today' element within this calendar
-            const todayElement = calendar.querySelector('.day-circle.today');
+          // Scroll goal calendars to the right when goal popups open
+          if (modalId.includes('goals-') && modalId.includes('-logging')) {
+            const goalNumber = modalId.match(/goals-(\d+)-logging/)[1];
+            const calendar = document.getElementById(`goal-calendar-${goalNumber}`);
             
-            if (todayElement) {
-              // Get the parent day element
-              const todayDay = todayElement.closest('.calendar-day');
+            if (calendar) {
+              // Find the 'today' element within this calendar
+              const todayElement = calendar.querySelector('.day-circle.today');
               
-              // Calculate the position to center 'today' in the viewport
-              const calendarRect = calendar.getBoundingClientRect();
-              const todayRect = todayDay.getBoundingClientRect();
-              
-              // Calculate the offset of today relative to the calendar's scroll container
-              const todayOffsetLeft = todayDay.offsetLeft;
-              const todayWidth = todayRect.width;
-              const calendarWidth = calendarRect.width;
-              
-              // Calculate scroll position to center today
-              const scrollToCenter = todayOffsetLeft - (calendarWidth / 2) + (todayWidth / 2);
-              
-              calendar.scrollLeft = scrollToCenter;
-            } else {
-              // Fallback: scroll to the end if no today element found
-              calendar.scrollLeft = calendar.scrollWidth;
+              if (todayElement) {
+                // Get the parent day element and center it
+                const todayDay = todayElement.closest('.calendar-day');
+                centerDayInCalendar(calendar, todayDay);
+              } else {
+                // Fallback: scroll to the end if no today element found
+                setTimeout(() => {
+                  calendar.scrollLeft = calendar.scrollWidth;
+                }, 100);
+              }
             }
-          }, 100);
-        }
+          }
         }
       });
     });
@@ -905,7 +897,7 @@
   function initializeGoalCalendars() {
     const goalIds = [1, 2, 3, 4];
     const today = new Date();
-    const endDate = new Date('2025-08-11');
+    const endDate = new Date('2025-08-15');
     const startDate = new Date('2025-07-11');
     
     goalIds.forEach(goalId => {
@@ -960,6 +952,9 @@
           // Add selected class to clicked day
           dayElement.querySelector('.day-circle').classList.add('selected');
           
+          // Center the selected day in the calendar
+          centerDayInCalendar(calendar, dayElement);
+          
           // Update placeholder text
           const isClickedToday = date.toDateString() === today.toDateString();
           textarea.placeholder = isClickedToday ? 
@@ -974,6 +969,27 @@
       });
       
     });
+  }
+
+  function centerDayInCalendar(calendar, targetDay) {
+    setTimeout(() => {
+      const calendarRect = calendar.getBoundingClientRect();
+      const targetRect = targetDay.getBoundingClientRect();
+      
+      // Calculate the offset of target day relative to the calendar's scroll container
+      const targetOffsetLeft = targetDay.offsetLeft;
+      const targetWidth = targetRect.width;
+      const calendarWidth = calendarRect.width;
+      
+      // Calculate scroll position to center the target day
+      const scrollToCenter = targetOffsetLeft - (calendarWidth / 2) + (targetWidth / 2);
+      
+      // Smooth scroll to center the day
+      calendar.scrollTo({
+        left: scrollToCenter,
+        behavior: 'smooth'
+      });
+    }, 100);
   }
 
   function applyCalendarScrollScaling() {
