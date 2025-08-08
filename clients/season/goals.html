@@ -132,14 +132,7 @@
             <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
-          <span>Goals</span>
-        </a>
-        <a href="#" class="footer-item">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M23 19A2 2 0 0 1 21 21H3A2 2 0 0 1 1 19V8A2 2 0 0 1 3 6H7L9 3H15L17 6H21A2 2 0 0 1 23 8Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            <circle cx="12" cy="13" r="4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-          <span>Log</span>
+          <span>Meals</span>
         </a>
         <a href="#" class="footer-item">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -388,58 +381,138 @@
 
           <!-- Edit form (hidden by default) -->
           <div class="edit-form" id="edit-form">
-            <div class="edit-section">
-              <p>
-                Here's how Season created your pre-visit summary. You can exclude anything you don't want to share below.
-              </p>
-              <h3>What you told your RD</h3>
-              <textarea id="health-status">Michelle has been experiencing consistent energy fluctuations throughout the day, particularly noticeable afternoon crashes around 2-3 PM. Recent lab work shows slightly elevated cholesterol and mild iron deficiency.
-
-    - Afternoon energy crashes (2-3 PM daily)
-    - Elevated cholesterol levels (LDL: 145 mg/dL)  
-    - Mild iron deficiency (ferritin: 18 ng/mL)
-    - Irregular sleep patterns affecting morning energy</textarea>
+            <div class="edit-disclaimer">
+              Here's how Season created your pre-visit summary. You can exclude anything you don't want to share below.
             </div>
             
             <div class="edit-section">
-              <h3>Dietary Patterns & Concerns</h3>
-              <textarea id="dietary-patterns">Current eating habits include skipping breakfast 3-4 times per week, rushed lunches, and late dinners that are typically carb-heavy. Michelle tends to rely heavily on coffee for energy management.
-
-    - Frequent breakfast skipping (3-4x per week)
-    - Rushed lunch breaks with processed foods
-    - Late dinners (after 8 PM) with high carb content
-    - Excessive caffeine consumption (4-5 cups daily)
-    - Stress-induced meal skipping patterns</textarea>
+              <h3>Things you discussed with your RD</h3>
+              <div class="edit-items">
+                <div class="edit-item" data-item-id="rd-1">
+                  <div class="item-text">Discussed afternoon energy crashes occurring daily around 2-3 PM and potential dietary causes.</div>
+                  <div class="item-toggle">
+                    <svg viewBox="0 0 24 24">
+                      <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                    </svg>
+                  </div>
+                </div>
+                <div class="edit-item" data-item-id="rd-2">
+                  <div class="item-text">Reviewed recent lab results showing elevated cholesterol (LDL: 145 mg/dL) and mild iron deficiency.</div>
+                  <div class="item-toggle">
+                    <svg viewBox="0 0 24 24">
+                      <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                    </svg>
+                  </div>
+                </div>
+                <div class="edit-item" data-item-id="rd-3">
+                  <div class="item-text">Talked about irregular sleep patterns and their impact on morning energy levels.</div>
+                  <div class="item-toggle">
+                    <svg viewBox="0 0 24 24">
+                      <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                    </svg>
+                  </div>
+                </div>
+                <div class="edit-item" data-item-id="rd-4">
+                  <div class="item-text">Established goals for consistent breakfast routine with 20g+ protein daily.</div>
+                  <div class="item-toggle">
+                    <svg viewBox="0 0 24 24">
+                      <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                    </svg>
+                  </div>
+                </div>
+              </div>
             </div>
             
             <div class="edit-section">
-              <h3>Goals for Upcoming Visit</h3>
-              <textarea id="visit-goals">The primary focus will be addressing energy stability through improved meal timing and nutrient density. We'll also work on strategies for better meal planning despite a busy schedule.
-
-    - Establish consistent breakfast routine with 20g+ protein
-    - Implement meal prep strategies for busy weekdays
-    - Address iron deficiency through dietary modifications
-    - Create sustainable evening meal timing
-    - Reduce caffeine dependency gradually</textarea>
+              <h3>Things you chatted with Season Assistant</h3>
+              <div class="edit-items">
+                <div class="edit-item" data-item-id="ai-1">
+                  <div class="item-text">Asked about meal prep strategies for busy weekdays and received customized suggestions.</div>
+                  <div class="item-toggle">
+                    <svg viewBox="0 0 24 24">
+                      <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                    </svg>
+                  </div>
+                </div>
+                <div class="edit-item" data-item-id="ai-2">
+                  <div class="item-text">Discussed iron-rich food options and how to improve absorption with vitamin C pairing.</div>
+                  <div class="item-toggle">
+                    <svg viewBox="0 0 24 24">
+                      <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                    </svg>
+                  </div>
+                </div>
+                <div class="edit-item" data-item-id="ai-3">
+                  <div class="item-text">Explored caffeine reduction strategies and healthy energy-boosting alternatives.</div>
+                  <div class="item-toggle">
+                    <svg viewBox="0 0 24 24">
+                      <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                    </svg>
+                  </div>
+                </div>
+                <div class="edit-item" data-item-id="ai-4">
+                  <div class="item-text">Got recommendations for timing evening meals earlier to improve sleep quality.</div>
+                  <div class="item-toggle">
+                    <svg viewBox="0 0 24 24">
+                      <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                    </svg>
+                  </div>
+                </div>
+                <div class="edit-item" data-item-id="ai-5">
+                  <div class="item-text">Received a personalized hydration tracking plan to maintain 64+ oz daily water intake.</div>
+                  <div class="item-toggle">
+                    <svg viewBox="0 0 24 24">
+                      <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                    </svg>
+                  </div>
+                </div>
+              </div>
             </div>
             
             <div class="edit-section">
-              <h3>Progress Since Last Visit</h3>
-              <textarea id="progress-update">Michelle has successfully implemented several recommendations from our previous session, including regular hydration tracking and incorporating more leafy greens into her diet.
-
-    - Consistent water intake tracking (64+ oz daily)
-    - Added spinach/kale to smoothies 4x per week
-    - Reduced late-night snacking by 60%
-    - Started taking recommended vitamin D supplement
-    - Improved meal timing on weekends</textarea>
+              <h3>Meals you ordered this month</h3>
+              <div class="edit-items">
+                <div class="edit-item" data-item-id="meal-1">
+                  <div class="item-text">Mediterranean Bowl with grilled chicken, quinoa, and tahini dressing (ordered 4 times).</div>
+                  <div class="item-toggle">
+                    <svg viewBox="0 0 24 24">
+                      <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                    </svg>
+                  </div>
+                </div>
+                <div class="edit-item" data-item-id="meal-2">
+                  <div class="item-text">Green Goddess Salad with salmon and avocado (ordered 3 times this month).</div>
+                  <div class="item-toggle">
+                    <svg viewBox="0 0 24 24">
+                      <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                    </svg>
+                  </div>
+                </div>
+                <div class="edit-item" data-item-id="meal-3">
+                  <div class="item-text">Steel-cut oats breakfast bowl with berries and almond butter (morning favorite).</div>
+                  <div class="item-toggle">
+                    <svg viewBox="0 0 24 24">
+                      <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                    </svg>
+                  </div>
+                </div>
+                <div class="edit-item" data-item-id="meal-4">
+                  <div class="item-text">Lentil curry with brown rice and steamed vegetables (comfort meal choice).</div>
+                  <div class="item-toggle">
+                    <svg viewBox="0 0 24 24">
+                      <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                    </svg>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 
           <!-- Regenerating state (hidden by default) -->
           <div class="regenerating-state" id="regenerating-state">
             <div class="regenerating-spinner"></div>
-            <div class="regenerating-text">Regenerating summary...</div>
-            <div class="regenerating-subtext">This will take just a moment</div>
+            <div class="regenerating-text">Regenerating pre-visit summary...</div>
+            <div class="regenerating-subtext">This will take just a moment!</div>
           </div>
         </div>
       </div>
@@ -593,7 +666,8 @@
     initializeSaveButtons();
     initializeBottomPanelClick();
     initializeAppointmentSoon();
-    initializePreVisitSummaryEdit(); 
+    initializePreVisitSummaryEdit();
+    initializeEditFormToggles(); 
     setTimeout(() => {
       applyCalendarScrollScaling();
     }, 100);
@@ -1167,6 +1241,38 @@
       }, 1000);
     }, 300);
   }
+}
+
+  // Initialize edit form item toggles
+function initializeEditFormToggles() {
+  const editItems = document.querySelectorAll('.edit-form .edit-item');
+  
+  editItems.forEach(item => {
+    item.addEventListener('click', () => {
+      const toggle = item.querySelector('.item-toggle');
+      const isExcluded = item.classList.contains('excluded');
+      
+      if (isExcluded) {
+        // Switch back to checkmark
+        item.classList.remove('excluded');
+        toggle.classList.remove('excluded');
+        toggle.innerHTML = `
+          <svg viewBox="0 0 24 24">
+            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+          </svg>
+        `;
+      } else {
+        // Switch to X
+        item.classList.add('excluded');
+        toggle.classList.add('excluded');
+        toggle.innerHTML = `
+          <svg viewBox="0 0 24 24">
+            <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+          </svg>
+        `;
+      }
+    });
+  });
 }
 
 
