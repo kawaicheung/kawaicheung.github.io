@@ -128,6 +128,13 @@
         </a>
         <a href="#" class="footer-item">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M22 11.08V12A10 10 0 1 1 5.68 3.49" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M22 4L12 14.01L9 11.01" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span>Goals</span>
+        </a>
+        <a href="#" class="footer-item">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -136,17 +143,18 @@
         </a>
         <a href="#" class="footer-item">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M22 11.08V12A10 10 0 1 1 5.68 3.49" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M22 4L12 14.01L9 11.01" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-          <span>Progress</span>
-        </a>
-        <a href="#" class="footer-item">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M20 21V19C20 17.9391 19.5786 16.9217 18.8284 16.1716C18.0783 15.4214 17.0609 15 16 15H8C6.93913 15 5.92172 15.4214 5.17157 16.1716C4.42143 16.9217 4 17.9391 4 19V21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             <path d="M12 11C14.2091 11 16 9.20914 16 7C16 4.79086 14.2091 3 12 3C9.79086 3 8 4.79086 8 7C8 9.20914 9.79086 11 12 11Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
-          <span>Profile</span>
+          <span>Account</span>
+        </a>
+        <a href="#" class="footer-item">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="12" cy="12" r="2" fill="currentColor"/>
+            <circle cx="19" cy="12" r="2" fill="currentColor"/>
+            <circle cx="5" cy="12" r="2" fill="currentColor"/>
+          </svg>
+          <span>More</span>
         </a>
       </div>
     </div>
@@ -917,9 +925,30 @@
   window.addEventListener('load', () => {
     setupTimeline();
     
-    // Your existing scroll to end - this will show the final 3 dots
-    const scrollDiv = document.getElementById('timeline');
-    scrollDiv.scrollLeft = scrollDiv.scrollWidth;
+    // Smooth scroll to end with 2-second ease-in animation
+    const timeline = document.getElementById('timeline');
+    setTimeout(() => {
+      const start = 0;
+      const end = timeline.scrollWidth - timeline.clientWidth;
+      const duration = 1000; // 2 seconds
+      const startTime = performance.now();
+
+      function animate(currentTime) {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        
+        // Ease-in function (slow start, fast end)
+        const easeIn = progress * progress;
+        
+        timeline.scrollLeft = start + (end - start) * easeIn;
+        
+        if (progress < 1) {
+          requestAnimationFrame(animate);
+        }
+      }
+      
+      requestAnimationFrame(animate);
+    }, 1000);
   });
 
   // Recalculate on window resize

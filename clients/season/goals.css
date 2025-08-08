@@ -517,8 +517,8 @@ main {
 }
 
 .timeline-scroll-animation {
-  animation: scrollToEnd 2.4s ease-out forwards;
-  animation-delay: 0.4s;
+  scroll-behavior: smooth;
+  animation: timelineScroll 2s ease-out forwards;
 }
 
 
@@ -1831,15 +1831,12 @@ main {
   }
 }
 
-@keyframes scrollToEnd {
+@keyframes timelineScroll {
   0% {
-    right: 0;
-  }
-  85% {
-    right: calc(100% + 50px); /* Goes a bit too far */
+    transform: translateX(0);
   }
   100% {
-    right: 100%; /* Snaps back to actual end */
+    transform: translateX(var(--scroll-distance, -50%));
   }
 }
 
