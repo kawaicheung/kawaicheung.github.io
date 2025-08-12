@@ -521,7 +521,6 @@ main {
   animation: timelineScroll 2s ease-out forwards;
 }
 
-
 .cta-button {
   margin-top: 2rem;
   background: var(--color--s3--season-dark-blue);
