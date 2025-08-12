@@ -48,7 +48,7 @@
             <path d="m17.012 3.375 4 0" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
             <path d="m21.25 18.625 0 4" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
             <path d="m19.25 20.625 4 0" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
-        </svg>
+          </svg>
         </div>
       </div>
     </div>
@@ -74,7 +74,7 @@
           <span>July 11 post-visit report</span>
         </div>-->
         <div class="cta-button pre-visit-summary-btn">
-          <span>Aug 11 pre-visit summary</span>
+          <span>Prep for your 8/15 visit!</span>
         </div>
       </div>
     </main>
@@ -329,7 +329,6 @@
           
           <!-- Provider info -->
           <div class="summary-to">
-            <span class="to">To:</span>
             <img src="img/alejandra.png" alt="Alejandra Sanchez, RD" class="avatar">
             <div class="rd-info">
               <div class="rd-name">Alejandra Sanchez, RD</div>
@@ -337,11 +336,39 @@
             </div>
           </div>
 
-          <div class="audit-button" id="pre-visit-action-btn">Edit</div>
+          <div class="audit-button" id="pre-visit-action-btn">
+            <span>See your pre-visit summary</span>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="Reward-Stars-2--Streamline-Ultimate" height="24" width="24">
+              <desc>Reward Stars 2 Streamline Icon: https://streamlinehq.com</desc>
+              <defs></defs>
+              <path d="M10.751 1.375c-0.025 6.281 3.029 9.844 10 10 -6.465 -0.025 -9.672 3.441 -10 10 -0.063 -6.187 -2.828 -10.009 -10 -10 6.416 -0.09 9.975 -3.187 10 -10Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
+              <path d="m19.012 1.375 0 4" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
+              <path d="m17.012 3.375 4 0" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
+              <path d="m21.25 18.625 0 4" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
+              <path d="m19.25 20.625 4 0" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
+            </svg>
+          </div>
           <!-- Edit form -->
           <div class="edit-form" id="edit-form">
             <div class="edit-disclaimer">
-              Here's how Season created your pre-visit summary. You can exclude anything you don't want to share below.
+              Season gathers highlights of what you've shared on this app since your last visit and 
+              writes a summary for Alexandra on your behalf. Feel free to
+              hide items you don't want to share below, or share something else before your visit.
+            </div>
+            
+            <div class="edit-section">
+              <h3>Anything else to share?</h3>
+              <div class="edit-items" id="custom-edit-items">
+                <!-- Custom items will be added here dynamically -->
+              </div>
+              <div class="custom-input-section">
+                <textarea 
+                  id="custom-input-textarea" 
+                  class="custom-input-textarea" 
+                  placeholder="Add anything else you'd like to share with Alejandra...">
+                </textarea>
+                <button class="save-custom-btn" id="save-custom-btn">Add to summary</button>
+              </div>
             </div>
             
             <div class="edit-section">
@@ -351,7 +378,7 @@
                   <div class="item-text">Discussed afternoon energy crashes occurring daily around 2-3 PM and potential dietary causes.</div>
                   <div class="item-toggle">
                     <svg viewBox="0 0 24 24">
-                      <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                      <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
                     </svg>
                   </div>
                 </div>
@@ -359,7 +386,7 @@
                   <div class="item-text">Reviewed recent lab results showing elevated cholesterol (LDL: 145 mg/dL) and mild iron deficiency.</div>
                   <div class="item-toggle">
                     <svg viewBox="0 0 24 24">
-                      <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                      <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
                     </svg>
                   </div>
                 </div>
@@ -367,7 +394,7 @@
                   <div class="item-text">Talked about irregular sleep patterns and their impact on morning energy levels.</div>
                   <div class="item-toggle">
                     <svg viewBox="0 0 24 24">
-                      <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                      <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
                     </svg>
                   </div>
                 </div>
@@ -375,7 +402,7 @@
                   <div class="item-text">Established goals for consistent breakfast routine with 20g+ protein daily.</div>
                   <div class="item-toggle">
                     <svg viewBox="0 0 24 24">
-                      <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                      <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
                     </svg>
                   </div>
                 </div>
@@ -389,7 +416,7 @@
                   <div class="item-text">Asked about meal prep strategies for busy weekdays and received customized suggestions.</div>
                   <div class="item-toggle">
                     <svg viewBox="0 0 24 24">
-                      <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                      <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
                     </svg>
                   </div>
                 </div>
@@ -397,7 +424,7 @@
                   <div class="item-text">Discussed iron-rich food options and how to improve absorption with vitamin C pairing.</div>
                   <div class="item-toggle">
                     <svg viewBox="0 0 24 24">
-                      <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                      <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
                     </svg>
                   </div>
                 </div>
@@ -405,7 +432,7 @@
                   <div class="item-text">Explored caffeine reduction strategies and healthy energy-boosting alternatives.</div>
                   <div class="item-toggle">
                     <svg viewBox="0 0 24 24">
-                      <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                      <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
                     </svg>
                   </div>
                 </div>
@@ -413,7 +440,7 @@
                   <div class="item-text">Got recommendations for timing evening meals earlier to improve sleep quality.</div>
                   <div class="item-toggle">
                     <svg viewBox="0 0 24 24">
-                      <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                      <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
                     </svg>
                   </div>
                 </div>
@@ -421,7 +448,7 @@
                   <div class="item-text">Received a personalized hydration tracking plan to maintain 64+ oz daily water intake.</div>
                   <div class="item-toggle">
                     <svg viewBox="0 0 24 24">
-                      <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                      <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
                     </svg>
                   </div>
                 </div>
@@ -435,7 +462,7 @@
                   <div class="item-text">Mediterranean Bowl with grilled chicken, quinoa, and tahini dressing (ordered 4 times).</div>
                   <div class="item-toggle">
                     <svg viewBox="0 0 24 24">
-                      <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                      <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
                     </svg>
                   </div>
                 </div>
@@ -443,7 +470,7 @@
                   <div class="item-text">Green Goddess Salad with salmon and avocado (ordered 3 times this month).</div>
                   <div class="item-toggle">
                     <svg viewBox="0 0 24 24">
-                      <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                      <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
                     </svg>
                   </div>
                 </div>
@@ -451,7 +478,7 @@
                   <div class="item-text">Steel-cut oats breakfast bowl with berries and almond butter (morning favorite).</div>
                   <div class="item-toggle">
                     <svg viewBox="0 0 24 24">
-                      <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                      <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
                     </svg>
                   </div>
                 </div>
@@ -459,12 +486,13 @@
                   <div class="item-text">Lentil curry with brown rice and steamed vegetables (comfort meal choice).</div>
                   <div class="item-toggle">
                     <svg viewBox="0 0 24 24">
-                      <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                      <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
                     </svg>
                   </div>
                 </div>
               </div>
             </div>
+
           </div>
 
           <!-- Original summary content (hidden by default)-->
@@ -674,6 +702,7 @@
     initializeAppointmentSoon();
     initializePreVisitSummaryEdit();
     initializeEditFormToggles(); 
+    initializeCustomInput();
     setTimeout(() => { applyCalendarScrollScaling(); }, 100);
   });
 
@@ -1226,17 +1255,20 @@
     }
 
     function updateActionButtonText() {
-      actionBtn.textContent = isEditing ? 'Save' : 'Edit';
+      /*actionBtn.textContent = isEditing ? 'Save' : 'Edit';*/
     }
   }
 
   function initializeEditFormToggles() {
     const editItems = document.querySelectorAll('.edit-form .edit-item');
+    const actionBtn = document.getElementById('pre-visit-action-btn');
     
     editItems.forEach(item => {
       item.addEventListener('click', () => {
         const toggle = item.querySelector('.item-toggle');
         const isExcluded = item.classList.contains('excluded');
+
+        actionBtn.classList.remove('hidden');
         
         if (isExcluded) {
           // Switch back to checkmark
@@ -1244,23 +1276,71 @@
           toggle.classList.remove('excluded');
           toggle.innerHTML = `
             <svg viewBox="0 0 24 24">
-              <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+              <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
             </svg>
           `;
         } else {
           // Switch to X
           item.classList.add('excluded');
           toggle.classList.add('excluded');
-          toggle.innerHTML = `
-            <svg viewBox="0 0 24 24">
-              <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
-            </svg>
-          `;
+          toggle.innerHTML = '';
         }
       });
     });
   }
 
+  function initializeCustomInput() {
+    const saveBtn = document.getElementById('save-custom-btn');
+    const textarea = document.getElementById('custom-input-textarea');
+    const customItemsContainer = document.getElementById('custom-edit-items');
+    
+    saveBtn.addEventListener('click', () => {
+      const inputText = textarea.value.trim();
+      
+      if (inputText) {
+        // Create new edit item
+        const newItem = document.createElement('div');
+        newItem.className = 'edit-item';
+        newItem.dataset.itemId = `custom-${Date.now()}`;
+        
+        newItem.innerHTML = `
+          <div class="item-text">${inputText}</div>
+          <div class="item-toggle">
+            <svg viewBox="0 0 24 24">
+              <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+            </svg>
+          </div>
+        `;
+        
+        // Add click handler for the new item
+        newItem.addEventListener('click', () => {
+          const toggle = newItem.querySelector('.item-toggle');
+          const isExcluded = newItem.classList.contains('excluded');
+          
+          if (isExcluded) {
+            newItem.classList.remove('excluded');
+            toggle.classList.remove('excluded');
+            toggle.innerHTML = `
+              <svg viewBox="0 0 24 24">
+                <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+              </svg>
+            `;
+          } else {
+            newItem.classList.add('excluded');
+            toggle.classList.add('excluded');
+            toggle.innerHTML = '';
+          }
+        });
+        
+        customItemsContainer.appendChild(newItem);
+        textarea.value = '';
+        
+        // Show action button if hidden
+        const actionBtn = document.getElementById('pre-visit-action-btn');
+        actionBtn.classList.remove('hidden');
+      }
+    });
+  }
 
   </script>
 </html>

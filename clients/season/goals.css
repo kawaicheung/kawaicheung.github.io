@@ -1132,6 +1132,7 @@ main {
       overflow-y: hidden;
 
       .pre-visit-summary-content {
+        position: relative;
         display: flex;
         flex-direction: column;
         height: 100%;
@@ -1154,7 +1155,6 @@ main {
           padding-left: var(--padding--sides);
           padding-right: var(--padding--sides);
           border-bottom: 1px solid var(--color--gray--medium);
-          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
           z-index: 100;
           
           .to {
@@ -1196,23 +1196,24 @@ main {
 
         .audit-button {
           position: absolute;
-          top: 0;
-          left: 0;
+          bottom: 0.5rem;
+          left: 50%;
           transform: translateX(-50%);
           font-family: var(--font-family--sans-serif);
-          font-size: 0.9rem;
+          font-size: 1rem;
           font-weight: 500;
           padding: 1rem 2rem;
           border-radius: 99rem;
           color: var(--color--black);
           background: var(--color--s2--blue);
-          border: none;
           cursor: pointer;
           text-decoration: none;
           display: flex;
           align-items: center;
           justify-content: center;
-          letter-spacing: -0.02rem;
+          gap: 0.5rem;
+          z-index: 100;
+          text-wrap: nowrap;
         }
 
         .summary-content {
@@ -1227,7 +1228,7 @@ main {
           margin-right: calc(-1 * var(--padding--sides));
           padding-left: var(--padding--sides);
           padding-right: var(--padding--sides);
-          padding-bottom: 3rem;
+          padding-bottom: 8rem;
           
           &::-webkit-scrollbar {
             display: none;
@@ -1302,7 +1303,7 @@ main {
         margin-right: calc(-1 * var(--padding--sides));
         padding-left: var(--padding--sides);
         padding-right: var(--padding--sides);
-        padding-bottom: 3rem;
+        padding-bottom: 8rem;
         scrollbar-width: none;
         -ms-overflow-style: none;
         -webkit-overflow-scrolling: touch;
@@ -1312,11 +1313,13 @@ main {
         }
 
         .edit-disclaimer {
-          font-family: var(--font-family--sans-serif);
-          font-size: 1rem;
+          font-family: var(--font-family--serif);
+          font-size: 1.2rem;
+          letter-spacing: -0.02rem;
           line-height: 1.4;
           color: var(--color--black);
           margin-bottom: 2rem;
+
         }
 
         .edit-section {
@@ -1334,7 +1337,7 @@ main {
           .edit-items {
             display: flex;
             flex-direction: column;
-            gap: 0;
+            gap: 0.2rem;
 
             .edit-item {
               display: flex;
@@ -1374,6 +1377,54 @@ main {
                 svg {
                   fill: var(--color--black);
                 }
+              }
+            }
+          }
+
+          .custom-input-section {
+            margin-top: 1rem;
+            
+            .custom-input-textarea {
+              width: 100%;
+              min-height: 120px;
+              padding: 1rem;
+              border: 1px solid var(--color--gray--light);
+              border-radius: 0.5rem;
+              font-family: var(--font-family--sans-serif);
+              font-size: 1rem;
+              line-height: 1.4;
+              resize: vertical;
+              outline: none;
+              margin-bottom: 1rem;
+              
+              &::placeholder {
+                color: #999;
+              }
+              
+              &:focus {
+                border-color: var(--color--s3--season-dark-blue);
+              }
+            }
+            
+            .save-custom-btn {
+              background: var(--color--s3--season-dark-blue);
+              color: var(--color--white);
+              border: none;
+              padding: 0.8rem 1.5rem;
+              border-radius: 0.5rem;
+              font-family: var(--font-family--sans-serif);
+              font-size: 1rem;
+              font-weight: 500;
+              cursor: pointer;
+              transition: all 0.2s ease;
+              
+              &:hover {
+                background: rgba(72, 95, 129, 0.9);
+                transform: translateY(-1px);
+              }
+              
+              &:active {
+                transform: translateY(0);
               }
             }
           }
@@ -1701,6 +1752,7 @@ main {
       position: absolute;
       top: 1rem;
       right: 1rem;
+      z-index: 1000;
     }
   }
 }
