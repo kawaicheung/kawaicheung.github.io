@@ -355,22 +355,7 @@
               writes a summary for Alexandra on your behalf. Feel free to
               hide items you don't want to share below, or share something else before your visit.
             </div>
-            
-            <div class="edit-section">
-              <h3>Anything else to share?</h3>
-              <div class="edit-items" id="custom-edit-items">
-                <!-- Custom items will be added here dynamically -->
-              </div>
-              <div class="custom-input-section">
-                <textarea 
-                  id="custom-input-textarea" 
-                  class="custom-input-textarea" 
-                  placeholder="Add anything else you'd like to share with Alejandra...">
-                </textarea>
-                <button class="save-custom-btn" id="save-custom-btn">Add to summary</button>
-              </div>
-            </div>
-            
+
             <div class="edit-section">
               <h3>What you discussed with your RD</h3>
               <div class="edit-items">
@@ -493,6 +478,19 @@
               </div>
             </div>
 
+            <div class="edit-section">
+              <h3>Anything else to share?</h3>
+              <div class="edit-items" id="custom-edit-items">
+                <!-- Custom items will be added here dynamically -->
+              </div>
+              <div class="custom-input-section">
+                <textarea 
+                  id="custom-input-textarea" 
+                  class="custom-input-textarea" 
+                  placeholder="Add anything else you'd like to share with Alejandra..."></textarea>
+                <button class="save-custom-btn" id="save-custom-btn">Add to summary</button>
+              </div>
+            </div>
           </div>
 
           <!-- Original summary content (hidden by default)-->
@@ -1332,12 +1330,13 @@
           }
         });
         
-        customItemsContainer.appendChild(newItem);
-        textarea.value = '';
-        
-        // Show action button if hidden
-        const actionBtn = document.getElementById('pre-visit-action-btn');
-        actionBtn.classList.remove('hidden');
+                 customItemsContainer.appendChild(newItem);
+         textarea.value = '';
+         textarea.focus();
+         
+         // Show action button if hidden
+         const actionBtn = document.getElementById('pre-visit-action-btn');
+         actionBtn.classList.remove('hidden');
       }
     });
   }
