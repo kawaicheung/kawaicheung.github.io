@@ -254,7 +254,7 @@ main {
   animation: shrinkMainHeight 0.3s ease-in-out 0.5s forwards;
 }
 
-.appointment-soon {
+.apt-soon--modal {
   position: fixed;
   top: 0;
   left: 0;
@@ -315,6 +315,68 @@ main {
     color: var(--color--white);
     background-color: var(--color--s3--season-dark-blue);
     width: 100%;
+  } 
+
+  .no-thanks-btn {
+    font-family: var(--font-family--sans-serif);
+    font-size: 1rem;
+    color: var(--color--s3--season-dark-blue);
+    width: fit-content;
+    white-space: nowrap;
+  }
+}
+
+.apt-soon--short {
+  position: fixed;
+  top: var(--height--header);
+  left: 0;
+  width: calc(100vw - 2rem);
+  height: auto;
+  z-index: 1001;
+  margin: 1rem;
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color--s3--season-light-blue);
+  border: solid 1px var(--color--gray--medium);
+  gap: 0.5rem;
+  color: var(--color--black);
+  font-size: 1.5rem;
+  padding: 1rem;
+  animation: popInAndUp 0.5s var(--easing--pop-in) forwards;
+  box-shadow: var(--box-shadow--standard);
+
+  .rd-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--color--white);
+  }
+
+  p {
+    font-size: 1.1rem;
+    font-weight: 300;
+    line-height: 1.2;
+    font-family: var(--font-family--serif);
+  }
+
+  .cta-btn {
+    font-family: var(--font-family--sans-serif);
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    font-size: 1.2rem;
+    letter-spacing: -0.02rem;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    animation: throb 1.4s ease-in-out infinite;
+    color: var(--color--white);
+    background-color: var(--color--s3--season-dark-blue);
+    width: fit-content;
+    height: fit-content;
   } 
 
   .no-thanks-btn {

@@ -12,12 +12,17 @@
     <link rel="stylesheet" href="goals.css">
   </head>
   <body>
-    <div class="appointment-soon">
+    <div class="apt-soon--modal">
       <h2>Hey Michelle!</h2>
       <p>Your appointment with Alejandra is in 15 minutes.</p>
       <img src="img/alejandra.png" alt="Alejandra Sanchez, RD" class="rd-avatar">
       <button class="cta-btn">Join now</button>
       <a href="#" class="no-thanks-btn">Just take me to Season for now</a>
+    </div>
+    <div class="apt-soon--short hidden">
+      <img src="img/alejandra.png" alt="Alejandra Sanchez, RD" class="rd-avatar">
+      <p>Your appointment with Alejandra is in 15 minutes.</p>
+      <button class="cta-btn">Join</button>
     </div>
     <div class="header-container">
       <svg enable-background="new 0 0 616.93 146.36" viewBox="0 0 616.93 146.36" xmlns="http://www.w3.org/2000/svg" height="22.5" width="94.5">
@@ -1216,14 +1221,14 @@
 
   function initializeAppointmentSoon() {
     const noThanksBtn = document.querySelector('.no-thanks-btn');
-    const appointmentSoon = document.querySelector('.appointment-soon');
+    const aptSoonModal = document.querySelector('.apt-soon--modal');
+    const aptSoonShort = document.querySelector('.apt-soon--short');
     
-    if (noThanksBtn && appointmentSoon) {
-      noThanksBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        appointmentSoon.style.display = 'none'; 
-      });
-    }
+    noThanksBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      aptSoonModal.classList.add('hidden');
+      aptSoonShort.classList.remove('hidden');
+    });
   }
 
   function initializePreVisitSummaryEdit() {
