@@ -1309,9 +1309,7 @@ main {
         }
       }
 
-      /* Edit form styles */
       .edit-form {
-        display: none;
         flex-direction: column;
         height: 100%;
         overflow-y: auto;
@@ -1421,7 +1419,7 @@ main {
 
       /* Regenerating state */
       .regenerating-state {
-        display: none;
+        display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
@@ -1456,24 +1454,6 @@ main {
         font-family: var(--font-family--sans-serif);
         font-size: 1rem;
         color: #666;
-      }
-
-
-      /* Smooth transitions */
-      .summary-content,
-      .edit-form,
-      .regenerating-state {
-        transition: opacity 0.3s ease, transform 0.3s ease;
-      }
-
-      .fade-out {
-        opacity: 0;
-        transform: translateY(10px);
-      }
-
-      .fade-in {
-        opacity: 1;
-        transform: translateY(0);
       }
     }
 
