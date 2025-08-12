@@ -682,10 +682,85 @@
     initializeAppointmentSoon();
     initializePreVisitSummaryEdit();
     initializeEditFormToggles(); 
-    setTimeout(() => {
-      applyCalendarScrollScaling();
-    }, 100);
+    setTimeout(() => { applyCalendarScrollScaling(); }, 100);
   });
+
+  // Run on page load
+  window.addEventListener('load', () => {
+    setupTimeline();
+
+    const timeline = document.getElementById('timeline');
+
+    setTimeout(() => {
+      const speed = 50;
+      const start = timeline.scrollLeft;
+      const end = timeline.scrollWidth - timeline.clientWidth;
+      const distance = end - start;
+      const duration = 300; // 3 seconds
+      const step = distance / (duration / speed); // ~16ms per frame at 60fps
+
+      const interval = setInterval(() => {
+        timeline.scrollLeft += step;
+        if (timeline.scrollLeft >= end) {
+          clearInterval(interval);
+        }
+      }, speed); // ~60fps
+    }, 50);
+  });
+
+  // Recalculate on window resize
+  window.addEventListener('resize', () => {
+    setupTimeline();
+    // Re-scroll to the end after resize
+    const timeline = document.getElementById('timeline');
+    timeline.scrollLeft = timeline.scrollWidth;
+  });
+
+  // Handle win-container animation on scroll (separate from timeline setup)
+  window.addEventListener('scroll', () => {
+    const winContainer = document.querySelector('.win-container');
+    const bottomPanel = document.querySelector('.bottom-panel');
+    
+    if (!winContainer || !bottomPanel) return;
+    
+    // Get initial rotation value on first run
+    if (typeof window.initialBottomPanelRotation === 'undefined') {
+      const computedStyle = window.getComputedStyle(bottomPanel);
+      const rotateValue = computedStyle.getPropertyValue('rotate');
+      window.initialBottomPanelRotation = rotateValue ? parseFloat(rotateValue) : 0;
+    }
+    
+    const bottomPanelHeight = bottomPanel.offsetHeight;
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    
+    // Calculate scroll progress based on bottom panel height
+    const scrollProgress = Math.min(scrollTop / bottomPanelHeight, 1);
+    
+    // Calculate transform and opacity values for win-container
+    const translateY = scrollProgress * -20; // Move up 20vh
+    const opacity = 1 - (scrollProgress / 0.8); // Fade from 1 to 0 over first 70% of scroll
+    
+    // Calculate rotation for bottom-panel (progress from initial value to 0)
+    const currentRotation = window.initialBottomPanelRotation * Math.max(0, (1 - (scrollProgress / 0.8)));
+    
+    // Apply the transformations
+    winContainer.style.transform = `translateY(${translateY}vh)`;
+    winContainer.style.opacity = opacity;
+    bottomPanel.style.rotate = `${currentRotation}deg`;
+  });
+
+  function enableHtmlScroll() {
+    document.documentElement.classList.remove('no-scroll');
+  }
+
+  function disableHtmlScroll() {
+    document.documentElement.classList.add('no-scroll');
+  }
+
+  // Initialize multiple modals at once
+  function initializeModals(modalConfigs) {
+    modalConfigs.forEach(config => setupModalToggle(config));
+  }
 
   // Reusable method to set up modal/popup toggle functionality
   function setupModalToggle(config) {
@@ -744,19 +819,6 @@
         enableHtmlScroll();
       }
     });
-  }
-
-  function enableHtmlScroll() {
-    document.documentElement.classList.remove('no-scroll');
-  }
-
-  function disableHtmlScroll() {
-    document.documentElement.classList.add('no-scroll');
-  }
-
-  // Initialize multiple modals at once
-  function initializeModals(modalConfigs) {
-    modalConfigs.forEach(config => setupModalToggle(config));
   }
 
   // Function to position timeline dots
@@ -927,77 +989,6 @@
     line.style.width = `${totalWidth}px`;
   }
 
-  // Run on page load
-  window.addEventListener('load', () => {
-    setupTimeline();
-    
-    // Smooth scroll to end with 2-second ease-in animation
-    const timeline = document.getElementById('timeline');
-    setTimeout(() => {
-      const start = 0;
-      const end = timeline.scrollWidth - timeline.clientWidth;
-      const duration = 1000; // 2 seconds
-      const startTime = performance.now();
-
-      function animate(currentTime) {
-        const elapsed = currentTime - startTime;
-        const progress = Math.min(elapsed / duration, 1);
-        
-        // Ease-in function (slow start, fast end)
-        const easeIn = progress * progress;
-        
-        timeline.scrollLeft = start + (end - start) * easeIn;
-        
-        if (progress < 1) {
-          requestAnimationFrame(animate);
-        }
-      }
-      
-      requestAnimationFrame(animate);
-    }, 1000);
-  });
-
-  // Recalculate on window resize
-  window.addEventListener('resize', () => {
-    setupTimeline();
-    // Re-scroll to the end after resize
-    const timeline = document.getElementById('timeline');
-    timeline.scrollLeft = timeline.scrollWidth;
-  });
-
-  // Handle win-container animation on scroll (separate from timeline setup)
-  window.addEventListener('scroll', () => {
-    const winContainer = document.querySelector('.win-container');
-    const bottomPanel = document.querySelector('.bottom-panel');
-    
-    if (!winContainer || !bottomPanel) return;
-    
-    // Get initial rotation value on first run
-    if (typeof window.initialBottomPanelRotation === 'undefined') {
-      const computedStyle = window.getComputedStyle(bottomPanel);
-      const rotateValue = computedStyle.getPropertyValue('rotate');
-      window.initialBottomPanelRotation = rotateValue ? parseFloat(rotateValue) : 0;
-    }
-    
-    const bottomPanelHeight = bottomPanel.offsetHeight;
-    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    
-    // Calculate scroll progress based on bottom panel height
-    const scrollProgress = Math.min(scrollTop / bottomPanelHeight, 1);
-    
-    // Calculate transform and opacity values for win-container
-    const translateY = scrollProgress * -20; // Move up 20vh
-    const opacity = 1 - (scrollProgress / 0.8); // Fade from 1 to 0 over first 70% of scroll
-    
-    // Calculate rotation for bottom-panel (progress from initial value to 0)
-    const currentRotation = window.initialBottomPanelRotation * Math.max(0, (1 - (scrollProgress / 0.8)));
-    
-    // Apply the transformations
-    winContainer.style.transform = `translateY(${translateY}vh)`;
-    winContainer.style.opacity = opacity;
-    bottomPanel.style.rotate = `${currentRotation}deg`;
-  });
-
   function toLocalDateOnly(date) {
     return new Date(date.getFullYear(), date.getMonth(), date.getDate());
   }
@@ -1147,7 +1138,7 @@
       window.addEventListener('resize', updateScaling);
     });
   }
-  // Save button handlers
+ 
   function initializeSaveButtons() {
     document.querySelectorAll('.save-writeup-btn').forEach(button => {
       button.addEventListener('click', (e) => {
@@ -1202,42 +1193,41 @@
     }
   }
 
-  // Initialize pre-visit summary edit functionality
   function initializePreVisitSummaryEdit() {
-  const editBtn = document.getElementById('edit-summary-btn');
-  const summaryContent = document.getElementById('summary-content');
-  const editForm = document.getElementById('edit-form');
-  const regeneratingState = document.getElementById('regenerating-state');
-  
-  let isEditing = false;
-  
-  editBtn.addEventListener('click', () => {
-    if (!isEditing) {
-      // Switch to edit mode
-      switchToEditMode();
-    } else {
-      // Save and regenerate
-      saveAndRegenerate();
-    }
-  });
-  
-  function switchToEditMode() {
-    // Fade out summary content
-    summaryContent.classList.add('fade-out');
+    const editBtn = document.getElementById('edit-summary-btn');
+    const summaryContent = document.getElementById('summary-content');
+    const editForm = document.getElementById('edit-form');
+    const regeneratingState = document.getElementById('regenerating-state');
     
-    setTimeout(() => {
-      summaryContent.style.display = 'none';
-      editForm.style.display = 'flex';
-      editForm.classList.add('fade-in');
-      
-      // Change button text
-      editBtn.textContent = 'Save';
-      editBtn.style.backgroundColor = 'var(--color--s2--green)';
-      isEditing = true;
-    }, 300);
-  }
+    let isEditing = false;
   
-  function saveAndRegenerate() {
+    editBtn.addEventListener('click', () => {
+      if (!isEditing) {
+        // Switch to edit mode
+        switchToEditMode();
+      } else {
+        // Save and regenerate
+        saveAndRegenerate();
+      }
+    });
+  
+    function switchToEditMode() {
+      // Fade out summary content
+      summaryContent.classList.add('fade-out');
+      
+      setTimeout(() => {
+        summaryContent.style.display = 'none';
+        editForm.style.display = 'flex';
+        editForm.classList.add('fade-in');
+        
+        // Change button text
+        editBtn.textContent = 'Save';
+        editBtn.style.backgroundColor = 'var(--color--s2--green)';
+        isEditing = true;
+      }, 300);
+    }
+    
+    function saveAndRegenerate() {
     // Fade out edit form
     editForm.classList.add('fade-out');
     
