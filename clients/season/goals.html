@@ -351,9 +351,19 @@
           <!-- Edit form -->
           <div class="edit-form" id="edit-form">
             <div class="edit-disclaimer">
-              Season gathers highlights of what you've shared on this app since your last visit and 
-              writes a summary for Alexandra on your behalf. Feel free to
-              hide items you don't want to share below, or share something else before your visit.
+              Review what you've shared since your last visit. Feel free to
+              hide things you don't want to share below. Scroll to the bottom to share something else before your visit.
+              <div class="bg-sparkle">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="Reward-Stars-2--Streamline-Ultimate" height="48" width="48">
+                  <desc>Reward Stars 2 Streamline Icon: https://streamlinehq.com</desc>
+                  <defs></defs>
+                  <path d="M10.751 1.375c-0.025 6.281 3.029 9.844 10 10 -6.465 -0.025 -9.672 3.441 -10 10 -0.063 -6.187 -2.828 -10.009 -10 -10 6.416 -0.09 9.975 -3.187 10 -10Z" fill="none" stroke="rgba(132,197,230,0.7)" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
+                  <path d="m19.012 1.375 0 4" fill="none" stroke="rgba(132,197,230,0.7)" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
+                  <path d="m17.012 3.375 4 0" fill="none" stroke="rgba(132,197,230,0.7)" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
+                  <path d="m21.25 18.625 0 4" fill="none" stroke="rgba(132,197,230,0.7)" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
+                  <path d="m19.25 20.625 4 0" fill="none" stroke="rgba(132,197,230,0.7)" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
+                </svg>
+              </div>
             </div>
 
             <div class="edit-section">
@@ -479,7 +489,7 @@
             </div>
 
             <div class="edit-section">
-              <h3>Anything else to share?</h3>
+              <h3>Anything else you'd like to share?</h3>
               <div class="edit-items" id="custom-edit-items">
                 <!-- Custom items will be added here dynamically -->
               </div>
@@ -488,7 +498,11 @@
                   id="custom-input-textarea" 
                   class="custom-input-textarea" 
                   placeholder="Add anything else you'd like to share with Alejandra..."></textarea>
-                <button class="save-custom-btn" id="save-custom-btn">Add to summary</button>
+                <button class="save-custom-btn" id="save-custom-btn">
+                  <svg viewBox="0 0 24 24" width="24" height="24">
+                    <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" stroke="#fff" fill="#fff" />
+                  </svg>
+                </button>
               </div>
             </div>
           </div>
@@ -1330,13 +1344,13 @@
           }
         });
         
-                 customItemsContainer.appendChild(newItem);
-         textarea.value = '';
-         textarea.focus();
-         
-         // Show action button if hidden
-         const actionBtn = document.getElementById('pre-visit-action-btn');
-         actionBtn.classList.remove('hidden');
+        customItemsContainer.appendChild(newItem);
+        textarea.value = '';
+        textarea.focus();
+
+        // Show action button if hidden
+        const actionBtn = document.getElementById('pre-visit-action-btn');
+        actionBtn.classList.remove('hidden');
       }
     });
   }

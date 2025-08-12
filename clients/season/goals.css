@@ -1196,7 +1196,7 @@ main {
 
         .audit-button {
           position: absolute;
-          bottom: 0.5rem;
+          bottom: 1rem;
           left: 50%;
           transform: translateX(-50%);
           font-family: var(--font-family--sans-serif);
@@ -1313,13 +1313,23 @@ main {
         }
 
         .edit-disclaimer {
+          position: relative;
           font-family: var(--font-family--serif);
-          font-size: 1.2rem;
+          font-size: 1.1rem;
           letter-spacing: -0.02rem;
           line-height: 1.4;
           color: var(--color--black);
+          padding: 4rem 2rem;
           margin-bottom: 2rem;
+          border: solid 2px var(--color--s3--blue);
+          border-radius: 1rem;
+          box-shadow: var(--box-shadow--standard);
 
+          .bg-sparkle {
+            position: absolute;
+            top: 0.8rem; 
+            right: 0.8rem;
+          }
         }
 
         .edit-section {
@@ -1382,6 +1392,10 @@ main {
           }
 
           .custom-input-section {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 0.5rem;
             
             .custom-input-textarea {
               width: 100%;
@@ -1394,7 +1408,6 @@ main {
               line-height: 1.4;
               resize: vertical;
               outline: none;
-              margin-bottom: 1rem;
               
               &::placeholder {
                 color: #999;
@@ -1406,25 +1419,19 @@ main {
             }
             
             .save-custom-btn {
+              flex: 0 0 3rem; /* Fixed width, don't grow or shrink */
               background: var(--color--s3--season-dark-blue);
               color: var(--color--white);
-              border: none;
-              padding: 0.8rem 1.5rem;
-              border-radius: 0.5rem;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              width: 3rem;
+              height: 3rem;
               font-family: var(--font-family--sans-serif);
               font-size: 1rem;
-              font-weight: 500;
+              border-radius: 99rem;
+              border: none;
               cursor: pointer;
-              transition: all 0.2s ease;
-              
-              &:hover {
-                background: rgba(72, 95, 129, 0.9);
-                transform: translateY(-1px);
-              }
-              
-              &:active {
-                transform: translateY(0);
-              }
             }
           }
         }
