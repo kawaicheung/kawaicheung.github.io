@@ -1223,11 +1223,17 @@
     const noThanksBtn = document.querySelector('.no-thanks-btn');
     const aptSoonModal = document.querySelector('.apt-soon--modal');
     const aptSoonShort = document.querySelector('.apt-soon--short');
+    const aptSoonShortCtaBtn = document.querySelector('.apt-soon--short .cta-btn');
     
     noThanksBtn.addEventListener('click', (e) => {
       e.preventDefault();
       aptSoonModal.classList.add('hidden');
       aptSoonShort.classList.remove('hidden');
+    });
+
+    aptSoonShortCtaBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      aptSoonShort.classList.add('hidden');
     });
   }
 
