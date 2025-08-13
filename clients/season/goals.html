@@ -1085,6 +1085,7 @@
       }
     }, 100);
   }
+
   function centerDayInCalendar(calendar, targetDay, callback) {
     setTimeout(() => {
       const calendarRect = calendar.getBoundingClientRect();
@@ -1116,8 +1117,18 @@
     
     if (!calendar) return;
     
-    let isSnapping = false;
-    let snapTimeout;
+    let isUserScrolling = false;
+    let scrollTimeout;
+    let lastScrollPosition = calendar.scrollLeft;
+    
+    // Enable CSS scroll snap
+    calendar.style.scrollSnapType = 'x mandatory';
+    
+    // Add scroll snap align to each day
+    const dayElements = calendar.querySelectorAll('.calendar-day');
+    dayElements.forEach(day => {
+      day.style.scrollSnapAlign = 'center';
+    });
     
     const updateScaling = () => {
       const calendarRect = calendar.getBoundingClientRect();
@@ -1149,61 +1160,26 @@
       });
     };
     
-    const snapToClosestCircle = () => {
-      if (isSnapping) return;
-      
-      const calendarRect = calendar.getBoundingClientRect();
-      const calendarCenter = calendarRect.left + calendarRect.width / 2;
-      const dayCircles = calendar.querySelectorAll('.day-circle');
-      
-      let closestCircle = null;
-      let closestDistance = Infinity;
-      
-      // Find the circle closest to center
-      dayCircles.forEach(circle => {
-        const circleRect = circle.getBoundingClientRect();
-        const circleCenter = circleRect.left + circleRect.width / 2;
-        const distanceFromCenter = Math.abs(circleCenter - calendarCenter);
-        
-        if (distanceFromCenter < closestDistance) {
-          closestDistance = distanceFromCenter;
-          closestCircle = circle;
-        }
-      });
-      
-      if (closestCircle && closestDistance > 5) { // Only snap if not already centered
-        isSnapping = true;
-        
-        const closestDay = closestCircle.closest('.calendar-day');
-        centerDayInCalendar(calendar, closestDay, () => {
-          isSnapping = false;
-          updateScaling();
-        });
-      }
-    };
-    
     // Initial scaling
     updateScaling();
     
-    // Update scaling on scroll with throttling for performance
-    let scrollTimeout;
+    // Handle scroll events
     calendar.addEventListener('scroll', () => {
+      isUserScrolling = true;
+      
+      // Clear existing timeout
       if (scrollTimeout) {
         clearTimeout(scrollTimeout);
       }
+      
+      // Update scaling immediately for smooth visual feedback
+      updateScaling();
+      
+      // Detect when scrolling stops
       scrollTimeout = setTimeout(() => {
-        updateScaling();
-      }, 10);
-      
-      // Clear existing snap timeout
-      if (snapTimeout) {
-        clearTimeout(snapTimeout);
-      }
-      
-      // Set new snap timeout (snap after user stops scrolling)
-      snapTimeout = setTimeout(() => {
-        snapToClosestCircle();
-      }, 150);
+        isUserScrolling = false;
+        lastScrollPosition = calendar.scrollLeft;
+      }, 50);
     });
     
     // Update on window resize
