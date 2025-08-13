@@ -360,6 +360,7 @@ main {
     font-weight: 300;
     line-height: 1.2;
     font-family: var(--font-family--serif);
+    text-wrap: balance;
   }
 
   .cta-btn {
@@ -542,7 +543,6 @@ main {
     .label {
       color: var(--color--black);
       white-space: nowrap;
-      font-weight: 400;
       letter-spacing: -0.02rem;
       pointer-events: none;
       display: flex;
@@ -552,7 +552,8 @@ main {
       text-align: center;
       gap: 0;
       font-family: var(--font-family--sans-serif);
-      font-size: 0.9rem;
+      font-size: 0.8rem;
+      font-weight: 500;
       rotate: calc(-1 * var(--timeline--angle));
       
     }
@@ -629,12 +630,13 @@ main {
       margin-left: calc(-1 * var(--padding--sides));
       margin-right: calc(-1 * var(--padding--sides));
       padding: 1rem var(--padding--sides);
+      gap: 0.2rem;
       display: flex;
-      gap: 0.5rem;
       overflow-x: auto;
       scrollbar-width: none;
       -ms-overflow-style: none;
       -webkit-overflow-scrolling: touch;
+      rotate: var(--timeline--angle);
       
       &::-webkit-scrollbar {
         display: none;
@@ -657,23 +659,12 @@ main {
           left: 0;
           right: 0;
           height: 1px;
-          border-top: 2px solid red;
+          border-top: 2px solid var(--timeline--color);
           margin-left: calc(-1 * var(--padding--sides));
           transform: translateY(-50%);
           z-index: -1;
         } 
 
-        &.logged {
-          &::before {
-            content: '✓';
-            position: absolute;
-            top: -3px;
-            right: -2px;
-            font-size: 1.2rem;
-            z-index: 10;
-          }
-        }
-        
         .day-circle {
           width: 100%;
           aspect-ratio: 1 / 1;
@@ -684,9 +675,11 @@ main {
           background-color: var(--color--white);
           border: 2px solid var(--timeline--color);
           transition: transform 0.12s ease;
+          rotate: calc(-1 * var(--timeline--angle));
           
           &.selected {
-            transform: scale(1.12);
+            transform: scale(1.5);
+            z-index: 1;
           }
           
           &.today {
@@ -708,10 +701,6 @@ main {
 
           > * {
             line-height: 1;
-          }
-
-          > :last-child {
-            font-size: 1rem;
           }
         }
       }
@@ -829,7 +818,7 @@ main {
 
   .popup-content {
     position: absolute;
-    border-radius: 2rem;
+    border-radius: 1rem;
     border: 1px solid var(--color--gray--medium);
     padding: var(--padding--sides);
     padding-bottom: 0;
@@ -1279,9 +1268,9 @@ main {
         height: 100%;
         
         .summary-header {
-          font-family: var(--font-family--serif);
-          font-size: 1.4rem;
-          font-weight: 400;
+          font-family: var(--font-family--sans-serif);
+          font-size: 1.2rem;
+          font-weight: 500;
           letter-spacing: -0.05rem;
           color: var(--color--black);
         }
@@ -1459,6 +1448,7 @@ main {
 
         .edit-disclaimer {
           position: relative;
+          background-color: var(--color--white);
           font-family: var(--font-family--serif);
           font-size: 1.1rem;
           letter-spacing: -0.02rem;
@@ -1466,7 +1456,7 @@ main {
           color: var(--color--black);
           padding: 3rem 1rem;
           margin-bottom: 2rem;
-          border: solid 2px var(--color--s3--blue);
+          border: solid 1px var(--color--s3--blue);
           border-radius: 1rem;
           box-shadow: var(--box-shadow--standard);
 
@@ -1498,7 +1488,7 @@ main {
               display: flex;
               align-items: center;
               justify-content: space-between;
-              padding: 0.8rem;
+              padding: 1rem;
               background-color: var(--color--white);
               border-radius: 0.5rem;
               border: solid 1px var(--color--s3--blue);
@@ -1702,22 +1692,6 @@ main {
 
     &.goals-1-logging { 
       background-color: var(--color--s3--blue);
-
-      .day-circle {
-        border-color: var(--color--s3--blue-dark) !important;
-      }
-
-      .calendar-day::after {
-        border-top-color: var(--color--s3--blue-dark) !important;
-      }
-
-      .today {
-        background-color: var(--color--s3--blue-dark) !important;
-
-        * {
-          color: var(--color--white) !important;
-        }
-      }
       
       .save-writeup-btn {
         background: var(--color--s3--blue-dark); 
@@ -1728,22 +1702,6 @@ main {
     &.goals-2-logging { 
       background-color: var(--color--s3--green);
 
-      .day-circle {
-        border-color: var(--color--s3--green-dark) !important;
-      }
-
-      .calendar-day::after {
-        border-top-color: var(--color--s3--green-dark) !important;
-      }
-
-      .today {
-        background-color: var(--color--s3--green-dark) !important;
-
-        * {
-          color: var(--color--white) !important;
-        }
-      }
-
       .save-writeup-btn {
         background: var(--color--s3--green-dark); 
         color: var(--color--white);
@@ -1752,22 +1710,6 @@ main {
 
     &.goals-3-logging { 
       background-color: var(--color--s3--pink);
-
-      .day-circle {
-        border-color: var(--color--s3--pink-dark) !important;
-      }
-
-      .calendar-day::after {
-        border-top-color: var(--color--s3--pink-dark) !important;
-      }
-
-      .today {
-        background-color: var(--color--s3--pink-dark) !important;
-
-        * {
-          color: var(--color--white) !important;
-        }
-      }
 
       .save-writeup-btn {
         background: var(--color--s3--pink-dark); 
@@ -1778,22 +1720,6 @@ main {
     &.goals-4-logging { 
       background-color: var(--color--s3--orange);
 
-      .day-circle {
-        border-color: var(--color--s3--orange-dark) !important;
-      }
-
-      .calendar-day::after {
-        border-top-color: var(--color--s3--orange-dark) !important;
-      }
-
-      .today {
-        background-color: var(--color--s3--orange-dark) !important;
-
-        * {
-          color: var(--color--white) !important;
-        }
-      }
-
       .save-writeup-btn {
         background: var(--color--s3--orange-dark); 
         color: var(--color--white);
@@ -1802,8 +1728,8 @@ main {
 
     .close {
       position: absolute;
-      top: 1rem;
-      right: 1rem;
+      top: 0.5rem;
+      right: 0.5rem;
       z-index: 1000;
     }
   }

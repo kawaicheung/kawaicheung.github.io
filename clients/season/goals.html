@@ -1033,13 +1033,6 @@
       const afterToday = date > todayDate;
       const isSelected = isToday;
 
-      if (date < todayDate) {
-        // 75% chance of being logged
-        if (Math.random() < 0.75) {
-          dayElement.classList.add('logged');
-        }
-      }
-      
       dayElement.innerHTML = `
         <div class="day-circle ${isToday ? 'today' : ''} ${isSelected ? 'selected' : ''}">
           <div class="day-label">
@@ -1085,7 +1078,7 @@
       }
     }, 100);
   }
-
+  
   function centerDayInCalendar(calendar, targetDay, callback) {
     setTimeout(() => {
       const calendarRect = calendar.getBoundingClientRect();
@@ -1095,20 +1088,33 @@
       const targetOffsetLeft = targetDay.offsetLeft;
       const targetWidth = targetRect.width;
       const calendarWidth = calendarRect.width;
+      const maxScrollLeft = calendar.scrollWidth - calendar.clientWidth;
       
-      // Calculate scroll position to center the target day
-      const scrollToCenter = targetOffsetLeft - (calendarWidth / 2) + (targetWidth / 2);
+      // Calculate ideal scroll position to center the target day
+      let scrollToCenter = targetOffsetLeft - (calendarWidth / 2) + (targetWidth / 2);
       
-      // Smooth scroll to center the day
+      // Clamp the scroll position to valid bounds
+      scrollToCenter = Math.max(0, Math.min(scrollToCenter, maxScrollLeft));
+      
+      // Temporarily disable CSS scroll snap for manual positioning
+      const originalSnapType = calendar.style.scrollSnapType;
+      calendar.style.scrollSnapType = 'none';
+      
+      // Smooth scroll to the position
       calendar.scrollTo({
         left: scrollToCenter,
         behavior: 'smooth'
       });
       
-      // Call callback after scroll completes (if provided)
-      if (callback) {
-        setTimeout(callback, 300); // Wait for smooth scroll to complete
-      }
+      // Re-enable scroll snap after scrolling completes
+      setTimeout(() => {
+        calendar.style.scrollSnapType = originalSnapType;
+        
+        // Call callback after scroll completes (if provided)
+        if (callback) {
+          callback();
+        }
+      }, 300); // Wait for smooth scroll to complete
     }, 100);
   }
 
@@ -1138,24 +1144,46 @@
       let closestCircle = null;
       let closestDistance = Infinity;
       
-      // Find the circle closest to center
+      // Find the circle closest to center (or closest to center within viewport)
       dayCircles.forEach(circle => {
         const circleRect = circle.getBoundingClientRect();
         const circleCenter = circleRect.left + circleRect.width / 2;
-        const distanceFromCenter = Math.abs(circleCenter - calendarCenter);
         
-        if (distanceFromCenter < closestDistance) {
-          closestDistance = distanceFromCenter;
-          closestCircle = circle;
+        // Only consider circles that are at least partially visible
+        if (circleRect.right > calendarRect.left && circleRect.left < calendarRect.right) {
+          const distanceFromCenter = Math.abs(circleCenter - calendarCenter);
+          
+          if (distanceFromCenter < closestDistance) {
+            closestDistance = distanceFromCenter;
+            closestCircle = circle;
+          }
         }
       });
+      
+      // If no circle is close to center (edge case), find the most centered visible one
+      if (!closestCircle || closestDistance > calendarRect.width * 0.4) {
+        dayCircles.forEach(circle => {
+          const circleRect = circle.getBoundingClientRect();
+          const circleCenter = circleRect.left + circleRect.width / 2;
+          
+          // Check if circle is visible and more centered than current closest
+          if (circleRect.right > calendarRect.left && circleRect.left < calendarRect.right) {
+            const distanceFromCenter = Math.abs(circleCenter - calendarCenter);
+            
+            if (!closestCircle || distanceFromCenter < closestDistance) {
+              closestDistance = distanceFromCenter;
+              closestCircle = circle;
+            }
+          }
+        });
+      }
       
       // Scale only the closest circle, reset all others
       dayCircles.forEach(circle => {
         if (circle === closestCircle) {
-          circle.style.transform = 'scale(1.4)';
+          circle.classList.add("selected")
         } else {
-          circle.style.transform = 'scale(1)';
+          circle.classList.remove("selected")
         }
       });
     };
