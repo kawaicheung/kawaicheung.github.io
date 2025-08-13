@@ -87,6 +87,9 @@
       <div class="bottom-panel-header">
         <span class="bottom-panel-question">How are your goals going?</span>
       </div>
+      <div class="goal-calendar-container">
+        <div class="goal-calendar" id="unified-goal-calendar"></div>
+      </div>
       <div class="bottom-panel-content">
         <div class="bottom-panel-grid">
           <div class="bottom-panel-square main-square weight-goal-logging-btn">
@@ -348,7 +351,7 @@
               hide things you don't want to share below. 
               Scroll to the bottom to share something else before your visit.
               <div class="bg-sparkle">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="Reward-Stars-2--Streamline-Ultimate" height="48" width="48">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="Reward-Stars-2--Streamline-Ultimate" height="42" width="42">
                   <desc>Reward Stars 2 Streamline Icon: https://streamlinehq.com</desc>
                   <defs></defs>
                   <path d="M10.751 1.375c-0.025 6.281 3.029 9.844 10 10 -6.465 -0.025 -9.672 3.441 -10 10 -0.063 -6.187 -2.828 -10.009 -10 -10 6.416 -0.09 9.975 -3.187 10 -10Z" fill="none" stroke="rgba(132,197,230,0.7)" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
@@ -605,9 +608,6 @@
           </svg>
         </div> 
         <div class="goal-title">Did you stay away from work treats today?</div>
-        <div class="goal-calendar-container">
-          <div class="goal-calendar" id="goal-calendar-1"></div>
-        </div>
         <textarea class="goal-writeup" id="goal-writeup-1" placeholder="How did it go today?"></textarea>
         <div class="goal-footer">
           <button class="save-writeup-btn" data-goal="1">Save</button>
@@ -625,8 +625,6 @@
         </div> 
         <div class="goal-title">Were you able to drink 64oz of water today?</div>
         <div class="goal-calendar-container">
-          <div class="goal-calendar" id="goal-calendar-2"></div>
-        </div>
         <textarea class="goal-writeup" id="goal-writeup-2" placeholder="How did it go today?"></textarea>
         <div class="goal-footer">
           <button class="save-writeup-btn" data-goal="2">Save this write-up</button>
@@ -643,9 +641,6 @@
           </svg>
         </div> 
         <div class="goal-title">How has exercising 15-20 min gone for you today?</div>
-        <div class="goal-calendar-container">
-          <div class="goal-calendar" id="goal-calendar-3"></div>
-        </div>
         <textarea class="goal-writeup" id="goal-writeup-3" placeholder="How did it go today?"></textarea>
         <div class="goal-footer">
           <button class="save-writeup-btn" data-goal="3">Save this write-up</button>
@@ -662,9 +657,6 @@
           </svg>
         </div> 
         <div class="goal-title">Were you watching TV without eating today?</div>
-        <div class="goal-calendar-container">
-          <div class="goal-calendar" id="goal-calendar-4"></div>
-        </div>
         <textarea class="goal-writeup" id="goal-writeup-4" placeholder="How did it go today?"></textarea>
         <div class="goal-footer">
           <button class="save-writeup-btn" data-goal="4">Save this write-up</button>
@@ -724,7 +716,7 @@
     ];
     
     initializeModals(modalConfigs);
-    initializeGoalCalendars();
+    initializeGoalCalendar();
     initializeSaveButtons();
     initializeBottomPanelClick();
     initializeAppointmentSoon();
@@ -821,37 +813,8 @@
     
     openBtn.forEach(btn => {
       btn.addEventListener('click', () => {
-        console.log('clicked');
         modal.style.display = 'block';
         disableHtmlScroll();
-
-        // Scroll goal calendars to the right when goal popups open
-        if (modalId.includes('goals-') && modalId.includes('-logging')) {
-          const goalNumber = modalId.match(/goals-(\d+)-logging/)[1];
-          const calendar = document.getElementById(`goal-calendar-${goalNumber}`);
-          
-          // Scroll goal calendars to the right when goal popups open
-          if (modalId.includes('goals-') && modalId.includes('-logging')) {
-            const goalNumber = modalId.match(/goals-(\d+)-logging/)[1];
-            const calendar = document.getElementById(`goal-calendar-${goalNumber}`);
-            
-            if (calendar) {
-              // Find the 'today' element within this calendar
-              const todayElement = calendar.querySelector('.day-circle.today');
-              
-              if (todayElement) {
-                // Get the parent day element and center it
-                const todayDay = todayElement.closest('.calendar-day');
-                centerDayInCalendar(calendar, todayDay);
-              } else {
-                // Fallback: scroll to the end if no today element found
-                setTimeout(() => {
-                  calendar.scrollLeft = calendar.scrollWidth;
-                }, 100);
-              }
-            }
-          }
-        }
       });
     });
     
@@ -1043,84 +1006,86 @@
   }
 
   // Goal calendar functionality
-  function initializeGoalCalendars() {
-    const goalIds = [1, 2, 3, 4];
+  function initializeGoalCalendar() {
+    const calendar = document.getElementById('unified-goal-calendar');
     const today = new Date();
-    const endDate = new Date('2025-08-15');
-    const startDate = new Date('2025-07-11');
+    const endDate = new Date('2025-08-20');
+    const startDate = new Date('2025-07-20');
     
-    goalIds.forEach(goalId => {
-      const calendar = document.getElementById(`goal-calendar-${goalId}`);
-      const textarea = document.getElementById(`goal-writeup-${goalId}`);
-      
-      // Generate calendar days
-      const days = [];
-      let currentDate = toLocalDateOnly(startDate);
-      const today = toLocalDateOnly(new Date());
+    // Generate calendar days
+    const days = [];
+    let currentDate = toLocalDateOnly(startDate);
+    const todayDate = toLocalDateOnly(new Date());
 
-      while (currentDate <= endDate) {
-        days.push(new Date(currentDate));
-        currentDate.setDate(currentDate.getDate() + 1);
+    while (currentDate <= endDate) {
+      days.push(new Date(currentDate));
+      currentDate.setDate(currentDate.getDate() + 1);
+    }
+    
+    // Render calendar days
+    days.forEach((date, index) => {
+      const dayElement = document.createElement('div');
+      dayElement.className = 'calendar-day';
+      dayElement.dataset.date = date.toISOString().split('T')[0];
+      
+      const isToday = date.toDateString() === todayDate.toDateString();
+      const beforeToday = date < todayDate;
+      const afterToday = date > todayDate;
+      const isSelected = isToday;
+
+      if (date < todayDate) {
+        // 75% chance of being logged
+        if (Math.random() < 0.75) {
+          dayElement.classList.add('logged');
+        }
       }
       
-      // Render calendar days
-      days.forEach((date, index) => {
-        const dayElement = document.createElement('div');
-        dayElement.className = 'calendar-day';
-        dayElement.dataset.date = date.toISOString().split('T')[0];
-        
-        const isToday = date.toDateString() === today.toDateString();
-        const beforeToday = date < today;
-        const afterToday = date > today;
-        const isSelected = isToday;
-
-
-        if (date < today) {
-          // 55% chance of being logged
-          if (Math.random() < 0.75) {
-            dayElement.classList.add('logged');
-          }
-        }
-        
-        dayElement.innerHTML = `
-          <div class="day-circle ${isToday ? 'today' : ''} ${isSelected ? 'selected' : ''}">
-            <div class="day-label">
-              <div>${date.toLocaleDateString('en-US', { month: 'short' })}</div>
-              <div>${date.getDate()}</div>
-            </div>
+      dayElement.innerHTML = `
+        <div class="day-circle ${isToday ? 'today' : ''} ${isSelected ? 'selected' : ''}">
+          <div class="day-label">
+            <div>${date.toLocaleDateString('en-US', { month: 'short' })}</div>
+            <div>${date.getDate()}</div>
           </div>
-        `;
-        
-        // Add click handler
-        dayElement.addEventListener('click', () => {
-          // Remove selected class from all days
-          calendar.querySelectorAll('.day-circle').forEach(circle => {
-            circle.classList.remove('selected');
-          });
-          
-          // Add selected class to clicked day
-          dayElement.querySelector('.day-circle').classList.add('selected');
-          
-          // Center the selected day in the calendar
-          centerDayInCalendar(calendar, dayElement);
-          
-          // Update placeholder text
-          const isClickedToday = date.toDateString() === today.toDateString();
-          textarea.placeholder = isClickedToday ? 
-            'How did it go today?' : 
-            `How did it go on ${date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}?`;
-          
-          // Clear textarea content (in a real app, you'd load saved content)
-          textarea.value = '';
+        </div>
+      `;
+      
+      // Add click handler
+      dayElement.addEventListener('click', () => {
+        // Remove selected class from all days
+        calendar.querySelectorAll('.day-circle').forEach(circle => {
+          circle.classList.remove('selected');
         });
         
-        calendar.appendChild(dayElement);
+        // Add selected class to clicked day
+        dayElement.querySelector('.day-circle').classList.add('selected');
+        
+        // Center the selected day in the calendar with callback to update scaling
+        centerDayInCalendar(calendar, dayElement, () => {
+          // Force update scaling after centering is complete
+          setTimeout(() => {
+            applyCalendarScrollScaling();
+          }, 50);
+        });
       });
       
+      calendar.appendChild(dayElement);
     });
-  }
 
-  function centerDayInCalendar(calendar, targetDay) {
+    // Auto-scroll to today on load
+    setTimeout(() => {
+      const todayElement = calendar.querySelector('.day-circle.today');
+      if (todayElement) {
+        const todayDay = todayElement.closest('.calendar-day');
+        centerDayInCalendar(calendar, todayDay, () => {
+          // Initialize scaling after initial scroll
+          setTimeout(() => {
+            applyCalendarScrollScaling();
+          }, 50);
+        });
+      }
+    }, 100);
+  }
+  function centerDayInCalendar(calendar, targetDay, callback) {
     setTimeout(() => {
       const calendarRect = calendar.getBoundingClientRect();
       const targetRect = targetDay.getBoundingClientRect();
@@ -1138,56 +1103,113 @@
         left: scrollToCenter,
         behavior: 'smooth'
       });
+      
+      // Call callback after scroll completes (if provided)
+      if (callback) {
+        setTimeout(callback, 300); // Wait for smooth scroll to complete
+      }
     }, 100);
   }
 
   function applyCalendarScrollScaling() {
-    const calendars = document.querySelectorAll('.goal-calendar');
+    const calendar = document.getElementById('unified-goal-calendar');
     
-    calendars.forEach(calendar => {
-      const updateScaling = () => {
-        const calendarRect = calendar.getBoundingClientRect();
-        const calendarCenter = calendarRect.left + calendarRect.width / 2;
-        const dayCircles = calendar.querySelectorAll('.day-circle');
+    if (!calendar) return;
+    
+    let isSnapping = false;
+    let snapTimeout;
+    
+    const updateScaling = () => {
+      const calendarRect = calendar.getBoundingClientRect();
+      const calendarCenter = calendarRect.left + calendarRect.width / 2;
+      const dayCircles = calendar.querySelectorAll('.day-circle');
+      
+      let closestCircle = null;
+      let closestDistance = Infinity;
+      
+      // Find the circle closest to center
+      dayCircles.forEach(circle => {
+        const circleRect = circle.getBoundingClientRect();
+        const circleCenter = circleRect.left + circleRect.width / 2;
+        const distanceFromCenter = Math.abs(circleCenter - calendarCenter);
         
-        dayCircles.forEach(circle => {
-          const circleRect = circle.getBoundingClientRect();
-          const circleCenter = circleRect.left + circleRect.width / 2;
-          
-          // Calculate distance from calendar center
-          const distanceFromCenter = Math.abs(circleCenter - calendarCenter);
-          const maxDistance = calendarRect.width / 2;
-          
-          // Normalize distance (0 = center, 1 = edge)
-          const normalizedDistance = Math.min(distanceFromCenter / maxDistance, 1);
-          
-          // Calculate scale (1.15 at center, 0.8 at edges)
-          const minScale = 0.8;
-          const maxScale = 1.2;
-          const scale = maxScale - (normalizedDistance * (maxScale - minScale));
-          
-          // Apply the transform and opacity
-          circle.style.transform = `scale(${scale})`;
-        });
-      };
-      
-      // Initial scaling
-      updateScaling();
-      
-      // Update scaling on scroll with throttling for performance
-      let scrollTimeout;
-      calendar.addEventListener('scroll', () => {
-        if (scrollTimeout) {
-          clearTimeout(scrollTimeout);
+        if (distanceFromCenter < closestDistance) {
+          closestDistance = distanceFromCenter;
+          closestCircle = circle;
         }
-        scrollTimeout = setTimeout(updateScaling, 10);
       });
       
-      // Update on window resize
-      window.addEventListener('resize', updateScaling);
+      // Scale only the closest circle, reset all others
+      dayCircles.forEach(circle => {
+        if (circle === closestCircle) {
+          circle.style.transform = 'scale(1.4)';
+        } else {
+          circle.style.transform = 'scale(1)';
+        }
+      });
+    };
+    
+    const snapToClosestCircle = () => {
+      if (isSnapping) return;
+      
+      const calendarRect = calendar.getBoundingClientRect();
+      const calendarCenter = calendarRect.left + calendarRect.width / 2;
+      const dayCircles = calendar.querySelectorAll('.day-circle');
+      
+      let closestCircle = null;
+      let closestDistance = Infinity;
+      
+      // Find the circle closest to center
+      dayCircles.forEach(circle => {
+        const circleRect = circle.getBoundingClientRect();
+        const circleCenter = circleRect.left + circleRect.width / 2;
+        const distanceFromCenter = Math.abs(circleCenter - calendarCenter);
+        
+        if (distanceFromCenter < closestDistance) {
+          closestDistance = distanceFromCenter;
+          closestCircle = circle;
+        }
+      });
+      
+      if (closestCircle && closestDistance > 5) { // Only snap if not already centered
+        isSnapping = true;
+        
+        const closestDay = closestCircle.closest('.calendar-day');
+        centerDayInCalendar(calendar, closestDay, () => {
+          isSnapping = false;
+          updateScaling();
+        });
+      }
+    };
+    
+    // Initial scaling
+    updateScaling();
+    
+    // Update scaling on scroll with throttling for performance
+    let scrollTimeout;
+    calendar.addEventListener('scroll', () => {
+      if (scrollTimeout) {
+        clearTimeout(scrollTimeout);
+      }
+      scrollTimeout = setTimeout(() => {
+        updateScaling();
+      }, 10);
+      
+      // Clear existing snap timeout
+      if (snapTimeout) {
+        clearTimeout(snapTimeout);
+      }
+      
+      // Set new snap timeout (snap after user stops scrolling)
+      snapTimeout = setTimeout(() => {
+        snapToClosestCircle();
+      }, 150);
     });
+    
+    // Update on window resize
+    window.addEventListener('resize', updateScaling);
   }
- 
+
   function initializeSaveButtons() {
     document.querySelectorAll('.save-writeup-btn').forEach(button => {
       button.addEventListener('click', (e) => {
