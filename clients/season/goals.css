@@ -509,7 +509,7 @@ main {
     top: calc(var(--timeline--height) / 2);
     transform: translateY(-50%);
     width: var(--timeline--dot-size);
-    height: var(--timeline--dot-size);
+    aspect-ratio: 1/1;
     border: solid 2px var(--timeline--color);
     background-color: var(--color--bg);
     border-radius: 50%;
@@ -518,50 +518,31 @@ main {
     justify-content: center;
     background-color: var(--color--white);
 
-    &.pulse::before {
-      content: '';
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      width: 120%;
-      height: 120%;
-      transform: translate(-50%, -50%);
-      border-radius: 50%;
-      border: solid 2px var(--timeline--color);
-      z-index: 0;
-      animation: timeline-today-pulse 1.2s infinite cubic-bezier(0.4,0,0.2,1);
-    }
+    &.today {
+      background: var(--timeline--color-bulb);
+      z-index: 100;
+      width: calc(var(--timeline--dot-size) / 3);
 
-    /* Stagger pulse delays on previous appointment dots */
-    &:nth-child(3n + 1) {
       &.pulse::before {
-        animation-delay: 0.5s;
-      }
-    }
-
-    &:nth-child(3n + 2) {
-      &.pulse::before {
-        animation-delay: 0.7s;
-      }
-    }
-
-    &:nth-child(3n) {
-      &.pulse::before {
+        content: '';
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 150%;
+        height: 150%;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        border: solid 2px var(--timeline--color);
+        z-index: 0;
+        animation: timeline-today-pulse 1.2s infinite cubic-bezier(0.4,0,0.2,1);
         animation-delay: 0.2s;
       }
     }
 
-    &.today {
-      background: var(--timeline--color-bulb);
-      z-index: 100;
-
-    }
-
     .label {
-      font-size: 1rem;
       color: var(--color--black);
       white-space: nowrap;
-      font-weight: 500;
+      font-weight: 400;
       letter-spacing: -0.02rem;
       pointer-events: none;
       display: flex;
@@ -571,7 +552,7 @@ main {
       text-align: center;
       gap: 0;
       font-family: var(--font-family--sans-serif);
-      font-size: 1rem;
+      font-size: 0.9rem;
       rotate: calc(-1 * var(--timeline--angle));
       
     }
@@ -599,7 +580,7 @@ main {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.2rem;
+  gap: 0.5rem;
   cursor: pointer;
 }
 
@@ -1260,21 +1241,25 @@ main {
           bottom: 1rem;
           left: 50%;
           transform: translateX(-50%);
-          font-family: var(--font-family--sans-serif);
-          font-size: 1rem;
-          font-weight: 500;
-          padding: 1rem 2rem;
-          border-radius: 99rem;
-          color: var(--color--black);
-          background: var(--color--s2--blue);
-          cursor: pointer;
-          text-decoration: none;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          gap: 0.5rem;
-          z-index: 100;
-          text-wrap: nowrap;
+
+          > div {
+            font-family: var(--font-family--sans-serif);
+            font-size: 1rem;
+            font-weight: 500;
+            padding: 1rem 2rem;
+            border-radius: 99rem;
+            color: var(--color--black);
+            background: var(--color--s2--blue);
+            cursor: pointer;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            z-index: 10000;
+            text-wrap: nowrap;
+            box-shadow: var(--box-shadow--standard);
+          }
         }
 
         .summary-content {
@@ -1380,7 +1365,7 @@ main {
           letter-spacing: -0.02rem;
           line-height: 1.4;
           color: var(--color--black);
-          padding: 4rem 2rem;
+          padding: 2rem 1rem;
           margin-bottom: 2rem;
           border: solid 2px var(--color--s3--blue);
           border-radius: 1rem;
@@ -1417,7 +1402,7 @@ main {
               padding: 0.8rem;
               background-color: var(--color--white);
               border-radius: 0.5rem;
-              border: 1px solid var(--color--gray--light);
+              border: solid 1px var(--color--s3--blue);
               cursor: pointer;
 
               &.excluded {

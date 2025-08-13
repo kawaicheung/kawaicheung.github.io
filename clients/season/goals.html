@@ -66,20 +66,20 @@
         </p>
         <div class="timeline" id="timeline">
           <div class="line"></div>
-          <div class="dot pulse appt-report-btn" data-appointment-date="2024-12-12"></div>
+          <div class="dot appt-report-btn" data-appointment-date="2024-12-12"></div>
           <div class="dot pulse appt-report-btn" data-appointment-date="2025-02-15"></div>
           <div class="dot pulse appt-report-btn" data-appointment-date="2025-03-02"></div>
-          <div class="dot pulse appt-report-btn" data-appointment-date="2025-04-12"></div>
-          <div class="dot pulse appt-report-btn" data-appointment-date="2025-05-21"></div>
-          <div class="dot pulse appt-report-btn" data-appointment-date="2025-07-11"></div>
-          <div class="dot today"></div>
+          <div class="dot appt-report-btn" data-appointment-date="2025-04-12"></div>
+          <div class="dot appt-report-btn" data-appointment-date="2025-05-21"></div>
+          <div class="dot appt-report-btn" data-appointment-date="2025-07-11"></div>
+          <div class="dot pulse today"></div>
           <div class="dot" data-appointment-date="2025-08-15"></div>
         </div>
-        <!--<div class="cta-button appt-report-btn">
-          <span>July 11 post-visit report</span>
-        </div>-->
         <div class="cta-button pre-visit-summary-btn">
           <span>Prep for your 8/15 visit!</span>
+          <svg viewBox="0 0 24 24" width="24" height="24">
+            <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z" fill="currentColor"/>
+          </svg>
         </div>
       </div>
     </main>
@@ -341,23 +341,12 @@
             </div>
           </div>
 
-          <div class="audit-button" id="pre-visit-action-btn">
-            <span>See your pre-visit summary</span>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="Reward-Stars-2--Streamline-Ultimate" height="24" width="24">
-              <desc>Reward Stars 2 Streamline Icon: https://streamlinehq.com</desc>
-              <defs></defs>
-              <path d="M10.751 1.375c-0.025 6.281 3.029 9.844 10 10 -6.465 -0.025 -9.672 3.441 -10 10 -0.063 -6.187 -2.828 -10.009 -10 -10 6.416 -0.09 9.975 -3.187 10 -10Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
-              <path d="m19.012 1.375 0 4" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
-              <path d="m17.012 3.375 4 0" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
-              <path d="m21.25 18.625 0 4" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
-              <path d="m19.25 20.625 4 0" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
-            </svg>
-          </div>
           <!-- Edit form -->
           <div class="edit-form" id="edit-form">
             <div class="edit-disclaimer">
-              Review what you've shared since your last visit. Feel free to
-              hide things you don't want to share below. Scroll to the bottom to share something else before your visit.
+              Review what you've done since last visit. Tap to
+              hide things you don't want to share below. 
+              Scroll to the bottom to share something else before your visit.
               <div class="bg-sparkle">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="Reward-Stars-2--Streamline-Ultimate" height="48" width="48">
                   <desc>Reward Stars 2 Streamline Icon: https://streamlinehq.com</desc>
@@ -559,6 +548,28 @@
                 <li>Started taking recommended vitamin D supplement</li>
                 <li>Improved meal timing on weekends</li>
               </ul>
+            </div>
+          </div>
+
+          <!-- Toggle button -->
+          <div class="audit-button" id="pre-visit-action-btn">
+            <div class="audit-button--manage">
+              <span>Manage what you want to share</span>
+              <svg viewBox="0 0 24 24" width="24" height="24">
+                <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z" fill="currentColor"/>
+              </svg>
+            </div>
+            <div class="audit-button--see">
+              <span>Update your pre-visit summary</span>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="Reward-Stars-2--Streamline-Ultimate" height="24" width="24">
+                <desc>Reward Stars 2 Streamline Icon: https://streamlinehq.com</desc>
+                <defs></defs>
+                <path d="M10.751 1.375c-0.025 6.281 3.029 9.844 10 10 -6.465 -0.025 -9.672 3.441 -10 10 -0.063 -6.187 -2.828 -10.009 -10 -10 6.416 -0.09 9.975 -3.187 10 -10Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
+                <path d="m19.012 1.375 0 4" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
+                <path d="m17.012 3.375 4 0" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
+                <path d="m21.25 18.625 0 4" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
+                <path d="m19.25 20.625 4 0" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
+              </svg>
             </div>
           </div>
 
@@ -883,7 +894,7 @@
 
   // Set label text
   if (isToday) {
-    labelSpan.textContent = 'Today';
+    labelSpan.textContent = '';
   } else if (dateStr) {
     const [year, month, day] = dateStr.split('-').map(Number);
     const date = new Date(year, month - 1, day);
@@ -1206,15 +1217,10 @@
               bottomPanelHeader.classList.remove('bounce-animation');
           }, 500);
           
-          // Smooth scroll to bottom
-          // Method 1: Simple scroll to bottom
           window.scrollTo({
               top: document.documentElement.scrollHeight,
               behavior: 'smooth'
           });
-          
-          // Alternative Method 2: More precise control with custom easing
-          // scrollToBottomWithCustomEasing();
       });
     }
   }
@@ -1242,6 +1248,8 @@
     const summaryContent = document.getElementById('summary-content');
     const editForm = document.getElementById('edit-form');
     const regeneratingState = document.getElementById('regenerating-state');
+    const actionBtnManage = document.querySelector('.audit-button--manage');
+    const actionBtnSee = document.querySelector('.audit-button--see');
     
     let isEditing = true;
     updateActionButtonText();
@@ -1278,7 +1286,13 @@
     }
 
     function updateActionButtonText() {
-      /*actionBtn.textContent = isEditing ? 'Save' : 'Edit';*/
+      if (isEditing) {
+        actionBtnSee.classList.remove('hidden');
+        actionBtnManage.classList.add('hidden');
+      } else {
+        actionBtnManage.classList.remove('hidden');
+        actionBtnSee.classList.add('hidden');
+      }
     }
   }
 
@@ -1358,10 +1372,6 @@
         customItemsContainer.appendChild(newItem);
         textarea.value = '';
         textarea.focus();
-
-        // Show action button if hidden
-        const actionBtn = document.getElementById('pre-visit-action-btn');
-        actionBtn.classList.remove('hidden');
       }
     });
   }
