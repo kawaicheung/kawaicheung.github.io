@@ -981,6 +981,7 @@
     const today = new Date();
     const endDate = new Date('2025-08-20');
     const startDate = new Date('2025-07-20');
+    let currentIndex = 0; // Will be set to today's index
     
     // Generate calendar days
     const days = [];
@@ -992,196 +993,178 @@
       currentDate.setDate(currentDate.getDate() + 1);
     }
     
+    // Find today's index
+    const todayIndex = days.findIndex(date => 
+      date.toDateString() === todayDate.toDateString()
+    );
+    if (todayIndex !== -1) {
+      currentIndex = todayIndex;
+    }
+    
+    // Clear existing content
+    calendar.innerHTML = '';
+    
     // Render calendar days
     days.forEach((date, index) => {
       const dayElement = document.createElement('div');
       dayElement.className = 'calendar-day';
       dayElement.dataset.date = date.toISOString().split('T')[0];
+      dayElement.dataset.index = index;
       
       const isToday = date.toDateString() === todayDate.toDateString();
-      const beforeToday = date < todayDate;
-      const afterToday = date > todayDate;
-      const isSelected = isToday;
 
       dayElement.innerHTML = `
-        <div class="day-circle ${isToday ? 'today' : ''} ${isSelected ? 'selected' : ''}">
+        <div class="day-circle ${isToday ? 'today' : ''}">
           <div class="day-label">
-            <div>${date.toLocaleDateString('en-US', { month: 'short' })}</div>
-            <div>${date.getDate()}</div>
+            <div class="month">${date.toLocaleDateString('en-US', { month: 'short' })}</div>
+            <div class="day">${date.getDate()}</div>
           </div>
         </div>
       `;
       
-      // Add click handler
-      dayElement.addEventListener('click', () => {
-        // Remove selected class from all days
-        calendar.querySelectorAll('.day-circle').forEach(circle => {
-          circle.classList.remove('selected');
-        });
-        
-        // Add selected class to clicked day
-        dayElement.querySelector('.day-circle').classList.add('selected');
-        
-        // Center the selected day in the calendar with callback to update scaling
-        centerDayInCalendar(calendar, dayElement, () => {
-          // Force update scaling after centering is complete
-          setTimeout(() => {
-            applyCalendarScrollScaling();
-          }, 50);
-        });
-      });
-      
       calendar.appendChild(dayElement);
     });
 
-    // Auto-scroll to today on load
-    setTimeout(() => {
-      const todayElement = calendar.querySelector('.day-circle.today');
-      if (todayElement) {
-        const todayDay = todayElement.closest('.calendar-day');
-        centerDayInCalendar(calendar, todayDay, () => {
-          // Initialize scaling after initial scroll
-          setTimeout(() => {
-            applyCalendarScrollScaling();
-          }, 50);
-        });
-      }
-    }, 100);
-
-    function centerDayInCalendar(calendar, targetDay, callback) {
-      setTimeout(() => {
-        const calendarRect = calendar.getBoundingClientRect();
-        const targetRect = targetDay.getBoundingClientRect();
+    function updateCalendarPositions() {
+      const dayElements = calendar.querySelectorAll('.calendar-day');
+      
+      dayElements.forEach((dayElement, index) => {
+        const dayCircle = dayElement.querySelector('.day-circle');
+        dayCircle.classList.remove('selected');
         
-        // Calculate the offset of target day relative to the calendar's scroll container
-        const targetOffsetLeft = targetDay.offsetLeft;
-        const targetWidth = targetRect.width;
-        const calendarWidth = calendarRect.width;
-        const maxScrollLeft = calendar.scrollWidth - calendar.clientWidth;
-        
-        // Calculate ideal scroll position to center the target day
-        let scrollToCenter = targetOffsetLeft - (calendarWidth / 2) + (targetWidth / 2);
-        
-        // Clamp the scroll position to valid bounds
-        scrollToCenter = Math.max(0, Math.min(scrollToCenter, maxScrollLeft));
-        
-        // Temporarily disable CSS scroll snap for manual positioning
-        const originalSnapType = calendar.style.scrollSnapType;
-        calendar.style.scrollSnapType = 'none';
-        
-        // Smooth scroll to the position
-        calendar.scrollTo({
-          left: scrollToCenter,
-          behavior: 'smooth'
-        });
-        
-        // Re-enable scroll snap after scrolling completes
-        setTimeout(() => {
-          calendar.style.scrollSnapType = originalSnapType;
-          
-          // Call callback after scroll completes (if provided)
-          if (callback) {
-            callback();
-          }
-        }, 300); // Wait for smooth scroll to complete
-      }, 100);
+        if (index === currentIndex) {
+          dayCircle.classList.add('selected');
+        }
+      });
     }
-  }
-  
-  function applyCalendarScrollScaling() {
-    const calendar = document.getElementById('unified-goal-calendar');
-    
-    if (!calendar) return;
-    
-    let isUserScrolling = false;
-    let scrollTimeout;
-    let lastScrollPosition = calendar.scrollLeft;
-    
-    // Enable CSS scroll snap
-    calendar.style.scrollSnapType = 'x mandatory';
-    
-    // Add scroll snap align to each day
-    const dayElements = calendar.querySelectorAll('.calendar-day');
-    dayElements.forEach(day => {
-      day.style.scrollSnapAlign = 'center';
-    });
-    
-    const updateScaling = () => {
-      const calendarRect = calendar.getBoundingClientRect();
-      const calendarCenter = calendarRect.left + calendarRect.width / 2;
-      const dayCircles = calendar.querySelectorAll('.day-circle');
+
+    function addCalendarClickListeners() {
+      const dayElements = calendar.querySelectorAll('.calendar-day');
       
-      let closestCircle = null;
-      let closestDistance = Infinity;
-      
-      // Find the circle closest to center (or closest to center within viewport)
-      dayCircles.forEach(circle => {
-        const circleRect = circle.getBoundingClientRect();
-        const circleCenter = circleRect.left + circleRect.width / 2;
-        
-        // Only consider circles that are at least partially visible
-        if (circleRect.right > calendarRect.left && circleRect.left < calendarRect.right) {
-          const distanceFromCenter = Math.abs(circleCenter - calendarCenter);
-          
-          if (distanceFromCenter < closestDistance) {
-            closestDistance = distanceFromCenter;
-            closestCircle = circle;
+      dayElements.forEach((dayElement, index) => {
+        dayElement.addEventListener('click', (e) => {
+          // Prevent click if we were just scrolling/swiping
+          if (calendar.dataset.wasScrolling === 'true') {
+            return;
           }
-        }
-      });
-      
-      // If no circle is close to center (edge case), find the most centered visible one
-      if (!closestCircle || closestDistance > calendarRect.width * 0.4) {
-        dayCircles.forEach(circle => {
-          const circleRect = circle.getBoundingClientRect();
-          const circleCenter = circleRect.left + circleRect.width / 2;
           
-          // Check if circle is visible and more centered than current closest
-          if (circleRect.right > calendarRect.left && circleRect.left < calendarRect.right) {
-            const distanceFromCenter = Math.abs(circleCenter - calendarCenter);
-            
-            if (!closestCircle || distanceFromCenter < closestDistance) {
-              closestDistance = distanceFromCenter;
-              closestCircle = circle;
-            }
-          }
+          currentIndex = index;
+          updateCalendarPositions();
+          e.stopPropagation();
         });
-      }
-      
-      // Scale only the closest circle, reset all others
-      dayCircles.forEach(circle => {
-        if (circle === closestCircle) {
-          circle.classList.add("selected")
-        } else {
-          circle.classList.remove("selected")
-        }
       });
-    };
-    
-    // Initial scaling
-    updateScaling();
-    
-    // Handle scroll events
+    }
+
+    function centerSelectedDay() {
+      const selectedDay = calendar.querySelector(`[data-index="${currentIndex}"]`);
+      if (!selectedDay) return;
+
+      const calendarRect = calendar.getBoundingClientRect();
+      const selectedRect = selectedDay.getBoundingClientRect();
+      
+      // Calculate the offset of selected day relative to the calendar's scroll container
+      const selectedOffsetLeft = selectedDay.offsetLeft;
+      const selectedWidth = selectedRect.width;
+      const calendarWidth = calendarRect.width;
+      const maxScrollLeft = calendar.scrollWidth - calendar.clientWidth;
+      
+      // Calculate ideal scroll position to center the selected day
+      let scrollToCenter = selectedOffsetLeft - (calendarWidth / 2) + (selectedWidth / 2);
+      
+      // Clamp the scroll position to valid bounds
+      scrollToCenter = Math.max(0, Math.min(scrollToCenter, maxScrollLeft));
+      
+      // Smooth scroll to the position
+      calendar.scrollTo({
+        left: scrollToCenter,
+        behavior: 'smooth'
+      });
+    }
+
+    // Track scrolling state to prevent clicks during scroll
+    let scrollTimeout;
+    let isScrolling = false;
+
     calendar.addEventListener('scroll', () => {
-      isUserScrolling = true;
+      isScrolling = true;
+      calendar.dataset.wasScrolling = 'true';
       
-      // Clear existing timeout
-      if (scrollTimeout) {
-        clearTimeout(scrollTimeout);
-      }
-      
-      // Update scaling immediately for smooth visual feedback
-      updateScaling();
-      
-      // Detect when scrolling stops
+      clearTimeout(scrollTimeout);
       scrollTimeout = setTimeout(() => {
-        isUserScrolling = false;
-        lastScrollPosition = calendar.scrollLeft;
-      }, 50);
+        isScrolling = false;
+        calendar.dataset.wasScrolling = 'false';
+      }, 150);
     });
+
+    // Touch events for free scrolling (no selection change)
+    let startX = 0;
+    let startY = 0;
+    let isDragging = false;
+
+    calendar.addEventListener('touchstart', (e) => {
+      startX = e.touches[0].clientX;
+      startY = e.touches[0].clientY;
+      isDragging = false;
+    });
+
+    calendar.addEventListener('touchmove', (e) => {
+      const currentX = e.touches[0].clientX;
+      const currentY = e.touches[0].clientY;
+      const diffX = Math.abs(currentX - startX);
+      const diffY = Math.abs(currentY - startY);
+      
+      // If horizontal movement is greater than vertical, we're scrolling horizontally
+      if (diffX > diffY && diffX > 10) {
+        isDragging = true;
+        calendar.dataset.wasScrolling = 'true';
+      }
+    });
+
+    calendar.addEventListener('touchend', (e) => {
+      if (isDragging) {
+        // Reset scrolling state after a delay
+        setTimeout(() => {
+          calendar.dataset.wasScrolling = 'false';
+        }, 100);
+      }
+      isDragging = false;
+    });
+
+    // Mouse events for desktop (free scrolling)
+    calendar.addEventListener('mousedown', (e) => {
+      startX = e.clientX;
+      isDragging = false;
+    });
+
+    calendar.addEventListener('mousemove', (e) => {
+      const currentX = e.clientX;
+      const diffX = Math.abs(currentX - startX);
+      
+      if (diffX > 10) {
+        isDragging = true;
+        calendar.dataset.wasScrolling = 'true';
+      }
+    });
+
+    calendar.addEventListener('mouseup', (e) => {
+      if (isDragging) {
+        // Reset scrolling state after a delay
+        setTimeout(() => {
+          calendar.dataset.wasScrolling = 'false';
+        }, 100);
+      }
+      isDragging = false;
+    });
+
+    // Initialize
+    calendar.dataset.wasScrolling = 'false';
+    updateCalendarPositions();
+    addCalendarClickListeners();
     
-    // Update on window resize
-    window.addEventListener('resize', updateScaling);
+    // Center today on load
+    setTimeout(() => {
+      centerSelectedDay();
+    }, 100);
   }
 
   function initializeSaveWriteupButtons() {
