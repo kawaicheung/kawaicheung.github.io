@@ -1527,28 +1527,41 @@ main {
             font-size: 1.3rem;
             font-weight: 400;
             color: var(--color--black);
-            margin-bottom: 1rem;
+            margin-bottom: 2rem;
             letter-spacing: -0.02rem;
           }
 
           .edit-items {
             display: flex;
             flex-direction: column;
-            gap: 0.2rem;
+            gap: 1.2rem;
 
             .edit-item {
               display: flex;
               align-items: center;
               justify-content: space-between;
-              padding: 1rem;
+              padding: 1.3rem 1rem 1rem 1rem;
               background-color: var(--color--white);
               border-radius: 0.5rem;
               border: solid 1px var(--color--s3--blue);
               cursor: pointer;
+              position: relative;
 
               &.excluded {
                 opacity: 0.7;
                 text-decoration: line-through;
+              }
+
+              .item-date {
+                position: absolute;
+                color: var(--color--gray--medium);
+                font-size: 0.8rem;
+                background-color: var(--color--s3--blue);
+                color: var(--color--black);
+                border-radius: 99rem;
+                padding: 0.2rem 0.8rem;
+                top: -0.8rem;
+                left: 0.8rem;
               }
 
               .item-text {
