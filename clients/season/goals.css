@@ -484,6 +484,7 @@ main {
  }
 
 .card-timeline {
+  margin-top: 1rem;
   position: relative;
   height: 300px;
 
@@ -513,7 +514,7 @@ main {
     transform-origin: center center;
 
     &.center {
-      transform: translateX(0) scale(1.1) translateZ(0);
+      transform: translateX(0) scale(1.1) translateY(-10%);
       z-index: 3;
       border: solid 1px var(--color--gray--medium);
     }
