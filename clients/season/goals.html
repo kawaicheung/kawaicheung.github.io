@@ -687,6 +687,7 @@
         <p>This is the popup content.</p>
       </div>
     </div>
+
     <!-- Goals 1 logging -->
     <div class="popup" id="goals-1-logging">
       <div class="popup-content goals-1-logging">
@@ -697,12 +698,123 @@
           </svg>
         </div> 
         <div class="goal-title">Did you stay away from work treats today?</div>
-        <textarea class="goal-writeup" id="goal-writeup-1" placeholder="How did it go today?"></textarea>
+        
+        <!-- Rating Options -->
+        <div class="goal-rating">
+          <div class="rating-option" data-rating="positive">
+            <div class="rating-circle">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M7 22H4C3.46957 22 2.96086 21.7893 2.58579 21.4142C2.21071 21.0391 2 20.5304 2 20V13C2 12.4696 2.21071 11.9609 2.58579 11.5858C2.96086 11.2107 3.46957 11 4 11H7M14 9V5C14 4.20435 13.6839 3.44129 13.1213 2.87868C12.5587 2.31607 11.7956 2 11 2L7 11V22H18.28C18.7623 22.0055 19.2304 21.8364 19.5979 21.524C19.9654 21.2116 20.2077 20.7769 20.28 20.3L21.66 11.3C21.7035 11.0134 21.6842 10.7207 21.6033 10.4423C21.5225 10.1638 21.3821 9.90629 21.1919 9.68751C21.0016 9.46873 20.7661 9.29393 20.5016 9.17522C20.2371 9.0565 19.9499 8.99672 19.66 9H14Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </div>
+          <div class="rating-option" data-rating="neutral">
+            <div class="rating-circle">
+              <span>OK</span>
+            </div>
+          </div>
+          <div class="rating-option" data-rating="negative">
+            <div class="rating-circle">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M17 2H19.67C20.236 1.98999 20.7859 2.18813 21.2154 2.55681C21.6449 2.9255 21.9241 3.43905 22 4V11C21.9241 11.5609 21.6449 12.0745 21.2154 12.4432C20.7859 12.8119 20.236 13.01 19.67 13H17M10 15V19C10 19.7956 10.3161 20.5587 10.8787 21.1213C11.4413 21.6839 12.2044 22 13 22L17 13V2H5.72C5.23767 1.99454 4.76962 2.16359 4.40209 2.47599C4.03457 2.78839 3.79232 3.22309 3.72 3.7L2.34 12.7C2.29649 12.9866 2.31583 13.2793 2.39666 13.5577C2.47749 13.8362 2.6179 14.0937 2.80814 14.3125C2.99839 14.5313 3.23392 14.7061 3.49843 14.8248C3.76294 14.9435 4.05009 15.0033 4.34 15H10Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <hr class="goal-divider">
+
+        <!-- Add More Section -->
+        <div class="goal-add-more">
+          <div class="add-more-label">Add more</div>
+          <div class="input-options" id="input-options-1">
+            <div class="input-option" data-type="speak">
+              <div class="option-icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 1C12 1 8 1 8 5V11C8 15 12 15 12 15C12 15 16 15 16 11V5C16 1 12 1 12 1Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M19 10V11C19 14.866 15.866 18 12 18C8.13401 18 5 14.866 5 11V10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <line x1="12" y1="18" x2="12" y2="23" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <line x1="8" y1="23" x2="16" y2="23" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div class="option-label">Speak</div>
+            </div>
+            <div class="input-option" data-type="type">
+              <div class="option-icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M14 2H6C5.46957 2 4.96086 2.21071 4.58579 2.58579C4.21071 2.96086 4 3.46957 4 4V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V8L14 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <polyline points="14,2 14,8 20,8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <line x1="16" y1="13" x2="8" y2="13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <line x1="16" y1="17" x2="8" y2="17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <polyline points="10,9 9,9 8,9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div class="option-label">Type</div>
+            </div>
+            <div class="input-option" data-type="upload">
+              <div class="option-icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect x="3" y="3" width="18" height="18" rx="2" ry="2" stroke="currentColor" stroke-width="2"/>
+                  <circle cx="8.5" cy="8.5" r="1.5" stroke="currentColor" stroke-width="2"/>
+                  <polyline points="21,15 16,10 5,21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div class="option-label">Upload</div>
+            </div>
+          </div>
+          
+          <!-- Secondary options (shown when one is selected) -->
+          <div class="secondary-options hidden" id="secondary-options-1">
+            <div class="secondary-option" data-type="speak">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 1C12 1 8 1 8 5V11C8 15 12 15 12 15C12 15 16 15 16 11V5C16 1 12 1 12 1Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M19 10V11C19 14.866 15.866 18 12 18C8.13401 18 5 14.866 5 11V10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <line x1="12" y1="18" x2="12" y2="23" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <line x1="8" y1="23" x2="16" y2="23" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div class="secondary-option" data-type="type">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M14 2H6C5.46957 2 4.96086 2.21071 4.58579 2.58579C4.21071 2.96086 4 3.46957 4 4V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V8L14 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <polyline points="14,2 14,8 20,8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <line x1="16" y1="13" x2="8" y2="13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <line x1="16" y1="17" x2="8" y2="17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <polyline points="10,9 9,9 8,9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div class="secondary-option" data-type="upload">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2" stroke="currentColor" stroke-width="2"/>
+                <circle cx="8.5" cy="8.5" r="1.5" stroke="currentColor" stroke-width="2"/>
+                <polyline points="21,15 16,10 5,21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </div>
+          
+          <!-- Input Areas -->
+          <div class="input-area hidden" id="textarea-1">
+            <textarea class="goal-writeup" placeholder="How did it go today?"></textarea>
+          </div>
+          <div class="input-area hidden" id="recording-1">
+            <div class="recording-interface">
+              <div class="recording-status">Ready to record</div>
+              <button class="record-btn">Start Recording</button>
+            </div>
+          </div>
+          <div class="input-area hidden" id="upload-1">
+            <div class="upload-interface">
+              <input type="file" id="file-upload-1" accept="image/*" style="display: none;">
+              <button class="upload-btn" onclick="document.getElementById('file-upload-1').click()">Choose Image</button>
+            </div>
+          </div>
+        </div>
+
         <div class="goal-footer">
           <button class="save-writeup-btn" data-goal="1">Save</button>
         </div>
       </div>
     </div>
+
     <!-- Goals 2 logging -->
     <div class="popup" id="goals-2-logging">
       <div class="popup-content goals-2-logging">
@@ -713,13 +825,123 @@
           </svg>
         </div> 
         <div class="goal-title">Were you able to drink 64oz of water today?</div>
-        <div class="goal-calendar-container">
-        <textarea class="goal-writeup" id="goal-writeup-2" placeholder="How did it go today?"></textarea>
+        
+        <!-- Rating Options -->
+        <div class="goal-rating">
+          <div class="rating-option" data-rating="positive">
+            <div class="rating-circle">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M7 22H4C3.46957 22 2.96086 21.7893 2.58579 21.4142C2.21071 21.0391 2 20.5304 2 20V13C2 12.4696 2.21071 11.9609 2.58579 11.5858C2.96086 11.2107 3.46957 11 4 11H7M14 9V5C14 4.20435 13.6839 3.44129 13.1213 2.87868C12.5587 2.31607 11.7956 2 11 2L7 11V22H18.28C18.7623 22.0055 19.2304 21.8364 19.5979 21.524C19.9654 21.2116 20.2077 20.7769 20.28 20.3L21.66 11.3C21.7035 11.0134 21.6842 10.7207 21.6033 10.4423C21.5225 10.1638 21.3821 9.90629 21.1919 9.68751C21.0016 9.46873 20.7661 9.29393 20.5016 9.17522C20.2371 9.0565 19.9499 8.99672 19.66 9H14Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </div>
+          <div class="rating-option" data-rating="neutral">
+            <div class="rating-circle">
+              <span>OK</span>
+            </div>
+          </div>
+          <div class="rating-option" data-rating="negative">
+            <div class="rating-circle">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M17 2H19.67C20.236 1.98999 20.7859 2.18813 21.2154 2.55681C21.6449 2.9255 21.9241 3.43905 22 4V11C21.9241 11.5609 21.6449 12.0745 21.2154 12.4432C20.7859 12.8119 20.236 13.01 19.67 13H17M10 15V19C10 19.7956 10.3161 20.5587 10.8787 21.1213C11.4413 21.6839 12.2044 22 13 22L17 13V2H5.72C5.23767 1.99454 4.76962 2.16359 4.40209 2.47599C4.03457 2.78839 3.79232 3.22309 3.72 3.7L2.34 12.7C2.29649 12.9866 2.31583 13.2793 2.39666 13.5577C2.47749 13.8362 2.6179 14.0937 2.80814 14.3125C2.99839 14.5313 3.23392 14.7061 3.49843 14.8248C3.76294 14.9435 4.05009 15.0033 4.34 15H10Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <hr class="goal-divider">
+
+        <!-- Add More Section -->
+        <div class="goal-add-more">
+          <div class="add-more-label">Add more</div>
+          <div class="input-options" id="input-options-2">
+            <div class="input-option" data-type="speak">
+              <div class="option-icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 1C12 1 8 1 8 5V11C8 15 12 15 12 15C12 15 16 15 16 11V5C16 1 12 1 12 1Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M19 10V11C19 14.866 15.866 18 12 18C8.13401 18 5 14.866 5 11V10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <line x1="12" y1="18" x2="12" y2="23" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <line x1="8" y1="23" x2="16" y2="23" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div class="option-label">Speak</div>
+            </div>
+            <div class="input-option" data-type="type">
+              <div class="option-icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M14 2H6C5.46957 2 4.96086 2.21071 4.58579 2.58579C4.21071 2.96086 4 3.46957 4 4V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V8L14 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <polyline points="14,2 14,8 20,8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <line x1="16" y1="13" x2="8" y2="13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <line x1="16" y1="17" x2="8" y2="17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <polyline points="10,9 9,9 8,9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div class="option-label">Type</div>
+            </div>
+            <div class="input-option" data-type="upload">
+              <div class="option-icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect x="3" y="3" width="18" height="18" rx="2" ry="2" stroke="currentColor" stroke-width="2"/>
+                  <circle cx="8.5" cy="8.5" r="1.5" stroke="currentColor" stroke-width="2"/>
+                  <polyline points="21,15 16,10 5,21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div class="option-label">Upload</div>
+            </div>
+          </div>
+          
+          <!-- Secondary options -->
+          <div class="secondary-options hidden" id="secondary-options-2">
+            <div class="secondary-option" data-type="speak">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 1C12 1 8 1 8 5V11C8 15 12 15 12 15C12 15 16 15 16 11V5C16 1 12 1 12 1Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M19 10V11C19 14.866 15.866 18 12 18C8.13401 18 5 14.866 5 11V10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <line x1="12" y1="18" x2="12" y2="23" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <line x1="8" y1="23" x2="16" y2="23" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div class="secondary-option" data-type="type">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M14 2H6C5.46957 2 4.96086 2.21071 4.58579 2.58579C4.21071 2.96086 4 3.46957 4 4V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V8L14 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <polyline points="14,2 14,8 20,8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <line x1="16" y1="13" x2="8" y2="13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <line x1="16" y1="17" x2="8" y2="17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <polyline points="10,9 9,9 8,9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div class="secondary-option" data-type="upload">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2" stroke="currentColor" stroke-width="2"/>
+                <circle cx="8.5" cy="8.5" r="1.5" stroke="currentColor" stroke-width="2"/>
+                <polyline points="21,15 16,10 5,21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </div>
+          
+          <!-- Input Areas -->
+          <div class="input-area hidden" id="textarea-2">
+            <textarea class="goal-writeup" placeholder="How did it go today?"></textarea>
+          </div>
+          <div class="input-area hidden" id="recording-2">
+            <div class="recording-interface">
+              <div class="recording-status">Ready to record</div>
+              <button class="record-btn">Start Recording</button>
+            </div>
+          </div>
+          <div class="input-area hidden" id="upload-2">
+            <div class="upload-interface">
+              <input type="file" id="file-upload-2" accept="image/*" style="display: none;">
+              <button class="upload-btn" onclick="document.getElementById('file-upload-2').click()">Choose Image</button>
+            </div>
+          </div>
+        </div>
+
         <div class="goal-footer">
-          <button class="save-writeup-btn" data-goal="2">Save this write-up</button>
+          <button class="save-writeup-btn" data-goal="2">Save</button>
         </div>
       </div>
     </div>
+
     <!-- Goals 3 logging -->
     <div class="popup" id="goals-3-logging">
       <div class="popup-content goals-3-logging">
@@ -730,12 +952,123 @@
           </svg>
         </div> 
         <div class="goal-title">How has exercising 15-20 min gone for you today?</div>
-        <textarea class="goal-writeup" id="goal-writeup-3" placeholder="How did it go today?"></textarea>
+        
+        <!-- Rating Options -->
+        <div class="goal-rating">
+          <div class="rating-option" data-rating="positive">
+            <div class="rating-circle">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M7 22H4C3.46957 22 2.96086 21.7893 2.58579 21.4142C2.21071 21.0391 2 20.5304 2 20V13C2 12.4696 2.21071 11.9609 2.58579 11.5858C2.96086 11.2107 3.46957 11 4 11H7M14 9V5C14 4.20435 13.6839 3.44129 13.1213 2.87868C12.5587 2.31607 11.7956 2 11 2L7 11V22H18.28C18.7623 22.0055 19.2304 21.8364 19.5979 21.524C19.9654 21.2116 20.2077 20.7769 20.28 20.3L21.66 11.3C21.7035 11.0134 21.6842 10.7207 21.6033 10.4423C21.5225 10.1638 21.3821 9.90629 21.1919 9.68751C21.0016 9.46873 20.7661 9.29393 20.5016 9.17522C20.2371 9.0565 19.9499 8.99672 19.66 9H14Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </div>
+          <div class="rating-option" data-rating="neutral">
+            <div class="rating-circle">
+              <span>OK</span>
+            </div>
+          </div>
+          <div class="rating-option" data-rating="negative">
+            <div class="rating-circle">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M17 2H19.67C20.236 1.98999 20.7859 2.18813 21.2154 2.55681C21.6449 2.9255 21.9241 3.43905 22 4V11C21.9241 11.5609 21.6449 12.0745 21.2154 12.4432C20.7859 12.8119 20.236 13.01 19.67 13H17M10 15V19C10 19.7956 10.3161 20.5587 10.8787 21.1213C11.4413 21.6839 12.2044 22 13 22L17 13V2H5.72C5.23767 1.99454 4.76962 2.16359 4.40209 2.47599C4.03457 2.78839 3.79232 3.22309 3.72 3.7L2.34 12.7C2.29649 12.9866 2.31583 13.2793 2.39666 13.5577C2.47749 13.8362 2.6179 14.0937 2.80814 14.3125C2.99839 14.5313 3.23392 14.7061 3.49843 14.8248C3.76294 14.9435 4.05009 15.0033 4.34 15H10Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <hr class="goal-divider">
+
+        <!-- Add More Section -->
+        <div class="goal-add-more">
+          <div class="add-more-label">Add more</div>
+          <div class="input-options" id="input-options-3">
+            <div class="input-option" data-type="speak">
+              <div class="option-icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 1C12 1 8 1 8 5V11C8 15 12 15 12 15C12 15 16 15 16 11V5C16 1 12 1 12 1Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M19 10V11C19 14.866 15.866 18 12 18C8.13401 18 5 14.866 5 11V10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <line x1="12" y1="18" x2="12" y2="23" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <line x1="8" y1="23" x2="16" y2="23" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div class="option-label">Speak</div>
+            </div>
+            <div class="input-option" data-type="type">
+              <div class="option-icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M14 2H6C5.46957 2 4.96086 2.21071 4.58579 2.58579C4.21071 2.96086 4 3.46957 4 4V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V8L14 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <polyline points="14,2 14,8 20,8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <line x1="16" y1="13" x2="8" y2="13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <line x1="16" y1="17" x2="8" y2="17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <polyline points="10,9 9,9 8,9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div class="option-label">Type</div>
+            </div>
+            <div class="input-option" data-type="upload">
+              <div class="option-icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect x="3" y="3" width="18" height="18" rx="2" ry="2" stroke="currentColor" stroke-width="2"/>
+                  <circle cx="8.5" cy="8.5" r="1.5" stroke="currentColor" stroke-width="2"/>
+                  <polyline points="21,15 16,10 5,21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div class="option-label">Upload</div>
+            </div>
+          </div>
+          
+          <!-- Secondary options -->
+          <div class="secondary-options hidden" id="secondary-options-3">
+            <div class="secondary-option" data-type="speak">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 1C12 1 8 1 8 5V11C8 15 12 15 12 15C12 15 16 15 16 11V5C16 1 12 1 12 1Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M19 10V11C19 14.866 15.866 18 12 18C8.13401 18 5 14.866 5 11V10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <line x1="12" y1="18" x2="12" y2="23" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <line x1="8" y1="23" x2="16" y2="23" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div class="secondary-option" data-type="type">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M14 2H6C5.46957 2 4.96086 2.21071 4.58579 2.58579C4.21071 2.96086 4 3.46957 4 4V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V8L14 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <polyline points="14,2 14,8 20,8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <line x1="16" y1="13" x2="8" y2="13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <line x1="16" y1="17" x2="8" y2="17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <polyline points="10,9 9,9 8,9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div class="secondary-option" data-type="upload">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2" stroke="currentColor" stroke-width="2"/>
+                <circle cx="8.5" cy="8.5" r="1.5" stroke="currentColor" stroke-width="2"/>
+                <polyline points="21,15 16,10 5,21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </div>
+          
+          <!-- Input Areas -->
+          <div class="input-area hidden" id="textarea-3">
+            <textarea class="goal-writeup" placeholder="How did it go today?"></textarea>
+          </div>
+          <div class="input-area hidden" id="recording-3">
+            <div class="recording-interface">
+              <div class="recording-status">Ready to record</div>
+              <button class="record-btn">Start Recording</button>
+            </div>
+          </div>
+          <div class="input-area hidden" id="upload-3">
+            <div class="upload-interface">
+              <input type="file" id="file-upload-3" accept="image/*" style="display: none;">
+              <button class="upload-btn" onclick="document.getElementById('file-upload-3').click()">Choose Image</button>
+            </div>
+          </div>
+        </div>
+
         <div class="goal-footer">
-          <button class="save-writeup-btn" data-goal="3">Save this write-up</button>
+          <button class="save-writeup-btn" data-goal="3">Save</button>
         </div>
       </div>
     </div>
+
     <!-- Goals 4 logging -->
     <div class="popup" id="goals-4-logging">
       <div class="popup-content goals-4-logging">
@@ -746,608 +1079,672 @@
           </svg>
         </div> 
         <div class="goal-title">Were you watching TV without eating today?</div>
-        <textarea class="goal-writeup" id="goal-writeup-4" placeholder="How did it go today?"></textarea>
+        
+        <!-- Rating Options -->
+        <div class="goal-rating">
+          <div class="rating-option" data-rating="positive">
+            <div class="rating-circle">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M7 22H4C3.46957 22 2.96086 21.7893 2.58579 21.4142C2.21071 21.0391 2 20.5304 2 20V13C2 12.4696 2.21071 11.9609 2.58579 11.5858C2.96086 11.2107 3.46957 11 4 11H7M14 9V5C14 4.20435 13.6839 3.44129 13.1213 2.87868C12.5587 2.31607 11.7956 2 11 2L7 11V22H18.28C18.7623 22.0055 19.2304 21.8364 19.5979 21.524C19.9654 21.2116 20.2077 20.7769 20.28 20.3L21.66 11.3C21.7035 11.0134 21.6842 10.7207 21.6033 10.4423C21.5225 10.1638 21.3821 9.90629 21.1919 9.68751C21.0016 9.46873 20.7661 9.29393 20.5016 9.17522C20.2371 9.0565 19.9499 8.99672 19.66 9H14Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </div>
+          <div class="rating-option" data-rating="neutral">
+            <div class="rating-circle">
+              <span>OK</span>
+            </div>
+          </div>
+          <div class="rating-option" data-rating="negative">
+            <div class="rating-circle">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M17 2H19.67C20.236 1.98999 20.7859 2.18813 21.2154 2.55681C21.6449 2.9255 21.9241 3.43905 22 4V11C21.9241 11.5609 21.6449 12.0745 21.2154 12.4432C20.7859 12.8119 20.236 13.01 19.67 13H17M10 15V19C10 19.7956 10.3161 20.5587 10.8787 21.1213C11.4413 21.6839 12.2044 22 13 22L17 13V2H5.72C5.23767 1.99454 4.76962 2.16359 4.40209 2.47599C4.03457 2.78839 3.79232 3.22309 3.72 3.7L2.34 12.7C2.29649 12.9866 2.31583 13.2793 2.39666 13.5577C2.47749 13.8362 2.6179 14.0937 2.80814 14.3125C2.99839 14.5313 3.23392 14.7061 3.49843 14.8248C3.76294 14.9435 4.05009 15.0033 4.34 15H10Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <hr class="goal-divider">
+
+        <!-- Add More Section -->
+        <div class="goal-add-more">
+          <div class="add-more-label">Add more</div>
+          <div class="input-options" id="input-options-4">
+            <div class="input-option" data-type="speak">
+              <div class="option-icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 1C12 1 8 1 8 5V11C8 15 12 15 12 15C12 15 16 15 16 11V5C16 1 12 1 12 1Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M19 10V11C19 14.866 15.866 18 12 18C8.13401 18 5 14.866 5 11V10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <line x1="12" y1="18" x2="12" y2="23" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <line x1="8" y1="23" x2="16" y2="23" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div class="option-label">Speak</div>
+            </div>
+            <div class="input-option" data-type="type">
+              <div class="option-icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M14 2H6C5.46957 2 4.96086 2.21071 4.58579 2.58579C4.21071 2.96086 4 3.46957 4 4V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V8L14 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <polyline points="14,2 14,8 20,8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <line x1="16" y1="13" x2="8" y2="13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <line x1="16" y1="17" x2="8" y2="17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <polyline points="10,9 9,9 8,9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div class="option-label">Type</div>
+            </div>
+            <div class="input-option" data-type="upload">
+              <div class="option-icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect x="3" y="3" width="18" height="18" rx="2" ry="2" stroke="currentColor" stroke-width="2"/>
+                  <circle cx="8.5" cy="8.5" r="1.5" stroke="currentColor" stroke-width="2"/>
+                  <polyline points="21,15 16,10 5,21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div class="option-label">Upload</div>
+            </div>
+          </div>
+          
+          <!-- Secondary options -->
+          <div class="secondary-options hidden" id="secondary-options-4">
+            <div class="secondary-option" data-type="speak">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 1C12 1 8 1 8 5V11C8 15 12 15 12 15C12 15 16 15 16 11V5C16 1 12 1 12 1Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M19 10V11C19 14.866 15.866 18 12 18C8.13401 18 5 14.866 5 11V10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <line x1="12" y1="18" x2="12" y2="23" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <line x1="8" y1="23" x2="16" y2="23" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div class="secondary-option" data-type="type">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M14 2H6C5.46957 2 4.96086 2.21071 4.58579 2.58579C4.21071 2.96086 4 3.46957 4 4V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V8L14 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <polyline points="14,2 14,8 20,8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <line x1="16" y1="13" x2="8" y2="13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <line x1="16" y1="17" x2="8" y2="17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <polyline points="10,9 9,9 8,9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div class="secondary-option" data-type="upload">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2" stroke="currentColor" stroke-width="2"/>
+                <circle cx="8.5" cy="8.5" r="1.5" stroke="currentColor" stroke-width="2"/>
+                <polyline points="21,15 16,10 5,21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </div>
+          
+          <!-- Input Areas -->
+          <div class="input-area hidden" id="textarea-4">
+            <textarea class="goal-writeup" placeholder="How did it go today?"></textarea>
+          </div>
+          <div class="input-area hidden" id="recording-4">
+            <div class="recording-interface">
+              <div class="recording-status">Ready to record</div>
+              <button class="record-btn">Start Recording</button>
+            </div>
+          </div>
+          <div class="input-area hidden" id="upload-4">
+            <div class="upload-interface">
+              <input type="file" id="file-upload-4" accept="image/*" style="display: none;">
+              <button class="upload-btn" onclick="document.getElementById('file-upload-4').click()">Choose Image</button>
+            </div>
+          </div>
+        </div>
+
         <div class="goal-footer">
-          <button class="save-writeup-btn" data-goal="4">Save this write-up</button>
+          <button class="save-writeup-btn" data-goal="4">Save</button>
         </div>
       </div>
     </div>
   </body>
   <script>
-  // Usage example - replace your original code with this:
-  document.addEventListener('DOMContentLoaded', () => {
-    const modalConfigs = [
-      {
-        openBtnSelector: '#ai-chat-btn',
-        modalId: 'ai-chat',
-        closeBtnId: 'ai-chat-close-btn'
-      },
-      {
-        openBtnSelector: '#rd-chat-btn',
-        modalId: 'rd-chat',
-        closeBtnId: 'rd-chat-close-btn'
-      },
-      {
-        openBtnSelector: '.appt-report-btn',
-        modalId: 'appt-report',
-        closeBtnId: 'appt-report-close-btn'
-      },
-      {
-        openBtnSelector: '.pre-visit-summary-btn',
-        modalId: 'pre-visit-summary',
-        closeBtnId: 'pre-visit-summary-close-btn'
-      },
-      {
-        openBtnSelector: '.weight-goal-logging-btn',
-        modalId: 'weight-goal-logging',
-        closeBtnId: 'weight-goal-logging-close-btn'
-      },
-      {
-        openBtnSelector: '.goals-1-logging-btn',
-        modalId: 'goals-1-logging',
-        closeBtnId: 'goals-1-logging-close-btn'
-      },
-      {
-        openBtnSelector: '.goals-2-logging-btn',
-        modalId: 'goals-2-logging',
-        closeBtnId: 'goals-2-logging-close-btn'
-      },
-      {
-        openBtnSelector: '.goals-3-logging-btn',
-        modalId: 'goals-3-logging',
-        closeBtnId: 'goals-3-logging-close-btn'
-      },
-      {
-        openBtnSelector: '.goals-4-logging-btn',
-        modalId: 'goals-4-logging',
-        closeBtnId: 'goals-4-logging-close-btn'
-      }
-    ];
-    initializeModals(modalConfigs);
-    initializeCardTimeline();
-    initializeGoalCalendar();
-    initializeSaveWriteupButtons();
-    initializeBottomPanelClick();
-    initializeAppointmentSoon();
-    initializePreVisitSummaryEdit();
-    initializeEditFormToggles(); 
-    initializeCustomInput();
-  });
-
-  window.addEventListener('scroll', () => {
-    const winContainer = document.querySelector('.win-container');
-    const bottomPanel = document.querySelector('.bottom-panel');
-    
-    if (!winContainer || !bottomPanel) return;
-    
-    const bottomPanelHeight = bottomPanel.offsetHeight;
-    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    
-    // Calculate scroll progress based on bottom panel height
-    const scrollProgress = Math.min(scrollTop / bottomPanelHeight, 1);
-    
-    // Calculate transform and opacity values for win-container
-    const translateY = scrollProgress * -20; // Move up 20vh
-    const opacity = 1 - (scrollProgress / 0.8); // Fade from 1 to 0 over first 70% of scroll
-    
-    // Apply the transformations
-    winContainer.style.transform = `translateY(${translateY}vh)`;
-    winContainer.style.opacity = opacity;
-  });
-
-  function enableHtmlScroll() {
-    document.documentElement.classList.remove('no-scroll');
-  }
-
-  function disableHtmlScroll() {
-    document.documentElement.classList.add('no-scroll');
-  }
-
-  function initializeCardTimeline() {
-    const cardsContainer = document.getElementById('cards-container');
-    const cards = document.querySelectorAll('.appointment-card');
-    let currentIndex = 6; // Start with today card (index 6)
-    let startX = 0;
-    let isDragging = false;
-
-    function updateCardPositions() {
-      cards.forEach((card, index) => {
-        card.classList.remove('left', 'center', 'right', 'hidden');
-        
-        if (index === currentIndex) {
-          card.classList.add('center');
-        } else if (index === currentIndex - 1) {
-          card.classList.add('left');
-        } else if (index === currentIndex + 1) {
-          card.classList.add('right');
-        } else {
-          card.classList.add('hidden');
+    // Usage example - replace your original code with this:
+    document.addEventListener('DOMContentLoaded', () => {
+      const modalConfigs = [
+        {
+          openBtnSelector: '#ai-chat-btn',
+          modalId: 'ai-chat',
+          closeBtnId: 'ai-chat-close-btn'
+        },
+        {
+          openBtnSelector: '#rd-chat-btn',
+          modalId: 'rd-chat',
+          closeBtnId: 'rd-chat-close-btn'
+        },
+        {
+          openBtnSelector: '.appt-report-btn',
+          modalId: 'appt-report',
+          closeBtnId: 'appt-report-close-btn'
+        },
+        {
+          openBtnSelector: '.pre-visit-summary-btn',
+          modalId: 'pre-visit-summary',
+          closeBtnId: 'pre-visit-summary-close-btn'
+        },
+        {
+          openBtnSelector: '.weight-goal-logging-btn',
+          modalId: 'weight-goal-logging',
+          closeBtnId: 'weight-goal-logging-close-btn'
+        },
+        {
+          openBtnSelector: '.goals-1-logging-btn',
+          modalId: 'goals-1-logging',
+          closeBtnId: 'goals-1-logging-close-btn'
+        },
+        {
+          openBtnSelector: '.goals-2-logging-btn',
+          modalId: 'goals-2-logging',
+          closeBtnId: 'goals-2-logging-close-btn'
+        },
+        {
+          openBtnSelector: '.goals-3-logging-btn',
+          modalId: 'goals-3-logging',
+          closeBtnId: 'goals-3-logging-close-btn'
+        },
+        {
+          openBtnSelector: '.goals-4-logging-btn',
+          modalId: 'goals-4-logging',
+          closeBtnId: 'goals-4-logging-close-btn'
         }
-      });
+      ];
+      initializeModals(modalConfigs);
+      initializeCardTimeline();
+      initializeGoalCalendar();
+      initializeSaveWriteupButtons();
+      initializeBottomPanelClick();
+      initializeAppointmentSoon();
+      initializePreVisitSummaryEdit();
+      initializeEditFormToggles(); 
+      initializeCustomInput();
+      initializeGoalLogging();
+    });
+
+    window.addEventListener('scroll', () => {
+      const winContainer = document.querySelector('.win-container');
+      const bottomPanel = document.querySelector('.bottom-panel');
+      
+      if (!winContainer || !bottomPanel) return;
+      
+      const bottomPanelHeight = bottomPanel.offsetHeight;
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      
+      // Calculate scroll progress based on bottom panel height
+      const scrollProgress = Math.min(scrollTop / bottomPanelHeight, 1);
+      
+      // Calculate transform and opacity values for win-container
+      const translateY = scrollProgress * -20; // Move up 20vh
+      const opacity = 1 - (scrollProgress / 0.8); // Fade from 1 to 0 over first 70% of scroll
+      
+      // Apply the transformations
+      winContainer.style.transform = `translateY(${translateY}vh)`;
+      winContainer.style.opacity = opacity;
+    });
+
+    function enableHtmlScroll() {
+      document.documentElement.classList.remove('no-scroll');
     }
 
-    function addCardClickListeners() {
-      cards.forEach((card, index) => {
-        card.addEventListener('click', (e) => {
-          // Only handle clicks on left and right cards
-          if (card.classList.contains('left') || card.classList.contains('right')) {
-            currentIndex = index;
-            updateCardPositions();
-            e.stopPropagation(); // Prevent event bubbling
+    function disableHtmlScroll() {
+      document.documentElement.classList.add('no-scroll');
+    }
+
+    function initializeCardTimeline() {
+      const cardsContainer = document.getElementById('cards-container');
+      const cards = document.querySelectorAll('.appointment-card');
+      let currentIndex = 6; // Start with today card (index 6)
+      let startX = 0;
+      let isDragging = false;
+
+      function updateCardPositions() {
+        cards.forEach((card, index) => {
+          card.classList.remove('left', 'center', 'right', 'hidden');
+          
+          if (index === currentIndex) {
+            card.classList.add('center');
+          } else if (index === currentIndex - 1) {
+            card.classList.add('left');
+          } else if (index === currentIndex + 1) {
+            card.classList.add('right');
+          } else {
+            card.classList.add('hidden');
           }
         });
-      });
-    }
-
-    function swipeLeft() {
-      if (currentIndex < cards.length - 1) {
-        currentIndex++;
-        updateCardPositions();
       }
-    }
 
-    function swipeRight() {
-      if (currentIndex > 0) {
-        currentIndex--;
-        updateCardPositions();
-      }
-    }
-
-    // Touch events
-    cardsContainer.addEventListener('touchstart', (e) => {
-      startX = e.touches[0].clientX;
-      isDragging = true;
-    });
-
-    cardsContainer.addEventListener('touchmove', (e) => {
-      if (!isDragging) return;
-      e.preventDefault();
-    });
-
-    cardsContainer.addEventListener('touchend', (e) => {
-      if (!isDragging) return;
-      isDragging = false;
-      
-      const endX = e.changedTouches[0].clientX;
-      const diff = startX - endX;
-      
-      if (Math.abs(diff) > 50) { // Minimum swipe distance
-        if (diff > 0) {
-          swipeLeft();
-        } else {
-          swipeRight();
-        }
-      }
-    });
-
-    // Mouse events for desktop
-    cardsContainer.addEventListener('mousedown', (e) => {
-      startX = e.clientX;
-      isDragging = true;
-    });
-
-    cardsContainer.addEventListener('mousemove', (e) => {
-      if (!isDragging) return;
-      e.preventDefault();
-    });
-
-    cardsContainer.addEventListener('mouseup', (e) => {
-      if (!isDragging) return;
-      isDragging = false;
-      
-      const endX = e.clientX;
-      const diff = startX - endX;
-      
-      if (Math.abs(diff) > 50) { // Minimum swipe distance
-        if (diff > 0) {
-          swipeLeft();
-        } else {
-          swipeRight();
-        }
-      }
-    });
-
-    updateCardPositions();
-    addCardClickListeners();
-  }
-
-  // Initialize multiple modals at once
-  function initializeModals(modalConfigs) {
-    modalConfigs.forEach(config => setupModalToggle(config));
-  }
-
-  function setupModalToggle(config) {
-    const { openBtnSelector, modalId, closeBtnId } = config;
-    
-    const openBtn = document.querySelectorAll(openBtnSelector);
-    const modal = document.getElementById(modalId);
-    const closeBtn = document.getElementById(closeBtnId);
-    
-    openBtn.forEach(btn => {
-      btn.addEventListener('click', () => {
-        modal.style.display = 'block';
-        disableHtmlScroll();
-      });
-    });
-    
-    closeBtn.addEventListener('click', () => {
-      modal.style.display = 'none';
-      enableHtmlScroll();
-
-    });
-    
-    // Close modal when clicking on the background (popup area)
-    modal.addEventListener('click', (e) => {
-      if (e.target === modal) {
-        modal.style.display = 'none';
-        enableHtmlScroll();
-      }
-    });
-  }
-
-  function toLocalDateOnly(date) {
-    return new Date(date.getFullYear(), date.getMonth(), date.getDate());
-  }
-
-  function initializeGoalCalendar() {
-    const calendar = document.getElementById('unified-goal-calendar');
-    const today = new Date();
-    const endDate = new Date('2025-08-20');
-    const startDate = new Date('2025-07-20');
-    let currentIndex = 0; // Will be set to today's index
-    
-    // Generate calendar days
-    const days = [];
-    let currentDate = toLocalDateOnly(startDate);
-    const todayDate = toLocalDateOnly(new Date());
-
-    while (currentDate <= endDate) {
-      days.push(new Date(currentDate));
-      currentDate.setDate(currentDate.getDate() + 1);
-    }
-    
-    // Find today's index
-    const todayIndex = days.findIndex(date => 
-      date.toDateString() === todayDate.toDateString()
-    );
-    if (todayIndex !== -1) {
-      currentIndex = todayIndex;
-    }
-    
-    // Clear existing content
-    calendar.innerHTML = '';
-    
-    // Render calendar days
-    days.forEach((date, index) => {
-      const dayElement = document.createElement('div');
-      dayElement.className = 'calendar-day';
-      dayElement.dataset.date = date.toISOString().split('T')[0];
-      dayElement.dataset.index = index;
-      
-      const isToday = date.toDateString() === todayDate.toDateString();
-
-      dayElement.innerHTML = `
-        <div class="day-circle ${isToday ? 'today' : ''}">
-          <div class="day-label">
-            <div class="month">${date.toLocaleDateString('en-US', { month: 'short' })}</div>
-            <div class="day">${date.getDate()}</div>
-          </div>
-        </div>
-      `;
-      
-      calendar.appendChild(dayElement);
-    });
-
-    function updateCalendarPositions() {
-      const dayElements = calendar.querySelectorAll('.calendar-day');
-      
-      dayElements.forEach((dayElement, index) => {
-        const dayCircle = dayElement.querySelector('.day-circle');
-        dayCircle.classList.remove('selected');
-        
-        if (index === currentIndex) {
-          dayCircle.classList.add('selected');
-        }
-      });
-    }
-
-    function addCalendarClickListeners() {
-      const dayElements = calendar.querySelectorAll('.calendar-day');
-      
-      dayElements.forEach((dayElement, index) => {
-        dayElement.addEventListener('click', (e) => {
-          // Prevent click if we were just scrolling/swiping
-          if (calendar.dataset.wasScrolling === 'true') {
-            return;
-          }
-          
-          currentIndex = index;
-          updateCalendarPositions();
-          e.stopPropagation();
-        });
-      });
-    }
-
-    function centerSelectedDay() {
-      const selectedDay = calendar.querySelector(`[data-index="${currentIndex}"]`);
-      if (!selectedDay) return;
-
-      const calendarRect = calendar.getBoundingClientRect();
-      const selectedRect = selectedDay.getBoundingClientRect();
-      
-      // Calculate the offset of selected day relative to the calendar's scroll container
-      const selectedOffsetLeft = selectedDay.offsetLeft;
-      const selectedWidth = selectedRect.width;
-      const calendarWidth = calendarRect.width;
-      const maxScrollLeft = calendar.scrollWidth - calendar.clientWidth;
-      
-      // Calculate ideal scroll position to center the selected day
-      let scrollToCenter = selectedOffsetLeft - (calendarWidth / 2) + (selectedWidth / 2);
-      
-      // Clamp the scroll position to valid bounds
-      scrollToCenter = Math.max(0, Math.min(scrollToCenter, maxScrollLeft));
-      
-      // Smooth scroll to the position
-      calendar.scrollTo({
-        left: scrollToCenter,
-        behavior: 'smooth'
-      });
-    }
-
-    // Track scrolling state to prevent clicks during scroll
-    let scrollTimeout;
-    let isScrolling = false;
-
-    calendar.addEventListener('scroll', () => {
-      isScrolling = true;
-      calendar.dataset.wasScrolling = 'true';
-      
-      clearTimeout(scrollTimeout);
-      scrollTimeout = setTimeout(() => {
-        isScrolling = false;
-        calendar.dataset.wasScrolling = 'false';
-      }, 150);
-    });
-
-    // Touch events for free scrolling (no selection change)
-    let startX = 0;
-    let startY = 0;
-    let isDragging = false;
-
-    calendar.addEventListener('touchstart', (e) => {
-      startX = e.touches[0].clientX;
-      startY = e.touches[0].clientY;
-      isDragging = false;
-    });
-
-    calendar.addEventListener('touchmove', (e) => {
-      const currentX = e.touches[0].clientX;
-      const currentY = e.touches[0].clientY;
-      const diffX = Math.abs(currentX - startX);
-      const diffY = Math.abs(currentY - startY);
-      
-      // If horizontal movement is greater than vertical, we're scrolling horizontally
-      if (diffX > diffY && diffX > 10) {
-        isDragging = true;
-        calendar.dataset.wasScrolling = 'true';
-      }
-    });
-
-    calendar.addEventListener('touchend', (e) => {
-      if (isDragging) {
-        // Reset scrolling state after a delay
-        setTimeout(() => {
-          calendar.dataset.wasScrolling = 'false';
-        }, 100);
-      }
-      isDragging = false;
-    });
-
-    // Mouse events for desktop (free scrolling)
-    calendar.addEventListener('mousedown', (e) => {
-      startX = e.clientX;
-      isDragging = false;
-    });
-
-    calendar.addEventListener('mousemove', (e) => {
-      const currentX = e.clientX;
-      const diffX = Math.abs(currentX - startX);
-      
-      if (diffX > 10) {
-        isDragging = true;
-        calendar.dataset.wasScrolling = 'true';
-      }
-    });
-
-    calendar.addEventListener('mouseup', (e) => {
-      if (isDragging) {
-        // Reset scrolling state after a delay
-        setTimeout(() => {
-          calendar.dataset.wasScrolling = 'false';
-        }, 100);
-      }
-      isDragging = false;
-    });
-
-    // Initialize
-    calendar.dataset.wasScrolling = 'false';
-    updateCalendarPositions();
-    addCalendarClickListeners();
-    
-    // Center today on load
-    setTimeout(() => {
-      centerSelectedDay();
-    }, 100);
-  }
-
-  function initializeSaveWriteupButtons() {
-    document.querySelectorAll('.save-writeup-btn').forEach(button => {
-      button.addEventListener('click', (e) => {
-        const goalId = e.target.dataset.goal;
-        const modal = document.getElementById(`goals-${goalId}-logging`);
-        
-        // In a real app, you'd save the data here
-        console.log(`Saving writeup for goal ${goalId}`);
-        
-        // Hide modal
-        modal.style.display = 'none';
-        enableHtmlScroll();
-      });
-    });
-  }
-
-  function initializeBottomPanelClick() {
-    const bottomPanelHeader = document.querySelector('.bottom-panel-header');
-            
-    if (bottomPanelHeader) {
-      bottomPanelHeader.addEventListener('click', () => {
-          // Add bounce animation class
-          bottomPanelHeader.classList.add('bounce-animation');
-          
-          // Remove the animation class after animation completes
-          setTimeout(() => {
-              bottomPanelHeader.classList.remove('bounce-animation');
-          }, 500);
-          
-          window.scrollTo({
-              top: document.documentElement.scrollHeight,
-              behavior: 'smooth'
+      function addCardClickListeners() {
+        cards.forEach((card, index) => {
+          card.addEventListener('click', (e) => {
+            // Only handle clicks on left and right cards
+            if (card.classList.contains('left') || card.classList.contains('right')) {
+              currentIndex = index;
+              updateCardPositions();
+              e.stopPropagation(); // Prevent event bubbling
+            }
           });
+        });
+      }
+
+      function swipeLeft() {
+        if (currentIndex < cards.length - 1) {
+          currentIndex++;
+          updateCardPositions();
+        }
+      }
+
+      function swipeRight() {
+        if (currentIndex > 0) {
+          currentIndex--;
+          updateCardPositions();
+        }
+      }
+
+      // Touch events
+      cardsContainer.addEventListener('touchstart', (e) => {
+        startX = e.touches[0].clientX;
+        isDragging = true;
       });
-    }
-  }
 
-  function initializeAppointmentSoon() {
-    const noThanksBtn = document.querySelector('.no-thanks-btn');
-    const aptSoonModal = document.querySelector('.apt-soon--modal');
-    const aptSoonShort = document.querySelector('.apt-soon--short');
-    const aptSoonShortCtaBtn = document.querySelector('.apt-soon--short .cta-btn');
-    
-    noThanksBtn.addEventListener('click', (e) => {
-      e.preventDefault();
-      aptSoonModal.classList.add('hidden');
-      aptSoonShort.classList.remove('hidden');
-    });
+      cardsContainer.addEventListener('touchmove', (e) => {
+        if (!isDragging) return;
+        e.preventDefault();
+      });
 
-    aptSoonShortCtaBtn.addEventListener('click', (e) => {
-      e.preventDefault();
-      aptSoonShort.classList.add('hidden');
-    });
-  }
-
-  function initializePreVisitSummaryEdit() {
-    const actionBtn = document.getElementById('pre-visit-action-btn');
-    const summaryContent = document.getElementById('summary-content');
-    const editForm = document.getElementById('edit-form');
-    const regeneratingState = document.getElementById('regenerating-state');
-    const actionBtnManage = document.querySelector('.audit-button--manage');
-    const actionBtnSee = document.querySelector('.audit-button--see');
-    
-    let isEditing = true;
-    updateActionButtonText();
-  
-    actionBtn.addEventListener('click', () => {
-      if (isEditing) {
-        saveAndRegenerate();
-      } else {
-        switchToEditMode();
-      }
-    });
-  
-    function switchToEditMode() {
-      summaryContent.classList.add('hidden');
-      editForm.classList.remove('hidden');
-      isEditing = true;
-      updateActionButtonText();
-    }
-    
-    function saveAndRegenerate() {
-      editForm.classList.add('hidden');
-      actionBtn.classList.add('hidden');
-      regeneratingState.classList.remove('hidden');
-      
-      // Simulate regeneration process (modify when implementing into React)
-      setTimeout(() => {
-        // Hide regenerating state
-        summaryContent.classList.remove('hidden');
-        actionBtn.classList.remove('hidden');
-        regeneratingState.classList.add('hidden');
-        isEditing = false;
-        updateActionButtonText();
-      }, 1000);
-    }
-
-    function updateActionButtonText() {
-      if (isEditing) {
-        actionBtnSee.classList.remove('hidden');
-        actionBtnManage.classList.add('hidden');
-      } else {
-        actionBtnManage.classList.remove('hidden');
-        actionBtnSee.classList.add('hidden');
-      }
-    }
-  }
-
-  function initializeEditFormToggles() {
-    const editItems = document.querySelectorAll('.edit-form .edit-item');
-    const actionBtn = document.getElementById('pre-visit-action-btn');
-    
-    editItems.forEach(item => {
-      item.addEventListener('click', () => {
-        const toggle = item.querySelector('.item-toggle');
-        const isExcluded = item.classList.contains('excluded');
-
-        actionBtn.classList.remove('hidden');
+      cardsContainer.addEventListener('touchend', (e) => {
+        if (!isDragging) return;
+        isDragging = false;
         
-        if (isExcluded) {
-          // Switch back to checkmark
-          item.classList.remove('excluded');
-          toggle.classList.remove('excluded');
-          toggle.innerHTML = `
-            <svg viewBox="0 0 24 24">
-              <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
-            </svg>
-          `;
-        } else {
-          // Switch to X
-          item.classList.add('excluded');
-          toggle.classList.add('excluded');
-          toggle.innerHTML = '';
+        const endX = e.changedTouches[0].clientX;
+        const diff = startX - endX;
+        
+        if (Math.abs(diff) > 50) { // Minimum swipe distance
+          if (diff > 0) {
+            swipeLeft();
+          } else {
+            swipeRight();
+          }
         }
       });
-    });
-  }
 
-  function initializeCustomInput() {
-    const saveBtn = document.getElementById('save-custom-btn');
-    const textarea = document.getElementById('custom-input-textarea');
-    const customItemsContainer = document.getElementById('custom-edit-items');
-    
-    saveBtn.addEventListener('click', () => {
-      const inputText = textarea.value.trim();
-      
-      if (inputText) {
-        // Create new edit item
-        const newItem = document.createElement('div');
-        newItem.className = 'edit-item';
-        newItem.dataset.itemId = `custom-${Date.now()}`;
+      // Mouse events for desktop
+      cardsContainer.addEventListener('mousedown', (e) => {
+        startX = e.clientX;
+        isDragging = true;
+      });
+
+      cardsContainer.addEventListener('mousemove', (e) => {
+        if (!isDragging) return;
+        e.preventDefault();
+      });
+
+      cardsContainer.addEventListener('mouseup', (e) => {
+        if (!isDragging) return;
+        isDragging = false;
         
-        newItem.innerHTML = `
-          <div class="item-text">${inputText}</div>
-          <div class="item-toggle">
-            <svg viewBox="0 0 24 24">
-              <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
-            </svg>
+        const endX = e.clientX;
+        const diff = startX - endX;
+        
+        if (Math.abs(diff) > 50) { // Minimum swipe distance
+          if (diff > 0) {
+            swipeLeft();
+          } else {
+            swipeRight();
+          }
+        }
+      });
+
+      updateCardPositions();
+      addCardClickListeners();
+    }
+
+    function initializeModals(modalConfigs) {
+      modalConfigs.forEach(config => setupModalToggle(config));
+    }
+
+    function setupModalToggle(config) {
+      const { openBtnSelector, modalId, closeBtnId } = config;
+      
+      const openBtn = document.querySelectorAll(openBtnSelector);
+      const modal = document.getElementById(modalId);
+      const closeBtn = document.getElementById(closeBtnId);
+      
+      openBtn.forEach(btn => {
+        btn.addEventListener('click', () => {
+          modal.style.display = 'block';
+          disableHtmlScroll();
+        });
+      });
+      
+      closeBtn.addEventListener('click', () => {
+        modal.style.display = 'none';
+        enableHtmlScroll();
+
+      });
+      
+      // Close modal when clicking on the background (popup area)
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+          modal.style.display = 'none';
+          enableHtmlScroll();
+        }
+      });
+    }
+
+    function toLocalDateOnly(date) {
+      return new Date(date.getFullYear(), date.getMonth(), date.getDate());
+    }
+
+    function initializeGoalCalendar() {
+      const calendar = document.getElementById('unified-goal-calendar');
+      const today = new Date();
+      const endDate = new Date('2025-08-20');
+      const startDate = new Date('2025-07-20');
+      let currentIndex = 0; // Will be set to today's index
+      
+      // Generate calendar days
+      const days = [];
+      let currentDate = toLocalDateOnly(startDate);
+      const todayDate = toLocalDateOnly(new Date());
+
+      while (currentDate <= endDate) {
+        days.push(new Date(currentDate));
+        currentDate.setDate(currentDate.getDate() + 1);
+      }
+      
+      // Find today's index
+      const todayIndex = days.findIndex(date => 
+        date.toDateString() === todayDate.toDateString()
+      );
+      if (todayIndex !== -1) {
+        currentIndex = todayIndex;
+      }
+      
+      // Clear existing content
+      calendar.innerHTML = '';
+      
+      // Render calendar days
+      days.forEach((date, index) => {
+        const dayElement = document.createElement('div');
+        dayElement.className = 'calendar-day';
+        dayElement.dataset.date = date.toISOString().split('T')[0];
+        dayElement.dataset.index = index;
+        
+        const isToday = date.toDateString() === todayDate.toDateString();
+
+        dayElement.innerHTML = `
+          <div class="day-circle ${isToday ? 'today' : ''}">
+            <div class="day-label">
+              <div class="month">${date.toLocaleDateString('en-US', { month: 'short' })}</div>
+              <div class="day">${date.getDate()}</div>
+            </div>
           </div>
         `;
         
-        // Add click handler for the new item
-        newItem.addEventListener('click', () => {
-          const toggle = newItem.querySelector('.item-toggle');
-          const isExcluded = newItem.classList.contains('excluded');
+        calendar.appendChild(dayElement);
+      });
+
+      function updateCalendarPositions() {
+        const dayElements = calendar.querySelectorAll('.calendar-day');
+        
+        dayElements.forEach((dayElement, index) => {
+          const dayCircle = dayElement.querySelector('.day-circle');
+          dayCircle.classList.remove('selected');
+          
+          if (index === currentIndex) {
+            dayCircle.classList.add('selected');
+          }
+        });
+      }
+
+      function addCalendarClickListeners() {
+        const dayElements = calendar.querySelectorAll('.calendar-day');
+        
+        dayElements.forEach((dayElement, index) => {
+          dayElement.addEventListener('click', (e) => {
+            // Prevent click if we were just scrolling/swiping
+            if (calendar.dataset.wasScrolling === 'true') {
+              return;
+            }
+            
+            currentIndex = index;
+            updateCalendarPositions();
+            e.stopPropagation();
+          });
+        });
+      }
+
+      function centerSelectedDay() {
+        const selectedDay = calendar.querySelector(`[data-index="${currentIndex}"]`);
+        if (!selectedDay) return;
+
+        const calendarRect = calendar.getBoundingClientRect();
+        const selectedRect = selectedDay.getBoundingClientRect();
+        
+        // Calculate the offset of selected day relative to the calendar's scroll container
+        const selectedOffsetLeft = selectedDay.offsetLeft;
+        const selectedWidth = selectedRect.width;
+        const calendarWidth = calendarRect.width;
+        const maxScrollLeft = calendar.scrollWidth - calendar.clientWidth;
+        
+        // Calculate ideal scroll position to center the selected day
+        let scrollToCenter = selectedOffsetLeft - (calendarWidth / 2) + (selectedWidth / 2);
+        
+        // Clamp the scroll position to valid bounds
+        scrollToCenter = Math.max(0, Math.min(scrollToCenter, maxScrollLeft));
+        
+        // Smooth scroll to the position
+        calendar.scrollTo({
+          left: scrollToCenter,
+          behavior: 'smooth'
+        });
+      }
+
+      // Track scrolling state to prevent clicks during scroll
+      let scrollTimeout;
+      let isScrolling = false;
+
+      calendar.addEventListener('scroll', () => {
+        isScrolling = true;
+        calendar.dataset.wasScrolling = 'true';
+        
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(() => {
+          isScrolling = false;
+          calendar.dataset.wasScrolling = 'false';
+        }, 150);
+      });
+
+      // Touch events for free scrolling (no selection change)
+      let startX = 0;
+      let startY = 0;
+      let isDragging = false;
+
+      calendar.addEventListener('touchstart', (e) => {
+        startX = e.touches[0].clientX;
+        startY = e.touches[0].clientY;
+        isDragging = false;
+      });
+
+      calendar.addEventListener('touchmove', (e) => {
+        const currentX = e.touches[0].clientX;
+        const currentY = e.touches[0].clientY;
+        const diffX = Math.abs(currentX - startX);
+        const diffY = Math.abs(currentY - startY);
+        
+        // If horizontal movement is greater than vertical, we're scrolling horizontally
+        if (diffX > diffY && diffX > 10) {
+          isDragging = true;
+          calendar.dataset.wasScrolling = 'true';
+        }
+      });
+
+      calendar.addEventListener('touchend', (e) => {
+        if (isDragging) {
+          // Reset scrolling state after a delay
+          setTimeout(() => {
+            calendar.dataset.wasScrolling = 'false';
+          }, 100);
+        }
+        isDragging = false;
+      });
+
+      // Mouse events for desktop (free scrolling)
+      calendar.addEventListener('mousedown', (e) => {
+        startX = e.clientX;
+        isDragging = false;
+      });
+
+      calendar.addEventListener('mousemove', (e) => {
+        const currentX = e.clientX;
+        const diffX = Math.abs(currentX - startX);
+        
+        if (diffX > 10) {
+          isDragging = true;
+          calendar.dataset.wasScrolling = 'true';
+        }
+      });
+
+      calendar.addEventListener('mouseup', (e) => {
+        if (isDragging) {
+          // Reset scrolling state after a delay
+          setTimeout(() => {
+            calendar.dataset.wasScrolling = 'false';
+          }, 100);
+        }
+        isDragging = false;
+      });
+
+      // Initialize
+      calendar.dataset.wasScrolling = 'false';
+      updateCalendarPositions();
+      addCalendarClickListeners();
+      
+      // Center today on load
+      setTimeout(() => {
+        centerSelectedDay();
+      }, 100);
+    }
+
+    function initializeSaveWriteupButtons() {
+      document.querySelectorAll('.save-writeup-btn').forEach(button => {
+        button.addEventListener('click', (e) => {
+          const goalId = e.target.dataset.goal;
+          const modal = document.getElementById(`goals-${goalId}-logging`);
+          
+          // In a real app, you'd save the data here
+          console.log(`Saving writeup for goal ${goalId}`);
+          
+          // Hide modal
+          modal.style.display = 'none';
+          enableHtmlScroll();
+        });
+      });
+    }
+
+    function initializeBottomPanelClick() {
+      const bottomPanelHeader = document.querySelector('.bottom-panel-header');
+              
+      if (bottomPanelHeader) {
+        bottomPanelHeader.addEventListener('click', () => {
+            // Add bounce animation class
+            bottomPanelHeader.classList.add('bounce-animation');
+            
+            // Remove the animation class after animation completes
+            setTimeout(() => {
+                bottomPanelHeader.classList.remove('bounce-animation');
+            }, 500);
+            
+            window.scrollTo({
+                top: document.documentElement.scrollHeight,
+                behavior: 'smooth'
+            });
+        });
+      }
+    }
+
+    function initializeAppointmentSoon() {
+      const noThanksBtn = document.querySelector('.no-thanks-btn');
+      const aptSoonModal = document.querySelector('.apt-soon--modal');
+      const aptSoonShort = document.querySelector('.apt-soon--short');
+      const aptSoonShortCtaBtn = document.querySelector('.apt-soon--short .cta-btn');
+      
+      noThanksBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        aptSoonModal.classList.add('hidden');
+        aptSoonShort.classList.remove('hidden');
+      });
+
+      aptSoonShortCtaBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        aptSoonShort.classList.add('hidden');
+      });
+    }
+
+    function initializePreVisitSummaryEdit() {
+      const actionBtn = document.getElementById('pre-visit-action-btn');
+      const summaryContent = document.getElementById('summary-content');
+      const editForm = document.getElementById('edit-form');
+      const regeneratingState = document.getElementById('regenerating-state');
+      const actionBtnManage = document.querySelector('.audit-button--manage');
+      const actionBtnSee = document.querySelector('.audit-button--see');
+      
+      let isEditing = true;
+      updateActionButtonText();
+    
+      actionBtn.addEventListener('click', () => {
+        if (isEditing) {
+          saveAndRegenerate();
+        } else {
+          switchToEditMode();
+        }
+      });
+    
+      function switchToEditMode() {
+        summaryContent.classList.add('hidden');
+        editForm.classList.remove('hidden');
+        isEditing = true;
+        updateActionButtonText();
+      }
+      
+      function saveAndRegenerate() {
+        editForm.classList.add('hidden');
+        actionBtn.classList.add('hidden');
+        regeneratingState.classList.remove('hidden');
+        
+        // Simulate regeneration process (modify when implementing into React)
+        setTimeout(() => {
+          // Hide regenerating state
+          summaryContent.classList.remove('hidden');
+          actionBtn.classList.remove('hidden');
+          regeneratingState.classList.add('hidden');
+          isEditing = false;
+          updateActionButtonText();
+        }, 1000);
+      }
+
+      function updateActionButtonText() {
+        if (isEditing) {
+          actionBtnSee.classList.remove('hidden');
+          actionBtnManage.classList.add('hidden');
+        } else {
+          actionBtnManage.classList.remove('hidden');
+          actionBtnSee.classList.add('hidden');
+        }
+      }
+    }
+
+    function initializeEditFormToggles() {
+      const editItems = document.querySelectorAll('.edit-form .edit-item');
+      const actionBtn = document.getElementById('pre-visit-action-btn');
+      
+      editItems.forEach(item => {
+        item.addEventListener('click', () => {
+          const toggle = item.querySelector('.item-toggle');
+          const isExcluded = item.classList.contains('excluded');
+
+          actionBtn.classList.remove('hidden');
           
           if (isExcluded) {
-            newItem.classList.remove('excluded');
+            // Switch back to checkmark
+            item.classList.remove('excluded');
             toggle.classList.remove('excluded');
             toggle.innerHTML = `
               <svg viewBox="0 0 24 24">
@@ -1355,18 +1752,133 @@
               </svg>
             `;
           } else {
-            newItem.classList.add('excluded');
+            // Switch to X
+            item.classList.add('excluded');
             toggle.classList.add('excluded');
             toggle.innerHTML = '';
           }
         });
-        
-        customItemsContainer.appendChild(newItem);
-        textarea.value = '';
-        textarea.focus();
-      }
-    });
-  }
+      });
+    }
 
+    function initializeCustomInput() {
+      const saveBtn = document.getElementById('save-custom-btn');
+      const textarea = document.getElementById('custom-input-textarea');
+      const customItemsContainer = document.getElementById('custom-edit-items');
+      
+      saveBtn.addEventListener('click', () => {
+        const inputText = textarea.value.trim();
+        
+        if (inputText) {
+          // Create new edit item
+          const newItem = document.createElement('div');
+          newItem.className = 'edit-item';
+          newItem.dataset.itemId = `custom-${Date.now()}`;
+          
+          newItem.innerHTML = `
+            <div class="item-text">${inputText}</div>
+            <div class="item-toggle">
+              <svg viewBox="0 0 24 24">
+                <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+              </svg>
+            </div>
+          `;
+          
+          // Add click handler for the new item
+          newItem.addEventListener('click', () => {
+            const toggle = newItem.querySelector('.item-toggle');
+            const isExcluded = newItem.classList.contains('excluded');
+            
+            if (isExcluded) {
+              newItem.classList.remove('excluded');
+              toggle.classList.remove('excluded');
+              toggle.innerHTML = `
+                <svg viewBox="0 0 24 24">
+                  <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+                </svg>
+              `;
+            } else {
+              newItem.classList.add('excluded');
+              toggle.classList.add('excluded');
+              toggle.innerHTML = '';
+            }
+          });
+          
+          customItemsContainer.appendChild(newItem);
+          textarea.value = '';
+          textarea.focus();
+        }
+      });
+    }
+
+    function initializeGoalLogging() {
+      // Initialize rating selection
+      document.querySelectorAll('.rating-option').forEach(option => {
+        option.addEventListener('click', function() {
+          const parentGoal = this.closest('.popup-content');
+          parentGoal.querySelectorAll('.rating-option').forEach(opt => opt.classList.remove('selected'));
+          this.classList.add('selected');
+        });
+      });
+
+      // Initialize input type selection
+      document.querySelectorAll('.input-option').forEach(option => {
+        option.addEventListener('click', function() {
+          const goalId = this.closest('.popup-content').id.split('-')[1];
+          const inputType = this.dataset.type;
+          
+          selectInputType(goalId, inputType);
+        });
+      });
+
+      // Initialize secondary options
+      document.querySelectorAll('.secondary-option').forEach(option => {
+        option.addEventListener('click', function() {
+          const goalId = this.closest('.popup-content').id.split('-')[1];
+          const inputType = this.dataset.type;
+          
+          selectInputType(goalId, inputType);
+        });
+      });
+    }
+
+    function selectInputType(goalId, inputType) {
+      const goalPopup = document.getElementById(`goals-${goalId}-logging`);
+      if (!goalPopup) {
+        console.error(`Goal popup not found for ID: goals-${goalId}-logging`);
+        return;
+      }
+      
+      const inputOptions = goalPopup.querySelector('.input-options');
+      const secondaryOptions = goalPopup.querySelector('.secondary-options');
+      
+      if (!inputOptions || !secondaryOptions) {
+        console.error('Required elements not found in goal popup');
+        return;
+      }
+      
+      // Hide main options, show secondary options
+      inputOptions.classList.add('hidden');
+      secondaryOptions.classList.remove('hidden');
+      
+      // Clear previous selections in secondary options
+      secondaryOptions.querySelectorAll('.secondary-option').forEach(opt => opt.classList.remove('selected'));
+      
+      // Select current option in secondary options
+      const selectedSecondary = secondaryOptions.querySelector(`[data-type="${inputType}"]`);
+      if (selectedSecondary) {
+        selectedSecondary.classList.add('selected');
+      }
+      
+      // Hide all input areas
+      const inputAreas = goalPopup.querySelectorAll('.input-area');
+      inputAreas.forEach(area => area.classList.add('hidden'));
+      
+      // Show appropriate input area
+      const targetArea = goalPopup.querySelector(`#${inputType === 'type' ? 'textarea' : inputType}-${goalId}`);
+      if (targetArea) {
+        targetArea.classList.remove('hidden');
+      }
+    }
   </script>
 </html>

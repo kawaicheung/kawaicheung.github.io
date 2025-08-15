@@ -1702,29 +1702,212 @@ main {
         letter-spacing: -0.05rem;
         color: var(--color--black);
         text-align: left;
-        margin-bottom: 0.5rem;
+        margin-bottom: 1.5rem;
         width: calc(100% - 24px - var(--padding--sides));
       }
       
-      .goal-writeup {
-        flex: 1;
-        width: 100%;
-        height: 100%;
-        border-radius: 1rem;
-        background: var(--color--white);
-        padding: 1rem;
-        font-family: var(--font-family--sans-serif);
-        font-size: 1rem;
-        line-height: 1.5;
-        resize: vertical;
-        outline: none;
+      .goal-rating {
+        display: flex;
+        justify-content: space-between;
+        gap: 1rem;
         margin-bottom: 1rem;
-        border: none;
         
-        &::placeholder {
-          color: var(--color--gray--dark);
+        .rating-option {
+          flex: 1;
+          cursor: pointer;
+          
+          .rating-circle {
+            width: 60px;
+            height: 60px;
+            border: 2px solid rgba(0, 0, 0, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+            transition: all 0.2s ease;
+            color: rgba(0, 0, 0, 0.6);
+            
+            span {
+              font-family: var(--font-family--sans-serif);
+              font-weight: 500;
+              font-size: 0.9rem;
+            }
+            
+            &:hover {
+              border-color: rgba(0, 0, 0, 0.4);
+              transform: scale(1.05);
+            }
+          }
+          
+          &.selected .rating-circle {
+            border-width: 3px;
+            border-color: var(--color--black);
+            color: var(--color--black);
+          }
+        }
+      }
+      
+      .goal-divider {
+        border: none;
+        height: 1px;
+        background-color: rgba(0, 0, 0, 0.1);
+        margin: 1.5rem 0;
+      }
+      
+      .goal-add-more {
+        margin-bottom: 2rem;
+        
+        .add-more-label {
+          text-align: center;
+          font-family: var(--font-family--sans-serif);
+          font-size: 1.1rem;
+          font-weight: 500;
+          color: var(--color--black);
+          margin-bottom: 1.5rem;
         }
         
+        .input-options {
+          display: flex;
+          justify-content: space-around;
+          gap: 1rem;
+          margin-bottom: 1rem;
+          
+          .input-option {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            
+            .option-icon {
+              width: 60px;
+              height: 60px;
+              border: 2px solid rgba(0, 0, 0, 0.2);
+              border-radius: 50%;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              margin-bottom: 0.5rem;
+              color: rgba(0, 0, 0, 0.6);
+              
+              &:hover {
+                border-color: rgba(0, 0, 0, 0.4);
+                transform: scale(1.05);
+              }
+            }
+            
+            .option-label {
+              font-family: var(--font-family--sans-serif);
+              font-size: 0.9rem;
+              font-weight: 500;
+              color: rgba(0, 0, 0, 0.7);
+            }
+            
+            &.selected {
+              .option-icon {
+                border-width: 3px;
+                border-color: var(--color--black);
+                color: var(--color--black);
+              }
+              
+              .option-label {
+                color: var(--color--black);
+              }
+            }
+          }
+        }
+        
+        .secondary-options {
+          display: flex;
+          justify-content: center;
+          gap: 0.8rem;
+          margin-bottom: 1rem;
+          
+          .secondary-option {
+            width: 36px;
+            height: 36px;
+            border: 2px solid rgba(0, 0, 0, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: rgba(0, 0, 0, 0.6);
+            transition: all 0.2s ease;
+            
+            &:hover {
+              border-color: rgba(0, 0, 0, 0.4);
+              transform: scale(1.05);
+            }
+            
+            &.selected {
+              border-width: 3px;
+              border-color: var(--color--black);
+              color: var(--color--black);
+            }
+          }
+        }
+        
+        .input-area {
+          margin-top: 1rem;
+          
+          .goal-writeup {
+            width: 100%;
+            min-height: 120px;
+            border-radius: 0.8rem;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 1rem;
+            font-family: var(--font-family--sans-serif);
+            font-size: 1rem;
+            line-height: 1.5;
+            resize: vertical;
+            outline: none;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            
+            &::placeholder {
+              color: rgba(0, 0, 0, 0.5);
+            }
+            
+            &:focus {
+              border-color: rgba(0, 0, 0, 0.3);
+            }
+          }
+          
+          .recording-interface,
+          .upload-interface {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 0.8rem;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            
+            .recording-status {
+              font-family: var(--font-family--sans-serif);
+              font-size: 1rem;
+              margin-bottom: 1rem;
+              color: rgba(0, 0, 0, 0.7);
+            }
+            
+            .record-btn,
+            .upload-btn {
+              padding: 0.8rem 1.5rem;
+              border-radius: 99rem;
+              border: none;
+              font-family: var(--font-family--sans-serif);
+              font-size: 1rem;
+              font-weight: 500;
+              cursor: pointer;
+              background: rgba(0, 0, 0, 0.1);
+              color: var(--color--black);
+              transition: all 0.2s ease;
+              
+              &:hover {
+                background: rgba(0, 0, 0, 0.2);
+              }
+            }
+          }
+        }
       }
     
       .goal-footer {
