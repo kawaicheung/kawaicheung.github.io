@@ -788,31 +788,22 @@
         closeBtnId: 'goals-4-logging-close-btn'
       }
     ];
-    
     initializeModals(modalConfigs);
     initializeCardTimeline();
     initializeGoalCalendar();
-    initializeSaveButtons();
+    initializeSaveWriteupButtons();
     initializeBottomPanelClick();
     initializeAppointmentSoon();
     initializePreVisitSummaryEdit();
     initializeEditFormToggles(); 
     initializeCustomInput();
-    setTimeout(() => { applyCalendarScrollScaling(); }, 100);
   });
-  // Handle win-container animation on scroll (separate from timeline setup)
+
   window.addEventListener('scroll', () => {
     const winContainer = document.querySelector('.win-container');
     const bottomPanel = document.querySelector('.bottom-panel');
     
     if (!winContainer || !bottomPanel) return;
-    
-    // Get initial rotation value on first run
-    if (typeof window.initialBottomPanelRotation === 'undefined') {
-      const computedStyle = window.getComputedStyle(bottomPanel);
-      const rotateValue = computedStyle.getPropertyValue('rotate');
-      window.initialBottomPanelRotation = rotateValue ? parseFloat(rotateValue) : 0;
-    }
     
     const bottomPanelHeight = bottomPanel.offsetHeight;
     const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
@@ -824,13 +815,9 @@
     const translateY = scrollProgress * -20; // Move up 20vh
     const opacity = 1 - (scrollProgress / 0.8); // Fade from 1 to 0 over first 70% of scroll
     
-    // Calculate rotation for bottom-panel (progress from initial value to 0)
-    const currentRotation = window.initialBottomPanelRotation * Math.max(0, (1 - (scrollProgress / 0.8)));
-    
     // Apply the transformations
     winContainer.style.transform = `translateY(${translateY}vh)`;
     winContainer.style.opacity = opacity;
-    bottomPanel.style.rotate = `${currentRotation}deg`;
   });
 
   function enableHtmlScroll() {
@@ -941,7 +928,6 @@
     modalConfigs.forEach(config => setupModalToggle(config));
   }
 
-  // Reusable method to set up modal/popup toggle functionality
   function setupModalToggle(config) {
     const { openBtnSelector, modalId, closeBtnId } = config;
     
@@ -975,7 +961,6 @@
     return new Date(date.getFullYear(), date.getMonth(), date.getDate());
   }
 
-  // Goal calendar functionality
   function initializeGoalCalendar() {
     const calendar = document.getElementById('unified-goal-calendar');
     const today = new Date();
@@ -1047,47 +1032,47 @@
         });
       }
     }, 100);
+
+    function centerDayInCalendar(calendar, targetDay, callback) {
+      setTimeout(() => {
+        const calendarRect = calendar.getBoundingClientRect();
+        const targetRect = targetDay.getBoundingClientRect();
+        
+        // Calculate the offset of target day relative to the calendar's scroll container
+        const targetOffsetLeft = targetDay.offsetLeft;
+        const targetWidth = targetRect.width;
+        const calendarWidth = calendarRect.width;
+        const maxScrollLeft = calendar.scrollWidth - calendar.clientWidth;
+        
+        // Calculate ideal scroll position to center the target day
+        let scrollToCenter = targetOffsetLeft - (calendarWidth / 2) + (targetWidth / 2);
+        
+        // Clamp the scroll position to valid bounds
+        scrollToCenter = Math.max(0, Math.min(scrollToCenter, maxScrollLeft));
+        
+        // Temporarily disable CSS scroll snap for manual positioning
+        const originalSnapType = calendar.style.scrollSnapType;
+        calendar.style.scrollSnapType = 'none';
+        
+        // Smooth scroll to the position
+        calendar.scrollTo({
+          left: scrollToCenter,
+          behavior: 'smooth'
+        });
+        
+        // Re-enable scroll snap after scrolling completes
+        setTimeout(() => {
+          calendar.style.scrollSnapType = originalSnapType;
+          
+          // Call callback after scroll completes (if provided)
+          if (callback) {
+            callback();
+          }
+        }, 300); // Wait for smooth scroll to complete
+      }, 100);
+    }
   }
   
-  function centerDayInCalendar(calendar, targetDay, callback) {
-    setTimeout(() => {
-      const calendarRect = calendar.getBoundingClientRect();
-      const targetRect = targetDay.getBoundingClientRect();
-      
-      // Calculate the offset of target day relative to the calendar's scroll container
-      const targetOffsetLeft = targetDay.offsetLeft;
-      const targetWidth = targetRect.width;
-      const calendarWidth = calendarRect.width;
-      const maxScrollLeft = calendar.scrollWidth - calendar.clientWidth;
-      
-      // Calculate ideal scroll position to center the target day
-      let scrollToCenter = targetOffsetLeft - (calendarWidth / 2) + (targetWidth / 2);
-      
-      // Clamp the scroll position to valid bounds
-      scrollToCenter = Math.max(0, Math.min(scrollToCenter, maxScrollLeft));
-      
-      // Temporarily disable CSS scroll snap for manual positioning
-      const originalSnapType = calendar.style.scrollSnapType;
-      calendar.style.scrollSnapType = 'none';
-      
-      // Smooth scroll to the position
-      calendar.scrollTo({
-        left: scrollToCenter,
-        behavior: 'smooth'
-      });
-      
-      // Re-enable scroll snap after scrolling completes
-      setTimeout(() => {
-        calendar.style.scrollSnapType = originalSnapType;
-        
-        // Call callback after scroll completes (if provided)
-        if (callback) {
-          callback();
-        }
-      }, 300); // Wait for smooth scroll to complete
-    }, 100);
-  }
-
   function applyCalendarScrollScaling() {
     const calendar = document.getElementById('unified-goal-calendar');
     
@@ -1184,7 +1169,7 @@
     window.addEventListener('resize', updateScaling);
   }
 
-  function initializeSaveButtons() {
+  function initializeSaveWriteupButtons() {
     document.querySelectorAll('.save-writeup-btn').forEach(button => {
       button.addEventListener('click', (e) => {
         const goalId = e.target.dataset.goal;

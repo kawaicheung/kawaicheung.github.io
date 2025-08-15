@@ -162,7 +162,7 @@
   display: none !important;
 }
 
- :root {
+:root {
   --font-family--serif: "DomaineText", serif;
   --font-family--sans-serif: "GT-America-Standard", sans-serif;
 
@@ -330,7 +330,7 @@ main {
 
 .apt-soon--short {
   position: fixed;
-  top: var(--height--header);
+  top: 0;
   left: 0;
   width: calc(100vw - 2rem);
   height: auto;
@@ -483,7 +483,6 @@ main {
   }
  }
 
- /* Card Timeline Styles */
 .card-timeline {
   position: relative;
   width: 100vw;
@@ -569,7 +568,7 @@ main {
       text-align: center;
       margin-bottom: 1rem;
 
-      & .card-month {
+      .card-month {
         font-family: var(--font-family--sans-serif);
         font-size: 0.9rem;
         font-weight: 500;
@@ -579,7 +578,7 @@ main {
         margin-bottom: 0.2rem;
       }
 
-      & .card-day {
+      .card-day {
         font-family: var(--font-family--serif);
         font-size: 3rem;
         font-weight: 400;
@@ -589,7 +588,7 @@ main {
       }
     }
 
-    & .card-blurb {
+    .card-blurb {
       flex: 1;
       display: flex;
       align-items: center;
@@ -597,7 +596,7 @@ main {
       text-align: center;
       margin: 1rem 0;
 
-      & .card-blurb-text {
+      .card-blurb-text {
         font-family: var(--font-family--serif);
         font-size: 1.2rem;
         font-weight: 400;
@@ -607,7 +606,7 @@ main {
       }
     }
 
-    & .card-cta {
+    .card-cta {
       background: var(--color--s3--season-dark-blue);
       color: var(--color--white);
       border: none;
@@ -634,110 +633,6 @@ main {
       }
     }
   }
-}
-
-.timeline {
-  rotate: var(--timeline--angle);
-  position: relative;
-  width: calc((100% + (2 * var(--padding--sides))) / cos(-1 * var(--timeline--angle)));
-  height: var(--timeline--height);
-  overflow-x: scroll;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-  -webkit-overflow-scrolling: touch;
-  scroll-behavior: smooth;
-  overscroll-behavior-x: contain;
-  
-  &::-webkit-scrollbar {
-    display: none;
-  }
-
-  .line {
-    position: absolute;
-    top: calc(var(--timeline--height) / 2);
-    left: 0;
-    height: 1px;
-    border-top: 3px dotted var(--timeline--color);
-  }
-
-  .dot {
-    position: absolute;
-    top: calc(var(--timeline--height) / 2);
-    transform: translateY(-50%);
-    width: var(--timeline--dot-size);
-    aspect-ratio: 1/1;
-    border: solid 2px var(--timeline--color);
-    background-color: var(--color--bg);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: var(--color--white);
-
-    &.today {
-      background: var(--timeline--color-bulb);
-      z-index: 100;
-      width: calc(var(--timeline--dot-size) / 3);
-
-      &.pulse::before {
-        content: '';
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        width: 150%;
-        height: 150%;
-        transform: translate(-50%, -50%);
-        border-radius: 50%;
-        border: solid 2px var(--timeline--color);
-        z-index: 0;
-        animation: timeline-today-pulse 1.2s infinite cubic-bezier(0.4,0,0.2,1);
-        animation-delay: 0.2s;
-      }
-    }
-
-    .label {
-      color: var(--color--black);
-      white-space: nowrap;
-      letter-spacing: -0.02rem;
-      pointer-events: none;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      gap: 0;
-      font-family: var(--font-family--sans-serif);
-      font-size: 0.8rem;
-      font-weight: 500;
-      rotate: calc(-1 * var(--timeline--angle));
-      
-    }
-  }
-}
-
-.timeline-scroll-animation {
-  scroll-behavior: smooth;
-  animation: timelineScroll 2s ease-out forwards;
-}
-
-.cta-button {
-  margin-top: 2rem;
-  background: var(--color--s3--season-dark-blue);
-  border: solid 1px var(--color--gray--medium);
-  box-shadow: var(--box-shadow--standard);
-  color: var(--color--white);
-  font-family: var(--font-family--sans-serif);
-  padding: 1rem 2rem;
-  border-radius: 99rem;
-  font-size: 1.2rem;
-  letter-spacing: -0.02rem;
-  font-weight: 500;
-  text-decoration: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  cursor: pointer;
 }
 
 .bottom-panel {
@@ -790,7 +685,6 @@ main {
       scrollbar-width: none;
       -ms-overflow-style: none;
       -webkit-overflow-scrolling: touch;
-      rotate: var(--timeline--angle);
       
       &::-webkit-scrollbar {
         display: none;
@@ -829,7 +723,6 @@ main {
           background-color: var(--color--white);
           border: 2px solid var(--timeline--color);
           transition: transform 0.12s ease;
-          rotate: calc(-1 * var(--timeline--angle));
           
           &.selected {
             transform: scale(1.5);
