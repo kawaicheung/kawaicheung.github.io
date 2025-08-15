@@ -1583,7 +1583,6 @@ main {
                 transition: all 0.2s ease;
                 flex-shrink: 0;
 
-
                 svg {
                   fill: var(--color--black);
                 }
