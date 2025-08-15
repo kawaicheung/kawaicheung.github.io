@@ -701,6 +701,7 @@ main {
           height: 1px;
           border-top: 1px solid var(--color--gray--medium);
           margin-left: calc(-1 * var(--padding--sides));
+          margin-right: calc(-1 * var(--padding--sides));
           transform: translateY(-50%);
           z-index: -1;
         } 
