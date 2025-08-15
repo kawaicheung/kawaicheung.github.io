@@ -853,6 +853,19 @@
       });
     }
 
+    function addCardClickListeners() {
+      cards.forEach((card, index) => {
+        card.addEventListener('click', (e) => {
+          // Only handle clicks on left and right cards
+          if (card.classList.contains('left') || card.classList.contains('right')) {
+            currentIndex = index;
+            updateCardPositions();
+            e.stopPropagation(); // Prevent event bubbling
+          }
+        });
+      });
+    }
+
     function swipeLeft() {
       if (currentIndex < cards.length - 1) {
         currentIndex++;
@@ -921,8 +934,8 @@
       }
     });
 
-    // Initialize positions
     updateCardPositions();
+    addCardClickListeners();
   }
 
   // Initialize multiple modals at once
