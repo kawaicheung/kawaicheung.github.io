@@ -228,6 +228,8 @@
   --easing--pop-in: cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
   --box-shadow--standard: 0 0 10px rgba(0,0,0,0.1);
+  --box-shadow--card: 0 8px 32px rgba(0,0,0,0.12);
+
 }
 
 body {
@@ -481,6 +483,159 @@ main {
   }
  }
 
+ /* Card Timeline Styles */
+.card-timeline {
+  position: relative;
+  width: 100vw;
+  height: 320px;
+  overflow: hidden;
+  margin-top: 2rem;
+
+  & .cards-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    touch-action: pan-x;
+  }
+
+  & .appointment-card {
+    position: absolute;
+    width: 260px;
+    height: 280px;
+    background: var(--color--white);
+    border-radius: 1.5rem;
+    box-shadow: var(--box-shadow--card);
+    border: 1px solid var(--color--gray--light);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-origin: center center;
+
+    &.center {
+      transform: translateX(0) scale(1.1) translateZ(0);
+      z-index: 3;
+      box-shadow: var(--box-shadow--card), 0 0 0 3px var(--timeline--color);
+    }
+
+    &.left {
+      transform: translateX(-180px) scale(0.9) rotate(-8deg) translateZ(0);
+      z-index: 1;
+      opacity: 0.7;
+    }
+
+    &.right {
+      transform: translateX(180px) scale(0.9) rotate(8deg) translateZ(0);
+      z-index: 1;
+      opacity: 0.7;
+    }
+
+    &.hidden {
+      opacity: 0;
+      transform: translateX(0) scale(0.8) translateZ(0);
+      pointer-events: none;
+    }
+
+    &.today {
+      border-color: var(--timeline--color-bulb);
+      background: linear-gradient(135deg, #fff 0%, #fefcf0 100%);
+
+      &::before {
+        content: 'TODAY';
+        position: absolute;
+        top: -8px;
+        right: 1rem;
+        background: var(--timeline--color-bulb);
+        color: var(--color--white);
+        padding: 0.3rem 0.8rem;
+        border-radius: 99rem;
+        font-size: 0.7rem;
+        font-weight: 600;
+        letter-spacing: 0.05rem;
+        font-family: var(--font-family--sans-serif);
+      }
+    }
+
+    & .card-date {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      margin-bottom: 1rem;
+
+      & .card-month {
+        font-family: var(--font-family--sans-serif);
+        font-size: 0.9rem;
+        font-weight: 500;
+        color: var(--color--gray--dark);
+        text-transform: uppercase;
+        letter-spacing: 0.1rem;
+        margin-bottom: 0.2rem;
+      }
+
+      & .card-day {
+        font-family: var(--font-family--serif);
+        font-size: 3rem;
+        font-weight: 400;
+        color: var(--color--black);
+        line-height: 0.9;
+        letter-spacing: -0.05rem;
+      }
+    }
+
+    & .card-blurb {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      margin: 1rem 0;
+
+      & .card-blurb-text {
+        font-family: var(--font-family--serif);
+        font-size: 1.2rem;
+        font-weight: 400;
+        color: var(--color--gray--dark);
+        line-height: 1.3;
+        letter-spacing: -0.02rem;
+      }
+    }
+
+    & .card-cta {
+      background: var(--color--s3--season-dark-blue);
+      color: var(--color--white);
+      border: none;
+      border-radius: 99rem;
+      padding: 0.8rem 1.5rem;
+      font-family: var(--font-family--sans-serif);
+      font-size: 1rem;
+      font-weight: 500;
+      letter-spacing: -0.02rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+
+      &:hover {
+        transform: translateY(-1px);
+      }
+
+      &:active {
+        transform: translateY(0);
+      }
+
+      &.primary {
+        background: var(--timeline--color-bulb);
+        animation: throb 1.4s ease-in-out infinite;
+      }
+    }
+  }
+}
+
 .timeline {
   rotate: var(--timeline--angle);
   position: relative;
@@ -595,11 +750,10 @@ main {
   border: solid 1px var(--color--gray--medium);
   /* Explicitly doing 1/2 padding sides...on two sides */
   width: calc(100% - (2 *  var(--padding--sides) / 2));
-  height: calc(100vh - 1.5 * var(--height--header));
   box-shadow: var(--box-shadow--standard);
   z-index: 100;
-  transform-origin: top left;
   margin: 0 calc(var(--padding--sides) / 2);
+  padding-bottom: var(--height--header);
   scrollbar-width: none;
   -ms-overflow-style: none;
 

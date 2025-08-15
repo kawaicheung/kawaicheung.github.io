@@ -64,22 +64,96 @@
           You've done <strong>5 straight days</strong> of exercise. 
           Consider skipping your run today and rest. But keep it up!
         </p>
-        <div class="timeline" id="timeline">
-          <div class="line"></div>
-          <div class="dot appt-report-btn" data-appointment-date="2024-12-12"></div>
-          <div class="dot pulse appt-report-btn" data-appointment-date="2025-02-15"></div>
-          <div class="dot pulse appt-report-btn" data-appointment-date="2025-03-02"></div>
-          <div class="dot appt-report-btn" data-appointment-date="2025-04-12"></div>
-          <div class="dot appt-report-btn" data-appointment-date="2025-05-21"></div>
-          <div class="dot appt-report-btn" data-appointment-date="2025-07-11"></div>
-          <div class="dot pulse today"></div>
-          <div class="dot" data-appointment-date="2025-08-15"></div>
-        </div>
-        <div class="cta-button pre-visit-summary-btn">
-          <span>Prep for your 8/15 visit!</span>
-          <svg viewBox="0 0 24 24" width="24" height="24">
-            <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z" fill="currentColor"/>
-          </svg>
+        <div class="card-timeline" id="card-timeline">
+          <div class="cards-container" id="cards-container">
+            <div class="appointment-card appt-report-btn hidden" data-appointment-date="2024-12-12" data-index="0">
+              <div class="card-date">
+                <div class="card-month">Dec</div>
+                <div class="card-day">12</div>
+              </div>
+              <div class="card-blurb">
+                <div class="card-blurb-text">Follow-up visit</div>
+              </div>
+              <button class="card-cta">View Report</button>
+            </div>
+        
+            <div class="appointment-card appt-report-btn left" data-appointment-date="2025-02-15" data-index="1">
+              <div class="card-date">
+                <div class="card-month">Feb</div>
+                <div class="card-day">15</div>
+              </div>
+              <div class="card-blurb">
+                <div class="card-blurb-text">Nutrition check-in</div>
+              </div>
+              <button class="card-cta">View Report</button>
+            </div>
+        
+            <div class="appointment-card appt-report-btn center" data-appointment-date="2025-03-02" data-index="2">
+              <div class="card-date">
+                <div class="card-month">Mar</div>
+                <div class="card-day">2</div>
+              </div>
+              <div class="card-blurb">
+                <div class="card-blurb-text">Goal adjustment session</div>
+              </div>
+              <button class="card-cta">View Report</button>
+            </div>
+        
+            <div class="appointment-card appt-report-btn right" data-appointment-date="2025-04-12" data-index="3">
+              <div class="card-date">
+                <div class="card-month">Apr</div>
+                <div class="card-day">12</div>
+              </div>
+              <div class="card-blurb">
+                <div class="card-blurb-text">Progress review</div>
+              </div>
+              <button class="card-cta">View Report</button>
+            </div>
+        
+            <div class="appointment-card appt-report-btn hidden" data-appointment-date="2025-05-21" data-index="4">
+              <div class="card-date">
+                <div class="card-month">May</div>
+                <div class="card-day">21</div>
+              </div>
+              <div class="card-blurb">
+                <div class="card-blurb-text">Quarterly assessment</div>
+              </div>
+              <button class="card-cta">View Report</button>
+            </div>
+        
+            <div class="appointment-card appt-report-btn hidden" data-appointment-date="2025-07-11" data-index="5">
+              <div class="card-date">
+                <div class="card-month">Jul</div>
+                <div class="card-day">11</div>
+              </div>
+              <div class="card-blurb">
+                <div class="card-blurb-text">Mid-year review</div>
+              </div>
+              <button class="card-cta">View Report</button>
+            </div>
+        
+            <div class="appointment-card today center" data-appointment-date="2025-08-15" data-index="6">
+              <div class="card-date">
+                <div class="card-month">Aug</div>
+                <div class="card-day">15</div>
+              </div>
+              <div class="card-blurb">
+                <div class="card-blurb-text">Prep for your visit!</div>
+              </div>
+              <button class="card-cta primary pre-visit-summary-btn">Get Ready</button>
+            </div>
+        
+            <div class="appointment-card appt-report-btn hidden" data-appointment-date="2025-09-20" data-index="7">
+              <div class="card-date">
+                <div class="card-month">Sep</div>
+                <div class="card-day">20</div>
+              </div>
+              <div class="card-blurb">
+                <div class="card-blurb-text">Next appointment</div>
+              </div>
+              <button class="card-cta">Schedule</button>
+            </div>
+          </div>
         </div>
       </div>
     </main>
@@ -716,6 +790,7 @@
     ];
     
     initializeModals(modalConfigs);
+    initializeCardTimeline();
     initializeGoalCalendar();
     initializeSaveButtons();
     initializeBottomPanelClick();
@@ -725,38 +800,6 @@
     initializeCustomInput();
     setTimeout(() => { applyCalendarScrollScaling(); }, 100);
   });
-
-  // Run on page load
-  window.addEventListener('load', () => {
-    setupTimeline();
-
-    const timeline = document.getElementById('timeline');
-
-    setTimeout(() => {
-      const speed = 50;
-      const start = timeline.scrollLeft;
-      const end = timeline.scrollWidth - timeline.clientWidth;
-      const distance = end - start;
-      const duration = 300; // 3 seconds
-      const step = distance / (duration / speed); // ~16ms per frame at 60fps
-
-      const interval = setInterval(() => {
-        timeline.scrollLeft += step;
-        if (timeline.scrollLeft >= end) {
-          clearInterval(interval);
-        }
-      }, speed); // ~60fps
-    }, 50);
-  });
-
-  // Recalculate on window resize
-  window.addEventListener('resize', () => {
-    setupTimeline();
-    // Re-scroll to the end after resize
-    const timeline = document.getElementById('timeline');
-    timeline.scrollLeft = timeline.scrollWidth;
-  });
-
   // Handle win-container animation on scroll (separate from timeline setup)
   window.addEventListener('scroll', () => {
     const winContainer = document.querySelector('.win-container');
@@ -798,6 +841,101 @@
     document.documentElement.classList.add('no-scroll');
   }
 
+  function initializeCardTimeline() {
+    const cardsContainer = document.getElementById('cards-container');
+    const cards = document.querySelectorAll('.appointment-card');
+    let currentIndex = 6; // Start with today card (index 6)
+    let startX = 0;
+    let isDragging = false;
+
+    function updateCardPositions() {
+      cards.forEach((card, index) => {
+        card.classList.remove('left', 'center', 'right', 'hidden');
+        
+        if (index === currentIndex) {
+          card.classList.add('center');
+        } else if (index === currentIndex - 1) {
+          card.classList.add('left');
+        } else if (index === currentIndex + 1) {
+          card.classList.add('right');
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+    }
+
+    function swipeLeft() {
+      if (currentIndex < cards.length - 1) {
+        currentIndex++;
+        updateCardPositions();
+      }
+    }
+
+    function swipeRight() {
+      if (currentIndex > 0) {
+        currentIndex--;
+        updateCardPositions();
+      }
+    }
+
+    // Touch events
+    cardsContainer.addEventListener('touchstart', (e) => {
+      startX = e.touches[0].clientX;
+      isDragging = true;
+    });
+
+    cardsContainer.addEventListener('touchmove', (e) => {
+      if (!isDragging) return;
+      e.preventDefault();
+    });
+
+    cardsContainer.addEventListener('touchend', (e) => {
+      if (!isDragging) return;
+      isDragging = false;
+      
+      const endX = e.changedTouches[0].clientX;
+      const diff = startX - endX;
+      
+      if (Math.abs(diff) > 50) { // Minimum swipe distance
+        if (diff > 0) {
+          swipeLeft();
+        } else {
+          swipeRight();
+        }
+      }
+    });
+
+    // Mouse events for desktop
+    cardsContainer.addEventListener('mousedown', (e) => {
+      startX = e.clientX;
+      isDragging = true;
+    });
+
+    cardsContainer.addEventListener('mousemove', (e) => {
+      if (!isDragging) return;
+      e.preventDefault();
+    });
+
+    cardsContainer.addEventListener('mouseup', (e) => {
+      if (!isDragging) return;
+      isDragging = false;
+      
+      const endX = e.clientX;
+      const diff = startX - endX;
+      
+      if (Math.abs(diff) > 50) { // Minimum swipe distance
+        if (diff > 0) {
+          swipeLeft();
+        } else {
+          swipeRight();
+        }
+      }
+    });
+
+    // Initialize positions
+    updateCardPositions();
+  }
+
   // Initialize multiple modals at once
   function initializeModals(modalConfigs) {
     modalConfigs.forEach(config => setupModalToggle(config));
@@ -831,174 +969,6 @@
         enableHtmlScroll();
       }
     });
-  }
-
-  // Function to position timeline dots
-  function setupTimeline() {
-    const line = timeline.querySelector('.line');
-    const dots = timeline.querySelectorAll('.dot');
-    const viewportWidth = window.innerWidth;
-    const sidePadding = 24;
-    
-    if (dots.length === 0) return;
-
-    // Generate labels for dots
-    dots.forEach(dot => {
-    const dateStr = dot.getAttribute('data-appointment-date');
-    const isToday = dot.classList.contains('today');
-
-    // Check if label span already exists
-    let labelSpan = dot.querySelector('.label');
-    if (!labelSpan) {
-      labelSpan = document.createElement('span');
-      labelSpan.className = 'label';
-      dot.appendChild(labelSpan);
-    }
-
-  // Set label text
-  if (isToday) {
-    labelSpan.textContent = '';
-  } else if (dateStr) {
-    const [year, month, day] = dateStr.split('-').map(Number);
-    const date = new Date(year, month - 1, day);
-    const options = { month: 'short', day: 'numeric' };
-    const parts = date.toLocaleDateString('en-US', options).split(' ');
-
-    labelSpan.innerHTML = `${parts[0]}<br>${parts[1]}`;
-  }
-});
-
-    const dotWidth = dots[0].offsetWidth;
-    
-    // Distance from 3rd-to-last to last dot (subtract dot width as a way to do 50% X translation from both ends
-    // (e.g. 2 * 1/2 dot width)
-    const finalThreeSpan = viewportWidth - (2 * sidePadding) - dotWidth; 
-    const regularSpacing = viewportWidth * 0.5; // 50% viewport for earlier dots
-    
-    // Get today's date for comparison
-    const today = new Date();
-    
-    // Position each dot
-    dots.forEach((dot, index) => {
-      let leftPosition;
-
-      const isLastThreeDots = index >= dots.length - 3;
-      const isToday = dot.classList.contains('today');
-      
-      if (isToday && index > 0 && index < dots.length - 1) {
-        // Special positioning for "Today" dot based on date interpolation
-        const prevDot = dots[index - 1];
-        const nextDot = dots[index + 1];
-        
-        const prevDateStr = prevDot.getAttribute('data-appointment-date');
-        const nextDateStr = nextDot.getAttribute('data-appointment-date');
-        
-        if (prevDateStr && nextDateStr) {
-          // Parse dates as local dates to avoid timezone issues
-          const [prevYear, prevMonth, prevDay] = prevDateStr.split('-').map(Number);
-          const [nextYear, nextMonth, nextDay] = nextDateStr.split('-').map(Number);
-          const prevDate = new Date(prevYear, prevMonth - 1, prevDay);
-          const nextDate = new Date(nextYear, nextMonth - 1, nextDay);
-          
-          // Calculate proportional position based on actual dates
-          const totalDays = (nextDate - prevDate) / (1000 * 60 * 60 * 24);
-          const todayDays = (today - prevDate) / (1000 * 60 * 60 * 24);
-          const dateRatio = Math.max(0, Math.min(1, todayDays / totalDays)); // Clamp between 0 and 1
-          
-          // Get the positions of the previous and next dots
-          let prevPosition, nextPosition;
-          
-          if (index - 1 >= dots.length - 3) {
-            // Previous dot is in final 3
-            const prevFinalIndex = (index - 1) - (dots.length - 3);
-            if (dots.length >= 4) {
-              const earlierDotsEnd = (dots.length - 3) * regularSpacing + sidePadding;
-              prevPosition = earlierDotsEnd + (prevFinalIndex * (finalThreeSpan / 2));
-            } else {
-              prevPosition = sidePadding + (prevFinalIndex * (finalThreeSpan / (Math.max(dots.length - 1, 1))));
-            }
-          } else {
-            prevPosition = sidePadding + ((index - 1) * regularSpacing);
-          }
-          
-          if (index + 1 >= dots.length - 3) {
-            // Next dot is in final 3
-            const nextFinalIndex = (index + 1) - (dots.length - 3);
-            if (dots.length >= 4) {
-              const earlierDotsEnd = (dots.length - 3) * regularSpacing + sidePadding;
-              nextPosition = earlierDotsEnd + (nextFinalIndex * (finalThreeSpan / 2));
-            } else {
-              nextPosition = sidePadding + (nextFinalIndex * (finalThreeSpan / (Math.max(dots.length - 1, 1))));
-            }
-          } else {
-            nextPosition = sidePadding + ((index + 1) * regularSpacing);
-          }
-          
-          // Interpolate position based on date ratio
-          leftPosition = prevPosition + (dateRatio * (nextPosition - prevPosition));
-        } else {
-          // Fallback: position at 50% between previous and next dots
-          let prevPosition, nextPosition;
-          
-          // Calculate prev position
-          if (index - 1 >= dots.length - 3) {
-            const prevFinalIndex = (index - 1) - (dots.length - 3);
-            if (dots.length >= 4) {
-              const earlierDotsEnd = (dots.length - 3) * regularSpacing + sidePadding;
-              prevPosition = earlierDotsEnd + (prevFinalIndex * (finalThreeSpan / 2));
-            } else {
-              prevPosition = sidePadding + (prevFinalIndex * (finalThreeSpan / (Math.max(dots.length - 1, 1))));
-            }
-          } else {
-            prevPosition = sidePadding + ((index - 1) * regularSpacing);
-          }
-          
-          // Calculate next position
-          if (index + 1 >= dots.length - 3) {
-            const nextFinalIndex = (index + 1) - (dots.length - 3);
-            if (dots.length >= 4) {
-              const earlierDotsEnd = (dots.length - 3) * regularSpacing + sidePadding;
-              nextPosition = earlierDotsEnd + (nextFinalIndex * (finalThreeSpan / 2));
-            } else {
-              nextPosition = sidePadding + (nextFinalIndex * (finalThreeSpan / (Math.max(dots.length - 1, 1))));
-            }
-          } else {
-            nextPosition = sidePadding + ((index + 1) * regularSpacing);
-          }
-          
-          // Position at 50% between prev and next
-          leftPosition = prevPosition + (0.5 * (nextPosition - prevPosition));
-        }
-      } else if (isLastThreeDots) {
-        // Final 3 dots: evenly space them across the finalThreeSpan
-        const finalDotIndex = index - (dots.length - 3); // 0, 1, or 2
-        
-        if (dots.length >= 4) {
-          // If there are 4+ dots, calculate where the final 3 should start
-          const earlierDotsEnd = (dots.length - 3) * regularSpacing + sidePadding;
-          leftPosition = earlierDotsEnd + (finalDotIndex * (finalThreeSpan / 2));
-        } else {
-          // If there are 3 or fewer dots total, just space them across the viewport
-          leftPosition = sidePadding + (finalDotIndex * (finalThreeSpan / (Math.max(dots.length - 1, 1))));
-        }
-      } else {
-        // Earlier dots: space at regular intervals, starting from sidePadding
-        leftPosition = sidePadding + (index * regularSpacing);
-      }
-      
-      dot.style.left = `${leftPosition}px`;
-    });
-    
-    // Calculate total timeline width
-    let totalWidth;
-    if (dots.length >= 4) {
-      const earlierDotsEnd = (dots.length - 3) * regularSpacing;
-      totalWidth = earlierDotsEnd + viewportWidth;
-    } else {
-      totalWidth = viewportWidth;
-    }
-    
-    line.style.width = `${totalWidth}px`;
   }
 
   function toLocalDateOnly(date) {
