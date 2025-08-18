@@ -1600,7 +1600,6 @@ main {
                 font-size: 1rem;
                 line-height: 1.3;
                 color: var(--color--black);
-                margin-right: 1rem;
               }
 
               .item-toggle {
