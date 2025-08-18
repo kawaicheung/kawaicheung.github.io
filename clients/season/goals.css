@@ -805,6 +805,21 @@ main {
   padding: 1rem;
   grid-column: span 2;
 
+  .main-square-label {
+    position: absolute;
+    top: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: var(--font-family--sans-serif);
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.02rem;
+    color: var(--color--black);
+    text-align: center;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+
   .weight-display {
     display: flex;
     align-items: center;
