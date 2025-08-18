@@ -1016,8 +1016,6 @@
           </div>
         </div>
 
-
-
         <!-- Add More Section -->
         <div class="goal-add-more">
           <div class="add-more-label">Would you like to share more?</div>
@@ -1078,6 +1076,91 @@
         <div class="goal-footer">
           <button class="save-writeup-btn" data-goal="4">Save</button>
         </div>
+      </div>
+    </div>
+
+
+    <!-- Text input popup for Goal 1 -->
+    <div class="text-input-popup" id="text-input-popup-1">
+      <div class="popup-content">
+          <div class="popup-header">
+              <div class="popup-title">Share more about work treats</div>
+              <div class="close-text-popup" id="close-text-popup-1">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M18 6L6 18" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                      <path d="M6 6L18 18" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+              </div>
+          </div>
+          <div class="text-input-container">
+              <textarea class="main-textarea" placeholder="How did it go today? Share any details, challenges, or thoughts about avoiding work treats..."></textarea>
+          </div>
+          <div class="text-input-footer">
+              <button class="save-text-btn" data-goal="1">Save</button>
+          </div>
+      </div>
+    </div>
+
+    <!-- Text input popup for Goal 2 -->
+    <div class="text-input-popup" id="text-input-popup-2">
+      <div class="popup-content">
+          <div class="popup-header">
+              <div class="popup-title">Share more about water intake</div>
+              <div class="close-text-popup" id="close-text-popup-2">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M18 6L6 18" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                      <path d="M6 6L18 18" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+              </div>
+          </div>
+          <div class="text-input-container">
+              <textarea class="main-textarea" placeholder="How did your water intake go today? Share any strategies, challenges, or observations..."></textarea>
+          </div>
+          <div class="text-input-footer">
+              <button class="save-text-btn" data-goal="2">Save</button>
+          </div>
+      </div>
+    </div>
+
+    <!-- Text input popup for Goal 3 -->
+    <div class="text-input-popup" id="text-input-popup-3">
+      <div class="popup-content">
+          <div class="popup-header">
+              <div class="popup-title">Share more about exercise</div>
+              <div class="close-text-popup" id="close-text-popup-3">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M18 6L6 18" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                      <path d="M6 6L18 18" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+              </div>
+          </div>
+          <div class="text-input-container">
+              <textarea class="main-textarea" placeholder="How did your exercise session go today? What type of activity did you do? Any challenges or wins?"></textarea>
+          </div>
+          <div class="text-input-footer">
+              <button class="save-text-btn" data-goal="3">Save</button>
+          </div>
+      </div>
+    </div>
+
+    <!-- Text input popup for Goal 4 -->
+    <div class="text-input-popup" id="text-input-popup-4">
+      <div class="popup-content">
+          <div class="popup-header">
+              <div class="popup-title">Share more about TV habits</div>
+              <div class="close-text-popup" id="close-text-popup-4">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M18 6L6 18" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                      <path d="M6 6L18 18" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+              </div>
+          </div>
+          <div class="text-input-container">
+              <textarea class="main-textarea" placeholder="How did it go with not eating while watching TV today? Share any strategies or challenges..."></textarea>
+          </div>
+          <div class="text-input-footer">
+              <button class="save-text-btn" data-goal="4">Save</button>
+          </div>
       </div>
     </div>
   </body>
@@ -1142,6 +1225,7 @@
       initializeCustomInput();
       initializeGoalLogging();
       initializeGoalAddMoreToggle();
+      initializeTextInputPopups();
     });
 
     window.addEventListener('scroll', () => {
@@ -1761,5 +1845,69 @@
       });
     }
 
+    function initializeTextInputPopups() {
+            // Initialize text input functionality for all goals
+            for (let goalId = 1; goalId <= 4; goalId++) {
+                initializeTextInputForGoal(goalId);
+            }
+        }
+
+        function initializeTextInputForGoal(goalId) {
+            const typeOption = document.querySelector(`#goals-${goalId}-logging .input-option[data-type="type"]`);
+            const textInputPopup = document.getElementById(`text-input-popup-${goalId}`);
+            const closeBtn = document.getElementById(`close-text-popup-${goalId}`);
+            const saveBtn = textInputPopup.querySelector('.save-text-btn');
+            const textarea = textInputPopup.querySelector('.main-textarea');
+
+            // Open text input popup when "Type" option is clicked
+            if (typeOption) {
+                typeOption.addEventListener('click', () => {
+                    textInputPopup.style.display = 'flex';
+                    // Focus on textarea after a short delay to ensure popup is visible
+                    setTimeout(() => {
+                        textarea.focus();
+                    }, 300);
+                });
+            }
+
+            // Close text input popup
+            if (closeBtn) {
+                closeBtn.addEventListener('click', () => {
+                    textInputPopup.style.display = 'none';
+                });
+            }
+
+            // Close when clicking background
+            textInputPopup.addEventListener('click', (e) => {
+                if (e.target === textInputPopup) {
+                    textInputPopup.style.display = 'none';
+                }
+            });
+
+            // Save and close both popups
+            if (saveBtn) {
+                saveBtn.addEventListener('click', () => {
+                    const textContent = textarea.value.trim();
+                    
+                    // In a real app, you'd save the data here
+                    console.log(`Saving text input for goal ${goalId}:`, textContent);
+                    
+                    // Hide text input popup
+                    textInputPopup.style.display = 'none';
+                    
+                    // Hide parent goal popup
+                    const parentPopup = document.getElementById(`goals-${goalId}-logging`);
+                    if (parentPopup) {
+                        parentPopup.style.display = 'none';
+                    }
+                    
+                    // Re-enable scrolling
+                    enableHtmlScroll();
+                    
+                    // Clear textarea for next use
+                    textarea.value = '';
+                });
+            }
+        }
   </script>
 </html>
