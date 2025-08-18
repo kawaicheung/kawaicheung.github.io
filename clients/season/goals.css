@@ -542,7 +542,8 @@ main {
         content: 'TODAY';
         position: absolute;
         top: -10px;
-        right: 1rem;
+        left: 50%;
+        transform: translateX(-50%);
         background: var(--timeline--color-bulb);
         color: var(--color--white);
         padding: 0.25rem 0.8rem;
