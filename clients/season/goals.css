@@ -1558,7 +1558,7 @@ main {
             font-size: 1.3rem;
             font-weight: 400;
             color: var(--color--black);
-            margin-bottom: 2rem;
+            margin-bottom: 1rem;
             letter-spacing: -0.02rem;
           }
 
@@ -1566,6 +1566,7 @@ main {
             display: flex;
             flex-direction: column;
             gap: 1.2rem;
+            margin-bottom: 1rem;
 
             .edit-item {
               display: flex;
