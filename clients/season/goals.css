@@ -330,65 +330,46 @@ main {
 
 .apt-soon--short {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: calc(100vw - 2rem);
+  bottom: var(--height--footer);
+  right: 0;
   height: auto;
   z-index: 1001;
-  margin: 1rem;
   border-radius: 0.5rem;
+  margin-bottom: 0.5rem;
+  margin-right: 0.5rem;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   background-color: var(--color--s3--season-light-blue);
   border: solid 1px var(--color--gray--medium);
   gap: 0.5rem;
   color: var(--color--black);
-  font-size: 1.5rem;
   padding: 1rem;
-  animation: popInAndUp 0.5s var(--easing--pop-in) forwards;
+  padding-top: 0.5rem;
+  animation: throbInAndUp 1.2s ease-in-out infinite;
   box-shadow: var(--box-shadow--standard);
 
-  .rd-avatar {
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid var(--color--white);
+  .time {
+    font-size: 0.8rem;
+    font-weight: 600;
   }
-
-  p {
-    font-size: 1.1rem;
-    font-weight: 300;
-    line-height: 1.2;
-    font-family: var(--font-family--serif);
-    text-wrap: balance;
-  }
-
+  
   .cta-btn {
     font-family: var(--font-family--sans-serif);
     padding: 0.5rem 1rem;
-    border-radius: 0.5rem;
-    font-size: 1.2rem;
+    border-radius: 99rem;
+    font-size: 1rem;
     letter-spacing: -0.02rem;
     font-weight: 500;
     border: none;
     cursor: pointer;
     transition: all 0.2s ease;
-    animation: throb 1.4s ease-in-out infinite;
     color: var(--color--white);
     background-color: var(--color--s3--season-dark-blue);
     width: fit-content;
     height: fit-content;
   } 
-
-  .no-thanks-btn {
-    font-family: var(--font-family--sans-serif);
-    font-size: 1rem;
-    color: var(--color--s3--season-dark-blue);
-    width: fit-content;
-    white-space: nowrap;
-  }
 }
 
 .header-container {
@@ -456,10 +437,10 @@ main {
   height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
   /* top: min(calc(var(--height--header) * 2), 20vh); */
-  top: 0;
+  top: var(--height--header);
+  margin-top: 2rem;
   font-family: var(--font-family--sans-serif);
   padding: 0 var(--padding--sides);
 
@@ -620,7 +601,6 @@ main {
 
       &.primary {
         background: var(--timeline--color-bulb);
-        animation: throb 1.4s ease-in-out infinite;
       }
     }
   }
@@ -2245,11 +2225,20 @@ main {
 @keyframes popInAndUp {
   0% {
     opacity: 0;
-    transform: scale(1) translateY(50%);
+    transform: translateY(50%);
   }
   100% {
     opacity: 1;
-    transform: scale(1) translateY(0);
+    transform: translateY(0);
+  }
+}
+
+@keyframes throbInAndUp {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
   }
 }
 
@@ -2285,6 +2274,15 @@ main {
   }
   50% {
     transform: scale(1.05);
+  }
+}
+
+@keyframes throbAndUp {
+  0%, 100% {
+    transform: scale(1) translateY(0);
+  }
+  50% {
+    transform: scale(1.05) translateY(-20px);
   }
 }
 
