@@ -167,39 +167,6 @@
       </div>
       <div class="bottom-panel-content">
         <div class="bottom-panel-grid">
-          <div class="bottom-panel-square main-square weight-goal-logging-btn">
-            <div class="main-square-label">Weight loss goal</div>
-            <div class="weight-display">
-              <div class="current-weight">
-                <span class="weight-number">195</span>
-                <span class="weight-unit">lbs</span>
-              </div>
-              <div class="weight-chart">
-                <svg width="120" height="80" viewBox="0 0 120 80">
-                  <!-- Y-axis labels -->
-                  <text x="5" y="15" font-family="var(--font-family--sans-serif)" font-size="8" fill="#666">200</text>
-                  <text x="5" y="35" font-family="var(--font-family--sans-serif)" font-size="8" fill="#666">195</text>
-                  <text x="5" y="55" font-family="var(--font-family--sans-serif)" font-size="8" fill="#666">190</text>
-                  
-                  <!-- Y-axis line -->
-                  <line x1="25" y1="10" x2="25" y2="60" stroke="#ccc" stroke-width="1"/>
-                  
-                  <!-- X-axis line -->
-                  <line x1="25" y1="60" x2="110" y2="60" stroke="#ccc" stroke-width="1"/>
-                  
-                  <!-- Bars -->
-                  <rect x="30" y="45" width="8" height="15" fill="#FF4D4D"/>
-                  <rect x="42" y="40" width="8" height="20" fill="#FF944D"/>
-                  <rect x="54" y="35" width="8" height="25" fill="#FFD84D"/>
-                  <rect x="66" y="30" width="8" height="30" fill="#66CC66"/>
-                  <rect x="78" y="25" width="8" height="35" fill="#4CAF50"/>
-                  <rect x="90" y="20" width="8" height="40" fill="#2196F3"/>
-                  <rect x="102" y="15" width="8" height="45" fill="#9C27B0"/>
-                </svg>
-              </div>
-            </div>
-            <div class="weight-caption">You're two pounds from your goal!</div>
-          </div>
           <div class="bottom-panel-square square square-1 goals-1-logging-btn">
             <div class="rated">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -237,32 +204,18 @@
       <div class="footer-menu">
         <a href="#" class="footer-item">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M3 9L12 2L21 9V20C21 20.5304 20.7893 21.0391 20.4142 21.4142C20.0391 21.7893 19.5304 22 19 22H5C4.46957 22 3.96086 21.7893 3.58579 21.4142C3.21071 21.0391 3 20.5304 3 20V9Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            <polyline points="9,22 9,12 15,12 15,22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-          <span>Home</span>
-        </a>
-        <a href="#" class="footer-item">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M22 11.08V12A10 10 0 1 1 5.68 3.49" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M22 4L12 14.01L9 11.01" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <!-- Filled circle with checkmark -->
+            <circle cx="12" cy="12" r="12" fill="currentColor"/>
+            <path d="M9 12L11 14L15 10" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
           <span>Goals</span>
         </a>
         <a href="#" class="footer-item">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
+          <svg fill="none" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg" class="lgIcon text-greyscale-70"><g fill="currentColor"><path d="m23 16.8604h-22c-.265216 0-.51957.1229-.707107.3417-.187536.2188-.292893.5155-.292893.8249s.105357.5531.292893.7719c.187537.2188.441891.3417.707107.3417l1.06.2198c.1638-.0003.32516.0463.46988.1358 0 .1488.26839 2.3858.36012 2.5442l.45.77c.18118.3209.4275.5847.7171.7679.28959.1832.61349.2801.9429.2821h14c.3294-.002.6533-.0989.9429-.2821s.5359-.447.7171-.7679l.45-.77c.0917-.1584.39-2.5404.3601-2.5442.1447-.0895.3061-.1361.4699-.1358l1.06-.2198c.2652 0 .5196-.1229.7071-.3417s.2929-.4625.2929-.7719-.1054-.6061-.2929-.8249-.4419-.3417-.7071-.3417z"></path><path d="m1.52632 15.1406h20.94738c.1396 0 .2734-.0518.3721-.1439.0987-.0922.1542-.2172.1542-.3476-.0011-2.0971-1-5.59897-3.1473-7.74631-1.3899-1.64733-3.3326-2.81037-5.5159-3.30214-.0368-.01056-.0709-.02828-.0999-.052-.029-.02371-.0524-.05289-.0685-.08561-.0156-.03418-.0237-.07096-.0237-.10813s.0081-.07395.0237-.10812c.139-.28032.2109-.58558.2105-.8945 0-.58657-.2495-1.14912-.6936-1.563883-.4442-.414768-1.0466-.647782-1.6748-.647782-.6281 0-1.2305.233014-1.6747.647782-.44417.414763-.69369.977313-.69369 1.563883-.00035.30892.0715.61418.21052.8945.01847.03343.0281.0705.0281.10812s-.00963.07469-.0281.10813c-.01726.03089-.0411.05817-.07007.08014-.02896.02198-.06243.03819-.09835.04764-2.18887.48837-4.13767 1.65124-5.53186 3.30093-2.62603 2.62603-3.152433 5.65585-3.15235 7.75735 0 .1304.05545.2554.15415.3476.09871.0921.23258.1439.37217.1439zm4.6421-7.74572c1.24771-1.20964 2.88579-2.00382 4.66318-2.26081.208-.02867.4196.02098.5884.13803.1688.11706.2809.29193.3116.48615s-.0225.39188-.1478.54949c-.1254.15761-.3127.26227-.5206.29094-1.42886.18879-2.75039.81446-3.75794 1.77917-.15072.14159-.35465.2227-.56842.22608-.10447-.00082-.20771-.02126-.30355-.0601s-.18234-.09529-.25434-.16598c-.13092-.13395-.20437-.30826-.20631-.48961-.00195-.18134.06776-.35699.19578-.49336z"></path></g></svg>
           <span>Meals</span>
         </a>
         <a href="#" class="footer-item">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M22 10V6L12 1L2 6V10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M2 10L12 15L22 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M6 12V20L12 23L18 20V12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg" class="lgIcon text-greyscale-70"><path d="M10.3011 5.25285C10.3071 5.2065 10.2992 5.1594 10.2783 5.11759C10.2573 5.07579 10.2244 5.04117 10.1837 5.0182C8.95181 4.2458 6.11643 3.03343 0.748766 2.96499C0.683748 2.96157 0.618746 2.972 0.558065 2.9956C0.497385 3.0192 0.442411 3.05542 0.396788 3.10187C0.349072 3.14701 0.311363 3.20166 0.2861 3.26229C0.260837 3.32292 0.248583 3.38818 0.25013 3.45385V18.8627C0.248829 18.9264 0.26026 18.9897 0.283753 19.049C0.307246 19.1083 0.342329 19.1622 0.386946 19.2078C0.431563 19.2533 0.484817 19.2895 0.543588 19.3141C0.60236 19.3388 0.665466 19.3515 0.729211 19.3515C5.76445 19.42 8.55094 20.4759 9.90997 21.2385C9.94637 21.2621 9.98882 21.2746 10.0322 21.2746C10.0756 21.2746 10.118 21.2621 10.1544 21.2385C10.1891 21.2164 10.218 21.1861 10.2384 21.1503C10.2588 21.1146 10.2703 21.0744 10.2717 21.0332C10.2717 21.0332 10.2619 5.54616 10.3011 5.25285Z" fill="currentColor"></path><path d="M18.0933 16.3206C18.0917 16.4927 18.0304 16.659 17.9199 16.791C17.8093 16.9229 17.6563 17.0124 17.4871 17.0441C15.8987 17.3444 14.4353 18.1101 13.283 19.244C12.9087 19.6743 12.581 20.1429 12.3052 20.6421C12.2749 20.685 12.2587 20.7362 12.2587 20.7888C12.2587 20.8413 12.2749 20.8925 12.3052 20.9354C12.3472 20.9636 12.3965 20.9786 12.447 20.9786C12.4975 20.9786 12.5469 20.9636 12.5888 20.9354C15.3305 19.7691 18.2928 19.212 21.2709 19.3026C21.3346 19.3026 21.3978 19.2899 21.4565 19.2653C21.5153 19.2406 21.5685 19.2044 21.6132 19.1589C21.6578 19.1133 21.6929 19.0594 21.7164 19.0001C21.7399 18.9409 21.7513 18.8775 21.75 18.8138V3.45385C21.7515 3.38818 21.7393 3.32292 21.714 3.26229C21.6887 3.20166 21.651 3.14701 21.6033 3.10187C21.5577 3.05542 21.5027 3.0192 21.442 2.9956C21.3814 2.972 21.3164 2.96157 21.2513 2.96499C20.1661 2.96499 19.1884 3.04321 18.3182 3.1312C18.2594 3.14033 18.2057 3.1698 18.1664 3.21446C18.1271 3.25912 18.1047 3.31616 18.1031 3.37563L18.0933 16.3206Z" fill="currentColor"></path><path d="M16.451 15.783C16.5017 15.7682 16.5463 15.7373 16.5781 15.695C16.6098 15.6527 16.627 15.6012 16.627 15.5483V0.951013C16.6267 0.912052 16.6167 0.873776 16.5979 0.839637C16.5791 0.805498 16.5522 0.776572 16.5194 0.755469C16.4852 0.735732 16.4464 0.725342 16.407 0.725342C16.3675 0.725342 16.3287 0.735732 16.2945 0.755469C15.1542 1.13934 14.1219 1.78958 13.2832 2.65224C12.4716 3.44247 11.9309 4.46917 11.7384 5.58539V18.1393C11.7376 18.1884 11.7523 18.2366 11.7804 18.2769C11.8084 18.3173 11.8485 18.3478 11.8948 18.3641C11.9412 18.3822 11.9918 18.3863 12.0405 18.3759C12.0892 18.3655 12.1337 18.341 12.1686 18.3055C13.3344 17.0837 14.8171 16.2103 16.451 15.783Z" fill="currentColor"></path></svg>
           <span>Learn</span>
         </a>
         <a href="#" class="footer-item">
@@ -730,9 +683,7 @@
         <div class="goal-rating">
           <div class="rating-option" data-rating="positive">
             <div class="rating-circle">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M7 22H4C3.46957 22 2.96086 21.7893 2.58579 21.4142C2.21071 21.0391 2 20.5304 2 20V13C2 12.4696 2.21071 11.9609 2.58579 11.5858C2.96086 11.2107 3.46957 11 4 11H7M14 9V5C14 4.20435 13.6839 3.44129 13.1213 2.87868C12.5587 2.31607 11.7956 2 11 2L7 11V22H18.28C18.7623 22.0055 19.2304 21.8364 19.5979 21.524C19.9654 21.2116 20.2077 20.7769 20.28 20.3L21.66 11.3C21.7035 11.0134 21.6842 10.7207 21.6033 10.4423C21.5225 10.1638 21.3821 9.90629 21.1919 9.68751C21.0016 9.46873 20.7661 9.29393 20.5016 9.17522C20.2371 9.0565 19.9499 8.99672 19.66 9H14Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
+              <span>Poor</span>
             </div>
           </div>
           <div class="rating-option" data-rating="neutral">
@@ -742,9 +693,7 @@
           </div>
           <div class="rating-option" data-rating="negative">
             <div class="rating-circle">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M17 2H19.67C20.236 1.98999 20.7859 2.18813 21.2154 2.55681C21.6449 2.9255 21.9241 3.43905 22 4V11C21.9241 11.5609 21.6449 12.0745 21.2154 12.4432C20.7859 12.8119 20.236 13.01 19.67 13H17M10 15V19C10 19.7956 10.3161 20.5587 10.8787 21.1213C11.4413 21.6839 12.2044 22 13 22L17 13V2H5.72C5.23767 1.99454 4.76962 2.16359 4.40209 2.47599C4.03457 2.78839 3.79232 3.22309 3.72 3.7L2.34 12.7C2.29649 12.9866 2.31583 13.2793 2.39666 13.5577C2.47749 13.8362 2.6179 14.0937 2.80814 14.3125C2.99839 14.5313 3.23392 14.7061 3.49843 14.8248C3.76294 14.9435 4.05009 15.0033 4.34 15H10Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
+              <span>Great</span>
             </div>
           </div>
         </div>
@@ -827,9 +776,7 @@
         <div class="goal-rating">
           <div class="rating-option" data-rating="positive">
             <div class="rating-circle">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M7 22H4C3.46957 22 2.96086 21.7893 2.58579 21.4142C2.21071 21.0391 2 20.5304 2 20V13C2 12.4696 2.21071 11.9609 2.58579 11.5858C2.96086 11.2107 3.46957 11 4 11H7M14 9V5C14 4.20435 13.6839 3.44129 13.1213 2.87868C12.5587 2.31607 11.7956 2 11 2L7 11V22H18.28C18.7623 22.0055 19.2304 21.8364 19.5979 21.524C19.9654 21.2116 20.2077 20.7769 20.28 20.3L21.66 11.3C21.7035 11.0134 21.6842 10.7207 21.6033 10.4423C21.5225 10.1638 21.3821 9.90629 21.1919 9.68751C21.0016 9.46873 20.7661 9.29393 20.5016 9.17522C20.2371 9.0565 19.9499 8.99672 19.66 9H14Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
+              <span>Poor</span>
             </div>
           </div>
           <div class="rating-option" data-rating="neutral">
@@ -839,9 +786,7 @@
           </div>
           <div class="rating-option" data-rating="negative">
             <div class="rating-circle">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M17 2H19.67C20.236 1.98999 20.7859 2.18813 21.2154 2.55681C21.6449 2.9255 21.9241 3.43905 22 4V11C21.9241 11.5609 21.6449 12.0745 21.2154 12.4432C20.7859 12.8119 20.236 13.01 19.67 13H17M10 15V19C10 19.7956 10.3161 20.5587 10.8787 21.1213C11.4413 21.6839 12.2044 22 13 22L17 13V2H5.72C5.23767 1.99454 4.76962 2.16359 4.40209 2.47599C4.03457 2.78839 3.79232 3.22309 3.72 3.7L2.34 12.7C2.29649 12.9866 2.31583 13.2793 2.39666 13.5577C2.47749 13.8362 2.6179 14.0937 2.80814 14.3125C2.99839 14.5313 3.23392 14.7061 3.49843 14.8248C3.76294 14.9435 4.05009 15.0033 4.34 15H10Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
+              <span>Great</span>
             </div>
           </div>
         </div>
@@ -926,9 +871,7 @@
         <div class="goal-rating">
           <div class="rating-option" data-rating="positive">
             <div class="rating-circle">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M7 22H4C3.46957 22 2.96086 21.7893 2.58579 21.4142C2.21071 21.0391 2 20.5304 2 20V13C2 12.4696 2.21071 11.9609 2.58579 11.5858C2.96086 11.2107 3.46957 11 4 11H7M14 9V5C14 4.20435 13.6839 3.44129 13.1213 2.87868C12.5587 2.31607 11.7956 2 11 2L7 11V22H18.28C18.7623 22.0055 19.2304 21.8364 19.5979 21.524C19.9654 21.2116 20.2077 20.7769 20.28 20.3L21.66 11.3C21.7035 11.0134 21.6842 10.7207 21.6033 10.4423C21.5225 10.1638 21.3821 9.90629 21.1919 9.68751C21.0016 9.46873 20.7661 9.29393 20.5016 9.17522C20.2371 9.0565 19.9499 8.99672 19.66 9H14Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
+              <span>Poor</span>
             </div>
           </div>
           <div class="rating-option" data-rating="neutral">
@@ -938,9 +881,7 @@
           </div>
           <div class="rating-option" data-rating="negative">
             <div class="rating-circle">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M17 2H19.67C20.236 1.98999 20.7859 2.18813 21.2154 2.55681C21.6449 2.9255 21.9241 3.43905 22 4V11C21.9241 11.5609 21.6449 12.0745 21.2154 12.4432C20.7859 12.8119 20.236 13.01 19.67 13H17M10 15V19C10 19.7956 10.3161 20.5587 10.8787 21.1213C11.4413 21.6839 12.2044 22 13 22L17 13V2H5.72C5.23767 1.99454 4.76962 2.16359 4.40209 2.47599C4.03457 2.78839 3.79232 3.22309 3.72 3.7L2.34 12.7C2.29649 12.9866 2.31583 13.2793 2.39666 13.5577C2.47749 13.8362 2.6179 14.0937 2.80814 14.3125C2.99839 14.5313 3.23392 14.7061 3.49843 14.8248C3.76294 14.9435 4.05009 15.0033 4.34 15H10Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
+              <span>Great</span>
             </div>
           </div>
         </div>
@@ -1023,9 +964,7 @@
         <div class="goal-rating">
           <div class="rating-option" data-rating="positive">
             <div class="rating-circle">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M7 22H4C3.46957 22 2.96086 21.7893 2.58579 21.4142C2.21071 21.0391 2 20.5304 2 20V13C2 12.4696 2.21071 11.9609 2.58579 11.5858C2.96086 11.2107 3.46957 11 4 11H7M14 9V5C14 4.20435 13.6839 3.44129 13.1213 2.87868C12.5587 2.31607 11.7956 2 11 2L7 11V22H18.28C18.7623 22.0055 19.2304 21.8364 19.5979 21.524C19.9654 21.2116 20.2077 20.7769 20.28 20.3L21.66 11.3C21.7035 11.0134 21.6842 10.7207 21.6033 10.4423C21.5225 10.1638 21.3821 9.90629 21.1919 9.68751C21.0016 9.46873 20.7661 9.29393 20.5016 9.17522C20.2371 9.0565 19.9499 8.99672 19.66 9H14Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
+              <span>Poor</span>
             </div>
           </div>
           <div class="rating-option" data-rating="neutral">
@@ -1035,9 +974,7 @@
           </div>
           <div class="rating-option" data-rating="negative">
             <div class="rating-circle">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M17 2H19.67C20.236 1.98999 20.7859 2.18813 21.2154 2.55681C21.6449 2.9255 21.9241 3.43905 22 4V11C21.9241 11.5609 21.6449 12.0745 21.2154 12.4432C20.7859 12.8119 20.236 13.01 19.67 13H17M10 15V19C10 19.7956 10.3161 20.5587 10.8787 21.1213C11.4413 21.6839 12.2044 22 13 22L17 13V2H5.72C5.23767 1.99454 4.76962 2.16359 4.40209 2.47599C4.03457 2.78839 3.79232 3.22309 3.72 3.7L2.34 12.7C2.29649 12.9866 2.31583 13.2793 2.39666 13.5577C2.47749 13.8362 2.6179 14.0937 2.80814 14.3125C2.99839 14.5313 3.23392 14.7061 3.49843 14.8248C3.76294 14.9435 4.05009 15.0033 4.34 15H10Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
+              <span>Great</span>
             </div>
           </div>
         </div>
@@ -1431,7 +1368,7 @@
     function initializeGoalCalendar() {
       const calendar = document.getElementById('unified-goal-calendar');
       const today = new Date();
-      const endDate = new Date('2025-08-21');
+      const endDate = new Date('2025-08-29');
       const startDate = new Date('2025-07-21');
       let currentIndex = 0; // Will be set to today's index
       

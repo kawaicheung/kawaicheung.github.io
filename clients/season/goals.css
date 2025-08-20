@@ -545,10 +545,9 @@ main {
       .card-month {
         font-family: var(--font-family--sans-serif);
         font-size: 0.8rem;
-        font-weight: 600;
+        font-weight: 500;
         color: var(--color--gray--dark);
         text-transform: uppercase;
-        letter-spacing: 0.1rem;
       }
 
       .card-day {
@@ -619,7 +618,7 @@ main {
   box-shadow: var(--box-shadow--standard);
   z-index: 100;
   margin: 0 calc(var(--padding--sides) / 2);
-  padding-bottom: var(--height--header);
+  padding-bottom: calc(var(--height--footer) + 2rem);
   scrollbar-width: none;
   -ms-overflow-style: none;
 
@@ -650,7 +649,7 @@ main {
       margin-left: calc(-1 * var(--padding--sides));
       margin-right: calc(-1 * var(--padding--sides));
       padding: 1rem calc(2 * var(--padding--sides));
-      gap: 0.2rem;
+      gap: 0.5rem;
       display: flex;
       overflow-x: auto;
       scrollbar-width: none;
@@ -680,7 +679,7 @@ main {
           left: 0;
           right: 0;
           height: 1px;
-          border-top: 1px solid var(--color--gray--medium);
+          border-top: 1px solid var(--color--s3--season-dark-blue);
           margin-left: calc(-1 * var(--padding--sides));
           margin-right: calc(-1 * var(--padding--sides));
           transform: translateY(-50%);
@@ -695,7 +694,7 @@ main {
           align-items: center;
           justify-content: center;
           background-color: var(--color--white);
-          border: 1px solid var(--color--gray--medium);
+          border: 1px solid var(--color--s3--season-dark-blue);
           transition: transform 0.12s ease;
           box-shadow: var(--box-shadow--standard);
           
@@ -705,7 +704,7 @@ main {
           }
           
           &.today {
-            background-color: var(--timeline--color-bulb);
+            border-color: var(--timeline--color-bulb);
           }
         }
         
@@ -716,7 +715,7 @@ main {
           justify-content: center;
           gap: 0;
           font-family: var(--font-family--sans-serif);
-          font-size: 1.2rem;
+          font-size: 1rem;
           font-weight: 500;
           text-align: center;
           color: var(--color--black);
@@ -726,7 +725,7 @@ main {
 
             &.month {
               font-family: var(--font-family--sans-serif);
-              font-size: 0.7rem;
+              font-size: 0.6rem;
               text-transform: uppercase;
             }
 
@@ -778,9 +777,6 @@ main {
       right: 5%;
       width: 40px;
       height: 40px;
-      border-radius: 50%;
-      padding: 0.5rem;
-      background-color: rgba(255,255,255,0.7);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -1737,15 +1733,13 @@ main {
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto;
-            color: rgba(0, 0, 0, 0.6);
             transition: all 0.2s ease;
             background-color: rgba(255,255,255,1);
             
             span {
               font-family: var(--font-family--sans-serif);
               font-weight: 500;
-              font-size: 1.5rem;
+              font-size: 1.2rem;
             }
           }
           
@@ -1936,7 +1930,8 @@ main {
       background-color: var(--color--s3--blue);
 
       .rating-circle,
-      .option-icon {
+      .option-icon { 
+        color: var(--color--s3--blue-dark);
         border-color: var(--color--s3--blue-dark);
       }
 
@@ -1951,6 +1946,7 @@ main {
 
       .rating-circle,
       .option-icon {
+        color: var(--color--s3--green-dark);
         border-color: var(--color--s3--green-dark);
       }
 
@@ -1965,6 +1961,7 @@ main {
       
       .rating-circle,
       .option-icon {
+        color: var(--color--s3--pink-dark);
         border-color: var(--color--s3--pink-dark);
       }
 
@@ -1979,6 +1976,7 @@ main {
       
       .rating-circle,
       .option-icon {
+        color: var(--color--s3--orange-dark);
         border-color: var(--color--s3--orange-dark);
       }
       
