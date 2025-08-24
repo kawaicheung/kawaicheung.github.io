@@ -15,6 +15,7 @@
 
   <!-- Header container -->
   <div class="header-container">
+    <!-- Season logo -->
     <svg enable-background="new 0 0 616.93 146.36" viewBox="0 0 616.93 146.36" xmlns="http://www.w3.org/2000/svg" height="22.5" width="94.5">
       <path fill="#101010" d="m20.76 31.49c0 11.29 7.38 18.24 25.62 29.53l15.85 9.77c14.98 9.12 24.32 18.89 24.32 34.96 0 25.19-20.63 40.17-41.69 40.17-22.37 0-37.13-15.63-43.86-36.05l18.02-10.42c7.6 28.01 20.63 37.35 32.14 37.35 12.38 0 21.28-7.38 21.28-19.98 0-11.51-3.47-18.67-20.41-29.1l-19.98-12.37c-14.11-8.69-25.62-18.02-25.62-35.18 0-21.28 18.24-39.74 47.34-39.74 11.07 0 21.5 1.52 28.45 4.56l-4.34 31.7c-10.22-18.45-23.9-26.05-37.14-26.05-12.16 0-19.98 7.82-19.98 20.85z">
       </path>
@@ -50,11 +51,11 @@
 
     <!-- Appointment soon popups -->
     <div class="apt-soon--modal">
-      <h2>Hey Michelle!</h2>
-      <p>Your appointment with Alejandra is in 15 minutes.</p>
-      <img src="img/alejandra.png" alt="Alejandra Sanchez, RD" class="rd-avatar">
-      <button class="cta-btn">Join now</button>
-      <a href="#" class="no-thanks-btn">Just take me to Season for now</a>
+      <h2 class="font-['DomaineText'] font-light text-5xl tracking-[-0.1rem] leading-none text-center">Hey Michelle!</h2>
+      <p class="font-['DomaineText'] text-[1.4rem] font-light tracking-[-0.04rem] leading-[1.2] text-center">Your appointment with Alejandra is in 15 minutes.</p>
+      <img class="w-20 h-20 rounded-full object-cover border-2 border-white" src="img/alejandra.png" alt="Alejandra Sanchez, RD" >
+      <button class="font-['GT-America-Standard'] text-white bg-[var(--color--s3--season-dark-blue)] px-8 py-4 rounded-full text-[1.4rem] tracking-[-0.02rem] font-medium border-0 cursor-pointer transition-all duration-200 ease-in-out animate-[throb_1.4s_ease-in-out_infinite] w-full">Join now</button>
+      <a href="#" class="no-thanks-btn font-sans text-base text-[var(--color--s3--season-dark-blue)] w-fit whitespace-nowrap underline">Just take me to Season for now</a>
     </div>
     <div class="apt-soon--short hidden">
       <div class="time">:15 min</div>
@@ -64,7 +65,7 @@
     <main>
       <div class="win-container">
         <h1 class="font-['DomaineText'] text-[2.4rem] font-light tracking-[-0.1rem] leading-none mb-5">Welcome back, Michelle!</h1>
-        <p>
+        <p class="font-['DomaineText'] text-left w-full text-xl font-light text-gray-700 text-xl font-light tracking-tight leading-tight">
           You've done <strong>5 straight days</strong> of exercise. 
           Consider skipping your run today and rest. But keep it up!
         </p>
@@ -657,19 +658,7 @@
         </div>
       </div>
     </div>
-    <!-- Weight goal logging -->
-    <div class="popup" id="weight-goal-logging">
-      <div class="popup-content weight-goal-logging">
-        <div class="close" id="weight-goal-logging-close-btn">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M18 6L6 18" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M6 6L18 18" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </div> 
-        <h2>Weight Goal Logging</h2>
-        <p>This is the popup content.</p>
-      </div>
-    </div>
+
 
     <!-- Goals 1 logging -->
     <div class="popup" id="goals-1-logging">
@@ -1153,11 +1142,6 @@
           openBtnSelector: '.pre-visit-summary-btn',
           modalId: 'pre-visit-summary',
           closeBtnId: 'pre-visit-summary-close-btn'
-        },
-        {
-          openBtnSelector: '.weight-goal-logging-btn',
-          modalId: 'weight-goal-logging',
-          closeBtnId: 'weight-goal-logging-close-btn'
         },
         {
           openBtnSelector: '.goals-1-logging-btn',
