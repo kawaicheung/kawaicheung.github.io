@@ -211,6 +211,9 @@ html {
   --box-shadow--day-square: 0 3px 1px rgba(0,0,0,0.2);
   --box-shadow--card: 0 6px 5px rgba(0,0,0,0.2);
 
+  --padding--btn-standard: 0.8rem 1.5rem;
+  --font-size--btn-standard: 1.1rem;
+
 }
 
 body {
@@ -355,9 +358,9 @@ main {
  
   .cta-btn {
     font-family: var(--font-family--sans-serif);
-    padding: 1rem 2rem;
+    padding: var(--padding--btn-standard);
     border-radius: 99rem;
-    font-size: 1.4rem;
+    font-size: var(--font-size--btn-standard);
     letter-spacing: -0.02rem;
     font-weight: 500;
     border: none;
@@ -629,17 +632,13 @@ main {
       color: var(--color--white);
       border: none;
       border-radius: 99rem;
-      padding: 0.8rem 1.5rem;
+      padding: var(--padding--btn-standard);
+      font-size: var(--font-size--btn-standard);
       font-family: var(--font-family--sans-serif);
-      font-size: 1rem;
       font-weight: 500;
       letter-spacing: -0.02rem;
       cursor: pointer;
       transition: all 0.2s ease;
-
-      &:hover {
-        transform: translateY(-1px);
-      }
 
       &:active {
         transform: translateY(0);
@@ -1740,7 +1739,7 @@ main {
           position: absolute;
           top: calc(-.5 * var(--height--day-square));
           left: 50%;
-          transform: translateX(-50%);
+          transform: translateX(-50%) scale(1.2);
         }
 
         .goal-rating-title {
@@ -1757,215 +1756,30 @@ main {
           flex-direction: column;
           justify-content: space-around;
           gap: 0.2rem;
-
-          .rating-option {
+            
+          .rating-btn {
             width: 100%;
-            cursor: pointer;
+            border-width: 1px;
+            border-style: solid;
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.2s ease;
+            background-color: rgba(255,255,255,1);
+            border-radius: 99rem;
+            letter-spacing: -0.05rem;
             
-            .rating-btn {
-              width: 100%;
-              border-width: 1px;
-              border-style: solid;
-              padding: 1rem;
-              display: flex;
-              align-items: center;
-              justify-content: space-between;
-              transition: all 0.2s ease;
-              background-color: rgba(255,255,255,1);
-              border-radius: 99rem;
-              letter-spacing: -0.05rem;
-              
-              span {
-                font-family: var(--font-family--sans-serif);
-                font-weight: 500;
-                font-size: 1.2rem;
-              }
+            span {
+              font-family: var(--font-family--sans-serif);
+              font-weight: 500;
+              font-size: var(--font-size--btn-standard);
             }
-            
-            &.selected .rating-btn {
+
+            &.selected  {
               border-width: 2px;
               transform: scale(1.02);
             }
-          }
-        }
-      }
-          
-      .goal-add-more {
-        background-color: rgba(255,255,255,0.5);
-        padding: 2rem 1rem;
-        border-radius: 1rem;
-        
-        .add-more-label {
-          text-align: center;
-          font-family: var(--font-family--serif);
-          font-size: 1.1rem;
-          font-weight: 500;
-          color: var(--color--black);
-          margin-bottom: 1.5rem;
-        }
-        
-        .input-options {
-          display: flex;
-          justify-content: space-around;
-          margin-bottom: 1rem;
-          
-          .input-option {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            
-            .option-icon {
-              width: 20vw;
-              padding: 1rem 0;
-              border-width: 1px;
-              border-style: solid;
-              background-color: var(--color--white);
-              border-radius: 0.5rem;
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              margin-bottom: 0.5rem;
-              color: rgba(0, 0, 0, 0.6);
-            }
-            
-            .option-label {
-              font-family: var(--font-family--sans-serif);
-              font-size: 0.9rem;
-              font-weight: 500;
-              color: rgba(0, 0, 0, 0.7);
-            }
-            
-            &.selected {
-              .option-icon {
-                border-width: 3px;
-              }
-              
-              .option-label {
-                color: var(--color--black);
-              }
-            }
-          }
-        }
-        
-        .secondary-options {
-          display: flex;
-          justify-content: center;
-          gap: 0.8rem;
-          margin-bottom: 1rem;
-          
-          .secondary-option {
-            width: 36px;
-            height: 36px;
-            border-width: 2px;
-            border-style: solid;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            color: rgba(0, 0, 0, 0.6);
-            transition: all 0.2s ease;
-            
-            &.selected {
-              border-width: 3px;
-              border-color: var(--color--black);
-              color: var(--color--black);
-            }
-          }
-        }
-        
-        .input-area {
-          margin-top: 1rem;
-          
-          .goal-writeup {
-            width: 100%;
-            min-height: 120px;
-            border-radius: 0.8rem;
-            background: rgba(255, 255, 255, 0.8);
-            padding: 1rem;
-            font-family: var(--font-family--sans-serif);
-            font-size: 1rem;
-            line-height: 1.5;
-            resize: vertical;
-            outline: none;
-            border: 1px solid rgba(0, 0, 0, 0.1);
-            
-            &::placeholder {
-              color: rgba(0, 0, 0, 0.5);
-            }
-            
-            &:focus {
-              border-color: rgba(0, 0, 0, 0.3);
-            }
-          }
-          
-          .recording-interface,
-          .upload-interface {
-            text-align: center;
-            padding: 2rem;
-            background: rgba(255, 255, 255, 0.8);
-            border-radius: 0.8rem;
-            border: 1px solid rgba(0, 0, 0, 0.1);
-            
-            .recording-status {
-              font-family: var(--font-family--sans-serif);
-              font-size: 1rem;
-              margin-bottom: 1rem;
-              color: rgba(0, 0, 0, 0.7);
-            }
-            
-            .record-btn,
-            .upload-btn {
-              padding: 0.8rem 1.5rem;
-              border-radius: 99rem;
-              border: none;
-              font-family: var(--font-family--sans-serif);
-              font-size: 1rem;
-              font-weight: 500;
-              cursor: pointer;
-              background: rgba(0, 0, 0, 0.1);
-              color: var(--color--black);
-              transition: all 0.2s ease;
-              
-              &:hover {
-                background: rgba(0, 0, 0, 0.2);
-              }
-            }
-          }
-
-
-        }
-
-
-
-      }
-
-      .goal-footer {
-        display: flex;
-        justify-content: center;
-        margin-bottom: 1rem;
-        
-        .save-writeup-btn {
-          width: 100%;
-          font-family: var(--font-family--sans-serif);
-          padding: 1rem 2rem;
-          border-radius: 99rem;
-          font-size: 1.1rem;
-          letter-spacing: -0.02rem;
-          font-weight: 500;
-          border: none;
-          cursor: pointer;
-          transition: all 0.2s ease;
-          
-          &:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-          }
-          
-          &:active {
-            transform: translateY(0);
           }
         }
       }
@@ -2111,10 +1925,16 @@ main {
       flex: 1;
       display: flex;
       flex-direction: column;
+      height: 100%;
       gap: 1rem;
+
+      .input-area {
+        height: 100%;
+      }
 
       .main-textarea {
         flex: 1;
+        height: 100%;
         width: 100%;
         border: 1px solid var(--color--gray--medium);
         border-radius: 0.8rem;
@@ -2129,11 +1949,6 @@ main {
         &::placeholder {
           color: rgba(0, 0, 0, 0.5);
         }
-
-        &:focus {
-          border-color: var(--color--btn--blue);
-          box-shadow: 0 0 0 2px rgba(72, 95, 129, 0.1);
-        }
       }
     }
 
@@ -2145,7 +1960,7 @@ main {
       .save-text-btn {
         width: 100%;
         font-family: var(--font-family--sans-serif);
-        padding: 1rem 2rem;
+        padding: var(--padding--btn-standard);
         border-radius: 99rem;
         font-size: 1.1rem;
         letter-spacing: -0.02rem;
@@ -2248,6 +2063,139 @@ main {
       }
     }
   }
+}
+
+.goal-action-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.share-more-btn,
+.save-btn {
+  font-family: var(--font-family--sans-serif);
+  padding: var(--padding--btn-standard);
+  border-radius: 99rem;
+  font-size: var(--font-size--btn-standard);
+  letter-spacing: -0.02rem;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.save-btn {
+  background: transparent;
+  color: var(--color--goals--blue-dark);
+  border: 2px solid var(--color--goals--blue-dark);
+}
+
+.share-more-btn {
+  background: var(--color--goals--blue-dark);
+  color: var(--color--white);
+}
+
+
+.button-divider {
+  font-family: var(--font-family--serif);
+  font-size: 1rem;
+  color: var(--color--goals--blue-dark);
+  font-weight: 400;
+  flex-shrink: 0;
+}
+
+.input-method-selector {
+  display: flex;
+  background-color: var(--color--gray--light);
+  border-radius: 0.5rem;
+  padding: 0.25rem;
+  gap: 0.25rem;
+}
+
+.input-method-option {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  padding: 0.75rem 0.5rem;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  font-family: var(--font-family--sans-serif);
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.input-method-option svg {
+  width: 20px;
+  height: 20px;
+}
+
+.input-method-option.selected {
+  background-color: var(--color--white);
+  color: var(--color--black);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.input-method-option:hover:not(.selected) {
+  color: var(--color--black);
+  background-color: rgba(255, 255, 255, 0.7);
+}
+
+.speak-interface, .upload-interface {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  border: 2px dashed var(--color--gray--medium);
+  border-radius: 0.8rem;
+  padding: 2rem;
+  text-align: center;
+}
+
+.record-btn, .upload-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: var(--padding--btn-standard);
+  border-radius: 99rem;
+  border: none;
+  font-family: var(--font-family--sans-serif);
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: var(--color--btn--blue);
+  color: var(--color--white);
+}
+
+.record-btn:hover, .upload-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.record-btn.recording {
+  background: #dc2626;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+/* Also update the text-input-popup height */
+.text-input-popup .popup-content {
+  height: 70vh; /* Changed from 60vh */
+  max-height: 70vh;
 }
 
 @keyframes shrinkMainHeight {
