@@ -170,15 +170,18 @@ html {
 
   --color--white: #fff;
   --color--black: #000;
-  --color--summary-bg: #fdfae6;
   --color--gray--light: #f0f0f0;
   --color--gray--medium: #ccc;
   --color--gray--dark: #333;
-  --color--success: #090;
-  --color--warning: #c00;
-  
+
   --color--bg: rgb(246,244,235);
+  --color--bg--summary: #fdfae6;
+  --color--bg--appt-alert: #aad3ff;
+
   --color--btn--blue: rgb(72, 95, 129);
+  --color--btn--orange: rgb(250, 123, 82);
+
+  --color--green-dot: #090;
 
   /* Goals colors (4) */
   --color--goals--pink: #f374ae;
@@ -190,16 +193,14 @@ html {
   --color--goals--green: #9cd08f;
   --color--goals--green-dark: #3E7330;
 
-  --color--appt-alert-bg: #aad3ff;
-
   --padding--sides: 1.5rem;
 
   --height--header: 5rem;
   --height--bottom-panel-header: 4.5rem;
   --height--footer: 4.5rem;
 
-  --timeline--color: rgb(255, 191, 0);
-  --timeline--color-bulb: rgba(250, 123, 82, 1);
+  --height--day-square: 3rem;
+
   --timeline--height: 110px;
   --timeline--dot-size: 3.4rem;
   --timeline--angle: -4deg;
@@ -207,7 +208,8 @@ html {
   --easing--pop-in: cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
   --box-shadow--standard: 0 0 10px rgba(0,0,0,0.1);
-  --box-shadow--card: 0 8px 32px rgba(0,0,0,0.12);
+  --box-shadow--day-square: 0 3px 1px rgba(0,0,0,0.2);
+  --box-shadow--card: 0 6px 5px rgba(0,0,0,0.2);
 
 }
 
@@ -234,7 +236,6 @@ main {
   /* Animation properties */
   animation: shrinkMainHeight 0.3s ease-in-out 0.5s forwards;
 }
-
 
 .header-container {
   position: fixed;
@@ -276,7 +277,7 @@ main {
         width: 12px;
         height: 12px;
         border-radius: 8px;
-        background-color: var(--color--success);
+        background-color: var(--color--green-dot);
         border: 2px solid var(--color--white);
       }
 
@@ -294,8 +295,6 @@ main {
   }
 }
 
-
-
 .apt-soon--modal {
   position: fixed;
   top: 0;
@@ -309,7 +308,7 @@ main {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: var(--color--appt-alert-bg);
+  background-color: var(--color--bg--appt-alert);
   border: solid 1px var(--color--gray--medium);
   gap: 1rem;
   color: var(--color--black);
@@ -380,6 +379,56 @@ main {
   }
 }
 
+
+  .day-square {
+    height: var(--height--day-square);
+    aspect-ratio: 1 / 1;
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color--white);
+    border: 1px solid var(--color--btn--blue);
+    transition: transform 0.12s ease;
+    box-shadow: var(--box-shadow--day-square);
+    
+    &.selected {
+      transform: scale(1.5);
+      z-index: 1;
+    }
+    
+    &.today {
+      border-color: var(--color--btn--orange);
+    }
+  
+    .day-label {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      font-family: var(--font-family--sans-serif);
+      font-size: 1rem;
+      font-weight: 500;
+      text-align: center;
+      color: var(--color--black);
+
+      > * {
+        line-height: 1;
+
+        &.month {
+          font-family: var(--font-family--sans-serif);
+          font-size: 0.6rem;
+          text-transform: uppercase;
+        }
+
+        &.day {
+          font-family: var(--font-family--serif);
+        }
+      }
+    }
+  }
+
 .apt-soon--short {
   position: fixed;
   bottom: var(--height--footer);
@@ -393,7 +442,7 @@ main {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: var(--color--appt-alert-bg);
+  background-color: var(--color--bg--appt-alert);
   border: solid 1px var(--color--gray--medium);
   gap: 0.5rem;
   color: var(--color--black);
@@ -447,15 +496,16 @@ main {
     font-family: var(--font-family--serif);
   }
 
-
   p {
     text-align: left;
     width: 100%;
     font-size: 1.4rem;
+    line-height: 1.4;
     letter-spacing: -0.05rem;
     font-weight: 300;
     color: var(--color--gray--dark);
     font-family: var(--font-family--serif);
+    margin-bottom: 1rem;
   }
  }
 
@@ -520,7 +570,7 @@ main {
         top: -10px;
         left: 50%;
         transform: translateX(-50%);
-        background: var(--timeline--color-bulb);
+        background: var(--color--btn--orange);
         color: var(--color--white);
         padding: 0.25rem 0.8rem;
         border-radius: 99rem;
@@ -539,7 +589,9 @@ main {
 
       .card-month {
         font-family: var(--font-family--sans-serif);
-        font-size: 0.8rem;
+        font-size: 1.2rem;
+        line-height: 1;
+        margin-top: 1rem;
         font-weight: 500;
         color: var(--color--gray--dark);
         text-transform: uppercase;
@@ -594,7 +646,7 @@ main {
       }
 
       &.primary {
-        background: var(--timeline--color-bulb);
+        background: var(--color--btn--orange);
       }
     }
   }
@@ -627,6 +679,7 @@ main {
     font-family: var(--font-family--serif);
     font-size: 1.5rem;
     letter-spacing: -0.02rem;
+    padding-top: 0.5rem;
     font-weight: 500;
     user-select: none;
     display: flex;
@@ -644,7 +697,7 @@ main {
       margin-left: calc(-1 * var(--padding--sides));
       margin-right: calc(-1 * var(--padding--sides));
       padding: 1rem calc(2 * var(--padding--sides));
-      gap: 0.5rem;
+      gap: 0.4rem;
       display: flex;
       overflow-x: auto;
       scrollbar-width: none;
@@ -681,57 +734,17 @@ main {
           z-index: -1;
         } 
 
-        .day-circle {
-          width: 100%;
-          aspect-ratio: 1 / 1;
-          border-radius: 0.5rem;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          background-color: var(--color--white);
-          border: 1px solid var(--color--btn--blue);
-          transition: transform 0.12s ease;
-          box-shadow: var(--box-shadow--standard);
-          
-          &.selected {
-            transform: scale(1.5);
-            z-index: 1;
-          }
-          
-          &.today {
-            border-color: var(--timeline--color-bulb);
-          }
-        }
-        
-        .day-label {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          gap: 0;
-          font-family: var(--font-family--sans-serif);
-          font-size: 1rem;
-          font-weight: 500;
-          text-align: center;
-          color: var(--color--black);
-
-          > * {
-            line-height: 1;
-
-            &.month {
-              font-family: var(--font-family--sans-serif);
-              font-size: 0.6rem;
-              text-transform: uppercase;
-            }
-
-            &.day {
-              font-family: var(--font-family--serif);
-            }
-          }
-
-        }
       }
     }
+  }
+
+
+  .goal-instructions {
+    text-align: center;
+    padding: 0 var(--padding--sides);
+    font-family: var(--font-family--serif);
+    color: var(--color--gray--dark);
+    margin-bottom: 1rem;
   }
   
   .bottom-panel-content {
@@ -757,10 +770,6 @@ main {
     align-items: center;
     justify-content: center;
     border-radius: 0.8rem;
-    font-weight: 500;
-    letter-spacing: -0.02rem;
-    color: var(--color--black);
-    font-family: var(--font-family--sans-serif);
     text-align: center;
     text-wrap: balance;
     padding: 1rem;
@@ -768,13 +777,21 @@ main {
 
     .rated {
       position: absolute;
-      top: 5%;
-      right: 5%;
-      width: 40px;
-      height: 40px;
+      top: 10px;
+      right: 10px;
+      font-weight: 600;
       display: flex;
       align-items: center;
       justify-content: center;
+    }
+
+    span {
+      font-weight: 500;
+      letter-spacing: -0.02rem;
+      color: var(--color--black);
+      font-size: 1rem;
+      font-family: var(--font-family--sans-serif);
+      line-height: 1.2;
     }
   }
 }
@@ -1411,7 +1428,7 @@ main {
           scrollbar-width: none;
           -ms-overflow-style: none;
           -webkit-overflow-scrolling: touch;
-          background-color: var(--color--summary-bg);
+          background-color: var(--color--bg--summary);
           margin-left: calc(-1 * var(--padding--sides));
           margin-right: calc(-1 * var(--padding--sides));
           padding-left: var(--padding--sides);
@@ -1486,7 +1503,7 @@ main {
         height: 100%;
         overflow-y: auto;
         padding: 2rem 0;
-        background-color: var(--color--summary-bg);
+        background-color: var(--color--bg--summary);
         margin-left: calc(-1 * var(--padding--sides));
         margin-right: calc(-1 * var(--padding--sides));
         padding-left: var(--padding--sides);
@@ -1645,7 +1662,7 @@ main {
         align-items: center;
         justify-content: center;
         height: 100%;
-        background-color: var(--color--summary-bg);
+        background-color: var(--color--bg--summary);
         margin-left: calc(-1 * var(--padding--sides));
         margin-right: calc(-1 * var(--padding--sides));
         padding: 2rem var(--padding--sides);
@@ -1695,52 +1712,80 @@ main {
     &.goals-4-logging {
       display: flex;
       flex-direction: column;
+      align-items: center;
       gap: 1rem;
-      
+
       .goal-title {
         font-family: var(--font-family--serif);
         font-size: 1.4rem;
         font-weight: 500;
         letter-spacing: -0.05rem;
-        color: var(--color--black);
         text-align: left;
         margin-bottom: 1rem;
-        width: calc(100% - 24px - var(--padding--sides));
       }
 
       .goal-rating {
+        position: relative;
+        width: 100%;
         display: flex;
-        justify-content: space-around;
-        gap: 0.5rem;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
         background-color: rgba(255,255,255,0.5);
-        padding: 2rem 1rem;
         border-radius: 1rem;
-        
-        .rating-option {
-          cursor: pointer;
-          
-          .rating-circle {
-            width: 20vw;
-            height: 20vw;
-            border-width: 2px;
-            border-style: solid;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s ease;
-            background-color: rgba(255,255,255,1);
+        padding: 2rem 1rem;
+
+        .day-square {
+          position: absolute;
+          top: calc(-.5 * var(--height--day-square));
+          left: 50%;
+          transform: translateX(-50%);
+        }
+
+        .goal-rating-title {
+          text-align: center;
+          font-weight: 500;
+          font-size: 1.4rem;
+          width: fit-content;
+          font-family: var(--font-family--serif);
+        }
+
+        .rating-options {
+          width: 100%;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-around;
+          gap: 0.2rem;
+
+          .rating-option {
+            width: 100%;
+            cursor: pointer;
             
-            span {
-              font-family: var(--font-family--sans-serif);
-              font-weight: 500;
-              font-size: 1.2rem;
+            .rating-btn {
+              width: 100%;
+              border-width: 1px;
+              border-style: solid;
+              padding: 1rem;
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+              transition: all 0.2s ease;
+              background-color: rgba(255,255,255,1);
+              border-radius: 99rem;
+              letter-spacing: -0.05rem;
+              
+              span {
+                font-family: var(--font-family--sans-serif);
+                font-weight: 500;
+                font-size: 1.2rem;
+              }
             }
-          }
-          
-          &.selected .rating-circle {
-            border-width: 3px;
-            transform: scale(1.2);
+            
+            &.selected .rating-btn {
+              border-width: 2px;
+              transform: scale(1.02);
+            }
           }
         }
       }
@@ -1889,7 +1934,12 @@ main {
               }
             }
           }
+
+
         }
+
+
+
       }
 
       .goal-footer {
@@ -1924,7 +1974,8 @@ main {
     &.goals-1-logging { 
       background-color: var(--color--goals--blue);
 
-      .rating-circle,
+      .goal-rating-title,
+      .rating-btn,
       .option-icon { 
         color: var(--color--goals--blue-dark);
         border-color: var(--color--goals--blue-dark);
@@ -1939,7 +1990,8 @@ main {
     &.goals-2-logging { 
       background-color: var(--color--goals--green);
 
-      .rating-circle,
+      .goal-rating-title,
+      .rating-btn,
       .option-icon {
         color: var(--color--goals--green-dark);
         border-color: var(--color--goals--green-dark);
@@ -1954,7 +2006,9 @@ main {
     &.goals-3-logging { 
       background-color: var(--color--goals--pink);
       
-      .rating-circle,
+
+      .goal-rating-title,
+      .rating-btn,
       .option-icon {
         color: var(--color--goals--pink-dark);
         border-color: var(--color--goals--pink-dark);
@@ -1969,7 +2023,9 @@ main {
     &.goals-4-logging { 
       background-color: var(--color--goals--orange);
       
-      .rating-circle,
+
+      .goal-rating-title,
+      .rating-btn,
       .option-icon {
         color: var(--color--goals--orange-dark);
         border-color: var(--color--goals--orange-dark);
@@ -2016,7 +2072,7 @@ main {
     flex-direction: column;
     transform: scale(0.9);
     animation: popInAndUp 0.3s var(--easing--pop-in) forwards;
-    box-shadow: var(--box-shadow--card);
+    box-shadow: var(--box-shadow--standard);
     gap: 1rem;
 
     .popup-header {
