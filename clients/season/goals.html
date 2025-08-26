@@ -62,8 +62,8 @@
       <a href="#" class="no-thanks-btn">Just take me to Season for now</a>
     </div>
     <div class="apt-soon--short hidden">
-      <div class="time">:15 min</div>
-      <button class="cta-btn">Join meeting now</button>
+      <div class="time">:15</div>
+      <button class="cta-btn">Join!</button>
     </div>
 
     <main>
@@ -1309,6 +1309,11 @@
 
         dayElement.innerHTML = `
           <div class="day-square ${isToday ? 'today' : ''}">
+            <div class="check">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M5 12.7037L9.93103 18L18 5" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
             <div class="day-label">
               <div class="month">${date.toLocaleDateString('en-US', { month: 'short' })}</div>
               <div class="day">${date.getDate()}</div>

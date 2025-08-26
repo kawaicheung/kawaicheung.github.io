@@ -208,7 +208,7 @@ html {
   --easing--pop-in: cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
   --box-shadow--standard: 0 0 10px rgba(0,0,0,0.1);
-  --box-shadow--day-square: 0 3px 1px rgba(0,0,0,0.2);
+  --box-shadow--day-square: 0 2px 3px rgba(0,0,0,0.2);
   --box-shadow--card: 0 6px 5px rgba(0,0,0,0.2);
 
   --padding--btn-standard: 0.8rem 1.5rem;
@@ -327,15 +327,6 @@ main {
     border: 2px solid var(--color--white);
   }
 
-  h1 {
-    font-size: 2.4rem;
-    font-weight: 300;
-    letter-spacing: -0.1rem;
-    line-height: 1;
-    margin-bottom: 1rem;
-    font-family: var(--font-family--serif);
-  }
-
 
   h2 {
     font-size: 3rem;
@@ -382,55 +373,60 @@ main {
   }
 }
 
+.day-square {
+  height: var(--height--day-square);
+  aspect-ratio: 1 / 1;
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color--white);
+  border: 1px solid var(--color--btn--blue);
+  transition: transform 0.12s ease;
+  box-shadow: var(--box-shadow--day-square);
 
-  .day-square {
-    height: var(--height--day-square);
-    aspect-ratio: 1 / 1;
-    border-radius: 0.5rem;
+  .check {
+    position: absolute;
+    bottom: 1px;
+    right: 1px;
+  }
+  
+  &.selected {
+    transform: scale(1.5);
+    z-index: 1;
+  }
+  
+  &.today {
+    border-color: var(--color--btn--orange);
+  }
+
+  .day-label {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: var(--color--white);
-    border: 1px solid var(--color--btn--blue);
-    transition: transform 0.12s ease;
-    box-shadow: var(--box-shadow--day-square);
-    
-    &.selected {
-      transform: scale(1.5);
-      z-index: 1;
-    }
-    
-    &.today {
-      border-color: var(--color--btn--orange);
-    }
-  
-    .day-label {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 0;
-      font-family: var(--font-family--sans-serif);
-      font-size: 1rem;
-      font-weight: 500;
-      text-align: center;
-      color: var(--color--black);
+    gap: 0;
+    font-family: var(--font-family--sans-serif);
+    font-size: 1rem;
+    font-weight: 500;
+    text-align: center;
+    color: var(--color--black);
 
-      > * {
-        line-height: 1;
+    > * {
+      line-height: 1;
 
-        &.month {
-          font-family: var(--font-family--sans-serif);
-          font-size: 0.6rem;
-          text-transform: uppercase;
-        }
+      &.month {
+        font-family: var(--font-family--sans-serif);
+        font-size: 0.6rem;
+        text-transform: uppercase;
+      }
 
-        &.day {
-          font-family: var(--font-family--serif);
-        }
+      &.day {
+        font-family: var(--font-family--serif);
       }
     }
   }
+}
 
 .apt-soon--short {
   position: fixed;
@@ -442,7 +438,6 @@ main {
   margin-bottom: 0.5rem;
   margin-right: 0.5rem;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
   background-color: var(--color--bg--appt-alert);
@@ -450,13 +445,12 @@ main {
   gap: 0.5rem;
   color: var(--color--black);
   padding: 1rem;
-  padding-top: 0.5rem;
   animation: throbInAndUp 1.2s ease-in-out infinite;
   box-shadow: var(--box-shadow--standard);
 
   .time {
-    font-size: 0.8rem;
-    font-weight: 600;
+    font-size: 1.5rem;
+    font-family: var(--font-family--serif);
   }
   
   .cta-btn {
@@ -732,7 +726,6 @@ main {
           transform: translateY(-50%);
           z-index: -1;
         } 
-
       }
     }
   }
@@ -773,6 +766,7 @@ main {
     text-wrap: balance;
     padding: 1rem;
     position: relative;
+    box-shadow: var(--box-shadow--day-square);
 
     .rated {
       position: absolute;
@@ -1743,6 +1737,7 @@ main {
           transform: translateX(-50%) scale(1.2);
         }
 
+
         .goal-rating-title {
           text-align: center;
           font-weight: 500;
@@ -1769,7 +1764,7 @@ main {
             transition: all 0.2s ease;
             background-color: rgba(255,255,255,1);
             border-radius: 99rem;
-            letter-spacing: -0.05rem;
+            letter-spacing: -0.025rem;
             
             span {
               font-family: var(--font-family--sans-serif);
