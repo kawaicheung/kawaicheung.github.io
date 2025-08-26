@@ -141,8 +141,7 @@
 }
 
 
-/* Clearing / base css */
-
+/* Clearing / base CSS */
 *,
 *::before,
 *::after {
@@ -208,7 +207,7 @@ html {
   --easing--pop-in: cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
   --box-shadow--standard: 0 0 10px rgba(0,0,0,0.1);
-  --box-shadow--day-square: 0 2px 3px rgba(0,0,0,0.2);
+  --box-shadow--square: 0 2px 3px rgba(0,0,0,0.2);
   --box-shadow--card: 0 6px 5px rgba(0,0,0,0.2);
 
   --padding--btn-standard: 0.8rem 1.5rem;
@@ -383,7 +382,7 @@ main {
   background-color: var(--color--white);
   border: 1px solid var(--color--btn--blue);
   transition: transform 0.12s ease;
-  box-shadow: var(--box-shadow--day-square);
+  box-shadow: var(--box-shadow--square);
 
   .check {
     position: absolute;
@@ -766,7 +765,7 @@ main {
     text-wrap: balance;
     padding: 1rem;
     position: relative;
-    box-shadow: var(--box-shadow--day-square);
+    box-shadow: var(--box-shadow--square);
 
     .rated {
       position: absolute;
@@ -2083,7 +2082,7 @@ main {
   display: flex;
   background-color: var(--color--gray--light);
   border-radius: 0.5rem;
-  padding: 0.25rem;
+  padding: 0.5rem;
   gap: 0.25rem;
 }
 
@@ -2111,7 +2110,7 @@ main {
 .input-method-option.selected {
   background-color: var(--color--white);
   color: var(--color--black);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--box-shadow--square);
 }
 
 .input-method-option:hover:not(.selected) {
