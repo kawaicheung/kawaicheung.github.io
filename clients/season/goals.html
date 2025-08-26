@@ -895,11 +895,10 @@
       </div>
     </div>
 
-<!-- i moved close btn outside popup-header only for goals 1. lets remove goals 2 3 4 and just have all things point to goals 1 -->
-    <!-- Text input popup for Goal 1 -->
-    <div class="text-input-popup" id="text-input-popup-1">
+    <!-- Unified text input popup for all goals -->
+    <div class="text-input-popup" id="text-input-popup">
       <div class="popup-content">
-          <div class="close-text-popup" id="close-text-popup-1">
+          <div class="close-text-popup" id="close-text-popup">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M18 6L6 18" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
               <path d="M6 6L18 18" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -938,13 +937,13 @@
           </div>
           <div class="text-input-container">
               <!-- Type input (default) -->
-              <div class="input-area active" id="type-area-1">
-                  <textarea class="main-textarea" placeholder="How did it go today? Share any details, challenges, or thoughts about avoiding work treats..."></textarea>
+              <div class="input-area active" id="type-area">
+                  <textarea class="main-textarea" placeholder="How did it go today? Share any details, challenges, or thoughts..."></textarea>
               </div>
               <!-- Speak input -->
-              <div class="input-area hidden" id="speak-area-1">
+              <div class="input-area hidden" id="speak-area">
                   <div class="speak-interface">
-                      <button class="record-btn" id="record-btn-1">
+                      <button class="record-btn" id="record-btn">
                           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                               <circle cx="12" cy="12" r="3" fill="currentColor"/>
                           </svg>
@@ -953,10 +952,10 @@
                   </div>
               </div>
               <!-- Upload input -->
-              <div class="input-area hidden" id="upload-area-1">
+              <div class="input-area hidden" id="upload-area">
                   <div class="upload-interface">
-                      <input type="file" id="file-input-1" accept="image/*" style="display: none;">
-                      <button class="upload-btn" id="upload-btn-1">
+                      <input type="file" id="file-input" accept="image/*" style="display: none;">
+                      <button class="upload-btn" id="upload-btn">
                           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                               <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                               <polyline points="7,10 12,15 17,10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -968,130 +967,11 @@
               </div>
           </div>
           <div class="text-input-footer">
-              <button class="save-text-btn" data-goal="1">Save</button>
+              <button class="save-text-btn">Save</button>
           </div>
       </div>
     </div>
 
-    <!-- Text input popup for Goal 2 -->
-    <div class="text-input-popup" id="text-input-popup-2">
-      <div class="popup-content">
-          <div class="popup-header">
-              <div class="popup-title">Share more about this goal.</div>
-              <div class="close-text-popup" id="close-text-popup-2">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M18 6L6 18" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                      <path d="M6 6L18 18" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-              </div>
-          </div>
-          <div class="input-method-selector">
-              <div class="input-method-option selected" data-method="type">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M14 2H6C5.46957 2 4.96086 2.21071 4.58579 2.58579C4.21071 2.96086 4 3.46957 4 4V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V8L14 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                      <polyline points="14,2 14,8 20,8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                      <line x1="16" y1="13" x2="8" y2="13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                      <line x1="16" y1="17" x2="8" y2="17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-                  <span>Type</span>
-              </div>
-              <div class="input-method-option" data-method="speak">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M12 1C12 1 8 1 8 5V11C8 15 12 15 12 15C12 15 16 15 16 11V5C16 1 12 1 12 1Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                      <path d="M19 10V11C19 14.866 15.866 18 12 18C8.13401 18 5 14.866 5 11V10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                      <line x1="12" y1="18" x2="12" y2="23" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                      <line x1="8" y1="23" x2="16" y2="23" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-                  <span>Speak</span>
-              </div>
-              <div class="input-method-option" data-method="upload">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <rect x="3" y="3" width="18" height="18" rx="2" ry="2" stroke="currentColor" stroke-width="2"/>
-                      <circle cx="8.5" cy="8.5" r="1.5" stroke="currentColor" stroke-width="2"/>
-                      <polyline points="21,15 16,10 5,21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-                  <span>Upload</span>
-              </div>
-          </div>
-          <div class="text-input-container">
-              <!-- Type input (default) -->
-              <div class="input-area active" id="type-area-2">
-                  <textarea class="main-textarea" placeholder="How did it go today? Share any details, challenges, or thoughts about avoiding work treats..."></textarea>
-              </div>
-              <!-- Speak input -->
-              <div class="input-area hidden" id="speak-area-2">
-                  <div class="speak-interface">
-                      <button class="record-btn" id="record-btn-2">
-                          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                              <circle cx="12" cy="12" r="3" fill="currentColor"/>
-                          </svg>
-                          Start Recording
-                      </button>
-                  </div>
-              </div>
-              <!-- Upload input -->
-              <div class="input-area hidden" id="upload-area-2">
-                  <div class="upload-interface">
-                      <input type="file" id="file-input-2" accept="image/*" style="display: none;">
-                      <button class="upload-btn" id="upload-btn-2">
-                          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                              <polyline points="7,10 12,15 17,10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                              <line x1="12" y1="15" x2="12" y2="3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                          </svg>
-                          Choose Image
-                      </button>
-                  </div>
-              </div>
-          </div>
-          <div class="text-input-footer">
-              <button class="save-text-btn" data-goal="1">Save</button>
-          </div>
-      </div>
-    </div>
-
-
-    <!-- Text input popup for Goal 3 -->
-    <div class="text-input-popup" id="text-input-popup-3">
-      <div class="popup-content">
-          <div class="popup-header">
-              <div class="popup-title">Share more about exercise</div>
-              <div class="close-text-popup" id="close-text-popup-3">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M18 6L6 18" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                      <path d="M6 6L18 18" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-              </div>
-          </div>
-          <div class="text-input-container">
-              <textarea class="main-textarea" placeholder="How did your exercise session go today? What type of activity did you do? Any challenges or wins?"></textarea>
-          </div>
-          <div class="text-input-footer">
-              <button class="save-text-btn" data-goal="3">Save</button>
-          </div>
-      </div>
-    </div>
-
-    <!-- Text input popup for Goal 4 -->
-    <div class="text-input-popup" id="text-input-popup-4">
-      <div class="popup-content">
-          <div class="popup-header">
-              <div class="popup-title">Share more about TV habits</div>
-              <div class="close-text-popup" id="close-text-popup-4">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M18 6L6 18" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                      <path d="M6 6L18 18" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-              </div>
-          </div>
-          <div class="text-input-container">
-              <textarea class="main-textarea" placeholder="How did it go with not eating while watching TV today? Share any strategies or challenges..."></textarea>
-          </div>
-          <div class="text-input-footer">
-              <button class="save-text-btn" data-goal="4">Save</button>
-          </div>
-      </div>
-    </div>
   </body>
   <script>
     // Usage example - replace your original code with this:
@@ -1141,7 +1021,6 @@
       initializeModals(modalConfigs);
       initializeCardTimeline();
       initializeGoalCalendar();
-      initializeSaveWriteupButtons();
       initializeBottomPanelClick();
       initializeAppointmentSoon();
       initializePreVisitSummaryEdit();
@@ -1149,8 +1028,7 @@
       initializeCustomInput();
       initializeGoalLogging();
       initializeGoalAddMoreToggle();
-      initializeTextInputPopups();
-      initializeUpdatedGoalButtons();
+      initializeUnifiedTextInput();
     });
 
     window.addEventListener('scroll', () => {
@@ -1529,21 +1407,6 @@
       }, 100);
     }
     
-    function initializeSaveWriteupButtons() {
-      document.querySelectorAll('.save-writeup-btn').forEach(button => {
-        button.addEventListener('click', (e) => {
-          const goalId = e.target.dataset.goal;
-          const modal = document.getElementById(`goals-${goalId}-logging`);
-          
-          // In a real app, you'd save the data here
-          console.log(`Saving writeup for goal ${goalId}`);
-          
-          // Hide modal
-          modal.style.display = 'none';
-          enableHtmlScroll();
-        });
-      });
-    }
 
     function initializeBottomPanelClick() {
       const bottomPanelHeader = document.querySelector('.bottom-panel-header');
@@ -1726,271 +1589,176 @@
       });
     }
 
-    function initializeGoalAddMoreToggle() {
-      // Hide all goal-add-more sections by default
-      document.querySelectorAll('.goal-action-buttons').forEach(section => {
-        section.classList.add('hidden');
-      });
+  function initializeGoalAddMoreToggle() {
+    // Hide all goal-add-more sections by default
+    document.querySelectorAll('.goal-action-buttons').forEach(section => {
+      section.classList.add('hidden');
+    });
 
-      // Add event listeners to all rating options
-      document.querySelectorAll('.rating-btn').forEach(option => {
-        option.addEventListener('click', function() {
-          const parentGoal = this.closest('.popup-content');
-          if (!parentGoal) return;
+    // Add event listeners to all rating options
+    document.querySelectorAll('.rating-btn').forEach(option => {
+      option.addEventListener('click', function() {
+        const parentGoal = this.closest('.popup-content');
+        if (!parentGoal) return;
 
-          const goalAddMoreSection = parentGoal.querySelector('.goal-action-buttons');
+        const goalAddMoreSection = parentGoal.querySelector('.goal-action-buttons');
+        
+        // Remove selected class from all rating options in this goal
+        parentGoal.querySelectorAll('.rating-btn').forEach(opt => {
+          opt.classList.remove('selected');
+        });
+        
+        // Add selected class to clicked option
+        this.classList.add('selected');
+        
+        // Show the goal-add-more section with a smooth animation
+        if (goalAddMoreSection) {
+          goalAddMoreSection.classList.remove('hidden')
+          goalAddMoreSection.style.opacity = '0';
+          goalAddMoreSection.style.transform = 'translateY(20px)';
           
-          // Remove selected class from all rating options in this goal
-          parentGoal.querySelectorAll('.rating-btn').forEach(opt => {
-            opt.classList.remove('selected');
+          // Animate in
+          requestAnimationFrame(() => {
+            goalAddMoreSection.style.transition = 'all 0.3s ease';
+            goalAddMoreSection.style.opacity = '1';
+            goalAddMoreSection.style.transform = 'translateY(0)';
           });
-          
-          // Add selected class to clicked option
-          this.classList.add('selected');
-          
-          // Show the goal-add-more section with a smooth animation
-          if (goalAddMoreSection) {
-            goalAddMoreSection.classList.remove('hidden')
-            goalAddMoreSection.style.opacity = '0';
-            goalAddMoreSection.style.transform = 'translateY(20px)';
+        }
+      });
+    });
+
+    // Add event listeners to all rating options
+    document.querySelectorAll('.input-option').forEach(option => {
+      option.addEventListener('click', function() {
+        const parentGoal = this.closest('.popup-content');
+        if (!parentGoal) return;
+
+        // Remove selected class from all rating options in this goal
+        parentGoal.querySelectorAll('.input-option').forEach(opt => {
+          opt.classList.remove('selected');
+        });
+        
+        // Add selected class to clicked option
+        this.classList.add('selected');
+      });
+    });
+  }
+
+  function initializeUnifiedTextInput() {
+    const textInputPopup = document.getElementById('text-input-popup');
+    const closeBtn = document.getElementById('close-text-popup');
+    const saveBtn = textInputPopup.querySelector('.save-text-btn');
+    const textarea = textInputPopup.querySelector('.main-textarea');
+    
+    let currentGoalId = null;
+
+    // Store reference to current goal when opening popup
+    document.querySelectorAll('.share-more-btn').forEach(button => {
+        button.addEventListener('click', (e) => {
+            currentGoalId = e.target.dataset.goal;
+            textInputPopup.style.display = 'flex';
             
-            // Animate in
-            requestAnimationFrame(() => {
-              goalAddMoreSection.style.transition = 'all 0.3s ease';
-              goalAddMoreSection.style.opacity = '1';
-              goalAddMoreSection.style.transform = 'translateY(0)';
-            });
-          }
+            // Focus on textarea after a short delay
+            setTimeout(() => {
+                textarea.focus();
+            }, 300);
         });
-      });
+    });
 
-      // Add event listeners to all rating options
-      document.querySelectorAll('.input-option').forEach(option => {
-        option.addEventListener('click', function() {
-          const parentGoal = this.closest('.popup-content');
-          if (!parentGoal) return;
-
-          // Remove selected class from all rating options in this goal
-          parentGoal.querySelectorAll('.input-option').forEach(opt => {
-            opt.classList.remove('selected');
-          });
-          
-          // Add selected class to clicked option
-          this.classList.add('selected');
-        });
-      });
-    }
-
-    function initializeTextInputPopups() {
-        // Initialize text input functionality for all goals
-        for (let goalId = 1; goalId <= 4; goalId++) {
-            initializeTextInputForGoal(goalId);
-        }
-    }
-
-    function initializeTextInputForGoal(goalId) {
-        const typeOption = document.querySelector(`#goals-${goalId}-logging .input-option[data-type="type"]`);
-        const textInputPopup = document.getElementById(`text-input-popup-${goalId}`);
-        const closeBtn = document.getElementById(`close-text-popup-${goalId}`);
-        const saveBtn = textInputPopup.querySelector('.save-text-btn');
-        const textarea = textInputPopup.querySelector('.main-textarea');
-
-        // Open text input popup when "Type" option is clicked
-        if (typeOption) {
-            typeOption.addEventListener('click', () => {
-                textInputPopup.style.display = 'flex';
-                // Focus on textarea after a short delay to ensure popup is visible
-                setTimeout(() => {
-                    textarea.focus();
-                }, 300);
+    // Handle input method selector for text input popup
+    document.querySelectorAll('.input-method-option').forEach(option => {
+        option.addEventListener('click', (e) => {
+            const method = e.currentTarget.dataset.method;
+            const popup = e.currentTarget.closest('.text-input-popup');
+            
+            // Remove selected class from all options in this popup
+            popup.querySelectorAll('.input-method-option').forEach(opt => {
+                opt.classList.remove('selected');
             });
-        }
-
-        // Close text input popup
-        if (closeBtn) {
-            closeBtn.addEventListener('click', () => {
-                textInputPopup.style.display = 'none';
+            
+            // Add selected class to clicked option
+            e.currentTarget.classList.add('selected');
+            
+            // Hide all input areas in this popup
+            popup.querySelectorAll('.input-area').forEach(area => {
+                area.classList.add('hidden');
             });
-        }
-
-        // Close when clicking background
-        textInputPopup.addEventListener('click', (e) => {
-            if (e.target === textInputPopup) {
-                textInputPopup.style.display = 'none';
+            
+            // Show the selected input area
+            const targetArea = popup.querySelector(`#${method}-area`);
+            if (targetArea) {
+                targetArea.classList.remove('hidden');
+                
+                // Focus on textarea if type method is selected
+                if (method === 'type') {
+                    const textarea = targetArea.querySelector('.main-textarea');
+                    if (textarea) {
+                        setTimeout(() => textarea.focus(), 100);
+                    }
+                }
             }
         });
+    });
 
-        // Save and close both popups
-        if (saveBtn) {
-            saveBtn.addEventListener('click', () => {
-                const textContent = textarea.value.trim();
-                
-                // In a real app, you'd save the data here
-                console.log(`Saving text input for goal ${goalId}:`, textContent);
-                
-                // Hide text input popup
-                textInputPopup.style.display = 'none';
-                
-                // Hide parent goal popup
-                const parentPopup = document.getElementById(`goals-${goalId}-logging`);
+   // Handle Save buttons (same functionality as old goal-footer button)
+    document.querySelectorAll('.save-btn').forEach(button => {
+      button.addEventListener('click', (e) => {
+        const goalId = e.target.dataset.goal;
+        const modal = document.getElementById(`goals-${goalId}-logging`);
+        
+        // In a real app, you'd save the data here
+        console.log(`Saving goal ${goalId} without additional text`);
+        
+        // Hide modal
+        modal.style.display = 'none';
+        enableHtmlScroll();
+      });
+    });
+
+    // Close text input popup
+    if (closeBtn) {
+        closeBtn.addEventListener('click', () => {
+            textInputPopup.style.display = 'none';
+            currentGoalId = null;
+        });
+    }
+
+    // Close when clicking background
+    textInputPopup.addEventListener('click', (e) => {
+        if (e.target === textInputPopup) {
+            textInputPopup.style.display = 'none';
+            currentGoalId = null;
+        }
+    });
+
+    // Save and close both popups
+    if (saveBtn) {
+        saveBtn.addEventListener('click', () => {
+            const textContent = textarea.value.trim();
+            
+            // In a real app, you'd save the data here
+            console.log(`Saving text input for goal ${currentGoalId}:`, textContent);
+            
+            // Hide text input popup
+            textInputPopup.style.display = 'none';
+            
+            // Hide parent goal popup if currentGoalId exists
+            if (currentGoalId) {
+                const parentPopup = document.getElementById(`goals-${currentGoalId}-logging`);
                 if (parentPopup) {
                     parentPopup.style.display = 'none';
                 }
-                
-                // Re-enable scrolling
-                enableHtmlScroll();
-                
-                // Clear textarea for next use
-                textarea.value = '';
-            });
-        }
-    }
-
-    function initializeUpdatedGoalButtons() {
-      // Handle Share More buttons
-      document.querySelectorAll('.share-more-btn').forEach(button => {
-        button.addEventListener('click', (e) => {
-          const goalId = e.target.dataset.goal;
-          const textInputPopup = document.getElementById(`text-input-popup-${goalId}`);
-          const textarea = textInputPopup.querySelector('.main-textarea');
-          
-          // Open the text input popup
-          textInputPopup.style.display = 'flex';
-          
-          // Focus on textarea after a short delay
-          setTimeout(() => {
-            textarea.focus();
-          }, 300);
-        });
-      });
-
-      // Handle Save buttons (same functionality as old goal-footer button)
-      document.querySelectorAll('.save-btn').forEach(button => {
-        button.addEventListener('click', (e) => {
-          const goalId = e.target.dataset.goal;
-          const modal = document.getElementById(`goals-${goalId}-logging`);
-          
-          // In a real app, you'd save the data here
-          console.log(`Saving goal ${goalId} without additional text`);
-          
-          // Hide modal
-          modal.style.display = 'none';
-          enableHtmlScroll();
-        });
-      });
-
-      // Handle input method selector for text input popups
-      document.querySelectorAll('.input-method-option').forEach(option => {
-        option.addEventListener('click', (e) => {
-          const method = e.currentTarget.dataset.method;
-          const popup = e.currentTarget.closest('.text-input-popup');
-          const goalId = popup.id.split('-').pop();
-          
-          // Remove selected class from all options in this popup
-          popup.querySelectorAll('.input-method-option').forEach(opt => {
-            opt.classList.remove('selected');
-          });
-          
-          // Add selected class to clicked option
-          e.currentTarget.classList.add('selected');
-          
-          // Hide all input areas in this popup
-          popup.querySelectorAll('.input-area').forEach(area => {
-            area.classList.add('hidden');
-          });
-          
-          // Show the selected input area
-          const targetArea = popup.querySelector(`#${method}-area-${goalId}`);
-          if (targetArea) {
-            targetArea.classList.remove('hidden');
+            }
             
-            // Focus on textarea if type method is selected
-            if (method === 'type') {
-              const textarea = targetArea.querySelector('.main-textarea');
-              if (textarea) {
-                setTimeout(() => textarea.focus(), 100);
-              }
-            }
-          }
-        });
-      });
-
-      // Handle record button functionality
-      document.querySelectorAll('.record-btn').forEach(button => {
-        let isRecording = false;
-        let mediaRecorder = null;
-        
-        button.addEventListener('click', async (e) => {
-          const btn = e.currentTarget;
-          const statusElement = btn.parentElement.querySelector('.speak-status');
-          
-          if (!isRecording) {
-            try {
-              const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-              mediaRecorder = new MediaRecorder(stream);
-              
-              mediaRecorder.start();
-              isRecording = true;
-              
-              btn.classList.add('recording');
-              btn.innerHTML = `
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <rect x="6" y="6" width="12" height="12" fill="currentColor"/>
-                </svg>
-                Stop Recording
-              `;
-              statusElement.textContent = 'Recording...';
-              
-              mediaRecorder.ondataavailable = (event) => {
-                console.log('Recorded audio data:', event.data);
-              };
-              
-              mediaRecorder.onstop = () => {
-                stream.getTracks().forEach(track => track.stop());
-              };
-              
-            } catch (error) {
-              console.error('Error accessing microphone:', error);
-              statusElement.textContent = 'Microphone access denied';
-            }
-          } else {
-            if (mediaRecorder && mediaRecorder.state === 'recording') {
-              mediaRecorder.stop();
-            }
-            isRecording = false;
+            // Re-enable scrolling
+            enableHtmlScroll();
             
-            btn.classList.remove('recording');
-            btn.innerHTML = `
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="12" cy="12" r="3" fill="currentColor"/>
-              </svg>
-              Start Recording
-            `;
-            statusElement.textContent = 'Recording saved';
-          }
+            // Clear textarea and reset goal reference
+            textarea.value = '';
+            currentGoalId = null;
         });
-      });
-
-      // Handle upload button functionality
-      document.querySelectorAll('.upload-btn').forEach(button => {
-        button.addEventListener('click', (e) => {
-          const goalId = e.currentTarget.id.split('-').pop();
-          const fileInput = document.getElementById(`file-input-${goalId}`);
-          fileInput.click();
-        });
-      });
-
-      // Handle file input changes
-      document.querySelectorAll('input[type="file"]').forEach(input => {
-        input.addEventListener('change', (e) => {
-          const file = e.target.files[0];
-          if (file) {
-            console.log('Selected file:', file.name);
-            const uploadBtn = e.target.parentElement.querySelector('.upload-btn');
-            uploadBtn.textContent = `Selected: ${file.name}`;
-          }
-        });
-      });
     }
+}
+
   </script>
 </html>
