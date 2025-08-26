@@ -895,17 +895,18 @@
       </div>
     </div>
 
+<!-- i moved close btn outside popup-header only for goals 1. lets remove goals 2 3 4 and just have all things point to goals 1 -->
     <!-- Text input popup for Goal 1 -->
     <div class="text-input-popup" id="text-input-popup-1">
       <div class="popup-content">
+          <div class="close-text-popup" id="close-text-popup-1">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M18 6L6 18" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M6 6L18 18" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
           <div class="popup-header">
               <div class="popup-title">Share more about this goal.</div>
-              <div class="close-text-popup" id="close-text-popup-1">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M18 6L6 18" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                      <path d="M6 6L18 18" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-              </div>
           </div>
           <div class="input-method-selector">
               <div class="input-method-option selected" data-method="type">
@@ -976,7 +977,7 @@
     <div class="text-input-popup" id="text-input-popup-2">
       <div class="popup-content">
           <div class="popup-header">
-              <div class="popup-title">Share more about water intake</div>
+              <div class="popup-title">Share more about this goal.</div>
               <div class="close-text-popup" id="close-text-popup-2">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path d="M18 6L6 18" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -984,14 +985,71 @@
                   </svg>
               </div>
           </div>
+          <div class="input-method-selector">
+              <div class="input-method-option selected" data-method="type">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M14 2H6C5.46957 2 4.96086 2.21071 4.58579 2.58579C4.21071 2.96086 4 3.46957 4 4V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V8L14 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                      <polyline points="14,2 14,8 20,8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                      <line x1="16" y1="13" x2="8" y2="13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                      <line x1="16" y1="17" x2="8" y2="17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                  <span>Type</span>
+              </div>
+              <div class="input-method-option" data-method="speak">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M12 1C12 1 8 1 8 5V11C8 15 12 15 12 15C12 15 16 15 16 11V5C16 1 12 1 12 1Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                      <path d="M19 10V11C19 14.866 15.866 18 12 18C8.13401 18 5 14.866 5 11V10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                      <line x1="12" y1="18" x2="12" y2="23" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                      <line x1="8" y1="23" x2="16" y2="23" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                  <span>Speak</span>
+              </div>
+              <div class="input-method-option" data-method="upload">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <rect x="3" y="3" width="18" height="18" rx="2" ry="2" stroke="currentColor" stroke-width="2"/>
+                      <circle cx="8.5" cy="8.5" r="1.5" stroke="currentColor" stroke-width="2"/>
+                      <polyline points="21,15 16,10 5,21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                  <span>Upload</span>
+              </div>
+          </div>
           <div class="text-input-container">
-              <textarea class="main-textarea" placeholder="How did your water intake go today? Share any strategies, challenges, or observations..."></textarea>
+              <!-- Type input (default) -->
+              <div class="input-area active" id="type-area-2">
+                  <textarea class="main-textarea" placeholder="How did it go today? Share any details, challenges, or thoughts about avoiding work treats..."></textarea>
+              </div>
+              <!-- Speak input -->
+              <div class="input-area hidden" id="speak-area-2">
+                  <div class="speak-interface">
+                      <button class="record-btn" id="record-btn-2">
+                          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <circle cx="12" cy="12" r="3" fill="currentColor"/>
+                          </svg>
+                          Start Recording
+                      </button>
+                  </div>
+              </div>
+              <!-- Upload input -->
+              <div class="input-area hidden" id="upload-area-2">
+                  <div class="upload-interface">
+                      <input type="file" id="file-input-2" accept="image/*" style="display: none;">
+                      <button class="upload-btn" id="upload-btn-2">
+                          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                              <polyline points="7,10 12,15 17,10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                              <line x1="12" y1="15" x2="12" y2="3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                          </svg>
+                          Choose Image
+                      </button>
+                  </div>
+              </div>
           </div>
           <div class="text-input-footer">
-              <button class="save-text-btn" data-goal="2">Save</button>
+              <button class="save-text-btn" data-goal="1">Save</button>
           </div>
       </div>
     </div>
+
 
     <!-- Text input popup for Goal 3 -->
     <div class="text-input-popup" id="text-input-popup-3">

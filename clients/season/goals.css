@@ -1883,8 +1883,7 @@ main {
 
     .popup-header {
       display: flex;
-      align-items: center;
-      justify-content: space-between;
+      justify-content: center;
 
       .popup-title {
         font-family: var(--font-family--serif);
@@ -1894,6 +1893,9 @@ main {
         letter-spacing: -0.02rem;
       }
 
+    }
+
+    
       .close-text-popup {
         position: absolute;
         top: 0.5rem;
@@ -1911,7 +1913,6 @@ main {
           background-color: var(--color--gray--light);
         }
       }
-    }
 
     .text-input-container {
       flex: 1;
