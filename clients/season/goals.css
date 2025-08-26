@@ -1718,9 +1718,10 @@ main {
         font-family: var(--font-family--serif);
         font-size: 1.4rem;
         font-weight: 500;
-        letter-spacing: -0.05rem;
-        text-align: left;
-        margin-bottom: 1rem;
+        letter-spacing: -0.025rem;
+        text-align: center;
+        text-wrap: balance;
+        margin-bottom: 1.5rem;
       }
 
       .goal-rating {
@@ -1733,7 +1734,7 @@ main {
         gap: 1rem;
         background-color: rgba(255,255,255,0.5);
         border-radius: 1rem;
-        padding: 2rem 1rem;
+        padding: 2.5rem 1rem 2rem 1rem;
 
         .day-square {
           position: absolute;
@@ -1745,7 +1746,7 @@ main {
         .goal-rating-title {
           text-align: center;
           font-weight: 500;
-          font-size: 1.4rem;
+          font-size: 1.2rem;
           width: fit-content;
           font-family: var(--font-family--serif);
         }
@@ -1788,7 +1789,6 @@ main {
     &.goals-1-logging { 
       background-color: var(--color--goals--blue);
 
-      .goal-rating-title,
       .rating-btn,
       .option-icon { 
         color: var(--color--goals--blue-dark);
@@ -1821,7 +1821,6 @@ main {
       background-color: var(--color--goals--pink);
       
 
-      .goal-rating-title,
       .rating-btn,
       .option-icon {
         color: var(--color--goals--pink-dark);
@@ -1838,7 +1837,6 @@ main {
       background-color: var(--color--goals--orange);
       
 
-      .goal-rating-title,
       .rating-btn,
       .option-icon {
         color: var(--color--goals--orange-dark);
@@ -1985,27 +1983,6 @@ main {
   }
 }
 
-/* Themed save buttons for each goal */
-#text-input-popup-1 {
-  .save-text-btn {
-    background: var(--color--goals--blue-dark);
-  }
-}
-#text-input-popup-2 {
-  .save-text-btn {
-    background: var(--color--goals--green-dark);
-  }
-}
-#text-input-popup-3 {
-  .save-text-btn {
-    background: var(--color--goals--pink-dark);
-  }
-}
-#text-input-popup-4 {
-  .save-text-btn {
-    background: var(--color--goals--orange-dark);
-  }
-}
 
 
 .footer {
@@ -2089,12 +2066,12 @@ main {
 
 .save-btn {
   background: transparent;
-  color: var(--color--goals--blue-dark);
-  border: 2px solid var(--color--goals--blue-dark);
+  color: var(--color--btn--blue);
+  border: 2px solid var(--color--btn--blue);
 }
 
 .share-more-btn {
-  background: var(--color--goals--blue-dark);
+  background: var(--color--btn--blue);
   color: var(--color--white);
 }
 
