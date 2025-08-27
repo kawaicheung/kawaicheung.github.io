@@ -430,12 +430,11 @@ main {
 .apt-soon--short {
   position: fixed;
   bottom: var(--height--footer);
-  right: 0;
+  right: 1rem;
   height: auto;
-  z-index: 1001;
-  border-radius: 0.5rem;
-  margin-bottom: 0.5rem;
-  margin-right: 0.5rem;
+  z-index: 999;
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -444,7 +443,7 @@ main {
   gap: 0.5rem;
   color: var(--color--black);
   padding: 1rem;
-  animation: throbInAndUp 1.2s ease-in-out infinite;
+  animation: throbInAndUp 2s ease-in-out infinite;
   box-shadow: var(--box-shadow--standard);
 
   .time {
@@ -2389,10 +2388,10 @@ main {
 
 @keyframes throbInAndUp {
   0%, 100% {
-    transform: translateY(0);
+    transform: translateY(20px);
   }
   50% {
-    transform: translateY(-20px);
+    transform: translateY(0);
   }
 }
 
