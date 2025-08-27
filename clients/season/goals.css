@@ -1276,46 +1276,6 @@ main {
       }
     }
 
-    &.appt-report {
-      bottom: var(--padding--sides);
-      background-color: var(--color--white);
-      margin-top: var(--height--header);
-      height: 80vh;
-      overflow-y: hidden;
-
-      h2 {
-        font-family: var(--font-family--sans-serif);
-        font-size: 1.4rem;
-        font-weight: 500;
-        letter-spacing: -0.05rem;
-        margin-bottom: 1rem;
-      }
-
-      .content {
-        overflow-y: scroll;
-        height: calc(100% - 4rem);
-        padding-top: 0;
-        margin-top: 2rem;
-        scrollbar-width: none;
-        -ms-overflow-style: none;
-        -webkit-overflow-scrolling: touch;
-        position: relative;
-   
-        &::-webkit-scrollbar {
-          display: none;
-        }
-
-        p {
-          font-family: var(--font-family--sans-serif);
-          font-size: 1.1rem;
-          line-height: 1.5rem;
-          font-weight: 400;
-          letter-spacing: -0.02rem;
-          color: var(--color--black);
-          margin-bottom: 2rem;
-        }
-      }
-    }
 
     &.pre-visit-summary {
       bottom: var(--padding--sides);
@@ -1349,15 +1309,6 @@ main {
           padding-right: var(--padding--sides);
           border-bottom: 1px solid var(--color--gray--medium);
           z-index: 100;
-          
-          .to {
-            font-family: var(--font-family--sans-serif);
-            font-size: 0.8rem;
-            color: var(--color--gray--dark);
-            letter-spacing: 0.05rem;
-            text-transform: uppercase;
-            font-weight: 500;
-          }
 
           .avatar {
             width: 48px;
@@ -1416,16 +1367,13 @@ main {
         .summary-content {
           flex: 1;
           overflow-y: auto;
-          padding: 2rem 0;
           scrollbar-width: none;
           -ms-overflow-style: none;
           -webkit-overflow-scrolling: touch;
           background-color: var(--color--bg--summary);
           margin-left: calc(-1 * var(--padding--sides));
           margin-right: calc(-1 * var(--padding--sides));
-          padding-left: var(--padding--sides);
-          padding-right: var(--padding--sides);
-          padding-bottom: 8rem;
+          padding: 2rem var(--padding--sides) 8rem var(--padding--sides);
           
           &::-webkit-scrollbar {
             display: none;
@@ -1474,10 +1422,9 @@ main {
                 letter-spacing: -0.02rem;
                 
                 &:before {
-                  content: '•';
+                  content: '-';
                   position: absolute;
                   left: 0;
-                  color: #666;
                   font-weight: 600;
                 }
                 
@@ -1535,11 +1482,12 @@ main {
 
           h3 {
             font-family: var(--font-family--serif);
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             font-weight: 400;
             color: var(--color--black);
-            margin-bottom: 1rem;
+            margin-bottom: 2rem;
             letter-spacing: -0.02rem;
+            line-height: 1.2;
           }
 
           .edit-items {
@@ -2159,6 +2107,7 @@ main {
   animation: pulse 2s infinite;
 }
 
+
 @keyframes pulse {
   0%, 100% { transform: scale(1); }
   50% { transform: scale(1.05); }
@@ -2169,6 +2118,249 @@ main {
   height: 70vh; /* Changed from 60vh */
   max-height: 70vh;
 }
+
+
+/* Add these CSS rules to support the updated appointment report modal */
+
+.popup-content.appt-report {
+  bottom: var(--padding--sides);
+  background-color: var(--color--white);
+  margin-top: var(--height--header);
+  height: 88vh;
+  overflow-y: hidden;
+
+  .appt-report-summary-content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    margin-left: calc(-1 * var(--padding--sides));
+    margin-right: calc(-1 * var(--padding--sides));
+    padding-left: var(--padding--sides);
+    padding-right: var(--padding--sides);
+    
+    .summary-header {
+      font-family: var(--font-family--sans-serif);
+      font-size: 1.2rem;
+      font-weight: 500;
+      letter-spacing: -0.05rem;
+      color: var(--color--black);
+    }
+    
+    .summary-to {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 1rem 0;
+      margin-left: calc(-1 * var(--padding--sides));
+      margin-right: calc(-1 * var(--padding--sides));
+      padding-left: var(--padding--sides);
+      padding-right: var(--padding--sides);
+      border-bottom: 1px solid var(--color--gray--medium);
+      z-index: 100;
+      
+      .avatar {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 1px solid var(--color--gray--medium);
+        flex-shrink: 0;
+      }
+      
+      .rd-info {
+        .rd-name {
+          font-family: var(--font-family--sans-serif);
+          font-size: 1.1rem;
+          font-weight: 500;
+          color: var(--color--black);
+          letter-spacing: -0.02rem;
+        }
+        
+        .rd-title {
+          font-family: var(--font-family--sans-serif);
+          font-size: 0.9rem;
+          font-weight: 400;
+          color: #666;
+          letter-spacing: -0.02rem;
+        }
+      }
+    }
+
+    .appt-report-tabs {
+      display: flex;
+      margin-left: calc(-1 * var(--padding--sides));
+      margin-right: calc(-1 * var(--padding--sides));
+
+      .tab-btn {
+        flex: 1;
+        padding: 1rem 0;
+        text-align: center;
+        font-family: var(--font-family--sans-serif);
+        font-size: 0.95rem;
+        font-weight: 500;
+        color: #666;
+        cursor: pointer;
+        border-bottom: 1px solid var(--color--gray--medium);
+        transition: all 0.2s ease;
+        letter-spacing: -0.02rem;
+
+        &:hover {
+          color: var(--color--black);
+        }
+
+        &.active {
+          color: var(--color--black);
+          background-color: var(--color--goals--blue);
+        }
+      }
+    }
+
+    .tab-content {
+      flex: 1;
+      overflow-y: auto;
+      display: none;
+      margin-left: calc(-1 * var(--padding--sides));
+      margin-right: calc(-1 * var(--padding--sides));
+      padding: 2rem var(--padding--sides) 4rem var(--padding--sides);
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      -webkit-overflow-scrolling: touch;
+        background-color: var(--color--bg--summary);
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+
+      &.active {
+        display: block;
+      }
+
+      .edit-form-content {
+
+        .edit-section {
+          margin-bottom: 2rem;
+
+          h3 {
+            font-family: var(--font-family--serif);
+            font-size: 1.2rem;
+            font-weight: 400;
+            color: var(--color--black);
+            margin-bottom: 2rem;
+            letter-spacing: -0.02rem;
+            line-height: 1.2;
+          }
+
+          .edit-items {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+            margin-bottom: 1rem;
+
+            .edit-item {
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+              padding: 1.3rem 1rem 1rem 1rem;
+              background-color: var(--color--white);
+              border-radius: 0.5rem;
+              border: solid 1px var(--color--goals--blue);
+              position: relative;
+              /* Remove cursor: pointer since these aren't clickable */
+
+              &.excluded {
+                opacity: 0.7;
+                text-decoration: line-through;
+              }
+
+              .item-date {
+                position: absolute;
+                color: var(--color--gray--medium);
+                font-size: 0.8rem;
+                background-color: var(--color--goals--blue);
+                color: var(--color--black);
+                border-radius: 99rem;
+                padding: 0.2rem 0.8rem;
+                top: -0.8rem;
+                left: 0.8rem;
+              }
+
+              .item-text {
+                flex: 1;
+                font-family: var(--font-family--sans-serif);
+                font-size: 1rem;
+                line-height: 1.3;
+                color: var(--color--black);
+              }
+            }
+          }
+        }
+      }
+
+      .summary-content-style {
+        .content-section {
+          margin-bottom: 2rem;
+          
+          &:last-child {
+            margin-bottom: 0;
+          }
+          
+          .section-title {
+            font-family: var(--font-family--sans-serif);
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--color--black);
+            margin-bottom: 0.8rem;
+            letter-spacing: -0.03rem;
+          }
+          
+          .section-text {
+            font-family: var(--font-family--sans-serif);
+            font-size: 1rem;
+            line-height: 1.5;
+            font-weight: 400;
+            color: var(--color--black);
+            margin-bottom: 1rem;
+            letter-spacing: -0.02rem;
+          }
+          
+          .section-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            
+            li {
+              font-family: var(--font-family--sans-serif);
+              font-size: 0.95rem;
+              line-height: 1.4;
+              font-weight: 400;
+              color: var(--color--black);
+              margin-bottom: 0.5rem;
+              padding-left: 1.2rem;
+              position: relative;
+              letter-spacing: -0.02rem;
+              
+              &:before {
+                content: '•';
+                position: absolute;
+                left: 0;
+                color: #666;
+                font-weight: 600;
+              }
+              
+              &:last-child {
+                margin-bottom: 0;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+/* Remove the old appt-report styles since they're replaced above */
+/* The old .popup-content.appt-report rules can be deleted */
 
 @keyframes shrinkMainHeight {
   0% {

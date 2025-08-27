@@ -62,7 +62,7 @@
     </div>
     <div class="apt-soon--short hidden">
       <div class="time">:15</div>
-      <button class="cta-btn">Join!</button>
+      <button class="cta-btn">Join now!</button>
     </div>
     <main>
       <div class="win-container">
@@ -347,13 +347,134 @@
             <path d="M6 6L18 18" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </div>
-        <h2>MM/DD post-visit report</h2>
-        <div class="content">
-          <p>Michelle met with <strong>Jamie Rivera, RD</strong>, a registered dietitian, for a comprehensive nutrition consultation. The primary focus of the session was to assess Michelle’s current eating habits, energy levels, and long-term health goals. Jamie began by reviewing Michelle’s medical history and recent lab results, which showed slightly elevated cholesterol levels and mild iron deficiency.</p>
-          <p>During the consultation, Michelle described her typical daily intake, which often includes a light breakfast, a rushed lunch, and a late, carb-heavy dinner. Jamie noted that Michelle tends to <em>skip meals</em> when under stress and frequently relies on coffee to manage fatigue. These habits may be contributing to her reported afternoon energy crashes and difficulty sleeping.</p>
-          <p><strong>Key recommendations</strong> included increasing protein intake at breakfast, incorporating iron-rich foods such as leafy greens and lentils, and reducing processed snacks high in added sugars. Jamie also emphasized the importance of staying hydrated and <em>establishing consistent meal times</em> throughout the day to support blood sugar stability.</p>
-          <p>Michelle expressed interest in improving her overall energy and focusing on nutrition that supports hormonal balance. Jamie provided a sample meal plan and suggested tracking meals and energy levels over the next two weeks. The dietitian also recommended basic supplements: a gentle iron tablet and a vitamin D3 capsule, pending follow-up lab confirmation.</p>
-          <p>A follow-up appointment was scheduled for four weeks later to assess progress and make any necessary adjustments. Michelle left the session with a clearer understanding of how her dietary choices affect her daily functioning and long-term wellness.</p>
+        
+        <div class="appt-report-summary-content">
+          <!-- Header -->
+          <div class="summary-header" id="appt-report-header">4/13 - 5/21 Summary</div>
+          
+          <!-- Provider info -->
+          <div class="summary-to">
+            <img src="img/alejandra.png" alt="Alejandra Sanchez, RD" class="avatar">
+            <div class="rd-info">
+              <div class="rd-name">Alejandra Sanchez, RD</div>
+              <div class="rd-title">Registered Dietitian</div>
+            </div>
+          </div>
+
+          <!-- Tabs -->
+          <div class="appt-report-tabs">
+            <div class="tab-btn active" data-tab="shared">Activity</div>
+            <div class="tab-btn" data-tab="pre-visit">Pre-visit</div>
+            <div class="tab-btn" data-tab="post-visit">Post-visit</div>
+          </div>
+
+          <!-- Tab Content: What you shared -->
+          <div class="tab-content active" id="shared-content">
+            <div class="edit-form-content">
+              <div class="edit-section">
+                <h3>What you discussed with your RD</h3>
+                <div class="edit-items">
+                  <div class="edit-item excluded">
+                    <div class="item-date">Apr 17</div>
+                    <div class="item-text">Discussed afternoon energy crashes occurring daily around 2-3 PM and potential dietary causes.</div>
+                  </div>
+                  <div class="edit-item">
+                    <div class="item-date">Apr 13</div>
+                    <div class="item-text">Reviewed recent lab results showing elevated cholesterol (LDL: 145 mg/dL) and mild iron deficiency.</div>
+                  </div>
+                  <div class="edit-item">
+                    <div class="item-date">Apr 10</div>
+                    <div class="item-text">Talked about irregular sleep patterns and their impact on morning energy levels.</div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="edit-section">
+                <h3>What you shared with Season Assistant</h3>
+                <div class="edit-items">
+                  <div class="edit-item">
+                    <div class="item-date">Apr 1</div>
+                    <div class="item-text">Asked about meal prep strategies for busy weekdays and received customized suggestions.</div>
+                  </div>
+                  <div class="edit-item excluded">
+                    <div class="item-date">Apr 1</div>
+                    <div class="item-text">Discussed iron-rich food options and how to improve absorption with vitamin C pairing.</div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="edit-section">
+                <h3>Meals you ordered recently</h3>
+                <div class="edit-items">
+                  <div class="edit-item">
+                    <div class="item-date">Apr 11</div>
+                    <div class="item-text">Mediterranean Bowl with grilled chicken, quinoa, and tahini dressing (ordered 4 times).</div>
+                  </div>
+                  <div class="edit-item">
+                    <div class="item-date">Mar 30</div>
+                    <div class="item-text">Green Goddess Salad with salmon and avocado (ordered 3 times this month).</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tab Content: Pre-visit -->
+          <div class="tab-content" id="pre-visit-content">
+            <div class="summary-content-style">
+              <div class="content-section">
+                <h3 class="section-title">Current Health Status</h3>
+                <p class="section-text">Michelle has been experiencing consistent energy fluctuations throughout the day, particularly noticeable afternoon crashes around 2-3 PM. Recent lab work shows slightly elevated cholesterol and mild iron deficiency.</p>
+                <ul class="section-list">
+                  <li>Afternoon energy crashes (2-3 PM daily)</li>
+                  <li>Elevated cholesterol levels (LDL: 145 mg/dL)</li>
+                  <li>Mild iron deficiency (ferritin: 18 ng/mL)</li>
+                  <li>Irregular sleep patterns affecting morning energy</li>
+                </ul>
+              </div>
+              
+              <div class="content-section">
+                <h3 class="section-title">Dietary Patterns & Concerns</h3>
+                <p class="section-text">Current eating habits include skipping breakfast 3-4 times per week, rushed lunches, and late dinners that are typically carb-heavy. Michelle tends to rely heavily on coffee for energy management.</p>
+                <ul class="section-list">
+                  <li>Frequent breakfast skipping (3-4x per week)</li>
+                  <li>Rushed lunch breaks with processed foods</li>
+                  <li>Late dinners (after 8 PM) with high carb content</li>
+                  <li>Excessive caffeine consumption (4-5 cups daily)</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tab Content: Post-visit -->
+          <div class="tab-content" id="post-visit-content">
+            <div class="summary-content-style">
+              <div class="content-section">
+                <h3 class="section-title">Visit Summary</h3>
+                <p class="section-text">Michelle met with Alejandra for a comprehensive follow-up consultation focusing on energy management and dietary optimization. Key progress was noted in several areas with new recommendations provided.</p>
+              </div>
+              
+              <div class="content-section">
+                <h3 class="section-title">Key Recommendations</h3>
+                <ul class="section-list">
+                  <li>Increase morning protein to 25g minimum within 2 hours of waking</li>
+                  <li>Implement structured meal timing with no more than 4 hours between meals</li>
+                  <li>Add iron supplement (18mg) with vitamin C source</li>
+                  <li>Reduce caffeine intake gradually from 4-5 cups to 2 cups daily</li>
+                </ul>
+              </div>
+              
+              <div class="content-section">
+                <h3 class="section-title">Goals</h3>
+                <ul class="section-list">
+                  <li>Say "no" to work treats</li>
+                  <li>Drink 64oz of water a day</li>
+                  <li>Exercise 15-20 min, 5 days per week</li>
+                  <li>Avoid eating while watching TV</li>
+                </ul>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -778,6 +899,8 @@
       initializeGoalLogging();
       initializeGoalAddMoreToggle();
       initializeUnifiedTextInput();
+      initializeAppointmentReportTabs();
+      updateAppointmentReportHeader();
     });
 
     window.addEventListener('scroll', () => {
@@ -1622,6 +1745,73 @@
           });
       }
     }
+
+    function initializeAppointmentReportTabs() {
+      const tabBtns = document.querySelectorAll('.appt-report-tabs .tab-btn');
+      const tabContents = document.querySelectorAll('.tab-content');
+
+      tabBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const targetTab = btn.dataset.tab;
+          
+          // Remove active class from all tabs and content
+          tabBtns.forEach(b => b.classList.remove('active'));
+          tabContents.forEach(c => c.classList.remove('active'));
+          
+          // Add active class to clicked tab
+          btn.classList.add('active');
+          
+          // Show corresponding content
+          const targetContent = document.getElementById(`${targetTab}-content`);
+          if (targetContent) {
+            targetContent.classList.add('active');
+          }
+        });
+      });
+    }
+
+    function updateAppointmentReportHeader() {
+      document.querySelectorAll('.appt-report-btn').forEach((btn, index) => {
+        btn.addEventListener('click', () => {
+          const card = btn.closest('.appointment-card');
+          const appointmentDate = card.dataset.appointmentDate;
+          const appointmentIndex = parseInt(card.dataset.index);
+          
+          // Get the previous appointment date for date range
+          const cards = document.querySelectorAll('.appointment-card');
+          let headerText = '';
+          
+          if (appointmentIndex === 0) {
+            // First appointment, just show single date
+            const date = new Date(appointmentDate);
+            headerText = date.toLocaleDateString('en-US', { month: 'numeric', day: 'numeric' }) + ' Summary';
+          } else {
+            // Find previous appointment
+            const prevCard = Array.from(cards).find(c => parseInt(c.dataset.index) === appointmentIndex - 1);
+            if (prevCard) {
+              const prevDate = new Date(prevCard.dataset.appointmentDate);
+              const currentDate = new Date(appointmentDate);
+              
+              const prevFormatted = prevDate.toLocaleDateString('en-US', { month: 'numeric', day: 'numeric' });
+              const currentFormatted = currentDate.toLocaleDateString('en-US', { month: 'numeric', day: 'numeric' });
+              
+              headerText = `${prevFormatted} - ${currentFormatted} Summary`;
+            } else {
+              // Fallback to single date
+              const date = new Date(appointmentDate);
+              headerText = date.toLocaleDateString('en-US', { month: 'numeric', day: 'numeric' }) + ' Summary';
+            }
+          }
+          
+          // Update the header
+          const header = document.getElementById('appt-report-header');
+          if (header) {
+            header.textContent = headerText;
+          }
+        });
+      });
+    }
+
 
   </script>
 </html>
