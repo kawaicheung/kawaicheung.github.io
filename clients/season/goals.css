@@ -1459,22 +1459,18 @@ main {
 
         .edit-disclaimer {
           position: relative;
-          background-color: var(--color--white);
           font-family: var(--font-family--serif);
           font-size: 1.1rem;
           letter-spacing: -0.02rem;
           line-height: 1.4;
           color: var(--color--black);
-          padding: 3rem 1rem;
-          margin-bottom: 2rem;
-          border: solid 1px var(--color--goals--blue);
-          border-radius: 1rem;
-          box-shadow: var(--box-shadow--standard);
+          margin-bottom: 5rem;
 
           .bg-sparkle {
             position: absolute;
-            top: 0.8rem; 
-            right: 0.8rem;
+            bottom: -2.5rem; 
+            left: 50%;
+            transform: translate(-50%, 50%);
           }
         }
 

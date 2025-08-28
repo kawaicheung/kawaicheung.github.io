@@ -508,7 +508,7 @@
           </div>
 
           <!-- Edit form -->
-          <div class="edit-form" id="edit-form">
+          <div id="season--pre-visit-summary-edit-form" class="edit-form">
             <div class="edit-disclaimer">
               Review what you've done since last visit. Tap to
               hide things you don't want to share below. 
@@ -965,6 +965,10 @@
     </div>
   </body>
   <script>
+
+    const elem_PreVisitSummaryEditForm = document.getElementById('season--pre-visit-summary-edit-form');
+
+
     // Usage example - replace your original code with this:
       const goalsData = [
         {
@@ -1015,6 +1019,7 @@
 
     document.addEventListener('DOMContentLoaded', () => {
       
+      initPreVisitSummaryItemToggles(); 
 
       initializeModals([...staticModalConfigs, ...goalModalConfigs]);
       initializeCardTimeline();
@@ -1022,7 +1027,6 @@
       initializeBottomPanelClick();
       initializeAppointmentSoon();
       initializePreVisitSummaryEdit();
-      initializeEditFormToggles(); 
       initializeCustomInput();
       initializeGoalLogging();
       initializeGoalAddMoreToggle();
@@ -1449,7 +1453,6 @@
     function initializePreVisitSummaryEdit() {
       const actionBtn = document.getElementById('pre-visit-action-btn');
       const summaryContent = document.getElementById('summary-content');
-      const editForm = document.getElementById('edit-form');
       const regeneratingState = document.getElementById('regenerating-state');
       const actionBtnManage = document.querySelector('.audit-button--manage');
       const actionBtnSee = document.querySelector('.audit-button--see');
@@ -1467,13 +1470,13 @@
     
       function switchToEditMode() {
         summaryContent.classList.add('hidden');
-        editForm.classList.remove('hidden');
+        elem_PreVisitSummaryEditForm.classList.remove('hidden');
         isEditing = true;
         updateActionButtonText();
       }
       
       function saveAndRegenerate() {
-        editForm.classList.add('hidden');
+        elem_PreVisitSummaryEditForm.classList.add('hidden');
         actionBtn.classList.add('hidden');
         regeneratingState.classList.remove('hidden');
         
@@ -1499,10 +1502,12 @@
       }
     }
 
-    function initializeEditFormToggles() {
-      const editItems = document.querySelectorAll('.edit-form .edit-item');
+    /* Initializes the 'show/hide' functionality for pre-visit summaries. */
+    /* Dev note: Can add API call to regenerate summary on each click? Or on submit. */
+    function initPreVisitSummaryItemToggles() {
+      const togglableItems = elem_PreVisitSummaryEditForm.querySelectorAll('.edit-item');
       
-      editItems.forEach(item => {
+      togglableItems.forEach(item => {
         item.addEventListener('click', () => {
           const toggle = item.querySelector('.item-toggle');
           const eyeOpened = toggle.querySelector('.eye-opened');
