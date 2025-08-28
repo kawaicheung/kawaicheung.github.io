@@ -429,26 +429,25 @@ main {
 
 .apt-soon--short {
   position: fixed;
+  width: 100%;
   bottom: var(--height--footer);
-  right: 1rem;
-  height: auto;
+  left: 0;
   z-index: 999;
-  border-top-left-radius: 0.5rem;
-  border-top-right-radius: 0.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
   background-color: var(--color--bg--appt-alert);
   border: solid 1px var(--color--gray--medium);
-  gap: 0.5rem;
+  gap: 1rem;
   color: var(--color--black);
   padding: 1rem;
-  animation: throbInAndUp 2s ease-in-out infinite;
+  animation: popInAndUp 0.2s ease-in-out forwards;
   box-shadow: var(--box-shadow--standard);
 
   .time {
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     font-family: var(--font-family--serif);
+    letter-spacing: -0.02rem;
   }
   
   .cta-btn {
@@ -465,6 +464,7 @@ main {
     background-color: var(--color--btn--blue);
     width: fit-content;
     height: fit-content;
+    animation: throb 1s ease-in-out infinite;
   } 
 }
 
@@ -1502,6 +1502,7 @@ main {
               align-items: center;
               justify-content: space-between;
               padding: 1.3rem 1rem 1rem 1rem;
+              gap: 1rem;
               background-color: var(--color--white);
               border-radius: 0.5rem;
               border: solid 1px var(--color--goals--blue);
@@ -1542,10 +1543,6 @@ main {
                 cursor: pointer;
                 transition: all 0.2s ease;
                 flex-shrink: 0;
-
-                svg {
-                  fill: var(--color--black);
-                }
               }
             }
           }
