@@ -5,48 +5,55 @@
 *
 /******************************************************/
 
-
 /******************************************************
 *
 * DOM references
 * 
 /******************************************************/
 
-
 // Single item references (by ID)
+const elem_ApptSoonModal = document.getElementById('seasonApptSoonModal');
+const elem_ApptSoonBug = document.getElementById('seasonApptSoonBug');
 const elem_SplashContainer = document.getElementById('seasonSplashContainer');
 const elem_CalendarCardsContainer = document.getElementById('seasonCalendarCardsContainer');
-const elem_GoalsSummary = document.getElementById('seasonGoalsSummary');
+const elem_GoalsTrackingPanel = document.getElementById('seasonGoalsTrackingPanel');
 const elem_GoalsDailyCalendar = document.getElementById('seasonGoalsDailyCalendar');
 const elem_PreVisitSummaryItemToggles = document.getElementById('seasonPreVisitSummaryItemToggles');
 const elem_PreVisitSummaryGeneratedReport = document.getElementById('seasonPreVisitSummaryGeneratedReport');
+const elem_PrevReportTabContainer = document.getElementById('seasonPrevReportTabContainer');
 
 // Collection references (by class)
 const elems_AppointmentCards = document.querySelectorAll('.season--appointment-card');
+const elems_PrevReportTabContent = document.querySelectorAll('.season--prev-report-tab-content');
+const elems_ShareableItems = document.querySelectorAll('.season--shareable-item');
 
 // HTML constants
-const FACE_SVG = {
-  poor: `<!-- Frown face -->
-         <svg width="32" height="32" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-           <circle cx="12" cy="12" r="9.5" fill="none" stroke="currentColor" stroke-width="1"/>
-           <circle cx="9" cy="9" r="1" fill="currentColor"/>
-           <circle cx="15" cy="9" r="1" fill="currentColor"/>
-           <path d="M 8 16 Q 12 12 16 16" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/>
-         </svg>`,
-  okay: `<!-- Indifferent face -->
-         <svg width="32" height="32" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-           <circle cx="12" cy="12" r="9.5" fill="none" stroke="currentColor" stroke-width="1"/>
-           <circle cx="9" cy="9" r="1" fill="currentColor"/>
-           <circle cx="15" cy="9" r="1" fill="currentColor"/>
-           <line x1="8" y1="15" x2="16" y2="15" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
-         </svg>`,
-  good: `<!-- Smiley face -->
-         <svg width="32" height="32" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-           <circle cx="12" cy="12" r="9.5" fill="none" stroke="currentColor" stroke-width="1"/>
-           <circle cx="9" cy="9" r="1" fill="currentColor"/>
-           <circle cx="15" cy="9" r="1" fill="currentColor"/>
-           <path d="M 8 14 Q 12 18 16 14" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/>
-         </svg>`
+const svgs = {
+  sad_face: `<svg width="32" height="32" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+               <circle cx="12" cy="12" r="9.5" fill="none" stroke="currentColor" stroke-width="1"/>
+               <circle cx="9" cy="9" r="1" fill="currentColor"/>
+               <circle cx="15" cy="9" r="1" fill="currentColor"/>
+               <path d="M 8 16 Q 12 12 16 16" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/>
+             </svg>`,
+  mid_face: `<svg width="32" height="32" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+               <circle cx="12" cy="12" r="9.5" fill="none" stroke="currentColor" stroke-width="1"/>
+               <circle cx="9" cy="9" r="1" fill="currentColor"/>
+               <circle cx="15" cy="9" r="1" fill="currentColor"/>
+               <line x1="8" y1="15" x2="16" y2="15" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
+             </svg>`,
+  happy_face: `<svg width="32" height="32" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                 <circle cx="12" cy="12" r="9.5" fill="none" stroke="currentColor" stroke-width="1"/>
+                 <circle cx="9" cy="9" r="1" fill="currentColor"/>
+                 <circle cx="15" cy="9" r="1" fill="currentColor"/>
+                 <path d="M 8 14 Q 12 18 16 14" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/>
+               </svg>`,
+  close: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M18 6L6 18" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M6 6L18 18" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>`,
+  check: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M5 12.7037L9.93103 18L18 5" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>`
 };
 
 /******************************************************
@@ -112,32 +119,52 @@ const staticModalConfigs = [
 
 document.addEventListener('DOMContentLoaded', () => {
   
+  initApptSoonAlerts();
+
   enableCalendarContainerFade();
   initCalendarCardSwiping();
 
   createGoalElements();
-  initGoalCalendar();
-  initGoalSummaryHeaderClick();
+  initGoalsTrackingCalendar(date_PrevAppt, date_NextAppt);
+  initGoalsTrackingHeaderClick();
   initPreVisitSummaryItemToggles(); 
 
   // Must come after createGoalElements()
   initModals([...staticModalConfigs, ...goalModalConfigs]);
-  initAppointmentSoon();
   initPreVisitSummaryEdit();
   initCustomInput();
   initGoalAddMoreToggle();
   initUnifiedTextInput();
-  initAppointmentReportTabs();
+  initApptReportTabs();
   updateAppointmentReportHeader();
 });
 
-// Calendar fade effect when scrolling vertically to reveal goals...
+
+// Enabled only when within X hours of next appt
+function initApptSoonAlerts() {
+  const skipModalBtn = elem_ApptSoonModal.querySelector('button:last-of-type');
+  const joinNowBugBtn = elem_ApptSoonBug.querySelector('button:last-of-type');
+  
+  skipModalBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    elem_ApptSoonModal.classList.add('hidden');
+    elem_ApptSoonBug.classList.remove('hidden');
+  });
+
+  // TODO: Replace this with actual 'join' functionality. 
+  // For demo, just hiding the bug.
+  joinNowBugBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    elem_ApptSoonBug.classList.add('hidden');
+  });
+}
+
+// Calendar fade effect when scrolling vertically to reveal goals
 function enableCalendarContainerFade() {
   window.addEventListener('scroll', () => {
     const calTranslateYMax = 20;
     const calFadeRate = 0.8; 
-
-    const goalSummaryHeight = elem_GoalsSummary.offsetHeight;
+    const goalSummaryHeight = elem_GoalsTrackingPanel.offsetHeight;
     const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
     const scrollProgress = Math.min(scrollTop / goalSummaryHeight, 1);
     const translateY = scrollProgress * -1 * calTranslateYMax; 
@@ -148,22 +175,14 @@ function enableCalendarContainerFade() {
   });
 }
 
-function enableHtmlScroll() {
-  document.documentElement.classList.remove('no-scroll');
-}
-
-function disableHtmlScroll() {
-  document.documentElement.classList.add('no-scroll');
-}
-
+// Creates swipe effect for appointment cards collection
 function initCalendarCardSwiping() {
-  const cardsContainer = elem_CalendarCardsContainer;
-
   // Find the index of the card with "today" class
-  let currentIndex = 0;
-  const todayCard = document.querySelector('.appointment-card.today');
+  let curIndex = 0;
+  const todayCard = elem_CalendarCardsContainer.querySelector('.today');
+
   if (todayCard) {
-    currentIndex = parseInt(todayCard.dataset.index) || 0;
+    curIndex = parseInt(todayCard.dataset.index) || 0;
   }
 
   let startX = 0;
@@ -173,11 +192,11 @@ function initCalendarCardSwiping() {
     elems_AppointmentCards.forEach((card, index) => {
       card.classList.remove('left', 'center', 'right', 'hidden');
       
-      if (index === currentIndex) {
+      if (index === curIndex) {
         card.classList.add('center');
-      } else if (index === currentIndex - 1) {
+      } else if (index === curIndex - 1) {
         card.classList.add('left');
-      } else if (index === currentIndex + 1) {
+      } else if (index === curIndex + 1) {
         card.classList.add('right');
       } else {
         card.classList.add('hidden');
@@ -189,7 +208,7 @@ function initCalendarCardSwiping() {
     elems_AppointmentCards.forEach((card, index) => {
       card.addEventListener('click', (e) => {
         if (card.classList.contains('left') || card.classList.contains('right')) {
-          currentIndex = index;
+          curIndex = index;
           updateCardPositions();
           e.stopPropagation(); 
         }
@@ -198,15 +217,15 @@ function initCalendarCardSwiping() {
   }
 
   function swipeLeft() {
-    if (currentIndex < elems_AppointmentCards.length - 1) {
-      currentIndex++;
+    if (curIndex < elems_AppointmentCards.length - 1) {
+      curIndex++;
       updateCardPositions();
     }
   }
 
   function swipeRight() {
-    if (currentIndex > 0) {
-      currentIndex--;
+    if (curIndex > 0) {
+      curIndex--;
       updateCardPositions();
     }
   }
@@ -269,55 +288,39 @@ function initCalendarCardSwiping() {
   addCardClickListeners();
 }
 
-function initModals(modalConfigs) {
-  modalConfigs.forEach(config => setupModalToggle(config));
-}
-
-function setupModalToggle(config) {
-  const { openBtnSelector, modalId, closeBtnId } = config;
+function createGoalElements() {
+  // Generate goal modals
+  const goalsModalsContainer = document.getElementById('goals-modals-container');
+  const goalsContainer = document.getElementById('goals-container');
   
-  const openBtn = document.querySelectorAll(openBtnSelector);
-  const modal = document.getElementById(modalId);
-  const closeBtn = document.getElementById(closeBtnId);
+  // Clear existing content
+  goalsModalsContainer.innerHTML = '';
+  goalsContainer.innerHTML = '';
   
-  openBtn.forEach(btn => {
-    btn.addEventListener('click', () => {
-      modal.style.display = 'block';
-      disableHtmlScroll();
-    });
-  });
-  
-  closeBtn.addEventListener('click', () => {
-    modal.style.display = 'none';
-    enableHtmlScroll();
-
-  });
-  
-  // Close modal when clicking on the background (popup area)
-  modal.addEventListener('click', (e) => {
-    if (e.target === modal) {
-      modal.style.display = 'none';
-      enableHtmlScroll();
-    }
+  goalsData.forEach(goal => {
+    // Create and append goal modal
+    const modalElement = document.createElement('div');
+    modalElement.innerHTML = createGoalModalTemplate(goal);
+    goalsModalsContainer.appendChild(modalElement.firstElementChild);
+    
+    // Create and append bottom panel square
+    const squareElement = document.createElement('div');
+    squareElement.innerHTML = createGoalSquares(goal);
+    goalsContainer.appendChild(squareElement.firstElementChild);
   });
 }
 
-function toLocalDateOnly(date) {
-  return new Date(date.getFullYear(), date.getMonth(), date.getDate());
-}
-
-function initGoalCalendar() {
-  const startDate = date_PrevAppt;
-  const endDate = date_NextAppt;
+// Sets up horizontal days UI for goal tracking
+function initGoalsTrackingCalendar(startDate, endDate) {
   const calendar = elem_GoalsDailyCalendar;
 
   const today = new Date();
-  let currentIndex = 0; // Will be set to today's index
+  let curIndex = 0; // Will be set to today's index
   
   // Generate calendar days
   const days = [];
-  let currentDate = toLocalDateOnly(startDate);
-  const todayDate = toLocalDateOnly(new Date());
+  let currentDate = startDate;
+  const todayDate = new Date();
 
   while (currentDate <= endDate) {
     days.push(new Date(currentDate));
@@ -328,8 +331,9 @@ function initGoalCalendar() {
   const todayIndex = days.findIndex(date => 
     date.toDateString() === todayDate.toDateString()
   );
+
   if (todayIndex !== -1) {
-    currentIndex = todayIndex;
+    curIndex = todayIndex;
   }
   
   // Clear existing content
@@ -347,9 +351,7 @@ function initGoalCalendar() {
     dayElement.innerHTML = `
       <div class="day-square ${isToday ? 'today' : ''}">
         <div class="check">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M5 12.7037L9.93103 18L18 5" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
+          ${svgs.check}
         </div>
         <div class="day-label">
           <div class="month">${date.toLocaleDateString('en-US', { month: 'short' })}</div>
@@ -368,14 +370,14 @@ function initGoalCalendar() {
       const dayCircle = dayElement.querySelector('.day-square');
       dayCircle.classList.remove('selected');
       
-      if (index === currentIndex) {
+      if (index === curIndex) {
         dayCircle.classList.add('selected');
       }
     });
   }
 
   function centerSelectedDay() {
-    const selectedDay = calendar.querySelector(`[data-index="${currentIndex}"]`);
+    const selectedDay = calendar.querySelector(`[data-index="${curIndex}"]`);
     if (!selectedDay) return;
 
     const calendarRect = calendar.getBoundingClientRect();
@@ -410,7 +412,7 @@ function initGoalCalendar() {
           return;
         }
         
-        currentIndex = index;
+        curIndex = index;
         updateCalendarPositions();
         
         // Center the newly selected day
@@ -509,8 +511,9 @@ function initGoalCalendar() {
   }, 100);
 }
 
-function initGoalSummaryHeaderClick() {
-  const bottomPanelHeader = elem_GoalsSummary.firstElementChild;
+// Allow clicking "How are your goals going?" to pop the entire goals tracking panel
+function initGoalsTrackingHeaderClick() {
+  const bottomPanelHeader = elem_GoalsTrackingPanel.firstElementChild;
           
   bottomPanelHeader.addEventListener('click', () => {
     // Add bounce animation class
@@ -525,24 +528,6 @@ function initGoalSummaryHeaderClick() {
         top: document.documentElement.scrollHeight,
         behavior: 'smooth'
     });
-  });
-}
-
-function initAppointmentSoon() {
-  const noThanksBtn = document.querySelector('.no-thanks-btn');
-  const aptSoonModal = document.querySelector('.apt-soon--modal');
-  const aptSoonShort = document.querySelector('.apt-soon--short');
-  const aptSoonShortCtaBtn = document.querySelector('.apt-soon--short .cta-btn');
-  
-  noThanksBtn.addEventListener('click', (e) => {
-    e.preventDefault();
-    aptSoonModal.classList.add('hidden');
-    aptSoonShort.classList.remove('hidden');
-  });
-
-  aptSoonShortCtaBtn.addEventListener('click', (e) => {
-    e.preventDefault();
-    aptSoonShort.classList.add('hidden');
   });
 }
 
@@ -598,35 +583,41 @@ function initPreVisitSummaryEdit() {
   }
 }
 
-/* inits the 'show/hide' functionality for pre-visit summaries. */
-/* Dev note: Can add API call to regenerate summary on each click? Or on submit. */
+// Sets the share/exclude functionality for pre-visit summaries items
+// Dev note: Can add API call to regenerate summary on each click? Or on submit.
 function initPreVisitSummaryItemToggles() {
-  const togglableItems = elem_PreVisitSummaryItemToggles.querySelectorAll('.edit-item');
-  
-  togglableItems.forEach(item => {
-    createPreVisitSummaryItemTogglability(item);
+  elems_ShareableItems.forEach(item => {
+    enableShareableItemToggle(item);
   });
 }
 
-function createPreVisitSummaryItemTogglability(item) {
-  item.addEventListener('click', () => {
-    const toggle = item.querySelector('.item-toggle');
-    const eyeOpened = toggle.querySelector('.eye-opened');
-    const eyeClosed = toggle.querySelector('.eye-closed');
+// Sets up all modals (goals, chats, summaries)
+function initModals(modalConfigs) {
+  modalConfigs.forEach(config => {
+    const { openBtnSelector, modalId, closeBtnId } = config;
     
-    const isExcluded = item.classList.contains('excluded');
+    const openBtn = document.querySelectorAll(openBtnSelector);
+    const modal = document.getElementById(modalId);
+    const closeBtn = document.getElementById(closeBtnId);
     
-    if (isExcluded) {
-      item.classList.remove('excluded');
-      // Show eye-opened, hide eye-closed
-      eyeOpened.classList.remove('hidden');
-      eyeClosed.classList.add('hidden');
-    } else {
-      item.classList.add('excluded');
-      // Hide eye-opened, show eye-closed
-      eyeOpened.classList.add('hidden');
-      eyeClosed.classList.remove('hidden');
-    }
+    openBtn.forEach(btn => {
+      btn.addEventListener('click', () => {
+        modal.style.display = 'block';
+        disableHtmlScroll();
+      });
+    });
+    
+    closeBtn.addEventListener('click', () => {
+      modal.style.display = 'none';
+      enableHtmlScroll();
+    });
+    
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        modal.style.display = 'none';
+        enableHtmlScroll();
+      }
+    });
   });
 }
 
@@ -684,7 +675,7 @@ function initCustomInput() {
         </div>
       `;
 
-      createPreVisitSummaryItemTogglability(newItem);
+      enableShareableItemToggle(newItem);
       customItemsContainer.appendChild(newItem);
       textarea.value = '';
       textarea.focus();
@@ -706,40 +697,20 @@ function createGoalModalConfigs() {
   return modalConfigs;
 }
 
-function createGoalElements() {
-  // Generate goal modals
-  const goalsModalsContainer = document.getElementById('goals-modals-container');
-  const goalsContainer = document.getElementById('goals-container');
-  
-  // Clear existing content
-  goalsModalsContainer.innerHTML = '';
-  goalsContainer.innerHTML = '';
-  
-  goalsData.forEach(goal => {
-    // Create and append goal modal
-    const modalElement = document.createElement('div');
-    modalElement.innerHTML = createGoalModalTemplate(goal);
-    goalsModalsContainer.appendChild(modalElement.firstElementChild);
-    
-    // Create and append bottom panel square
-    const squareElement = document.createElement('div');
-    squareElement.innerHTML = createGoalSquares(goal);
-    goalsContainer.appendChild(squareElement.firstElementChild);
-  });
-}
+
 
 function createGoalSquares(goal) {
   let svgContent = '';
   
   switch(goal.rating) {
     case "poor":
-      svgContent = FACE_SVG.poor;
+      svgContent = svgs.sad_face;
       break;
     case "ok":
-      svgContent = FACE_SVG.okay;
+      svgContent = svgs.mid_face;
       break;
     case "good":
-      svgContent = FACE_SVG.good;
+      svgContent = svgs.happy_face;
       break;
   }
   
@@ -758,10 +729,7 @@ function createGoalModalTemplate(goal) {
     <div class="popup" id="goals-${goal.id}-logging">
       <div class="popup-content goals-${goal.id}-logging">
         <div class="close" id="goals-${goal.id}-logging-close-btn">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M18 6L6 18" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M6 6L18 18" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
+          ${svgs.close}
         </div> 
         <div class="goal-title">${goal.title}</div>
         <div class="goal-rating">
@@ -776,19 +744,19 @@ function createGoalModalTemplate(goal) {
             <div class="rating-option">
               <div class="rating-btn" data-rating="positive">
                 <span>I didn't do so well.</span>
-                ${FACE_SVG.poor}
+                ${svgs.sad_face}
               </div>
             </div>
             <div class="rating-option">
               <div class="rating-btn" data-rating="neutral">
                 <span>I did OK.</span>
-                ${FACE_SVG.okay}
+                ${svgs.mid_face}
               </div>
             </div>
             <div class="rating-option">
               <div class="rating-btn" data-rating="negative">
                 <span>I did great!</span>
-                ${FACE_SVG.good}     
+                ${svgs.happy_face}     
               </div>
             </div>
           </div>
@@ -958,9 +926,9 @@ function initUnifiedTextInput() {
   }
 }
 
-function initAppointmentReportTabs() {
-  const tabBtns = document.querySelectorAll('.appt-report-tabs .tab-btn');
-  const tabContents = document.querySelectorAll('.tab-content');
+function initApptReportTabs() {
+  const tabBtns = elem_PrevReportTabContainer.querySelectorAll('div');
+  const tabContents = elems_PrevReportTabContent;
 
   tabBtns.forEach(btn => {
     btn.addEventListener('click', () => {
@@ -1022,4 +990,40 @@ function updateAppointmentReportHeader() {
       }
     });
   });
+}
+
+/******************************************************
+*
+* Shared utility methods
+* 
+/******************************************************/
+
+function enableShareableItemToggle(item) {
+  item.addEventListener('click', () => {
+    const toggle = item.querySelector('.item-toggle');
+    const eyeOpened = toggle.querySelector('.eye-opened');
+    const eyeClosed = toggle.querySelector('.eye-closed');
+    
+    const isExcluded = item.classList.contains('excluded');
+    
+    if (isExcluded) {
+      item.classList.remove('excluded');
+      // Show eye-opened, hide eye-closed
+      eyeOpened.classList.remove('hidden');
+      eyeClosed.classList.add('hidden');
+    } else {
+      item.classList.add('excluded');
+      // Hide eye-opened, show eye-closed
+      eyeOpened.classList.add('hidden');
+      eyeClosed.classList.remove('hidden');
+    }
+  });
+}
+
+function enableHtmlScroll() {
+  document.documentElement.classList.remove('no-scroll');
+}
+
+function disableHtmlScroll() {
+  document.documentElement.classList.add('no-scroll');
 }

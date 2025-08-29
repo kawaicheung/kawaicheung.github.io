@@ -53,14 +53,14 @@
   <!-- END: Header container -->
 
     <!-- Appointment soon popups -->
-    <div class="apt-soon--modal">
+    <div id="seasonApptSoonModal" class="apt-soon--modal">
       <h2>Hey Michelle!</h2>
       <p>Your appointment with Alejandra is in 15 minutes.</p>
       <img class="rd-avatar" src="img/alejandra.png" alt="Alejandra Sanchez, RD" >
       <button class="cta-btn">Join now</button>
-      <a href="#" class="no-thanks-btn">Just take me to Season for now</a>
+      <button class="no-thanks-btn">Just take me to Season for now</button>
     </div>
-    <div class="apt-soon--short hidden">
+    <div id="seasonApptSoonBug" class="apt-soon--short hidden">
       <div class="time">Appointment in :15</div>
       <button class="cta-btn">Join now!</button>
     </div>
@@ -73,7 +73,7 @@
         </p>
         <div class="card-timeline" id="card-timeline">
           <div class="cards-container" id="seasonCalendarCardsContainer">
-            <div class="season--appointment-card appointment-card hidden" data-appointment-date="2024-12-12" data-index="0">
+            <div class="season--appointment-card appointment-card " data-appointment-date="2024-12-12" data-index="0">
               <div class="caption">Appointment</div>
               <div class="card-date">
                 <div class="card-month">Dec</div>
@@ -84,7 +84,7 @@
               </div>
               <button class="card-cta appt-report-btn">View Summary</button>
             </div>
-            <div class="season--appointment-card appointment-card left" data-appointment-date="2025-02-15" data-index="1">
+            <div class="season--appointment-card appointment-card " data-appointment-date="2025-02-15" data-index="1">
               <div class="caption">Appointment</div>
               <div class="card-date">
                 <div class="card-month">Feb</div>
@@ -95,7 +95,7 @@
               </div>
               <button class="card-cta appt-report-btn">View Summary</button>
             </div>
-            <div class="season--appointment-card appointment-card center" data-appointment-date="2025-03-02" data-index="2">
+            <div class="season--appointment-card appointment-card " data-appointment-date="2025-03-02" data-index="2">
               <div class="caption">Appointment</div>
               <div class="card-date">
                 <div class="card-month">Mar</div>
@@ -106,7 +106,7 @@
               </div>
               <button class="card-cta appt-report-btn">View Summary</button>
             </div>
-            <div class="season--appointment-card appointment-card right" data-appointment-date="2025-04-12" data-index="3">
+            <div class="season--appointment-card appointment-card" data-appointment-date="2025-04-12" data-index="3">
               <div class="caption">Appointment</div>
               <div class="card-date">
                 <div class="card-month">Apr</div>
@@ -117,7 +117,7 @@
               </div>
               <button class="card-cta appt-report-btn">View Summary</button>
             </div>
-            <div class="season--appointment-card appointment-card hidden" data-appointment-date="2025-05-21" data-index="4">
+            <div class="season--appointment-card appointment-card" data-appointment-date="2025-05-21" data-index="4">
               <div class="caption">Appointment</div>
               <div class="card-date">
                 <div class="card-month">May</div>
@@ -128,7 +128,7 @@
               </div>
               <button class="card-cta appt-report-btn">View Summary</button>
             </div>
-            <div class="season--appointment-card appointment-card hidden" data-appointment-date="2025-07-11" data-index="5">
+            <div class="season--appointment-card appointment-card" data-appointment-date="2025-07-11" data-index="5">
               <div class="caption">Appointment</div>
               <div class="card-date">
                 <div class="card-month">Jul</div>
@@ -139,7 +139,7 @@
               </div>
               <button class="card-cta appt-report-btn">View Summary</button>
             </div>
-            <div class="season--appointment-card appointment-card today center" data-appointment-date="2025-08-15" data-index="6">
+            <div class="season--appointment-card appointment-card today" data-appointment-date="2025-08-15" data-index="6">
               <div class="caption">Today</div>
               <div class="card-date">
                 <div class="card-month">Aug</div>
@@ -150,7 +150,7 @@
               </div>
               <button class="card-cta primary pre-visit-summary-btn">Prepare</button>
             </div>
-            <div class="season--appointment-card appointment-card hidden" data-appointment-date="2025-08-20" data-index="7">
+            <div class="season--appointment-card appointment-card" data-appointment-date="2025-08-20" data-index="7">
               <div class="caption">Appointment</div>
               <div class="card-date">
                 <div class="card-month">Aug</div>
@@ -165,7 +165,7 @@
         </div>
       </div>
     </main>
-    <div id="seasonGoalsSummary" class="bottom-panel">
+    <div id="seasonGoalsTrackingPanel" class="bottom-panel">
       <div class="bottom-panel-header">
         How are your goals going?
       </div>
@@ -361,14 +361,14 @@
           </div>
 
           <!-- Tabs -->
-          <div class="appt-report-tabs">
+          <div id="seasonPrevReportTabContainer" class="appt-report-tabs">
             <div class="tab-btn active" data-tab="shared">Activity</div>
             <div class="tab-btn" data-tab="pre-visit">Pre-visit</div>
             <div class="tab-btn" data-tab="post-visit">Post-visit</div>
           </div>
 
           <!-- Tab Content: What you shared -->
-          <div class="tab-content active" id="shared-content">
+          <div class="season--prev-report-tab-content tab-content active" id="shared-content">
             <div class="edit-form-content">
               <div class="edit-section">
                 <h3>What you discussed with your RD</h3>
@@ -377,11 +377,11 @@
                     <div class="item-date">Apr 17</div>
                     <div class="item-text">Discussed afternoon energy crashes occurring daily around 2-3 PM and potential dietary causes.</div>
                   </div>
-                  <div class="edit-item">
+                  <div class="season--shareable-item edit-item">
                     <div class="item-date">Apr 13</div>
                     <div class="item-text">Reviewed recent lab results showing elevated cholesterol (LDL: 145 mg/dL) and mild iron deficiency.</div>
                   </div>
-                  <div class="edit-item">
+                  <div class="season--shareable-item edit-item">
                     <div class="item-date">Apr 10</div>
                     <div class="item-text">Talked about irregular sleep patterns and their impact on morning energy levels.</div>
                   </div>
@@ -391,7 +391,7 @@
               <div class="edit-section">
                 <h3>What you shared with Season Assistant</h3>
                 <div class="edit-items">
-                  <div class="edit-item">
+                  <div class="season--shareable-item edit-item">
                     <div class="item-date">Apr 1</div>
                     <div class="item-text">Asked about meal prep strategies for busy weekdays and received customized suggestions.</div>
                   </div>
@@ -405,11 +405,11 @@
               <div class="edit-section">
                 <h3>Meals you ordered recently</h3>
                 <div class="edit-items">
-                  <div class="edit-item">
+                  <div class="season--shareable-item edit-item">
                     <div class="item-date">Apr 11</div>
                     <div class="item-text">Mediterranean Bowl with grilled chicken, quinoa, and tahini dressing (ordered 4 times).</div>
                   </div>
-                  <div class="edit-item">
+                  <div class="season--shareable-item edit-item">
                     <div class="item-date">Mar 30</div>
                     <div class="item-text">Green Goddess Salad with salmon and avocado (ordered 3 times this month).</div>
                   </div>
@@ -419,7 +419,7 @@
           </div>
 
           <!-- Tab Content: Pre-visit -->
-          <div class="tab-content" id="pre-visit-content">
+          <div class="season--prev-report-tab-content tab-content" id="pre-visit-content">
             <div class="summary-content-style">
               <div class="content-section">
                 <h3 class="section-title">Current Health Status</h3>
@@ -446,7 +446,7 @@
           </div>
 
           <!-- Tab Content: Post-visit -->
-          <div class="tab-content" id="post-visit-content">
+          <div class="season--prev-report-tab-content tab-content" id="post-visit-content">
             <div class="summary-content-style">
 
               <div class="content-section">
@@ -521,7 +521,7 @@
             <div class="edit-section">
               <h3>What you discussed with your RD</h3>
               <div class="edit-items">
-                <div class="edit-item" data-item-id="rd-1">
+                <div class="season--shareable-item edit-item" data-item-id="rd-1">
                   <div class="item-date">Aug 17</div>
                   <div class="item-text">Discussed afternoon energy crashes occurring daily around 2-3 PM and potential dietary causes.</div>
                   <div class="item-toggle">
@@ -544,7 +544,7 @@
 
                   </div>
                 </div>
-                <div class="edit-item" data-item-id="rd-2">
+                <div class="season--shareable-item edit-item" data-item-id="rd-2">
                   <div class="item-date">Aug 13</div>
                   <div class="item-text">Reviewed recent lab results showing elevated cholesterol (LDL: 145 mg/dL) and mild iron deficiency.</div>
                   <div class="item-toggle">
@@ -565,7 +565,7 @@
                     </svg>
                   </div>
                 </div>
-                <div class="edit-item" data-item-id="rd-3">
+                <div class="season--shareable-item edit-item" data-item-id="rd-3">
                   <div class="item-date">Aug 10</div>
                   <div class="item-text">Talked about irregular sleep patterns and their impact on morning energy levels.</div>
                   <div class="item-toggle">
@@ -586,7 +586,7 @@
                     </svg>
                   </div>
                 </div>
-                <div class="edit-item" data-item-id="rd-4">
+                <div class="season--shareable-item edit-item" data-item-id="rd-4">
                   <div class="item-date">Aug 4</div>
                   <div class="item-text">Established goals for consistent breakfast routine with 20g+ protein daily.</div>
                   <div class="item-toggle">
@@ -612,7 +612,7 @@
             <div class="edit-section">
               <h3>What you shared with Season Assistant</h3>
               <div class="edit-items">
-                <div class="edit-item" data-item-id="ai-1">
+                <div class="season--shareable-item edit-item" data-item-id="ai-1">
                   <div class="item-date">Aug 1</div>
                   <div class="item-text">Asked about meal prep strategies for busy weekdays and received customized suggestions.</div>
                   <div class="item-toggle">
@@ -633,7 +633,7 @@
                     </svg>
                   </div>
                 </div>
-                <div class="edit-item" data-item-id="ai-2">
+                <div class="season--shareable-item edit-item" data-item-id="ai-2">
                   <div class="item-date">Aug 1</div>
                   <div class="item-text">Discussed iron-rich food options and how to improve absorption with vitamin C pairing.</div>
                   <div class="item-toggle">
@@ -654,7 +654,7 @@
                     </svg>
                   </div>
                 </div>
-                <div class="edit-item" data-item-id="ai-3">
+                <div class="season--shareable-item edit-item" data-item-id="ai-3">
                   <div class="item-date">Aug 1</div>
                   <div class="item-text">Explored caffeine reduction strategies and healthy energy-boosting alternatives.</div>
                   <div class="item-toggle">
@@ -675,7 +675,7 @@
                     </svg>
                   </div>
                 </div>
-                <div class="edit-item" data-item-id="ai-4">
+                <div class="season--shareable-item edit-item" data-item-id="ai-4">
                   <div class="item-date">Aug 14</div>
                   <div class="item-text">Got recommendations for timing evening meals earlier to improve sleep quality.</div>
                   <div class="item-toggle">
@@ -696,7 +696,7 @@
                     </svg>
                   </div>
                 </div>
-                <div class="edit-item" data-item-id="ai-5">
+                <div class="season--shareable-item edit-item" data-item-id="ai-5">
                   <div class="item-date">Aug 5</div>
                   <div class="item-text">Received a personalized hydration tracking plan to maintain 64+ oz daily water intake.</div>
                   <div class="item-toggle">
@@ -722,7 +722,7 @@
             <div class="edit-section">
               <h3>Meals you ordered recently</h3>
               <div class="edit-items">
-                <div class="edit-item" data-item-id="meal-1">
+                <div class="season--shareable-item edit-item" data-item-id="meal-1">
                   <div class="item-date">Aug 11</div>
                   <div class="item-text">Mediterranean Bowl with grilled chicken, quinoa, and tahini dressing (ordered 4 times).</div>
                   <div class="item-toggle">
@@ -743,7 +743,7 @@
                     </svg>
                   </div>
                 </div>
-                <div class="edit-item" data-item-id="meal-2">
+                <div class="season--shareable-item edit-item" data-item-id="meal-2">
                   <div class="item-date">Jul 30</div>
                   <div class="item-text">Green Goddess Salad with salmon and avocado (ordered 3 times this month).</div>
                   <div class="item-toggle">
@@ -764,7 +764,7 @@
                     </svg>
                   </div>
                 </div>
-                <div class="edit-item" data-item-id="meal-3">
+                <div class="season--shareable-item edit-item" data-item-id="meal-3">
                   <div class="item-date">Jul 22</div>
                   <div class="item-text">Steel-cut oats breakfast bowl with berries and almond butter (morning favorite).</div>
                   <div class="item-toggle">
@@ -785,7 +785,7 @@
                     </svg>
                   </div>
                 </div>
-                <div class="edit-item" data-item-id="meal-4">
+                <div class="season--shareable-item edit-item" data-item-id="meal-4">
                   <div class="item-date">Jul 15</div>
                   <div class="item-text">Lentil curry with brown rice and steamed vegetables (comfort meal choice).</div>
                   <div class="item-toggle">
