@@ -21,6 +21,8 @@ const elem_GoalsDailyCalendar = document.getElementById('seasonGoalsDailyCalenda
 const elem_PreVisitSummaryItemToggles = document.getElementById('seasonPreVisitSummaryItemToggles');
 const elem_PreVisitSummaryGeneratedReport = document.getElementById('seasonPreVisitSummaryGeneratedReport');
 const elem_PrevReportTabContainer = document.getElementById('seasonPrevReportTabContainer');
+const elem_GoalGridContainer = document.getElementById('seasonGoalGridContainer');
+const elem_GoalModalsContainer = document.getElementById('seasonGoalModalsContainer');
 
 // Collection references (by class)
 const elems_AppointmentCards = document.querySelectorAll('.season--appointment-card');
@@ -119,17 +121,19 @@ const staticModalConfigs = [
 
 document.addEventListener('DOMContentLoaded', () => {
   
-  initApptSoonAlerts();
+  enableApptSoonAlerts();
 
   enableCalendarContainerFade();
-  initCalendarCardSwiping();
+  enableCalendarCardSwiping();
 
-  createGoalElements();
-  initGoalsTrackingCalendar(date_PrevAppt, date_NextAppt);
+  createGoalsTrackingCalendar(date_PrevAppt, date_NextAppt);
+  createGoalGridSquares();
+  createGoalModals();
   initGoalsTrackingHeaderClick();
+
   initPreVisitSummaryItemToggles(); 
 
-  // Must come after createGoalElements()
+  // Must come after createGoalModals()
   initModals([...staticModalConfigs, ...goalModalConfigs]);
   initPreVisitSummaryEdit();
   initCustomInput();
@@ -141,7 +145,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 // Enabled only when within X hours of next appt
-function initApptSoonAlerts() {
+function enableApptSoonAlerts() {
   const skipModalBtn = elem_ApptSoonModal.querySelector('button:last-of-type');
   const joinNowBugBtn = elem_ApptSoonBug.querySelector('button:last-of-type');
   
@@ -175,8 +179,8 @@ function enableCalendarContainerFade() {
   });
 }
 
-// Creates swipe effect for appointment cards collection
-function initCalendarCardSwiping() {
+// Swipe effect for appointment cards collection
+function enableCalendarCardSwiping() {
   // Find the index of the card with "today" class
   let curIndex = 0;
   const todayCard = elem_CalendarCardsContainer.querySelector('.today');
@@ -288,30 +292,105 @@ function initCalendarCardSwiping() {
   addCardClickListeners();
 }
 
-function createGoalElements() {
-  // Generate goal modals
-  const goalsModalsContainer = document.getElementById('goals-modals-container');
-  const goalsContainer = document.getElementById('goals-container');
-  
+// Creates goal grid squares to populate goals tracking panel
+function createGoalGridSquares() {
   // Clear existing content
-  goalsModalsContainer.innerHTML = '';
-  goalsContainer.innerHTML = '';
+  elem_GoalGridContainer.innerHTML = '';
+  
+  goalsData.forEach(goal => {
+    const squareElement = document.createElement('div');
+    squareElement.innerHTML = createGoalGridSquare(goal);
+    elem_GoalGridContainer.appendChild(squareElement.firstElementChild);
+  });
+
+  function createGoalGridSquare(goal) {
+    let svgContent = '';
+    
+    switch(goal.rating) {
+      case "poor":
+        svgContent = svgs.sad_face;
+        break;
+      case "ok":
+        svgContent = svgs.mid_face;
+        break;
+      case "good":
+        svgContent = svgs.happy_face;
+        break;
+    }
+    
+    return `
+      <div class="bottom-panel-square square square-${goal.id} goals-${goal.id}-logging-btn">
+        <div class="rated">
+          ${svgContent}
+        </div>
+        <span>${goal.title}</span>
+      </div>
+    `;
+  }
+}
+
+// Creates goal modals
+function createGoalModals() {
+  // Clear existing content
+  elem_GoalModalsContainer.innerHTML = '';
   
   goalsData.forEach(goal => {
     // Create and append goal modal
     const modalElement = document.createElement('div');
-    modalElement.innerHTML = createGoalModalTemplate(goal);
-    goalsModalsContainer.appendChild(modalElement.firstElementChild);
-    
-    // Create and append bottom panel square
-    const squareElement = document.createElement('div');
-    squareElement.innerHTML = createGoalSquares(goal);
-    goalsContainer.appendChild(squareElement.firstElementChild);
+    modalElement.innerHTML = createGoalModalContent(goal);
+    elem_GoalModalsContainer.appendChild(modalElement.firstElementChild);
   });
+
+  function createGoalModalContent(goal) {
+    return `
+      <div class="popup" id="goals-${goal.id}-logging">
+        <div class="popup-content goals-${goal.id}-logging">
+          <div class="close" id="goals-${goal.id}-logging-close-btn">
+            ${svgs.close}
+          </div> 
+          <div class="goal-title">${goal.title}</div>
+          <div class="goal-rating">
+            <div class="day-square today">
+              <div class="day-label">
+                <div class="month">Aug</div>
+                <div class="day">25</div>
+              </div>
+            </div>
+            <div class="goal-rating-title">How did it go today?</div>
+            <div class="rating-options">
+              <div class="rating-option">
+                <div class="rating-btn" data-rating="positive">
+                  <span>I didn't do so well.</span>
+                  ${svgs.sad_face}
+                </div>
+              </div>
+              <div class="rating-option">
+                <div class="rating-btn" data-rating="neutral">
+                  <span>I did OK.</span>
+                  ${svgs.mid_face}
+                </div>
+              </div>
+              <div class="rating-option">
+                <div class="rating-btn" data-rating="negative">
+                  <span>I did great!</span>
+                  ${svgs.happy_face}     
+                </div>
+              </div>
+            </div>
+            <div class="goal-action-buttons hidden">
+              <button class="share-more-btn" data-goal="${goal.id}">Share More&hellip;</button>
+              <span class="button-divider">or</span>
+              <button class="save-btn" data-goal="${goal.id}">Save</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+  }
 }
 
 // Sets up horizontal days UI for goal tracking
-function initGoalsTrackingCalendar(startDate, endDate) {
+function createGoalsTrackingCalendar(startDate, endDate) {
   const calendar = elem_GoalsDailyCalendar;
 
   const today = new Date();
@@ -695,80 +774,6 @@ function createGoalModalConfigs() {
   });
   
   return modalConfigs;
-}
-
-
-
-function createGoalSquares(goal) {
-  let svgContent = '';
-  
-  switch(goal.rating) {
-    case "poor":
-      svgContent = svgs.sad_face;
-      break;
-    case "ok":
-      svgContent = svgs.mid_face;
-      break;
-    case "good":
-      svgContent = svgs.happy_face;
-      break;
-  }
-  
-  return `
-    <div class="bottom-panel-square square square-${goal.id} goals-${goal.id}-logging-btn">
-      <div class="rated">
-        ${svgContent}
-      </div>
-      <span>${goal.title}</span>
-    </div>
-  `;
-}
-
-function createGoalModalTemplate(goal) {
-  return `
-    <div class="popup" id="goals-${goal.id}-logging">
-      <div class="popup-content goals-${goal.id}-logging">
-        <div class="close" id="goals-${goal.id}-logging-close-btn">
-          ${svgs.close}
-        </div> 
-        <div class="goal-title">${goal.title}</div>
-        <div class="goal-rating">
-          <div class="day-square today">
-            <div class="day-label">
-              <div class="month">Aug</div>
-              <div class="day">25</div>
-            </div>
-          </div>
-          <div class="goal-rating-title">How did it go today?</div>
-          <div class="rating-options">
-            <div class="rating-option">
-              <div class="rating-btn" data-rating="positive">
-                <span>I didn't do so well.</span>
-                ${svgs.sad_face}
-              </div>
-            </div>
-            <div class="rating-option">
-              <div class="rating-btn" data-rating="neutral">
-                <span>I did OK.</span>
-                ${svgs.mid_face}
-              </div>
-            </div>
-            <div class="rating-option">
-              <div class="rating-btn" data-rating="negative">
-                <span>I did great!</span>
-                ${svgs.happy_face}     
-              </div>
-            </div>
-          </div>
-          <div class="goal-action-buttons hidden">
-            <button class="share-more-btn" data-goal="${goal.id}">Share More&hellip;</button>
-            <span class="button-divider">or</span>
-            <button class="save-btn" data-goal="${goal.id}">Save</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  `;
 }
 
 function initGoalAddMoreToggle() {
