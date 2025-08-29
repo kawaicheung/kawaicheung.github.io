@@ -29,9 +29,13 @@ const elems_PrevReportTabContent = document.querySelectorAll('.season--prev-repo
 const elems_ShareableItems = document.querySelectorAll('.season--shareable-item');
 
 // Classes (Built dynamically so cannot reference document.querySelectorAll initially)
-const class_ApptCard = '.season--appointment-card';
-const class_GoalActionBtnsContainer = '.season--goal-action-buttons';
-const class_GoalProgressBtn = '.season--goal-progress-btn';
+const class_ApptCard = 'season--appt-card';
+const sel_ApptCard = `.${class_ApptCard}`;
+
+const class_GoalActionBtnsContainer = 'season--goal-action-buttons';
+const sel_GoalActionBtnsContainer = `.${class_GoalActionBtnsContainer}`;
+const class_GoalProgressBtn = 'season--goal-progress-btn';
+const sel_GoalProgressBtn = `.${class_GoalProgressBtn}`;
 
 // HTML constants
 const svgs = {
@@ -216,18 +220,20 @@ document.addEventListener('DOMContentLoaded', () => {
   createGoalsTrackingCalendar(date_PrevAppt, date_NextAppt);
   createGoalGridSquares();
   createGoalModals();
+  enableGoalProgressSelection();
   initGoalsTrackingHeaderClick();
 
   initPreVisitSummaryItemToggles(); 
 
-  // Must come after createApptCards() and createGoalModals()
-  initModals([...configs_StaticModal, ...configs_GoalModal]);
   initPreVisitSummaryEdit();
   initCustomInput();
-  initGoalAddMoreToggle();
   initUnifiedTextInput();
   enableApptReportTabs();
   updateAppointmentReportHeader();
+
+  
+  // Must come after createApptCards() and createGoalModals()
+  initModals([...configs_StaticModal, ...configs_GoalModal]);
 });
 
 // Calendar fade effect when scrolling vertically to reveal goals
@@ -281,7 +287,7 @@ function createApptCards() {
     const primaryClass = appointment.ctaClass.includes('primary') ? ' primary' : '';
     
     return `
-      <div class="season--appointment-card appointment-card${todayClass}" data-appointment-date="${appointment.date}" data-index="${index}">
+      <div class="${class_ApptCard} appointment-card${todayClass}" data-appointment-date="${appointment.date}" data-index="${index}">
         <div class="caption">${appointment.caption}</div>
         <div class="card-date">
           <div class="card-month">${appointment.month}</div>
@@ -299,7 +305,7 @@ function createApptCards() {
 // Swipe effect for appointment cards collection
 function enableCalendarCardSwiping() {
 
-  const apptCards = document.querySelectorAll(class_ApptCard);
+  const apptCards = document.querySelectorAll(sel_ApptCard);
   console.log(apptCards);
 
   // Find the index of the card with "today" class
@@ -681,25 +687,25 @@ function createGoalModals() {
             <div class="goal-rating-title">How did it go today?</div>
             <div class="rating-options">
               <div class="rating-option">
-                <div class="season--goal-progress-btn rating-btn" data-rating="positive">
+                <div class="${class_GoalProgressBtn} rating-btn" data-rating="positive">
                   <span>I didn't do so well.</span>
                   ${svgs.sad_face}
                 </div>
               </div>
               <div class="rating-option">
-                <div class="season--goal-progress-btn rating-btn" data-rating="neutral">
+                <div class="${class_GoalProgressBtn} rating-btn" data-rating="neutral">
                   <span>I did OK.</span>
                   ${svgs.mid_face}
                 </div>
               </div>
               <div class="rating-option">
-                <div class="season--goal-progress-btn rating-btn" data-rating="negative">
+                <div class="${class_GoalProgressBtn} rating-btn" data-rating="negative">
                   <span>I did great!</span>
                   ${svgs.happy_face}     
                 </div>
               </div>
             </div>
-            <div class="season--goal-action-buttons goal-action-buttons hidden">
+            <div class="${class_GoalActionBtnsContainer} goal-action-buttons hidden">
               <button class="share-more-btn" data-goal="${goal.id}">Share More&hellip;</button>
               <span class="button-divider">or</span>
               <button class="save-btn" data-goal="${goal.id}">Save</button>
@@ -709,6 +715,39 @@ function createGoalModals() {
       </div>
     `;
   }
+}
+
+// Goal progress selection + add more buttons
+function enableGoalProgressSelection() {
+  // Add event listeners to all rating options
+  document.querySelectorAll(sel_GoalProgressBtn).forEach(option => {
+    option.addEventListener('click', function() {
+      const parentGoal = this.closest('.popup-content');
+      const goalAddMoreSection = parentGoal.querySelector(sel_GoalActionBtnsContainer);
+      
+      // Remove selected class from all rating options in this goal
+      parentGoal.querySelectorAll(sel_GoalProgressBtn).forEach(opt => {
+        opt.classList.remove('selected');
+      });
+      
+      // Add selected class to clicked option
+      this.classList.add('selected');
+      
+      // Show the goal-add-more section with a smooth animation
+      if (goalAddMoreSection) {
+        goalAddMoreSection.classList.remove('hidden')
+        goalAddMoreSection.style.opacity = '0';
+        goalAddMoreSection.style.transform = 'translateY(20px)';
+        
+        // Animate in
+        requestAnimationFrame(() => {
+          goalAddMoreSection.style.transition = 'all 0.3s ease';
+          goalAddMoreSection.style.opacity = '1';
+          goalAddMoreSection.style.transform = 'translateY(0)';
+        });
+      }
+    });
+  });
 }
 
 // Allow clicking "How are your goals going?" to pop the entire goals tracking panel
@@ -895,45 +934,6 @@ function createconfigs_GoalModal() {
   });
   
   return modalConfigs;
-}
-
-function initGoalAddMoreToggle() {
-  // Hide all goal-add-more sections by default
-  document.querySelectorAll(class_GoalActionBtnsContainer).forEach(section => {
-    section.classList.add('hidden');
-  });
-
-  // Add event listeners to all rating options
-  document.querySelectorAll(class_GoalProgressBtn).forEach(option => {
-    option.addEventListener('click', function() {
-      const parentGoal = this.closest('.popup-content');
-      if (!parentGoal) return;
-
-      const goalAddMoreSection = parentGoal.querySelector(class_GoalActionBtnsContainer);
-      
-      // Remove selected class from all rating options in this goal
-      parentGoal.querySelectorAll(class_GoalProgressBtn).forEach(opt => {
-        opt.classList.remove('selected');
-      });
-      
-      // Add selected class to clicked option
-      this.classList.add('selected');
-      
-      // Show the goal-add-more section with a smooth animation
-      if (goalAddMoreSection) {
-        goalAddMoreSection.classList.remove('hidden')
-        goalAddMoreSection.style.opacity = '0';
-        goalAddMoreSection.style.transform = 'translateY(20px)';
-        
-        // Animate in
-        requestAnimationFrame(() => {
-          goalAddMoreSection.style.transition = 'all 0.3s ease';
-          goalAddMoreSection.style.opacity = '1';
-          goalAddMoreSection.style.transform = 'translateY(0)';
-        });
-      }
-    });
-  });
 }
 
 function initUnifiedTextInput() {
