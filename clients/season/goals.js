@@ -84,7 +84,7 @@ const data_ApptCards = [
     day: "12",
     caption: "Appointment", 
     blurbText: "First visit. Way to go!",
-    ctaText: "View Summary",
+    ctaText: "View Recap",
     ctaClass: "appt-report-btn"
   },
   {
@@ -93,7 +93,7 @@ const data_ApptCards = [
     day: "15",
     caption: "Appointment",
     blurbText: "Nice improvements!",
-    ctaText: "View Summary", 
+    ctaText: "View Recap", 
     ctaClass: "appt-report-btn"
   },
   {
@@ -102,7 +102,7 @@ const data_ApptCards = [
     day: "2", 
     caption: "Appointment",
     blurbText: "You set new goals.",
-    ctaText: "View Summary",
+    ctaText: "View Recap",
     ctaClass: "appt-report-btn"
   },
   {
@@ -111,7 +111,7 @@ const data_ApptCards = [
     day: "12",
     caption: "Appointment", 
     blurbText: "Nice work on your goals!",
-    ctaText: "View Summary",
+    ctaText: "View Recap",
     ctaClass: "appt-report-btn"
   },
   {
@@ -120,7 +120,7 @@ const data_ApptCards = [
     day: "21",
     caption: "Appointment",
     blurbText: "You ordered 10 meals.",
-    ctaText: "View Summary",
+    ctaText: "View Recap",
     ctaClass: "appt-report-btn"
   },
   {
@@ -129,7 +129,7 @@ const data_ApptCards = [
     day: "11",
     caption: "Appointment",
     blurbText: "Great eating improvements!",
-    ctaText: "View Summary",
+    ctaText: "View Recap",
     ctaClass: "appt-report-btn"
   },
   {
@@ -213,7 +213,7 @@ document.addEventListener('DOMContentLoaded', () => {
   enableApptSoonAlerts();
 
   // Component: Appointment cards
-  createApptCards();
+  createCalendarCards();
   enableCalendarCardSwiping();
 
   // Component: Goals tracking 
@@ -221,18 +221,19 @@ document.addEventListener('DOMContentLoaded', () => {
   createGoalGridSquares();
   createGoalModals();
   enableGoalProgressSelection();
+  initGoalAddMoreInput();
   initGoalsTrackingHeaderClick();
 
+  // Component: Pre-visit summary
   initPreVisitSummaryItemToggles(); 
-
   initPreVisitSummaryEdit();
   initCustomInput();
-  initUnifiedTextInput();
+
+  // Component: Past appointment recaps
   enableApptReportTabs();
   updateAppointmentReportHeader();
 
-  
-  // Must come after createApptCards() and createGoalModals()
+  // Must come after createCalendarCards() and createGoalModals()
   initModals([...configs_StaticModal, ...configs_GoalModal]);
 });
 
@@ -272,7 +273,7 @@ function enableApptSoonAlerts() {
 }
 
 // Create carousel of appointment cards
-function createApptCards() {
+function createCalendarCards() {
   // Clear existing content
   elem_CalendarCardsContainer.innerHTML = '';
   
@@ -750,6 +751,123 @@ function enableGoalProgressSelection() {
   });
 }
 
+// Goal add more input (text, speak, upload)
+function initGoalAddMoreInput() {
+  const textInputPopup = document.getElementById('text-input-popup');
+  const closeBtn = document.getElementById('close-text-popup');
+  const saveBtn = textInputPopup.querySelector('.save-text-btn');
+  const textarea = textInputPopup.querySelector('.main-textarea');
+  
+  let currentGoalId = null;
+
+  // Store reference to current goal when opening popup
+  document.querySelectorAll('.share-more-btn').forEach(button => {
+    button.addEventListener('click', (e) => {
+      currentGoalId = e.target.dataset.goal;
+      textInputPopup.style.display = 'flex';
+      
+      // Focus on textarea after a short delay
+      setTimeout(() => {
+          textarea.focus();
+      }, 300);
+    });
+  });
+
+  // Handle input method selector for text input popup
+  document.querySelectorAll('.input-method-option').forEach(option => {
+    option.addEventListener('click', (e) => {
+      const method = e.currentTarget.dataset.method;
+      const popup = e.currentTarget.closest('.text-input-popup');
+      
+      // Remove selected class from all options in this popup
+      popup.querySelectorAll('.input-method-option').forEach(opt => {
+          opt.classList.remove('selected');
+      });
+      
+      // Add selected class to clicked option
+      e.currentTarget.classList.add('selected');
+      
+      // Hide all input areas in this popup
+      popup.querySelectorAll('.input-area').forEach(area => {
+          area.classList.add('hidden');
+      });
+      
+      // Show the selected input area
+      const targetArea = popup.querySelector(`#${method}-area`);
+      if (targetArea) {
+        targetArea.classList.remove('hidden');
+        
+        // Focus on textarea if type method is selected
+        if (method === 'type') {
+          const textarea = targetArea.querySelector('.main-textarea');
+          if (textarea) {
+              setTimeout(() => textarea.focus(), 100);
+          }
+        }
+      }
+    });
+  });
+
+  // Handle Save buttons (same functionality as old goal-footer button)
+  document.querySelectorAll('.save-btn').forEach(button => {
+    button.addEventListener('click', (e) => {
+      const goalId = e.target.dataset.goal;
+      const modal = document.getElementById(`goals-${goalId}-logging`);
+      
+      // In a real app, you'd save the data here
+      console.log(`Saving goal ${goalId} without additional text`);
+      
+      // Hide modal
+      modal.style.display = 'none';
+      enableHtmlScroll();
+    });
+  });
+
+  // Close text input popup
+  if (closeBtn) {
+    closeBtn.addEventListener('click', () => {
+      textInputPopup.style.display = 'none';
+      currentGoalId = null;
+    });
+  }
+
+  // Close when clicking background
+  textInputPopup.addEventListener('click', (e) => {
+    if (e.target === textInputPopup) {
+      textInputPopup.style.display = 'none';
+      currentGoalId = null;
+    }
+  });
+
+  // Save and close both popups
+  if (saveBtn) {
+    saveBtn.addEventListener('click', () => {
+      const textContent = textarea.value.trim();
+      
+      // In a real app, you'd save the data here
+      console.log(`Saving text input for goal ${currentGoalId}:`, textContent);
+      
+      // Hide text input popup
+      textInputPopup.style.display = 'none';
+      
+      // Hide parent goal popup if currentGoalId exists
+      if (currentGoalId) {
+        const parentPopup = document.getElementById(`goals-${currentGoalId}-logging`);
+        if (parentPopup) {
+          parentPopup.style.display = 'none';
+        }
+      }
+      
+      // Re-enable scrolling
+      enableHtmlScroll();
+      
+      // Clear textarea and reset goal reference
+      textarea.value = '';
+      currentGoalId = null;
+    });
+  }
+}
+
 // Allow clicking "How are your goals going?" to pop the entire goals tracking panel
 function initGoalsTrackingHeaderClick() {
   const elem = elem_GoalsTrackingPanel.firstElementChild;
@@ -934,122 +1052,6 @@ function createconfigs_GoalModal() {
   });
   
   return modalConfigs;
-}
-
-function initUnifiedTextInput() {
-  const textInputPopup = document.getElementById('text-input-popup');
-  const closeBtn = document.getElementById('close-text-popup');
-  const saveBtn = textInputPopup.querySelector('.save-text-btn');
-  const textarea = textInputPopup.querySelector('.main-textarea');
-  
-  let currentGoalId = null;
-
-  // Store reference to current goal when opening popup
-  document.querySelectorAll('.share-more-btn').forEach(button => {
-      button.addEventListener('click', (e) => {
-          currentGoalId = e.target.dataset.goal;
-          textInputPopup.style.display = 'flex';
-          
-          // Focus on textarea after a short delay
-          setTimeout(() => {
-              textarea.focus();
-          }, 300);
-      });
-  });
-
-  // Handle input method selector for text input popup
-  document.querySelectorAll('.input-method-option').forEach(option => {
-      option.addEventListener('click', (e) => {
-          const method = e.currentTarget.dataset.method;
-          const popup = e.currentTarget.closest('.text-input-popup');
-          
-          // Remove selected class from all options in this popup
-          popup.querySelectorAll('.input-method-option').forEach(opt => {
-              opt.classList.remove('selected');
-          });
-          
-          // Add selected class to clicked option
-          e.currentTarget.classList.add('selected');
-          
-          // Hide all input areas in this popup
-          popup.querySelectorAll('.input-area').forEach(area => {
-              area.classList.add('hidden');
-          });
-          
-          // Show the selected input area
-          const targetArea = popup.querySelector(`#${method}-area`);
-          if (targetArea) {
-              targetArea.classList.remove('hidden');
-              
-              // Focus on textarea if type method is selected
-              if (method === 'type') {
-                  const textarea = targetArea.querySelector('.main-textarea');
-                  if (textarea) {
-                      setTimeout(() => textarea.focus(), 100);
-                  }
-              }
-          }
-      });
-  });
-
- // Handle Save buttons (same functionality as old goal-footer button)
-  document.querySelectorAll('.save-btn').forEach(button => {
-    button.addEventListener('click', (e) => {
-      const goalId = e.target.dataset.goal;
-      const modal = document.getElementById(`goals-${goalId}-logging`);
-      
-      // In a real app, you'd save the data here
-      console.log(`Saving goal ${goalId} without additional text`);
-      
-      // Hide modal
-      modal.style.display = 'none';
-      enableHtmlScroll();
-    });
-  });
-
-  // Close text input popup
-  if (closeBtn) {
-      closeBtn.addEventListener('click', () => {
-          textInputPopup.style.display = 'none';
-          currentGoalId = null;
-      });
-  }
-
-  // Close when clicking background
-  textInputPopup.addEventListener('click', (e) => {
-      if (e.target === textInputPopup) {
-          textInputPopup.style.display = 'none';
-          currentGoalId = null;
-      }
-  });
-
-  // Save and close both popups
-  if (saveBtn) {
-      saveBtn.addEventListener('click', () => {
-          const textContent = textarea.value.trim();
-          
-          // In a real app, you'd save the data here
-          console.log(`Saving text input for goal ${currentGoalId}:`, textContent);
-          
-          // Hide text input popup
-          textInputPopup.style.display = 'none';
-          
-          // Hide parent goal popup if currentGoalId exists
-          if (currentGoalId) {
-              const parentPopup = document.getElementById(`goals-${currentGoalId}-logging`);
-              if (parentPopup) {
-                  parentPopup.style.display = 'none';
-              }
-          }
-          
-          // Re-enable scrolling
-          enableHtmlScroll();
-          
-          // Clear textarea and reset goal reference
-          textarea.value = '';
-          currentGoalId = null;
-      });
-  }
 }
 
 function enableApptReportTabs() {
