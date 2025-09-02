@@ -20,8 +20,9 @@ const elem_SplashContainer = document.getElementById('seasonSplashContainer');
 // Shell for initGoalsTrackingPanel() component...
 const elem_GoalsTrackingPanel = document.getElementById('seasonGoalsTrackingPanel');
 
-const elem_PreVisitSummaryItemToggles = document.getElementById('seasonPreVisitSummaryItemToggles');
-const elem_PreVisitSummaryGeneratedReport = document.getElementById('seasonPreVisitSummaryGeneratedReport');
+// Shell for initPreVisitSummary() component (popup)...
+// TODO: Extract out #seasonPreVisitSummary reference below.
+
 const elem_PrevReportTabContainer = document.getElementById('seasonPrevReportTabContainer');
 const elem_GoalModalsContainer = document.getElementById('seasonGoalModalsContainer');
 
@@ -198,8 +199,8 @@ const configs_StaticModal = [
   },
   {
     openBtnSelector: '.pre-visit-summary-btn',
-    modalId: 'pre-visit-summary',
-    closeBtnId: 'pre-visit-summary-close-btn'
+    modalId: 'seasonPreVisitSummary', 
+    closeBtnId: 'seasonPreVisitSummary-close-btn' 
   }
 ];
 
@@ -231,10 +232,77 @@ document.addEventListener('DOMContentLoaded', () => {
     goals: data_Goals
   });
 
-  // Component: Pre-visit summary
-  initPreVisitSummaryItemToggles(); 
-  initPreVisitSummaryEdit();
-  initCustomInput();
+  // Pre-visit summary panel
+  initPreVisitSummary({
+    headerText: 'Your pre-visit summary for 8/15',
+    providerData: {
+      name: 'Alejandra Sanchez, RD',
+      title: 'Registered Dietitian',
+      image: 'img/alejandra.png'
+    },
+    summaryItems: {
+      rdDiscussions: [
+        { date: 'Aug 17', text: 'Discussed afternoon energy crashes occurring daily around 2-3 PM and potential dietary causes.', excluded: false },
+        { date: 'Aug 13', text: 'Reviewed recent lab results showing elevated cholesterol (LDL: 145 mg/dL) and mild iron deficiency.', excluded: true },
+        { date: 'Aug 10', text: 'Talked about irregular sleep patterns and their impact on morning energy levels.', excluded: false },
+        { date: 'Aug 4', text: 'Established goals for consistent breakfast routine with 20g+ protein daily.', excluded: false }
+      ],
+      aiAssistantShares: [
+        { date: 'Aug 1', text: 'Asked about meal prep strategies for busy weekdays and received customized suggestions.', excluded: false },
+        { date: 'Aug 1', text: 'Discussed iron-rich food options and how to improve absorption with vitamin C pairing.', excluded: true },
+        { date: 'Aug 1', text: 'Explored caffeine reduction strategies and healthy energy-boosting alternatives.', excluded: true },
+        { date: 'Aug 14', text: 'Got recommendations for timing evening meals earlier to improve sleep quality.', excluded: false },
+        { date: 'Aug 5', text: 'Received a personalized hydration tracking plan to maintain 64+ oz daily water intake.', excluded: false }
+      ],
+      recentMeals: [
+        { date: 'Aug 11', text: 'Mediterranean Bowl with grilled chicken, quinoa, and tahini dressing (ordered 4 times).', excluded: false },
+        { date: 'Jul 30', text: 'Green Goddess Salad with salmon and avocado (ordered 3 times this month).', excluded: false },
+        { date: 'Jul 22', text: 'Steel-cut oats breakfast bowl with berries and almond butter (morning favorite).', excluded: false },
+        { date: 'Jul 15', text: 'Lentil curry with brown rice and steamed vegetables (comfort meal choice).', excluded: false }
+      ]
+    },
+    generatedSummary: {
+      currentHealthStatus: {
+        text: 'Michelle has been experiencing consistent energy fluctuations throughout the day, particularly noticeable afternoon crashes around 2-3 PM. Recent lab work shows slightly elevated cholesterol and mild iron deficiency.',
+        points: [
+          'Afternoon energy crashes (2-3 PM daily)',
+          'Elevated cholesterol levels (LDL: 145 mg/dL)',
+          'Mild iron deficiency (ferritin: 18 ng/mL)',
+          'Irregular sleep patterns affecting morning energy'
+        ]
+      },
+      dietaryPatterns: {
+        text: 'Current eating habits include skipping breakfast 3-4 times per week, rushed lunches, and late dinners that are typically carb-heavy. Michelle tends to rely heavily on coffee for energy management.',
+        points: [
+          'Frequent breakfast skipping (3-4x per week)',
+          'Rushed lunch breaks with processed foods',
+          'Late dinners (after 8 PM) with high carb content',
+          'Excessive caffeine consumption (4-5 cups daily)',
+          'Stress-induced meal skipping patterns'
+        ]
+      },
+      upcomingGoals: {
+        text: 'The primary focus will be addressing energy stability through improved meal timing and nutrient density. We\'ll also work on strategies for better meal planning despite a busy schedule.',
+        points: [
+          'Establish consistent breakfast routine with 20g+ protein',
+          'Implement meal prep strategies for busy weekdays',
+          'Address iron deficiency through dietary modifications',
+          'Create sustainable evening meal timing',
+          'Reduce caffeine dependency gradually'
+        ]
+      },
+      progressSinceLastVisit: {
+        text: 'Michelle has successfully implemented several recommendations from our previous session, including regular hydration tracking and incorporating more leafy greens into her diet.',
+        points: [
+          'Consistent water intake tracking (64+ oz daily)',
+          'Added spinach/kale to smoothies 4x per week',
+          'Reduced late-night snacking by 60%',
+          'Started taking recommended vitamin D supplement',
+          'Improved meal timing on weekends'
+        ]
+      }
+    }
+  });
 
   // Component: Past appointment recaps
   enableApptReportTabs();
@@ -995,64 +1063,326 @@ function initGoalsTrackingPanel(panelData) {
   }
 }
 
-function initPreVisitSummaryEdit() {
-  const actionBtn = document.getElementById('pre-visit-action-btn');
-  const summaryContent = document.getElementById('summary-content');
-  const regeneratingState = document.getElementById('regenerating-state');
-  const actionBtnManage = document.querySelector('.audit-button--manage');
-  const actionBtnSee = document.querySelector('.audit-button--see');
-  
-  let isEditing = true;
-  updateActionButtonText();
+// Master method that creates the full pre-visit summary component
+function initPreVisitSummary(summaryData) {
 
-  actionBtn.addEventListener('click', () => {
-    if (isEditing) {
-      saveAndRegenerate();
-    } else {
-      switchToEditMode();
-    }
-  });
-
-  function switchToEditMode() {
-    elem_PreVisitSummaryGeneratedReport.classList.add('hidden');
-    elem_PreVisitSummaryItemToggles.classList.remove('hidden');
-    isEditing = true;
-    updateActionButtonText();
-  }
+  const eyeToggleHTML = `
+    <div class="item-toggle">
+      <svg class="eye-closed hidden" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <g clip-path="url(#clip0_179_0)">
+          <path d="M14.12 14.12C13.8454 14.4147 13.5141 14.6511 13.1462 14.8151C12.7782 14.9791 12.3809 15.0673 11.9781 15.0744C11.5753 15.0815 11.1752 15.0074 10.8016 14.8565C10.4281 14.7056 10.0887 14.481 9.80385 14.1961C9.51897 13.9113 9.29439 13.5719 9.14351 13.1984C8.99262 12.8248 8.91853 12.4247 8.92563 12.0219C8.93274 11.6191 9.02091 11.2218 9.18488 10.8538C9.34884 10.4858 9.58525 10.1546 9.88 9.87999M17.94 17.94C16.2306 19.243 14.1491 19.9649 12 20C5 20 1 12 1 12C2.24389 9.68189 3.96914 7.6566 6.06 6.05999L17.94 17.94ZM9.9 4.23999C10.5883 4.07887 11.2931 3.99833 12 3.99999C19 3.99999 23 12 23 12C22.393 13.1356 21.6691 14.2047 20.84 15.19L9.9 4.23999Z" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M1 1L23 23" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>
+        </g>
+        <defs>
+          <clipPath id="clip0_179_0">
+          <rect width="24" height="24" fill="white"/>
+          </clipPath>
+        </defs>
+      </svg>
+      <svg class="eye-opened" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M1 12C1 12 5 4 12 4C19 4 23 12 23 12C23 12 19 20 12 20C5 20 1 12 1 12Z" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15Z" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+  `;
   
-  function saveAndRegenerate() {
-    elem_PreVisitSummaryItemToggles.classList.add('hidden');
-    actionBtn.classList.add('hidden');
-    regeneratingState.classList.remove('hidden');
+  // Build by sub-component...
+  createPreVisitSummaryContent(summaryData);
+  
+  // Get DOM references after content creation
+  const elem_PreVisitSummaryItemToggles = document.getElementById('seasonPreVisitSummaryItemToggles');
+  const elem_PreVisitSummaryGeneratedReport = document.getElementById('seasonPreVisitSummaryGeneratedReport');
+  
+  // Initialize sub-components
+  initPreVisitSummaryItemToggles(); 
+  initPreVisitSummaryEdit();
+  initCustomInput();
+
+  // Create pre-visit summary content
+  function createPreVisitSummaryContent(summaryData = {}) {
+    const modalContent = document.querySelector('#seasonPreVisitSummary .popup-content');
     
-    // Simulate regeneration process (modify when implementing into React)
-    setTimeout(() => {
-      // Hide regenerating state
-      elem_PreVisitSummaryGeneratedReport.classList.remove('hidden');
-      actionBtn.classList.remove('hidden');
-      regeneratingState.classList.add('hidden');
-      isEditing = false;
-      updateActionButtonText();
-    }, 1000);
+    // Find the close button (preserve it)
+    const closeBtn = modalContent.querySelector('.close');
+    
+    // Clear content but preserve close button
+    modalContent.innerHTML = '';
+    modalContent.appendChild(closeBtn);
+    
+    // Add the main content
+    const contentDiv = document.createElement('div');
+    contentDiv.className = 'pre-visit-summary-content';
+    contentDiv.innerHTML = `
+      <!-- Header -->
+      <div class="summary-header">${summaryData.headerText}</div>
+      
+      <!-- Provider info -->
+      <div class="summary-to">
+        <img src="${summaryData.providerData.image}" alt="${summaryData.providerData.name}" class="avatar">
+        <div class="rd-info">
+          <div class="rd-name">${summaryData.providerData.name}</div>
+          <div class="rd-title">${summaryData.providerData.title}</div>
+        </div>
+      </div>
+
+      <!-- Pre-visit summary item toggles -->
+      <div id="seasonPreVisitSummaryItemToggles" class="edit-form">
+        <div class="edit-disclaimer">
+          Review what you've done since last visit. Tap to
+          hide things you don't want to share below. 
+          Scroll to the bottom to share something else before your visit.
+          <div class="bg-sparkle">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="Reward-Stars-2--Streamline-Ultimate" height="42" width="42">
+              <desc>Reward Stars 2 Streamline Icon: https://streamlinehq.com</desc>
+              <defs></defs>
+              <path d="M10.751 1.375c-0.025 6.281 3.029 9.844 10 10 -6.465 -0.025 -9.672 3.441 -10 10 -0.063 -6.187 -2.828 -10.009 -10 -10 6.416 -0.09 9.975 -3.187 10 -10 Z" fill="none" stroke="rgba(132,197,230,0.7)" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
+              <path d="m19.012 1.375 0 4" fill="none" stroke="rgba(132,197,230,0.7)" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
+              <path d="m17.012 3.375 4 0" fill="none" stroke="rgba(132,197,230,0.7)" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
+              <path d="m21.25 18.625 0 4" fill="none" stroke="rgba(132,197,230,0.7)" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
+              <path d="m19.25 20.625 4 0" fill="none" stroke="rgba(132,197,230,0.7)" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
+            </svg>
+          </div>
+        </div>
+        ${createSummaryItemSections(summaryData.summaryItems)}
+        <div class="edit-section">
+          <h3>Anything else you'd like to share?</h3>
+          <div class="custom-input-section">
+            <textarea 
+              id="custom-input-textarea" 
+              class="custom-input-textarea" 
+              placeholder="Add anything else you'd like to share with ${summaryData.providerData.name.split(',')[0]}..."></textarea>
+            <button class="save-custom-btn" id="save-custom-btn">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M22 2L11 13" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M22 2L15 22L11 13L2 9L22 2Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pre-visit generated report (Hidden to start) -->
+      <div id="seasonPreVisitSummaryGeneratedReport" class="summary-content hidden">
+        ${createGeneratedSummaryContent(summaryData.generatedSummary)}
+      </div>
+
+      <!-- Toggle button -->
+      <div class="audit-button" id="pre-visit-action-btn">
+        <div class="audit-button--manage">
+          <span>Manage what you want to share</span>
+          <svg viewBox="0 0 24 24" width="24" height="24">
+            <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z" fill="currentColor"/>
+          </svg>
+        </div>
+        <div class="audit-button--see">
+          <span>Update your pre-visit summary</span>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="Reward-Stars-2--Streamline-Ultimate" height="24" width="24">
+            <desc>Reward Stars 2 Streamline Icon: https://streamlinehq.com</desc>
+            <defs></defs>
+            <path d="M10.751 1.375c-0.025 6.281 3.029 9.844 10 10 -6.465 -0.025 -9.672 3.441 -10 10 -0.063 -6.187 -2.828 -10.009 -10 -10 6.416 -0.09 9.975 -3.187 10 -10 Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
+            <path d="m19.012 1.375 0 4" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
+            <path d="m17.012 3.375 4 0" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
+            <path d="m21.25 18.625 0 4" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
+            <path d="m19.25 20.625 4 0" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Regenerating state (hidden by default) -->
+      <div class="regenerating-state hidden" id="regenerating-state">
+        <div class="regenerating-spinner"></div>
+        <div class="regenerating-text">Regenerating pre-visit summary...</div>
+        <div class="regenerating-subtext">This will take just a moment!</div>
+      </div>
+    `;
+    
+    modalContent.appendChild(contentDiv);
   }
 
-  function updateActionButtonText() {
-    if (isEditing) {
-      actionBtnSee.classList.remove('hidden');
-      actionBtnManage.classList.add('hidden');
-    } else {
-      actionBtnManage.classList.remove('hidden');
-      actionBtnSee.classList.add('hidden');
+  // Helper function to create summary item sections
+  function createSummaryItemSections(summaryItems) {
+    return `
+      <div class="edit-section">
+        <h3>What you discussed with your RD</h3>
+        <div class="edit-items">
+          ${summaryItems.rdDiscussions.map((item, index) => `
+            <div class="season--shareable-item edit-item${item.excluded ? ' excluded' : ''}" data-item-id="rd-${index + 1}">
+              <div class="item-date">${item.date}</div>
+              <div class="item-text">${item.text}</div>
+              ${eyeToggleHTML}
+            </div>
+          `).join('')}
+        </div>
+      </div>
+      
+      <div class="edit-section">
+        <h3>What you shared with Season Assistant</h3>
+        <div class="edit-items">
+          ${summaryItems.aiAssistantShares.map((item, index) => `
+            <div class="season--shareable-item edit-item${item.excluded ? ' excluded' : ''}" data-item-id="ai-${index + 1}">
+              <div class="item-date">${item.date}</div>
+              <div class="item-text">${item.text}</div>
+              ${eyeToggleHTML}
+            </div>
+          `).join('')}
+        </div>
+      </div>
+      
+      <div class="edit-section">
+        <h3>Meals you ordered recently</h3>
+        <div class="edit-items">
+          ${summaryItems.recentMeals.map((item, index) => `
+            <div class="season--shareable-item edit-item${item.excluded ? ' excluded' : ''}" data-item-id="meal-${index + 1}">
+              <div class="item-date">${item.date}</div>
+              <div class="item-text">${item.text}</div>
+              ${eyeToggleHTML}
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `;
+  }
+
+  // Helper function to create generated summary content
+  function createGeneratedSummaryContent(generatedSummary) {
+    return `
+      <div class="content-section">
+        <h3 class="section-title">Current Health Status</h3>
+        <p class="section-text">${generatedSummary.currentHealthStatus.text}</p>
+        <ul class="section-list">
+          ${generatedSummary.currentHealthStatus.points.map(point => `<li>${point}</li>`).join('')}
+        </ul>
+      </div>
+      <div class="content-section">
+        <h3 class="section-title">Dietary Patterns & Concerns</h3>
+        <p class="section-text">${generatedSummary.dietaryPatterns.text}</p>
+        <ul class="section-list">
+          ${generatedSummary.dietaryPatterns.points.map(point => `<li>${point}</li>`).join('')}
+        </ul>
+      </div>
+      <div class="content-section">
+        <h3 class="section-title">Goals for Upcoming Visit</h3>
+        <p class="section-text">${generatedSummary.upcomingGoals.text}</p>
+        <ul class="section-list">
+          ${generatedSummary.upcomingGoals.points.map(point => `<li>${point}</li>`).join('')}
+        </ul>
+      </div>
+      <div class="content-section">
+        <h3 class="section-title">Progress Since Last Visit</h3>
+        <p class="section-text">${generatedSummary.progressSinceLastVisit.text}</p>
+        <ul class="section-list">
+          ${generatedSummary.progressSinceLastVisit.points.map(point => `<li>${point}</li>`).join('')}
+        </ul>
+      </div>
+    `;
+  }
+
+  // Sets the share/exclude functionality for pre-visit summaries items
+  // Dev note: Can add API call to regenerate summary on each click? Or on submit.
+  function initPreVisitSummaryItemToggles() {
+    const shareableItems = document.querySelectorAll('.season--shareable-item');
+    shareableItems.forEach(item => {
+      enableShareableItemToggle(item);
+    });
+  }
+
+  // Initialize pre-visit summary edit functionality
+  function initPreVisitSummaryEdit() {
+    const actionBtn = document.getElementById('pre-visit-action-btn');
+    const regeneratingState = document.getElementById('regenerating-state');
+    const actionBtnManage = document.querySelector('.audit-button--manage');
+    const actionBtnSee = document.querySelector('.audit-button--see');
+    
+    let isEditing = true;
+    updateActionButtonText();
+
+    actionBtn.addEventListener('click', () => {
+      if (isEditing) {
+        saveAndRegenerate();
+      } else {
+        switchToEditMode();
+      }
+    });
+
+    function switchToEditMode() {
+      elem_PreVisitSummaryGeneratedReport.classList.add('hidden');
+      elem_PreVisitSummaryItemToggles.classList.remove('hidden');
+      isEditing = true;
+      updateActionButtonText();
+    }
+    
+    function saveAndRegenerate() {
+      elem_PreVisitSummaryItemToggles.classList.add('hidden');
+      actionBtn.classList.add('hidden');
+      regeneratingState.classList.remove('hidden');
+      
+      // Simulate regeneration process (modify when implementing into React)
+      setTimeout(() => {
+        // Hide regenerating state
+        elem_PreVisitSummaryGeneratedReport.classList.remove('hidden');
+        actionBtn.classList.remove('hidden');
+        regeneratingState.classList.add('hidden');
+        isEditing = false;
+        updateActionButtonText();
+      }, 1000);
+    }
+
+    function updateActionButtonText() {
+      if (isEditing) {
+        actionBtnSee.classList.remove('hidden');
+        actionBtnManage.classList.add('hidden');
+      } else {
+        actionBtnManage.classList.remove('hidden');
+        actionBtnSee.classList.add('hidden');
+      }
     }
   }
-}
 
-// Sets the share/exclude functionality for pre-visit summaries items
-// Dev note: Can add API call to regenerate summary on each click? Or on submit.
-function initPreVisitSummaryItemToggles() {
-  elems_ShareableItems.forEach(item => {
-    enableShareableItemToggle(item);
-  });
+  // Initialize custom input functionality
+  function initCustomInput() {
+    const saveBtn = document.getElementById('save-custom-btn');
+    const textarea = document.getElementById('custom-input-textarea');
+    
+    saveBtn.addEventListener('click', () => {
+      const inputText = textarea.value.trim();
+      
+      if (inputText) {
+        // Create or get the custom items container
+        let customItemsContainer = document.getElementById('custom-edit-items');
+        
+        if (!customItemsContainer) {
+          customItemsContainer = document.createElement('div');
+          customItemsContainer.className = 'edit-items';
+          customItemsContainer.id = 'custom-edit-items';
+          
+          // Insert it before the custom-input-section
+          const customInputSection = document.querySelector('.custom-input-section');
+          customInputSection.parentNode.insertBefore(customItemsContainer, customInputSection);
+        }
+        
+        // Create new edit item
+        const newItem = document.createElement('div');
+        newItem.className = 'edit-item';
+        newItem.dataset.itemId = `custom-${Date.now()}`;
+
+        const currentDate = new Date();
+        const formattedDate = currentDate.toLocaleDateString('en-US', { 
+          month: 'short', 
+          day: 'numeric' 
+        });
+        
+        newItem.innerHTML = `
+          <div class="item-date">${formattedDate}</div>
+          <div class="item-text">${inputText}</div>
+          ${eyeToggleHTML}
+        `;
+        enableShareableItemToggle(newItem);
+        customItemsContainer.appendChild(newItem);
+        textarea.value = '';
+        textarea.focus();
+      }
+    });
+  }
 }
 
 // Sets up all modals (goals, chats, summaries)
@@ -1082,68 +1412,6 @@ function initModals(modalConfigs) {
         enableHtmlScroll();
       }
     });
-  });
-}
-
-function initCustomInput() {
-  const saveBtn = document.getElementById('save-custom-btn');
-  const textarea = document.getElementById('custom-input-textarea');
-  
-  saveBtn.addEventListener('click', () => {
-    const inputText = textarea.value.trim();
-    
-    if (inputText) {
-      // Create or get the custom items container
-      let customItemsContainer = document.getElementById('custom-edit-items');
-      
-      if (!customItemsContainer) {
-        customItemsContainer = document.createElement('div');
-        customItemsContainer.className = 'edit-items';
-        customItemsContainer.id = 'custom-edit-items';
-        
-        // Insert it before the custom-input-section
-        const customInputSection = document.querySelector('.custom-input-section');
-        customInputSection.parentNode.insertBefore(customItemsContainer, customInputSection);
-      }
-      
-      // Create new edit item
-      const newItem = document.createElement('div');
-      newItem.className = 'edit-item';
-      newItem.dataset.itemId = `custom-${Date.now()}`;
-
-      const currentDate = new Date();
-      const formattedDate = currentDate.toLocaleDateString('en-US', { 
-        month: 'short', 
-        day: 'numeric' 
-      });
-      
-      newItem.innerHTML = `
-        <div class="item-date">${formattedDate}</div>
-        <div class="item-text">${inputText}</div>
-        <div class="item-toggle">
-          <svg class="eye-closed hidden" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <g clip-path="url(#clip0_179_0)">
-              <path d="M14.12 14.12C13.8454 14.4147 13.5141 14.6511 13.1462 14.8151C12.7782 14.9791 12.3809 15.0673 11.9781 15.0744C11.5753 15.0815 11.1752 15.0074 10.8016 14.8565C10.4281 14.7056 10.0887 14.481 9.80385 14.1961C9.51897 13.9113 9.29439 13.5719 9.14351 13.1984C8.99262 12.8248 8.91853 12.4247 8.92563 12.0219C8.93274 11.6191 9.02091 11.2218 9.18488 10.8538C9.34884 10.4858 9.58525 10.1546 9.88 9.87999M17.94 17.94C16.2306 19.243 14.1491 19.9649 12 20C5 20 1 12 1 12C2.24389 9.68189 3.96914 7.6566 6.06 6.05999L17.94 17.94ZM9.9 4.23999C10.5883 4.07887 11.2931 3.99833 12 3.99999C19 3.99999 23 12 23 12C22.393 13.1356 21.6691 14.2047 20.84 15.19L9.9 4.23999Z" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M1 1L23 23" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>
-            </g>
-            <defs>
-              <clipPath id="clip0_179_0">
-              <rect width="24" height="24" fill="white"/>
-              </clipPath>
-            </defs>
-          </svg>
-          <svg class="eye-opened" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M1 12C1 12 5 4 12 4C19 4 23 12 23 12C23 12 19 20 12 20C5 20 1 12 1 12Z" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15Z" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </div>
-      `;
-
-      enableShareableItemToggle(newItem);
-      customItemsContainer.appendChild(newItem);
-      textarea.value = '';
-      textarea.focus();
-    }
   });
 }
 
