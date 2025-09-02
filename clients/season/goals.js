@@ -17,12 +17,12 @@ const elem_ApptSoonAlert = document.getElementById('seasonApptSoonAlert');
 // Shell for initSplashContainer() component...
 const elem_SplashContainer = document.getElementById('seasonSplashContainer');
 
+// Shell for initGoalsTrackingPanel() component...
 const elem_GoalsTrackingPanel = document.getElementById('seasonGoalsTrackingPanel');
-const elem_GoalsDailyCalendar = document.getElementById('seasonGoalsDailyCalendar');
+
 const elem_PreVisitSummaryItemToggles = document.getElementById('seasonPreVisitSummaryItemToggles');
 const elem_PreVisitSummaryGeneratedReport = document.getElementById('seasonPreVisitSummaryGeneratedReport');
 const elem_PrevReportTabContainer = document.getElementById('seasonPrevReportTabContainer');
-const elem_GoalGridContainer = document.getElementById('seasonGoalGridContainer');
 const elem_GoalModalsContainer = document.getElementById('seasonGoalModalsContainer');
 
 // Collection references (by class)
@@ -78,11 +78,8 @@ const svgs = {
 /******************************************************/
 
 // Dates between appointments
-const date_PrevAppt = new Date('2025-08-16');
-const date_NextAppt = new Date('2025-09-15');
-
 // Appointments for appointment cards
-const data_ApptCards = [
+const data_CalendarCards = [
   {
     date: "2024-12-12",
     month: "Dec",
@@ -162,7 +159,7 @@ const data_ApptCards = [
 const data_Goals = [
   {
     id: 1,
-    title: "Say \"no\" to work treats.",
+    title: "Say \"no\" to work treats!",
     rating: "poor" 
   },
   {
@@ -181,9 +178,6 @@ const data_Goals = [
     rating: "good" 
   }
 ];
-
-// Goal modals data
-const configs_GoalModal = createconfigs_GoalModal();
 
 // Static modals data
 const configs_StaticModal = [
@@ -220,19 +214,22 @@ document.addEventListener('DOMContentLoaded', () => {
     shortTimeDisplay: ':10'
   });
 
-  // Create splash container with welcome content and cards
+  // Splash container 
   initSplashContainer({
     headline: 'Welcome back, Michelle!',
     message: 'You\'ve done <strong>5 straight days</strong> of exercise. Consider skipping your run today and rest. But keep it up!'
   });
 
-  // Component: Goals tracking 
-  createGoalsTrackingCalendar(date_PrevAppt, date_NextAppt);
-  createGoalGridSquares();
-  createGoalModals();
-  enableGoalProgressSelection();
-  initGoalAddMoreInput();
-  initGoalsTrackingHeaderClick();
+  // Goals tracking panel 
+  initGoalsTrackingPanel({
+    headerText: 'How are your goals going?',
+    instructionText: 'Rate your goal progress today. Scroll back to see how you did in the past.',
+    dateRange: {
+      startDate: new Date('2025-08-26'),
+      endDate: new Date('2025-09-15')
+    },
+    goals: data_Goals
+  });
 
   // Component: Pre-visit summary
   initPreVisitSummaryItemToggles(); 
@@ -244,6 +241,7 @@ document.addEventListener('DOMContentLoaded', () => {
   updateAppointmentReportHeader();
 
   // Must come after createCalendarCards() and createGoalModals()
+  const configs_GoalModal = createconfigs_GoalModal(data_Goals);
   initModals([...configs_StaticModal, ...configs_GoalModal]);
 });
 
@@ -284,7 +282,6 @@ function enableApptSoonAlerts(enabled, apptData) {
     modal.classList.add('hidden');
     bug.classList.remove('hidden');
   });
-
   joinNowBugBtn.addEventListener('click', (e) => {
     e.preventDefault();
     bug.classList.add('hidden');
@@ -293,6 +290,8 @@ function enableApptSoonAlerts(enabled, apptData) {
 
 // Parent method that creates the full splash container
 function initSplashContainer(welcomeData) {
+
+  // Build by sub-component...
   createSplashContent(welcomeData);
   createCalendarCards();
   enableCalendarCardSwiping();
@@ -320,7 +319,7 @@ function initSplashContainer(welcomeData) {
     // Clear existing content
     elem_CalendarCardsContainer.innerHTML = '';
 
-    data_ApptCards.forEach((appointment, index) => {
+    data_CalendarCards.forEach((appointment, index) => {
       const cardElement = document.createElement('div');
       cardElement.innerHTML = createAppointmentCardContent(appointment, index);
       elem_CalendarCardsContainer.appendChild(cardElement.firstElementChild);
@@ -421,7 +420,7 @@ function initSplashContainer(welcomeData) {
     updateCardPositions();
     addCardClickListeners();
 
-    
+
     function updateCardPositions() {
       apptCards.forEach((card, index) => {
         card.classList.remove('left', 'center', 'right', 'hidden');
@@ -482,473 +481,518 @@ function initSplashContainer(welcomeData) {
   }
 }
 
+// Parent method that creates the full goals tracking section
+function initGoalsTrackingPanel(panelData) {
 
-// Sets up horizontal days UI for goal tracking
-function createGoalsTrackingCalendar(startDate, endDate) {
-  const calendar = elem_GoalsDailyCalendar;
+  // Build by sub-component...
+  createGoalsTrackingPanel(panelData);
+  createGoalsTrackingCalendar(panelData.dateRange.startDate, panelData.dateRange.endDate);
+  createGoalGridSquares(panelData.goals);
+  createGoalModals(panelData.goals);
+  enableGoalProgressSelection();
+  initGoalAddMoreInput();
+  initGoalsTrackingHeaderClick();
 
-  const today = new Date();
-  let curIndex = 0; // Will be set to today's index
-  
-  // Generate calendar days
-  const days = [];
-  let currentDate = startDate;
-  const todayDate = new Date();
+  // Create goals tracking panel content
+  function createGoalsTrackingPanel(panelData = {}) {
+    // Default data
+    const defaultData = {
+      headerText: 'How are your goals going?',
+      instructionText: 'Rate your goal progress today. Scroll back to see how you did in the past.'
+    };
 
-  while (currentDate <= endDate) {
-    days.push(new Date(currentDate));
-    currentDate.setDate(currentDate.getDate() + 1);
-  }
-  
-  // Find today's index
-  const todayIndex = days.findIndex(date => 
-    date.toDateString() === todayDate.toDateString()
-  );
+    // Merge with provided data
+    const goalData = { ...defaultData, ...panelData };
 
-  if (todayIndex !== -1) {
-    curIndex = todayIndex;
-  }
-  
-  // Clear existing content
-  calendar.innerHTML = '';
-  
-  // Render calendar days
-  days.forEach((date, index) => {
-    const dayElement = document.createElement('div');
-    dayElement.className = 'calendar-day';
-    dayElement.dataset.date = date.toISOString().split('T')[0];
-    dayElement.dataset.index = index;
-    
-    const isToday = date.toDateString() === todayDate.toDateString();
-
-    dayElement.innerHTML = `
-      <div class="day-square ${isToday ? 'today' : ''}">
-        <div class="check">
-          ${svgs.check}
+    // Create the content
+    elem_GoalsTrackingPanel.innerHTML = `
+      <div class="bottom-panel-header">
+        ${goalData.headerText}
+      </div>
+      <div class="goal-instructions">
+        ${goalData.instructionText}
+      </div>
+      <div class="goal-calendar-container">
+        <div id="seasonGoalsDailyCalendar" class="goal-calendar">
+          <!-- Calendar will be generated by JavaScript -->
         </div>
-        <div class="day-label">
-          <div class="month">${date.toLocaleDateString('en-US', { month: 'short' })}</div>
-          <div class="day">${date.getDate()}</div>
+      </div>
+      <div class="bottom-panel-content">
+        <div id="seasonGoalGridContainer" class="bottom-panel-grid">
+          <!-- Squares will be generated by JavaScript -->
         </div>
       </div>
     `;
-    
-    calendar.appendChild(dayElement);
-  });
+  }
 
-  function updateCalendarPositions() {
-    const dayElements = calendar.querySelectorAll('.calendar-day');
+  // Sets up horizontal days UI for goal tracking
+  function createGoalsTrackingCalendar(startDate, endDate) {
+    const calendar = document.getElementById('seasonGoalsDailyCalendar');
+
+    const today = new Date();
+    let curIndex = 0; // Will be set to today's index
     
-    dayElements.forEach((dayElement, index) => {
-      const dayCircle = dayElement.querySelector('.day-square');
-      dayCircle.classList.remove('selected');
+    // Generate calendar days
+    const days = [];
+    let currentDate = new Date(startDate);
+    const todayDate = new Date();
+
+    while (currentDate <= endDate) {
+      days.push(new Date(currentDate));
+      currentDate.setDate(currentDate.getDate() + 1);
+    }
+    
+    // Find today's index
+    const todayIndex = days.findIndex(date => 
+      date.toDateString() === todayDate.toDateString()
+    );
+
+    if (todayIndex !== -1) {
+      curIndex = todayIndex;
+    }
+    
+    // Clear existing content
+    calendar.innerHTML = '';
+    
+    // Render calendar days
+    days.forEach((date, index) => {
+      const dayElement = document.createElement('div');
+      dayElement.className = 'calendar-day';
+      dayElement.dataset.date = date.toISOString().split('T')[0];
+      dayElement.dataset.index = index;
       
-      if (index === curIndex) {
-        dayCircle.classList.add('selected');
+      const isToday = date.toDateString() === todayDate.toDateString();
+
+      dayElement.innerHTML = `
+        <div class="day-square ${isToday ? 'today' : ''}">
+          <div class="check">
+            ${svgs.check}
+          </div>
+          <div class="day-label">
+            <div class="month">${date.toLocaleDateString('en-US', { month: 'short' })}</div>
+            <div class="day">${date.getDate()}</div>
+          </div>
+        </div>
+      `;
+      
+      calendar.appendChild(dayElement);
+    });
+
+    function updateCalendarPositions() {
+      const dayElements = calendar.querySelectorAll('.calendar-day');
+      
+      dayElements.forEach((dayElement, index) => {
+        const dayCircle = dayElement.querySelector('.day-square');
+        dayCircle.classList.remove('selected');
+        
+        if (index === curIndex) {
+          dayCircle.classList.add('selected');
+        }
+      });
+    }
+
+    function centerSelectedDay() {
+      const selectedDay = calendar.querySelector(`[data-index="${curIndex}"]`);
+      if (!selectedDay) return;
+
+      const calendarRect = calendar.getBoundingClientRect();
+      const selectedRect = selectedDay.getBoundingClientRect();
+      
+      // Calculate the offset of selected day relative to the calendar's scroll container
+      const selectedOffsetLeft = selectedDay.offsetLeft;
+      const selectedWidth = selectedRect.width;
+      const calendarWidth = calendarRect.width;
+      const maxScrollLeft = calendar.scrollWidth - calendar.clientWidth;
+      
+      // Calculate ideal scroll position to center the selected day
+      let scrollToCenter = selectedOffsetLeft - (calendarWidth / 2) + (selectedWidth / 2);
+      
+      // Clamp the scroll position to valid bounds
+      scrollToCenter = Math.max(0, Math.min(scrollToCenter, maxScrollLeft));
+      
+      // Smooth scroll to the position
+      calendar.scrollTo({
+        left: scrollToCenter,
+        behavior: 'smooth'
+      });
+    }
+
+    function addCalendarClickListeners() {
+      const dayElements = calendar.querySelectorAll('.calendar-day');
+      
+      dayElements.forEach((dayElement, index) => {
+        dayElement.addEventListener('click', (e) => {
+          // Prevent click if we were just scrolling/swiping
+          if (calendar.dataset.wasScrolling === 'true') {
+            return;
+          }
+          
+          curIndex = index;
+          updateCalendarPositions();
+          
+          // Center the newly selected day
+          setTimeout(() => {
+            centerSelectedDay();
+          }, 50); // Small delay to ensure DOM updates
+          
+          e.stopPropagation();
+        });
+      });
+    }
+
+    // Track scrolling state to prevent clicks during scroll
+    let scrollTimeout;
+    let isScrolling = false;
+
+    calendar.addEventListener('scroll', () => {
+      isScrolling = true;
+      calendar.dataset.wasScrolling = 'true';
+      
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => {
+        isScrolling = false;
+        calendar.dataset.wasScrolling = 'false';
+      }, 150);
+    });
+
+    // Touch events for free scrolling (no selection change)
+    let startX = 0;
+    let startY = 0;
+    let isDragging = false;
+
+    calendar.addEventListener('touchstart', (e) => {
+      startX = e.touches[0].clientX;
+      startY = e.touches[0].clientY;
+      isDragging = false;
+    });
+
+    calendar.addEventListener('touchmove', (e) => {
+      const currentX = e.touches[0].clientX;
+      const currentY = e.touches[0].clientY;
+      const diffX = Math.abs(currentX - startX);
+      const diffY = Math.abs(currentY - startY);
+      
+      // If horizontal movement is greater than vertical, we're scrolling horizontally
+      if (diffX > diffY && diffX > 10) {
+        isDragging = true;
+        calendar.dataset.wasScrolling = 'true';
       }
     });
-  }
 
-  function centerSelectedDay() {
-    const selectedDay = calendar.querySelector(`[data-index="${curIndex}"]`);
-    if (!selectedDay) return;
-
-    const calendarRect = calendar.getBoundingClientRect();
-    const selectedRect = selectedDay.getBoundingClientRect();
-    
-    // Calculate the offset of selected day relative to the calendar's scroll container
-    const selectedOffsetLeft = selectedDay.offsetLeft;
-    const selectedWidth = selectedRect.width;
-    const calendarWidth = calendarRect.width;
-    const maxScrollLeft = calendar.scrollWidth - calendar.clientWidth;
-    
-    // Calculate ideal scroll position to center the selected day
-    let scrollToCenter = selectedOffsetLeft - (calendarWidth / 2) + (selectedWidth / 2);
-    
-    // Clamp the scroll position to valid bounds
-    scrollToCenter = Math.max(0, Math.min(scrollToCenter, maxScrollLeft));
-    
-    // Smooth scroll to the position
-    calendar.scrollTo({
-      left: scrollToCenter,
-      behavior: 'smooth'
-    });
-  }
-
-  function addCalendarClickListeners() {
-    const dayElements = calendar.querySelectorAll('.calendar-day');
-    
-    dayElements.forEach((dayElement, index) => {
-      dayElement.addEventListener('click', (e) => {
-        // Prevent click if we were just scrolling/swiping
-        if (calendar.dataset.wasScrolling === 'true') {
-          return;
-        }
-        
-        curIndex = index;
-        updateCalendarPositions();
-        
-        // Center the newly selected day
+    calendar.addEventListener('touchend', (e) => {
+      if (isDragging) {
+        // Reset scrolling state after a delay
         setTimeout(() => {
-          centerSelectedDay();
-        }, 50); // Small delay to ensure DOM updates
-        
-        e.stopPropagation();
-      });
+          calendar.dataset.wasScrolling = 'false';
+        }, 100);
+      }
+      isDragging = false;
     });
+
+    // Mouse events for desktop (free scrolling)
+    calendar.addEventListener('mousedown', (e) => {
+      startX = e.clientX;
+      isDragging = false;
+    });
+
+    calendar.addEventListener('mousemove', (e) => {
+      const currentX = e.clientX;
+      const diffX = Math.abs(currentX - startX);
+      
+      if (diffX > 10) {
+        isDragging = true;
+        calendar.dataset.wasScrolling = 'true';
+      }
+    });
+
+    calendar.addEventListener('mouseup', (e) => {
+      if (isDragging) {
+        // Reset scrolling state after a delay
+        setTimeout(() => {
+          calendar.dataset.wasScrolling = 'false';
+        }, 100);
+      }
+      isDragging = false;
+    });
+
+    // init
+    calendar.dataset.wasScrolling = 'false';
+    updateCalendarPositions();
+    addCalendarClickListeners();
+    
+    // Center today on load
+    setTimeout(() => {
+      centerSelectedDay();
+    }, 100);
   }
 
-  // Track scrolling state to prevent clicks during scroll
-  let scrollTimeout;
-  let isScrolling = false;
+  // Creates goal grid squares to populate goals tracking panel
+  function createGoalGridSquares(goals) {
+    const elem_GoalGridContainer = document.getElementById('seasonGoalGridContainer');
 
-  calendar.addEventListener('scroll', () => {
-    isScrolling = true;
-    calendar.dataset.wasScrolling = 'true';
+    // Clear existing content
+    elem_GoalGridContainer.innerHTML = '';
     
-    clearTimeout(scrollTimeout);
-    scrollTimeout = setTimeout(() => {
-      isScrolling = false;
-      calendar.dataset.wasScrolling = 'false';
-    }, 150);
-  });
+    goals.forEach(goal => {
+      const squareElement = document.createElement('div');
+      squareElement.innerHTML = createGoalGridSquare(goal);
+      elem_GoalGridContainer.appendChild(squareElement.firstElementChild);
+    });
 
-  // Touch events for free scrolling (no selection change)
-  let startX = 0;
-  let startY = 0;
-  let isDragging = false;
-
-  calendar.addEventListener('touchstart', (e) => {
-    startX = e.touches[0].clientX;
-    startY = e.touches[0].clientY;
-    isDragging = false;
-  });
-
-  calendar.addEventListener('touchmove', (e) => {
-    const currentX = e.touches[0].clientX;
-    const currentY = e.touches[0].clientY;
-    const diffX = Math.abs(currentX - startX);
-    const diffY = Math.abs(currentY - startY);
-    
-    // If horizontal movement is greater than vertical, we're scrolling horizontally
-    if (diffX > diffY && diffX > 10) {
-      isDragging = true;
-      calendar.dataset.wasScrolling = 'true';
-    }
-  });
-
-  calendar.addEventListener('touchend', (e) => {
-    if (isDragging) {
-      // Reset scrolling state after a delay
-      setTimeout(() => {
-        calendar.dataset.wasScrolling = 'false';
-      }, 100);
-    }
-    isDragging = false;
-  });
-
-  // Mouse events for desktop (free scrolling)
-  calendar.addEventListener('mousedown', (e) => {
-    startX = e.clientX;
-    isDragging = false;
-  });
-
-  calendar.addEventListener('mousemove', (e) => {
-    const currentX = e.clientX;
-    const diffX = Math.abs(currentX - startX);
-    
-    if (diffX > 10) {
-      isDragging = true;
-      calendar.dataset.wasScrolling = 'true';
-    }
-  });
-
-  calendar.addEventListener('mouseup', (e) => {
-    if (isDragging) {
-      // Reset scrolling state after a delay
-      setTimeout(() => {
-        calendar.dataset.wasScrolling = 'false';
-      }, 100);
-    }
-    isDragging = false;
-  });
-
-  // init
-  calendar.dataset.wasScrolling = 'false';
-  updateCalendarPositions();
-  addCalendarClickListeners();
-  
-  // Center today on load
-  setTimeout(() => {
-    centerSelectedDay();
-  }, 100);
-}
-
-// Creates goal grid squares to populate goals tracking panel
-function createGoalGridSquares() {
-  // Clear existing content
-  elem_GoalGridContainer.innerHTML = '';
-  
-  data_Goals.forEach(goal => {
-    const squareElement = document.createElement('div');
-    squareElement.innerHTML = createGoalGridSquare(goal);
-    elem_GoalGridContainer.appendChild(squareElement.firstElementChild);
-  });
-
-  function createGoalGridSquare(goal) {
-    let svgContent = '';
-    
-    switch(goal.rating) {
-      case "poor":
-        svgContent = svgs.sad_face;
-        break;
-      case "ok":
-        svgContent = svgs.mid_face;
-        break;
-      case "good":
-        svgContent = svgs.happy_face;
-        break;
-    }
-    
-    return `
-      <div class="bottom-panel-square square square-${goal.id} goals-${goal.id}-logging-btn">
-        <div class="rated">
-          ${svgContent}
+    function createGoalGridSquare(goal) {
+      let svgContent = '';
+      
+      switch(goal.rating) {
+        case "poor":
+          svgContent = svgs.sad_face;
+          break;
+        case "ok":
+          svgContent = svgs.mid_face;
+          break;
+        case "good":
+          svgContent = svgs.happy_face;
+          break;
+      }
+      
+      return `
+        <div class="bottom-panel-square square square-${goal.id} goals-${goal.id}-logging-btn">
+          <div class="rated">
+            ${svgContent}
+          </div>
+          <span>${goal.title}</span>
         </div>
-        <span>${goal.title}</span>
-      </div>
-    `;
+      `;
+    }
   }
-}
 
-// Creates goal modals
-function createGoalModals() {
-  // Clear existing content
-  elem_GoalModalsContainer.innerHTML = '';
-  
-  data_Goals.forEach(goal => {
-    // Create and append goal modal
-    const modalElement = document.createElement('div');
-    modalElement.innerHTML = createGoalModalContent(goal);
-    elem_GoalModalsContainer.appendChild(modalElement.firstElementChild);
-  });
+  // Creates goal modals
+  function createGoalModals(goals) {
+    const elem_GoalModalsContainer = document.getElementById('seasonGoalModalsContainer');
+    
+    goals.forEach(goal => {
+      // Create and append goal modal
+      const modalElement = document.createElement('div');
+      modalElement.innerHTML = createGoalModalContent(goal);
+      elem_GoalModalsContainer.appendChild(modalElement.firstElementChild);
+    });
 
-  function createGoalModalContent(goal) {
-    return `
-      <div class="popup" id="goals-${goal.id}-logging">
-        <div class="popup-content goals-${goal.id}-logging">
-          <div class="close" id="goals-${goal.id}-logging-close-btn">
-            ${svgs.close}
-          </div> 
-          <div class="goal-title">${goal.title}</div>
-          <div class="goal-rating">
-            <div class="day-square today">
-              <div class="day-label">
-                <div class="month">Aug</div>
-                <div class="day">25</div>
-              </div>
-            </div>
-            <div class="goal-rating-title">How did it go today?</div>
-            <div class="rating-options">
-              <div class="rating-option">
-                <div class="${class_GoalProgressBtn} rating-btn" data-rating="positive">
-                  <span>I didn't do so well.</span>
-                  ${svgs.sad_face}
+    function createGoalModalContent(goal) {
+      return `
+        <div class="popup" id="goals-${goal.id}-logging">
+          <div class="popup-content goals-${goal.id}-logging">
+            <div class="close" id="goals-${goal.id}-logging-close-btn">
+              ${svgs.close}
+            </div> 
+            <div class="goal-title">${goal.title}</div>
+            <div class="goal-rating">
+              <div class="day-square today">
+                <div class="day-label">
+                  <div class="month">Aug</div>
+                  <div class="day">25</div>
                 </div>
               </div>
-              <div class="rating-option">
-                <div class="${class_GoalProgressBtn} rating-btn" data-rating="neutral">
-                  <span>I did OK.</span>
-                  ${svgs.mid_face}
+              <div class="goal-rating-title">How did it go today?</div>
+              <div class="rating-options">
+                <div class="rating-option">
+                  <div class="${class_GoalProgressBtn} rating-btn" data-rating="positive">
+                    <span>I didn't do so well.</span>
+                    ${svgs.sad_face}
+                  </div>
+                </div>
+                <div class="rating-option">
+                  <div class="${class_GoalProgressBtn} rating-btn" data-rating="neutral">
+                    <span>I did OK.</span>
+                    ${svgs.mid_face}
+                  </div>
+                </div>
+                <div class="rating-option">
+                  <div class="${class_GoalProgressBtn} rating-btn" data-rating="negative">
+                    <span>I did great!</span>
+                    ${svgs.happy_face}     
+                  </div>
                 </div>
               </div>
-              <div class="rating-option">
-                <div class="${class_GoalProgressBtn} rating-btn" data-rating="negative">
-                  <span>I did great!</span>
-                  ${svgs.happy_face}     
-                </div>
+              <div class="${class_GoalActionBtnsContainer} goal-action-buttons hidden">
+                <button class="share-more-btn" data-goal="${goal.id}">Share More&hellip;</button>
+                <span class="button-divider">or</span>
+                <button class="save-btn" data-goal="${goal.id}">Save</button>
               </div>
-            </div>
-            <div class="${class_GoalActionBtnsContainer} goal-action-buttons hidden">
-              <button class="share-more-btn" data-goal="${goal.id}">Share More&hellip;</button>
-              <span class="button-divider">or</span>
-              <button class="save-btn" data-goal="${goal.id}">Save</button>
             </div>
           </div>
         </div>
-      </div>
-    `;
+      `;
+    }
   }
-}
 
-// Goal progress selection + add more buttons
-function enableGoalProgressSelection() {
-  // Add event listeners to all rating options
-  document.querySelectorAll(sel_GoalProgressBtn).forEach(option => {
-    option.addEventListener('click', function() {
-      const parentGoal = this.closest('.popup-content');
-      const goalAddMoreSection = parentGoal.querySelector(sel_GoalActionBtnsContainer);
-      
-      // Remove selected class from all rating options in this goal
-      parentGoal.querySelectorAll(sel_GoalProgressBtn).forEach(opt => {
-        opt.classList.remove('selected');
-      });
-      
-      // Add selected class to clicked option
-      this.classList.add('selected');
-      
-      // Show the goal-add-more section with a smooth animation
-      if (goalAddMoreSection) {
-        goalAddMoreSection.classList.remove('hidden')
-        goalAddMoreSection.style.opacity = '0';
-        goalAddMoreSection.style.transform = 'translateY(20px)';
+  // Goal progress selection + add more buttons
+  function enableGoalProgressSelection() {
+    // Add event listeners to all rating options
+    document.querySelectorAll(sel_GoalProgressBtn).forEach(option => {
+      option.addEventListener('click', function() {
+        const parentGoal = this.closest('.popup-content');
+        const goalAddMoreSection = parentGoal.querySelector(sel_GoalActionBtnsContainer);
         
-        // Animate in
-        requestAnimationFrame(() => {
-          goalAddMoreSection.style.transition = 'all 0.3s ease';
-          goalAddMoreSection.style.opacity = '1';
-          goalAddMoreSection.style.transform = 'translateY(0)';
-        });
-      }
-    });
-  });
-}
-
-// Goal add more input (text, speak, upload)
-function initGoalAddMoreInput() {
-  const textInputPopup = document.getElementById('text-input-popup');
-  const closeBtn = document.getElementById('close-text-popup');
-  const saveBtn = textInputPopup.querySelector('.save-text-btn');
-  const textarea = textInputPopup.querySelector('.main-textarea');
-  
-  let currentGoalId = null;
-
-  // Store reference to current goal when opening popup
-  document.querySelectorAll('.share-more-btn').forEach(button => {
-    button.addEventListener('click', (e) => {
-      currentGoalId = e.target.dataset.goal;
-      textInputPopup.style.display = 'flex';
-      
-      // Focus on textarea after a short delay
-      setTimeout(() => {
-          textarea.focus();
-      }, 300);
-    });
-  });
-
-  // Handle input method selector for text input popup
-  document.querySelectorAll('.input-method-option').forEach(option => {
-    option.addEventListener('click', (e) => {
-      const method = e.currentTarget.dataset.method;
-      const popup = e.currentTarget.closest('.text-input-popup');
-      
-      // Remove selected class from all options in this popup
-      popup.querySelectorAll('.input-method-option').forEach(opt => {
+        // Remove selected class from all rating options in this goal
+        parentGoal.querySelectorAll(sel_GoalProgressBtn).forEach(opt => {
           opt.classList.remove('selected');
-      });
-      
-      // Add selected class to clicked option
-      e.currentTarget.classList.add('selected');
-      
-      // Hide all input areas in this popup
-      popup.querySelectorAll('.input-area').forEach(area => {
-          area.classList.add('hidden');
-      });
-      
-      // Show the selected input area
-      const targetArea = popup.querySelector(`#${method}-area`);
-      if (targetArea) {
-        targetArea.classList.remove('hidden');
+        });
         
-        // Focus on textarea if type method is selected
-        if (method === 'type') {
-          const textarea = targetArea.querySelector('.main-textarea');
-          if (textarea) {
-              setTimeout(() => textarea.focus(), 100);
+        // Add selected class to clicked option
+        this.classList.add('selected');
+        
+        // Show the goal-add-more section with a smooth animation
+        if (goalAddMoreSection) {
+          goalAddMoreSection.classList.remove('hidden')
+          goalAddMoreSection.style.opacity = '0';
+          goalAddMoreSection.style.transform = 'translateY(20px)';
+          
+          // Animate in
+          requestAnimationFrame(() => {
+            goalAddMoreSection.style.transition = 'all 0.3s ease';
+            goalAddMoreSection.style.opacity = '1';
+            goalAddMoreSection.style.transform = 'translateY(0)';
+          });
+        }
+      });
+    });
+  }
+
+  // Goal add more input (text, speak, upload)
+  function initGoalAddMoreInput() {
+    const textInputPopup = document.getElementById('text-input-popup');
+    const closeBtn = document.getElementById('close-text-popup');
+    const saveBtn = textInputPopup.querySelector('.save-text-btn');
+    const textarea = textInputPopup.querySelector('.main-textarea');
+    
+    let currentGoalId = null;
+
+    // Store reference to current goal when opening popup
+    document.querySelectorAll('.share-more-btn').forEach(button => {
+      button.addEventListener('click', (e) => {
+        currentGoalId = e.target.dataset.goal;
+        textInputPopup.style.display = 'flex';
+        
+        // Focus on textarea after a short delay
+        setTimeout(() => {
+            textarea.focus();
+        }, 300);
+      });
+    });
+
+    // Handle input method selector for text input popup
+    document.querySelectorAll('.input-method-option').forEach(option => {
+      option.addEventListener('click', (e) => {
+        const method = e.currentTarget.dataset.method;
+        const popup = e.currentTarget.closest('.text-input-popup');
+        
+        // Remove selected class from all options in this popup
+        popup.querySelectorAll('.input-method-option').forEach(opt => {
+            opt.classList.remove('selected');
+        });
+        
+        // Add selected class to clicked option
+        e.currentTarget.classList.add('selected');
+        
+        // Hide all input areas in this popup
+        popup.querySelectorAll('.input-area').forEach(area => {
+            area.classList.add('hidden');
+        });
+        
+        // Show the selected input area
+        const targetArea = popup.querySelector(`#${method}-area`);
+        if (targetArea) {
+          targetArea.classList.remove('hidden');
+          
+          // Focus on textarea if type method is selected
+          if (method === 'type') {
+            const textarea = targetArea.querySelector('.main-textarea');
+            if (textarea) {
+                setTimeout(() => textarea.focus(), 100);
+            }
           }
         }
-      }
+      });
     });
-  });
 
-  // Handle Save buttons (same functionality as old goal-footer button)
-  document.querySelectorAll('.save-btn').forEach(button => {
-    button.addEventListener('click', (e) => {
-      const goalId = e.target.dataset.goal;
-      const modal = document.getElementById(`goals-${goalId}-logging`);
-      
-      // In a real app, you'd save the data here
-      console.log(`Saving goal ${goalId} without additional text`);
-      
-      // Hide modal
-      modal.style.display = 'none';
-      enableHtmlScroll();
+    // Handle Save buttons (same functionality as old goal-footer button)
+    document.querySelectorAll('.save-btn').forEach(button => {
+      button.addEventListener('click', (e) => {
+        const goalId = e.target.dataset.goal;
+        const modal = document.getElementById(`goals-${goalId}-logging`);
+        
+        // In a real app, you'd save the data here
+        console.log(`Saving goal ${goalId} without additional text`);
+        
+        // Hide modal
+        modal.style.display = 'none';
+        enableHtmlScroll();
+      });
     });
-  });
 
-  // Close text input popup
-  if (closeBtn) {
-    closeBtn.addEventListener('click', () => {
-      textInputPopup.style.display = 'none';
-      currentGoalId = null;
-    });
-  }
-
-  // Close when clicking background
-  textInputPopup.addEventListener('click', (e) => {
-    if (e.target === textInputPopup) {
-      textInputPopup.style.display = 'none';
-      currentGoalId = null;
+    // Close text input popup
+    if (closeBtn) {
+      closeBtn.addEventListener('click', () => {
+        textInputPopup.style.display = 'none';
+        currentGoalId = null;
+      });
     }
-  });
 
-  // Save and close both popups
-  if (saveBtn) {
-    saveBtn.addEventListener('click', () => {
-      const textContent = textarea.value.trim();
-      
-      // In a real app, you'd save the data here
-      console.log(`Saving text input for goal ${currentGoalId}:`, textContent);
-      
-      // Hide text input popup
-      textInputPopup.style.display = 'none';
-      
-      // Hide parent goal popup if currentGoalId exists
-      if (currentGoalId) {
-        const parentPopup = document.getElementById(`goals-${currentGoalId}-logging`);
-        if (parentPopup) {
-          parentPopup.style.display = 'none';
-        }
+    // Close when clicking background
+    textInputPopup.addEventListener('click', (e) => {
+      if (e.target === textInputPopup) {
+        textInputPopup.style.display = 'none';
+        currentGoalId = null;
       }
+    });
+
+    // Save and close both popups
+    if (saveBtn) {
+      saveBtn.addEventListener('click', () => {
+        const textContent = textarea.value.trim();
+        
+        // In a real app, you'd save the data here
+        console.log(`Saving text input for goal ${currentGoalId}:`, textContent);
+        
+        // Hide text input popup
+        textInputPopup.style.display = 'none';
+        
+        // Hide parent goal popup if currentGoalId exists
+        if (currentGoalId) {
+          const parentPopup = document.getElementById(`goals-${currentGoalId}-logging`);
+          if (parentPopup) {
+            parentPopup.style.display = 'none';
+          }
+        }
+        
+        // Re-enable scrolling
+        enableHtmlScroll();
+        
+        // Clear textarea and reset goal reference
+        textarea.value = '';
+        currentGoalId = null;
+      });
+    }
+  }
+
+  // Allow clicking "How are your goals going?" to pop the entire goals tracking panel
+  function initGoalsTrackingHeaderClick() {
+    const elem = elem_GoalsTrackingPanel.firstElementChild;
+            
+    elem.addEventListener('click', () => {
+      // Add bounce animation class
+      elem.classList.add('bounce-animation');
       
-      // Re-enable scrolling
-      enableHtmlScroll();
+      // Remove the animation class after animation completes
+      setTimeout(() => {
+          elem.classList.remove('bounce-animation');
+      }, 500);
       
-      // Clear textarea and reset goal reference
-      textarea.value = '';
-      currentGoalId = null;
+      window.scrollTo({
+          top: document.documentElement.scrollHeight,
+          behavior: 'smooth'
+      });
     });
   }
-}
-
-// Allow clicking "How are your goals going?" to pop the entire goals tracking panel
-function initGoalsTrackingHeaderClick() {
-  const elem = elem_GoalsTrackingPanel.firstElementChild;
-          
-  elem.addEventListener('click', () => {
-    // Add bounce animation class
-    elem.classList.add('bounce-animation');
-    
-    // Remove the animation class after animation completes
-    setTimeout(() => {
-        elem.classList.remove('bounce-animation');
-    }, 500);
-    
-    window.scrollTo({
-        top: document.documentElement.scrollHeight,
-        behavior: 'smooth'
-    });
-  });
 }
 
 function initPreVisitSummaryEdit() {
@@ -1103,10 +1147,10 @@ function initCustomInput() {
   });
 }
 
-function createconfigs_GoalModal() {
+function createconfigs_GoalModal(goals) {
   const modalConfigs = [];
   
-  data_Goals.forEach(goal => {
+  goals.forEach(goal => {
     modalConfigs.push({
       openBtnSelector: `.goals-${goal.id}-logging-btn`,
       modalId: `goals-${goal.id}-logging`,
