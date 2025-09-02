@@ -11,11 +11,12 @@
 * 
 /******************************************************/
 
-// Single item references (by ID)
-const elem_ApptSoonModal = document.getElementById('seasonApptSoonModal');
-const elem_ApptSoonBug = document.getElementById('seasonApptSoonBug');
+// Shell for enableApptSoonAlerts() component...
+const elem_ApptSoonAlert = document.getElementById('seasonApptSoonAlert');
+
+// Shell for initSplashContainer() component...
 const elem_SplashContainer = document.getElementById('seasonSplashContainer');
-const elem_CalendarCardsContainer = document.getElementById('seasonCalendarCardsContainer');
+
 const elem_GoalsTrackingPanel = document.getElementById('seasonGoalsTrackingPanel');
 const elem_GoalsDailyCalendar = document.getElementById('seasonGoalsDailyCalendar');
 const elem_PreVisitSummaryItemToggles = document.getElementById('seasonPreVisitSummaryItemToggles');
@@ -34,8 +35,12 @@ const sel_ApptCard = `.${class_ApptCard}`;
 
 const class_GoalActionBtnsContainer = 'season--goal-action-buttons';
 const sel_GoalActionBtnsContainer = `.${class_GoalActionBtnsContainer}`;
+
 const class_GoalProgressBtn = 'season--goal-progress-btn';
 const sel_GoalProgressBtn = `.${class_GoalProgressBtn}`;
+
+const class_TodayApptCard = 'season--today-card';
+const sel_TodayApptCard = `.${class_TodayApptCard}`;
 
 // HTML constants
 const svgs = {
@@ -206,15 +211,20 @@ const configs_StaticModal = [
 
 document.addEventListener('DOMContentLoaded', () => {
   
-  // Can call on base page
-  enableSplashContainerFade();
+  // Appointment callouts 
+  enableApptSoonAlerts(true, {
+    userName: 'Michelle',
+    providerName: 'Alejandra',
+    providerImage: 'img/alejandra.png',
+    timeRemaining: '10 minutes',
+    shortTimeDisplay: ':10'
+  });
 
-  // Component: Appointment callouts 
-  enableApptSoonAlerts();
-
-  // Component: Appointment cards
-  createCalendarCards();
-  enableCalendarCardSwiping();
+  // Create splash container with welcome content and cards
+  initSplashContainer({
+    headline: 'Welcome back, Michelle!',
+    message: 'You\'ve done <strong>5 straight days</strong> of exercise. Consider skipping your run today and rest. But keep it up!'
+  });
 
   // Component: Goals tracking 
   createGoalsTrackingCalendar(date_PrevAppt, date_NextAppt);
@@ -237,188 +247,241 @@ document.addEventListener('DOMContentLoaded', () => {
   initModals([...configs_StaticModal, ...configs_GoalModal]);
 });
 
-// Calendar fade effect when scrolling vertically to reveal goals
-function enableSplashContainerFade() {
-  window.addEventListener('scroll', () => {
-    const calTranslateYMax = 20;
-    const calFadeRate = 0.8; 
-    const goalSummaryHeight = elem_GoalsTrackingPanel.offsetHeight;
-    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    const scrollProgress = Math.min(scrollTop / goalSummaryHeight, 1);
-    const translateY = scrollProgress * -1 * calTranslateYMax; 
-    const opacity = 1 - (scrollProgress / calFadeRate); 
-    
-    elem_SplashContainer.style.transform = `translateY(${translateY}vh)`;
-    elem_SplashContainer.style.opacity = opacity;
-  });
-}
-
 // Enabled only when within X hours of next appt
-function enableApptSoonAlerts() {
-  const skipModalBtn = elem_ApptSoonModal.querySelector('button:last-of-type');
-  const joinNowBugBtn = elem_ApptSoonBug.querySelector('button:last-of-type');
+function enableApptSoonAlerts(enabled, apptData) {
+
+  if (!enabled) {
+    elem_ApptSoonAlert.classList.add('hidden');
+    elem_ApptSoonAlert.innerHTML = ''; 
+    return;
+  }
+
+  elem_ApptSoonAlert.innerHTML = `
+    <div id="seasonApptSoonModal" class="apt-soon--modal">
+      <h2>Hey ${apptData.userName}!</h2>
+      <p>Your appointment with ${apptData.providerName} is in ${apptData.timeRemaining}.</p>
+      <img class="rd-avatar" src="${apptData.providerImage}" alt="${apptData.providerName}, RD">
+      <button class="cta-btn">Join now</button>
+      <button class="no-thanks-btn">Just take me to Season for now</button>
+    </div>
+    <div id="seasonApptSoonBug" class="apt-soon--short hidden">
+      <div class="time">Appointment in ${apptData.shortTimeDisplay}</div>
+      <button class="cta-btn">Join now!</button>
+    </div>
+  `;
+
+  // Show the alert
+  elem_ApptSoonAlert.classList.remove('hidden');
+
+  // Get references to newly created elements
+  const modal = elem_ApptSoonAlert.querySelector('#seasonApptSoonModal');
+  const bug = elem_ApptSoonAlert.querySelector('#seasonApptSoonBug');
+  const skipModalBtn = modal.querySelector('.no-thanks-btn');
+  const joinNowBugBtn = bug.querySelector('.cta-btn');
   
   skipModalBtn.addEventListener('click', (e) => {
     e.preventDefault();
-    elem_ApptSoonModal.classList.add('hidden');
-    elem_ApptSoonBug.classList.remove('hidden');
+    modal.classList.add('hidden');
+    bug.classList.remove('hidden');
   });
 
-  // TODO: Replace this with actual 'join' functionality. 
-  // For demo, just hiding the bug.
   joinNowBugBtn.addEventListener('click', (e) => {
     e.preventDefault();
-    elem_ApptSoonBug.classList.add('hidden');
+    bug.classList.add('hidden');
   });
 }
 
-// Create carousel of appointment cards
-function createCalendarCards() {
-  // Clear existing content
-  elem_CalendarCardsContainer.innerHTML = '';
-  
-  data_ApptCards.forEach((appointment, index) => {
-    const cardElement = document.createElement('div');
-    cardElement.innerHTML = createAppointmentCardContent(appointment, index);
-    elem_CalendarCardsContainer.appendChild(cardElement.firstElementChild);
-  });
+// Parent method that creates the full splash container
+function initSplashContainer(welcomeData) {
+  createSplashContent(welcomeData);
+  createCalendarCards();
+  enableCalendarCardSwiping();
+  enableSplashContainerFade();
 
-  function createAppointmentCardContent(appointment, index) {
-    const todayClass = appointment.isToday ? ' today' : '';
-    const primaryClass = appointment.ctaClass.includes('primary') ? ' primary' : '';
-    
-    return `
-      <div class="${class_ApptCard} appointment-card${todayClass}" data-appointment-date="${appointment.date}" data-index="${index}">
-        <div class="caption">${appointment.caption}</div>
-        <div class="card-date">
-          <div class="card-month">${appointment.month}</div>
-          <div class="card-day">${appointment.day}</div>
+  // Create splash content (welcome message)
+  function createSplashContent(welcomeData = {}) {
+    elem_SplashContainer.innerHTML = `
+      <div>
+        <h1>${welcomeData.headline}</h1>
+        <p>${welcomeData.message}</p>
+      </div>
+      <div class="card-timeline" id="card-timeline">
+        <div class="cards-container" id="seasonCalendarCardsContainer">
+          <!-- Appointment cards will be generated by JavaScript (createCalendarCards) -->
         </div>
-        <div class="card-blurb">
-          <div class="card-blurb-text">${appointment.blurbText}</div>
-        </div>
-        <button class="card-cta ${appointment.ctaClass}">${appointment.ctaText}</button>
       </div>
     `;
   }
-}
 
-// Swipe effect for appointment cards collection
-function enableCalendarCardSwiping() {
+  // Create carousel of appointment cards
+  function createCalendarCards() {
+    const elem_CalendarCardsContainer = document.getElementById('seasonCalendarCardsContainer');
+    
+    // Clear existing content
+    elem_CalendarCardsContainer.innerHTML = '';
 
-  const apptCards = document.querySelectorAll(sel_ApptCard);
-  console.log(apptCards);
+    data_ApptCards.forEach((appointment, index) => {
+      const cardElement = document.createElement('div');
+      cardElement.innerHTML = createAppointmentCardContent(appointment, index);
+      elem_CalendarCardsContainer.appendChild(cardElement.firstElementChild);
+    });
 
-  // Find the index of the card with "today" class
-  let curIndex = 0;
-  const todayCard = elem_CalendarCardsContainer.querySelector('.today');
-
-  if (todayCard) {
-    curIndex = parseInt(todayCard.dataset.index) || 0;
+    function createAppointmentCardContent(appointment, index) {
+      const todayClass = appointment.isToday ? ` ${class_TodayApptCard} today` : '';
+      const primaryClass = appointment.ctaClass.includes('primary') ? ' primary' : '';
+      
+      return `
+        <div class="${class_ApptCard} appointment-card${todayClass}" data-appointment-date="${appointment.date}" data-index="${index}">
+          <div class="caption">${appointment.caption}</div>
+          <div class="card-date">
+            <div class="card-month">${appointment.month}</div>
+            <div class="card-day">${appointment.day}</div>
+          </div>
+          <div class="card-blurb">
+            <div class="card-blurb-text">${appointment.blurbText}</div>
+          </div>
+          <button class="card-cta ${appointment.ctaClass}">${appointment.ctaText}</button>
+        </div>
+      `;
+    }
   }
 
-  let startX = 0;
-  let isDragging = false;
+  // Swipe effect for appointment cards collection
+  function enableCalendarCardSwiping() {
+    const elem_CalendarCardsContainer = document.getElementById('seasonCalendarCardsContainer');
 
-  function updateCardPositions() {
-    apptCards.forEach((card, index) => {
-      card.classList.remove('left', 'center', 'right', 'hidden');
+    const apptCards = document.querySelectorAll(sel_ApptCard);
+
+    // Find the index of the card with "today" class
+    let curIndex = 0;
+    const todayCard = elem_CalendarCardsContainer.querySelector(sel_TodayApptCard);
+
+    if (todayCard) {
+      curIndex = parseInt(todayCard.dataset.index) || 0;
+    }
+
+    let startX = 0;
+    let isDragging = false;
+
+
+    // Touch events
+    elem_CalendarCardsContainer.addEventListener('touchstart', (e) => {
+      startX = e.touches[0].clientX;
+      isDragging = true;
+    });
+
+    elem_CalendarCardsContainer.addEventListener('touchmove', (e) => {
+      if (!isDragging) return;
+      e.preventDefault();
+    });
+
+    elem_CalendarCardsContainer.addEventListener('touchend', (e) => {
+      if (!isDragging) return;
+      isDragging = false;
       
-      if (index === curIndex) {
-        card.classList.add('center');
-      } else if (index === curIndex - 1) {
-        card.classList.add('left');
-      } else if (index === curIndex + 1) {
-        card.classList.add('right');
-      } else {
-        card.classList.add('hidden');
+      const endX = e.changedTouches[0].clientX;
+      const diff = startX - endX;
+      
+      if (Math.abs(diff) > 50) { // Minimum swipe distance
+        if (diff > 0) {
+          swipeLeft();
+        } else {
+          swipeRight();
+        }
       }
     });
-  }
 
-  function addCardClickListeners() {
-    apptCards.forEach((card, index) => {
-      card.addEventListener('click', (e) => {
-        if (card.classList.contains('left') || card.classList.contains('right')) {
-          curIndex = index;
-          updateCardPositions();
-          e.stopPropagation(); 
+    // Mouse events for desktop
+    elem_CalendarCardsContainer.addEventListener('mousedown', (e) => {
+      startX = e.clientX;
+      isDragging = true;
+    });
+
+    elem_CalendarCardsContainer.addEventListener('mousemove', (e) => {
+      if (!isDragging) return;
+      e.preventDefault();
+    });
+
+    elem_CalendarCardsContainer.addEventListener('mouseup', (e) => {
+      if (!isDragging) return;
+      isDragging = false;
+      
+      const endX = e.clientX;
+      const diff = startX - endX;
+      
+      if (Math.abs(diff) > 50) { // Minimum swipe distance
+        if (diff > 0) {
+          swipeLeft();
+        } else {
+          swipeRight();
+        }
+      }
+    });
+
+    updateCardPositions();
+    addCardClickListeners();
+
+    
+    function updateCardPositions() {
+      apptCards.forEach((card, index) => {
+        card.classList.remove('left', 'center', 'right', 'hidden');
+        
+        if (index === curIndex) {
+          card.classList.add('center');
+        } else if (index === curIndex - 1) {
+          card.classList.add('left');
+        } else if (index === curIndex + 1) {
+          card.classList.add('right');
+        } else {
+          card.classList.add('hidden');
         }
       });
+    }
+
+    function addCardClickListeners() {
+      apptCards.forEach((card, index) => {
+        card.addEventListener('click', (e) => {
+          if (card.classList.contains('left') || card.classList.contains('right')) {
+            curIndex = index;
+            updateCardPositions();
+            e.stopPropagation(); 
+          }
+        });
+      });
+    }
+
+    function swipeLeft() {
+      if (curIndex < apptCards.length - 1) {
+        curIndex++;
+        updateCardPositions();
+      }
+    }
+
+    function swipeRight() {
+      if (curIndex > 0) {
+        curIndex--;
+        updateCardPositions();
+      }
+    }
+  }
+
+  // Calendar fade effect when scrolling vertically to reveal goals
+  function enableSplashContainerFade() {
+    window.addEventListener('scroll', () => {
+      const calTranslateYMax = 20;
+      const calFadeRate = 0.8; 
+      const goalSummaryHeight = elem_GoalsTrackingPanel.offsetHeight;
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      const scrollProgress = Math.min(scrollTop / goalSummaryHeight, 1);
+      const translateY = scrollProgress * -1 * calTranslateYMax; 
+      const opacity = 1 - (scrollProgress / calFadeRate); 
+      
+      elem_SplashContainer.style.transform = `translateY(${translateY}vh)`;
+      elem_SplashContainer.style.opacity = opacity;
     });
   }
-
-  function swipeLeft() {
-    if (curIndex < apptCards.length - 1) {
-      curIndex++;
-      updateCardPositions();
-    }
-  }
-
-  function swipeRight() {
-    if (curIndex > 0) {
-      curIndex--;
-      updateCardPositions();
-    }
-  }
-
-  // Touch events
-  elem_CalendarCardsContainer.addEventListener('touchstart', (e) => {
-    startX = e.touches[0].clientX;
-    isDragging = true;
-  });
-
-  elem_CalendarCardsContainer.addEventListener('touchmove', (e) => {
-    if (!isDragging) return;
-    e.preventDefault();
-  });
-
-  elem_CalendarCardsContainer.addEventListener('touchend', (e) => {
-    if (!isDragging) return;
-    isDragging = false;
-    
-    const endX = e.changedTouches[0].clientX;
-    const diff = startX - endX;
-    
-    if (Math.abs(diff) > 50) { // Minimum swipe distance
-      if (diff > 0) {
-        swipeLeft();
-      } else {
-        swipeRight();
-      }
-    }
-  });
-
-  // Mouse events for desktop
-  elem_CalendarCardsContainer.addEventListener('mousedown', (e) => {
-    startX = e.clientX;
-    isDragging = true;
-  });
-
-  elem_CalendarCardsContainer.addEventListener('mousemove', (e) => {
-    if (!isDragging) return;
-    e.preventDefault();
-  });
-
-  elem_CalendarCardsContainer.addEventListener('mouseup', (e) => {
-    if (!isDragging) return;
-    isDragging = false;
-    
-    const endX = e.clientX;
-    const diff = startX - endX;
-    
-    if (Math.abs(diff) > 50) { // Minimum swipe distance
-      if (diff > 0) {
-        swipeLeft();
-      } else {
-        swipeRight();
-      }
-    }
-  });
-
-  updateCardPositions();
-  addCardClickListeners();
 }
+
 
 // Sets up horizontal days UI for goal tracking
 function createGoalsTrackingCalendar(startDate, endDate) {
