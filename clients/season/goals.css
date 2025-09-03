@@ -179,6 +179,7 @@ html {
 
   --color--btn--blue: rgb(72, 95, 129);
   --color--btn--orange: rgb(250, 123, 82);
+  --color--btn--green: rgb(16, 185, 129);
 
   --color--green-dot: #090;
 
@@ -523,6 +524,7 @@ main {
   .appointment-card {
     position: absolute;
     width: 200px;
+    aspect-ratio: 1/1;
     background: var(--color--white);
     border-radius: 1rem;
     box-shadow: var(--box-shadow--card);
@@ -573,9 +575,24 @@ main {
       font-family: var(--font-family--sans-serif);
     }
 
-    &.today .caption {
-      background-color: var(--color--btn--orange);
-      color: var(--color--white);
+    &.today {
+      .caption {
+        background-color: var(--color--btn--orange);
+        color: var(--color--white);
+      }
+      .card-cta {
+        background-color: var(--color--btn--orange) !important;
+      }
+    }
+
+    &.delivery {
+      .caption {
+        background-color: var(--color--btn--green);
+        color: var(--color--white);
+      }
+      .card-cta {
+        background-color: var(--color--btn--green) !important;
+      }
     }
 
     .card-date {
@@ -638,9 +655,6 @@ main {
         transform: translateY(0);
       }
 
-      &.primary {
-        background: var(--color--btn--orange);
-      }
     }
   }
 }

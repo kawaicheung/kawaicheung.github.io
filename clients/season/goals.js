@@ -21,14 +21,10 @@ const elem_SplashContainer = document.getElementById('seasonSplashContainer');
 const elem_GoalsTrackingPanel = document.getElementById('seasonGoalsTrackingPanel');
 
 // Shell for initPreVisitSummary() component (popup)...
-// TODO: Extract out #seasonPreVisitSummary reference below.
+const elem_PreVisitSummary = document.getElementById('seasonPreVisitSummary');
 
-const elem_PrevReportTabContainer = document.getElementById('seasonPrevReportTabContainer');
-const elem_GoalModalsContainer = document.getElementById('seasonGoalModalsContainer');
-
-// Collection references (by class)
-const elems_PrevReportTabContent = document.querySelectorAll('.season--prev-report-tab-content');
-const elems_ShareableItems = document.querySelectorAll('.season--shareable-item');
+// Shell for initAppointmentReport() component (popup)...
+const elem_ApptReport = document.getElementById('seasonApptReport');
 
 // Classes (Built dynamically so cannot reference document.querySelectorAll initially)
 const class_ApptCard = 'season--appt-card';
@@ -78,8 +74,6 @@ const svgs = {
 * 
 /******************************************************/
 
-// Dates between appointments
-// Appointments for appointment cards
 const data_CalendarCards = [
   {
     date: "2024-12-12",
@@ -136,14 +130,24 @@ const data_CalendarCards = [
     ctaClass: "appt-report-btn"
   },
   {
-    date: "2025-08-15", 
-    month: "Aug",
-    day: "19",
+    date: "2025-09-04", 
+    month: "Sep",
+    day: "04",
     caption: "Today",
     blurbText: "Get ready for your visit.",
     ctaText: "Prepare", 
     ctaClass: "pre-visit-summary-btn primary",
     isToday: true
+  },
+  {
+    date: "2025-09-08", 
+    month: "Sep",
+    day: "08",
+    caption: "Delivery",
+    blurbText: "Three meals arriving.",
+    ctaText: "Review order", 
+    isDelivery: true,
+    ctaClass: "appt-report-btn"
   },
   {
     date: "2025-08-20",
@@ -156,7 +160,112 @@ const data_CalendarCards = [
   }
 ];
 
-// Goals 
+const data_ApptReport = {
+  headerTitle: "4/13 - 5/21 Summary",
+  providerData: {
+    name: "Alejandra Sanchez, RD",
+    title: "Registered Dietitian", 
+    image: "img/alejandra.png"
+  },
+  tabData: [
+    {
+      id: "shared",
+      label: "Activity",
+      active: true
+    },
+    {
+      id: "pre-visit", 
+      label: "Pre-visit",
+      active: false
+    },
+    {
+      id: "post-visit",
+      label: "Post-visit", 
+      active: false
+    }
+  ],
+  sharedContent: {
+    rdDiscussions: [
+      {
+        date: "Apr 17",
+        text: "Discussed afternoon energy crashes occurring daily around 2-3 PM and potential dietary causes.",
+        excluded: true
+      },
+      {
+        date: "Apr 13", 
+        text: "Reviewed recent lab results showing elevated cholesterol (LDL: 145 mg/dL) and mild iron deficiency.",
+        excluded: false
+      },
+      {
+        date: "Apr 10",
+        text: "Talked about irregular sleep patterns and their impact on morning energy levels.", 
+        excluded: false
+      }
+    ],
+    aiAssistantShares: [
+      {
+        date: "Apr 1",
+        text: "Asked about meal prep strategies for busy weekdays and received customized suggestions.",
+        excluded: false
+      },
+      {
+        date: "Apr 1", 
+        text: "Discussed iron-rich food options and how to improve absorption with vitamin C pairing.",
+        excluded: true
+      }
+    ],
+    recentMeals: [
+      {
+        date: "Apr 11",
+        text: "Mediterranean Bowl with grilled chicken, quinoa, and tahini dressing (ordered 4 times).",
+        excluded: false
+      },
+      {
+        date: "Mar 30",
+        text: "Green Goddess Salad with salmon and avocado (ordered 3 times this month).", 
+        excluded: false
+      }
+    ]
+  },
+  preVisitContent: {
+    currentHealthStatus: {
+      text: "Michelle has been experiencing consistent energy fluctuations throughout the day, particularly noticeable afternoon crashes around 2-3 PM. Recent lab work shows slightly elevated cholesterol and mild iron deficiency.",
+      points: [
+        "Afternoon energy crashes (2-3 PM daily)",
+        "Elevated cholesterol levels (LDL: 145 mg/dL)", 
+        "Mild iron deficiency (ferritin: 18 ng/mL)",
+        "Irregular sleep patterns affecting morning energy"
+      ]
+    },
+    dietaryPatterns: {
+      text: "Current eating habits include skipping breakfast 3-4 times per week, rushed lunches, and late dinners that are typically carb-heavy. Michelle tends to rely heavily on coffee for energy management.",
+      points: [
+        "Frequent breakfast skipping (3-4x per week)",
+        "Rushed lunch breaks with processed foods", 
+        "Late dinners (after 8 PM) with high carb content",
+        "Excessive caffeine consumption (4-5 cups daily)"
+      ]
+    }
+  },
+  postVisitContent: {
+    assignedGoals: [
+      'Say "no" to work treats',
+      "Drink 64oz of water a day",
+      "Exercise 15-20 min, 5 days per week", 
+      "Avoid eating while watching TV"
+    ],
+    visitSummary: {
+      text: "Michelle met with Alejandra for a comprehensive follow-up consultation focusing on energy management and dietary optimization. Key progress was noted in several areas with new recommendations provided."
+    },
+    keyRecommendations: [
+      "Increase morning protein to 25g minimum within 2 hours of waking",
+      "Implement structured meal timing with no more than 4 hours between meals",
+      "Add iron supplement (18mg) with vitamin C source", 
+      "Reduce caffeine intake gradually from 4-5 cups to 2 cups daily"
+    ]
+  }
+};
+
 const data_Goals = [
   {
     id: 1,
@@ -180,7 +289,77 @@ const data_Goals = [
   }
 ];
 
-// Static modals data
+const data_PreVisitSummary = {
+  headerText: 'Your pre-visit summary for 8/15',
+  providerData: {
+    name: 'Alejandra Sanchez, RD',
+    title: 'Registered Dietitian',
+    image: 'img/alejandra.png'
+  },
+  summaryItems: {
+    rdDiscussions: [
+      { date: 'Aug 17', text: 'Discussed afternoon energy crashes occurring daily around 2-3 PM and potential dietary causes.', excluded: false },
+      { date: 'Aug 13', text: 'Reviewed recent lab results showing elevated cholesterol (LDL: 145 mg/dL) and mild iron deficiency.', excluded: true },
+      { date: 'Aug 10', text: 'Talked about irregular sleep patterns and their impact on morning energy levels.', excluded: false },
+      { date: 'Aug 4', text: 'Established goals for consistent breakfast routine with 20g+ protein daily.', excluded: false }
+    ],
+    aiAssistantShares: [
+      { date: 'Aug 1', text: 'Asked about meal prep strategies for busy weekdays and received customized suggestions.', excluded: false },
+      { date: 'Aug 1', text: 'Discussed iron-rich food options and how to improve absorption with vitamin C pairing.', excluded: true },
+      { date: 'Aug 1', text: 'Explored caffeine reduction strategies and healthy energy-boosting alternatives.', excluded: true },
+      { date: 'Aug 14', text: 'Got recommendations for timing evening meals earlier to improve sleep quality.', excluded: false },
+      { date: 'Aug 5', text: 'Received a personalized hydration tracking plan to maintain 64+ oz daily water intake.', excluded: false }
+    ],
+    recentMeals: [
+      { date: 'Aug 11', text: 'Mediterranean Bowl with grilled chicken, quinoa, and tahini dressing (ordered 4 times).', excluded: false },
+      { date: 'Jul 30', text: 'Green Goddess Salad with salmon and avocado (ordered 3 times this month).', excluded: false },
+      { date: 'Jul 22', text: 'Steel-cut oats breakfast bowl with berries and almond butter (morning favorite).', excluded: false },
+      { date: 'Jul 15', text: 'Lentil curry with brown rice and steamed vegetables (comfort meal choice).', excluded: false }
+    ]
+  },
+  generatedSummary: {
+    currentHealthStatus: {
+      text: 'Michelle has been experiencing consistent energy fluctuations throughout the day, particularly noticeable afternoon crashes around 2-3 PM. Recent lab work shows slightly elevated cholesterol and mild iron deficiency.',
+      points: [
+        'Afternoon energy crashes (2-3 PM daily)',
+        'Elevated cholesterol levels (LDL: 145 mg/dL)',
+        'Mild iron deficiency (ferritin: 18 ng/mL)',
+        'Irregular sleep patterns affecting morning energy'
+      ]
+    },
+    dietaryPatterns: {
+      text: 'Current eating habits include skipping breakfast 3-4 times per week, rushed lunches, and late dinners that are typically carb-heavy. Michelle tends to rely heavily on coffee for energy management.',
+      points: [
+        'Frequent breakfast skipping (3-4x per week)',
+        'Rushed lunch breaks with processed foods',
+        'Late dinners (after 8 PM) with high carb content',
+        'Excessive caffeine consumption (4-5 cups daily)',
+        'Stress-induced meal skipping patterns'
+      ]
+    },
+    upcomingGoals: {
+      text: 'The primary focus will be addressing energy stability through improved meal timing and nutrient density. We\'ll also work on strategies for better meal planning despite a busy schedule.',
+      points: [
+        'Establish consistent breakfast routine with 20g+ protein',
+        'Implement meal prep strategies for busy weekdays',
+        'Address iron deficiency through dietary modifications',
+        'Create sustainable evening meal timing',
+        'Reduce caffeine dependency gradually'
+      ]
+    },
+    progressSinceLastVisit: {
+      text: 'Michelle has successfully implemented several recommendations from our previous session, including regular hydration tracking and incorporating more leafy greens into her diet.',
+      points: [
+        'Consistent water intake tracking (64+ oz daily)',
+        'Added spinach/kale to smoothies 4x per week',
+        'Reduced late-night snacking by 60%',
+        'Started taking recommended vitamin D supplement',
+        'Improved meal timing on weekends'
+      ]
+    }
+  }
+};
+
 const configs_StaticModal = [
   {
     openBtnSelector: '#ai-chat-btn',
@@ -194,8 +373,8 @@ const configs_StaticModal = [
   },
   {
     openBtnSelector: '.appt-report-btn',
-    modalId: 'appt-report',
-    closeBtnId: 'appt-report-close-btn'
+    modalId: 'seasonApptReport',
+    closeBtnId: 'seasonApptReport-close-btn'
   },
   {
     openBtnSelector: '.pre-visit-summary-btn',
@@ -233,80 +412,9 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // Pre-visit summary panel
-  initPreVisitSummary({
-    headerText: 'Your pre-visit summary for 8/15',
-    providerData: {
-      name: 'Alejandra Sanchez, RD',
-      title: 'Registered Dietitian',
-      image: 'img/alejandra.png'
-    },
-    summaryItems: {
-      rdDiscussions: [
-        { date: 'Aug 17', text: 'Discussed afternoon energy crashes occurring daily around 2-3 PM and potential dietary causes.', excluded: false },
-        { date: 'Aug 13', text: 'Reviewed recent lab results showing elevated cholesterol (LDL: 145 mg/dL) and mild iron deficiency.', excluded: true },
-        { date: 'Aug 10', text: 'Talked about irregular sleep patterns and their impact on morning energy levels.', excluded: false },
-        { date: 'Aug 4', text: 'Established goals for consistent breakfast routine with 20g+ protein daily.', excluded: false }
-      ],
-      aiAssistantShares: [
-        { date: 'Aug 1', text: 'Asked about meal prep strategies for busy weekdays and received customized suggestions.', excluded: false },
-        { date: 'Aug 1', text: 'Discussed iron-rich food options and how to improve absorption with vitamin C pairing.', excluded: true },
-        { date: 'Aug 1', text: 'Explored caffeine reduction strategies and healthy energy-boosting alternatives.', excluded: true },
-        { date: 'Aug 14', text: 'Got recommendations for timing evening meals earlier to improve sleep quality.', excluded: false },
-        { date: 'Aug 5', text: 'Received a personalized hydration tracking plan to maintain 64+ oz daily water intake.', excluded: false }
-      ],
-      recentMeals: [
-        { date: 'Aug 11', text: 'Mediterranean Bowl with grilled chicken, quinoa, and tahini dressing (ordered 4 times).', excluded: false },
-        { date: 'Jul 30', text: 'Green Goddess Salad with salmon and avocado (ordered 3 times this month).', excluded: false },
-        { date: 'Jul 22', text: 'Steel-cut oats breakfast bowl with berries and almond butter (morning favorite).', excluded: false },
-        { date: 'Jul 15', text: 'Lentil curry with brown rice and steamed vegetables (comfort meal choice).', excluded: false }
-      ]
-    },
-    generatedSummary: {
-      currentHealthStatus: {
-        text: 'Michelle has been experiencing consistent energy fluctuations throughout the day, particularly noticeable afternoon crashes around 2-3 PM. Recent lab work shows slightly elevated cholesterol and mild iron deficiency.',
-        points: [
-          'Afternoon energy crashes (2-3 PM daily)',
-          'Elevated cholesterol levels (LDL: 145 mg/dL)',
-          'Mild iron deficiency (ferritin: 18 ng/mL)',
-          'Irregular sleep patterns affecting morning energy'
-        ]
-      },
-      dietaryPatterns: {
-        text: 'Current eating habits include skipping breakfast 3-4 times per week, rushed lunches, and late dinners that are typically carb-heavy. Michelle tends to rely heavily on coffee for energy management.',
-        points: [
-          'Frequent breakfast skipping (3-4x per week)',
-          'Rushed lunch breaks with processed foods',
-          'Late dinners (after 8 PM) with high carb content',
-          'Excessive caffeine consumption (4-5 cups daily)',
-          'Stress-induced meal skipping patterns'
-        ]
-      },
-      upcomingGoals: {
-        text: 'The primary focus will be addressing energy stability through improved meal timing and nutrient density. We\'ll also work on strategies for better meal planning despite a busy schedule.',
-        points: [
-          'Establish consistent breakfast routine with 20g+ protein',
-          'Implement meal prep strategies for busy weekdays',
-          'Address iron deficiency through dietary modifications',
-          'Create sustainable evening meal timing',
-          'Reduce caffeine dependency gradually'
-        ]
-      },
-      progressSinceLastVisit: {
-        text: 'Michelle has successfully implemented several recommendations from our previous session, including regular hydration tracking and incorporating more leafy greens into her diet.',
-        points: [
-          'Consistent water intake tracking (64+ oz daily)',
-          'Added spinach/kale to smoothies 4x per week',
-          'Reduced late-night snacking by 60%',
-          'Started taking recommended vitamin D supplement',
-          'Improved meal timing on weekends'
-        ]
-      }
-    }
-  });
+  initPreVisitSummary(data_PreVisitSummary);
 
-  // Component: Past appointment recaps
-  enableApptReportTabs();
-  updateAppointmentReportHeader();
+  initApptReport(data_ApptReport);
 
   // Must come after createCalendarCards() and createGoalModals()
   const configs_GoalModal = createconfigs_GoalModal(data_Goals);
@@ -394,11 +502,21 @@ function initSplashContainer(welcomeData) {
     });
 
     function createAppointmentCardContent(appointment, index) {
-      const todayClass = appointment.isToday ? ` ${class_TodayApptCard} today` : '';
-      const primaryClass = appointment.ctaClass.includes('primary') ? ' primary' : '';
+      extraClass = ''
+
+      if (appointment.isToday) {
+        extraClass = ` ${class_TodayApptCard} today`;
+      } else if (appointment.isDelivery) {
+        extraClass = ` delivery`;
+      }
+
+      // Only render button if ctaText exist
+      const buttonHTML = appointment.ctaText 
+        ? `<button class="card-cta ${appointment.ctaClass}">${appointment.ctaText}</button>`
+        : '';
       
       return `
-        <div class="${class_ApptCard} appointment-card${todayClass}" data-appointment-date="${appointment.date}" data-index="${index}">
+        <div class="${class_ApptCard} appointment-card${extraClass}" data-appointment-date="${appointment.date}" data-index="${index}">
           <div class="caption">${appointment.caption}</div>
           <div class="card-date">
             <div class="card-month">${appointment.month}</div>
@@ -407,7 +525,7 @@ function initSplashContainer(welcomeData) {
           <div class="card-blurb">
             <div class="card-blurb-text">${appointment.blurbText}</div>
           </div>
-          <button class="card-cta ${appointment.ctaClass}">${appointment.ctaText}</button>
+          ${buttonHTML}
         </div>
       `;
     }
@@ -1100,13 +1218,22 @@ function initPreVisitSummary(summaryData) {
 
   // Create pre-visit summary content
   function createPreVisitSummaryContent(summaryData = {}) {
-    const modalContent = document.querySelector('#seasonPreVisitSummary .popup-content');
+
+    const modalContent = elem_PreVisitSummary.querySelector('.popup-content');
     
-    // Find the close button (preserve it)
-    const closeBtn = modalContent.querySelector('.close');
-    
-    // Clear content but preserve close button
+    // Clear all existing content
     modalContent.innerHTML = '';
+    
+    // Create and add the close button first
+    const closeBtn = document.createElement('div');
+    closeBtn.className = 'close';
+    closeBtn.id = 'seasonPreVisitSummary-close-btn';
+    closeBtn.innerHTML = `
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M18 6L6 18" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M6 6L18 18" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    `;
     modalContent.appendChild(closeBtn);
     
     // Add the main content
@@ -1385,6 +1512,172 @@ function initPreVisitSummary(summaryData) {
   }
 }
 
+// Master method to initialize appointment report content
+function initApptReport(reportData) {
+  console.log(elem_ApptReport)
+  const modalContent = elem_ApptReport.querySelector('.popup-content');
+
+  // Clear all existing content
+  modalContent.innerHTML = '';
+  
+  // Create and add the close button first
+  const closeBtn = document.createElement('div');
+  closeBtn.className = 'close';
+  closeBtn.id = 'seasonApptReport-close-btn';
+  closeBtn.innerHTML = `
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M18 6L6 18" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M6 6L18 18" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  `;
+  modalContent.appendChild(closeBtn);
+  
+  // Clear existing content except close button
+  const existingCloseBtn = modalContent.querySelector('.close');
+  modalContent.innerHTML = '';
+  modalContent.appendChild(existingCloseBtn);
+  
+  // Create and add main content
+  const contentDiv = document.createElement('div');
+  contentDiv.className = 'appt-report-summary-content';
+  contentDiv.innerHTML = createAppointmentReportContent(reportData);
+  modalContent.appendChild(contentDiv);
+  
+  // Re-initialize tab functionality after content creation
+  enableApptReportTabs();
+
+  function enableApptReportTabs() {
+    const tabBtns = document.getElementById('seasonPrevReportTabContainer').querySelectorAll('div');
+    const tabContents = document.querySelectorAll('.season--prev-report-tab-content');
+
+    tabBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const targetTab = btn.dataset.tab;
+        
+        // Remove active class from all tabs and content
+        tabBtns.forEach(b => b.classList.remove('active'));
+        tabContents.forEach(c => c.classList.remove('active'));
+        
+        // Add active class to clicked tab
+        btn.classList.add('active');
+        
+        // Show corresponding content
+        const targetContent = document.getElementById(`${targetTab}-content`);
+        if (targetContent) {
+          targetContent.classList.add('active');
+        }
+      });
+    });
+  }
+
+  function createAppointmentReportContent(reportData) {
+    return `
+      <!-- Header -->
+      <div class="summary-header" id="appt-report-header">${reportData.headerTitle}</div>
+      
+      <!-- Provider info -->
+      <div class="summary-to">
+        <img src="${reportData.providerData.image}" alt="${reportData.providerData.name}" class="avatar">
+        <div class="rd-info">
+          <div class="rd-name">${reportData.providerData.name}</div>
+          <div class="rd-title">${reportData.providerData.title}</div>
+        </div>
+      </div>
+
+      <!-- Tabs -->
+      <div id="seasonPrevReportTabContainer" class="appt-report-tabs">
+        ${reportData.tabData.map(tab => `
+          <div class="tab-btn${tab.active ? ' active' : ''}" data-tab="${tab.id}">${tab.label}</div>
+        `).join('')}
+      </div>
+
+      <!-- Tab Content: What you shared -->
+      <div class="season--prev-report-tab-content tab-content${reportData.tabData.find(t => t.id === 'shared')?.active ? ' active' : ''}" id="shared-content">
+        <div class="edit-form-content">
+          <div class="edit-section">
+            <h3>What you discussed with your RD</h3>
+            <div class="edit-items">
+              ${reportData.sharedContent.rdDiscussions.map(item => `
+                <div class="edit-item${item.excluded ? ' excluded' : ''}">
+                  <div class="item-date">${item.date}</div>
+                  <div class="item-text">${item.text}</div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+          
+          <div class="edit-section">
+            <h3>What you shared with Season Assistant</h3>
+            <div class="edit-items">
+              ${reportData.sharedContent.aiAssistantShares.map(item => `
+                <div class="season--shareable-item edit-item${item.excluded ? ' excluded' : ''}">
+                  <div class="item-date">${item.date}</div>
+                  <div class="item-text">${item.text}</div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+          
+          <div class="edit-section">
+            <h3>Meals you ordered recently</h3>
+            <div class="edit-items">
+              ${reportData.sharedContent.recentMeals.map(item => `
+                <div class="season--shareable-item edit-item${item.excluded ? ' excluded' : ''}">
+                  <div class="item-date">${item.date}</div>
+                  <div class="item-text">${item.text}</div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab Content: Pre-visit -->
+      <div class="season--prev-report-tab-content tab-content${reportData.tabData.find(t => t.id === 'pre-visit')?.active ? ' active' : ''}" id="pre-visit-content">
+        <div class="summary-content-style">
+          <div class="content-section">
+            <h3 class="section-title">Current Health Status</h3>
+            <p class="section-text">${reportData.preVisitContent.currentHealthStatus.text}</p>
+            <ul class="section-list">
+              ${reportData.preVisitContent.currentHealthStatus.points.map(point => `<li>${point}</li>`).join('')}
+            </ul>
+          </div>
+          
+          <div class="content-section">
+            <h3 class="section-title">Dietary Patterns & Concerns</h3>
+            <p class="section-text">${reportData.preVisitContent.dietaryPatterns.text}</p>
+            <ul class="section-list">
+              ${reportData.preVisitContent.dietaryPatterns.points.map(point => `<li>${point}</li>`).join('')}
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab Content: Post-visit -->
+      <div class="season--prev-report-tab-content tab-content${reportData.tabData.find(t => t.id === 'post-visit')?.active ? ' active' : ''}" id="post-visit-content">
+        <div class="summary-content-style">
+          <div class="content-section">
+            <h3 class="section-title">Assigned Goals</h3>
+            <ul class="section-list">
+              ${reportData.postVisitContent.assignedGoals.map(goal => `<li>${goal}</li>`).join('')}
+            </ul>
+          </div>
+          <div class="content-section">
+            <h3 class="section-title">Visit Summary</h3>
+            <p class="section-text">${reportData.postVisitContent.visitSummary.text}</p>
+          </div>
+          <div class="content-section">
+            <h3 class="section-title">Key Recommendations</h3>
+            <ul class="section-list">
+              ${reportData.postVisitContent.keyRecommendations.map(rec => `<li>${rec}</li>`).join('')}
+            </ul>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+}
+
 // Sets up all modals (goals, chats, summaries)
 function initModals(modalConfigs) {
   modalConfigs.forEach(config => {
@@ -1427,72 +1720,6 @@ function createconfigs_GoalModal(goals) {
   });
   
   return modalConfigs;
-}
-
-function enableApptReportTabs() {
-  const tabBtns = elem_PrevReportTabContainer.querySelectorAll('div');
-  const tabContents = elems_PrevReportTabContent;
-
-  tabBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const targetTab = btn.dataset.tab;
-      
-      // Remove active class from all tabs and content
-      tabBtns.forEach(b => b.classList.remove('active'));
-      tabContents.forEach(c => c.classList.remove('active'));
-      
-      // Add active class to clicked tab
-      btn.classList.add('active');
-      
-      // Show corresponding content
-      const targetContent = document.getElementById(`${targetTab}-content`);
-      if (targetContent) {
-        targetContent.classList.add('active');
-      }
-    });
-  });
-}
-
-function updateAppointmentReportHeader() {
-  document.querySelectorAll('.appt-report-btn').forEach((btn, index) => {
-    btn.addEventListener('click', () => {
-      const card = btn.closest('.appointment-card');
-      const appointmentDate = card.dataset.appointmentDate;
-      const appointmentIndex = parseInt(card.dataset.index);
-      
-      // Get the previous appointment date for date range
-      const cards = document.querySelectorAll('.appointment-card');
-      let headerText = '';
-      
-      if (appointmentIndex === 0) {
-        // First appointment, just show single date
-        const date = new Date(appointmentDate);
-        headerText = date.toLocaleDateString('en-US', { month: 'numeric', day: 'numeric' }) + ' Summary';
-      } else {
-        // Find previous appointment
-        const prevCard = Array.from(cards).find(c => parseInt(c.dataset.index) === appointmentIndex - 1);
-        if (prevCard) {
-          const prevDate = new Date(prevCard.dataset.appointmentDate);
-          const currentDate = new Date(appointmentDate);
-          
-          const prevFormatted = prevDate.toLocaleDateString('en-US', { month: 'numeric', day: 'numeric' });
-          const currentFormatted = currentDate.toLocaleDateString('en-US', { month: 'numeric', day: 'numeric' });
-          
-          headerText = `${prevFormatted} - ${currentFormatted} Summary`;
-        } else {
-          // Fallback to single date
-          const date = new Date(appointmentDate);
-          headerText = date.toLocaleDateString('en-US', { month: 'numeric', day: 'numeric' }) + ' Summary';
-        }
-      }
-      
-      // Update the header
-      const header = document.getElementById('appt-report-header');
-      if (header) {
-        header.textContent = headerText;
-      }
-    });
-  });
 }
 
 /******************************************************
