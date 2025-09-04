@@ -781,6 +781,7 @@ main {
     padding: 1rem;
     position: relative;
     box-shadow: var(--box-shadow--square);
+    cursor: pointer;
 
     .rated {
       position: absolute;
@@ -1719,6 +1720,7 @@ main {
             background-color: rgba(255,255,255,0.5);
             border-radius: 99rem;
             letter-spacing: -0.025rem;
+            cursor: pointer;
             
             span {
               font-family: var(--font-family--sans-serif);

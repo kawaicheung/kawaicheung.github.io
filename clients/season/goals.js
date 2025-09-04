@@ -941,12 +941,12 @@ function initGoalsTrackingPanel(panelData) {
       }
       
       return `
-        <div class="bottom-panel-square square square-${goal.id} goals-${goal.id}-logging-btn">
+        <button class="bottom-panel-square square square-${goal.id} goals-${goal.id}-logging-btn">
           <div class="rated">
             ${svgContent}
           </div>
           <span>${goal.title}</span>
-        </div>
+        </button>
       `;
     }
   }
@@ -980,22 +980,22 @@ function initGoalsTrackingPanel(panelData) {
               <div class="goal-rating-title">How did it go today?</div>
               <div class="rating-options">
                 <div class="rating-option">
-                  <div class="${class_GoalProgressBtn} rating-btn" data-rating="positive">
-                    <span>I didn't do so well.</span>
-                    ${svgs.sad_face}
-                  </div>
-                </div>
-                <div class="rating-option">
-                  <div class="${class_GoalProgressBtn} rating-btn" data-rating="neutral">
-                    <span>I did OK.</span>
-                    ${svgs.mid_face}
-                  </div>
-                </div>
-                <div class="rating-option">
-                  <div class="${class_GoalProgressBtn} rating-btn" data-rating="negative">
+                  <button class="${class_GoalProgressBtn} rating-btn" data-rating="negative">
                     <span>I did great!</span>
                     ${svgs.happy_face}     
-                  </div>
+                  </button>
+                </div>
+                <div class="rating-option">
+                  <button class="${class_GoalProgressBtn} rating-btn" data-rating="neutral">
+                    <span>I did OK.</span>
+                    ${svgs.mid_face}
+                  </button>
+                </div>
+                <div class="rating-option">
+                  <button class="${class_GoalProgressBtn} rating-btn" data-rating="positive">
+                    <span>I didn't do so well.</span>
+                    ${svgs.sad_face}
+                  </button>
                 </div>
               </div>
               <div class="${class_GoalActionBtnsContainer} goal-action-buttons hidden">
