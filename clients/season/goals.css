@@ -215,8 +215,9 @@ html {
   --font-size--btn-standard: 1.1rem;
 
   --width--event-card: 200px;
-  --max-width--desktop: 800px;
-
+  --max-width--win-container: 800px;
+  --max-width--bottom-panel: 800px;
+  --max-width--popup: 800px;
 }
 
 body {
@@ -228,6 +229,15 @@ body {
   font-family: var(--font-family--sans-serif);
   color: var(--color--black);
   overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+ background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 1400 400' xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='none'%3E%3Cdefs%3E%3ClinearGradient id='skyGradient' x1='0%25' y1='0%25' x2='0%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23f8f9fa;stop-opacity:0.1'/%3E%3Cstop offset='100%25' style='stop-color:%23ffffff;stop-opacity:1'/%3E%3C/linearGradient%3E%3ClinearGradient id='hill1' x1='0%25' y1='0%25' x2='0%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%239cd08f;stop-opacity:0.2'/%3E%3Cstop offset='100%25' style='stop-color:%239cd08f;stop-opacity:0.08'/%3E%3C/linearGradient%3E%3ClinearGradient id='hill2' x1='0%25' y1='0%25' x2='0%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23f374ae;stop-opacity:0.15'/%3E%3Cstop offset='100%25' style='stop-color:%23ffffff;stop-opacity:0.06'/%3E%3C/linearGradient%3E%3ClinearGradient id='hill3' x1='0%25' y1='0%25' x2='0%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23f5bb00;stop-opacity:0.5'/%3E%3Cstop offset='100%25' style='stop-color:%23ffffff;stop-opacity:0.04'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100%25' height='100%25' fill='url(%23skyGradient)'/%3E%3Cpath d='M0,280 C200,260 400,220 600,240 C800,260 1000,200 1200,220 C1300,230 1400,240 1400,240 L1400,400 L0,400 Z' fill='url(%23hill3)'/%3E%3Cpath d='M0,320 C150,300 350,280 550,300 C750,320 950,260 1150,280 C1250,290 1350,300 1400,310 L1400,400 L0,400 Z' fill='url(%23hill2)'/%3E%3Cpath d='M0,340 C100,330 300,320 500,340 C700,360 900,320 1100,340 C1200,350 1300,360 1400,370 L1400,400 L0,400 Z' fill='url(%23hill1)'/%3E%3C/svg%3E");
+  background-size: 100vw auto;
+  background-repeat: no-repeat;
+  background-position: center bottom;
+  background-attachment: fixed; /* Optional: keeps background fixed during scroll */
+
 }
 
 main {
@@ -476,7 +486,7 @@ main {
   position: fixed;
   left: 50%;
   transform: translateX(-50%);
-  width: min(100vw, var(--max-width--desktop));
+  width: min(100vw, var(--max-width--win-container));
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -526,8 +536,8 @@ main {
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
-      width: 48px;
-      height: 48px;
+      width: 68px;
+      height: 68px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -549,8 +559,8 @@ main {
       }
 
       svg {
-        width: 36px;
-        height: 36px;
+        width: 100%;
+        height: 100%;
       }
     }
 
@@ -609,13 +619,11 @@ main {
     &.left {
       transform: translateX(-180px) scale(0.9) rotate(-8deg) translateZ(0);
       z-index: 1;
-      opacity: 0.7;
     }
 
     &.right {
       transform: translateX(180px) scale(0.9) rotate(8deg) translateZ(0);
       z-index: 1;
-      opacity: 0.7;
     }
 
     &.hidden {
@@ -732,7 +740,7 @@ main {
   border-top-right-radius: 2rem;
   border: solid 1px var(--color--gray--medium);
   /* Explicitly doing 1/2 padding sides...on two sides */
-  width: min(calc(100% - (2 *  var(--padding--sides) / 2)), var(--max-width--desktop));
+  width: min(calc(100% - (2 *  var(--padding--sides) / 2)), var(--max-width--bottom-panel));
   box-shadow: var(--box-shadow--standard);
   z-index: 100;
   margin: 0 calc(var(--padding--sides) / 2);
@@ -956,7 +964,8 @@ main {
   display: none;
   z-index: 10000;
   padding: 0 calc(var(--padding--sides) * 0.5);
-  background-color: rgba(255,255,255,0.25);
+  background-color: rgba(255,255,255,0.5);
+  box-sizing: border-box;
 
   .popup-content {
     position: absolute;
@@ -964,11 +973,15 @@ main {
     border: 1px solid var(--color--gray--medium);
     padding: var(--padding--sides);
     padding-bottom: 0;
-    width: calc(100% - var(--padding--sides));
+    width: min(calc(100% - var(--padding--sides)), var(--max-width--popup));
     transform: scale(0.9);
     overflow-x: hidden;
     animation: popInAndUp 0.5s var(--easing--pop-in) forwards;
     box-shadow: var(--box-shadow--standard);
+
+    @media (min-width: 600px) {
+      right: var(--padding--sides);
+    }
 
     &.ai-chat {
       bottom: var(--padding--sides);
@@ -1755,7 +1768,6 @@ main {
           transform: translateX(-50%) scale(1.2);
         }
 
-
         .goal-rating-title {
           text-align: center;
           font-weight: 500;
@@ -1888,7 +1900,7 @@ main {
 
   .popup-content {
     position: relative;
-    width: calc(100% - var(--padding--sides));
+    width: min(calc(100% - var(--padding--sides)), var(--max-width--popup));
     height: 60vh; /* Smaller than parent 80vh */
     max-height: 60vh;
     background-color: var(--color--white);

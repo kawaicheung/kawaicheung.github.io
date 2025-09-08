@@ -483,12 +483,12 @@ function initSplashContainer(welcomeData) {
       <div class="card-timeline" id="card-timeline">
         <div class="timeline-nav-arrows">
           <div class="nav-arrow nav-arrow-left" id="nav-arrow-left">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M16 19L9 12L16 5" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </div>
           <div class="nav-arrow nav-arrow-right" id="nav-arrow-right">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M8 5L15 12L8 19" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </div>
@@ -848,6 +848,7 @@ function initGoalsTrackingPanel(panelData) {
       
       dayElements.forEach((dayElement, index) => {
         dayElement.addEventListener('click', (e) => {
+          console.log('clicked')
           // Prevent click if we were just scrolling/swiping
           if (calendar.dataset.wasScrolling === 'true') {
             return;
