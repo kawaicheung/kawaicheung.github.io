@@ -214,6 +214,9 @@ html {
   --padding--btn-standard: 0.8rem 1.5rem;
   --font-size--btn-standard: 1.1rem;
 
+  --width--event-card: 200px;
+  --max-width--desktop: 800px;
+
 }
 
 body {
@@ -471,8 +474,9 @@ main {
 
 .win-container {
   position: fixed;
-  left: 0;
-  width: 100vw;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(100vw, var(--max-width--desktop));
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -510,6 +514,55 @@ main {
   position: relative;
   height: 300px;
 
+  .timeline-nav-arrows {
+    display: none; /* Hidden by default for mobile */
+    
+    @media (min-width: 768px) {
+      display: block;
+      width: calc(3.5 * var(--width--event-card));
+    }
+
+    .nav-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 5;
+      transition: all 0.2s ease;
+
+      &:hover {
+        transform: translateY(-50%) scale(1.25);
+      }
+
+      &:active {
+        transform: translateY(-50%) scale(0.95);
+      }
+
+      &.disabled {
+        opacity: 0.3;
+        cursor: not-allowed;
+      }
+
+      svg {
+        width: 36px;
+        height: 36px;
+      }
+    }
+
+    .nav-arrow-left {
+      left: 0%;
+    }
+
+    .nav-arrow-right {
+      right: 0%;
+    }
+  }
+
   .cards-container {
     position: relative;
     width: 100%;
@@ -521,9 +574,20 @@ main {
     touch-action: pan-x;
   }
 
-  .appointment-card {
+  .cards-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    touch-action: pan-x;
+  }
+
+  .event-card {
     position: absolute;
-    width: 200px;
+    width: var(--width--event-card);
     aspect-ratio: 1/1;
     background: var(--color--white);
     border-radius: 1rem;
@@ -668,7 +732,7 @@ main {
   border-top-right-radius: 2rem;
   border: solid 1px var(--color--gray--medium);
   /* Explicitly doing 1/2 padding sides...on two sides */
-  width: calc(100% - (2 *  var(--padding--sides) / 2));
+  width: min(calc(100% - (2 *  var(--padding--sides) / 2)), var(--max-width--desktop));
   box-shadow: var(--box-shadow--standard);
   z-index: 100;
   margin: 0 calc(var(--padding--sides) / 2);
@@ -743,7 +807,6 @@ main {
       }
     }
   }
-
 
   .goal-instructions {
     text-align: center;
