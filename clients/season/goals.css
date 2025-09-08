@@ -849,7 +849,7 @@ main {
     border-radius: 0.8rem;
     text-align: center;
     text-wrap: balance;
-    padding: 1rem;
+    padding: 10%;
     position: relative;
     box-shadow: var(--box-shadow--square);
     cursor: pointer;
@@ -868,7 +868,7 @@ main {
       font-weight: 500;
       letter-spacing: -0.02rem;
       color: var(--color--black);
-      font-size: 1rem;
+      font-size: clamp(1rem, 1.5vw ,5rem);
       font-family: var(--font-family--sans-serif);
       line-height: 1.2;
     }
@@ -979,7 +979,7 @@ main {
     animation: popInAndUp 0.5s var(--easing--pop-in) forwards;
     box-shadow: var(--box-shadow--standard);
 
-    @media (min-width: 600px) {
+    @media (min-width: 768px) {
       right: var(--padding--sides);
     }
 
