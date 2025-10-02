@@ -178,6 +178,7 @@
         let lastY = 0;
         let lastTime = 0;
         let velocity = 0;
+        let momentumInterval = null;
 
         // Load saved distance
         const saved = Number(window.totalScrollDistance) || 0;
@@ -249,10 +250,42 @@
             progressFill.style.width = Math.min(progress, 100) + '%';
         }
 
+        function applyMomentum(initialVelocity) {
+            if (momentumInterval) {
+                clearInterval(momentumInterval);
+            }
+            
+            let currentVelocity = initialVelocity;
+            const friction = 0.92; // Adjust for more/less coasting
+            const minVelocity = 0.1;
+            
+            momentumInterval = setInterval(() => {
+                if (currentVelocity < minVelocity) {
+                    clearInterval(momentumInterval);
+                    momentumInterval = null;
+                    return;
+                }
+                
+                // Convert velocity to distance
+                const pixelsPerInch = 96;
+                const inchesScrolled = (currentVelocity * 16) / pixelsPerInch; // 16ms per frame
+                
+                totalInches += inchesScrolled;
+                updateDisplay();
+                
+                currentVelocity *= friction;
+            }, 16);
+        }
+
         // Touch handling
         document.addEventListener('touchstart', (e) => {
+            if (momentumInterval) {
+                clearInterval(momentumInterval);
+                momentumInterval = null;
+            }
             lastY = e.touches[0].clientY;
             lastTime = Date.now();
+            velocity = 0;
         });
 
         document.addEventListener('touchmove', (e) => {
@@ -276,10 +309,23 @@
             lastTime = currentTime;
         });
 
+        document.addEventListener('touchend', () => {
+            if (velocity > 0.5) {
+                // Apply momentum based on final velocity
+                applyMomentum(velocity * 3); // Multiplier for more dramatic effect
+            }
+        });
+
         // Mouse wheel for desktop
         let lastWheelTime = 0;
         document.addEventListener('wheel', (e) => {
             e.preventDefault();
+            
+            if (momentumInterval) {
+                clearInterval(momentumInterval);
+                momentumInterval = null;
+            }
+            
             const currentTime = Date.now();
             const deltaY = e.deltaY;
             
@@ -287,7 +333,7 @@
             const pixelsPerInch = 96;
             const inchesScrolled = Math.abs(deltaY) / pixelsPerInch;
             
-            totalInches += inchesScrolled;
+            totalInches += inchesScrolled * 2; // Desktop gets more distance per scroll
             updateDisplay();
             
             lastWheelTime = currentTime;
