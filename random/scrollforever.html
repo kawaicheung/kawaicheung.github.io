@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#1a1a2e">
+    <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiU2Nyb2xsIFRyYWNrZXIiLCJzaG9ydF9uYW1lIjoiU2Nyb2xsIiwiZGlzcGxheSI6InN0YW5kYWxvbmUiLCJiYWNrZ3JvdW5kX2NvbG9yIjoiIzFhMWEyZSIsInRoZW1lX2NvbG9yIjoiIzFhMWEyZSIsImlkZW50aXR5IjoibWFuaWZlc3QuanNvbiJ9">
+    <title>Scroll Tracker</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            overflow: hidden;
+            height: 100vh;
+            background: #1a1a2e;
+            touch-action: pan-y;
+        }
+
+        #milestone-area {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 70vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(180deg, #0f3460 0%, #1a1a2e 100%);
+            overflow: hidden;
+        }
+
+        #milestone-content {
+            text-align: center;
+            color: white;
+            padding: 2rem;
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all 0.5s ease;
+        }
+
+        #milestone-content.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        #milestone-title {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 0 20px rgba(255,255,255,0.3);
+        }
+
+        #milestone-height {
+            font-size: 1.5rem;
+            color: #16c784;
+            margin-bottom: 1rem;
+        }
+
+        #milestone-emoji {
+            font-size: 6rem;
+            margin-bottom: 1rem;
+        }
+
+        #progress-bar {
+            width: 80%;
+            max-width: 400px;
+            height: 8px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 4px;
+            margin: 1rem auto;
+            overflow: hidden;
+        }
+
+        #progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #16c784, #00d4ff);
+            width: 0%;
+            transition: width 0.3s ease;
+            border-radius: 4px;
+        }
+
+        #counter-area {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 30vh;
+            background: rgba(22, 199, 132, 0.1);
+            backdrop-filter: blur(10px);
+            border-top: 2px solid rgba(22, 199, 132, 0.3);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        #distance-display {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #16c784;
+            text-align: center;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 10px rgba(22, 199, 132, 0.3);
+        }
+
+        #swipe-hint {
+            color: rgba(255,255,255,0.5);
+            font-size: 1rem;
+            text-align: center;
+        }
+
+        #reset-btn {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            z-index: 100;
+        }
+
+        #reset-btn:active {
+            background: rgba(255,255,255,0.2);
+        }
+    </style>
+</head>
+<body>
+    <button id="reset-btn">Reset</button>
+    
+    <div id="milestone-area">
+        <div id="milestone-content">
+            <div id="milestone-emoji">🚀</div>
+            <div id="milestone-title">Start Scrolling!</div>
+            <div id="milestone-height">Swipe to begin your journey</div>
+            <div id="progress-bar">
+                <div id="progress-fill"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="counter-area">
+        <div id="distance-display">0 inches</div>
+        <div id="swipe-hint">Swipe up or down to scroll</div>
+    </div>
+
+    <script>
+        // Milestones in inches
+        const milestones = [
+            { name: "Start", height: 0, emoji: "🚀" },
+            { name: "Green Monster", height: 33 * 12, emoji: "⚾" },
+            { name: "Basketball Hoop", height: 10 * 12, emoji: "🏀" },
+            { name: "Giraffe", height: 18 * 12, emoji: "🦒" },
+            { name: "Hollywood Sign", height: 45 * 12, emoji: "🎬" },
+            { name: "Statue of Liberty", height: 305 * 12, emoji: "🗽" },
+            { name: "Eiffel Tower", height: 1063 * 12, emoji: "🗼" },
+            { name: "Empire State Building", height: 1454 * 12, emoji: "🏢" },
+            { name: "Willis Tower", height: 1450 * 12, emoji: "🌃" },
+            { name: "Burj Khalifa", height: 2717 * 12, emoji: "🏗️" },
+            { name: "Mount Everest", height: 29032 * 12, emoji: "🏔️" },
+            { name: "Commercial Flight", height: 35000 * 12, emoji: "✈️" },
+            { name: "Edge of Space", height: 328084 * 12, emoji: "🌌" },
+            { name: "ISS Orbit", height: 250 * 5280 * 12, emoji: "🛸" },
+            { name: "Moon", height: 238900 * 5280 * 12, emoji: "🌙" }
+        ].sort((a, b) => a.height - b.height);
+
+        let totalInches = 0;
+        let currentMilestoneIndex = 0;
+        let lastY = 0;
+        let lastTime = 0;
+        let velocity = 0;
+        let momentumInterval = null;
+
+        // Load saved distance
+        const saved = Number(window.totalScrollDistance) || 0;
+        totalInches = saved;
+
+        const distanceDisplay = document.getElementById('distance-display');
+        const milestoneContent = document.getElementById('milestone-content');
+        const milestoneTitle = document.getElementById('milestone-title');
+        const milestoneHeight = document.getElementById('milestone-height');
+        const milestoneEmoji = document.getElementById('milestone-emoji');
+        const progressFill = document.getElementById('progress-fill');
+        const resetBtn = document.getElementById('reset-btn');
+
+        function formatDistance(inches) {
+            const feet = Math.floor(inches / 12);
+            const remainingInches = Math.floor(inches % 12);
+            const miles = Math.floor(feet / 5280);
+            
+            if (miles > 0) {
+                const remainingFeet = feet % 5280;
+                return `${miles.toLocaleString()} mi ${remainingFeet.toLocaleString()} ft ${remainingInches} in`;
+            } else if (feet > 0) {
+                return `${feet.toLocaleString()} ft ${remainingInches} in`;
+            } else {
+                return `${Math.floor(inches)} inches`;
+            }
+        }
+
+        function updateDisplay() {
+            distanceDisplay.textContent = formatDistance(totalInches);
+            
+            // Find current milestone
+            for (let i = milestones.length - 1; i >= 0; i--) {
+                if (totalInches >= milestones[i].height) {
+                    if (i !== currentMilestoneIndex) {
+                        currentMilestoneIndex = i;
+                        showMilestone(i);
+                    }
+                    updateProgress(i);
+                    break;
+                }
+            }
+            
+            // Save to memory
+            window.totalScrollDistance = totalInches;
+        }
+
+        function showMilestone(index) {
+            const milestone = milestones[index];
+            milestoneEmoji.textContent = milestone.emoji;
+            milestoneTitle.textContent = milestone.name;
+            milestoneHeight.textContent = formatDistance(milestone.height);
+            
+            milestoneContent.classList.remove('active');
+            setTimeout(() => {
+                milestoneContent.classList.add('active');
+            }, 50);
+        }
+
+        function updateProgress(index) {
+            if (index >= milestones.length - 1) {
+                progressFill.style.width = '100%';
+                return;
+            }
+            
+            const current = milestones[index];
+            const next = milestones[index + 1];
+            const progress = ((totalInches - current.height) / (next.height - current.height)) * 100;
+            progressFill.style.width = Math.min(progress, 100) + '%';
+        }
+
+        function applyMomentum(initialVelocity) {
+            if (momentumInterval) {
+                clearInterval(momentumInterval);
+            }
+            
+            let currentVelocity = initialVelocity;
+            const friction = 0.92; // Adjust for more/less coasting
+            const minVelocity = 0.1;
+            
+            momentumInterval = setInterval(() => {
+                if (currentVelocity < minVelocity) {
+                    clearInterval(momentumInterval);
+                    momentumInterval = null;
+                    return;
+                }
+                
+                // Convert velocity to distance
+                const pixelsPerInch = 96;
+                const inchesScrolled = (currentVelocity * 16) / pixelsPerInch; // 16ms per frame
+                
+                totalInches += inchesScrolled;
+                updateDisplay();
+                
+                currentVelocity *= friction;
+            }, 16);
+        }
+
+        // Touch handling
+        document.addEventListener('touchstart', (e) => {
+            if (momentumInterval) {
+                clearInterval(momentumInterval);
+                momentumInterval = null;
+            }
+            lastY = e.touches[0].clientY;
+            lastTime = Date.now();
+            velocity = 0;
+        });
+
+        document.addEventListener('touchmove', (e) => {
+            const currentY = e.touches[0].clientY;
+            const currentTime = Date.now();
+            const deltaY = lastY - currentY;
+            const deltaTime = currentTime - lastTime;
+            
+            if (deltaTime > 0) {
+                velocity = Math.abs(deltaY / deltaTime);
+                
+                // Convert pixels to inches (roughly 96 DPI standard)
+                const pixelsPerInch = 96;
+                const inchesScrolled = Math.abs(deltaY) / pixelsPerInch;
+                
+                totalInches += inchesScrolled;
+                updateDisplay();
+            }
+            
+            lastY = currentY;
+            lastTime = currentTime;
+        });
+
+        document.addEventListener('touchend', () => {
+            if (velocity > 0.5) {
+                // Apply momentum based on final velocity
+                applyMomentum(velocity * 3); // Multiplier for more dramatic effect
+            }
+        });
+
+        // Mouse wheel for desktop
+        let lastWheelTime = 0;
+        document.addEventListener('wheel', (e) => {
+            e.preventDefault();
+            
+            if (momentumInterval) {
+                clearInterval(momentumInterval);
+                momentumInterval = null;
+            }
+            
+            const currentTime = Date.now();
+            const deltaY = e.deltaY;
+            
+            // Convert pixels to inches
+            const pixelsPerInch = 96;
+            const inchesScrolled = Math.abs(deltaY) / pixelsPerInch;
+            
+            totalInches += inchesScrolled * 2; // Desktop gets more distance per scroll
+            updateDisplay();
+            
+            lastWheelTime = currentTime;
+        }, { passive: false });
+
+        // Reset button
+        resetBtn.addEventListener('click', () => {
+            if (confirm('Reset your scroll distance?')) {
+                totalInches = 0;
+                currentMilestoneIndex = 0;
+                window.totalScrollDistance = 0;
+                updateDisplay();
+                showMilestone(0);
+            }
+        });
+
+        // Initialize
+        updateDisplay();
+        if (totalInches === 0) {
+            setTimeout(() => {
+                milestoneContent.classList.add('active');
+            }, 100);
+        }
+    </script>
+</body>
+</html>
