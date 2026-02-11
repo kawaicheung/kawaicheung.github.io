@@ -180,6 +180,11 @@ body > div h3 {
   letter-spacing: -0.01rem;
   font-style: italic;
 }
+body > div h3.software {
+  font-weight: 800;
+  font-size: 1.2rem;
+  font-style: normal;
+}
 body > div h4 {
   position: relative;
   font-size: 0.8rem;
