@@ -185,6 +185,7 @@ body > div h3.software {
   font-family: var(--fonts-system);
   font-size: 1.2rem;
   font-style: normal;
+  margin-bottom: 1rem;
 }
 body > div h4 {
   position: relative;
