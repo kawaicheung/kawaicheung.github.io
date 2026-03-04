@@ -172,13 +172,11 @@ body > div h2.black {
   background: linear-gradient(135deg, orange 0, purple 50%);
 }
 body > div h3 {
-  font-size: 1.4rem;
-  font-weight: 300;
-  font-family: var(--fonts-serif);
-  line-height: 1.8rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+  line-height: 1.6rem;
   margin-bottom: 2rem;
-  letter-spacing: -0.01rem;
-  font-style: italic;
+  letter-spacing: -0.025rem;
 }
 body > div h3.software {
   font-weight: 800;
