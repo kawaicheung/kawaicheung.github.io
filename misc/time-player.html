@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Podcast Player</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #0a1929;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    font-family: 'Circular', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+
+  /* ── Player Card ── */
+  .player {
+    background: #112030;
+    width: 420px;
+    border-radius: 16px;
+    padding: 24px 24px 32px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* chapters pill */
+  .chapters-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: #0d0d0d;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 700;
+    padding: 10px 20px;
+    border-radius: 40px;
+    border: none;
+    cursor: pointer;
+    margin-bottom: 28px;
+    letter-spacing: 0.01em;
+  }
+  .chapters-btn svg { flex-shrink: 0; }
+
+  /* episode info row */
+  .episode-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 10px;
+    min-width: 0;
+  }
+  .ep-art {
+    width: 72px;
+    height: 72px;
+    border-radius: 6px;
+    flex-shrink: 0;
+    overflow: hidden;
+    background: #1a3a55;
+    position: relative;
+  }
+  .ep-art-inner {
+    width: 100%;
+    height: 100%;
+    background:
+      radial-gradient(ellipse at 30% 70%, #ff006680 0%, transparent 55%),
+      radial-gradient(ellipse at 80% 20%, #7c3aed90 0%, transparent 50%),
+      radial-gradient(ellipse at 60% 60%, #00d4ff60 0%, transparent 45%),
+      radial-gradient(ellipse at 20% 30%, #ff6b0070 0%, transparent 50%),
+      radial-gradient(ellipse at 50% 50%, #1a0a2e 0%, #0d1b3e 100%);
+    animation: psyche 1.4s ease-in-out infinite alternate;
+  }
+  @keyframes psyche {
+    0%   { filter: hue-rotate(0deg) saturate(1.2); }
+    100% { filter: hue-rotate(90deg) saturate(1.8); }
+  }
+
+
+  .ep-meta { flex: 1; min-width: 0; }
+  .ep-title {
+    font-size: 18px;
+    font-weight: 800;
+    color: #fff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    letter-spacing: -0.5px;
+    line-height: 1.1;
+    margin-bottom: 4px;
+  }
+  .ep-show {
+    font-size: 15px;
+    color: #8899aa;
+    font-weight: 500;
+  }
+
+  .add-btn {
+    background: none;
+    border: 2.5px solid rgba(255,255,255,0.5);
+    border-radius: 50%;
+    width: 38px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    flex-shrink: 0;
+    color: #fff;
+    transition: border-color 0.15s, transform 0.15s;
+  }
+  .add-btn:hover { border-color: #fff; transform: scale(1.05); }
+
+  /* ── Scrubber ── */
+  .scrubber-wrap {
+    position: relative;
+    padding: 10px 0;
+    margin-bottom: 10px;
+    cursor: pointer;
+    user-select: none;
+  }
+  .scrubber-track {
+    position: relative;
+    height: 4px;
+    border-radius: 2px;
+    background: #2a4055;
+  }
+  .scrubber-fill {
+    position: absolute;
+    left: 0; top: 0; height: 100%;
+    background: #fff;
+    border-radius: 2px;
+    pointer-events: none;
+  }
+  .scrubber-thumb {
+    position: absolute;
+    top: 50%;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #fff;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    transition: transform 0.1s;
+    box-shadow: 0 0 0 0 rgba(255,255,255,0.3);
+  }
+  .scrubber-wrap:active .scrubber-thumb,
+  .scrubber-wrap.dragging .scrubber-thumb {
+    transform: translate(-50%, -50%) scale(1.3);
+  }
+
+  /* chapter tick marks */
+  .chapter-tick {
+    position: absolute;
+    top: 50%;
+    width: 3px;
+    height: 10px;
+    background: #2a4055;
+    transform: translate(-50%, -50%);
+    border-radius: 1px;
+    pointer-events: none;
+    z-index: 1;
+  }
+  .chapter-tick.passed { background: #8899aa; }
+
+  /* scrubber labels */
+  .scrubber-labels {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  .time-elapsed {
+    font-size: 13px;
+    color: #8899aa;
+    font-weight: 500;
+    font-variant-numeric: tabular-nums;
+  }
+  .chapter-name {
+    position: absolute;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-size: 13px;
+    color: #fff;
+    font-weight: 700;
+    pointer-events: none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 0 72px; /* keep clear of timestamps */
+  }
+  .scrubber-section {
+    position: relative;
+    padding-top: 22px; /* room for the pill above the track */
+  }
+
+.end-time-pill {
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 11px;
+  font-weight: 700;
+  color: #ff4d4d;
+  border: 1.5px solid rgba(255,255,255,0.55);
+  border-radius: 6px;
+  padding: 2px 7px;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  box-shadow: 0 0 6px 2px rgba(255, 77, 77, 0.35);
+  animation: pill-pulse 1s ease-in-out infinite;
+}
+
+@keyframes pill-pulse {
+  0%, 100% {
+    box-shadow: 0 0 4px 1px rgba(255, 77, 77, 0.3);
+    border-color: rgba(255,255,255,0.55);
+  }
+  50% {
+    box-shadow: 0 0 10px 3px rgba(255, 77, 77, 0.6);
+    border-color: rgba(255, 100, 100, 0.85);
+  }
+}
+  .time-remaining {
+    font-size: 13px;
+    color: #8899aa;
+    font-weight: 500;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ── Controls ── */
+  .controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 4px;
+  }
+
+  .speed-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+    padding: 4px;
+  }
+  .speed-val {
+    color: #1DB954;
+    font-size: 20px;
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.5px;
+  }
+  .speed-x {
+    color: #1DB954;
+    font-size: 14px;
+    font-weight: 700;
+  }
+
+
+  .ctrl-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px;
+    transition: transform 0.1s, opacity 0.1s;
+    position: relative;
+  }
+  .ctrl-btn:hover { opacity: 0.85; transform: scale(1.05); }
+  .ctrl-btn:active { transform: scale(0.95); }
+
+
+
+  .play-pause-btn {
+    background: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 68px;
+    height: 68px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #0a1929;
+    transition: transform 0.15s, background 0.15s;
+    flex-shrink: 0;
+  }
+  .play-pause-btn:hover { transform: scale(1.05); background: #f0f0f0; }
+  .play-pause-btn:active { transform: scale(0.96); }
+
+  .timer-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #fff;
+    padding: 4px;
+    opacity: 0.85;
+    transition: opacity 0.15s;
+  }
+  .timer-btn:hover { opacity: 1; }
+
+  /* ── Speed Modal ── */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    z-index: 100;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s;
+  }
+  .modal-overlay.visible {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  .speed-modal {
+    background: #1a1a1a;
+    width: 100%;
+    max-width: 480px;
+    border-radius: 20px 20px 0 0;
+    padding-bottom: 40px;
+    transform: translateY(100%);
+    transition: transform 0.3s cubic-bezier(0.32, 0.72, 0, 1);
+  }
+  .modal-overlay.visible .speed-modal {
+    transform: translateY(0);
+  }
+
+  .modal-handle {
+    width: 40px;
+    height: 4px;
+    background: #444;
+    border-radius: 2px;
+    margin: 12px auto 0;
+  }
+
+  .modal-title {
+    text-align: center;
+    font-size: 17px;
+    font-weight: 700;
+    color: #fff;
+    padding: 16px 0 16px;
+    border-bottom: 1px solid #2a2a2a;
+  }
+
+  .modal-body { padding: 28px 24px 20px; }
+
+  .current-speed-display {
+    text-align: center;
+    margin-bottom: 6px;
+  }
+  .current-speed-val {
+    font-size: 42px;
+    font-weight: 800;
+    color: #1DB954;
+    letter-spacing: -1px;
+    line-height: 1;
+  }
+
+  /* ruler */
+  .ruler-wrap {
+    position: relative;
+    margin-bottom: 6px;
+    overflow: hidden;
+  }
+
+  .ruler-pointer {
+    position: absolute;
+    top: 0;
+    left: 50.3%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 5;
+    pointer-events: none;
+  }
+  .ruler-pointer-arrow {
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 8px solid #1DB954;
+  }
+  .ruler-pointer-line {
+    width: 2px;
+    height: 36px;
+    background: #1DB954;
+    margin-top: -1px;
+  }
+
+  .ruler-scroll {
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    cursor: grab;
+    padding: 8px 0 4px;
+  }
+  .ruler-scroll::-webkit-scrollbar { display: none; }
+  .ruler-scroll.grabbing { cursor: grabbing; }
+
+  .ruler-inner {
+    display: flex;
+    align-items: flex-end;
+    gap: 0;
+    padding: 0 50%;
+    height: 44px;
+    position: relative;
+  }
+
+  .ruler-tick {
+    flex-shrink: 0;
+    width: 2px;
+    background: #555;
+    border-radius: 1px;
+    margin-right: 20px;
+    transition: background 0.1s;
+  }
+  .ruler-tick.major { background: #888; }
+  .ruler-tick.active { background: #1DB954; }
+
+  .ruler-labels {
+    display: flex;
+    position: relative;
+    padding: 0 50%;
+    height: 20px;
+    margin-top: -4px;
+    pointer-events: none;
+    opacity: 0;
+  }
+  .ruler-label {
+    position: absolute;
+    font-size: 13px;
+    color: #666;
+    font-weight: 600;
+    transform: translateX(-50%);
+  }
+
+  /* preset pills */
+  .presets {
+    display: flex;
+    gap: 6px;
+    justify-content: center;
+    margin-top: 14px;
+    flex-wrap: nowrap;
+  }
+  .preset-btn {
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: #2a2a2a;
+    border: none;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.15s, transform 0.1s;
+    aspect-ratio: 1;
+  }
+  .preset-btn:hover { background: #333; }
+  .preset-btn:active { transform: scale(0.93); }
+  .preset-btn.active { background: #1DB954; color: #000; }
+
+  .current-speed-display {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .modal-end-time-wrap {
+    position: absolute;
+    right: 0;
+    top: -4px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .modal-end-time-pill {
+    font-size: 14px;
+    font-weight: 700;
+    color: #ff4d4d;
+    border: 1.5px solid rgba(255,255,255,0.55);
+    border-radius: 7px;
+    padding: 4px 10px;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+    box-shadow: 0 0 6px 2px rgba(255, 77, 77, 0.35);
+    animation: pill-pulse 1s ease-in-out infinite;
+  }
+
+  .modal-end-time-wrap::before {
+    content: 'ENDS AT';
+    font-size: 10px;
+    font-weight: 700;
+    color: rgba(255, 77, 77, 0.7);
+    letter-spacing: 0em;
+    margin-bottom: 3px;
+  }
+
+  @keyframes pill-bounce {
+    0%   { transform: scale(1); }
+    40%  { transform: scale(1.18); }
+    70%  { transform: scale(0.93); }
+    100% { transform: scale(1); }
+  }
+
+  .end-time-pill.bounce,
+  .modal-end-time-pill.bounce {
+    animation: pill-bounce 0.35s ease-out;
+  }
+</style>
+</head>
+<body>
+
+<div class="player" id="player">
+
+  <!-- Chapters -->
+  <button class="chapters-btn">
+    <svg width="20" height="16" viewBox="0 0 20 16" fill="none">
+      <rect x="4" y="0" width="16" height="2.5" rx="1.25" fill="white"/>
+      <rect x="4" y="6.5" width="16" height="2.5" rx="1.25" fill="white"/>
+      <rect x="4" y="13" width="16" height="2.5" rx="1.25" fill="white"/>
+      <circle cx="1.25" cy="1.25" r="1.25" fill="white"/>
+      <circle cx="1.25" cy="7.75" r="1.25" fill="white"/>
+      <circle cx="1.25" cy="14.25" r="1.25" fill="white"/>
+    </svg>
+    Chapters
+  </button>
+
+  <!-- Episode -->
+  <div class="episode-row">
+    <div class="ep-art">
+      <div class="ep-art-inner"></div>
+    </div>
+    <div class="ep-meta">
+      <div class="ep-title" id="ep-title">Ep 1: Time on our side</div>
+      <div class="ep-show">The Life Podcast</div>
+    </div>
+    <button class="add-btn">
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+        <line x1="9" y1="2" x2="9" y2="16" stroke="white" stroke-width="2.2" stroke-linecap="round"/>
+        <line x1="2" y1="9" x2="16" y2="9" stroke="white" stroke-width="2.2" stroke-linecap="round"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Scrubber -->
+  <div class="scrubber-section">
+    <span class="end-time-pill" id="endTimePill">--:-- --</span>
+    <div class="scrubber-wrap" id="scrubber">
+      <div class="scrubber-track" id="scrubberTrack">
+        <div class="scrubber-fill" id="scrubberFill"></div>
+        <div class="scrubber-thumb" id="scrubberThumb"></div>
+        <!-- chapter ticks rendered by JS -->
+      </div>
+    </div>
+  </div>
+
+  <div class="scrubber-labels">
+    <span class="time-elapsed" id="timeElapsed">0:00</span>
+    <span class="chapter-name" id="chapterName">Intro</span>
+    <span class="time-remaining" id="timeRemaining">-0:00</span>
+  </div>
+
+  <!-- Controls -->
+  <div class="controls">
+    <button class="speed-btn" id="speedBtn" title="Playback speed">
+      <div class="speed-val">1.0<span class="speed-x">×</span></div>
+
+    </button>
+
+    <button class="ctrl-btn" id="skipBackBtn" title="Skip back 15s" style="transform: scaleX(-1);">
+      <!-- skip back -->
+      <svg fill="#ffffff" width="48px" height="48px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M19.146 4.854l-1.489 1.489A8 8 0 1 0 12 20a8.094 8.094 0 0 0 7.371-4.886 1 1 0 1 0-1.842-.779A6.071 6.071 0 0 1 12 18a6 6 0 1 1 4.243-10.243l-1.39 1.39a.5.5 0 0 0 .354.854H19.5A.5.5 0 0 0 20 9.5V5.207a.5.5 0 0 0-.854-.353z"/>
+      </svg>
+    </button>
+
+    <button class="play-pause-btn" id="playPauseBtn">
+      <!-- play icon by default -->
+      <svg id="playIcon" width="28" height="28" viewBox="0 0 28 28" fill="none">
+        <path d="M8 5l18 9-18 9V5z" fill="#0a1929"/>
+      </svg>
+      <svg id="pauseIcon" width="28" height="28" viewBox="0 0 28 28" fill="none" style="display:none">
+        <rect x="6" y="4" width="5.5" height="20" rx="2" fill="#0a1929"/>
+        <rect x="16.5" y="4" width="5.5" height="20" rx="2" fill="#0a1929"/>
+      </svg>
+    </button>
+
+    <button class="ctrl-btn" id="skipFwdBtn" title="Skip forward 15s">
+      <!-- skip back -->
+      <svg fill="#ffffff" width="48px" height="48px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M19.146 4.854l-1.489 1.489A8 8 0 1 0 12 20a8.094 8.094 0 0 0 7.371-4.886 1 1 0 1 0-1.842-.779A6.071 6.071 0 0 1 12 18a6 6 0 1 1 4.243-10.243l-1.39 1.39a.5.5 0 0 0 .354.854H19.5A.5.5 0 0 0 20 9.5V5.207a.5.5 0 0 0-.854-.353z"/>
+      </svg>
+    </button>
+
+    <button class="timer-btn" title="Sleep timer">
+      <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
+        <circle cx="13" cy="14" r="9" stroke="white" stroke-width="2"/>
+        <path d="M13 9.5V14l3 2" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M9 3h8" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+        <path d="M4.5 5.5L6 7" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+        <path d="M21.5 5.5L20 7" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+      </svg>
+    </button>
+  </div>
+</div>
+
+<!-- Speed Modal -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="speed-modal" id="speedModal">
+    <div class="modal-handle"></div>
+    <div class="modal-title">Speed</div>
+    <div class="modal-body">
+      <div class="current-speed-display">
+        <span class="current-speed-val" id="modalSpeedVal">1.3×</span>
+        <div class="modal-end-time-wrap">
+          <span class="modal-end-time-pill" id="modalEndTimePill">--:-- --</span>
+        </div>
+      </div>
+
+      <div class="ruler-wrap">
+        <div class="ruler-pointer">
+          <div class="ruler-pointer-arrow"></div>
+          <div class="ruler-pointer-line"></div>
+        </div>
+        <div class="ruler-scroll" id="rulerScroll">
+          <div class="ruler-inner" id="rulerInner"></div>
+        </div>
+        <div class="ruler-labels" id="rulerLabels"></div>
+      </div>
+
+      <div class="presets">
+        <button class="preset-btn" data-speed="1">1</button>
+        <button class="preset-btn" data-speed="1.2">1.2</button>
+        <button class="preset-btn" data-speed="1.5">1.5</button>
+        <button class="preset-btn" data-speed="1.6">1.6</button>
+        <button class="preset-btn" data-speed="1.8">1.8</button>
+        <button class="preset-btn" data-speed="2">2</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── State ──────────────────────────────────────────────
+const TOTAL = 2457; // 40:57 total seconds
+let current = 0;  // 13:05 start
+let playing = false;
+let playbackSpeed = 1.0;
+let animFrame = null;
+let lastTick = null;
+
+const CHAPTERS = [
+  { start: 0,    title: "Intro" },
+  { start: 150,  title: "Time is on My Side" },
+  { start: 495,  title: "The Free Time Illusion" },
+  { start: 785,  title: "Why Minutes Feel Shorter" },
+  { start: 1230, title: "Racing the Clock" },
+  { start: 1725, title: "Minutes Kids Steal" },
+  { start: 2100, title: "Making Peace With Time" },
+];
+
+// ── DOM refs ────────────────────────────────────────────
+const scrubberWrap  = document.getElementById('scrubber');
+const scrubberTrack = document.getElementById('scrubberTrack');
+const scrubberFill  = document.getElementById('scrubberFill');
+const scrubberThumb = document.getElementById('scrubberThumb');
+const timeElapsed   = document.getElementById('timeElapsed');
+const timeRemaining = document.getElementById('timeRemaining');
+const endTimePill   = document.getElementById('endTimePill');
+const chapterName   = document.getElementById('chapterName');
+const playPauseBtn  = document.getElementById('playPauseBtn');
+const playIcon      = document.getElementById('playIcon');
+const pauseIcon     = document.getElementById('pauseIcon');
+const skipBackBtn   = document.getElementById('skipBackBtn');
+const skipFwdBtn    = document.getElementById('skipFwdBtn');
+const speedBtn      = document.getElementById('speedBtn');
+const modalOverlay  = document.getElementById('modalOverlay');
+const modalSpeedVal    = document.getElementById('modalSpeedVal');
+const modalEndTimePill = document.getElementById('modalEndTimePill');
+const rulerScroll   = document.getElementById('rulerScroll');
+const rulerInner    = document.getElementById('rulerInner');
+const rulerLabels   = document.getElementById('rulerLabels');
+const speedValEl    = document.querySelector('.speed-val');
+
+// ── Helpers ─────────────────────────────────────────────
+const fmt = s => {
+  s = Math.round(s);
+  const m = Math.floor(s / 60);
+  const ss = String(s % 60).padStart(2, '0');
+  return `${m}:${ss}`;
+};
+
+const fmtEndTime = () => {
+  const secsLeft = (TOTAL - current) / playbackSpeed;
+  const end = new Date(Date.now() + secsLeft * 1000);
+  // round to nearest minute
+  end.setSeconds(0, 0);
+  if (end.getSeconds() >= 30) end.setMinutes(end.getMinutes() + 1);
+  let h = end.getHours();
+  const m = String(end.getMinutes()).padStart(2, '0');
+  const ampm = h >= 12 ? 'PM' : 'AM';
+  h = h % 12 || 12;
+  return `${h}:${m} ${ampm}`;
+};
+
+const setEndTime = () => {
+  const t = fmtEndTime();
+  [endTimePill, modalEndTimePill].forEach(el => {
+    if (el.textContent !== t) {
+      el.textContent = t;
+      el.classList.remove('bounce');
+      void el.offsetWidth; // force reflow to restart animation
+      el.classList.add('bounce');
+    }
+  });
+};
+
+setInterval(setEndTime, 100);
+
+const getChapter = t => {
+  let ch = CHAPTERS[0];
+  for (const c of CHAPTERS) { if (t >= c.start) ch = c; else break; }
+  return ch;
+};
+
+// ── Render ──────────────────────────────────────────────
+const buildChapterTicks = () => {
+  scrubberTrack.querySelectorAll('.chapter-tick').forEach(e => e.remove());
+  CHAPTERS.forEach((ch, i) => {
+    if (i === 0) return;
+    const pct = (ch.start / TOTAL) * 100;
+    const tick = document.createElement('div');
+    tick.className = 'chapter-tick';
+    tick.dataset.start = ch.start;
+    tick.style.left = pct + '%';
+    scrubberTrack.appendChild(tick);
+  });
+};
+
+const updateUI = () => {
+  const pct = (current / TOTAL) * 100;
+  scrubberFill.style.width = pct + '%';
+  scrubberThumb.style.left = pct + '%';
+  timeElapsed.textContent = fmt(current);
+  timeRemaining.textContent = '-' + fmt(TOTAL - current);
+  setEndTime();
+
+  const ch = getChapter(current);
+  chapterName.textContent = ch.title;
+
+  // update tick colors
+  scrubberTrack.querySelectorAll('.chapter-tick').forEach(tick => {
+    tick.classList.toggle('passed', current >= Number(tick.dataset.start));
+  });
+};
+
+const updateSpeedBtn = () => {
+  const display = Number.isInteger(playbackSpeed) ? playbackSpeed.toString() : playbackSpeed.toFixed(1);
+  speedValEl.innerHTML = display + '<span class="speed-x">×</span>';
+};
+
+// ── Playback ─────────────────────────────────────────────
+const tick = ts => {
+  if (lastTick !== null) {
+    const delta = (ts - lastTick) / 1000 * playbackSpeed;
+    current = Math.min(TOTAL, current + delta);
+    updateUI();
+    if (current >= TOTAL) { pause(); return; }
+  }
+  lastTick = ts;
+  animFrame = requestAnimationFrame(tick);
+};
+
+const play = () => {
+  playing = true;
+  lastTick = null;
+  playIcon.style.display = 'none';
+  pauseIcon.style.display = '';
+  animFrame = requestAnimationFrame(tick);
+};
+
+const pause = () => {
+  playing = false;
+  if (animFrame) cancelAnimationFrame(animFrame);
+  animFrame = null;
+  lastTick = null;
+  playIcon.style.display = '';
+  pauseIcon.style.display = 'none';
+};
+
+playPauseBtn.addEventListener('click', () => playing ? pause() : play());
+
+skipBackBtn.addEventListener('click', () => {
+  current = Math.max(0, current - 15);
+  updateUI();
+});
+skipFwdBtn.addEventListener('click', () => {
+  current = Math.min(TOTAL, current + 15);
+  updateUI();
+});
+
+// ── Scrubber drag ────────────────────────────────────────
+const scrubTo = clientX => {
+  const rect = scrubberTrack.getBoundingClientRect();
+  const ratio = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
+  current = ratio * TOTAL;
+  updateUI();
+};
+
+scrubberWrap.addEventListener('mousedown', e => {
+  scrubberWrap.classList.add('dragging');
+  scrubTo(e.clientX);
+  const onMove = e2 => scrubTo(e2.clientX);
+  const onUp = () => {
+    scrubberWrap.classList.remove('dragging');
+    window.removeEventListener('mousemove', onMove);
+    window.removeEventListener('mouseup', onUp);
+  };
+  window.addEventListener('mousemove', onMove);
+  window.addEventListener('mouseup', onUp);
+});
+
+scrubberWrap.addEventListener('touchstart', e => {
+  scrubberWrap.classList.add('dragging');
+  scrubTo(e.touches[0].clientX);
+  const onMove = e2 => { e2.preventDefault(); scrubTo(e2.touches[0].clientX); };
+  const onEnd = () => {
+    scrubberWrap.classList.remove('dragging');
+    window.removeEventListener('touchmove', onMove);
+    window.removeEventListener('touchend', onEnd);
+  };
+  window.addEventListener('touchmove', onMove, { passive: false });
+  window.addEventListener('touchend', onEnd);
+}, { passive: true });
+
+// ── Speed Modal ──────────────────────────────────────────
+// ruler: 0.5x to 3.0x in 0.1 steps = 26 values, ticks every 0.05 = 51 ticks
+const SPEED_MIN = 0.0;
+const SPEED_MAX = 3.0;
+const TICK_STEP = 0.1;
+const TICK_COUNT = Math.round((SPEED_MAX - SPEED_MIN) / TICK_STEP) + 1;
+const TICK_W = 22; // px per tick
+
+const buildRuler = () => {
+  rulerInner.innerHTML = '';
+  rulerLabels.innerHTML = '';
+  for (let i = 0; i < TICK_COUNT; i++) {
+    const spd = SPEED_MIN + i * TICK_STEP;
+    const tick = document.createElement('div');
+    tick.className = 'ruler-tick';
+    const isMajor = Math.abs(Math.round(spd * 2) - spd * 2) < 0.001;
+    if (isMajor) tick.classList.add('major');
+    tick.style.height = isMajor ? '22px' : '14px';
+    tick.dataset.speed = spd.toFixed(2);
+    rulerInner.appendChild(tick);
+
+    // label at whole numbers and 0.5 increments
+    const isLabel = Math.abs(Math.round(spd * 2) - spd * 2) < 0.001;
+    if (isLabel && spd !== SPEED_MAX) {
+      const lbl = document.createElement('div');
+      lbl.className = 'ruler-label';
+      const totalW = (TICK_COUNT - 1) * TICK_W;
+      const posFromLeft = i * TICK_W;
+      lbl.style.left = `calc(50% + ${posFromLeft - totalW / 2}px)`;
+      lbl.textContent = Number.isInteger(spd) ? spd.toFixed(1) : spd.toFixed(1);
+      rulerLabels.appendChild(lbl);
+    }
+  }
+};
+
+const speedToScroll = spd => {
+  const idx = (spd - SPEED_MIN) / TICK_STEP;
+  return idx * TICK_W;
+};
+
+const scrollToSpeed = spd => {
+  rulerScroll.scrollLeft = speedToScroll(spd);
+};
+
+const scrollToSpeedCurrent = () => scrollToSpeed(playbackSpeed);
+
+const setSpeed = spd => {
+  spd = Math.round(spd / 0.1) * 0.1;
+  spd = Math.max(0.1, Math.min(SPEED_MAX, spd));
+  playbackSpeed = +spd.toFixed(2);
+  const display = Number.isInteger(playbackSpeed) ? playbackSpeed.toFixed(1) : playbackSpeed.toFixed(1);
+  modalSpeedVal.textContent = display + '×';
+  updateSpeedBtn();
+  // highlight active tick
+  rulerInner.querySelectorAll('.ruler-tick').forEach(t => {
+    t.classList.toggle('active', Math.abs(parseFloat(t.dataset.speed) - playbackSpeed) < 0.051);
+  });
+  // update preset buttons
+  document.querySelectorAll('.preset-btn').forEach(b => {
+    b.classList.toggle('active', Math.abs(parseFloat(b.dataset.speed) - playbackSpeed) < 0.01);
+  });
+};
+
+// ruler scroll → speed
+let rulerScrolling = false;
+rulerScroll.addEventListener('scroll', () => {
+  if (rulerScrolling) return;
+  const idx = rulerScroll.scrollLeft / TICK_W;
+  const spd = SPEED_MIN + idx * TICK_STEP;
+  setSpeed(spd);
+}, { passive: true });
+
+// rubber-band elastic snap on scroll end
+let scrollEndTimer = null;
+rulerScroll.addEventListener('scroll', () => {
+  clearTimeout(scrollEndTimer);
+  scrollEndTimer = setTimeout(() => {
+    rulerScrolling = true;
+    const snapped = speedToScroll(playbackSpeed);
+    rulerScroll.scrollTo({ left: snapped, behavior: 'smooth' });
+    setTimeout(() => { rulerScrolling = false; }, 300);
+  }, 80);
+}, { passive: true });
+
+// ruler click (desktop)
+rulerScroll.addEventListener('click', e => {
+  if (e.target.classList.contains('ruler-tick')) {
+    const spd = parseFloat(e.target.dataset.speed);
+    setSpeed(spd);
+    rulerScrolling = true;
+    rulerScroll.scrollTo({ left: speedToScroll(spd), behavior: 'smooth' });
+    setTimeout(() => { rulerScrolling = false; }, 300);
+  }
+});
+
+// preset buttons
+document.querySelectorAll('.preset-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const spd = parseFloat(btn.dataset.speed);
+    setSpeed(spd);
+    rulerScrolling = true;
+    rulerScroll.scrollTo({ left: speedToScroll(spd), behavior: 'smooth' });
+    setTimeout(() => { rulerScrolling = false; }, 300);
+  });
+});
+
+// open/close modal
+speedBtn.addEventListener('click', () => {
+  modalOverlay.classList.add('visible');
+  requestAnimationFrame(() => {
+    scrollToSpeedCurrent();
+    setSpeed(playbackSpeed);
+  });
+});
+
+modalOverlay.addEventListener('click', e => {
+  if (e.target === modalOverlay) modalOverlay.classList.remove('visible');
+});
+
+// ── Init ─────────────────────────────────────────────────
+buildChapterTicks();
+buildRuler();
+updateUI();
+updateSpeedBtn();
+// refresh end-time every second even when paused (wall clock keeps moving)
+setInterval(() => {
+  const t = fmtEndTime();
+  endTimePill.textContent = t;
+  modalEndTimePill.textContent = t;
+}, 1000);
+</script>
+</body>
+</html>
