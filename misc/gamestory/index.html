@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>gamestory</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #f5f0e8;
+      color: #1a1a1a;
+      font-family: system-ui, -apple-system, sans-serif;
+      min-height: 100dvh;
+    }
+
+    main {
+      width: min(480px, 100%);
+      margin-inline: auto;
+      padding: 2rem 1.25rem;
+    }
+
+    header {
+      margin-bottom: 2rem;
+
+      & h1 {
+        font-size: 1.5rem;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+      }
+
+      & .date-nav {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin-top: 0.5rem;
+
+        & button {
+          background: none;
+          border: 1px solid #c8bfae;
+          border-radius: 4px;
+          padding: 2px 8px;
+          font-size: 0.8rem;
+          cursor: pointer;
+          color: #555;
+
+          &:hover { background: #ede8df; }
+        }
+
+        & .date-label {
+          font-size: 0.85rem;
+          color: #666;
+        }
+      }
+    }
+
+    .games {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .game-card {
+      display: block;
+      text-decoration: none;
+      color: inherit;
+      background: #faf7f2;
+      border: 1px solid #ddd6c8;
+      border-radius: 8px;
+      padding: 1rem 1.125rem;
+
+      &:hover { background: #f0ece3; }
+
+      & .teams {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.5rem;
+      }
+
+      & .team {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.9rem;
+        font-weight: 500;
+
+        & img {
+          width: 24px;
+          height: 24px;
+          object-fit: contain;
+        }
+      }
+
+      & .vs {
+        font-size: 0.7rem;
+        color: #999;
+        flex-shrink: 0;
+      }
+
+      & .status {
+        margin-top: 0.5rem;
+        font-size: 0.75rem;
+        color: #777;
+
+        & .live {
+          color: #c0392b;
+          font-weight: 600;
+        }
+
+        & .final { color: #555; }
+      }
+    }
+
+    .state-msg {
+      font-size: 0.9rem;
+      color: #888;
+      padding: 2rem 0;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>gamestory</h1>
+      <div class="date-nav">
+        <button id="btn-prev">&#8592;</button>
+        <span class="date-label" id="date-label"></span>
+        <button id="btn-next">&#8594;</button>
+      </div>
+    </header>
+    <div class="games" id="games"></div>
+  </main>
+
+  <script>
+    const ESPN = date =>
+      `https://site.api.espn.com/apis/site/v2/sports/baseball/mlb/scoreboard?dates=${date}`;
+    const API = date =>
+      `https://corsproxy.io/?url=${encodeURIComponent(ESPN(date))}`;
+
+    function todayStr() {
+      const d = new Date();
+      return [
+        d.getFullYear(),
+        String(d.getMonth() + 1).padStart(2, '0'),
+        String(d.getDate()).padStart(2, '0')
+      ].join('');
+    }
+
+    function parseDate(str) {
+      return new Date(
+        parseInt(str.slice(0, 4)),
+        parseInt(str.slice(4, 6)) - 1,
+        parseInt(str.slice(6, 8))
+      );
+    }
+
+    function shiftDate(str, days) {
+      const d = parseDate(str);
+      d.setDate(d.getDate() + days);
+      return [
+        d.getFullYear(),
+        String(d.getMonth() + 1).padStart(2, '0'),
+        String(d.getDate()).padStart(2, '0')
+      ].join('');
+    }
+
+    function formatDateLabel(str) {
+      const d = parseDate(str);
+      const today = parseDate(todayStr());
+      if (d.getTime() === today.getTime()) return 'Today';
+      return d.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+    }
+
+    function gameStatus(event) {
+      const state = event.status?.type?.state;
+      const detail = event.status?.type?.shortDetail ?? '';
+      if (state === 'post') return { label: 'Final', cls: 'final' };
+      if (state === 'in')   return { label: detail || 'In Progress', cls: 'live' };
+      return { label: detail || 'Scheduled', cls: '' };
+    }
+
+    function renderGames(events) {
+      const container = document.getElementById('games');
+      container.innerHTML = '';
+
+      if (!events?.length) {
+        container.innerHTML = '<p class="state-msg">No games scheduled.</p>';
+        return;
+      }
+
+      for (const event of events) {
+        const comp = event.competitions?.[0];
+        if (!comp) continue;
+
+        const away = comp.competitors.find(c => c.homeAway === 'away');
+        const home = comp.competitors.find(c => c.homeAway === 'home');
+        if (!away || !home) continue;
+
+        const { label, cls } = gameStatus(event);
+
+        const a = document.createElement('a');
+        a.className = 'game-card';
+        a.href = `game.html?id=${event.id}`;
+        a.innerHTML = `
+          <div class="teams">
+            <div class="team">
+              <img src="${away.team.logo}" alt="${away.team.abbreviation}" onerror="this.style.display='none'">
+              <span>${away.team.abbreviation}</span>
+            </div>
+            <span class="vs">@</span>
+            <div class="team">
+              <img src="${home.team.logo}" alt="${home.team.abbreviation}" onerror="this.style.display='none'">
+              <span>${home.team.abbreviation}</span>
+            </div>
+          </div>
+          <div class="status">
+            <span class="${cls}">${label}</span>
+          </div>
+        `;
+        container.appendChild(a);
+      }
+    }
+
+    async function load(dateStr) {
+      const container = document.getElementById('games');
+      container.innerHTML = '<p class="state-msg">Loading…</p>';
+      document.getElementById('date-label').textContent = formatDateLabel(dateStr);
+
+      try {
+        const res = await fetch(API(dateStr));
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+        renderGames(data.events);
+      } catch (e) {
+        container.innerHTML = '<p class="state-msg">Failed to load games.</p>';
+        console.error(e);
+      }
+    }
+
+    const params = new URLSearchParams(location.search);
+    let currentDate = params.get('date') || todayStr();
+
+    document.getElementById('btn-prev').addEventListener('click', () => {
+      currentDate = shiftDate(currentDate, -1);
+      load(currentDate);
+    });
+
+    document.getElementById('btn-next').addEventListener('click', () => {
+      currentDate = shiftDate(currentDate, 1);
+      load(currentDate);
+    });
+
+    load(currentDate);
+  </script>
+</body>
+</html>
