@@ -2,257 +2,656 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>gamestory</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Play by Play</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --bg: #080b14;
+      --surface: #0e1220;
+      --border: #1a1f30;
+      --text: #eef0f5;
+      --dim: #4a5068;
+      --mid: #8890a8;
+      --amber: #f5a623;
+      --amber-dim: #3d2800;
+      --blue: #4c8df5;
+    }
+
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+    html, body {
+      height: 100%;
+      overflow: hidden;
+    }
+
     body {
-      background: #f5f0e8;
-      color: #1a1a1a;
-      font-family: system-ui, -apple-system, sans-serif;
-      min-height: 100dvh;
-    }
-
-    main {
-      width: min(480px, 100%);
-      margin-inline: auto;
-      padding: 2rem 1.25rem;
-    }
-
-    header {
-      margin-bottom: 2rem;
-
-      & h1 {
-        font-size: 1.5rem;
-        font-weight: 700;
-        letter-spacing: -0.02em;
-      }
-
-      & .date-nav {
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-        margin-top: 0.5rem;
-
-        & button {
-          background: none;
-          border: 1px solid #c8bfae;
-          border-radius: 4px;
-          padding: 2px 8px;
-          font-size: 0.8rem;
-          cursor: pointer;
-          color: #555;
-
-          &:hover { background: #ede8df; }
-        }
-
-        & .date-label {
-          font-size: 0.85rem;
-          color: #666;
-        }
-      }
-    }
-
-    .games {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
       display: flex;
       flex-direction: column;
-      gap: 0.75rem;
+      height: 100dvh;
+      -webkit-font-smoothing: antialiased;
     }
 
-    .game-card {
-      display: block;
-      text-decoration: none;
-      color: inherit;
-      background: #faf7f2;
-      border: 1px solid #ddd6c8;
-      border-radius: 8px;
-      padding: 1rem 1.125rem;
-
-      &:hover { background: #f0ece3; }
-
-      & .teams {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 0.5rem;
-      }
-
-      & .team {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        font-size: 0.9rem;
-        font-weight: 500;
-
-        & img {
-          width: 24px;
-          height: 24px;
-          object-fit: contain;
-        }
-      }
-
-      & .vs {
-        font-size: 0.7rem;
-        color: #999;
-        flex-shrink: 0;
-      }
-
-      & .status {
-        margin-top: 0.5rem;
-        font-size: 0.75rem;
-        color: #777;
-
-        & .live {
-          color: #c0392b;
-          font-weight: 600;
-        }
-
-        & .final { color: #555; }
-      }
+    /* ── TOP SCORE BAR ───────────────────────────────── */
+    #scorebar {
+      flex-shrink: 0;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: 0;
+      padding: 10px 16px;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
     }
 
-    .state-msg {
-      font-size: 0.9rem;
-      color: #888;
-      padding: 2rem 0;
+    .team-block {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .team-block.home {
+      flex-direction: row-reverse;
+      text-align: right;
+    }
+
+    .team-logo { width: 34px; height: 34px; object-fit: contain; flex-shrink: 0; }
+
+    .team-abbr {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: var(--mid);
+      text-transform: uppercase;
+      line-height: 1;
+    }
+
+    .team-score {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 36px;
+      font-weight: 800;
+      line-height: 1;
+      color: var(--text);
+    }
+
+    /* center state */
+    .game-meta {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      padding: 0 12px;
+    }
+
+    .inning-display {
       text-align: center;
     }
+
+    .inning-half {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      color: var(--dim);
+      text-transform: uppercase;
+      line-height: 1;
+    }
+
+    .inning-num {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 22px;
+      font-weight: 800;
+      line-height: 1;
+    }
+
+    .outs-row {
+      display: flex;
+      gap: 5px;
+    }
+
+    .out-pip {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      border: 1.5px solid var(--dim);
+      background: transparent;
+      transition: background 0.1s, border-color 0.1s;
+    }
+    .out-pip.on { background: var(--amber); border-color: var(--amber); }
+
+    /* ── MAIN PLAY AREA ──────────────────────────────── */
+    #main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      padding: 20px 48px;
+      gap: 20px;
+      min-height: 0;
+    }
+
+    /* tap zones — full left/right halves */
+    .tap-zone {
+      position: absolute;
+      top: 0; bottom: 0;
+      width: 50%;
+      z-index: 20;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+    #tap-prev { left: 0; }
+    #tap-next { right: 0; }
+
+    /* ripple feedback */
+    .tap-zone::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      width: 60px; height: 60px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.06);
+      transform: translate(-50%, -50%) scale(0);
+      pointer-events: none;
+      transition: transform 0.25s ease-out, opacity 0.25s;
+      opacity: 0;
+    }
+    #tap-prev::after { left: 30px; }
+    #tap-next::after { right: -30px; transform: translate(50%, -50%) scale(0); }
+    .tap-zone.flash::after { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+    #tap-next.flash::after { transform: translate(50%, -50%) scale(1); }
+
+    /* edge arrows */
+    .edge-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 18px;
+      color: var(--border);
+      pointer-events: none;
+      z-index: 1;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      transition: color 0.15s;
+    }
+    .edge-arrow.prev { left: 14px; }
+    .edge-arrow.next { right: 14px; }
+
+    /* base diamond */
+    .diamond-wrap {
+      position: relative;
+      width: 58px;
+      height: 58px;
+      flex-shrink: 0;
+      z-index: 2;
+    }
+
+    .base-sq {
+      position: absolute;
+      width: 14px;
+      height: 14px;
+      transform: rotate(45deg);
+      border: 2px solid var(--border);
+      background: transparent;
+      transition: background 0.12s, border-color 0.12s;
+    }
+    .base-sq.on { background: var(--amber); border-color: var(--amber); }
+
+    .b2nd { top: 3px;    left: 50%; transform: translateX(-50%) rotate(45deg); }
+    .b1st { top: 50%;   right: 3px; transform: translateY(-50%) rotate(45deg); }
+    .b3rd { top: 50%;   left: 3px;  transform: translateY(-50%) rotate(45deg); }
+    .bhome {
+      bottom: 3px; left: 50%;
+      transform: translateX(-50%) rotate(45deg);
+      background: var(--border);
+      border-color: var(--border);
+    }
+
+    /* play content */
+    .play-content {
+      text-align: center;
+      max-width: 320px;
+      z-index: 2;
+    }
+
+    .play-type-tag {
+      display: inline-block;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--dim);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      padding: 2px 7px;
+      margin-bottom: 10px;
+    }
+    .play-type-tag.scoring-tag {
+      color: var(--amber);
+      border-color: var(--amber-dim);
+      background: var(--amber-dim);
+    }
+
+    .play-text {
+      font-size: 19px;
+      font-weight: 500;
+      line-height: 1.5;
+      color: var(--text);
+    }
+    .play-text.scoring { color: var(--amber); }
+    .play-text.admin { color: var(--mid); font-size: 15px; }
+
+    /* play slide animation */
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .play-content.anim { animation: slideIn 0.18s ease; }
+
+    /* ── MATCHUP BAR ─────────────────────────────────── */
+    #matchup {
+      flex-shrink: 0;
+      display: flex;
+      justify-content: space-around;
+      padding: 12px 20px;
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      gap: 16px;
+    }
+
+    .mu-item { text-align: center; flex: 1; }
+
+    .mu-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--dim);
+      margin-bottom: 3px;
+    }
+
+    .mu-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* ── PROGRESS BAR ────────────────────────────────── */
+    #progress {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 16px;
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+    }
+
+    #prog-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      color: var(--dim);
+      white-space: nowrap;
+      min-width: 56px;
+    }
+
+    .prog-track {
+      flex: 1;
+      height: 2px;
+      background: var(--border);
+      border-radius: 1px;
+    }
+    .prog-fill {
+      height: 100%;
+      background: var(--blue);
+      border-radius: 1px;
+      transition: width 0.2s ease;
+    }
+
+    /* ── LOADING ─────────────────────────────────────── */
+    #loading-screen {
+      position: fixed;
+      inset: 0;
+      background: var(--bg);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      z-index: 100;
+    }
+
+    .loader-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--dim);
+    }
+
+    .loader-dot-row {
+      display: flex;
+      gap: 6px;
+    }
+
+    .ldot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--dim);
+      animation: blink 1.2s infinite;
+    }
+    .ldot:nth-child(2) { animation-delay: 0.2s; }
+    .ldot:nth-child(3) { animation-delay: 0.4s; }
+
+    @keyframes blink {
+      0%, 80%, 100% { opacity: 0.3; }
+      40% { opacity: 1; }
+    }
+
+    /* ── HIDDEN ──────────────────────────────────────── */
+    .hidden { display: none !important; }
   </style>
 </head>
 <body>
-  <main>
-    <header>
-      <h1>gamestory</h1>
-      <div class="date-nav">
-        <button id="btn-prev">&#8592;</button>
-        <span class="date-label" id="date-label"></span>
-        <button id="btn-next">&#8594;</button>
+
+  <div id="loading-screen">
+    <div class="loader-dot-row">
+      <div class="ldot"></div><div class="ldot"></div><div class="ldot"></div>
+    </div>
+    <div class="loader-label">Loading game data</div>
+  </div>
+
+  <!-- SCORE BAR -->
+  <div id="scorebar">
+    <div class="team-block away">
+      <img id="away-logo" class="team-logo" src="" alt="">
+      <div>
+        <div class="team-abbr" id="away-abbr">—</div>
+        <div class="team-score" id="away-score">0</div>
       </div>
-    </header>
-    <div class="games" id="games"></div>
-  </main>
+    </div>
+
+    <div class="game-meta">
+      <div class="inning-display">
+        <div class="inning-half" id="inning-half">TOP</div>
+        <div class="inning-num" id="inning-num">1st</div>
+      </div>
+      <div class="outs-row">
+        <div class="out-pip" id="out1"></div>
+        <div class="out-pip" id="out2"></div>
+      </div>
+    </div>
+
+    <div class="team-block home">
+      <img id="home-logo" class="team-logo" src="" alt="">
+      <div>
+        <div class="team-abbr" id="home-abbr">—</div>
+        <div class="team-score" id="home-score">0</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN PLAY -->
+  <div id="main">
+    <div id="tap-prev" class="tap-zone"></div>
+    <div id="tap-next" class="tap-zone"></div>
+
+    <span class="edge-arrow prev">‹</span>
+    <span class="edge-arrow next">›</span>
+
+    <div class="diamond-wrap">
+      <div class="base-sq b2nd" id="b2"></div>
+      <div class="base-sq b1st" id="b1"></div>
+      <div class="base-sq b3rd" id="b3"></div>
+      <div class="base-sq bhome"></div>
+    </div>
+
+    <div class="play-content" id="play-content">
+      <div class="play-type-tag" id="play-type-tag">—</div>
+      <div class="play-text" id="play-text">—</div>
+    </div>
+  </div>
+
+  <!-- MATCHUP -->
+  <div id="matchup">
+    <div class="mu-item">
+      <div class="mu-label">Pitcher</div>
+      <div class="mu-name" id="pitcher-name">—</div>
+    </div>
+    <div class="mu-item">
+      <div class="mu-label">Batter</div>
+      <div class="mu-name" id="batter-name">—</div>
+    </div>
+  </div>
+
+  <!-- PROGRESS -->
+  <div id="progress">
+    <span id="prog-label">1 / —</span>
+    <div class="prog-track">
+      <div class="prog-fill" id="prog-fill" style="width:0%"></div>
+    </div>
+  </div>
 
   <script>
-    const ESPN = date =>
-      `https://site.api.espn.com/apis/site/v2/sports/baseball/mlb/scoreboard?dates=${date}`;
-    const API = date =>
-      `https://corsproxy.io/?url=${encodeURIComponent(ESPN(date))}`;
+    const GAME_ID  = '401809299';
+    const LS_KEY   = `mlb_pbp_${GAME_ID}`;
+    const DIRECT   = `https://site.api.espn.com/apis/site/v2/sports/baseball/mlb/summary?event=${GAME_ID}`;
+    const PROXIED  = `https://corsproxy.io/?url=${encodeURIComponent(DIRECT)}`;
 
-    function todayStr() {
-      const d = new Date();
-      return [
-        d.getFullYear(),
-        String(d.getMonth() + 1).padStart(2, '0'),
-        String(d.getDate()).padStart(2, '0')
-      ].join('');
+    let plays       = [];
+    let currentIdx  = 0;
+    let curPitcher  = '—';
+    let curBatter   = '—';
+
+    // ── ORDINAL ──────────────────────────────────────────
+    function ord(n) {
+      const v = n % 100;
+      const s = ['th','st','nd','rd'];
+      return n + (s[(v - 20) % 10] || s[v] || s[0]);
     }
 
-    function parseDate(str) {
-      return new Date(
-        parseInt(str.slice(0, 4)),
-        parseInt(str.slice(4, 6)) - 1,
-        parseInt(str.slice(6, 8))
-      );
-    }
+    // ── EXTRACT PITCHER / BATTER from a single play ──────
+    function extractMatchup(play) {
+      let p = null, b = null;
+      const sit = play.situation || {};
 
-    function shiftDate(str, days) {
-      const d = parseDate(str);
-      d.setDate(d.getDate() + days);
-      return [
-        d.getFullYear(),
-        String(d.getMonth() + 1).padStart(2, '0'),
-        String(d.getDate()).padStart(2, '0')
-      ].join('');
-    }
+      // Prefer situation.pitcher / situation.batter (most reliable)
+      if (sit.pitcher?.athlete) p = sit.pitcher.athlete.shortName || sit.pitcher.athlete.displayName;
+      if (sit.batter?.athlete)  b = sit.batter.athlete.shortName  || sit.batter.athlete.displayName;
 
-    function formatDateLabel(str) {
-      const d = parseDate(str);
-      const today = parseDate(todayStr());
-      if (d.getTime() === today.getTime()) return 'Today';
-      return d.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
-    }
-
-    function gameStatus(event) {
-      const state = event.status?.type?.state;
-      const detail = event.status?.type?.shortDetail ?? '';
-      if (state === 'post') return { label: 'Final', cls: 'final' };
-      if (state === 'in')   return { label: detail || 'In Progress', cls: 'live' };
-      return { label: detail || 'Scheduled', cls: '' };
-    }
-
-    function renderGames(events) {
-      const container = document.getElementById('games');
-      container.innerHTML = '';
-
-      if (!events?.length) {
-        container.innerHTML = '<p class="state-msg">No games scheduled.</p>';
-        return;
+      // Fallback: athletes array
+      if (!p || !b) {
+        (play.athletes || []).forEach(a => {
+          const pos  = (a.position?.abbreviation || '').toUpperCase();
+          const name = a.athlete?.shortName || a.athlete?.displayName || '';
+          if (!name) return;
+          const pitchPos = ['P','SP','RP','CP','CL'];
+          if (pitchPos.includes(pos) && !p) p = name;
+          else if (pos && !pitchPos.includes(pos) && !b) b = name;
+        });
       }
 
-      for (const event of events) {
-        const comp = event.competitions?.[0];
-        if (!comp) continue;
-
-        const away = comp.competitors.find(c => c.homeAway === 'away');
-        const home = comp.competitors.find(c => c.homeAway === 'home');
-        if (!away || !home) continue;
-
-        const { label, cls } = gameStatus(event);
-
-        const a = document.createElement('a');
-        a.className = 'game-card';
-        a.href = `game.html?id=${event.id}`;
-        a.innerHTML = `
-          <div class="teams">
-            <div class="team">
-              <img src="${away.team.logo}" alt="${away.team.abbreviation}" onerror="this.style.display='none'">
-              <span>${away.team.abbreviation}</span>
-            </div>
-            <span class="vs">@</span>
-            <div class="team">
-              <img src="${home.team.logo}" alt="${home.team.abbreviation}" onerror="this.style.display='none'">
-              <span>${home.team.abbreviation}</span>
-            </div>
-          </div>
-          <div class="status">
-            <span class="${cls}">${label}</span>
-          </div>
-        `;
-        container.appendChild(a);
-      }
+      return { pitcher: p, batter: b };
     }
 
-    async function load(dateStr) {
-      const container = document.getElementById('games');
-      container.innerHTML = '<p class="state-msg">Loading…</p>';
-      document.getElementById('date-label').textContent = formatDateLabel(dateStr);
+    // ── BUILD MATCHUP STATE UP TO INDEX ──────────────────
+    function buildMatchupTo(idx) {
+      let p = '—', b = '—';
+      for (let i = 0; i <= idx; i++) {
+        const m = extractMatchup(plays[i]);
+        if (m.pitcher) p = m.pitcher;
+        if (m.batter)  b = m.batter;
+      }
+      return { pitcher: p, batter: b };
+    }
 
+    // ── NAVIGATE ──────────────────────────────────────────
+    function goTo(idx) {
+      if (idx < 0 || idx >= plays.length) return;
+
+      if (idx > currentIdx) {
+        // Scan forward only the new plays
+        for (let i = currentIdx + 1; i <= idx; i++) {
+          const m = extractMatchup(plays[i]);
+          if (m.pitcher) curPitcher = m.pitcher;
+          if (m.batter)  curBatter  = m.batter;
+        }
+      } else {
+        // Scan from scratch
+        const m = buildMatchupTo(idx);
+        curPitcher = m.pitcher;
+        curBatter  = m.batter;
+      }
+
+      currentIdx = idx;
+      render();
+      localStorage.setItem(LS_KEY, idx);
+    }
+
+    function next() { goTo(currentIdx + 1); }
+    function prev() { goTo(currentIdx - 1); }
+
+    // ── RENDER ────────────────────────────────────────────
+    function render() {
+      const play = plays[currentIdx];
+      const sit  = play.situation || {};
+      const period = play.period || {};
+
+      // Scores
+      document.getElementById('away-score').textContent = play.awayScore ?? 0;
+      document.getElementById('home-score').textContent = play.homeScore ?? 0;
+
+      // Inning
+      const dv    = period.displayValue || '';
+      const isBot = dv.toLowerCase().startsWith('bot') || period.type === 2;
+      document.getElementById('inning-half').textContent = isBot ? 'BOT' : 'TOP';
+      document.getElementById('inning-num').textContent  = ord(period.number || 1);
+
+      // Outs (after play)
+      const outs = play.outs ?? sit.outs ?? 0;
+      document.getElementById('out1').className = 'out-pip' + (outs >= 1 ? ' on' : '');
+      document.getElementById('out2').className = 'out-pip' + (outs >= 2 ? ' on' : '');
+
+      // Bases (situation = state AFTER this play)
+      document.getElementById('b1').className = 'base-sq b1st' + (sit.onFirst  ? ' on' : '');
+      document.getElementById('b2').className = 'base-sq b2nd' + (sit.onSecond ? ' on' : '');
+      document.getElementById('b3').className = 'base-sq b3rd' + (sit.onThird  ? ' on' : '');
+
+      // Play type tag
+      const typeText  = play.type?.text || '';
+      const isScoring = !!play.scoringPlay;
+      const isAdmin   = ['Pitching Substitution','Defensive Substitution','Offensive Substitution',
+                         'Game Advisory','Runner On','Pinch Runner'].includes(typeText);
+
+      const tag = document.getElementById('play-type-tag');
+      tag.textContent  = typeText || 'Play';
+      tag.className    = 'play-type-tag' + (isScoring ? ' scoring-tag' : '');
+
+      const pt = document.getElementById('play-text');
+      pt.textContent = play.text || '—';
+      pt.className   = 'play-text' + (isScoring ? ' scoring' : isAdmin ? ' admin' : '');
+
+      // Matchup
+      document.getElementById('pitcher-name').textContent = curPitcher;
+      document.getElementById('batter-name').textContent  = curBatter;
+
+      // Progress
+      document.getElementById('prog-label').textContent = `${currentIdx + 1} / ${plays.length}`;
+      document.getElementById('prog-fill').style.width  = `${((currentIdx + 1) / plays.length) * 100}%`;
+
+      // Animate
+      const pc = document.getElementById('play-content');
+      pc.classList.remove('anim');
+      void pc.offsetWidth; // reflow
+      pc.classList.add('anim');
+    }
+
+    // ── FLASH FEEDBACK ────────────────────────────────────
+    function flash(el) {
+      el.classList.add('flash');
+      setTimeout(() => el.classList.remove('flash'), 260);
+    }
+
+    // ── INIT ──────────────────────────────────────────────
+    async function init() {
       try {
-        const res = await fetch(API(dateStr));
-        if (!res.ok) throw new Error(res.status);
-        const data = await res.json();
-        renderGames(data.events);
-      } catch (e) {
-        container.innerHTML = '<p class="state-msg">Failed to load games.</p>';
-        console.error(e);
+        let data;
+        try {
+          const res = await fetch(DIRECT);
+          data = await res.json();
+        } catch (_) {
+          // Direct blocked (file:// CORS) — fall back to proxy
+          const res = await fetch(PROXIED);
+          data = await res.json();
+        }
+
+        plays = (data.plays || []).filter(p => p.text && p.text.trim().length > 0);
+        if (!plays.length) throw new Error('No plays found');
+
+        // Teams
+        const comps = data.header?.competitions?.[0]?.competitors || [];
+        comps.forEach(c => {
+          const id = c.homeAway;
+          document.getElementById(`${id}-abbr`).textContent = c.team?.abbreviation || '—';
+          const logo = document.getElementById(`${id}-logo`);
+          if (c.team?.logo) { logo.src = c.team.logo; logo.alt = c.team.abbreviation; }
+        });
+
+        // Restore saved index
+        const saved = localStorage.getItem(LS_KEY);
+        const start = saved !== null ? Math.min(parseInt(saved, 10), plays.length - 1) : 0;
+
+        // Build initial matchup state
+        const m = buildMatchupTo(start);
+        curPitcher = m.pitcher;
+        curBatter  = m.batter;
+        currentIdx = start;
+
+        document.getElementById('loading-screen').classList.add('hidden');
+        render();
+
+      } catch (err) {
+        document.querySelector('.loader-label').textContent = 'Network error — serve via localhost';
+        document.querySelector('.loader-dot-row').style.display = 'none';
+        console.error(err);
       }
     }
 
-    const params = new URLSearchParams(location.search);
-    let currentDate = params.get('date') || todayStr();
+    // ── EVENTS ────────────────────────────────────────────
+    const tapPrev = document.getElementById('tap-prev');
+    const tapNext = document.getElementById('tap-next');
 
-    document.getElementById('btn-prev').addEventListener('click', () => {
-      currentDate = shiftDate(currentDate, -1);
-      load(currentDate);
+    tapPrev.addEventListener('click', () => { flash(tapPrev); prev(); });
+    tapNext.addEventListener('click', () => { flash(tapNext); next(); });
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'ArrowRight') next();
+      if (e.key === 'ArrowLeft')  prev();
     });
 
-    document.getElementById('btn-next').addEventListener('click', () => {
-      currentDate = shiftDate(currentDate, 1);
-      load(currentDate);
-    });
+    // Swipe
+    let swipeX = 0;
+    document.addEventListener('touchstart', e => { swipeX = e.touches[0].clientX; }, { passive: true });
+    document.addEventListener('touchend', e => {
+      const dx = e.changedTouches[0].clientX - swipeX;
+      if (Math.abs(dx) > 44) dx < 0 ? next() : prev();
+    }, { passive: true });
 
-    load(currentDate);
+    init();
   </script>
 </body>
 </html>
