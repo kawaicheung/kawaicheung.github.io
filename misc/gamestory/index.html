@@ -247,6 +247,44 @@
     .play-text.scoring { color: var(--amber); }
     .play-text.admin { color: var(--mid); font-size: 15px; }
 
+    /* balls / strikes count */
+    #count-wrap {
+      display: flex;
+      gap: 24px;
+      z-index: 2;
+      transition: opacity 0.15s;
+    }
+    #count-wrap.hidden-count { opacity: 0; pointer-events: none; }
+
+    .count-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .count-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--dim);
+    }
+
+    .count-pips { display: flex; gap: 4px; }
+
+    .count-pip {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      border: 1.5px solid var(--dim);
+      background: transparent;
+      transition: background 0.1s, border-color 0.1s;
+    }
+    .count-pip.ball-on   { background: #4caf50; border-color: #4caf50; }
+    .count-pip.strike-on { background: #ef5350; border-color: #ef5350; }
+
     /* play slide animation */
     @keyframes slideIn {
       from { opacity: 0; transform: translateY(6px); }
@@ -424,7 +462,26 @@
       <div class="play-type-tag" id="play-type-tag">—</div>
       <div class="play-text" id="play-text">—</div>
     </div>
-  </div>
+
+    <!-- BALLS / STRIKES COUNT -->
+    <div id="count-wrap" class="hidden-count">
+      <div class="count-item">
+        <div class="count-label">Balls</div>
+        <div class="count-pips" id="ball-pips">
+          <div class="count-pip" id="bp0"></div>
+          <div class="count-pip" id="bp1"></div>
+          <div class="count-pip" id="bp2"></div>
+          <div class="count-pip" id="bp3"></div>
+        </div>
+      </div>
+      <div class="count-item">
+        <div class="count-label">Strikes</div>
+        <div class="count-pips" id="strike-pips">
+          <div class="count-pip" id="sp0"></div>
+          <div class="count-pip" id="sp1"></div>
+        </div>
+      </div>
+    </div>
 
   <!-- MATCHUP -->
   <div id="matchup">
@@ -447,10 +504,9 @@
   </div>
 
   <script>
-    const GAME_ID  = '401809299';
-    const LS_KEY   = `mlb_pbp_${GAME_ID}`;
-    const DIRECT   = `https://site.api.espn.com/apis/site/v2/sports/baseball/mlb/summary?event=${GAME_ID}`;
-    const PROXIED  = `https://corsproxy.io/?url=${encodeURIComponent(DIRECT)}`;
+    const GAME_ID = '401809299';
+    const LS_KEY  = `mlb_pbp_${GAME_ID}`;
+    const API_URL = `https://site.api.espn.com/apis/site/v2/sports/baseball/mlb/summary?event=${GAME_ID}`;
 
     let plays       = [];
     let currentIdx  = 0;
@@ -469,19 +525,33 @@
       let p = null, b = null;
       const sit = play.situation || {};
 
-      // Prefer situation.pitcher / situation.batter (most reliable)
+      // Strategy 1: situation.pitcher / situation.batter
       if (sit.pitcher?.athlete) p = sit.pitcher.athlete.shortName || sit.pitcher.athlete.displayName;
       if (sit.batter?.athlete)  b = sit.batter.athlete.shortName  || sit.batter.athlete.displayName;
 
-      // Fallback: athletes array
+      // Strategy 2: athletes array — try `type` field first, then `credit`, then position
       if (!p || !b) {
         (play.athletes || []).forEach(a => {
-          const pos  = (a.position?.abbreviation || '').toUpperCase();
           const name = a.athlete?.shortName || a.athlete?.displayName || '';
           if (!name) return;
+          const t   = (a.type   || '').toLowerCase();
+          const cr  = (a.credit || '').toLowerCase();
+          const pos = (a.position?.abbreviation || '').toUpperCase();
           const pitchPos = ['P','SP','RP','CP','CL'];
-          if (pitchPos.includes(pos) && !p) p = name;
-          else if (pos && !pitchPos.includes(pos) && !b) b = name;
+
+          if ((t === 'pitcher' || cr === 'pitcher' || pitchPos.includes(pos)) && !p) p = name;
+          else if ((t === 'batter' || cr === 'batter' || (pos && !pitchPos.includes(pos))) && !b) b = name;
+        });
+      }
+
+      // Strategy 3: play.participants (alternate ESPN schema)
+      if (!p || !b) {
+        (play.participants || []).forEach(a => {
+          const name = a.athlete?.shortName || a.athlete?.displayName || '';
+          const role = (a.type || a.role || '').toLowerCase();
+          if (!name) return;
+          if (role.includes('pitch') && !p) p = name;
+          else if (role.includes('bat') && !b) b = name;
         });
       }
 
@@ -569,6 +639,19 @@
       document.getElementById('pitcher-name').textContent = curPitcher;
       document.getElementById('batter-name').textContent  = curBatter;
 
+      // Balls / Strikes count
+      const balls   = sit.balls   ?? null;
+      const strikes = sit.strikes ?? null;
+      const hasCount = balls !== null || strikes !== null;
+      const cw = document.getElementById('count-wrap');
+      cw.classList.toggle('hidden-count', !hasCount);
+      if (hasCount) {
+        for (let i = 0; i < 4; i++)
+          document.getElementById(`bp${i}`).className = 'count-pip' + (i < (balls || 0)   ? ' ball-on'   : '');
+        for (let i = 0; i < 2; i++)
+          document.getElementById(`sp${i}`).className = 'count-pip' + (i < (strikes || 0) ? ' strike-on' : '');
+      }
+
       // Progress
       document.getElementById('prog-label').textContent = `${currentIdx + 1} / ${plays.length}`;
       document.getElementById('prog-fill').style.width  = `${((currentIdx + 1) / plays.length) * 100}%`;
@@ -589,18 +672,20 @@
     // ── INIT ──────────────────────────────────────────────
     async function init() {
       try {
-        let data;
-        try {
-          const res = await fetch(DIRECT);
-          data = await res.json();
-        } catch (_) {
-          // Direct blocked (file:// CORS) — fall back to proxy
-          const res = await fetch(PROXIED);
-          data = await res.json();
-        }
+        const res  = await fetch(API_URL);
+        const data = await res.json();
 
         plays = (data.plays || []).filter(p => p.text && p.text.trim().length > 0);
         if (!plays.length) throw new Error('No plays found');
+
+        // Debug: inspect first play's athlete/situation structure once
+        if (plays[0]) {
+          const dp = plays[0];
+          console.log('[PBP debug] first play keys:', Object.keys(dp));
+          console.log('[PBP debug] situation:', dp.situation);
+          console.log('[PBP debug] athletes:', dp.athletes);
+          console.log('[PBP debug] participants:', dp.participants);
+        }
 
         // Teams
         const comps = data.header?.competitions?.[0]?.competitors || [];
@@ -625,7 +710,7 @@
         render();
 
       } catch (err) {
-        document.querySelector('.loader-label').textContent = 'Network error — serve via localhost';
+        document.querySelector('.loader-label').textContent = 'Failed to load';
         document.querySelector('.loader-dot-row').style.display = 'none';
         console.error(err);
       }
