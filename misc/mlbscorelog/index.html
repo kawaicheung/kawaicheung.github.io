@@ -25,7 +25,7 @@
     --text-muted: #6b7280;
     --text-dim: #9ca3af;
     --winner: #111827;
-    --loser: #9ca3af;
+    --loser: #6b7280;
     --tab-active: #ffffff;
   }
 
@@ -379,14 +379,26 @@
 
   .score {
     font-family: 'Barlow Condensed', sans-serif;
-    font-size: 15px;
-    font-weight: 600;
+    font-size: 13px;
+    font-weight: 700;
     color: var(--loser);
     margin-left: 4px;
     flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    border: 1.5px solid #d1d5db;
+    line-height: 1;
   }
 
-  .score.winner { color: var(--winner); font-weight: 700; }
+  .score.winner {
+    color: var(--winner);
+    font-weight: 700;
+    border-color: var(--winner);
+  }
 
   .score-record {
     font-family: 'Barlow Condensed', sans-serif;
@@ -559,10 +571,10 @@ const TEAMS = {
   Pirates:      { abbr: 'PIT', color: '#27251F', espn: 'pit', record: '4-6'  },
   Phillies:     { abbr: 'PHI', color: '#E81828', espn: 'phi', record: '7-3'  },
   // Spring training
-  WhiteSox:     { abbr: 'CWS', color: '#27251F', espn: 'chw', record: '—' },
+  'White Sox':   { abbr: 'CWS', color: '#27251F', espn: 'chw', record: '—' },
   Reds:         { abbr: 'CIN', color: '#C6011F', espn: 'cin', record: '—' },
   Brewers:      { abbr: 'MIL', color: '#12284B', espn: 'mil', record: '—' },
-  Diamondbacks: { abbr: 'ARI', color: '#A71930', espn: 'ari', record: '—' },
+  'D-Backs':    { abbr: 'ARI', color: '#A71930', espn: 'ari', record: '—' },
   Padres:       { abbr: 'SD',  color: '#2F241D', espn: 'sd',  record: '—' },
   Athletics:    { abbr: 'ATH', color: '#003831', espn: 'oak', record: '—' },
   Giants:       { abbr: 'SF',  color: '#E4590F', espn: 'sf',  record: '—' },
@@ -580,28 +592,28 @@ const springTraining = {
   springTraining: true,
   standing: { pos: null, gb: null },
   games: [
-    { away: 'WhiteSox',     awayScore: 5,  home: 'Cubs',         homeScore: 1,  status: 'Final', date: 'Sun, 3/1'  },
-    { away: 'Cubs',         awayScore: 9,  home: 'Reds',         homeScore: 17, status: 'Final', date: 'Mon, 3/2'  },
-    { away: 'Cubs',         awayScore: 4,  home: 'Brewers',      homeScore: 1,  status: 'Final', date: 'Wed, 3/4'  },
-    { away: 'Diamondbacks', awayScore: 1,  home: 'Cubs',         homeScore: 8,  status: 'Final', date: 'Thu, 3/5'  },
-    { away: 'Cubs',         awayScore: 0,  home: 'Padres',       homeScore: 3,  status: 'Final', date: 'Fri, 3/6'  },
-    { away: 'Athletics',    awayScore: 3,  home: 'Cubs',         homeScore: 4,  status: 'Final', date: 'Sat, 3/7'  },
-    { away: 'Giants',       awayScore: 9,  home: 'Cubs',         homeScore: 5,  status: 'Final', date: 'Sun, 3/8'  },
-    { away: 'Cubs',         awayScore: 3,  home: 'Rangers',      homeScore: 8,  status: 'Final', date: 'Tue, 3/10' },
-    { away: 'Royals',       awayScore: 8,  home: 'Cubs',         homeScore: 9,  status: 'Final', date: 'Wed, 3/11' },
-    { away: 'Mariners',     awayScore: 4,  home: 'Cubs',         homeScore: 7,  status: 'Final', date: 'Thu, 3/12' },
-    { away: 'Cubs',         awayScore: 2,  home: 'WhiteSox',     homeScore: 4,  status: 'Final', date: 'Fri, 3/13' },
-    { away: 'Cubs',         awayScore: 3,  home: 'Rockies',      homeScore: 4,  status: 'Final', date: 'Sat, 3/14' },
-    { away: 'Dodgers',      awayScore: 14, home: 'Cubs',         homeScore: 8,  status: 'Final', date: 'Sun, 3/15' },
-    { away: 'Cubs',         awayScore: 5,  home: 'Guardians',    homeScore: 2,  status: 'Final', date: 'Mon, 3/16' },
-    { away: 'Angels',       awayScore: 6,  home: 'Cubs',         homeScore: 8,  status: 'Final', date: 'Tue, 3/17' },
-    { away: 'Cubs',         awayScore: 8,  home: 'Diamondbacks', homeScore: 16, status: 'Final', date: 'Wed, 3/18' },
-    { away: 'Reds',         awayScore: 8,  home: 'Cubs',         homeScore: 6,  status: 'Final', date: 'Fri, 3/20' },
-    { away: 'Cubs',         awayScore: 2,  home: 'Athletics',    homeScore: 6,  status: 'Final', date: 'Fri, 3/20' },
-    { away: 'Cubs',         awayScore: 7,  home: 'Mariners',     homeScore: 1,  status: 'Final', date: 'Sat, 3/21' },
-    { away: 'Brewers',      awayScore: 0,  home: 'Cubs',         homeScore: 12, status: 'Final', date: 'Sun, 3/22' },
-    { away: 'Yankees',      awayScore: 6,  home: 'Cubs',         homeScore: 15, status: 'Final', date: 'Mon, 3/23' },
-    { away: 'Yankees',      awayScore: 8,  home: 'Cubs',         homeScore: 3,  status: 'Final', date: 'Tue, 3/24' },
+    { away: 'White Sox',  awayScore: 5,  home: 'Cubs',      homeScore: 1,  status: 'Final', date: 'Sun, 3/1'  },
+    { away: 'Cubs',       awayScore: 9,  home: 'Reds',      homeScore: 17, status: 'Final', date: 'Mon, 3/2'  },
+    { away: 'Cubs',       awayScore: 4,  home: 'Brewers',   homeScore: 1,  status: 'Final', date: 'Wed, 3/4'  },
+    { away: 'D-Backs',    awayScore: 1,  home: 'Cubs',      homeScore: 8,  status: 'Final', date: 'Thu, 3/5'  },
+    { away: 'Cubs',       awayScore: 0,  home: 'Padres',    homeScore: 3,  status: 'Final', date: 'Fri, 3/6'  },
+    { away: 'Athletics',  awayScore: 3,  home: 'Cubs',      homeScore: 4,  status: 'Final', date: 'Sat, 3/7'  },
+    { away: 'Giants',     awayScore: 9,  home: 'Cubs',      homeScore: 5,  status: 'Final', date: 'Sun, 3/8'  },
+    { away: 'Cubs',       awayScore: 3,  home: 'Rangers',   homeScore: 8,  status: 'Final', date: 'Tue, 3/10' },
+    { away: 'Royals',     awayScore: 8,  home: 'Cubs',      homeScore: 9,  status: 'Final', date: 'Wed, 3/11' },
+    { away: 'Mariners',   awayScore: 4,  home: 'Cubs',      homeScore: 7,  status: 'Final', date: 'Thu, 3/12' },
+    { away: 'Cubs',       awayScore: 2,  home: 'White Sox', homeScore: 4,  status: 'Final', date: 'Fri, 3/13' },
+    { away: 'Cubs',       awayScore: 3,  home: 'Rockies',   homeScore: 4,  status: 'Final', date: 'Sat, 3/14' },
+    { away: 'Dodgers',    awayScore: 14, home: 'Cubs',      homeScore: 8,  status: 'Final', date: 'Sun, 3/15' },
+    { away: 'Cubs',       awayScore: 5,  home: 'Guardians', homeScore: 2,  status: 'Final', date: 'Mon, 3/16' },
+    { away: 'Angels',     awayScore: 6,  home: 'Cubs',      homeScore: 8,  status: 'Final', date: 'Tue, 3/17' },
+    { away: 'Cubs',       awayScore: 8,  home: 'D-Backs',   homeScore: 16, status: 'Final', date: 'Wed, 3/18' },
+    { away: 'Reds',       awayScore: 8,  home: 'Cubs',      homeScore: 6,  status: 'Final', date: 'Fri, 3/20' },
+    { away: 'Cubs',       awayScore: 2,  home: 'Athletics', homeScore: 6,  status: 'Final', date: 'Fri, 3/20' },
+    { away: 'Cubs',       awayScore: 7,  home: 'Mariners',  homeScore: 1,  status: 'Final', date: 'Sat, 3/21' },
+    { away: 'Brewers',    awayScore: 0,  home: 'Cubs',      homeScore: 12, status: 'Final', date: 'Sun, 3/22' },
+    { away: 'Yankees',    awayScore: 6,  home: 'Cubs',      homeScore: 15, status: 'Final', date: 'Mon, 3/23' },
+    { away: 'Yankees',    awayScore: 8,  home: 'Cubs',      homeScore: 3,  status: 'Final', date: 'Tue, 3/24' },
   ]
 };
 
