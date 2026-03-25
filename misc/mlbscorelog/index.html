@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Cubs Scores</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@400;500;600&family=Pacifico&display=swap" rel="stylesheet">
+<style>
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cubs-blue: #0E3386;
+    --cubs-red: #CC3433;
+    --bg: #f2f4f8;
+    --card-bg: #ffffff;
+    --border: #e4e8ef;
+    --text-primary: #111827;
+    --text-muted: #6b7280;
+    --text-dim: #9ca3af;
+    --winner: #111827;
+    --loser: #9ca3af;
+    --tab-active: #ffffff;
+  }
+
+  body {
+    font-family: 'Barlow', sans-serif;
+    background: var(--bg);
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+  }
+
+  .phone {
+    width: 390px;
+    height: 100vh;
+    background: var(--bg);
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    position: relative;
+  }
+
+  .sticky-top {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+
+  .header {
+    background: var(--cubs-blue);
+    padding: 14px 16px 0;
+  }
+
+  .header-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 14px;
+  }
+
+  .back-btn {
+    color: white;
+    font-size: 22px;
+    cursor: pointer;
+    width: 32px;
+    display: flex;
+    align-items: center;
+  }
+
+  .team-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .team-name-header {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 22px;
+    color: white;
+    letter-spacing: 0.5px;
+  }
+
+  .header-actions {
+    display: flex;
+    gap: 14px;
+    color: white;
+    font-size: 20px;
+  }
+
+  .header-actions span { cursor: pointer; }
+
+  .nav-tabs {
+    display: flex;
+    gap: 0;
+    border-bottom: none;
+  }
+
+  .nav-tab {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.8px;
+    color: rgba(255,255,255,0.6);
+    padding: 10px 14px 10px;
+    cursor: pointer;
+    position: relative;
+    white-space: nowrap;
+  }
+
+  .nav-tab.active { color: white; }
+
+  .nav-tab.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 3px;
+    background: white;
+    border-radius: 2px 2px 0 0;
+  }
+
+  .month-scroller-wrap {
+    background: white;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .month-scroller {
+    display: flex;
+    overflow-x: auto;
+    padding: 12px 16px;
+    gap: 4px;
+    scrollbar-width: none;
+  }
+
+  .month-scroller::-webkit-scrollbar { display: none; }
+
+  .month-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 6px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    white-space: nowrap;
+    min-width: 72px;
+  }
+
+  .month-item.active { background: var(--cubs-blue); }
+
+  .month-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 0.5px;
+    color: var(--text-muted);
+  }
+
+  .month-item.active .month-name { color: white; }
+
+  .month-games {
+    font-size: 11px;
+    color: var(--text-dim);
+    font-weight: 500;
+    margin-top: 1px;
+  }
+
+  .month-item.active .month-games { color: rgba(255,255,255,0.75); }
+
+  .scores-list {
+    flex: 1;
+    padding: 0 0 80px;
+  }
+
+  /* SERIES BLOCK */
+  .series-block {
+    margin: 10px 12px;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    border: 2px solid var(--series-color, #374151);
+  }
+
+  .series-block.in-progress {
+    box-shadow:
+      0 0 0 2px #EEDC82,
+      0 6px 28px 4px color-mix(in srgb, #EEDC82 55%, transparent);
+  }
+
+  .series-header {
+    background: var(--series-color, #374151);
+    padding: 8px 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .series-header-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: rgba(255,255,255,0.9);
+    text-transform: uppercase;
+  }
+
+  .series-header.spring {
+    background: linear-gradient(135deg, #2d6a2d 0%, #4a9e4a 100%);
+  }
+
+  .series-header.spring .series-header-label {
+    font-family: 'Pacifico', cursive;
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0.5px;
+    color: rgba(255,255,255,0.95);
+    text-transform: none;
+  }
+
+  .series-header .series-pills,
+  .series-header .series-record,
+  .series-header .series-tally,
+  .series-header .pill-pos,
+  .series-header .pill-gb {
+    font-family: 'Barlow Condensed', sans-serif;
+  }
+
+  .series-pills {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    flex-shrink: 0;
+  }
+
+  .series-record {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.9);
+    background: rgba(255,255,255,0.15);
+    padding: 2px 8px;
+    border-radius: 20px;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .pill-pos { font-family: 'Barlow Condensed', sans-serif; opacity: 0.75; font-weight: 600; }
+  .pill-gb  { font-family: 'Barlow Condensed', sans-serif; opacity: 0.65; font-weight: 500; font-size: 10px; }
+
+  .series-tally {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    color: white;
+    background: rgba(0,0,0,0.22);
+    padding: 2px 9px;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+
+  .game-row.st-game { padding-top: 5px; padding-bottom: 5px; }
+  .game-row.st-game .date-day { font-size: 10px; }
+  .game-row.st-game .date-md  { font-size: 11px; }
+  .game-row.st-game .team-name { font-size: 13px; }
+  .game-row.st-game .score { font-size: 13px; }
+  .game-row.st-game .team-logo { width: 20px; height: 20px; }
+  .game-row.st-game .final-badge { width: 17px; height: 17px; font-size: 10px; }
+
+  .season-divider {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 4px 12px;
+    gap: 4px;
+  }
+
+  .season-divider svg { width: 100%; display: block; }
+
+  .season-divider-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+  /* GAME ROW */
+  .game-row {
+    background: #fff;
+    border-bottom: 1px solid rgba(0,0,0,0.07);
+    padding: 9px 14px;
+    display: grid;
+    grid-template-columns: 1fr 3fr 0.2fr 3fr 1fr;
+    align-items: center;
+    gap: 0 8px;
+    cursor: pointer;
+    transition: background 0.12s;
+  }
+
+  .game-row:hover { background: #f9fafb; }
+
+  .game-row.away-game { background: rgba(0,0,0,0.02); }
+  .game-row.away-game:hover { background: rgba(0,0,0,0.05); }
+
+  .game-row.live-game { background: #fef08a; }
+  .game-row.live-game:hover { background: #fde047; }
+  .game-row.live-game .team-name,
+  .game-row.live-game .score {
+    color: #111 !important;
+    font-weight: 500;
+  }
+
+  .series-block.in-progress .game-row { background: #fefce8; }
+  .series-block.in-progress .game-row:hover { background: #fef9c3; }
+  .series-block.in-progress .game-row.live-game { background: #fef08a; }
+  .series-block.in-progress .game-row.live-game:hover { background: #fde047; }
+
+  /* DATE COL */
+  .col-date {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+  }
+
+  .date-day {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+  }
+
+  .date-md {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-muted);
+  }
+
+  .col-team {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+
+  .col-team.home { justify-content: flex-start; }
+
+  .team-logo {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+    display: block;
+  }
+
+  .team-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--loser);
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .team-name.winner { color: var(--winner); font-weight: 700; }
+
+  .score {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--loser);
+    margin-left: 4px;
+    flex-shrink: 0;
+  }
+
+  .score.winner { color: var(--winner); font-weight: 700; }
+
+  .score-record {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text-dim);
+    margin-left: 4px;
+    flex-shrink: 0;
+  }
+
+  .score-dash {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    color: var(--text-dim);
+    margin-left: 4px;
+  }
+
+  .col-status {
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 1px;
+  }
+
+  .game-status {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-muted);
+    letter-spacing: 0.2px;
+  }
+
+  @keyframes pulse-ring {
+    0%   { box-shadow: 0 0 0 0 rgba(220,38,38,0.6); }
+    70%  { box-shadow: 0 0 0 6px rgba(220,38,38,0); }
+    100% { box-shadow: 0 0 0 0 rgba(220,38,38,0); }
+  }
+
+  .live-badge-wrap {
+    position: relative;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .live-badge-top {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 7px;
+    font-weight: 800;
+    letter-spacing: 0.8px;
+    color: #dc2626;
+    margin-bottom: 2px;
+    line-height: 1;
+  }
+
+  .live-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 1.5px solid #dc2626;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    font-weight: 800;
+    color: #dc2626;
+    line-height: 1;
+    animation: pulse-ring 1.4s ease-out infinite;
+  }
+
+  .final-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 1.5px solid var(--text-dim);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-muted);
+    line-height: 1;
+  }
+
+  .bottom-nav {
+    background: white;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-around;
+    padding: 8px 0 16px;
+    position: sticky;
+    bottom: 0;
+    z-index: 9;
+  }
+
+  .bottom-nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    cursor: pointer;
+    padding: 4px 12px;
+  }
+
+  .bottom-nav-icon { font-size: 22px; color: var(--text-dim); }
+  .bottom-nav-item.active .bottom-nav-icon { color: var(--cubs-blue); }
+  .bottom-nav-label { font-size: 10px; color: var(--text-dim); font-weight: 500; }
+  .bottom-nav-item.active .bottom-nav-label { color: var(--cubs-blue); }
+</style>
+</head>
+<body>
+<div class="phone">
+
+  <div class="sticky-top">
+    <div class="header">
+      <div class="header-top">
+        <div class="back-btn">&#8249;</div>
+        <div class="team-title">
+          <img src="https://a.espncdn.com/combiner/i?img=/i/teamlogos/mlb/500/chc.png&scale=crop&cquality=40&location=origin&w=80&h=80" style="width:40px;height:40px;border-radius:50%;object-fit:cover;" alt="Cubs">
+          <span class="team-name-header">Cubs</span>
+        </div>
+        <div class="header-actions">
+          <span>&#9733;</span>
+          <span>&#128276;</span>
+        </div>
+      </div>
+      <div class="nav-tabs">
+        <div class="nav-tab active">SCORES</div>
+        <div class="nav-tab">NEWS</div>
+        <div class="nav-tab">STANDINGS</div>
+        <div class="nav-tab">STATS</div>
+        <div class="nav-tab">ROSTER</div>
+      </div>
+    </div>
+    <div class="month-scroller-wrap">
+      <div class="month-scroller">
+        <div class="month-item"><span class="month-name">FEB</span><span class="month-games">0 GAMES</span></div>
+        <div class="month-item active"><span class="month-name">MAR</span><span class="month-games">5 GAMES</span></div>
+        <div class="month-item"><span class="month-name">APR</span><span class="month-games">22 GAMES</span></div>
+        <div class="month-item"><span class="month-name">MAY</span><span class="month-games">28 GAMES</span></div>
+        <div class="month-item"><span class="month-name">JUN</span><span class="month-games">27 GAMES</span></div>
+        <div class="month-item"><span class="month-name">JUL</span><span class="month-games">27 GAMES</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="scores-list" id="scores-list"></div>
+
+  <div class="bottom-nav">
+    <div class="bottom-nav-item"><div class="bottom-nav-icon">⌂</div><div class="bottom-nav-label">Home</div></div>
+    <div class="bottom-nav-item active"><div class="bottom-nav-icon">&#128202;</div><div class="bottom-nav-label">Scores</div></div>
+    <div class="bottom-nav-item"><div class="bottom-nav-icon">&#9654;</div><div class="bottom-nav-label">Watch</div></div>
+    <div class="bottom-nav-item"><div class="bottom-nav-icon">&#128250;</div><div class="bottom-nav-label">Verts</div></div>
+    <div class="bottom-nav-item"><div class="bottom-nav-icon">&#9776;</div><div class="bottom-nav-label">More</div></div>
+  </div>
+
+</div>
+
+<script>
+const ESPN = 'https://a.espncdn.com/combiner/i?img=/i/teamlogos/mlb/500';
+const TEAMS = {
+  Cubs:         { abbr: 'CHC', color: '#0E3386', espn: 'chc', record: '7-4'  },
+  Nationals:    { abbr: 'WSH', color: '#AB0003', espn: 'wsh', record: '3-7'  },
+  Angels:       { abbr: 'LAA', color: '#BA0021', espn: 'laa', record: '4-6'  },
+  Guardians:    { abbr: 'CLE', color: '#00385D', espn: 'cle', record: '6-4'  },
+  Rays:         { abbr: 'TB',  color: '#092C5C', espn: 'tb',  record: '5-5'  },
+  Pirates:      { abbr: 'PIT', color: '#27251F', espn: 'pit', record: '4-6'  },
+  Phillies:     { abbr: 'PHI', color: '#E81828', espn: 'phi', record: '7-3'  },
+  // Spring training
+  WhiteSox:     { abbr: 'CWS', color: '#27251F', espn: 'chw', record: '—' },
+  Reds:         { abbr: 'CIN', color: '#C6011F', espn: 'cin', record: '—' },
+  Brewers:      { abbr: 'MIL', color: '#12284B', espn: 'mil', record: '—' },
+  Diamondbacks: { abbr: 'ARI', color: '#A71930', espn: 'ari', record: '—' },
+  Padres:       { abbr: 'SD',  color: '#2F241D', espn: 'sd',  record: '—' },
+  Athletics:    { abbr: 'ATH', color: '#003831', espn: 'oak', record: '—' },
+  Giants:       { abbr: 'SF',  color: '#E4590F', espn: 'sf',  record: '—' },
+  Rangers:      { abbr: 'TEX', color: '#003278', espn: 'tex', record: '—' },
+  Royals:       { abbr: 'KC',  color: '#004687', espn: 'kc',  record: '—' },
+  Mariners:     { abbr: 'SEA', color: '#0C2C56', espn: 'sea', record: '—' },
+  Rockies:      { abbr: 'COL', color: '#33006F', espn: 'col', record: '—' },
+  Dodgers:      { abbr: 'LAD', color: '#005A9C', espn: 'lad', record: '—' },
+  Yankees:      { abbr: 'NYY', color: '#003087', espn: 'nyy', record: '—' },
+};
+
+const springTraining = {
+  label: 'Spring Training',
+  opponent: null,
+  springTraining: true,
+  standing: { pos: null, gb: null },
+  games: [
+    { away: 'WhiteSox',     awayScore: 5,  home: 'Cubs',         homeScore: 1,  status: 'Final', date: 'Sun, 3/1'  },
+    { away: 'Cubs',         awayScore: 9,  home: 'Reds',         homeScore: 17, status: 'Final', date: 'Mon, 3/2'  },
+    { away: 'Cubs',         awayScore: 4,  home: 'Brewers',      homeScore: 1,  status: 'Final', date: 'Wed, 3/4'  },
+    { away: 'Diamondbacks', awayScore: 1,  home: 'Cubs',         homeScore: 8,  status: 'Final', date: 'Thu, 3/5'  },
+    { away: 'Cubs',         awayScore: 0,  home: 'Padres',       homeScore: 3,  status: 'Final', date: 'Fri, 3/6'  },
+    { away: 'Athletics',    awayScore: 3,  home: 'Cubs',         homeScore: 4,  status: 'Final', date: 'Sat, 3/7'  },
+    { away: 'Giants',       awayScore: 9,  home: 'Cubs',         homeScore: 5,  status: 'Final', date: 'Sun, 3/8'  },
+    { away: 'Cubs',         awayScore: 3,  home: 'Rangers',      homeScore: 8,  status: 'Final', date: 'Tue, 3/10' },
+    { away: 'Royals',       awayScore: 8,  home: 'Cubs',         homeScore: 9,  status: 'Final', date: 'Wed, 3/11' },
+    { away: 'Mariners',     awayScore: 4,  home: 'Cubs',         homeScore: 7,  status: 'Final', date: 'Thu, 3/12' },
+    { away: 'Cubs',         awayScore: 2,  home: 'WhiteSox',     homeScore: 4,  status: 'Final', date: 'Fri, 3/13' },
+    { away: 'Cubs',         awayScore: 3,  home: 'Rockies',      homeScore: 4,  status: 'Final', date: 'Sat, 3/14' },
+    { away: 'Dodgers',      awayScore: 14, home: 'Cubs',         homeScore: 8,  status: 'Final', date: 'Sun, 3/15' },
+    { away: 'Cubs',         awayScore: 5,  home: 'Guardians',    homeScore: 2,  status: 'Final', date: 'Mon, 3/16' },
+    { away: 'Angels',       awayScore: 6,  home: 'Cubs',         homeScore: 8,  status: 'Final', date: 'Tue, 3/17' },
+    { away: 'Cubs',         awayScore: 8,  home: 'Diamondbacks', homeScore: 16, status: 'Final', date: 'Wed, 3/18' },
+    { away: 'Reds',         awayScore: 8,  home: 'Cubs',         homeScore: 6,  status: 'Final', date: 'Fri, 3/20' },
+    { away: 'Cubs',         awayScore: 2,  home: 'Athletics',    homeScore: 6,  status: 'Final', date: 'Fri, 3/20' },
+    { away: 'Cubs',         awayScore: 7,  home: 'Mariners',     homeScore: 1,  status: 'Final', date: 'Sat, 3/21' },
+    { away: 'Brewers',      awayScore: 0,  home: 'Cubs',         homeScore: 12, status: 'Final', date: 'Sun, 3/22' },
+    { away: 'Yankees',      awayScore: 6,  home: 'Cubs',         homeScore: 15, status: 'Final', date: 'Mon, 3/23' },
+    { away: 'Yankees',      awayScore: 8,  home: 'Cubs',         homeScore: 3,  status: 'Final', date: 'Tue, 3/24' },
+  ]
+};
+
+const series = [springTraining,
+  {
+    label: 'vs Nationals', opponent: 'Nationals',
+    standing: { pos: '1st', gb: null },
+    games: [
+      { away: 'Nationals', awayScore: 2, home: 'Cubs', homeScore: 5, status: 'Final', date: 'Thu, 3/26' },
+      { away: 'Nationals', awayScore: 7, home: 'Cubs', homeScore: 3, status: 'Final', date: 'Sat, 3/28' },
+      { away: 'Nationals', awayScore: 4, home: 'Cubs', homeScore: 8, status: 'Final', date: 'Sun, 3/29' },
+    ]
+  },
+  {
+    label: 'vs Angels', opponent: 'Angels',
+    standing: { pos: '1st', gb: null },
+    games: [
+      { away: 'Angels', awayScore: 1, home: 'Cubs', homeScore: 6, status: 'Final', date: 'Mon, 3/30' },
+      { away: 'Angels', awayScore: 3, home: 'Cubs', homeScore: 4, status: 'Final', date: 'Tue, 3/31' },
+      { away: 'Angels', awayScore: 5, home: 'Cubs', homeScore: 2, status: 'Final', date: 'Wed, 4/1'  },
+    ]
+  },
+  {
+    label: '@ Guardians', opponent: 'Guardians',
+    standing: { pos: '2nd', gb: '1' },
+    games: [
+      { away: 'Cubs', awayScore: 1, home: 'Guardians', homeScore: 4, status: 'Final', date: 'Fri, 4/3' },
+      { away: 'Cubs', awayScore: 7, home: 'Guardians', homeScore: 2, status: 'Final', date: 'Sat, 4/4' },
+      { away: 'Cubs', awayScore: 3, home: 'Guardians', homeScore: 6, status: 'Final', date: 'Sun, 4/5' },
+    ]
+  },
+  {
+    label: '@ Rays', opponent: 'Rays',
+    inProgress: true,
+    standing: { pos: '1st', gb: null },
+    games: [
+      { away: 'Cubs', awayScore: 5, home: 'Rays', homeScore: 3, status: 'Final',    date: 'Mon, 4/6' },
+      { away: 'Cubs', awayScore: 4, home: 'Rays', homeScore: 2, status: 'live',     date: 'Tue, 4/7', inning: 'TOP 5' },
+      { away: 'Cubs', awayScore: null, home: 'Rays', homeScore: null, status: 'upcoming', date: 'Wed, 4/8', time: '3:40 PM' },
+    ]
+  },
+  {
+    label: 'vs Pirates', opponent: 'Pirates',
+    inProgress: false,
+    standing: { pos: null, gb: null },
+    games: [
+      { away: 'Pirates', awayScore: null, home: 'Cubs', homeScore: null, status: 'upcoming', date: 'Fri, 4/10', time: '11:20 AM' },
+      { away: 'Pirates', awayScore: null, home: 'Cubs', homeScore: null, status: 'upcoming', date: 'Sat, 4/11', time: '11:20 AM' },
+      { away: 'Pirates', awayScore: null, home: 'Cubs', homeScore: null, status: 'upcoming', date: 'Sun, 4/12', time: '11:20 AM' },
+    ]
+  },
+  {
+    label: '@ Phillies', opponent: 'Phillies',
+    inProgress: false,
+    standing: { pos: null, gb: null },
+    games: [
+      { away: 'Cubs', awayScore: null, home: 'Phillies', homeScore: null, status: 'upcoming', date: 'Mon, 4/13', time: '3:40 PM' },
+      { away: 'Cubs', awayScore: null, home: 'Phillies', homeScore: null, status: 'upcoming', date: 'Tue, 4/14', time: '3:40 PM' },
+    ]
+  },
+];
+
+function winnerClass(a, b) { return a > b ? 'winner' : ''; }
+
+function renderLogo(name) {
+  const t = TEAMS[name];
+  if (!t) return '';
+  const needsPad = ['laa', 'tb', 'oak', 'sea', 'sd', 'lad', 'tex'].includes(t.espn);
+  const style = needsPad ? ' style="object-fit:contain;padding:2px;"' : '';
+  return `<img class="team-logo" src="${ESPN}/${t.espn}.png&scale=crop&cquality=40&location=origin&w=80&h=80" alt="${name}"${style}>`;
+}
+
+function seriesTally(games) {
+  let w = 0, l = 0;
+  for (const g of games) {
+    if (g.status === 'upcoming') continue;
+    const cs = g.home === 'Cubs' ? g.homeScore : g.awayScore;
+    const os = g.home === 'Cubs' ? g.awayScore : g.homeScore;
+    if (cs > os) w++; else if (os > cs) l++;
+  }
+  return { w, l };
+}
+
+function renderGame(g, isST = false) {
+  const isUpcoming = g.status === 'upcoming';
+  const isLive     = g.status === 'live';
+  const isAway     = g.away === 'Cubs';
+  const aw = (!isUpcoming && !isLive) ? winnerClass(g.awayScore, g.homeScore) : '';
+  const hw = (!isUpcoming && !isLive) ? winnerClass(g.homeScore, g.awayScore) : '';
+  const [dateDay, dateMD] = g.date.split(', ');
+
+  const awayScore = isUpcoming ? `<span class="score-record">${TEAMS[g.away]?.record ?? ''}</span>` : `<span class="score ${aw}">${g.awayScore}</span>`;
+  const homeScore = isUpcoming ? `<span class="score-record">${TEAMS[g.home]?.record ?? ''}</span>` : `<span class="score ${hw}">${g.homeScore}</span>`;
+
+  let statusHTML;
+  if (isUpcoming)       statusHTML = `<div class="game-status">${g.time}</div>`;
+  else if (isLive) {
+    const [top, num] = g.inning.split(' ');
+    statusHTML = `<span class="live-badge-wrap"><span class="live-badge-top">${top}</span><span class="live-badge">${num}</span></span>`;
+  }
+  else if (g.status === 'Final') statusHTML = `<span class="final-badge">F</span>`;
+  else                  statusHTML = `<div class="game-status">${g.status.replace('Final','F')}</div>`;
+
+  const rowClass = ['game-row', isAway ? 'away-game' : '', isLive ? 'live-game' : '', isST ? 'st-game' : ''].filter(Boolean).join(' ');
+
+  return `
+    <div class="${rowClass}">
+      <div class="col-date">
+        <span class="date-day">${dateDay}</span>
+        <span class="date-md">${dateMD}</span>
+      </div>
+      <div class="col-team">
+        ${renderLogo(g.away)}
+        <span class="team-name ${aw}">${g.away}</span>
+        ${awayScore}
+      </div>
+      <div></div>
+      <div class="col-team home">
+        ${renderLogo(g.home)}
+        <span class="team-name ${hw}">${g.home}</span>
+        ${homeScore}
+      </div>
+      <div class="col-status">${statusHTML}</div>
+    </div>`;
+}
+
+const WAVY_DIVIDER = `
+  <div class="season-divider">
+    <svg viewBox="0 0 360 16" preserveAspectRatio="none" height="16" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,8 C30,0 60,16 90,8 C120,0 150,16 180,8 C210,0 240,16 270,8 C300,0 330,16 360,8"
+        fill="none" stroke="#d1d5db" stroke-width="1.5" stroke-linecap="round"/>
+    </svg>
+    <span class="season-divider-label">Regular Season</span>
+    <svg viewBox="0 0 360 16" preserveAspectRatio="none" height="16" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,8 C30,0 60,16 90,8 C120,0 150,16 180,8 C210,0 240,16 270,8 C300,0 330,16 360,8"
+        fill="none" stroke="#d1d5db" stroke-width="1.5" stroke-linecap="round"/>
+    </svg>
+  </div>`;
+
+function render() {
+  const container = document.getElementById('scores-list');
+  let html = '';
+  let cumW = 0, cumL = 0;
+
+  for (let i = 0; i < series.length; i++) {
+    const s = series[i];
+    const isST = !!s.springTraining;
+    const color = isST ? '#2d6a2d' : (TEAMS[s.opponent]?.color ?? '#374151');
+    const { w, l } = seriesTally(s.games);
+    const played = w + l;
+    const allDone = s.games.every(g => g.status === 'Final');
+    if (!isST) { cumW += w; cumL += l; }
+
+    const tallyHTML = (!isST && played > 0)
+      ? `<span class="series-tally">${allDone ? (w>l?'W ':w<l?'L ':'T ') : ''}${w}–${l}</span>`
+      : (!isST ? `<span class="series-tally">Upcoming</span>` : '');
+
+    const { pos, gb } = s.standing;
+    const recordPill = (!isST && played > 0 && pos)
+      ? `<span class="series-record">${cumW}–${cumL} <span class="pill-pos">${pos}</span>${gb ? ` <span class="pill-gb">${gb}GB</span>` : ''}</span>`
+      : '';
+
+    const blockClass = ['series-block', s.inProgress ? 'in-progress' : ''].filter(Boolean).join(' ');
+    const headerClass = `series-header${isST ? ' spring' : ''}`;
+
+    html += `
+      <div class="${blockClass}" style="--series-color:${color}">
+        <div class="${headerClass}">
+          <span class="series-header-label">${s.label}</span>
+          ${!isST ? `<div class="series-pills">${recordPill}${tallyHTML}</div>` : ''}
+        </div>
+        ${s.games.map(g => renderGame(g, isST)).join('')}
+      </div>`;
+
+    // Inject wavy divider after spring training block
+    if (isST) html += WAVY_DIVIDER;
+  }
+  container.innerHTML = html;
+}
+
+render();
+</script>
+</body>
+</html>
