@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Wheel Bracket</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0b0e11;
+    --bg-2:#0f1318;
+    --ring:#1c2128;
+    --ring-2:#262c35;
+    --ink:#e6e8eb;
+    --ink-dim:#7b8694;
+    --gold:#e8b339;
+    --gold-dim:#5a4a22;
+    --danger:#d1495b;
+    --r-base: 46px;     /* radius of innermost hole */
+    --r-step: 64px;     /* thickness of each ring */
+  }
+
+  *{ box-sizing:border-box; }
+  html,body{
+    margin:0; padding:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Oswald',sans-serif;
+    overflow-x:hidden;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body{
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+  }
+
+  /* ---------- top bar ---------- */
+  .topbar{
+    width:100%;
+    max-width:680px;
+    padding:20px 20px 8px;
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+  }
+
+  .brand{
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+  }
+  .brand h1{
+    font-size:15px;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    font-weight:600;
+    margin:0;
+    color:var(--ink);
+  }
+  .brand span{
+    color:var(--gold);
+  }
+  .round-counter{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    color:var(--ink-dim);
+    letter-spacing:.05em;
+  }
+
+  .controls{
+    display:flex;
+    gap:10px;
+    align-items:center;
+    flex-wrap:wrap;
+  }
+  .controls label{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    color:var(--ink-dim);
+    letter-spacing:.05em;
+    text-transform:uppercase;
+  }
+  select, button{
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px;
+    background:var(--bg-2);
+    color:var(--ink);
+    border:1px solid var(--ring-2);
+    border-radius:6px;
+    padding:7px 10px;
+    cursor:pointer;
+  }
+  select:focus, button:focus-visible{
+    outline:2px solid var(--gold);
+    outline-offset:1px;
+  }
+  button{
+    color:var(--ink-dim);
+    transition:border-color .15s, color .15s;
+  }
+  button:hover{
+    border-color:var(--gold-dim);
+    color:var(--gold);
+  }
+  button.primary{
+    border-color:var(--gold-dim);
+    color:var(--gold);
+  }
+
+  .hint{
+    font-family:'JetBrains Mono',monospace;
+    font-size:10.5px;
+    color:var(--ink-dim);
+    opacity:.7;
+  }
+
+  /* ---------- wheel stage ---------- */
+  .stage{
+    position:relative;
+    width:100%;
+    flex:1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:10px 0 30px;
+    touch-action: pan-x; /* let us own vertical swipe */
+  }
+
+  .wheel-wrap{
+    position:relative;
+    cursor: grab;
+  }
+  .wheel-wrap.grabbing{ cursor: grabbing; }
+
+  .wheel{
+    display:block;
+    transform-origin:50% 50%;
+    will-change: transform;
+  }
+
+  .hub-fixed{
+    display:block;
+    position:absolute;
+    top:0;
+    left:0;
+    pointer-events:none; /* clicks pass through to wheel beneath, except where we re-enable */
+  }
+  .hub-fixed .hub-clickable{
+    pointer-events:auto;
+  }
+
+  .wheel.settle{
+    transition: transform 600ms cubic-bezier(.2,.8,.2,1);
+  }
+
+  /* center hub */
+  .hub-label{
+    font-family:'JetBrains Mono',monospace;
+    fill:var(--ink-dim);
+    font-size:9px;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+  }
+  .hub-winner{
+    font-family:'Oswald',sans-serif;
+    font-weight:600;
+    fill:var(--gold);
+    font-size:13px;
+  }
+
+  /* slices */
+  .slice{
+    cursor:pointer;
+    transition: opacity .2s, filter .2s;
+  }
+  .slice .slice-bg{
+    fill: var(--bg-2);
+    stroke: var(--ring);
+    stroke-width:1.5;
+    transition: fill .25s, stroke .25s;
+  }
+  .slice.empty .slice-bg{
+    fill: var(--bg);
+    stroke: var(--ring);
+  }
+  .slice.empty{
+    cursor:default;
+  }
+  .slice.eliminated .slice-bg{
+    fill: var(--bg);
+  }
+  .slice.eliminated .slice-label, .slice.eliminated .flag-circle{
+    opacity:.25;
+  }
+  .slice.winner .slice-bg{
+    fill: rgba(232,179,57,0.10);
+    stroke: var(--gold);
+  }
+  .slice.active-pick:hover .slice-bg{
+    stroke: var(--gold-dim);
+  }
+
+  .slice-label{
+    font-family:'Oswald',sans-serif;
+    font-weight:500;
+    fill:var(--ink);
+    font-size:11px;
+    pointer-events:none;
+  }
+  .slice.winner .slice-label{
+    fill:var(--gold);
+    font-weight:600;
+  }
+
+  .flag-circle{
+    pointer-events:none;
+  }
+
+  .connector{
+    fill:none;
+    stroke:var(--ring-2);
+    stroke-width:1.5;
+  }
+  .connector.lit{
+    stroke:var(--gold-dim);
+  }
+  .joint{
+    fill:var(--ring-2);
+  }
+  .joint.lit{
+    fill:var(--gold);
+  }
+
+  /* champion banner */
+  .champion-banner{
+    position:fixed;
+    left:50%;
+    bottom:28px;
+    transform:translateX(-50%) translateY(20px);
+    background:var(--bg-2);
+    border:1px solid var(--gold-dim);
+    border-radius:10px;
+    padding:14px 22px;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    opacity:0;
+    pointer-events:none;
+    transition: opacity .35s, transform .35s;
+    z-index:20;
+    box-shadow: 0 10px 40px rgba(0,0,0,.5);
+  }
+  .champion-banner.show{
+    opacity:1;
+    transform:translateX(-50%) translateY(0);
+  }
+  .champion-banner .cb-label{
+    font-family:'JetBrains Mono',monospace;
+    font-size:10px;
+    letter-spacing:.15em;
+    text-transform:uppercase;
+    color:var(--ink-dim);
+  }
+  .champion-banner .cb-name{
+    font-size:18px;
+    font-weight:600;
+    color:var(--gold);
+  }
+
+  @media (max-width: 480px){
+    .topbar{ padding:14px 14px 6px; }
+    .brand h1{ font-size:13px; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .wheel.settle{ transition:none; }
+    .champion-banner{ transition:none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand">
+    <h1>Wheel<span>Bracket</span></h1>
+    <div class="round-counter" id="roundCounter">ROUND 1 / 1</div>
+  </div>
+  <div class="controls">
+    <label for="yearSelect">Year</label>
+    <select id="yearSelect">
+      <option value="2026" selected>2026</option>
+      <option value="2025">2025</option>
+      <option value="2024">2024</option>
+      <option value="2023">2023</option>
+    </select>
+    <button id="randomizeBtn">Simulate random bracket</button>
+    <button id="resetBtn">Reset bracket</button>
+  </div>
+  <div class="hint">Drag / swipe up or down on the wheel to spin · click a team to advance it</div>
+</div>
+
+<div class="stage" id="stage">
+  <div class="wheel-wrap" id="wheelWrap">
+    <svg id="wheel" class="wheel"></svg>
+    <svg id="hub" class="hub-fixed"></svg>
+  </div>
+</div>
+
+<div class="champion-banner" id="championBanner">
+  <span class="cb-label">Champion</span>
+  <span class="cb-name" id="championName">—</span>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  // ---------------------------------------------------------------
+  // March Madness data — swap years here. Each region's 16 teams are
+  // ordered in standard seed-line bracket order (1,16,8,9,5,12,4,13,
+  // 6,11,3,14,7,10,2,15) so adjacent array entries are round-1 opponents.
+  // Regions are concatenated in bracket order: South, West, East, Midwest.
+  // ---------------------------------------------------------------
+  var SEED_ORDER = [1,16,8,9,5,12,4,13,6,11,3,14,7,10,2,15];
+
+  var REGION_COLORS = {
+    "South":   "#C8102E",
+    "West":    "#2E8B57",
+    "East":    "#0033A0",
+    "Midwest": "#FFC400"
+  };
+
+  function buildRegion(region, seeds){
+    // seeds: object mapping seed number -> team name, for seeds 1-16
+    return SEED_ORDER.map(function(seedNum){
+      return { seed: seedNum, name: seeds[seedNum], region: region };
+    });
+  }
+
+  var TOURNAMENT_DATA = {
+
+    "2026": [].concat(
+      buildRegion("South", {
+        1:"Florida", 2:"Houston", 3:"Illinois", 4:"Nebraska", 5:"Vanderbilt",
+        6:"North Carolina", 7:"Saint Mary's", 8:"Clemson", 9:"Iowa",
+        10:"Texas A&M", 11:"VCU", 12:"McNeese", 13:"Troy", 14:"Penn",
+        15:"Idaho", 16:"Lehigh"
+      }),
+      buildRegion("West", {
+        1:"Arizona", 2:"Purdue", 3:"Gonzaga", 4:"Arkansas", 5:"Wisconsin",
+        6:"BYU", 7:"Miami (FL)", 8:"Villanova", 9:"Utah State",
+        10:"Missouri", 11:"Texas", 12:"High Point", 13:"Hawaii",
+        14:"Kennesaw State", 15:"Queens", 16:"LIU"
+      }),
+      buildRegion("East", {
+        1:"Duke", 2:"UConn", 3:"Michigan State", 4:"Kansas", 5:"St. John's",
+        6:"Louisville", 7:"UCLA", 8:"Ohio State", 9:"TCU", 10:"UCF",
+        11:"South Florida", 12:"Northern Iowa", 13:"Cal Baptist",
+        14:"North Dakota State", 15:"Furman", 16:"Siena"
+      }),
+      buildRegion("Midwest", {
+        1:"Michigan", 2:"Iowa State", 3:"Virginia", 4:"Alabama",
+        5:"Texas Tech", 6:"Tennessee", 7:"Kentucky", 8:"Georgia",
+        9:"Saint Louis", 10:"Santa Clara", 11:"Miami (OH)", 12:"Akron",
+        13:"Hofstra", 14:"Wright State", 15:"Tennessee State", 16:"Howard"
+      })
+    ),
+
+    "2025": [].concat(
+      buildRegion("South", {
+        1:"Auburn", 2:"Michigan State", 3:"Iowa State", 4:"Texas A&M",
+        5:"Michigan", 6:"Ole Miss", 7:"Marquette", 8:"Louisville",
+        9:"Creighton", 10:"New Mexico", 11:"North Carolina",
+        12:"UC San Diego", 13:"Yale", 14:"Lipscomb", 15:"Bryant",
+        16:"Alabama State"
+      }),
+      buildRegion("West", {
+        1:"Florida", 2:"St. John's", 3:"Texas Tech", 4:"Maryland",
+        5:"Memphis", 6:"Missouri", 7:"Kansas", 8:"UConn", 9:"Oklahoma",
+        10:"Arkansas", 11:"Drake", 12:"Colorado State", 13:"Grand Canyon",
+        14:"UNC Wilmington", 15:"Omaha", 16:"Norfolk State"
+      }),
+      buildRegion("East", {
+        1:"Duke", 2:"Alabama", 3:"Wisconsin", 4:"Arizona", 5:"Oregon",
+        6:"BYU", 7:"Saint Mary's", 8:"Mississippi State", 9:"Baylor",
+        10:"Vanderbilt", 11:"VCU", 12:"Liberty", 13:"Akron",
+        14:"Montana", 15:"Robert Morris", 16:"Mount St. Mary's"
+      }),
+      buildRegion("Midwest", {
+        1:"Houston", 2:"Tennessee", 3:"Kentucky", 4:"Purdue", 5:"Clemson",
+        6:"Illinois", 7:"UCLA", 8:"Gonzaga", 9:"Georgia", 10:"Utah State",
+        11:"Xavier", 12:"McNeese", 13:"High Point", 14:"Troy",
+        15:"Wofford", 16:"SIU Edwardsville"
+      })
+    ),
+
+    "2024": [].concat(
+      buildRegion("South", {
+        1:"Houston", 2:"Marquette", 3:"Kentucky", 4:"Duke", 5:"Wisconsin",
+        6:"Texas Tech", 7:"Florida", 8:"Nebraska", 9:"Texas A&M",
+        10:"Colorado", 11:"NC State", 12:"James Madison", 13:"Vermont",
+        14:"Oakland", 15:"Western Kentucky", 16:"Longwood"
+      }),
+      buildRegion("West", {
+        1:"North Carolina", 2:"Arizona", 3:"Baylor", 4:"Alabama",
+        5:"Saint Mary's", 6:"Clemson", 7:"Dayton", 8:"Mississippi State",
+        9:"Michigan State", 10:"Nevada", 11:"New Mexico", 12:"Grand Canyon",
+        13:"Charleston", 14:"Colgate", 15:"Long Beach State", 16:"Wagner"
+      }),
+      buildRegion("East", {
+        1:"UConn", 2:"Iowa State", 3:"Illinois", 4:"Auburn",
+        5:"San Diego State", 6:"BYU", 7:"Washington State",
+        8:"Florida Atlantic", 9:"Northwestern", 10:"Drake", 11:"Duquesne",
+        12:"UAB", 13:"Yale", 14:"Morehead State", 15:"South Dakota State",
+        16:"Stetson"
+      }),
+      buildRegion("Midwest", {
+        1:"Purdue", 2:"Tennessee", 3:"Creighton", 4:"Kansas", 5:"Gonzaga",
+        6:"South Carolina", 7:"Texas", 8:"Utah State", 9:"TCU",
+        10:"Colorado State", 11:"Oregon", 12:"McNeese", 13:"Samford",
+        14:"Akron", 15:"Saint Peter's", 16:"Grambling State"
+      })
+    ),
+
+    "2023": [].concat(
+      buildRegion("South", {
+        1:"Alabama", 2:"Arizona", 3:"Baylor", 4:"Virginia",
+        5:"San Diego State", 6:"Creighton", 7:"Missouri", 8:"Maryland",
+        9:"West Virginia", 10:"Utah State", 11:"NC State",
+        12:"College of Charleston", 13:"Furman", 14:"UC Santa Barbara",
+        15:"Princeton", 16:"Texas A&M-Corpus Christi"
+      }),
+      buildRegion("West", {
+        1:"Kansas", 2:"UCLA", 3:"Gonzaga", 4:"UConn", 5:"Saint Mary's",
+        6:"TCU", 7:"Northwestern", 8:"Arkansas", 9:"Illinois",
+        10:"Boise State", 11:"Arizona State", 12:"VCU", 13:"Iona",
+        14:"Grand Canyon", 15:"UNC Asheville", 16:"Howard"
+      }),
+      buildRegion("East", {
+        1:"Purdue", 2:"Marquette", 3:"Kansas State", 4:"Tennessee",
+        5:"Duke", 6:"Kentucky", 7:"Michigan State", 8:"Memphis",
+        9:"Florida Atlantic", 10:"USC", 11:"Providence", 12:"Oral Roberts",
+        13:"Louisiana", 14:"Montana State", 15:"Vermont",
+        16:"Fairleigh Dickinson"
+      }),
+      buildRegion("Midwest", {
+        1:"Houston", 2:"Texas", 3:"Xavier", 4:"Indiana", 5:"Miami (FL)",
+        6:"Iowa State", 7:"Texas A&M", 8:"Iowa", 9:"Auburn",
+        10:"Penn State", 11:"Pittsburgh", 12:"Drake", 13:"Kent State",
+        14:"Kennesaw State", 15:"Colgate", 16:"Northern Kentucky"
+      })
+    )
+
+  };
+
+  // ---------------------------------------------------------------
+  // State
+  // ---------------------------------------------------------------
+  var state = {
+    year: "2026",
+    rounds: [],     // rounds[0] = leaf teams (outermost), rounds[last] = [champion slot]
+    rotation: 0      // current wheel rotation in degrees
+  };
+
+  var els = {
+    yearSelect: document.getElementById('yearSelect'),
+    randomizeBtn: document.getElementById('randomizeBtn'),
+    resetBtn: document.getElementById('resetBtn'),
+    stage: document.getElementById('stage'),
+    wheelWrap: document.getElementById('wheelWrap'),
+    wheel: document.getElementById('wheel'),
+    hub: document.getElementById('hub'),
+    roundCounter: document.getElementById('roundCounter'),
+    championBanner: document.getElementById('championBanner'),
+    championName: document.getElementById('championName')
+  };
+
+  // ---------------------------------------------------------------
+  // Bracket data model
+  // numRounds = log2(teamCount) + 1 levels of slots (last level = 1 = champion)
+  // rounds[0].length = 64 (4 regions x 16 seeds)
+  // rounds[k] = { name, color, seed, region, eliminated, filled }
+  // ---------------------------------------------------------------
+  function buildInitialRounds(year){
+    var field = TOURNAMENT_DATA[year];
+    var teamCount = field.length;
+
+    var rounds = [];
+    var leaf = field.map(function(team){
+      return {
+        name: team.name,
+        seed: team.seed,
+        region: team.region,
+        color: REGION_COLORS[team.region],
+        eliminated: false
+      };
+    });
+    rounds.push(leaf);
+
+    var count = teamCount/2;
+    while(count >= 1){
+      var lvl = [];
+      for (var j=0;j<count;j++){
+        lvl.push({ name:null, color:null, eliminated:false, filled:false });
+      }
+      rounds.push(lvl);
+      count = count/2;
+    }
+    return rounds;
+  }
+
+  function resetBracket(year){
+    state.year = year;
+    state.rounds = buildInitialRounds(year);
+    state.rotation = 0;
+    els.wheel.style.transform = "rotate(0deg)";
+    hideChampionBanner();
+    simulateRandomBracket();
+  }
+
+  // Simulates the entire bracket with random (coin-flip) winners at every round,
+  // then renders the fully-played-out wheel with the golden path lit up.
+  function simulateRandomBracket(){
+    var rounds = state.rounds;
+    var numLevels = rounds.length;
+
+    for (var r=0; r<numLevels-1; r++){
+      var roundArr = rounds[r];
+      for (var i=0; i<roundArr.length; i+=2){
+        var a = roundArr[i];
+        var b = roundArr[i+1];
+        if (!a.name && !b.name) continue;
+        var winner = !a.name ? b : !b.name ? a : (Math.random() < 0.5 ? a : b);
+        var loser = (winner === a) ? b : a;
+        if (loser.name) loser.eliminated = true;
+        winner.eliminated = false;
+
+        var nextSlot = rounds[r+1][i/2];
+        nextSlot.name = winner.name;
+        nextSlot.seed = winner.seed;
+        nextSlot.region = winner.region;
+        nextSlot.color = winner.color;
+        nextSlot.filled = true;
+        nextSlot.eliminated = false;
+      }
+    }
+    checkChampion();
+    render();
+  }
+
+  // pick a winner at round r, slot index i -> promotes into round r+1
+  function pickWinner(r, i){
+    if (r >= state.rounds.length - 1) return; // champion slot, nothing above
+    var roundArr = state.rounds[r];
+    var slot = roundArr[i];
+    if (!slot.name || slot.eliminated) return;
+
+    var pairIndex = Math.floor(i/2);
+    var siblingIndex = (i % 2 === 0) ? i+1 : i-1;
+    var sibling = roundArr[siblingIndex];
+
+    // eliminate sibling if it currently has a name
+    if (sibling && sibling.name){
+      sibling.eliminated = true;
+    }
+    slot.eliminated = false;
+
+    // promote
+    var nextRound = state.rounds[r+1];
+    var nextSlot = nextRound[pairIndex];
+    nextSlot.name = slot.name;
+    nextSlot.color = slot.color;
+    nextSlot.filled = true;
+    nextSlot.eliminated = false;
+
+    // if this overwrote a previous different winner, clear everything above recursively
+    propagateClearAbove(r+1, pairIndex, slot.name);
+
+    render();
+  }
+
+  function propagateClearAbove(r, i, newName){
+    if (r >= state.rounds.length - 1) {
+      checkChampion();
+      return;
+    }
+    var pairIndex = Math.floor(i/2);
+    var nextRound = state.rounds[r+1];
+    var nextSlot = nextRound[pairIndex];
+    if (nextSlot.filled && nextSlot.name !== newName){
+      clearAllAbove(r+1, pairIndex);
+    }
+    checkChampion();
+  }
+
+  function clearAllAbove(r, i){
+    if (r >= state.rounds.length - 1) return;
+    var pairIndex = Math.floor(i/2);
+    var nextRound = state.rounds[r+1];
+    var nextSlot = nextRound[pairIndex];
+    if (nextSlot.filled){
+      nextSlot.name = null;
+      nextSlot.filled = false;
+      nextSlot.eliminated = false;
+      clearAllAbove(r+1, pairIndex);
+    }
+  }
+
+  function checkChampion(){
+    var top = state.rounds[state.rounds.length-1][0];
+    if (top && top.name){
+      showChampionBanner(top.name);
+    } else {
+      hideChampionBanner();
+    }
+  }
+
+  function showChampionBanner(name){
+    els.championName.textContent = name;
+    els.championBanner.classList.add('show');
+  }
+  function hideChampionBanner(){
+    els.championBanner.classList.remove('show');
+  }
+
+  // current "active round" for the counter display = furthest round with at least one filled slot beyond leaf, capped
+  function currentRoundDisplay(){
+    var total = state.rounds.length - 1; // number of decision rounds (leaf->champion)
+    var furthest = 0;
+    for (var r=1;r<state.rounds.length;r++){
+      var anyFilled = state.rounds[r].some(function(s){return s.filled;});
+      if (anyFilled) furthest = r;
+    }
+    return Math.min(furthest+1, total) + " / " + total;
+  }
+
+  // ---------------------------------------------------------------
+  // SVG geometry — concentric rings, expanding outward
+  // ring 0 = leaf teams = OUTERMOST ring (largest radius)
+  // ring (rounds-1) = champion = center hole
+  // ---------------------------------------------------------------
+  var SVG_NS = "http://www.w3.org/2000/svg";
+
+  function buildSVG(){
+    var rounds = state.rounds;
+    var numLevels = rounds.length; // includes champion level
+    var rBase = 46;
+    var rStep = 58;
+
+    // outer radius for leaf ring (level 0) is the LARGEST
+    // level k has inner radius = rBase + (numLevels-1-k)*rStep
+    //            outer radius = inner + rStep   (except champion level which is just a hole)
+    function innerR(level){ return rBase + (numLevels-1-level-1)*rStep; }
+    function outerR(level){ return innerR(level) + rStep; }
+
+    var maxOuter = outerR(0);
+    var size = maxOuter*2 + 40;
+    var cx = size/2, cy = size/2;
+
+    els.wheel.setAttribute('viewBox', '0 0 ' + size + ' ' + size);
+    els.wheel.setAttribute('width', Math.min(size, maxStageSize()));
+    els.wheel.setAttribute('height', Math.min(size, maxStageSize()));
+    els.wheel.innerHTML = '';
+
+    els.hub.setAttribute('viewBox', '0 0 ' + size + ' ' + size);
+    els.hub.setAttribute('width', Math.min(size, maxStageSize()));
+    els.hub.setAttribute('height', Math.min(size, maxStageSize()));
+    els.hub.innerHTML = '';
+
+    var defs = document.createElementNS(SVG_NS,'defs');
+    els.wheel.appendChild(defs);
+
+    // draw from innermost decision ring out to outermost (leaf); champion level (0 slots
+    // worth of picking) is skipped here and rendered separately in the fixed hub SVG
+    for (var level = numLevels-2; level >= 0; level--){
+      drawLevel(level, rounds[level], innerR(level), outerR(level), cx, cy, numLevels);
+    }
+
+    // center hub — drawn into its own non-rotating SVG so the text never spins
+    drawHub(cx, cy, innerR(numLevels-1));
+
+    return {cx:cx, cy:cy};
+  }
+
+  function maxStageSize(){
+    var w = window.innerWidth;
+    var h = window.innerHeight - 170; // minus topbar approx
+    return Math.max(280, Math.min(w, h, 760));
+  }
+
+  function drawHub(cx, cy, r){
+    var champ = state.rounds[state.rounds.length-1][0];
+    var g = document.createElementNS(SVG_NS,'g');
+
+    var circle = document.createElementNS(SVG_NS,'circle');
+    circle.setAttribute('cx', cx);
+    circle.setAttribute('cy', cy);
+    circle.setAttribute('r', r);
+    circle.setAttribute('fill', '#0b0e11');
+    circle.setAttribute('stroke', champ && champ.name ? '#e8b339' : '#1c2128');
+    circle.setAttribute('stroke-width', '2');
+    g.appendChild(circle);
+
+    var trophy = document.createElementNS(SVG_NS,'text');
+    trophy.setAttribute('x', cx);
+    trophy.setAttribute('y', cy - (champ && champ.name ? 10 : 0));
+    trophy.setAttribute('text-anchor','middle');
+    trophy.setAttribute('class','hub-label');
+    trophy.textContent = champ && champ.name ? 'CHAMPION' : 'PICK TO FILL';
+    g.appendChild(trophy);
+
+    if (champ && champ.name){
+      var nameEl = document.createElementNS(SVG_NS,'text');
+      nameEl.setAttribute('x', cx);
+      nameEl.setAttribute('y', cy + 10);
+      nameEl.setAttribute('text-anchor','middle');
+      nameEl.setAttribute('class','hub-winner');
+      nameEl.textContent = champ.name.length > 10 ? champ.name.slice(0,9)+'…' : champ.name;
+      g.appendChild(nameEl);
+    }
+
+    els.hub.appendChild(g);
+  }
+
+  function polarToXY(cx, cy, r, angleDeg){
+    var a = (angleDeg - 90) * Math.PI/180;
+    return [cx + r*Math.cos(a), cy + r*Math.sin(a)];
+  }
+
+  function describeArcPath(cx, cy, rInner, rOuter, startAngle, endAngle){
+    var p1 = polarToXY(cx, cy, rOuter, startAngle);
+    var p2 = polarToXY(cx, cy, rOuter, endAngle);
+    var p3 = polarToXY(cx, cy, rInner, endAngle);
+    var p4 = polarToXY(cx, cy, rInner, startAngle);
+    var largeArc = (endAngle - startAngle) > 180 ? 1 : 0;
+    return [
+      'M', p1[0], p1[1],
+      'A', rOuter, rOuter, 0, largeArc, 1, p2[0], p2[1],
+      'L', p3[0], p3[1],
+      'A', rInner, rInner, 0, largeArc, 0, p4[0], p4[1],
+      'Z'
+    ].join(' ');
+  }
+
+  function drawLevel(level, slots, rInner, rOuter, cx, cy, numLevels){
+    var n = slots.length;
+    if (n === 0) return; // champion level has its own hub drawing
+    var anglePer = 360/n;
+
+    for (var i=0;i<n;i++){
+      var startA = i*anglePer;
+      var endA = startA + anglePer;
+      var midA = (startA+endA)/2;
+      var slot = slots[i];
+
+      var g = document.createElementNS(SVG_NS,'g');
+      g.setAttribute('class', 'slice' +
+        (slot.name ? '' : ' empty') +
+        (slot.eliminated ? ' eliminated' : '') );
+
+      var champSlot = state.rounds[numLevels-1][0];
+      if (slot.name && champSlot.name && slot.name === champSlot.name && !slot.eliminated){
+        g.classList.add('winner');
+      }
+      if (slot.name && !slot.eliminated && level < numLevels-1){
+        g.classList.add('active-pick');
+      }
+
+      var path = document.createElementNS(SVG_NS,'path');
+      path.setAttribute('d', describeArcPath(cx, cy, rInner, rOuter, startA, endA));
+      path.setAttribute('class','slice-bg');
+      if (slot.color && slot.name && !slot.eliminated){
+        path.style.fill = hexToRgba(slot.color, 0.14);
+      }
+      g.appendChild(path);
+
+      if (slot.name){
+        // seed badge (replaces the flag-circle concept — shows tournament seed number)
+        var flagR = Math.min(14, (rOuter-rInner)*0.28);
+        var flagPos = polarToXY(cx, cy, rOuter - (rOuter-rInner)*0.28, midA);
+        var flag = document.createElementNS(SVG_NS,'circle');
+        flag.setAttribute('cx', flagPos[0]);
+        flag.setAttribute('cy', flagPos[1]);
+        flag.setAttribute('r', flagR);
+        flag.setAttribute('fill', slot.color || '#444');
+        flag.setAttribute('class','flag-circle');
+        flag.setAttribute('opacity', slot.eliminated ? 0.3 : 0.9);
+        g.appendChild(flag);
+
+        if (slot.seed){
+          var seedLabel = document.createElementNS(SVG_NS,'text');
+          seedLabel.setAttribute('x', flagPos[0]);
+          seedLabel.setAttribute('y', flagPos[1]);
+          seedLabel.setAttribute('text-anchor','middle');
+          seedLabel.setAttribute('dominant-baseline','middle');
+          seedLabel.setAttribute('font-family',"'JetBrains Mono',monospace");
+          seedLabel.setAttribute('font-size', Math.max(6, flagR*0.9));
+          seedLabel.setAttribute('font-weight','600');
+          seedLabel.setAttribute('fill', '#0b0e11');
+          seedLabel.setAttribute('opacity', slot.eliminated ? 0.4 : 1);
+          seedLabel.style.pointerEvents = 'none';
+          seedLabel.textContent = slot.seed;
+          g.appendChild(seedLabel);
+        }
+
+        // label
+        var labelR = rOuter - (rOuter-rInner)*0.68;
+        var labelPos = polarToXY(cx, cy, labelR, midA);
+        var label = document.createElementNS(SVG_NS,'text');
+        label.setAttribute('x', labelPos[0]);
+        label.setAttribute('y', labelPos[1]);
+        label.setAttribute('text-anchor','middle');
+        label.setAttribute('dominant-baseline','middle');
+        label.setAttribute('class','slice-label');
+        var fontSize = n > 32 ? 7.5 : n > 16 ? 9 : 11;
+        label.setAttribute('font-size', fontSize);
+        label.textContent = truncateForArc(slot.name, n);
+
+        // rotate label to follow arc tangent for readability on big wheels
+        var rot = midA;
+        if (rot > 90 && rot < 270) rot += 180;
+        label.setAttribute('transform', 'rotate(' + rot + ' ' + labelPos[0] + ' ' + labelPos[1] + ')');
+        g.appendChild(label);
+      }
+
+      if (slot.name && !slot.eliminated && level < numLevels-1){
+        (function(lvl, idx){
+          g.addEventListener('click', function(e){
+            e.stopPropagation();
+            pickWinner(lvl, idx);
+          });
+        })(level, i);
+      }
+
+      els.wheel.appendChild(g);
+
+      // connector to parent slot (drawn pointing inward) — only if not innermost decision level info needed
+      if (level > 0){
+        drawConnectorTick(cx, cy, rInner, midA, slot);
+      }
+    }
+  }
+
+  function drawConnectorTick(cx, cy, r, angle, slot){
+    var p = polarToXY(cx, cy, r, angle);
+    var dot = document.createElementNS(SVG_NS,'circle');
+    dot.setAttribute('cx', p[0]);
+    dot.setAttribute('cy', p[1]);
+    dot.setAttribute('r', 2.5);
+    dot.setAttribute('class', 'joint' + (slot.filled ? ' lit' : ''));
+    els.wheel.appendChild(dot);
+  }
+
+  function truncateForArc(name, n){
+    var max = n > 32 ? 9 : n > 16 ? 11 : n > 8 ? 14 : 18;
+    return name.length > max ? name.slice(0, max-1) + '…' : name;
+  }
+
+  function hexToRgba(hex, alpha){
+    var h = hex.replace('#','');
+    if (h.length===3) h = h.split('').map(function(c){return c+c;}).join('');
+    var r = parseInt(h.substring(0,2),16);
+    var g = parseInt(h.substring(2,4),16);
+    var b = parseInt(h.substring(4,6),16);
+    return 'rgba('+r+','+g+','+b+','+alpha+')';
+  }
+
+  // ---------------------------------------------------------------
+  // Render
+  // ---------------------------------------------------------------
+  function render(){
+    buildSVG();
+    els.roundCounter.textContent = 'ROUND ' + currentRoundDisplay();
+  }
+
+  // ---------------------------------------------------------------
+  // Spin gesture — vertical drag (mouse or touch) rotates the wheel
+  // ---------------------------------------------------------------
+  var drag = {active:false, startY:0, startRotation:0, lastY:0, velocity:0, lastT:0};
+
+  function getY(e){
+    if (e.touches && e.touches.length) return e.touches[0].clientY;
+    return e.clientY;
+  }
+
+  function onDragStart(e){
+    drag.active = true;
+    drag.startY = getY(e);
+    drag.lastY = drag.startY;
+    drag.startRotation = state.rotation;
+    drag.velocity = 0;
+    drag.lastT = performance.now();
+    els.wheel.classList.remove('settle');
+    els.wheelWrap.classList.add('grabbing');
+  }
+
+  function onDragMove(e){
+    if (!drag.active) return;
+    var y = getY(e);
+    var dy = y - drag.startY;
+    // vertical drag -> rotation; sensitivity tuned so a full screen swipe ~ 180deg
+    var rotation = drag.startRotation - dy * 0.6;
+    var now = performance.now();
+    var dt = Math.max(1, now - drag.lastT);
+    drag.velocity = -(y - drag.lastY) * 0.6 / dt; // deg per ms
+    drag.lastY = y;
+    drag.lastT = now;
+    state.rotation = rotation;
+    els.wheel.style.transform = 'rotate(' + rotation + 'deg)';
+    if (e.cancelable) e.preventDefault();
+  }
+
+  function onDragEnd(){
+    if (!drag.active) return;
+    drag.active = false;
+    els.wheelWrap.classList.remove('grabbing');
+
+    // momentum fling, then settle with easing (no hard snap-to-slice required for this UI,
+    // since picking happens by click not by stopping angle)
+    var fling = drag.velocity * 160; // extrapolate a bit
+    var finalRotation = state.rotation + fling;
+    els.wheel.classList.add('settle');
+    state.rotation = finalRotation;
+    requestAnimationFrame(function(){
+      els.wheel.style.transform = 'rotate(' + finalRotation + 'deg)';
+    });
+  }
+
+  function bindDragHandlers(){
+    var wrap = els.wheelWrap;
+    wrap.addEventListener('mousedown', onDragStart);
+    window.addEventListener('mousemove', onDragMove);
+    window.addEventListener('mouseup', onDragEnd);
+
+    wrap.addEventListener('touchstart', onDragStart, {passive:true});
+    wrap.addEventListener('touchmove', onDragMove, {passive:false});
+    wrap.addEventListener('touchend', onDragEnd, {passive:true});
+    wrap.addEventListener('touchcancel', onDragEnd, {passive:true});
+  }
+
+  // ---------------------------------------------------------------
+  // Wire up controls
+  // ---------------------------------------------------------------
+  els.yearSelect.addEventListener('change', function(){
+    resetBracket(els.yearSelect.value);
+  });
+  els.randomizeBtn.addEventListener('click', simulateRandomBracket);
+  els.resetBtn.addEventListener('click', function(){
+    resetBracket(state.year);
+  });
+
+  window.addEventListener('resize', function(){
+    render();
+  });
+
+  bindDragHandlers();
+  resetBracket("2026");
+})();
+</script>
+</body>
+</html>
