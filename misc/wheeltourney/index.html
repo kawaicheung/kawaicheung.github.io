@@ -110,6 +110,14 @@
     border-color:var(--gold-dim);
     color:var(--gold);
   }
+  button.back-btn{
+    border-color:var(--gold);
+    color:var(--gold);
+    font-weight:600;
+  }
+  button.back-btn:hover{
+    background:rgba(232,179,57,0.08);
+  }
 
   .hint{
     font-family:'JetBrains Mono',monospace;
@@ -228,6 +236,20 @@
   .connector.lit{
     stroke:var(--gold-dim);
   }
+  .quadrant-divider{
+    stroke:var(--ink-dim);
+    stroke-width:2;
+    opacity:0.55;
+    pointer-events:none;
+  }
+  .region-label{
+    font-family:'JetBrains Mono',monospace;
+    font-size:13px;
+    font-weight:600;
+    letter-spacing:.18em;
+    fill:var(--ink-dim);
+    pointer-events:none;
+  }
   .joint{
     fill:var(--ring-2);
   }
@@ -299,8 +321,9 @@
     </select>
     <button id="randomizeBtn">Simulate random bracket</button>
     <button id="resetBtn">Reset bracket</button>
+    <button id="backToAllBtn" class="back-btn" hidden>&larr; Back to full bracket</button>
   </div>
-  <div class="hint">Drag / swipe up or down on the wheel to spin · click a team to advance it</div>
+  <div class="hint">Drag / swipe to spin · click a team to advance it · double-click any team to zoom into its quadrant</div>
 </div>
 
 <div class="stage" id="stage">
@@ -463,8 +486,11 @@
   var state = {
     year: "2026",
     rounds: [],     // rounds[0] = leaf teams (outermost), rounds[last] = [champion slot]
-    rotation: 0      // current wheel rotation in degrees
+    rotation: 0,     // current wheel rotation in degrees
+    quadrantPath: [] // [] = full wheel; [q0] = one quadrant of 16; [q0,q1] = sub-quadrant of 4
   };
+
+  var REGION_NAMES = ["South", "West", "East", "Midwest"]; // matches TOURNAMENT_DATA build order, used only for labeling depth-1 quadrants
 
   var els = {
     yearSelect: document.getElementById('yearSelect'),
@@ -476,7 +502,8 @@
     hub: document.getElementById('hub'),
     roundCounter: document.getElementById('roundCounter'),
     championBanner: document.getElementById('championBanner'),
-    championName: document.getElementById('championName')
+    championName: document.getElementById('championName'),
+    backToAllBtn: document.getElementById('backToAllBtn')
   };
 
   // ---------------------------------------------------------------
@@ -517,7 +544,9 @@
     state.year = year;
     state.rounds = buildInitialRounds(year);
     state.rotation = 0;
+    state.quadrantPath = [];
     els.wheel.style.transform = "rotate(0deg)";
+    els.backToAllBtn.hidden = true;
     hideChampionBanner();
     simulateRandomBracket();
   }
@@ -573,6 +602,8 @@
     var nextRound = state.rounds[r+1];
     var nextSlot = nextRound[pairIndex];
     nextSlot.name = slot.name;
+    nextSlot.seed = slot.seed;
+    nextSlot.region = slot.region;
     nextSlot.color = slot.color;
     nextSlot.filled = true;
     nextSlot.eliminated = false;
@@ -629,13 +660,94 @@
 
   // current "active round" for the counter display = furthest round with at least one filled slot beyond leaf, capped
   function currentRoundDisplay(){
-    var total = state.rounds.length - 1; // number of decision rounds (leaf->champion)
+    var rounds = getDisplayRounds();
+    var total = rounds.length - 1; // number of decision rounds (leaf->champion)
     var furthest = 0;
-    for (var r=1;r<state.rounds.length;r++){
-      var anyFilled = state.rounds[r].some(function(s){return s.filled;});
+    for (var r=1;r<rounds.length;r++){
+      var anyFilled = rounds[r].some(function(s){return s.filled;});
       if (anyFilled) furthest = r;
     }
     return Math.min(furthest+1, total) + " / " + total;
+  }
+
+  // ---------------------------------------------------------------
+  // Quadrant zoom — double-tap/double-click any slice to zoom the wheel
+  // into the quadrant (1/4) of the current view that slice belongs to,
+  // as long as that quadrant still has >=4 leaf teams (so 64 -> 16 -> 4,
+  // and from 4 there's nowhere smaller to go). Works recursively: from
+  // a 16-team quadrant view, double-tapping zooms into one of its own
+  // 4-team sub-quadrants. Picks made at any zoom depth write into the
+  // same state.rounds objects the full view reads, so progress is shared
+  // no matter which depth you're looking at.
+  // ---------------------------------------------------------------
+  var MIN_QUADRANT_LEAVES = 4; // smallest zoomable unit; below this there's no sub-quadrant to show
+
+  // Returns {start, count} in leaf-index space (round 0) for the current state.quadrantPath.
+  function leafBoundsForPath(path){
+    var start = 0, count = state.rounds[0].length; // 64
+    for (var i=0; i<path.length; i++){
+      var subCount = count / 4;
+      start += path[i] * subCount;
+      count = subCount;
+    }
+    return { start: start, count: count };
+  }
+
+  // Same, but for a given level (round index) within that view: every round halves the slot count.
+  function boundsAtLevelForPath(path, level){
+    var leaf = leafBoundsForPath(path);
+    return { start: leaf.start >> level, count: leaf.count >> level };
+  }
+
+  // Builds a standalone rounds-like array (same slot object references) for the current
+  // quadrant view, covering every round from its own leaf level down to its own "champion"
+  // (the single slot the view's leaves eventually feed into).
+  function getQuadrantRounds(path){
+    var leaf = leafBoundsForPath(path);
+    var depth = Math.log2(leaf.count); // rounds 0..depth-1 are within-quadrant, depth = champion level
+    var out = [];
+    for (var level=0; level<=depth; level++){
+      var bounds = boundsAtLevelForPath(path, level);
+      out.push(state.rounds[level].slice(bounds.start, bounds.start + bounds.count));
+    }
+    return out;
+  }
+
+  // Translates a local index (within the current quadrant view) at a given level
+  // back to the global index into state.rounds, for use with pickWinner.
+  function localToGlobalIndex(level, localIdx){
+    if (state.quadrantPath.length === 0) return localIdx;
+    var bounds = boundsAtLevelForPath(state.quadrantPath, level);
+    return bounds.start + localIdx;
+  }
+
+  // Given a slot's global leaf index (its position in state.rounds[0]) and the CURRENT
+  // view's path, returns which of the current view's 4 sub-quadrants (0-3) it falls under.
+  function subQuadrantOfGlobalLeaf(globalLeafIdx){
+    var leaf = leafBoundsForPath(state.quadrantPath);
+    var localLeaf = globalLeafIdx - leaf.start;
+    var subCount = leaf.count / 4;
+    return Math.floor(localLeaf / subCount);
+  }
+
+  function enterQuadrant(subQuadrantIdx){
+    var newPath = state.quadrantPath.concat([subQuadrantIdx]);
+    var newLeafCount = leafBoundsForPath(newPath).count;
+    if (newLeafCount < MIN_QUADRANT_LEAVES) return; // nothing smaller to zoom into
+    state.quadrantPath = newPath;
+    state.rotation = 0;
+    els.wheel.style.transform = "rotate(0deg)";
+    els.backToAllBtn.hidden = false;
+    render();
+  }
+
+  function exitToFullWheel(){
+    if (state.quadrantPath.length === 0) return;
+    state.quadrantPath = [];
+    state.rotation = 0;
+    els.wheel.style.transform = "rotate(0deg)";
+    els.backToAllBtn.hidden = true;
+    render();
   }
 
   // ---------------------------------------------------------------
@@ -645,8 +757,12 @@
   // ---------------------------------------------------------------
   var SVG_NS = "http://www.w3.org/2000/svg";
 
+  function getDisplayRounds(){
+    return state.quadrantPath.length === 0 ? state.rounds : getQuadrantRounds(state.quadrantPath);
+  }
+
   function buildSVG(){
-    var rounds = state.rounds;
+    var rounds = getDisplayRounds();
     var numLevels = rounds.length; // includes champion level
     var rBase = 46;
     var rStep = 58;
@@ -658,7 +774,8 @@
     function outerR(level){ return innerR(level) + rStep; }
 
     var maxOuter = outerR(0);
-    var size = maxOuter*2 + 40;
+    var labelPadding = state.quadrantPath.length === 0 ? 70 : 40; // room for curved region labels at root view
+    var size = maxOuter*2 + labelPadding;
     var cx = size/2, cy = size/2;
 
     els.wheel.setAttribute('viewBox', '0 0 ' + size + ' ' + size);
@@ -677,11 +794,17 @@
     // draw from innermost decision ring out to outermost (leaf); champion level (0 slots
     // worth of picking) is skipped here and rendered separately in the fixed hub SVG
     for (var level = numLevels-2; level >= 0; level--){
-      drawLevel(level, rounds[level], innerR(level), outerR(level), cx, cy, numLevels);
+      drawLevel(level, rounds[level], innerR(level), outerR(level), cx, cy, numLevels, rounds);
     }
 
     // center hub — drawn into its own non-rotating SVG so the text never spins
-    drawHub(cx, cy, innerR(numLevels-1));
+    drawHub(cx, cy, innerR(numLevels-1), rounds);
+
+    // quadrant dividers + curved region labels — only meaningful at the root view,
+    // since "South/West/East/Midwest" stops being a coherent concept once zoomed in
+    if (state.quadrantPath.length === 0){
+      drawQuadrantOverlay(cx, cy, maxOuter, defs);
+    }
 
     return {cx:cx, cy:cy};
   }
@@ -692,8 +815,64 @@
     return Math.max(280, Math.min(w, h, 760));
   }
 
-  function drawHub(cx, cy, r){
-    var champ = state.rounds[state.rounds.length-1][0];
+  // Draws 4 bold radial divider lines at the quadrant boundaries (0/90/180/270deg),
+  // and a curved region name label outside the leaf ring, centered on each quadrant.
+  function drawQuadrantOverlay(cx, cy, leafOuterR, defs){
+    var labelR = leafOuterR + 26; // radius of the (invisible) arc the text curves along
+    var boundaryAngles = [0, 90, 180, 270];
+    var quadrantMidAngles = [45, 135, 225, 315];
+
+    // --- divider lines ---
+    boundaryAngles.forEach(function(angle){
+      var inner = polarToXY(cx, cy, 0, angle); // from dead center
+      var outer = polarToXY(cx, cy, leafOuterR, angle);
+      var line = document.createElementNS(SVG_NS, 'line');
+      line.setAttribute('x1', cx);
+      line.setAttribute('y1', cy);
+      line.setAttribute('x2', outer[0]);
+      line.setAttribute('y2', outer[1]);
+      line.setAttribute('class', 'quadrant-divider');
+      els.wheel.appendChild(line);
+    });
+
+    // --- curved region labels ---
+    quadrantMidAngles.forEach(function(midAngle, qi){
+      var name = (REGION_NAMES[qi] || '').toUpperCase();
+      if (!name) return;
+
+      // build a short open arc centered on this quadrant's midpoint angle, just for the
+      // text to follow; arc span is generous so longer names ("MIDWEST") still fit comfortably.
+      var halfSpan = 34;
+      var startA = midAngle - halfSpan;
+      var endA = midAngle + halfSpan;
+
+      var pathId = 'regionLabelArc' + qi;
+      var startPt = polarToXY(cx, cy, labelR, startA);
+      var endPt = polarToXY(cx, cy, labelR, endA);
+      var largeArc = (endA - startA) > 180 ? 1 : 0;
+
+      var arcPath = document.createElementNS(SVG_NS, 'path');
+      arcPath.setAttribute('id', pathId);
+      arcPath.setAttribute('d', 'M ' + startPt[0] + ' ' + startPt[1] +
+        ' A ' + labelR + ' ' + labelR + ' 0 ' + largeArc + ' 1 ' + endPt[0] + ' ' + endPt[1]);
+      arcPath.setAttribute('fill', 'none');
+      defs.appendChild(arcPath);
+
+      var text = document.createElementNS(SVG_NS, 'text');
+      text.setAttribute('class', 'region-label');
+      var textPath = document.createElementNS(SVG_NS, 'textPath');
+      textPath.setAttributeNS('http://www.w3.org/1999/xlink', 'href', '#' + pathId);
+      textPath.setAttribute('href', '#' + pathId);
+      textPath.setAttribute('startOffset', '50%');
+      textPath.setAttribute('text-anchor', 'middle');
+      textPath.textContent = name;
+      text.appendChild(textPath);
+      els.wheel.appendChild(text);
+    });
+  }
+
+  function drawHub(cx, cy, r, rounds){
+    var champ = rounds[rounds.length-1][0];
     var g = document.createElementNS(SVG_NS,'g');
 
     var circle = document.createElementNS(SVG_NS,'circle');
@@ -705,12 +884,15 @@
     circle.setAttribute('stroke-width', '2');
     g.appendChild(circle);
 
+    var depth = state.quadrantPath.length;
+    var champLabel = depth === 0 ? 'CHAMPION' : depth === 1 ? 'REGION CHAMP' : 'GROUP CHAMP';
+
     var trophy = document.createElementNS(SVG_NS,'text');
     trophy.setAttribute('x', cx);
     trophy.setAttribute('y', cy - (champ && champ.name ? 10 : 0));
     trophy.setAttribute('text-anchor','middle');
     trophy.setAttribute('class','hub-label');
-    trophy.textContent = champ && champ.name ? 'CHAMPION' : 'PICK TO FILL';
+    trophy.textContent = champ && champ.name ? champLabel : 'PICK TO FILL';
     g.appendChild(trophy);
 
     if (champ && champ.name){
@@ -746,7 +928,7 @@
     ].join(' ');
   }
 
-  function drawLevel(level, slots, rInner, rOuter, cx, cy, numLevels){
+  function drawLevel(level, slots, rInner, rOuter, cx, cy, numLevels, allRounds){
     var n = slots.length;
     if (n === 0) return; // champion level has its own hub drawing
     var anglePer = 360/n;
@@ -762,7 +944,7 @@
         (slot.name ? '' : ' empty') +
         (slot.eliminated ? ' eliminated' : '') );
 
-      var champSlot = state.rounds[numLevels-1][0];
+      var champSlot = allRounds[numLevels-1][0];
       if (slot.name && champSlot.name && slot.name === champSlot.name && !slot.eliminated){
         g.classList.add('winner');
       }
@@ -829,9 +1011,40 @@
 
       if (slot.name && !slot.eliminated && level < numLevels-1){
         (function(lvl, idx){
+          var DOUBLE_TAP_MS = 320;
+          var pendingTimer = null;
+
+          function doSinglePick(){
+            pickWinner(lvl, localToGlobalIndex(lvl, idx));
+          }
+
           g.addEventListener('click', function(e){
             e.stopPropagation();
-            pickWinner(lvl, idx);
+
+            var globalIdx = localToGlobalIndex(lvl, idx);
+            var globalLeafIdx = globalIdx << lvl; // representative leaf under this slot
+            var subQ = subQuadrantOfGlobalLeaf(globalLeafIdx);
+            var prospectivePath = state.quadrantPath.concat([subQ]);
+            var canZoom = leafBoundsForPath(prospectivePath).count >= MIN_QUADRANT_LEAVES;
+
+            if (!canZoom){
+              // already at the smallest zoomable unit — behave as before, instantly
+              doSinglePick();
+              return;
+            }
+
+            if (pendingTimer){
+              // second click within window -> double tap -> zoom, cancel the pending single pick
+              clearTimeout(pendingTimer);
+              pendingTimer = null;
+              enterQuadrant(subQ);
+            } else {
+              // wait briefly to see if a second tap follows
+              pendingTimer = setTimeout(function(){
+                pendingTimer = null;
+                doSinglePick();
+              }, DOUBLE_TAP_MS);
+            }
           });
         })(level, i);
       }
@@ -952,6 +1165,7 @@
   els.resetBtn.addEventListener('click', function(){
     resetBracket(state.year);
   });
+  els.backToAllBtn.addEventListener('click', exitToFullWheel);
 
   window.addEventListener('resize', function(){
     render();
