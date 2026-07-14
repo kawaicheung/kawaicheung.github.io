@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>The Tablespoon Reckoner</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Old+Standard+TT&display=swap');
+
+  :root{
+    --ink:#111;
+    --paper:#fff;
+    --line:#111;
+  }
+
+  *{box-sizing:border-box;}
+
+  html,body{
+    margin:0; padding:0; height:100%;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Old Standard TT', Georgia, 'Times New Roman', serif;
+  }
+
+  body{
+    display:flex;
+    min-height:100vh;
+  }
+
+  .left, .right{
+    width:50%;
+    padding:36px 44px;
+  }
+
+  .left{
+    border-right:3px double var(--ink);
+    display:flex;
+    flex-direction:column;
+    gap:30px;
+  }
+
+  .right{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:flex-start;
+    text-align:center;
+  }
+
+  h1{
+    font-family:'Playfair Display', serif;
+    font-weight:700;
+    font-size:2rem;
+    letter-spacing:.5px;
+    margin:0;
+    text-transform:uppercase;
+  }
+
+  .header{
+    padding-bottom:20px;
+    border-bottom:3px double var(--ink);
+  }
+
+  .section{
+    border-top:1px solid var(--ink);
+    padding-top:14px;
+  }
+
+  .section:first-of-type{
+    border-top:none;
+    padding-top:0;
+  }
+
+  .section-label{
+    font-family:'Playfair Display', serif;
+    font-size:.78rem;
+    letter-spacing:3px;
+    text-transform:uppercase;
+    margin-bottom:10px;
+    display:block;
+  }
+
+  .grid{
+    display:grid;
+    gap:8px;
+  }
+
+  .grid.unit{
+    grid-template-columns:repeat(3, 1fr);
+  }
+
+  .unit-toggle{
+    font-size:inherit;
+    font-weight:inherit;
+    font-family:inherit;
+    text-decoration:underline;
+    text-underline-offset:6px;
+    cursor:pointer;
+    display:inline-block;
+  }
+
+  .unit-toggle:hover{
+    color:#555;
+  }
+
+  .numpad-grid{
+    display:grid;
+    grid-template-columns:repeat(5, 1fr);
+    grid-template-rows:repeat(4, 64px);
+    gap:8px;
+  }
+
+  .numpad-grid button.blank{
+    visibility:hidden;
+    pointer-events:none;
+  }
+
+  button.pick{
+    font-family:'Old Standard TT', Georgia, serif;
+    background:var(--paper);
+    color:var(--ink);
+    border:1.5px solid var(--ink);
+    padding:10px 4px;
+    font-size:.95rem;
+    cursor:pointer;
+    transition:background .12s ease, color .12s ease;
+  }
+
+  button.pick:hover{
+    background:#eee;
+  }
+
+  button.pick.selected{
+    background:var(--ink);
+    color:var(--paper);
+  }
+
+  .input-summary{
+    font-family:'Playfair Display', serif;
+    font-size:1.3rem;
+    font-style:italic;
+    margin-bottom:24px;
+    min-height:1.6rem;
+  }
+
+  .answer-wrap{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:6px;
+  }
+
+  .answer-label{
+    font-family:'Playfair Display', serif;
+    font-size:.8rem;
+    letter-spacing:3px;
+    text-transform:uppercase;
+    color:#555;
+  }
+
+  .answer{
+    font-family:'Playfair Display', serif;
+    font-size:5.5rem;
+    line-height:1;
+    font-weight:700;
+    border-top:2px solid var(--ink);
+    border-bottom:2px solid var(--ink);
+    padding:14px 30px;
+  }
+
+  .answer-unit{
+    font-size:1.1rem;
+    font-style:italic;
+    margin-top:2px;
+  }
+
+  .icon-grid{
+    display:grid;
+    gap:10px;
+    width:100%;
+    flex:1;
+    min-height:0;
+    margin-top:34px;
+    align-content:center;
+    justify-content:center;
+  }
+
+  .icon-cell{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+
+  .icon-cell svg{
+    width:100%;
+    height:100%;
+  }
+
+  .recipe-note{
+    margin-top:26px;
+    font-style:italic;
+    font-size:.8rem;
+    color:#666;
+    max-width:320px;
+  }
+
+  @media (max-width: 760px){
+    body{flex-direction:column;}
+    .left,.right{width:100%;}
+    .left{border-right:none;border-bottom:3px double var(--ink);}
+  }
+</style>
+</head>
+<body>
+
+<div class="left">
+  <div class="header">
+    <h1>I Have One <span class="unit-toggle" id="unit-toggle"></span></h1>
+  </div>
+
+  <div class="section">
+    <span class="section-label">Spoons &amp; Fractions</span>
+    <div class="numpad-grid" id="numpad-grid"></div>
+  </div>
+
+  <div class="section">
+    <span class="section-label">Measure By</span>
+    <div class="grid unit" id="unit-grid"></div>
+  </div>
+</div>
+
+<div class="right">
+  <div class="input-summary" id="input-summary">&nbsp;</div>
+  <div class="answer-wrap">
+    <span class="answer-label">Reckons to</span>
+    <div class="answer" id="answer">&mdash;</div>
+    <div class="answer-unit" id="answer-unit">tablespoons</div>
+  </div>
+
+  <div class="icon-grid" id="icon-grid"></div>
+
+  <p class="recipe-note">Tap a figure to choose it. Tap it again, it is undone. One whole, one fraction, one measure &mdash; combined as writ.</p>
+</div>
+
+<script>
+  const numpadGrid = document.getElementById('numpad-grid');
+  const unitGrid = document.getElementById('unit-grid');
+  const answerEl = document.getElementById('answer');
+
+  // numbers: label, value, [col, row, colSpan, rowSpan]
+  const wholes = [
+    {label:'7', value:7, col:1, row:1},
+    {label:'8', value:8, col:2, row:1},
+    {label:'9', value:9, col:3, row:1},
+    {label:'4', value:4, col:1, row:2},
+    {label:'5', value:5, col:2, row:2},
+    {label:'6', value:6, col:3, row:2},
+    {label:'1', value:1, col:1, row:3},
+    {label:'2', value:2, col:2, row:3},
+    {label:'3', value:3, col:3, row:3},
+    {label:'0', value:0, col:1, row:4}
+  ];
+  const clearSpot = {col:2, row:4, colSpan:2};
+
+  const fractions = [
+    {label:'1/2', value:1/2, col:4, row:1, rowSpan:2},
+    {label:'1/4', value:1/4, col:5, row:1, rowSpan:2},
+    {label:'1/3', value:1/3, col:4, row:3},
+    {label:'2/3', value:2/3, col:5, row:3},
+    {label:'3/4', value:3/4, col:4, row:4, colSpan:2}
+  ];
+
+  function pluralize(label){
+    return label + 's';
+  }
+
+  const ALL_UNITS = [
+    {label:'teaspoon', mult:1/3},
+    {label:'tablespoon', mult:1},
+    {label:'cup', mult:16}
+  ];
+
+  const unitToggle = document.getElementById('unit-toggle');
+  let targetIndex = 1; // default: tablespoon
+  let targetUnit = ALL_UNITS[targetIndex];
+  unitToggle.textContent = targetUnit.label;
+
+  unitToggle.addEventListener('click', () => {
+    targetIndex = (targetIndex + 1) % ALL_UNITS.length;
+    targetUnit = ALL_UNITS[targetIndex];
+    unitToggle.textContent = targetUnit.label;
+    state.unit = null;
+    labels.unit = null;
+    renderUnitGrid();
+    update();
+  });
+
+  let unitBtns = [];
+  function renderUnitGrid(){
+    unitGrid.innerHTML = '';
+    unitBtns = ALL_UNITS.filter(u => u !== targetUnit).map(u => {
+      const btn = makeButton(unitGrid, pluralize(u.label), () => selectSingle('unit', u.mult, pluralize(u.label), btn, unitBtns));
+      return btn;
+    });
+  }
+
+  let state = { whole:null, fraction:null, unit:null };
+  let labels = { whole:null, fraction:null, unit:null };
+
+  function placeGrid(btn, item){
+    btn.style.gridColumn = item.colSpan ? `${item.col} / span ${item.colSpan}` : item.col;
+    btn.style.gridRow = item.rowSpan ? `${item.row} / span ${item.rowSpan}` : item.row;
+  }
+
+  function makeButton(container, text, onClick){
+    const btn = document.createElement('button');
+    btn.className = 'pick';
+    btn.textContent = text;
+    btn.addEventListener('click', onClick);
+    container.appendChild(btn);
+    return btn;
+  }
+
+  const wholeBtns = wholes.map(w => {
+    const btn = makeButton(numpadGrid, w.label, () => selectSingle('whole', w.value, w.label, btn, wholeBtns));
+    placeGrid(btn, w);
+    return btn;
+  });
+
+  const clearBtn = makeButton(numpadGrid, 'Clear', clearAll);
+  placeGrid(clearBtn, clearSpot);
+
+  function clearAll(){
+    state.whole = null;
+    state.fraction = null;
+    labels.whole = null;
+    labels.fraction = null;
+    [...wholeBtns, ...fractionBtns].forEach(b => b.classList.remove('selected'));
+    update();
+  }
+
+  const fractionBtns = fractions.map(f => {
+    const btn = makeButton(numpadGrid, f.label, () => selectSingle('fraction', f.value, f.label, btn, fractionBtns));
+    placeGrid(btn, f);
+    return btn;
+  });
+
+  renderUnitGrid();
+
+  const iconGridEl = document.getElementById('icon-grid');
+
+  function iconShape(unitLabel){
+    if(unitLabel === 'cup'){
+      return `<path d="M28 38 h44 v50 a22 22 0 0 1 -44 0 z"/>`;
+    }
+    const big = unitLabel === 'tablespoon';
+    const x = big ? 39 : 42;
+    const y = big ? 95 : 100;
+    const w = big ? 22 : 16;
+    const r = big ? 11 : 8;
+    const straight = big ? 14 : 10;
+    const handleEnd = `${x + w * 2} ${y}`;
+    const body = `<path d="M${x} ${y} h${w} v${straight} a${r} ${r} 0 0 1 -${w} 0 z"/>`;
+    const handle = `<path d="M${x + w} ${y} L${handleEnd}" fill="none"/>`;
+    return body + handle;
+  }
+
+  function iconSVG(unitLabel, fillPercent){
+    const clipId = 'clip' + Math.random().toString(36).slice(2);
+    const shape = iconShape(unitLabel);
+    const fillHeight = 140 * fillPercent / 100;
+    const fillY = 140 - fillHeight;
+    return `<svg viewBox="0 0 100 140" xmlns="http://www.w3.org/2000/svg">
+      <defs><clipPath id="${clipId}"><rect x="0" y="${fillY}" width="100" height="${fillHeight}"/></clipPath></defs>
+      <g fill="none" stroke="black" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round">${shape}</g>
+      <g fill="black" clip-path="url(#${clipId})">${shape}</g>
+    </svg>`;
+  }
+
+  function renderIcons(unitLabel, amount){
+    iconGridEl.innerHTML = '';
+    iconGridEl.style.gridTemplateColumns = '';
+    iconGridEl.style.gridTemplateRows = '';
+
+    if(!unitLabel || !amount || amount <= 0 || amount > 10) return;
+
+    const whole = Math.floor(amount + 1e-9);
+    const remainder = amount - whole;
+    const count = whole + (remainder > 1e-6 ? 1 : 0);
+
+    const cols = Math.min(5, count);
+    const rows = Math.ceil(count / cols);
+    iconGridEl.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
+    iconGridEl.style.gridTemplateRows = `repeat(${rows}, 1fr)`;
+
+    for(let i = 0; i < count; i++){
+      const isLast = i === count - 1;
+      const fillPct = (isLast && remainder > 1e-6) ? remainder * 100 : 100;
+      const cell = document.createElement('div');
+      cell.className = 'icon-cell';
+      cell.innerHTML = iconSVG(unitLabel, fillPct);
+      iconGridEl.appendChild(cell);
+    }
+  }
+
+  function selectSingle(key, value, label, btn, group){
+    const already = state[key] === value && btn.classList.contains('selected');
+    group.forEach(b => b.classList.remove('selected'));
+    if(already){
+      state[key] = null;
+      labels[key] = null;
+    } else {
+      state[key] = value;
+      labels[key] = label;
+      btn.classList.add('selected');
+    }
+    update();
+  }
+
+function capitalize(s){
+    return s.charAt(0).toUpperCase() + s.slice(1);
+  }
+
+  function update(){
+    const summaryEl = document.getElementById('input-summary');
+    if(labels.whole === null && labels.fraction === null && labels.unit === null){
+      summaryEl.innerHTML = '&nbsp;';
+    } else {
+      const parts = [labels.whole, labels.fraction].filter(Boolean).join(' ');
+      const unitLabel = labels.unit ? capitalize(labels.unit) : '';
+      summaryEl.textContent = [parts, unitLabel].filter(Boolean).join(' ') || '\u00A0';
+    }
+
+    if(state.unit === null){
+      answerEl.textContent = '\u2014';
+      document.getElementById('answer-unit').textContent = pluralize(targetUnit.label);
+      renderIcons(null, 0);
+      return;
+    }
+    const base = (state.whole || 0) + (state.fraction || 0);
+    const amountTbsp = (base === 0 ? 1 : base) * state.unit;
+    const amount = amountTbsp / targetUnit.mult;
+    document.getElementById('answer-unit').textContent = pluralize(targetUnit.label);
+    renderIcons(targetUnit.label, amount);
+    // format nicely
+    let display;
+    if(Number.isInteger(amount)){
+      display = amount.toString();
+    } else {
+      display = amount.toFixed(2).replace(/0+$/,'').replace(/\.$/,'');
+    }
+    answerEl.textContent = display;
+  }
+
+  update();
+</script>
+
+</body>
+</html>
