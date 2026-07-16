@@ -8,7 +8,7 @@ const NUMBER_RADIUS = 90;
 const TOTAL_DIAL_SLOTS = 13;
 const SLOT_ANGLE = 360 / TOTAL_DIAL_SLOTS; // degrees between adjacent slots
 const VANITY_SLOT_INDEX = MAX_CHANNELS; // 12 — right after channel 13
-const NEUTRAL_ANGLE = -((VANITY_SLOT_INDEX + 0.5) * SLOT_ANGLE); // pointer parks halfway through the U-to-2 gap when TV is off
+const NEUTRAL_ANGLE = -(VANITY_SLOT_INDEX * SLOT_ANGLE); // pointer parks right on U when TV is off
 
 // Picture-control knobs: 0% parks at 7 o'clock (210deg clockwise from
 // noon), 100% parks at 5 o'clock (150deg, i.e. 510deg — a 300deg sweep
@@ -241,7 +241,7 @@ async function renderDialView(channels, session) {
         <div class="dial-rotor" id="dialRotor">
           <div class="dial-knob">
             <div class="dial-knob-face"></div>
-            <div class="dial-knob-handle"></div>
+            <div class="dial-knob-handle" style="transform: translate(-50%, -50%) rotate(${VANITY_SLOT_INDEX * SLOT_ANGLE}deg)"></div>
           </div>
         </div>
       </div>
