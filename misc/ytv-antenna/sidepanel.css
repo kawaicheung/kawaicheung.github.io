@@ -93,7 +93,7 @@ body {
   cursor: pointer;
   /* Barely-there sheen on the black face: lightest at the top (0%/100%,
      same value so the wrap is seamless), darkening toward the bottom. */
-  background: conic-gradient(from 0deg, #222 0%,#333 4%, #000 5%, #000 95%, #333 96%, #222 100%);
+  background: conic-gradient(from 0deg, #222 0%,#121212 14%, #000 25%, #000 75%, #121212 86%, #222 100%);
   border-radius: 50%;
 }
 

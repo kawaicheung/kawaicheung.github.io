@@ -35,10 +35,10 @@ function showChannelOSD(label, number) {
   const wrapper = document.querySelector("." + WRAPPER_CLASS);
   if (!wrapper) return;
   const el = ensureOsdElement(wrapper);
-  el.textContent = `${label}  ${String(number).padStart(2, "0")}`;
+  el.textContent = `${String(number).padStart(2, "0")}-${label}`;
   el.classList.add("show");
   clearTimeout(osdTimeout);
-  osdTimeout = setTimeout(() => el.classList.remove("show"), 3000);
+  osdTimeout = setTimeout(() => el.classList.remove("show"), 5000);
 }
 
 chrome.runtime.onMessage.addListener((msg) => {

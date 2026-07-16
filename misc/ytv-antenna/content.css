@@ -45,7 +45,7 @@
   top: 20px;
   right: 26px;
   font-family: "VT323", "Courier New", monospace;
-  font-size: 46px;
+  font-size: 8vw;
   line-height: 1;
   letter-spacing: 0.06em;
   color: #f5e6c8;
@@ -55,7 +55,7 @@
   border-radius: 2px;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.4s ease;
+  transition: opacity 0.04s ease;
   z-index: 10;
 
   &.show {
