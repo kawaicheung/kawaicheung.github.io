@@ -10,6 +10,7 @@ const statusDot = document.getElementById("statusDot");
 const gearBtn = document.getElementById("gearBtn");
 
 let view = "remote"; // "remote" | "settings"
+let lastRotorAngle = NEUTRAL_ANGLE; // carries over across re-renders so the dial has a "from" angle to turn from
 
 gearBtn.addEventListener("click", () => {
   view = view === "settings" ? "remote" : "settings";
@@ -73,7 +74,7 @@ function wirePowerRow(channels, session) {
   powerRow.classList.toggle("off", !session);
 
   onBtn.addEventListener("click", async () => {
-    if (channels.length === 0) return;
+    if (!channels.some(Boolean)) return;
     onBtn.disabled = true;
     const win = await chrome.windows.getCurrent();
     const res = await send({ type: "launch", windowId: win.id });
@@ -137,17 +138,26 @@ function wirePictureBox() {
 // call happened to be active when the listener was attached.
 async function changeChannel(delta) {
   const channels = await getChannels();
-  if (channels.length === 0) return;
+  if (!channels.some(Boolean)) return;
 
   const res = await send({ type: "getSession" });
   const session = res.ok ? res.session : null;
   if (!session) return; // TV has to be on to surf channels
 
-  const currentIndex = channels.findIndex((ch) => ch.url === session.activeUrl);
+  const currentIndex = channels.findIndex((ch) => ch && ch.url === session.activeUrl);
   const from = currentIndex === -1 ? 0 : currentIndex;
-  const nextIndex = (from + delta + channels.length) % channels.length;
 
-  const switchRes = await send({ type: "switch", url: channels[nextIndex].url });
+  // Skipped numbers aren't stops on the dial — keep stepping in the same
+  // direction until landing on a slot that actually has a channel.
+  let nextIndex = from;
+  do {
+    nextIndex = (nextIndex + delta + channels.length) % channels.length;
+  } while (!channels[nextIndex] && nextIndex !== from);
+
+  const nextChannel = channels[nextIndex];
+  if (!nextChannel) return; // no other channel configured
+
+  const switchRes = await send({ type: "switch", url: nextChannel.url });
   if (switchRes.ok && view === "remote") render();
 }
 
@@ -228,7 +238,19 @@ async function renderDialView(channels, session) {
   // landing it upright under the fixed arrow — same math that makes the
   // rest of the ring radiate, run in reverse for whichever channel is on.
   const rotorAngle = activeIndex === -1 ? NEUTRAL_ANGLE : -(activeIndex * SLOT_ANGLE);
+
+  // The rotor is a brand-new DOM node every render (full innerHTML rebuild),
+  // so there's normally no "previous" transform for the CSS transition to
+  // animate from — it would just snap. Park it at the last angle first with
+  // transitions off, force a reflow, then re-enable and set the real target
+  // so it visibly turns from where it was.
+  rotorEl.style.transition = "none";
+  rotorEl.style.transform = `rotate(${lastRotorAngle}deg)`;
+  void rotorEl.offsetHeight;
+  rotorEl.style.transition = "";
   rotorEl.style.transform = `rotate(${rotorAngle}deg)`;
+  lastRotorAngle = rotorAngle;
+
   arrowEl.classList.toggle("live", !!session);
 
   if (activeLabel) {
@@ -307,6 +329,7 @@ function renderEmptyRemote() {
 
 async function renderSettings(channels) {
   const uiMode = await getUiMode();
+  const channelCount = channels.filter(Boolean).length;
 
   contentEl.innerHTML = `
     <div class="settings-body">
@@ -321,7 +344,7 @@ async function renderSettings(channels) {
       <div class="form-error" id="formError"></div>
       <button class="add-btn" id="addBtn">Add channel</button>
       <ul class="ch-list" id="chList"></ul>
-      <p class="count">${channels.length} / ${MAX_CHANNELS} channels configured</p>
+      <p class="count">${channelCount} / ${MAX_CHANNELS} channels configured</p>
     </div>
   `;
 
@@ -334,6 +357,7 @@ async function renderSettings(channels) {
 
   const listEl = document.getElementById("chList");
   channels.forEach((ch, i) => {
+    if (!ch) return; // skipped number — no channel assigned to this slot
     const li = document.createElement("li");
     li.innerHTML = `
       <span class="num">${CHANNEL_START + i}</span>
@@ -347,7 +371,9 @@ async function renderSettings(channels) {
     if (!e.target.matches(".remove")) return;
     const index = Number(e.target.dataset.index);
     const updated = await getChannels();
-    updated.splice(index, 1);
+    // Clear the slot rather than splicing, so other channels keep their number.
+    updated[index] = null;
+    while (updated.length && !updated[updated.length - 1]) updated.pop();
     await setChannels(updated);
     renderSettings(updated);
   });
@@ -357,7 +383,7 @@ async function renderSettings(channels) {
   const urlInput = document.getElementById("urlInput");
   const errorEl = document.getElementById("formError");
 
-  if (channels.length >= MAX_CHANNELS) addBtn.disabled = true;
+  if (channelCount >= MAX_CHANNELS) addBtn.disabled = true;
 
   addBtn.addEventListener("click", async () => {
     errorEl.textContent = "";
@@ -383,12 +409,19 @@ async function renderSettings(channels) {
     }
 
     const updated = await getChannels();
-    if (updated.length >= MAX_CHANNELS) {
+    if (updated.filter(Boolean).length >= MAX_CHANNELS) {
       errorEl.textContent = `${MAX_CHANNELS} channel max reached.`;
       return;
     }
 
-    updated.push({ label: label.toUpperCase(), url: rawUrl });
+    // Fill the first skipped number if there is one, otherwise land on the next one.
+    const emptyIndex = updated.findIndex((ch) => !ch);
+    const newChannel = { label: label.toUpperCase(), url: rawUrl };
+    if (emptyIndex !== -1) {
+      updated[emptyIndex] = newChannel;
+    } else {
+      updated.push(newChannel);
+    }
     await setChannels(updated);
     renderSettings(updated);
   });
@@ -406,14 +439,14 @@ async function render() {
     return;
   }
 
-  if (channels.length === 0) {
+  if (!channels.some(Boolean)) {
     renderEmptyRemote();
     return;
   }
 
   const res = await send({ type: "getSession" });
   const session = res.ok ? res.session : null;
-  const fullyLaunched = session && channels.every((ch) => ch.url in session.tabsByUrl);
+  const fullyLaunched = session && channels.every((ch) => !ch || ch.url in session.tabsByUrl);
   const activeSession = fullyLaunched ? session : null;
 
   const uiMode = await getUiMode();
@@ -431,7 +464,7 @@ chrome.runtime.onMessage.addListener((msg) => {
 // Land on settings first run if nothing's configured yet.
 (async () => {
   const channels = await getChannels();
-  if (channels.length === 0) {
+  if (!channels.some(Boolean)) {
     view = "settings";
     gearBtn.classList.add("on");
   }

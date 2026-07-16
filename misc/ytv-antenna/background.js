@@ -7,20 +7,41 @@ chrome.sidePanel
   .setPanelBehavior({ openPanelOnActionClick: true })
   .catch((err) => console.error(err));
 
+const CHANNEL_START = 2; // dial runs 2..13, matches sidepanel.js
+const MAX_CHANNELS = 12; // dial has 12 slots (numbers 2..13), matches sidepanel.js
+
+// `number` is the dial position (2..13) each channel lands on. Numbers don't
+// need to be contiguous — leave gaps for channels you haven't assigned yet.
 const DEFAULT_CHANNELS = [
-  { label: "NBA TV", url: "https://tv.youtube.com/watch/lmchYrC6la0?vp=0gEEEgIwAQ%3D%3D" },
-  { label: "FOX", url: "https://tv.youtube.com/watch/6dvEBPxhFwk?vp=0gEEEgIwAQ%3D%3D" },
-  { label: "ESPN U", url: "https://tv.youtube.com/watch/KS2p4dNUF5w?vp=0gEEEgIwAQ%3D%3D" },
-  { label: "KPIX", url: "https://tv.youtube.com/watch/EhVGqawST0Q?vp=0gEEEgIwAQ%3D%3D" },
-  { label: "PBS", url: "https://tv.youtube.com/watch/76hRBy0Z6IU?vp=0gEEEgIwAQ%3D%3D" },
-  { label: "ABC", url: "https://tv.youtube.com/watch/zqsbGdIBNsM?vp=0gEEEgIwAQ%3D%3D" },
-  { label: "NBC", url: "https://tv.youtube.com/watch/gkF2WDFbP18?vp=0gEEEgIwAQ%3D%3D" },
+  { number: 2, label: "NBA TV", url: "https://tv.youtube.com/watch/lmchYrC6la0?vp=0gEEEgIwAQ%3D%3D" },
+  { number: 12, label: "FOX", url: "https://tv.youtube.com/watch/6dvEBPxhFwk?vp=0gEEEgIwAQ%3D%3D" },
+  { number: 4, label: "ESPN U", url: "https://tv.youtube.com/watch/KS2p4dNUF5w?vp=0gEEEgIwAQ%3D%3D" },
+  { number: 2, label: "KPIX", url: "https://tv.youtube.com/watch/EhVGqawST0Q?vp=0gEEEgIwAQ%3D%3D" },
+  { number: 11, label: "PBS", url: "https://tv.youtube.com/watch/76hRBy0Z6IU?vp=0gEEEgIwAQ%3D%3D" },
+  { number: 7, label: "ABC", url: "https://tv.youtube.com/watch/zqsbGdIBNsM?vp=0gEEEgIwAQ%3D%3D" },
+  { number: 5, label: "NBC", url: "https://tv.youtube.com/watch/gkF2WDFbP18?vp=0gEEEgIwAQ%3D%3D" },
 ];
+
+// Places each default at the dial slot its `number` maps to, leaving null
+// gaps in between for any numbers that were skipped.
+function buildDefaultChannels(entries) {
+  const maxIndex = Math.max(...entries.map(({ number }) => number - CHANNEL_START));
+  const channels = new Array(maxIndex + 1).fill(null);
+  for (const { number, label, url } of entries) {
+    const index = number - CHANNEL_START;
+    if (index < 0 || index >= MAX_CHANNELS) {
+      console.error(`channel number ${number} is out of dial range, skipping`, label);
+      continue;
+    }
+    channels[index] = { label, url };
+  }
+  return channels;
+}
 
 chrome.runtime.onInstalled.addListener(async () => {
   const { channels } = await chrome.storage.local.get("channels");
   if (!channels) {
-    await chrome.storage.local.set({ channels: DEFAULT_CHANNELS });
+    await chrome.storage.local.set({ channels: buildDefaultChannels(DEFAULT_CHANNELS) });
   }
 });
 
@@ -44,15 +65,13 @@ async function getChannels() {
   return channels || [];
 }
 
-const CHANNEL_START = 2; // dial runs 2..13, matches sidepanel.js
-
 // Tells the tab that just became the active channel to flash its OSD banner.
 // Best-effort: if the content script isn't listening yet (tab still loading
 // right after creation), the message silently fails and no banner shows —
 // acceptable for that one edge case rather than adding retry complexity.
 async function announceChannel(tabId, url) {
   const channels = await getChannels();
-  const index = channels.findIndex((ch) => ch.url === url);
+  const index = channels.findIndex((ch) => ch && ch.url === url);
   if (index === -1) return;
   chrome.tabs.sendMessage(tabId, {
     type: "channelOSD",
@@ -62,7 +81,7 @@ async function announceChannel(tabId, url) {
 }
 
 async function launch(windowId) {
-  const channels = await getChannels();
+  const channels = (await getChannels()).filter(Boolean);
   if (channels.length === 0) return { ok: false, error: "no-channels" };
 
   const existingTabs = await chrome.tabs.query({ windowId });
@@ -131,14 +150,20 @@ async function switchChannel(url) {
   if (!session) return { ok: false, error: "no-session" };
   if (!(url in session.tabsByUrl)) return { ok: false, error: "unknown-channel" };
 
+  // Persist the new activeUrl *before* activating the tab. Activation fires
+  // tabs.onActivated below, which re-reads the session to detect manual tab
+  // clicks — if that read still saw the old activeUrl, it would think this
+  // was a manual click, re-save, and broadcast a redundant sessionChanged
+  // that made the side panel re-render mid-animation.
+  session.activeUrl = url;
+  await setSession(session);
+
   const entries = Object.entries(session.tabsByUrl);
   await Promise.all(entries.map(([chUrl, tabId]) =>
     chrome.tabs.update(tabId, { muted: chUrl !== url, active: chUrl === url })
   ));
   await chrome.windows.update(session.windowId, { focused: true });
 
-  session.activeUrl = url;
-  await setSession(session);
   announceChannel(session.tabsByUrl[url], url);
   return { ok: true, session };
 }
