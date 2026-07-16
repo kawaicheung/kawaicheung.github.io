@@ -17,7 +17,6 @@ html, body {
   margin: 0;
   height: 100%;
   min-height: 100vh;
-  background: var(--plastic);
   color: var(--paper);
 }
 body {
@@ -27,26 +26,40 @@ body {
 }
 
 #content {
+  
   flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
+  corner-shape: squircle;
   min-height: 0;
+  border-radius: 50px;
+  padding: 5vh 0;
+  border: 4px solid transparent;
+  /* Same gradient-border trick as .dial-grid/.power-row: the striped fill
+     clips to the padding-box, the metal conic-gradient clips to the
+     border-box, so only the 4px frame shows the metal underneath. */
   background:
     linear-gradient(
       to bottom,
       #242424,
       #111
-    ),
+    ) padding-box,
     repeating-linear-gradient(
       to bottom,
       rgba(0,0,0,.75) 0px,
       rgba(0,0,0,.75) 2px,
       rgba(255,255,255,.02) 2px,
       rgba(255,255,255,.02) 4px
-    );
+    ) padding-box;
 
-  background-blend-mode: multiply;
+  background-blend-mode: multiply, multiply, normal;
+  /* Inset shadow just inside the metal frame so the whole panel reads as
+     sunk into the case rather than sitting flush with it. */
+  box-shadow:
+    inset 0 6px 18px rgba(0,0,0,0.65),
+    inset 0 -4px 14px rgba(0,0,0,0.5),
+    inset 0 0 0 1px rgba(0,0,0,0.35);
 }
 
 .brand {
@@ -295,21 +308,20 @@ body {
   justify-content: center;
   gap: 0;
   margin-top: 18px;
-  background: #16130e;
   width: fit-content;
-
   border-radius: 3px;
-  border-style: solid;
-  border-width: 2px;
-  border-color: rgba(255,255,255,0.35);
-  /* Beveled border: dark top/left, light bottom/right, so the plate reads
-     as a recessed pocket rather than a dome popping toward the viewer. */
+  border: 1px solid transparent;
+  /* Same gradient-border trick as .dial-grid: fill to the padding-box,
+     metal conic-gradient to the border-box, so only the 1px ring shows it. */
+  background:
+    linear-gradient(#16130e, #16130e) padding-box,
+    conic-gradient(from 200deg,
+      var(--metal-hi), var(--metal-lo) 15%, var(--metal-hi) 30%,
+      var(--metal-mid) 45%, var(--metal-hi) 60%, var(--metal-lo) 75%,
+      var(--metal-hi) 90%, var(--metal-hi) 100%) border-box;
   box-shadow:
     inset 0 2px 5px rgba(0,0,0,0.8),
     inset 0 1px 0 rgba(255,255,255,0.03);
-  background:
-    linear-gradient(rgba(0,0,0,0.08), rgba(255,255,255,0.05)),
-    linear-gradient(0deg, #9a958a 0%, #9a958a 15%, #b6b1a2 25%, #d8d4c8 100%);
 }
 
 .power-btn {
@@ -322,8 +334,9 @@ body {
   color: #4a4638;
   border: none;
   text-shadow: 0 1px 0 rgba(255,255,255,0.4);
-  /* Gradient runs dark-to-light top-to-bottom (inverted from a normal
-     raised button) so the metal reads as curving away into the recess. */
+  /* Plain top-light/bottom-dark linear gradient (not the conic metal used
+     elsewhere) so the face reads as a simple brushed-metal button. */
+  background: linear-gradient(180deg, var(--metal-hi), var(--metal-mid) 60%, var(--metal-lo));
 
   &:active {
     transform: translateY(1px);
