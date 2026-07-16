@@ -2,6 +2,10 @@ const MAX_CHANNELS = 12; // dial runs 2 through 13, VHF-style
 const CHANNEL_START = 2;
 const NUMBER_RADIUS = 90;
 
+// Any dial slot without a configured channel still tunes somewhere: a
+// shared "dead air" page, same one for every empty slot.
+const STATIC_URL = chrome.runtime.getURL("static.html");
+
 // The dial face has 13 equally-spaced positions: the 12 channels plus the
 // decorative "U" slot right after 13 — so every gap on the face is the
 // same width, including the one the pointer parks in when the TV is off.
@@ -17,7 +21,6 @@ const MINI_DIAL_START_ANGLE = 210;
 const MINI_DIAL_SWEEP = 300;
 
 const contentEl = document.getElementById("content");
-const statusDot = document.getElementById("statusDot");
 const gearBtn = document.getElementById("gearBtn");
 
 let view = "remote"; // "remote" | "settings"
@@ -29,6 +32,12 @@ let lastRotorAngle = NEUTRAL_ANGLE; // carries over across re-renders so the dia
 // snaps the short way and reverses direction at the 13-to-2 wrap). Null
 // means "no pending click" — fall back to the plain formula.
 let pendingRotorSteps = null;
+
+// Which physical dial slot (0..MAX_CHANNELS-1) we're parked on. Needed
+// because empty slots all share the same STATIC_URL tab — session.activeUrl
+// alone can't tell two different empty slots apart, so this is the source
+// of truth for "where on the dial are we" whenever we're sitting on static.
+let currentDialIndex = null;
 
 gearBtn.addEventListener("click", () => {
   view = view === "settings" ? "remote" : "settings";
@@ -80,7 +89,7 @@ function powerRowHtml() {
   `;
 }
 
-function wirePowerRow(channels, session) {
+function wirePowerRow(session) {
   const onBtn = document.getElementById("onBtn");
   const offBtn = document.getElementById("offBtn");
   const powerRow = onBtn.closest(".power-row");
@@ -92,7 +101,6 @@ function wirePowerRow(channels, session) {
   powerRow.classList.toggle("off", !session);
 
   onBtn.addEventListener("click", async () => {
-    if (!channels.some(Boolean)) return;
     onBtn.disabled = true;
     const win = await chrome.windows.getCurrent();
     const res = await send({ type: "launch", windowId: win.id });
@@ -201,32 +209,42 @@ function wirePictureBox() {
 // call happened to be active when the listener was attached.
 async function changeChannel(delta) {
   const channels = await getChannels();
-  if (!channels.some(Boolean)) return;
 
   const res = await send({ type: "getSession" });
   const session = res.ok ? res.session : null;
   if (!session) return; // TV has to be on to surf channels
 
-  const currentIndex = channels.findIndex((ch) => ch && ch.url === session.activeUrl);
-  const from = currentIndex === -1 ? 0 : currentIndex;
+  // Prefer the remembered dial position over deriving it from
+  // session.activeUrl — that lookup can't tell empty slots apart, since
+  // they all resolve to the same shared STATIC_URL.
+  let from = currentDialIndex;
+  if (from === null) {
+    const currentIndex = channels.findIndex((ch) => ch && ch.url === session.activeUrl);
+    from = currentIndex === -1 ? 0 : currentIndex;
+  }
 
-  // Skipped numbers aren't stops on the dial — keep stepping in the same
-  // direction until landing on a slot that actually has a channel.
-  let nextIndex = from;
-  do {
-    nextIndex = (nextIndex + delta + channels.length) % channels.length;
-  } while (!channels[nextIndex] && nextIndex !== from);
+  // Every one of the 12 physical slots is a valid stop now — an empty one
+  // just tunes to static instead of being skipped.
+  const nextIndex = (from + delta + MAX_CHANNELS) % MAX_CHANNELS;
+  const nextChannel = channels[nextIndex] || { label: "STATIC", url: STATIC_URL };
 
-  const nextChannel = channels[nextIndex];
-  if (!nextChannel) return; // no other channel configured
-
-  const switchRes = await send({ type: "switch", url: nextChannel.url });
+  // Passed straight through rather than left for background.js to look
+  // up — every empty slot shares the same STATIC_URL, so a url-based
+  // lookup there can't tell which physical slot this particular switch
+  // landed on the way it can for a real channel.
+  const switchRes = await send({
+    type: "switch",
+    url: nextChannel.url,
+    number: CHANNEL_START + nextIndex,
+    label: nextChannel.label
+  });
   if (switchRes.ok && view === "remote") {
+    currentDialIndex = nextIndex;
     // Physical slots on the dial face are fixed at TOTAL_DIAL_SLOTS (the 12
-    // channels plus U), independent of channels.length — so figure out the
+    // channels plus U), independent of MAX_CHANNELS — so figure out the
     // signed number of PHYSICAL slots between `from` and `nextIndex` that
     // matches the direction just clicked, wrapping through U's slot rather
-    // than however few array entries happen to separate them. E.g. 13->2
+    // than however few positions happen to separate them. E.g. 13->2
     // forward is 2 physical slots (through U), not 1.
     pendingRotorSteps = delta > 0
       ? (((nextIndex - from) % TOTAL_DIAL_SLOTS) + TOTAL_DIAL_SLOTS) % TOTAL_DIAL_SLOTS
@@ -250,6 +268,13 @@ document.addEventListener("keydown", (e) => {
 
 async function renderDialView(channels, session) {
   const filters = await getFilterSettings();
+
+  // First render after turning on with nothing configured yet: land on
+  // slot 0 instead of leaving the dial parked in the decorative U gap —
+  // there's no channel history yet to prefer any other slot.
+  if (currentDialIndex === null && session && session.activeUrl === STATIC_URL) {
+    currentDialIndex = 0;
+  }
 
   contentEl.innerHTML = `
     <div class="dial-stage">
@@ -286,10 +311,17 @@ async function renderDialView(channels, session) {
     // tilted everywhere else, following the circle like a clock face.
     num.style.transform = `rotate(${angle}deg) translateY(-${NUMBER_RADIUS}px)`;
 
-    if (channel && session && session.activeUrl === channel.url) {
+    // An empty slot showing static has no `channel` of its own to match
+    // against session.activeUrl (every empty slot shares STATIC_URL) — so
+    // it's only "this" slot's turn to glow when currentDialIndex agrees.
+    const isActive = channel
+      ? session && session.activeUrl === channel.url
+      : session && session.activeUrl === STATIC_URL && currentDialIndex === i;
+
+    if (isActive) {
       num.classList.add("active");
       activeIndex = i;
-      activeLabel = channel.label;
+      activeLabel = channel ? channel.label : "STATIC";
     }
     rotorEl.appendChild(num);
   }
@@ -306,12 +338,12 @@ async function renderDialView(channels, session) {
   // Tapping the dial (numbers included, since clicks bubble up from the
   // decorative spans) surfs one channel at a time — no picking a specific
   // number directly, same as turning a real tuner knob. Which way depends
-  // on which half of the dial got tapped: left half winds it forward
-  // (clockwise), right half winds it back (counterclockwise).
+  // on which half of the dial got tapped: right half winds it forward
+  // (clockwise), left half winds it back (counterclockwise).
   dialEl.addEventListener("click", (e) => {
     const rect = dialEl.getBoundingClientRect();
     const clickedLeftHalf = e.clientX - rect.left < rect.width / 2;
-    changeChannel(clickedLeftHalf ? 1 : -1);
+    changeChannel(clickedLeftHalf ? -1 : 1);
   });
 
   // The rotor (numbers + knob) turns as one rigid dial face. Rotating it by
@@ -346,19 +378,8 @@ async function renderDialView(channels, session) {
 
   arrowEl.classList.toggle("live", !!session);
 
-  wirePowerRow(channels, session);
+  wirePowerRow(session);
   wirePictureBox();
-
-  statusDot.classList.toggle("live", !!session);
-}
-
-// ---------- Remote view (90s keypad) ----------
-
-function renderEmptyRemote() {
-  contentEl.innerHTML = `
-    <p class="empty">No channels yet. Hit Settings to add up to ${MAX_CHANNELS}.</p>
-  `;
-  statusDot.classList.remove("live");
 }
 
 // ---------- Settings view ----------
@@ -457,8 +478,6 @@ async function renderSettings(channels) {
     await setChannels(updated);
     renderSettings(updated);
   });
-
-  statusDot.classList.remove("live");
 }
 
 // ---------- Router ----------
@@ -468,11 +487,6 @@ async function render() {
 
   if (view === "settings") {
     renderSettings(channels);
-    return;
-  }
-
-  if (!channels.some(Boolean)) {
-    renderEmptyRemote();
     return;
   }
 

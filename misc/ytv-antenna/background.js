@@ -10,6 +10,11 @@ chrome.sidePanel
 const CHANNEL_START = 2; // dial runs 2..13, matches sidepanel.js
 const MAX_CHANNELS = 12; // dial has 12 slots (numbers 2..13), matches sidepanel.js
 
+// Dead-air channel: any dial slot without a configured URL still tunes to
+// this shared page instead of being unreachable. One tab serves every empty
+// slot, same as any other channel would share a tab if it were reused.
+const STATIC_URL = chrome.runtime.getURL("static.html");
+
 // `number` is the dial position (2..13) each channel lands on. Numbers don't
 // need to be contiguous — leave gaps for channels you haven't assigned yet.
 const DEFAULT_CHANNELS = [
@@ -61,6 +66,18 @@ async function clearSession() {
   await chrome.storage.session.remove(SESSION_KEY);
 }
 
+const STATIC_CHANNEL_KEY = "staticChannel";
+
+// static.html can't be reverse-mapped to "which slot" from the tab/session
+// state alone (every empty slot shares the one STATIC_URL tab), so whatever
+// number/label it should currently show is persisted here. The page reads
+// this on load — covering the case where it wasn't listening yet when the
+// live channelOSD message went out — and also gets that message live for
+// any later switch while it stays open.
+async function setStaticChannel(number, label) {
+  await chrome.storage.session.set({ [STATIC_CHANNEL_KEY]: { number, label } });
+}
+
 async function getChannels() {
   const { channels } = await chrome.storage.local.get("channels");
   return channels || [];
@@ -70,25 +87,34 @@ async function getChannels() {
 // Best-effort: if the content script isn't listening yet (tab still loading
 // right after creation), the message silently fails and no banner shows —
 // acceptable for that one edge case rather than adding retry complexity.
+// Only used for the tab launch() lands on first — switchChannel gets its
+// number/label straight from the caller instead, since a shared static tab
+// can't be reverse-looked-up by url the way a real channel can.
 async function announceChannel(tabId, url) {
   const channels = await getChannels();
   const index = channels.findIndex((ch) => ch && ch.url === url);
-  if (index === -1) return;
-  chrome.tabs.sendMessage(tabId, {
-    type: "channelOSD",
-    label: channels[index].label,
-    number: index + CHANNEL_START
-  }).catch(() => {});
+  // Unmatched (the static tab, when nothing is configured yet) falls back
+  // to channel 2 — same default slot the side panel itself lands on.
+  const number = index === -1 ? CHANNEL_START : index + CHANNEL_START;
+  const label = index === -1 ? "STATIC" : channels[index].label;
+  if (url === STATIC_URL) await setStaticChannel(number, label);
+  chrome.tabs.sendMessage(tabId, { type: "channelOSD", label, number }).catch(() => {});
 }
 
 async function launch(windowId) {
   const channels = (await getChannels()).filter(Boolean);
-  if (channels.length === 0) return { ok: false, error: "no-channels" };
+  // No "nothing configured" bailout — with zero real channels the set below
+  // still includes the static page, so there's always at least one tab to
+  // launch into.
 
   const existingTabs = await chrome.tabs.query({ windowId });
   const tabsByUrl = {};
 
-  for (const channel of channels) {
+  // The static page is appended once here, alongside the real channels —
+  // any empty dial slot switches to this same shared url/tab rather than
+  // needing one of its own.
+  for (const channel of [...channels, { label: "STATIC", url: STATIC_URL }]) {
+    if (channel.url in tabsByUrl) continue; // already handled (e.g. static, deduped)
     const match = existingTabs.find((t) => t.url === channel.url);
     if (match) {
       tabsByUrl[channel.url] = match.id;
@@ -98,7 +124,7 @@ async function launch(windowId) {
     }
   }
 
-  const activeUrl = channels[0].url;
+  const activeUrl = channels[0] ? channels[0].url : STATIC_URL;
   const entries = Object.entries(tabsByUrl);
   await Promise.all(entries.map(([url, tabId]) =>
     chrome.tabs.update(tabId, { muted: url !== activeUrl, active: url === activeUrl })
@@ -134,7 +160,7 @@ async function groupChannelTabs(windowId, tabIds) {
   try {
     groupId = await chrome.tabs.group({ tabIds, groupId });
     await chrome.tabGroups.update(groupId, {
-      title: "Retro TV",
+      title: "WHYTV",
       color: "orange",
       collapsed: false
     });
@@ -146,7 +172,7 @@ async function groupChannelTabs(windowId, tabIds) {
   return groupId;
 }
 
-async function switchChannel(url) {
+async function switchChannel(url, number, label) {
   const session = await getSession();
   if (!session) return { ok: false, error: "no-session" };
   if (!(url in session.tabsByUrl)) return { ok: false, error: "unknown-channel" };
@@ -165,7 +191,11 @@ async function switchChannel(url) {
   ));
   await chrome.windows.update(session.windowId, { focused: true });
 
-  announceChannel(session.tabsByUrl[url], url);
+  // Sent straight from the caller rather than looked up here — a shared
+  // static tab can't be reverse-mapped to "which slot" the way a real
+  // channel's url can (every empty slot points at the same STATIC_URL).
+  if (url === STATIC_URL) await setStaticChannel(number, label);
+  chrome.tabs.sendMessage(session.tabsByUrl[url], { type: "channelOSD", label, number }).catch(() => {});
   return { ok: true, session };
 }
 
@@ -222,7 +252,7 @@ chrome.tabs.onRemoved.addListener(async (tabId) => {
 chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
   (async () => {
     if (msg.type === "launch") sendResponse(await launch(msg.windowId));
-    else if (msg.type === "switch") sendResponse(await switchChannel(msg.url));
+    else if (msg.type === "switch") sendResponse(await switchChannel(msg.url, msg.number, msg.label));
     else if (msg.type === "stop") sendResponse(await stop());
     else if (msg.type === "getSession") sendResponse({ ok: true, session: await getSession() });
     else sendResponse({ ok: false, error: "unknown-message" });

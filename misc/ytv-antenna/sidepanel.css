@@ -71,6 +71,13 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 0 8px;
+}
+.brand-title {
+  font-family: "Orbitron", sans-serif;
+  font-weight: 900;
+  font-size: 14px;
+  letter-spacing: 0.2rem;
 }
 .brand-right { display: flex; align-items: center; gap: 10px; }
 .status-dot {
@@ -86,24 +93,21 @@ body {
   border: none;
   color: var(--phosphor-dim);
   cursor: pointer;
-  font-size: 15px;
   padding: 0;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  font-family: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  & svg {
+    width: 18px;
+    height: 18px;
+    display: block;
+  }
 
   &:hover,
   &.on {
     color: var(--phosphor);
   }
-}
-
-.empty {
-  font-size: 15px;
-  line-height: 1.6;
-  color: var(--paper);
-  padding: 8px 2px 4px;
-  text-align: center;
 }
 
 /* ---------- Dial ---------- */

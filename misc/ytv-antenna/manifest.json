@@ -1,10 +1,10 @@
 {
   "manifest_version": 3,
-  "name": "Retro TV",
+  "name": "WHYTV",
   "version": "0.3.0",
   "description": "Configure up to 13 YouTube TV channels and flip between them like a real TV.",
   "action": {
-    "default_title": "Retro TV Remote"
+    "default_title": "WHYTV"
   },
   "background": {
     "service_worker": "background.js"
