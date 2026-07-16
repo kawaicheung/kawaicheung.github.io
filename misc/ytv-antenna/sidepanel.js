@@ -102,7 +102,7 @@ function wirePowerRow(channels, session) {
 const MINI_DIALS = [
   { key: "color", label: "Color", min: 0, max: 150, step: 5 },
   { key: "contrast", label: "Contrast", min: 50, max: 150, step: 5 },
-  { key: "brightness", label: "Brightness", min: 50, max: 150, step: 5 },
+  { key: "brightness", label: "Bright", min: 50, max: 150, step: 5 },
   { key: "hue", label: "Hue", min: 0, max: 360, step: 10 }
 ];
 

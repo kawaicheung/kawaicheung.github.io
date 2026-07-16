@@ -308,7 +308,7 @@ body {
   display: flex;
   justify-content: center;
   gap: 0;
-  margin-top: 18px;
+  margin-top: 40px;
   width: fit-content;
   border-radius: 3px;
   border: 1px solid transparent;
@@ -327,7 +327,7 @@ body {
      seam between them, instead of just flat-swapping color. The raised
      side pops proud of the plate, so it's allowed to spill past the
      row's own edges rather than getting clipped. */
-  perspective: 180px;
+  perspective: 160px;
   overflow: visible;
 }
 
@@ -348,7 +348,7 @@ body {
 }
 
 .power-btn {
-  width: 54px;
+  width: 50px;
   height: 36px;
   cursor: pointer;
   font-size: 12px;
@@ -389,12 +389,24 @@ body {
 .power-row.off .power-btn.on {
   position: relative;
   z-index: 2;
+  /* Same darkened-multiply trick as .dial-knob-face's recessed cap — the
+     unselected side reads as unlit/shadowed next to the engaged one. */
+  background:
+    linear-gradient(rgba(0,0,0,0.15), rgba(0,0,0,0.15)),
+    linear-gradient(180deg, var(--metal-hi), var(--metal-mid) 60%, var(--metal-lo));
+  background-blend-mode: multiply;
 }
 
 .power-row.on .power-btn.off {
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+  border-left: solid 3px #555;
   transform: rotateY(28deg);
 }
 .power-row.off .power-btn.on {
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+  border-right: solid 3px #555;
   transform: rotateY(-28deg);
 }
 
@@ -440,6 +452,7 @@ body {
 
 .mini-dial-label {
   font-size: 10px;
+  font-weight: 800;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--phosphor-dim);
