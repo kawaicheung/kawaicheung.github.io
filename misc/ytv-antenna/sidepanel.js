@@ -1,9 +1,20 @@
 const MAX_CHANNELS = 12; // dial runs 2 through 13, VHF-style
 const CHANNEL_START = 2;
-const SLOT_ANGLE = 30; // degrees between numbers on a 12-position dial
 const NUMBER_RADIUS = 90;
-const NEUTRAL_ANGLE = -15; // pointer parks between 13 and 2 when TV is off
-const KEYPAD_COUNT = 9; // 90s remote keypad only covers 1-9 for now
+
+// The dial face has 13 equally-spaced positions: the 12 channels plus the
+// decorative "U" slot right after 13 — so every gap on the face is the
+// same width, including the one the pointer parks in when the TV is off.
+const TOTAL_DIAL_SLOTS = 13;
+const SLOT_ANGLE = 360 / TOTAL_DIAL_SLOTS; // degrees between adjacent slots
+const VANITY_SLOT_INDEX = MAX_CHANNELS; // 12 — right after channel 13
+const NEUTRAL_ANGLE = -((VANITY_SLOT_INDEX + 0.5) * SLOT_ANGLE); // pointer parks halfway through the U-to-2 gap when TV is off
+
+// Picture-control knobs: 0% parks at 7 o'clock (210deg clockwise from
+// noon), 100% parks at 5 o'clock (150deg, i.e. 510deg — a 300deg sweep
+// the long way around through noon).
+const MINI_DIAL_START_ANGLE = 210;
+const MINI_DIAL_SWEEP = 300;
 
 const contentEl = document.getElementById("content");
 const statusDot = document.getElementById("statusDot");
@@ -88,48 +99,93 @@ function wirePowerRow(channels, session) {
   });
 }
 
-function pictureBoxHtml(filters) {
+const MINI_DIALS = [
+  { key: "color", label: "Color", min: 0, max: 150, step: 5 },
+  { key: "contrast", label: "Contrast", min: 50, max: 150, step: 5 },
+  { key: "brightness", label: "Brightness", min: 50, max: 150, step: 5 },
+  { key: "hue", label: "Hue", min: 0, max: 360, step: 10 }
+];
+
+function miniDialAngle(value, min, max) {
+  const pct = (value - min) / (max - min);
+  return MINI_DIAL_START_ANGLE + pct * MINI_DIAL_SWEEP;
+}
+
+function miniDialHtml({ key, label, min, max, step }, value) {
+  const angle = miniDialAngle(value, min, max);
   return `
-    <div class="picture-box">
-      <div class="ctrl">
-        <label>Color</label>
-        <input type="range" id="colorRange" min="0" max="150" value="${filters.color}">
-      </div>
-      <div class="ctrl">
-        <label>Contrast</label>
-        <input type="range" id="contrastRange" min="50" max="150" value="${filters.contrast}">
-      </div>
-      <div class="ctrl">
-        <label>Brightness</label>
-        <input type="range" id="brightnessRange" min="50" max="150" value="${filters.brightness}">
-      </div>
-      <div class="ctrl">
-        <label>Hue</label>
-        <input type="range" id="hueRange" min="0" max="360" value="${filters.hue}">
+    <div class="mini-dial-cell">
+      <span class="mini-dial-label">${label}</span>
+      <div class="mini-dial" data-key="${key}" data-min="${min}" data-max="${max}" data-step="${step}" data-value="${value}">
+        <div class="mini-dial-face"></div>
+        <div class="mini-dial-rotor" style="transform: rotate(${angle}deg)">
+          <div class="mini-dial-tick"></div>
+        </div>
       </div>
     </div>
   `;
 }
 
+function pictureBoxHtml(filters) {
+  return `
+    <div class="dial-grid">
+      ${MINI_DIALS.map((d) => miniDialHtml(d, filters[d.key])).join("")}
+    </div>
+  `;
+}
+
+const HOLD_DELAY = 350; // ms before a held-down press starts repeating
+const HOLD_INTERVAL = 90; // ms between repeats while held
+
+// Same press-a-half gesture as the channel dial: right side winds the
+// knob forward (clockwise, up), left side winds it back (down). Holding
+// a side down keeps stepping until release, instead of one nudge per press.
 function wirePictureBox() {
-  const colorRange = document.getElementById("colorRange");
-  const contrastRange = document.getElementById("contrastRange");
-  const brightnessRange = document.getElementById("brightnessRange");
-  const hueRange = document.getElementById("hueRange");
+  document.querySelectorAll(".mini-dial").forEach((dialEl) => {
+    let holdTimeout = null;
+    let holdInterval = null;
 
-  function pushFilterSettings() {
-    setFilterSettings({
-      color: Number(colorRange.value),
-      contrast: Number(contrastRange.value),
-      brightness: Number(brightnessRange.value),
-      hue: Number(hueRange.value)
+    async function stepDial(direction) {
+      const min = Number(dialEl.dataset.min);
+      const max = Number(dialEl.dataset.max);
+      const step = Number(dialEl.dataset.step);
+
+      let value = Number(dialEl.dataset.value) + direction * step;
+      value = Math.min(max, Math.max(min, value));
+      dialEl.dataset.value = value;
+
+      const rotorEl = dialEl.querySelector(".mini-dial-rotor");
+      rotorEl.style.transform = `rotate(${miniDialAngle(value, min, max)}deg)`;
+
+      const filters = await getFilterSettings();
+      filters[dialEl.dataset.key] = value;
+      await setFilterSettings(filters);
+    }
+
+    function stopHold() {
+      clearTimeout(holdTimeout);
+      clearInterval(holdInterval);
+      holdTimeout = null;
+      holdInterval = null;
+    }
+
+    // Pointer capture (rather than a document-level mouseup) keeps the
+    // release tied to this element even if the cursor drifts off the knob
+    // while held, and needs no cleanup on the next full re-render.
+    dialEl.addEventListener("pointerdown", (e) => {
+      dialEl.setPointerCapture(e.pointerId);
+      const rect = dialEl.getBoundingClientRect();
+      const direction = e.clientX - rect.left >= rect.width / 2 ? 1 : -1;
+
+      stepDial(direction);
+      holdTimeout = setTimeout(() => {
+        holdInterval = setInterval(() => stepDial(direction), HOLD_INTERVAL);
+      }, HOLD_DELAY);
     });
-  }
 
-  colorRange.addEventListener("input", pushFilterSettings);
-  contrastRange.addEventListener("input", pushFilterSettings);
-  brightnessRange.addEventListener("input", pushFilterSettings);
-  hueRange.addEventListener("input", pushFilterSettings);
+    dialEl.addEventListener("pointerup", stopHold);
+    dialEl.addEventListener("pointercancel", stopHold);
+  });
 }
 
 // Advances one channel slot at a time (delta = +1 or -1), wrapping around —
@@ -178,9 +234,7 @@ async function renderDialView(channels, session) {
   const filters = await getFilterSettings();
 
   contentEl.innerHTML = `
-    ${powerRowHtml()}
     <div class="dial-stage">
-      <div class="channel-readout" id="channelReadout"></div>
       <div class="dial">
         <div class="dial-metal"></div>
         <div class="dial-arrow" id="dialArrow"></div>
@@ -193,12 +247,12 @@ async function renderDialView(channels, session) {
       </div>
     </div>
     ${pictureBoxHtml(filters)}
+    ${powerRowHtml()}
   `;
 
   const dialEl = document.querySelector(".dial");
   const rotorEl = document.getElementById("dialRotor");
   const arrowEl = document.getElementById("dialArrow");
-  const readoutEl = document.getElementById("channelReadout");
 
   let activeIndex = -1;
   let activeLabel = null;
@@ -221,6 +275,15 @@ async function renderDialView(channels, session) {
     }
     rotorEl.appendChild(num);
   }
+
+  // Decorative only — not a real channel slot, doesn't factor into
+  // changeChannel's indexing. Takes the dedicated slot right after 13, one
+  // of the 13 equally-spaced positions on the face.
+  const vanityNum = document.createElement("span");
+  vanityNum.className = "dial-num vanity";
+  vanityNum.textContent = "U";
+  vanityNum.style.transform = `rotate(${VANITY_SLOT_INDEX * SLOT_ANGLE}deg) translateY(-${NUMBER_RADIUS}px)`;
+  rotorEl.appendChild(vanityNum);
 
   // Tapping the dial (numbers included, since clicks bubble up from the
   // decorative spans) surfs one channel at a time — no picking a specific
@@ -253,13 +316,6 @@ async function renderDialView(channels, session) {
 
   arrowEl.classList.toggle("live", !!session);
 
-  if (activeLabel) {
-    readoutEl.textContent = activeLabel;
-    readoutEl.classList.add("shown");
-  } else {
-    readoutEl.classList.remove("shown");
-  }
-
   wirePowerRow(channels, session);
   wirePictureBox();
 
@@ -267,56 +323,6 @@ async function renderDialView(channels, session) {
 }
 
 // ---------- Remote view (90s keypad) ----------
-
-async function renderKeypadView(channels, session) {
-  const filters = await getFilterSettings();
-
-  const keys = [];
-  for (let n = 1; n <= KEYPAD_COUNT; n++) {
-    const channel = channels[n - 1];
-    keys.push(`<button class="keypad-btn${channel ? " lit" : ""}" data-n="${n}" ${channel ? "" : "disabled"}>${n}</button>`);
-  }
-
-  contentEl.innerHTML = `
-    <div class="keypad-view">
-      <div class="keypad-readout" id="keypadReadout"></div>
-      <div class="keypad-grid">${keys.join("")}</div>
-      <div class="chan-updown">
-        <button class="updown-btn" id="chUpBtn">CH ▲</button>
-        <button class="updown-btn" id="chDownBtn">CH ▼</button>
-      </div>
-      ${powerRowHtml()}
-      ${pictureBoxHtml(filters)}
-    </div>
-  `;
-
-  const readoutEl = document.getElementById("keypadReadout");
-  const activeChannel = channels.find((ch) => session && ch.url === session.activeUrl);
-  if (activeChannel) {
-    readoutEl.textContent = activeChannel.label;
-    readoutEl.classList.add("shown");
-  } else {
-    readoutEl.classList.remove("shown");
-  }
-
-  contentEl.querySelectorAll(".keypad-btn.lit").forEach((btn) => {
-    const n = Number(btn.dataset.n);
-    const channel = channels[n - 1];
-    if (session && session.activeUrl === channel.url) btn.classList.add("active");
-    btn.addEventListener("click", async () => {
-      const res = await send({ type: "switch", url: channel.url });
-      if (res.ok) render();
-    });
-  });
-
-  document.getElementById("chUpBtn").addEventListener("click", () => changeChannel(1));
-  document.getElementById("chDownBtn").addEventListener("click", () => changeChannel(-1));
-
-  wirePowerRow(channels, session);
-  wirePictureBox();
-
-  statusDot.classList.toggle("live", !!session);
-}
 
 function renderEmptyRemote() {
   contentEl.innerHTML = `
@@ -333,10 +339,6 @@ async function renderSettings(channels) {
 
   contentEl.innerHTML = `
     <div class="settings-body">
-      <div class="mode-toggle">
-        <button class="mode-btn${uiMode === "dial" ? " active" : ""}" data-mode="dial">Dial</button>
-        <button class="mode-btn${uiMode === "keypad" ? " active" : ""}" data-mode="keypad">90s Remote</button>
-      </div>
       <label class="field-label">Label</label>
       <input id="labelInput" type="text" maxlength="12" placeholder="e.g. ESPN">
       <label class="field-label">Channel URL</label>
@@ -450,11 +452,8 @@ async function render() {
   const activeSession = fullyLaunched ? session : null;
 
   const uiMode = await getUiMode();
-  if (uiMode === "keypad") {
-    renderKeypadView(channels, activeSession);
-  } else {
-    renderDialView(channels, activeSession);
-  }
+  renderDialView(channels, activeSession);
+ 
 }
 
 chrome.runtime.onMessage.addListener((msg) => {
