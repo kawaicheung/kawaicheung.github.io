@@ -55,14 +55,8 @@ async function setFilterSettings(settings) {
 function powerRowHtml() {
   return `
     <div class="power-row">
-      <div class="power-unit">
-        <button class="power-btn on" id="onBtn"></button>
-        <span class="power-caption">On</span>
-      </div>
-      <div class="power-unit">
-        <button class="power-btn off" id="offBtn"></button>
-        <span class="power-caption">Off</span>
-      </div>
+      <button class="power-btn off" id="offBtn">Off</button>
+      <button class="power-btn on" id="onBtn">On</button>
     </div>
   `;
 }
@@ -70,8 +64,13 @@ function powerRowHtml() {
 function wirePowerRow(channels, session) {
   const onBtn = document.getElementById("onBtn");
   const offBtn = document.getElementById("offBtn");
+  const powerRow = onBtn.closest(".power-row");
   onBtn.classList.toggle("engaged", !!session);
   offBtn.classList.toggle("engaged", !session);
+  // The switch's tilt/glow lives on the row itself, not the individual
+  // buttons, so it reads as one rocker leaning toward whichever side is on.
+  powerRow.classList.toggle("on", !!session);
+  powerRow.classList.toggle("off", !session);
 
   onBtn.addEventListener("click", async () => {
     if (channels.length === 0) return;
@@ -169,23 +168,29 @@ async function renderDialView(channels, session) {
   const filters = await getFilterSettings();
 
   contentEl.innerHTML = `
+    ${powerRowHtml()}
     <div class="dial-stage">
       <div class="channel-readout" id="channelReadout"></div>
       <div class="dial">
         <div class="dial-metal"></div>
-        <div class="dial-hub"></div>
-        <div class="dial-pointer" id="dialPointer"></div>
+        <div class="dial-arrow" id="dialArrow"></div>
+        <div class="dial-rotor" id="dialRotor">
+          <div class="dial-knob">
+            <div class="dial-knob-face"></div>
+            <div class="dial-knob-handle"></div>
+          </div>
+        </div>
       </div>
     </div>
-    ${powerRowHtml()}
     ${pictureBoxHtml(filters)}
   `;
 
   const dialEl = document.querySelector(".dial");
-  const pointerEl = document.getElementById("dialPointer");
+  const rotorEl = document.getElementById("dialRotor");
+  const arrowEl = document.getElementById("dialArrow");
   const readoutEl = document.getElementById("channelReadout");
 
-  let activeAngle = NEUTRAL_ANGLE;
+  let activeIndex = -1;
   let activeLabel = null;
 
   for (let i = 0; i < MAX_CHANNELS; i++) {
@@ -194,24 +199,37 @@ async function renderDialView(channels, session) {
     const num = document.createElement("span");
     num.className = "dial-num" + (channel ? " lit" : "");
     num.textContent = String(CHANNEL_START + i);
-    num.style.transform = `rotate(${angle}deg) translateY(-${NUMBER_RADIUS}px) rotate(${-angle}deg)`;
+    // No counter-rotation: the number keeps the `angle` rotation, so it
+    // radiates — upright only once the rotor below brings it to the top,
+    // tilted everywhere else, following the circle like a clock face.
+    num.style.transform = `rotate(${angle}deg) translateY(-${NUMBER_RADIUS}px)`;
 
     if (channel && session && session.activeUrl === channel.url) {
       num.classList.add("active");
-      activeAngle = angle;
+      activeIndex = i;
       activeLabel = channel.label;
     }
-    dialEl.appendChild(num);
+    rotorEl.appendChild(num);
   }
 
-  // Tapping anywhere on the dial (numbers included, since clicks bubble up
-  // from the decorative spans) surfs to the next channel — no picking a
-  // specific number directly, same as turning a real tuner knob.
-  dialEl.addEventListener("click", () => changeChannel(1));
+  // Tapping the dial (numbers included, since clicks bubble up from the
+  // decorative spans) surfs one channel at a time — no picking a specific
+  // number directly, same as turning a real tuner knob. Which way depends
+  // on which half of the dial got tapped: left half winds it forward
+  // (clockwise), right half winds it back (counterclockwise).
+  dialEl.addEventListener("click", (e) => {
+    const rect = dialEl.getBoundingClientRect();
+    const clickedLeftHalf = e.clientX - rect.left < rect.width / 2;
+    changeChannel(clickedLeftHalf ? 1 : -1);
+  });
 
-  // Pointer's transform-origin sits at the hub, so a plain rotate swings the
-  // whole tapered hand — long end reaching the active number, short end trailing.
-  pointerEl.style.transform = `rotate(${activeAngle}deg)`;
+  // The rotor (numbers + knob) turns as one rigid dial face. Rotating it by
+  // -(index * slot angle) cancels out that number's own local rotation,
+  // landing it upright under the fixed arrow — same math that makes the
+  // rest of the ring radiate, run in reverse for whichever channel is on.
+  const rotorAngle = activeIndex === -1 ? NEUTRAL_ANGLE : -(activeIndex * SLOT_ANGLE);
+  rotorEl.style.transform = `rotate(${rotorAngle}deg)`;
+  arrowEl.classList.toggle("live", !!session);
 
   if (activeLabel) {
     readoutEl.textContent = activeLabel;

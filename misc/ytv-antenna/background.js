@@ -13,7 +13,8 @@ const DEFAULT_CHANNELS = [
   { label: "ESPN U", url: "https://tv.youtube.com/watch/KS2p4dNUF5w?vp=0gEEEgIwAQ%3D%3D" },
   { label: "KPIX", url: "https://tv.youtube.com/watch/EhVGqawST0Q?vp=0gEEEgIwAQ%3D%3D" },
   { label: "PBS", url: "https://tv.youtube.com/watch/76hRBy0Z6IU?vp=0gEEEgIwAQ%3D%3D" },
-
+  { label: "ABC", url: "https://tv.youtube.com/watch/zqsbGdIBNsM?vp=0gEEEgIwAQ%3D%3D" },
+  { label: "NBC", url: "https://tv.youtube.com/watch/gkF2WDFbP18?vp=0gEEEgIwAQ%3D%3D" },
 ];
 
 chrome.runtime.onInstalled.addListener(async () => {
