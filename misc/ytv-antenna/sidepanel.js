@@ -23,6 +23,13 @@ const gearBtn = document.getElementById("gearBtn");
 let view = "remote"; // "remote" | "settings"
 let lastRotorAngle = NEUTRAL_ANGLE; // carries over across re-renders so the dial has a "from" angle to turn from
 
+// Set by changeChannel right before it triggers a render, so that render
+// can keep spinning the rotor the same physical direction as the click/key
+// that caused it, instead of recomputing a bounded angle from scratch (which
+// snaps the short way and reverses direction at the 13-to-2 wrap). Null
+// means "no pending click" — fall back to the plain formula.
+let pendingRotorSteps = null;
+
 gearBtn.addEventListener("click", () => {
   view = view === "settings" ? "remote" : "settings";
   gearBtn.classList.toggle("on", view === "settings");
@@ -214,7 +221,18 @@ async function changeChannel(delta) {
   if (!nextChannel) return; // no other channel configured
 
   const switchRes = await send({ type: "switch", url: nextChannel.url });
-  if (switchRes.ok && view === "remote") render();
+  if (switchRes.ok && view === "remote") {
+    // Physical slots on the dial face are fixed at TOTAL_DIAL_SLOTS (the 12
+    // channels plus U), independent of channels.length — so figure out the
+    // signed number of PHYSICAL slots between `from` and `nextIndex` that
+    // matches the direction just clicked, wrapping through U's slot rather
+    // than however few array entries happen to separate them. E.g. 13->2
+    // forward is 2 physical slots (through U), not 1.
+    pendingRotorSteps = delta > 0
+      ? (((nextIndex - from) % TOTAL_DIAL_SLOTS) + TOTAL_DIAL_SLOTS) % TOTAL_DIAL_SLOTS
+      : -((((from - nextIndex) % TOTAL_DIAL_SLOTS) + TOTAL_DIAL_SLOTS) % TOTAL_DIAL_SLOTS);
+    render();
+  }
 }
 
 document.addEventListener("keydown", (e) => {
@@ -300,7 +318,19 @@ async function renderDialView(channels, session) {
   // -(index * slot angle) cancels out that number's own local rotation,
   // landing it upright under the fixed arrow — same math that makes the
   // rest of the ring radiate, run in reverse for whichever channel is on.
-  const rotorAngle = activeIndex === -1 ? NEUTRAL_ANGLE : -(activeIndex * SLOT_ANGLE);
+  // When this render was triggered by a click/key (pendingRotorSteps set),
+  // keep turning from lastRotorAngle by that many physical slots instead —
+  // otherwise recomputing the bounded formula fresh snaps to whichever way
+  // is numerically shorter and can spin backward at the 13-to-2 wrap.
+  let rotorAngle;
+  if (activeIndex === -1) {
+    rotorAngle = NEUTRAL_ANGLE;
+  } else if (pendingRotorSteps !== null) {
+    rotorAngle = lastRotorAngle - pendingRotorSteps * SLOT_ANGLE;
+  } else {
+    rotorAngle = -(activeIndex * SLOT_ANGLE);
+  }
+  pendingRotorSteps = null;
 
   // The rotor is a brand-new DOM node every render (full innerHTML rebuild),
   // so there's normally no "previous" transform for the CSS transition to

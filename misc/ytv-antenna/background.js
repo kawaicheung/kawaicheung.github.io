@@ -13,13 +13,14 @@ const MAX_CHANNELS = 12; // dial has 12 slots (numbers 2..13), matches sidepanel
 // `number` is the dial position (2..13) each channel lands on. Numbers don't
 // need to be contiguous — leave gaps for channels you haven't assigned yet.
 const DEFAULT_CHANNELS = [
-  { number: 2, label: "NBA TV", url: "https://tv.youtube.com/watch/lmchYrC6la0?vp=0gEEEgIwAQ%3D%3D" },
-  { number: 12, label: "FOX", url: "https://tv.youtube.com/watch/6dvEBPxhFwk?vp=0gEEEgIwAQ%3D%3D" },
+  { number: 2, label: "CBS", url: "https://tv.youtube.com/watch/EhVGqawST0Q?vp=0gEEEgIwAQ%3D%3D" },
   { number: 4, label: "ESPN U", url: "https://tv.youtube.com/watch/KS2p4dNUF5w?vp=0gEEEgIwAQ%3D%3D" },
-  { number: 2, label: "KPIX", url: "https://tv.youtube.com/watch/EhVGqawST0Q?vp=0gEEEgIwAQ%3D%3D" },
-  { number: 11, label: "PBS", url: "https://tv.youtube.com/watch/76hRBy0Z6IU?vp=0gEEEgIwAQ%3D%3D" },
-  { number: 7, label: "ABC", url: "https://tv.youtube.com/watch/zqsbGdIBNsM?vp=0gEEEgIwAQ%3D%3D" },
   { number: 5, label: "NBC", url: "https://tv.youtube.com/watch/gkF2WDFbP18?vp=0gEEEgIwAQ%3D%3D" },
+  { number: 6, label: "NBA TV", url: "https://tv.youtube.com/watch/lmchYrC6la0?vp=0gEEEgIwAQ%3D%3D" },
+  { number: 7, label: "ABC", url: "https://tv.youtube.com/watch/zqsbGdIBNsM?vp=0gEEEgIwAQ%3D%3D" },
+  { number: 11, label: "PBS", url: "https://tv.youtube.com/watch/76hRBy0Z6IU?vp=0gEEEgIwAQ%3D%3D" },
+  { number: 12, label: "FOX", url: "https://tv.youtube.com/watch/6dvEBPxhFwk?vp=0gEEEgIwAQ%3D%3D" },
+  { number: 13, label: "TEL", url: "https://tv.youtube.com/watch/BoeJ8WY9dIY?vp=0gEEEgIwAQ%3D%3D" }
 ];
 
 // Places each default at the dial slot its `number` maps to, leaving null
