@@ -304,6 +304,7 @@ body {
 
 /* ---------- Power controls ---------- */
 .power-row {
+  position: relative;
   display: flex;
   justify-content: center;
   gap: 0;
@@ -322,6 +323,28 @@ body {
   box-shadow:
     inset 0 2px 5px rgba(0,0,0,0.8),
     inset 0 1px 0 rgba(255,255,255,0.03);
+  /* Lets the two buttons tilt in 3D like a rocker switch, hinged at the
+     seam between them, instead of just flat-swapping color. The raised
+     side pops proud of the plate, so it's allowed to spill past the
+     row's own edges rather than getting clipped. */
+  perspective: 180px;
+  overflow: visible;
+}
+
+/* The hinge line between Off and On: a thin engraved groove (dark edge
+   facing the light, a sliver of highlight facing away) so the seam reads
+   as a physical crease rather than two buttons that just happen to touch. */
+.power-row::after {
+  content: "";
+  position: absolute;
+  top: 1px;
+  bottom: 1px;
+  left: 50%;
+  width: 2px;
+  margin-left: -1px;
+  background: rgba(0,0,0,0.55);
+  box-shadow: 1px 0 0 rgba(255,255,255,0.2);
+  pointer-events: none;
 }
 
 .power-btn {
@@ -337,10 +360,42 @@ body {
   /* Plain top-light/bottom-dark linear gradient (not the conic metal used
      elsewhere) so the face reads as a simple brushed-metal button. */
   background: linear-gradient(180deg, var(--metal-hi), var(--metal-mid) 60%, var(--metal-lo));
+ 
 
   &:active {
     transform: translateY(1px);
   }
+
+  /* The side that ISN'T engaged pops up and out toward the viewer,
+     hinged at the seam it shares with the other button — same seesaw
+     read as a real rocker switch, the un-pressed paddle lifting proud of
+     the plate. Off hinges on its right edge (against On), On hinges on
+     its left edge (against Off).
+     Sign note: with the hinge at x=0 and the outer edge at negative-x
+     (Off) or positive-x (On), rotateY(θ) sends that outer edge to
+     z = -x·sinθ. To bulge toward the viewer (z>0), Off's outer edge
+     (x<0) needs a positive θ, On's (x>0) needs a negative θ. */
+  &.off {
+    border-radius: 2px 0 0 2px;
+    transform-origin: right center;
+  }
+  &.on {
+    border-radius: 0 2px 2px 0;
+    transform-origin: left center;
+  }
+}
+
+.power-row.on .power-btn.off,
+.power-row.off .power-btn.on {
+  position: relative;
+  z-index: 2;
+}
+
+.power-row.on .power-btn.off {
+  transform: rotateY(28deg);
+}
+.power-row.off .power-btn.on {
+  transform: rotateY(-28deg);
 }
 
 .settings-body {
