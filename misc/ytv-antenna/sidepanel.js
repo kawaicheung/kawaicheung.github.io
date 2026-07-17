@@ -411,16 +411,11 @@ async function renderSettings(channels) {
 
   contentEl.innerHTML = `
     <div class="settings-body">
-      <label class="field-label">Label</label>
-      <input id="labelInput" type="text" maxlength="12" placeholder="e.g. ESPN">
-      <label class="field-label">Channel URL</label>
-      <input id="urlInput" type="text" placeholder="https://tv.youtube.com/watch/...">
-      <div class="form-error" id="formError"></div>
-      <button class="add-btn" id="addBtn">Add channel</button>
-      <button class="add-btn secondary" id="scrapeBtn" type="button">Find channels</button>
+      <button class="add-btn" id="scrapeBtn" type="button">Find channels</button>
       <div class="scrape-results" id="scrapeResults"></div>
       <ul class="ch-list" id="chList"></ul>
       <p class="count">${channelCount} / ${MAX_CHANNELS} channels configured</p>
+      <button class="done-btn" id="doneBtn" type="button">Done</button>
     </div>
   `;
 
@@ -429,6 +424,12 @@ async function renderSettings(channels) {
       await setUiMode(btn.dataset.mode);
       contentEl.querySelectorAll(".mode-btn").forEach((b) => b.classList.toggle("active", b === btn));
     });
+  });
+
+  document.getElementById("doneBtn").addEventListener("click", () => {
+    view = "remote";
+    gearBtn.classList.remove("on");
+    render();
   });
 
   const listEl = document.getElementById("chList");
@@ -452,13 +453,6 @@ async function renderSettings(channels) {
     while (updated.length && !updated[updated.length - 1]) updated.pop();
     await applyChannelsChange(updated);
   });
-
-  const addBtn = document.getElementById("addBtn");
-  const labelInput = document.getElementById("labelInput");
-  const urlInput = document.getElementById("urlInput");
-  const errorEl = document.getElementById("formError");
-
-  if (channelCount >= MAX_CHANNELS) addBtn.disabled = true;
 
   const scrapeBtn = document.getElementById("scrapeBtn");
   const scrapeResultsEl = document.getElementById("scrapeResults");
@@ -488,46 +482,6 @@ async function renderSettings(channels) {
     }
 
     renderScrapeResults(found, scrapeResultsEl);
-  });
-
-  addBtn.addEventListener("click", async () => {
-    errorEl.textContent = "";
-    const label = labelInput.value.trim() || "CH";
-    const rawUrl = urlInput.value.trim();
-
-    if (!rawUrl) {
-      errorEl.textContent = "Paste a tv.youtube.com URL first.";
-      return;
-    }
-
-    let parsedUrl;
-    try {
-      parsedUrl = new URL(rawUrl);
-    } catch {
-      errorEl.textContent = "That's not a valid URL.";
-      return;
-    }
-
-    if (parsedUrl.hostname !== "tv.youtube.com") {
-      errorEl.textContent = "Must be a tv.youtube.com URL — copy it from your own logged-in session.";
-      return;
-    }
-
-    const updated = await getChannels();
-    if (updated.filter(Boolean).length >= MAX_CHANNELS) {
-      errorEl.textContent = `${MAX_CHANNELS} channel max reached.`;
-      return;
-    }
-
-    // Fill the first skipped number if there is one, otherwise land on the next one.
-    const emptyIndex = updated.findIndex((ch) => !ch);
-    const newChannel = { label: label.toUpperCase(), url: rawUrl };
-    if (emptyIndex !== -1) {
-      updated[emptyIndex] = newChannel;
-    } else {
-      updated.push(newChannel);
-    }
-    await applyChannelsChange(updated);
   });
 }
 
