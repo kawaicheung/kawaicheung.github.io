@@ -45,6 +45,53 @@ chrome.runtime.onMessage.addListener((msg) => {
   if (msg.type === "channelOSD") showChannelOSD(msg.label, msg.number);
 });
 
+// ---------- Guide scraping (Settings > Find channels) ----------
+// tv.youtube.com's guide rows are Polymer custom elements built with Shady
+// DOM, so a plain querySelectorAll from document won't see into elements
+// that do have a real shadowRoot — walk down through any we find.
+function deepQueryAll(selector, root = document) {
+  let results = [...root.querySelectorAll(selector)];
+  root.querySelectorAll("*").forEach((el) => {
+    if (el.shadowRoot) results = results.concat(deepQueryAll(selector, el.shadowRoot));
+  });
+  return results;
+}
+
+// Each guide row's "watch" endpoint carries an aria-label of "watch <name>"
+// right next to the watch link itself — cheaper than correlating it with
+// the separate sibling element that shows the channel logo/title.
+function scrapeGuideChannels() {
+  return deepQueryAll('ytu-endpoint.tenx-thumb[aria-label]')
+    .map((endpoint) => {
+      const link = endpoint.querySelector('a[href*="watch/"]');
+      if (!link) return null;
+      return {
+        label: endpoint.getAttribute("aria-label").replace(/^watch\s+/i, ""),
+        url: new URL(link.getAttribute("href"), location.origin).href
+      };
+    })
+    .filter(Boolean);
+}
+
+// Guide rows render lazily after the SPA boots, so poll briefly rather than
+// scraping the instant the message arrives.
+function waitForGuideChannels(timeoutMs = 8000, intervalMs = 300) {
+  return new Promise((resolve) => {
+    const start = Date.now();
+    (function poll() {
+      const found = scrapeGuideChannels();
+      if (found.length > 0 || Date.now() - start > timeoutMs) resolve(found);
+      else setTimeout(poll, intervalMs);
+    })();
+  });
+}
+
+chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
+  if (msg.type !== "scrapeGuide") return;
+  waitForGuideChannels().then((channels) => sendResponse({ ok: true, channels }));
+  return true; // async response
+});
+
 function buildFilterString(f) {
   // Fixed low sepia = constant warm tube cast. saturate() is the real "color
   // knob": 0% is true black-and-white, 100% is normal color, past that is

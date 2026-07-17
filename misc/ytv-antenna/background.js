@@ -18,19 +18,12 @@ const STATIC_URL = chrome.runtime.getURL("static.html");
 // `number` is the dial position (2..13) each channel lands on. Numbers don't
 // need to be contiguous — leave gaps for channels you haven't assigned yet.
 const DEFAULT_CHANNELS = [
-  { number: 2, label: "CBS", url: "https://tv.youtube.com/watch/EhVGqawST0Q?vp=0gEEEgIwAQ%3D%3D" },
-  { number: 4, label: "ESPN U", url: "https://tv.youtube.com/watch/KS2p4dNUF5w?vp=0gEEEgIwAQ%3D%3D" },
-  { number: 5, label: "NBC", url: "https://tv.youtube.com/watch/gkF2WDFbP18?vp=0gEEEgIwAQ%3D%3D" },
-  { number: 6, label: "NBA TV", url: "https://tv.youtube.com/watch/lmchYrC6la0?vp=0gEEEgIwAQ%3D%3D" },
-  { number: 7, label: "ABC", url: "https://tv.youtube.com/watch/zqsbGdIBNsM?vp=0gEEEgIwAQ%3D%3D" },
-  { number: 11, label: "PBS", url: "https://tv.youtube.com/watch/76hRBy0Z6IU?vp=0gEEEgIwAQ%3D%3D" },
-  { number: 12, label: "FOX", url: "https://tv.youtube.com/watch/6dvEBPxhFwk?vp=0gEEEgIwAQ%3D%3D" },
-  { number: 13, label: "TEL", url: "https://tv.youtube.com/watch/BoeJ8WY9dIY?vp=0gEEEgIwAQ%3D%3D" }
 ];
 
 // Places each default at the dial slot its `number` maps to, leaving null
 // gaps in between for any numbers that were skipped.
 function buildDefaultChannels(entries) {
+  if (entries.length === 0) return [];
   const maxIndex = Math.max(...entries.map(({ number }) => number - CHANNEL_START));
   const channels = new Array(maxIndex + 1).fill(null);
   for (const { number, label, url } of entries) {
@@ -127,7 +120,7 @@ async function launch(windowId) {
   const activeUrl = channels[0] ? channels[0].url : STATIC_URL;
   const entries = Object.entries(tabsByUrl);
   await Promise.all(entries.map(([url, tabId]) =>
-    chrome.tabs.update(tabId, { muted: url !== activeUrl, active: url === activeUrl })
+    chrome.tabs.update(tabId, { muted: url !== activeUrl, active: url === activeUrl }).catch(() => {})
   ));
 
   const groupId = await groupChannelTabs(windowId, Object.values(tabsByUrl));
@@ -187,7 +180,7 @@ async function switchChannel(url, number, label) {
 
   const entries = Object.entries(session.tabsByUrl);
   await Promise.all(entries.map(([chUrl, tabId]) =>
-    chrome.tabs.update(tabId, { muted: chUrl !== url, active: chUrl === url })
+    chrome.tabs.update(tabId, { muted: chUrl !== url, active: chUrl === url }).catch(() => {})
   ));
   await chrome.windows.update(session.windowId, { focused: true });
 
@@ -199,12 +192,56 @@ async function switchChannel(url, number, label) {
   return { ok: true, session };
 }
 
+const GUIDE_URL = "https://tv.youtube.com/live";
+
+// Backs the Settings "Find channels" button. Opens a throwaway background
+// tab to the guide (rides on whatever tv.youtube.com session already exists
+// in the browser — no separate auth), asks content.js's scraper to read it,
+// then closes the tab either way.
+async function scrapeChannels() {
+  const tab = await chrome.tabs.create({ url: GUIDE_URL, active: false });
+
+  try {
+    await new Promise((resolve) => {
+      function onUpdated(tabId, info) {
+        if (tabId === tab.id && info.status === "complete") {
+          chrome.tabs.onUpdated.removeListener(onUpdated);
+          resolve();
+        }
+      }
+      chrome.tabs.onUpdated.addListener(onUpdated);
+    });
+
+    // The tab reporting "complete" doesn't guarantee content.js has
+    // registered its listener yet — retry the send instead of guessing a
+    // fixed delay.
+    let res;
+    for (let attempt = 0; attempt < 5; attempt++) {
+      try {
+        res = await chrome.tabs.sendMessage(tab.id, { type: "scrapeGuide" });
+        break;
+      } catch {
+        await new Promise((r) => setTimeout(r, 500));
+      }
+    }
+
+    return res && res.ok ? { ok: true, channels: res.channels } : { ok: false, error: "scrape-failed" };
+  } finally {
+    chrome.tabs.remove(tab.id).catch(() => {});
+  }
+}
+
 async function stop() {
   const session = await getSession();
   if (session) {
     const tabIds = Object.values(session.tabsByUrl);
-    try { await chrome.tabs.remove(tabIds); } catch {}
+    // Clear first, then remove: removing a tab fires tabs.onRemoved, whose
+    // listener below reads the session and writes it back (to drop that
+    // tab from a still-live session). If that write landed after this
+    // cleared the session, it would resurrect a phantom one — clearing
+    // first means that listener already sees no session and bails out.
     await clearSession();
+    try { await chrome.tabs.remove(tabIds); } catch {}
   }
   return { ok: true };
 }
@@ -221,9 +258,9 @@ chrome.tabs.onActivated.addListener(async ({ tabId, windowId }) => {
   if (url === session.activeUrl) return;
 
   await Promise.all(Object.entries(session.tabsByUrl).map(([chUrl, id]) =>
-    chUrl === url ? Promise.resolve() : chrome.tabs.update(id, { muted: true })
+    chUrl === url ? Promise.resolve() : chrome.tabs.update(id, { muted: true }).catch(() => {})
   ));
-  await chrome.tabs.update(tabId, { muted: false });
+  await chrome.tabs.update(tabId, { muted: false }).catch(() => {});
 
   session.activeUrl = url;
   await setSession(session);
@@ -254,6 +291,7 @@ chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
     if (msg.type === "launch") sendResponse(await launch(msg.windowId));
     else if (msg.type === "switch") sendResponse(await switchChannel(msg.url, msg.number, msg.label));
     else if (msg.type === "stop") sendResponse(await stop());
+    else if (msg.type === "scrapeGuide") sendResponse(await scrapeChannels());
     else if (msg.type === "getSession") sendResponse({ ok: true, session: await getSession() });
     else sendResponse({ ok: false, error: "unknown-message" });
   })();

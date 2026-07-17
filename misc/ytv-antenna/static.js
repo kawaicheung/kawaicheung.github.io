@@ -18,3 +18,27 @@ if (typeof chrome !== "undefined" && chrome.storage && chrome.storage.session) {
     showNumber(changes.staticChannel.newValue.number);
   });
 }
+
+// ---------- Picture controls ----------
+// Same filter formula as content.js's wrapPlayer, applied to <body> (which
+// holds both the bars and the OSD number, mirroring how content.js's
+// wrapper holds both the player and its OSD) so this page tracks the mini
+// dials instead of always rendering at defaults.
+const DEFAULT_FILTER = { color: 20, contrast: 100, brightness: 100, hue: 0 };
+
+function buildFilterString(f) {
+  return `sepia(0.25) saturate(${f.color}%) contrast(${f.contrast}%) brightness(${f.brightness}%) hue-rotate(${f.hue}deg)`;
+}
+
+function applyFilter(filterSettings) {
+  document.body.style.filter = buildFilterString({ ...DEFAULT_FILTER, ...(filterSettings || {}) });
+}
+
+if (typeof chrome !== "undefined" && chrome.storage && chrome.storage.local) {
+  chrome.storage.local.get("filterSettings").then(({ filterSettings }) => applyFilter(filterSettings));
+
+  chrome.storage.onChanged.addListener((changes, area) => {
+    if (area !== "local" || !changes.filterSettings) return;
+    applyFilter(changes.filterSettings.newValue);
+  });
+}

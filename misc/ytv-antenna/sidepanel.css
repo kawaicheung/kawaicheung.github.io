@@ -20,13 +20,17 @@ html, body {
   color: var(--paper);
 }
 body {
-  padding: 14px;
+  flex: 1;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  min-height: 0;
+  padding: 10px;
+  background-color: #fff;
 }
 
 #content {
-  
+  width: 100%;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -63,6 +67,7 @@ body {
 }
 
 .brand {
+  width: 100%;
   font-size: 13px;
   letter-spacing: 0.18em;
   color: var(--phosphor-dim);
@@ -80,13 +85,6 @@ body {
   letter-spacing: 0.2rem;
 }
 .brand-right { display: flex; align-items: center; gap: 10px; }
-.status-dot {
-  width: 7px; height: 7px; border-radius: 50%;
-  background: var(--plastic-raised);
-  display: inline-block;
-
-  &.live { background: var(--phosphor); box-shadow: 0 0 6px var(--phosphor); }
-}
 
 .gear {
   background: none;
@@ -154,25 +152,19 @@ body {
    number the rotor has carried to the top, under this arrow, is "on". */
 .dial-arrow {
   position: absolute;
-  top: -14px;
+  top: -20px;
   left: 50%;
   width: 18px;
   height: 14px;
   margin-left: -9px;
   z-index: 4;
   clip-path: polygon(0% 0%, 100% 0%, 50% 100%);
-  background: #171310;
+  background: #ccc;
+
   box-shadow:
-    inset 0 2px 3px rgba(0,0,0,0.85),
+    inset 0 2px 3px rgba(0,0,0,0.15),
     inset 0 -1px 0 rgba(255,255,255,0.08);
 
-  &.live {
-    background: #171310;
-    box-shadow:
-      inset 0 2px 3px rgba(0,0,0,0.6),
-      inset 0 -1px 1px rgba(255,176,55,0.5),
-      0 0 6px rgba(255,176,55,0.5);
-  }
 }
 
 /* The rotor: numbers + knob turn together as one physical dial face.
@@ -218,15 +210,6 @@ body {
 
   &.lit {
     color: #ffffff;
-
-    &::after {
-      box-shadow: 0 0 6px var(--phosphor);
-    }
-  }
-
-  &.active {
-    color: #fff3d6;
-    text-shadow: 0 0 8px var(--phosphor), 0 0 18px var(--phosphor);
 
     &::after {
       box-shadow: 0 0 6px var(--phosphor);
@@ -542,11 +525,44 @@ input {
 
   &:hover { background: var(--phosphor); }
 }
+.add-btn.secondary {
+  background: none;
+  color: var(--phosphor-dim);
+  border: 1px solid #55503f;
+
+  &:hover { background: var(--plastic-light); color: var(--phosphor); }
+  &:disabled { opacity: 0.5; cursor: default; background: none; }
+}
 .form-error {
   color: var(--danger);
   font-size: 13px;
   min-height: 14px;
   margin-top: 4px;
+}
+.scrape-results {
+  margin-top: 10px;
+}
+.scrape-list {
+  list-style: none;
+  padding: 0;
+  margin: 8px 0;
+  max-height: 220px;
+  overflow-y: auto;
+
+  & li { margin-bottom: 3px; }
+}
+.scrape-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 10px;
+  background: var(--plastic-light);
+  border-radius: 3px;
+  font-size: 14px;
+  cursor: pointer;
+
+  & input[type="checkbox"] { width: auto; margin: 0; }
+  & .label { flex: 1; }
 }
 .ch-list {
   list-style: none;

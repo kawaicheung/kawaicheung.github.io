@@ -39,6 +39,16 @@ let pendingRotorSteps = null;
 // of truth for "where on the dial are we" whenever we're sitting on static.
 let currentDialIndex = null;
 
+// Clears remembered dial position/rotation state. Needed on power-off and
+// whenever the channel lineup changes — a stale "parked on slot 3" index
+// can end up pointing at a totally different channel once slots are
+// added/removed/refilled, which is what reads as the dial "glitching."
+function resetDialState() {
+  currentDialIndex = null;
+  lastRotorAngle = NEUTRAL_ANGLE;
+  pendingRotorSteps = null;
+}
+
 gearBtn.addEventListener("click", () => {
   view = view === "settings" ? "remote" : "settings";
   gearBtn.classList.toggle("on", view === "settings");
@@ -110,8 +120,21 @@ function wirePowerRow(session) {
 
   offBtn.addEventListener("click", async () => {
     await send({ type: "stop" });
+    resetDialState();
     render();
   });
+}
+
+// Any edit to the channel lineup invalidates whatever tabs the live session
+// has open and whatever slot the dial was parked on. Rather than let a
+// running session drift out of sync with the new list, force the TV off so
+// the next "On" press does a full fresh launch against it.
+async function applyChannelsChange(updated) {
+  const res = await send({ type: "getSession" });
+  if (res.ok && res.session) await send({ type: "stop" });
+  resetDialState();
+  await setChannels(updated);
+  renderSettings(updated);
 }
 
 const MINI_DIALS = [
@@ -149,8 +172,8 @@ function pictureBoxHtml(filters) {
   `;
 }
 
-const HOLD_DELAY = 350; // ms before a held-down press starts repeating
-const HOLD_INTERVAL = 90; // ms between repeats while held
+const HOLD_DELAY = 250; // ms before a held-down press starts repeating
+const HOLD_INTERVAL = 40; // ms between repeats while held
 
 // Same press-a-half gesture as the channel dial: right side winds the
 // knob forward (clockwise, up), left side winds it back (down). Holding
@@ -376,8 +399,6 @@ async function renderDialView(channels, session) {
   rotorEl.style.transform = `rotate(${rotorAngle}deg)`;
   lastRotorAngle = rotorAngle;
 
-  arrowEl.classList.toggle("live", !!session);
-
   wirePowerRow(session);
   wirePictureBox();
 }
@@ -396,6 +417,8 @@ async function renderSettings(channels) {
       <input id="urlInput" type="text" placeholder="https://tv.youtube.com/watch/...">
       <div class="form-error" id="formError"></div>
       <button class="add-btn" id="addBtn">Add channel</button>
+      <button class="add-btn secondary" id="scrapeBtn" type="button">Find channels</button>
+      <div class="scrape-results" id="scrapeResults"></div>
       <ul class="ch-list" id="chList"></ul>
       <p class="count">${channelCount} / ${MAX_CHANNELS} channels configured</p>
     </div>
@@ -427,8 +450,7 @@ async function renderSettings(channels) {
     // Clear the slot rather than splicing, so other channels keep their number.
     updated[index] = null;
     while (updated.length && !updated[updated.length - 1]) updated.pop();
-    await setChannels(updated);
-    renderSettings(updated);
+    await applyChannelsChange(updated);
   });
 
   const addBtn = document.getElementById("addBtn");
@@ -437,6 +459,36 @@ async function renderSettings(channels) {
   const errorEl = document.getElementById("formError");
 
   if (channelCount >= MAX_CHANNELS) addBtn.disabled = true;
+
+  const scrapeBtn = document.getElementById("scrapeBtn");
+  const scrapeResultsEl = document.getElementById("scrapeResults");
+  if (channelCount >= MAX_CHANNELS) scrapeBtn.disabled = true;
+
+  scrapeBtn.addEventListener("click", async () => {
+    scrapeBtn.disabled = true;
+    scrapeBtn.textContent = "Scanning guide…";
+    scrapeResultsEl.innerHTML = "";
+
+    const res = await send({ type: "scrapeGuide" });
+
+    scrapeBtn.disabled = false;
+    scrapeBtn.textContent = "Find channels";
+
+    if (!res.ok || !res.channels.length) {
+      scrapeResultsEl.innerHTML = `<p class="form-error">Couldn't read the guide — make sure you're signed into tv.youtube.com and try again.</p>`;
+      return;
+    }
+
+    const existingUrls = new Set(channels.filter(Boolean).map((ch) => ch.url));
+    const found = res.channels.filter((ch) => !existingUrls.has(ch.url));
+
+    if (!found.length) {
+      scrapeResultsEl.innerHTML = `<p class="count">Every channel in the guide is already added.</p>`;
+      return;
+    }
+
+    renderScrapeResults(found, scrapeResultsEl);
+  });
 
   addBtn.addEventListener("click", async () => {
     errorEl.textContent = "";
@@ -475,8 +527,56 @@ async function renderSettings(channels) {
     } else {
       updated.push(newChannel);
     }
-    await setChannels(updated);
-    renderSettings(updated);
+    await applyChannelsChange(updated);
+  });
+}
+
+// Renders the checklist of scraped-but-not-yet-added channels under the
+// "Find channels" button, capped at however many dial slots are still free.
+function renderScrapeResults(found, scrapeResultsEl) {
+  getChannels().then((channels) => {
+    const openSlots = MAX_CHANNELS - channels.filter(Boolean).length;
+
+    if (openSlots <= 0) {
+      scrapeResultsEl.innerHTML = `<p class="count">${MAX_CHANNELS} channel max reached — remove one first.</p>`;
+      return;
+    }
+
+    scrapeResultsEl.innerHTML = `
+      <p class="count">${found.length} found — pick up to ${openSlots} to add</p>
+      <ul class="scrape-list" id="scrapeList">
+        ${found.map((ch, i) => `
+          <li>
+            <label class="scrape-row">
+              <input type="checkbox" data-index="${i}">
+              <span class="label">${ch.label}</span>
+            </label>
+          </li>
+        `).join("")}
+      </ul>
+      <button class="add-btn" id="addSelectedBtn" type="button">Add selected</button>
+    `;
+
+    const checkboxes = () => [...scrapeResultsEl.querySelectorAll('input[type="checkbox"]')];
+
+    document.getElementById("scrapeList").addEventListener("change", () => {
+      const checkedCount = checkboxes().filter((cb) => cb.checked).length;
+      checkboxes().forEach((cb) => { if (!cb.checked) cb.disabled = checkedCount >= openSlots; });
+    });
+
+    document.getElementById("addSelectedBtn").addEventListener("click", async () => {
+      const selected = checkboxes().filter((cb) => cb.checked).map((cb) => found[Number(cb.dataset.index)]);
+      if (!selected.length) return;
+
+      const updated = await getChannels();
+      for (const ch of selected) {
+        const newChannel = { label: ch.label.toUpperCase().slice(0, 12), url: ch.url };
+        const emptyIndex = updated.findIndex((c) => !c);
+        if (emptyIndex !== -1) updated[emptyIndex] = newChannel;
+        else updated.push(newChannel);
+      }
+      await applyChannelsChange(updated);
+    });
   });
 }
 
