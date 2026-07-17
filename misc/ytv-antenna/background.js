@@ -94,6 +94,22 @@ async function announceChannel(tabId, url) {
   chrome.tabs.sendMessage(tabId, { type: "channelOSD", label, number }).catch(() => {});
 }
 
+// Resolves once a tab reports load status "complete" (or after timeoutMs,
+// so a stalled load can't hang launch() forever).
+function waitForTabComplete(tabId, timeoutMs = 15000) {
+  return new Promise((resolve) => {
+    const timeout = setTimeout(() => cleanup() || resolve(), timeoutMs);
+    function onUpdated(id, info) {
+      if (id === tabId && info.status === "complete") cleanup() || resolve();
+    }
+    function cleanup() {
+      clearTimeout(timeout);
+      chrome.tabs.onUpdated.removeListener(onUpdated);
+    }
+    chrome.tabs.onUpdated.addListener(onUpdated);
+  });
+}
+
 async function launch(windowId) {
   const channels = (await getChannels()).filter(Boolean);
   // No "nothing configured" bailout — with zero real channels the set below
@@ -112,8 +128,16 @@ async function launch(windowId) {
     if (match) {
       tabsByUrl[channel.url] = match.id;
     } else {
-      const tab = await chrome.tabs.create({ windowId, url: channel.url, active: false });
+      // tv.youtube.com defers its initial player layout/reveal until the
+      // tab is genuinely visible — that's Chrome's own background-tab
+      // render throttle, not something a content script can fake. So each
+      // freshly created tab is made active (not backgrounded) here and
+      // held until it finishes loading, letting that reveal play out now
+      // instead of on the viewer's first real switch to it. This is what
+      // causes the brief flicker through channels on power-on.
+      const tab = await chrome.tabs.create({ windowId, url: channel.url, active: true });
       tabsByUrl[channel.url] = tab.id;
+      await waitForTabComplete(tab.id);
     }
   }
 
