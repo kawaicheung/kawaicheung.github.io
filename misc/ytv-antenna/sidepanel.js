@@ -22,8 +22,8 @@ const MINI_DIAL_SWEEP = 300;
 
 const contentEl = document.getElementById("content");
 const gearBtn = document.getElementById("gearBtn");
+const SETTINGS_URL = chrome.runtime.getURL("settings.html");
 
-let view = "remote"; // "remote" | "settings"
 let lastRotorAngle = NEUTRAL_ANGLE; // carries over across re-renders so the dial has a "from" angle to turn from
 
 // Set by changeChannel right before it triggers a render, so that render
@@ -49,11 +49,20 @@ function resetDialState() {
   pendingRotorSteps = null;
 }
 
-gearBtn.addEventListener("click", () => {
-  view = view === "settings" ? "remote" : "settings";
-  gearBtn.classList.toggle("on", view === "settings");
-  render();
-});
+// Settings now lives in its own tab (checklist scraping + the channel list
+// don't need the side panel's cramped width). Reuse an already-open
+// settings tab instead of stacking up duplicates on repeat gear clicks.
+async function openSettingsTab() {
+  const [existing] = await chrome.tabs.query({ url: SETTINGS_URL });
+  if (existing) {
+    await chrome.tabs.update(existing.id, { active: true });
+    await chrome.windows.update(existing.windowId, { focused: true });
+  } else {
+    await chrome.tabs.create({ url: SETTINGS_URL });
+  }
+}
+
+gearBtn.addEventListener("click", openSettingsTab);
 
 function send(msg) {
   return chrome.runtime.sendMessage(msg);
@@ -62,19 +71,6 @@ function send(msg) {
 async function getChannels() {
   const { channels } = await chrome.storage.local.get("channels");
   return channels || [];
-}
-
-async function setChannels(channels) {
-  await chrome.storage.local.set({ channels });
-}
-
-async function getUiMode() {
-  const { uiMode } = await chrome.storage.local.get("uiMode");
-  return uiMode === "keypad" ? "keypad" : "dial";
-}
-
-async function setUiMode(mode) {
-  await chrome.storage.local.set({ uiMode: mode });
 }
 
 const DEFAULT_FILTER = { color: 20, contrast: 100, brightness: 100, hue: 0 };
@@ -125,18 +121,6 @@ function wirePowerRow(session) {
   });
 }
 
-// Any edit to the channel lineup invalidates whatever tabs the live session
-// has open and whatever slot the dial was parked on. Rather than let a
-// running session drift out of sync with the new list, force the TV off so
-// the next "On" press does a full fresh launch against it.
-async function applyChannelsChange(updated) {
-  const res = await send({ type: "getSession" });
-  if (res.ok && res.session) await send({ type: "stop" });
-  resetDialState();
-  await setChannels(updated);
-  renderSettings(updated);
-}
-
 const MINI_DIALS = [
   { key: "color", label: "Color", min: 0, max: 150, step: 5 },
   { key: "contrast", label: "Contrast", min: 50, max: 150, step: 5 },
@@ -155,8 +139,8 @@ function miniDialHtml({ key, label, min, max, step }, value) {
     <div class="mini-dial-cell">
       <span class="mini-dial-label">${label}</span>
       <div class="mini-dial" data-key="${key}" data-min="${min}" data-max="${max}" data-step="${step}" data-value="${value}">
-        <div class="mini-dial-face"></div>
         <div class="mini-dial-rotor" style="transform: rotate(${angle}deg)">
+          <div class="mini-dial-face"></div>
           <div class="mini-dial-tick"></div>
         </div>
       </div>
@@ -261,7 +245,7 @@ async function changeChannel(delta) {
     number: CHANNEL_START + nextIndex,
     label: nextChannel.label
   });
-  if (switchRes.ok && view === "remote") {
+  if (switchRes.ok) {
     currentDialIndex = nextIndex;
     // Physical slots on the dial face are fixed at TOTAL_DIAL_SLOTS (the 12
     // channels plus U), independent of MAX_CHANNELS — so figure out the
@@ -277,7 +261,6 @@ async function changeChannel(delta) {
 }
 
 document.addEventListener("keydown", (e) => {
-  if (view !== "remote") return;
   if (e.key === "ArrowRight") {
     e.preventDefault();
     changeChannel(1);
@@ -403,167 +386,36 @@ async function renderDialView(channels, session) {
   wirePictureBox();
 }
 
-// ---------- Settings view ----------
-
-async function renderSettings(channels) {
-  const uiMode = await getUiMode();
-  const channelCount = channels.filter(Boolean).length;
-
-  contentEl.innerHTML = `
-    <div class="settings-body">
-      <button class="add-btn" id="scrapeBtn" type="button">Find channels</button>
-      <div class="scrape-results" id="scrapeResults"></div>
-      <ul class="ch-list" id="chList"></ul>
-      <p class="count">${channelCount} / ${MAX_CHANNELS} channels configured</p>
-      <button class="done-btn" id="doneBtn" type="button">Done</button>
-    </div>
-  `;
-
-  contentEl.querySelectorAll(".mode-btn").forEach((btn) => {
-    btn.addEventListener("click", async () => {
-      await setUiMode(btn.dataset.mode);
-      contentEl.querySelectorAll(".mode-btn").forEach((b) => b.classList.toggle("active", b === btn));
-    });
-  });
-
-  document.getElementById("doneBtn").addEventListener("click", () => {
-    view = "remote";
-    gearBtn.classList.remove("on");
-    render();
-  });
-
-  const listEl = document.getElementById("chList");
-  channels.forEach((ch, i) => {
-    if (!ch) return; // skipped number — no channel assigned to this slot
-    const li = document.createElement("li");
-    li.innerHTML = `
-      <span class="num">${CHANNEL_START + i}</span>
-      <span class="label">${ch.label}</span>
-      <button class="remove" data-index="${i}">Remove</button>
-    `;
-    listEl.appendChild(li);
-  });
-
-  listEl.addEventListener("click", async (e) => {
-    if (!e.target.matches(".remove")) return;
-    const index = Number(e.target.dataset.index);
-    const updated = await getChannels();
-    // Clear the slot rather than splicing, so other channels keep their number.
-    updated[index] = null;
-    while (updated.length && !updated[updated.length - 1]) updated.pop();
-    await applyChannelsChange(updated);
-  });
-
-  const scrapeBtn = document.getElementById("scrapeBtn");
-  const scrapeResultsEl = document.getElementById("scrapeResults");
-  if (channelCount >= MAX_CHANNELS) scrapeBtn.disabled = true;
-
-  scrapeBtn.addEventListener("click", async () => {
-    scrapeBtn.disabled = true;
-    scrapeBtn.textContent = "Scanning guide…";
-    scrapeResultsEl.innerHTML = "";
-
-    const res = await send({ type: "scrapeGuide" });
-
-    scrapeBtn.disabled = false;
-    scrapeBtn.textContent = "Find channels";
-
-    if (!res.ok || !res.channels.length) {
-      scrapeResultsEl.innerHTML = `<p class="form-error">Couldn't read the guide — make sure you're signed into tv.youtube.com and try again.</p>`;
-      return;
-    }
-
-    const existingUrls = new Set(channels.filter(Boolean).map((ch) => ch.url));
-    const found = res.channels.filter((ch) => !existingUrls.has(ch.url));
-
-    if (!found.length) {
-      scrapeResultsEl.innerHTML = `<p class="count">Every channel in the guide is already added.</p>`;
-      return;
-    }
-
-    renderScrapeResults(found, scrapeResultsEl);
-  });
-}
-
-// Renders the checklist of scraped-but-not-yet-added channels under the
-// "Find channels" button, capped at however many dial slots are still free.
-function renderScrapeResults(found, scrapeResultsEl) {
-  getChannels().then((channels) => {
-    const openSlots = MAX_CHANNELS - channels.filter(Boolean).length;
-
-    if (openSlots <= 0) {
-      scrapeResultsEl.innerHTML = `<p class="count">${MAX_CHANNELS} channel max reached — remove one first.</p>`;
-      return;
-    }
-
-    scrapeResultsEl.innerHTML = `
-      <p class="count">${found.length} found — pick up to ${openSlots} to add</p>
-      <ul class="scrape-list" id="scrapeList">
-        ${found.map((ch, i) => `
-          <li>
-            <label class="scrape-row">
-              <input type="checkbox" data-index="${i}">
-              <span class="label">${ch.label}</span>
-            </label>
-          </li>
-        `).join("")}
-      </ul>
-      <button class="add-btn" id="addSelectedBtn" type="button">Add selected</button>
-    `;
-
-    const checkboxes = () => [...scrapeResultsEl.querySelectorAll('input[type="checkbox"]')];
-
-    document.getElementById("scrapeList").addEventListener("change", () => {
-      const checkedCount = checkboxes().filter((cb) => cb.checked).length;
-      checkboxes().forEach((cb) => { if (!cb.checked) cb.disabled = checkedCount >= openSlots; });
-    });
-
-    document.getElementById("addSelectedBtn").addEventListener("click", async () => {
-      const selected = checkboxes().filter((cb) => cb.checked).map((cb) => found[Number(cb.dataset.index)]);
-      if (!selected.length) return;
-
-      const updated = await getChannels();
-      for (const ch of selected) {
-        const newChannel = { label: ch.label.toUpperCase().slice(0, 12), url: ch.url };
-        const emptyIndex = updated.findIndex((c) => !c);
-        if (emptyIndex !== -1) updated[emptyIndex] = newChannel;
-        else updated.push(newChannel);
-      }
-      await applyChannelsChange(updated);
-    });
-  });
-}
-
 // ---------- Router ----------
 
 async function render() {
   const channels = await getChannels();
-
-  if (view === "settings") {
-    renderSettings(channels);
-    return;
-  }
 
   const res = await send({ type: "getSession" });
   const session = res.ok ? res.session : null;
   const fullyLaunched = session && channels.every((ch) => !ch || ch.url in session.tabsByUrl);
   const activeSession = fullyLaunched ? session : null;
 
-  const uiMode = await getUiMode();
   renderDialView(channels, activeSession);
- 
 }
 
 chrome.runtime.onMessage.addListener((msg) => {
-  if (msg.type === "sessionChanged" && view === "remote") render();
+  if (msg.type === "sessionChanged") render();
 });
 
-// Land on settings first run if nothing's configured yet.
+// The channel list only ever changes from the settings tab now — pick up
+// edits made there (which also force the session off) by reacting to
+// storage directly, and clear out any now-stale dial position/rotation so
+// it doesn't end up pointing at a slot that moved or disappeared.
+chrome.storage.onChanged.addListener((changes, area) => {
+  if (area !== "local" || !changes.channels) return;
+  resetDialState();
+  render();
+});
+
+// Open settings first run if nothing's configured yet.
 (async () => {
   const channels = await getChannels();
-  if (!channels.some(Boolean)) {
-    view = "settings";
-    gearBtn.classList.add("on");
-  }
+  if (!channels.some(Boolean)) openSettingsTab();
   render();
 })();

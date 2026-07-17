@@ -1,0 +1,13 @@
+/* Settings runs in a full browser tab rather than the narrow side panel,
+   so sidepanel.css's full-width #content needs a cap here or it'd stretch
+   edge to edge on a wide window. */
+body {
+  justify-content: flex-start;
+}
+.brand {
+  max-width: 460px;
+}
+#content {
+  max-width: 460px;
+  padding: 4vh 0;
+}

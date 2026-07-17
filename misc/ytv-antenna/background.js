@@ -266,6 +266,11 @@ async function stop() {
     // first means that listener already sees no session and bails out.
     await clearSession();
     try { await chrome.tabs.remove(tabIds); } catch {}
+    // Settings now lives in its own tab and can trigger a stop (forcing the
+    // TV off after a channel edit) while the side panel is showing the dial
+    // — let it know the session's gone rather than leaving it stuck showing
+    // a channel that's no longer live.
+    chrome.runtime.sendMessage({ type: "sessionChanged", session: null }).catch(() => {});
   }
   return { ok: true };
 }
