@@ -7,7 +7,8 @@
 const TARGET_SELECTOR = "ytu-player-controller";
 const WRAPPER_CLASS = "retro-tv-wrapper";
 const OSD_CLASS = "retro-tv-osd";
-const DEFAULT_FILTER = { color: 20, contrast: 100, brightness: 100, hue: 0 };
+const DEFAULT_FILTER = { color: 100, contrast: 100, brightness: 100, hue: 0, lines: 30 };
+const MAX_SCANLINE_OPACITY = 0.55;
 
 let currentFilter = DEFAULT_FILTER;
 let osdEl = null;
@@ -92,11 +93,17 @@ chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
   return true; // async response
 });
 
+// Coupled to the TRK slider (f.lines, 0-100) rather than its own control —
+// 0 at the bottom of the track means no sepia, 100 at the top caps it at
+// 50%, so tracking distortion and the warm tube cast ride together.
+const MAX_SEPIA = 0.5;
+
 function buildFilterString(f) {
-  // Fixed low sepia = constant warm tube cast. saturate() is the real "color
-  // knob": 0% is true black-and-white, 100% is normal color, past that is
-  // punchy. Everything else (contrast/brightness/hue) layers on top.
-  return `sepia(0.25) saturate(${f.color}%) contrast(${f.contrast}%) brightness(${f.brightness}%) hue-rotate(${f.hue}deg)`;
+  // saturate() is the real "color knob": 0% is true black-and-white, 100% is
+  // normal color, past that is punchy. Everything else (contrast/brightness/
+  // hue) layers on top.
+  const sepia = (f.lines / 100) * MAX_SEPIA;
+  return `sepia(${sepia}) saturate(${f.color}%) contrast(${f.contrast}%) brightness(${f.brightness}%) hue-rotate(${f.hue}deg)`;
 }
 
 function wrapPlayer() {
@@ -111,17 +118,25 @@ function wrapPlayer() {
     wrapper.appendChild(target);
   }
   wrapper.style.filter = buildFilterString(currentFilter);
+  // Drives .retro-tv-wrapper::after's scanline overlay in content.css — a
+  // CSS var rather than a filter() term since it's painting stripes on top
+  // of the frame, not transforming the video's own pixels.
+  wrapper.style.setProperty("--scanline-opacity", (currentFilter.lines / 100) * MAX_SCANLINE_OPACITY);
 }
 
+// Renamed from "filterSettings" to leave any stale saved values behind and
+// start clean on the new 5-control (incl. lines) shape and rotation math.
+const FILTER_STORAGE_KEY = "filterSettingsV2";
+
 async function loadFilterSettings() {
-  const { filterSettings } = await chrome.storage.local.get("filterSettings");
+  const { [FILTER_STORAGE_KEY]: filterSettings } = await chrome.storage.local.get(FILTER_STORAGE_KEY);
   currentFilter = { ...DEFAULT_FILTER, ...(filterSettings || {}) };
   wrapPlayer();
 }
 
 chrome.storage.onChanged.addListener((changes, area) => {
-  if (area !== "local" || !changes.filterSettings) return;
-  currentFilter = { ...DEFAULT_FILTER, ...changes.filterSettings.newValue };
+  if (area !== "local" || !changes[FILTER_STORAGE_KEY]) return;
+  currentFilter = { ...DEFAULT_FILTER, ...changes[FILTER_STORAGE_KEY].newValue };
   wrapPlayer();
 });
 

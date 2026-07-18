@@ -14,11 +14,12 @@ const SLOT_ANGLE = 360 / TOTAL_DIAL_SLOTS; // degrees between adjacent slots
 const VANITY_SLOT_INDEX = MAX_CHANNELS; // 12 — right after channel 13
 const NEUTRAL_ANGLE = -(VANITY_SLOT_INDEX * SLOT_ANGLE); // pointer parks right on U when TV is off
 
-// Picture-control knobs: 0% parks at 7 o'clock (210deg clockwise from
-// noon), 100% parks at 5 o'clock (150deg, i.e. 510deg — a 300deg sweep
-// the long way around through noon).
-const MINI_DIAL_START_ANGLE = 210;
-const MINI_DIAL_SWEEP = 300;
+// Picture-control knobs: 0% parks straight down (180deg clockwise from
+// noon), 100% parks at 3 o'clock (450deg, i.e. 90deg — a 270deg sweep
+// the long way around through 9 o'clock and noon), leaving the bottom-right
+// quadrant (3 o'clock to straight down) as the dead zone.
+const MINI_DIAL_START_ANGLE = 180;
+const MINI_DIAL_SWEEP = 270;
 
 const contentEl = document.getElementById("content");
 const gearBtn = document.getElementById("gearBtn");
@@ -82,15 +83,19 @@ async function getChannels() {
   return channels || [];
 }
 
-const DEFAULT_FILTER = { color: 20, contrast: 100, brightness: 100, hue: 0 };
+const DEFAULT_FILTER = { color: 100, contrast: 100, brightness: 100, hue: 0, lines: 30 };
+
+// Renamed from "filterSettings" to leave any stale saved values behind and
+// start clean on the new 5-control (incl. lines) shape and rotation math.
+const FILTER_STORAGE_KEY = "filterSettingsV2";
 
 async function getFilterSettings() {
-  const { filterSettings } = await chrome.storage.local.get("filterSettings");
+  const { [FILTER_STORAGE_KEY]: filterSettings } = await chrome.storage.local.get(FILTER_STORAGE_KEY);
   return { ...DEFAULT_FILTER, ...(filterSettings || {}) };
 }
 
 async function setFilterSettings(settings) {
-  await chrome.storage.local.set({ filterSettings: settings });
+  await chrome.storage.local.set({ [FILTER_STORAGE_KEY]: settings });
 }
 
 // ---------- Shared pieces (used by both the dial and keypad views) ----------
@@ -130,27 +135,59 @@ function wirePowerRow(session) {
   });
 }
 
+// `default` is each dial's neutral filter value (matches DEFAULT_FILTER) —
+// carried here too so miniDialAngle can anchor it to a fixed visual
+// position, since the four controls span very different min/max widths.
 const MINI_DIALS = [
-  { key: "color", label: "Color", min: 0, max: 150, step: 5 },
-  { key: "contrast", label: "Contrast", min: 50, max: 150, step: 5 },
-  { key: "brightness", label: "Bright", min: 50, max: 150, step: 5 },
-  { key: "hue", label: "Hue", min: 0, max: 360, step: 10 }
+  { key: "color", label: "Color", min: 0, max: 150, step: 5, default: 100 },
+  { key: "contrast", label: "Contrast", min: 50, max: 150, step: 5, default: 100 },
+  { key: "brightness", label: "Bright", min: 50, max: 150, step: 5, default: 100 },
+  { key: "hue", label: "Hue", min: -180, max: 180, step: 10, default: 0 }
 ];
 
-function miniDialAngle(value, min, max) {
-  const pct = (value - min) / (max - min);
+// Fifth picture control — not a rotary knob like the others, a vertical
+// slider (matches a real TV's separate "lines"/sharpness pull-slider).
+const MINI_SLIDER = { key: "lines", label: "TRK", min: 0, max: 100, step: 5 };
+
+// Piecewise rather than one flat (value-min)/(max-min): each dial's own
+// `default` sits at a different fraction of its min/max span (e.g. Color's
+// neutral 100 is 67% of 0-150, Hue's is 28% of 0-360), so a flat mapping
+// makes four knobs at their defaults point four different ways. Splitting
+// the sweep at the default and scaling each half independently pins every
+// dial's default to the same middle angle while still landing min on 6
+// o'clock and max on 3 o'clock.
+function miniDialAngle(value, min, max, defaultValue) {
+  const pct = value <= defaultValue
+    ? 0.5 * (value - min) / (defaultValue - min)
+    : 0.5 + 0.5 * (value - defaultValue) / (max - defaultValue);
   return MINI_DIAL_START_ANGLE + pct * MINI_DIAL_SWEEP;
 }
 
-function miniDialHtml({ key, label, min, max, step }, value) {
-  const angle = miniDialAngle(value, min, max);
+function miniDialHtml({ key, label, min, max, step, default: defaultValue }, value) {
+  const angle = miniDialAngle(value, min, max, defaultValue);
   return `
     <div class="mini-dial-cell">
       <span class="mini-dial-label">${label}</span>
-      <div class="mini-dial" data-key="${key}" data-min="${min}" data-max="${max}" data-step="${step}" data-value="${value}">
+      <div class="mini-dial" data-key="${key}" data-min="${min}" data-max="${max}" data-step="${step}" data-default="${defaultValue}" data-value="${value}">
         <div class="mini-dial-rotor" style="transform: rotate(${angle}deg)">
           <div class="mini-dial-face"></div>
           <div class="mini-dial-tick"></div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+// Vertical slider, not a dial: 0% (min) parks the knob at the bottom of
+// the track, 100% (max) at the top.
+function miniSliderHtml({ key, label, min, max, step }, value) {
+  const pct = ((value - min) / (max - min)) * 100;
+  return `
+    <div class="mini-slider-cell">
+      <span class="mini-dial-label">${label}</span>
+      <div class="mini-slider" data-key="${key}" data-min="${min}" data-max="${max}" data-step="${step}" data-value="${value}">
+        <div class="mini-slider-track">
+          <div class="mini-slider-knob" style="bottom: ${pct}%"></div>
         </div>
       </div>
     </div>
@@ -161,6 +198,7 @@ function pictureBoxHtml(filters) {
   return `
     <div class="dial-grid">
       ${MINI_DIALS.map((d) => miniDialHtml(d, filters[d.key])).join("")}
+      ${miniSliderHtml(MINI_SLIDER, filters[MINI_SLIDER.key])}
     </div>
   `;
 }
@@ -180,13 +218,14 @@ function wirePictureBox() {
       const min = Number(dialEl.dataset.min);
       const max = Number(dialEl.dataset.max);
       const step = Number(dialEl.dataset.step);
+      const defaultValue = Number(dialEl.dataset.default);
 
       let value = Number(dialEl.dataset.value) + direction * step;
       value = Math.min(max, Math.max(min, value));
       dialEl.dataset.value = value;
 
       const rotorEl = dialEl.querySelector(".mini-dial-rotor");
-      rotorEl.style.transform = `rotate(${miniDialAngle(value, min, max)}deg)`;
+      rotorEl.style.transform = `rotate(${miniDialAngle(value, min, max, defaultValue)}deg)`;
 
       const filters = await getFilterSettings();
       filters[dialEl.dataset.key] = value;
@@ -216,6 +255,45 @@ function wirePictureBox() {
 
     dialEl.addEventListener("pointerup", stopHold);
     dialEl.addEventListener("pointercancel", stopHold);
+  });
+}
+
+// Unlike the mini-dials (relative nudges per tap), a slider's whole point is
+// landing wherever you grab it — so this maps pointer Y straight to a value
+// rather than stepping from the current one.
+function wireMiniSlider() {
+  const sliderEl = document.querySelector(".mini-slider");
+  if (!sliderEl) return;
+  const trackEl = sliderEl.querySelector(".mini-slider-track");
+  const knobEl = sliderEl.querySelector(".mini-slider-knob");
+
+  async function setFromClientY(clientY) {
+    const min = Number(sliderEl.dataset.min);
+    const max = Number(sliderEl.dataset.max);
+    const step = Number(sliderEl.dataset.step);
+
+    const rect = trackEl.getBoundingClientRect();
+    const pct = 1 - Math.min(1, Math.max(0, (clientY - rect.top) / rect.height));
+    let value = min + pct * (max - min);
+    value = Math.round(value / step) * step;
+    value = Math.min(max, Math.max(min, value));
+    if (value === Number(sliderEl.dataset.value)) return;
+    sliderEl.dataset.value = value;
+
+    knobEl.style.bottom = `${((value - min) / (max - min)) * 100}%`;
+
+    const filters = await getFilterSettings();
+    filters[sliderEl.dataset.key] = value;
+    await setFilterSettings(filters);
+  }
+
+  sliderEl.addEventListener("pointerdown", (e) => {
+    sliderEl.setPointerCapture(e.pointerId);
+    setFromClientY(e.clientY);
+  });
+  sliderEl.addEventListener("pointermove", (e) => {
+    if (!sliderEl.hasPointerCapture(e.pointerId)) return;
+    setFromClientY(e.clientY);
   });
 }
 
@@ -412,6 +490,7 @@ async function renderDialView(channels, session) {
 
   wirePowerRow(session);
   wirePictureBox();
+  wireMiniSlider();
 }
 
 // ---------- Router ----------
