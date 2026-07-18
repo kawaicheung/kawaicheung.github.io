@@ -39,6 +39,14 @@ let pendingRotorSteps = null;
 // of truth for "where on the dial are we" whenever we're sitting on static.
 let currentDialIndex = null;
 
+// True whenever the tab the user is actually looking at isn't part of the
+// TV (not a channel tab, not settings, not static) — background.js tracks
+// this globally and pushes it here. Purely a rendering concern: it parks
+// the rotor at the vanity "U" slot without touching the real session or
+// currentDialIndex, so glancing back at a channel tab (no dial tap needed)
+// snaps the rotor straight back to whatever's actually playing.
+let awayFromTV = false;
+
 // Clears remembered dial position/rotation state. Needed on power-off and
 // whenever the channel lineup changes — a stale "parked on slot 3" index
 // can end up pointing at a totally different channel once slots are
@@ -47,6 +55,7 @@ function resetDialState() {
   currentDialIndex = null;
   lastRotorAngle = NEUTRAL_ANGLE;
   pendingRotorSteps = null;
+  awayFromTV = false;
 }
 
 // Settings now lives in its own tab (checklist scraping + the channel list
@@ -221,18 +230,30 @@ async function changeChannel(delta) {
   const session = res.ok ? res.session : null;
   if (!session) return; // TV has to be on to surf channels
 
-  // Prefer the remembered dial position over deriving it from
-  // session.activeUrl — that lookup can't tell empty slots apart, since
-  // they all resolve to the same shared STATIC_URL.
-  let from = currentDialIndex;
-  if (from === null) {
-    const currentIndex = channels.findIndex((ch) => ch && ch.url === session.activeUrl);
-    from = currentIndex === -1 ? 0 : currentIndex;
+  // Having wandered off to some other tab, the dial's been sitting parked
+  // on the vanity U slot — first tap back treats that as the actual
+  // position, landing on 2 (forward) or 13 (back) same as coming off the
+  // real U gap between 13 and 2, rather than resuming wherever playback
+  // silently was.
+  let from;
+  if (awayFromTV) {
+    from = VANITY_SLOT_INDEX;
+  } else {
+    // Prefer the remembered dial position over deriving it from
+    // session.activeUrl — that lookup can't tell empty slots apart, since
+    // they all resolve to the same shared STATIC_URL.
+    from = currentDialIndex;
+    if (from === null) {
+      const currentIndex = channels.findIndex((ch) => ch && ch.url === session.activeUrl);
+      from = currentIndex === -1 ? 0 : currentIndex;
+    }
   }
 
   // Every one of the 12 physical slots is a valid stop now — an empty one
   // just tunes to static instead of being skipped.
-  const nextIndex = (from + delta + MAX_CHANNELS) % MAX_CHANNELS;
+  const nextIndex = awayFromTV
+    ? (delta > 0 ? 0 : MAX_CHANNELS - 1)
+    : (from + delta + MAX_CHANNELS) % MAX_CHANNELS;
   const nextChannel = channels[nextIndex] || { label: "STATIC", url: STATIC_URL };
 
   // Passed straight through rather than left for background.js to look
@@ -247,6 +268,7 @@ async function changeChannel(delta) {
   });
   if (switchRes.ok) {
     currentDialIndex = nextIndex;
+    awayFromTV = false;
     // Physical slots on the dial face are fixed at TOTAL_DIAL_SLOTS (the 12
     // channels plus U), independent of MAX_CHANNELS — so figure out the
     // signed number of PHYSICAL slots between `from` and `nextIndex` that
@@ -281,6 +303,12 @@ async function renderDialView(channels, session) {
   if (currentDialIndex === null && session && session.activeUrl === STATIC_URL) {
     currentDialIndex = 0;
   }
+
+  // Away from the TV, the numbers ring/rotor render exactly as if nothing
+  // were active (parking on U) — the power switch below still reflects the
+  // real session, since playback itself hasn't stopped, only where the
+  // user's looking has wandered.
+  const displaySession = awayFromTV ? null : session;
 
   contentEl.innerHTML = `
     <div class="dial-stage">
@@ -321,8 +349,8 @@ async function renderDialView(channels, session) {
     // against session.activeUrl (every empty slot shares STATIC_URL) — so
     // it's only "this" slot's turn to glow when currentDialIndex agrees.
     const isActive = channel
-      ? session && session.activeUrl === channel.url
-      : session && session.activeUrl === STATIC_URL && currentDialIndex === i;
+      ? displaySession && displaySession.activeUrl === channel.url
+      : displaySession && displaySession.activeUrl === STATIC_URL && currentDialIndex === i;
 
     if (isActive) {
       num.classList.add("active");
@@ -401,6 +429,10 @@ async function render() {
 
 chrome.runtime.onMessage.addListener((msg) => {
   if (msg.type === "sessionChanged") render();
+  else if (msg.type === "tvFocusChanged") {
+    awayFromTV = msg.away;
+    render();
+  }
 });
 
 // The channel list only ever changes from the settings tab now — pick up
@@ -417,5 +449,12 @@ chrome.storage.onChanged.addListener((changes, area) => {
 (async () => {
   const channels = await getChannels();
   if (!channels.some(Boolean)) openSettingsTab();
+
+  // Pick up whatever tab already has focus — the panel may be loading
+  // fresh (e.g. browser restart) with some unrelated tab already active,
+  // and there's no focus-change event to catch that after the fact.
+  const focusRes = await send({ type: "getTvFocus" });
+  if (focusRes.ok) awayFromTV = focusRes.away;
+
   render();
 })();

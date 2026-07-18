@@ -16,66 +16,152 @@ async function setChannels(channels) {
   await chrome.storage.local.set({ channels });
 }
 
-// Any edit to the channel lineup invalidates whatever tabs the live session
-// has open and whatever slot the dial was parked on. Rather than let a
-// running session drift out of sync with the new list, force the TV off so
-// the next "On" press does a full fresh launch against it. The side panel
-// picks up the change and resets its own dial state via its
-// chrome.storage.onChanged listener on "channels".
-async function applyChannelsChange(updated) {
-  const res = await send({ type: "getSession" });
-  if (res.ok && res.session) await send({ type: "stop" });
-  await setChannels(updated);
-  renderSettings(updated);
+// Nothing here touches storage until Done is pressed. `draft` mirrors the
+// 12 dial slots (index 0 = channel 2 ... index 11 = channel 13);
+// `available` holds scraped-but-unplaced channels shown in the grid.
+let draft = new Array(MAX_CHANNELS).fill(null);
+let available = [];
+
+async function loadDraft() {
+  const saved = await getChannels();
+  draft = Array.from({ length: MAX_CHANNELS }, (_, i) => saved[i] || null);
+  available = [];
 }
 
-async function renderSettings(channels) {
-  const channelCount = channels.filter(Boolean).length;
+function renderAll() {
+  renderAvailable();
+  renderSlots();
+  renderCount();
+}
+
+function renderCount() {
+  const count = draft.filter(Boolean).length;
+  document.getElementById("channelCount").textContent = `${count} / ${MAX_CHANNELS} channels configured`;
+}
+
+function renderAvailable() {
+  const grid = document.getElementById("availableGrid");
+
+  if (!available.length) {
+    grid.innerHTML = `<p class="available-empty">No unplaced channels — click "Find channels" to scan the guide.</p>`;
+    return;
+  }
+
+  grid.innerHTML = available.map((ch, i) => `
+    <div class="available-tile" draggable="true" data-index="${i}" title="${ch.label}">${ch.label}</div>
+  `).join("");
+
+  grid.querySelectorAll(".available-tile").forEach((tile) => {
+    tile.addEventListener("dragstart", (e) => {
+      const index = Number(tile.dataset.index);
+      e.dataTransfer.effectAllowed = "move";
+      e.dataTransfer.setData("application/json", JSON.stringify({ source: "available", index }));
+    });
+  });
+}
+
+function renderSlots() {
+  const slotsEl = document.getElementById("slots");
+
+  slotsEl.innerHTML = draft.map((ch, i) => `
+    <div class="slot${ch ? " filled" : ""}" data-index="${i}" draggable="${ch ? "true" : "false"}">
+      <span class="slot-number">${CHANNEL_START + i}</span>
+      ${ch ? `<button class="slot-remove" data-index="${i}" type="button" aria-label="Remove">&times;</button><span class="slot-label">${ch.label}</span>` : ""}
+    </div>
+  `).join("");
+
+  slotsEl.querySelectorAll(".slot").forEach((slotEl) => {
+    const index = Number(slotEl.dataset.index);
+
+    slotEl.addEventListener("dragstart", (e) => {
+      if (!draft[index]) { e.preventDefault(); return; }
+      e.dataTransfer.effectAllowed = "move";
+      e.dataTransfer.setData("application/json", JSON.stringify({ source: "slot", index }));
+    });
+
+    slotEl.addEventListener("dragover", (e) => {
+      e.preventDefault();
+      slotEl.classList.add("drag-over");
+    });
+    slotEl.addEventListener("dragleave", () => slotEl.classList.remove("drag-over"));
+    slotEl.addEventListener("drop", (e) => {
+      e.preventDefault();
+      slotEl.classList.remove("drag-over");
+      let data;
+      try {
+        data = JSON.parse(e.dataTransfer.getData("application/json"));
+      } catch {
+        return;
+      }
+      placeInSlot(data, index);
+    });
+  });
+
+  slotsEl.querySelectorAll(".slot-remove").forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const index = Number(btn.dataset.index);
+      const ch = draft[index];
+      if (!ch) return;
+      draft[index] = null;
+      available.push(ch);
+      renderAll();
+    });
+  });
+}
+
+// Drops a channel (from the available grid or another slot) into
+// `targetIndex`, bumping whatever's already there back into the available
+// grid rather than just overwriting it.
+function placeInSlot(data, targetIndex) {
+  let channel;
+  if (data.source === "available") {
+    channel = available[data.index];
+    if (!channel) return;
+    available.splice(data.index, 1);
+  } else if (data.source === "slot") {
+    if (data.index === targetIndex) return;
+    channel = draft[data.index];
+    if (!channel) return;
+    draft[data.index] = null;
+  } else {
+    return;
+  }
+
+  const evicted = draft[targetIndex];
+  draft[targetIndex] = channel;
+  if (evicted) available.push(evicted);
+
+  renderAll();
+}
+
+async function init() {
+  await loadDraft();
 
   contentEl.innerHTML = `
     <div class="settings-body">
-      <button class="add-btn" id="scrapeBtn" type="button">Find channels</button>
-      <div class="scrape-results" id="scrapeResults"></div>
-      <ul class="ch-list" id="chList"></ul>
-      <p class="count">${channelCount} / ${MAX_CHANNELS} channels configured</p>
-      <button class="done-btn" id="doneBtn" type="button">Done</button>
+      <p class="section-label">Channels (2&ndash;13)</p>
+      <div class="slots" id="slots"></div>
+
+      <p class="section-label">Available channels</p>
+      <button class="plain-btn" id="scrapeBtn" type="button">Find channels</button>
+      <div class="available-grid" id="availableGrid"></div>
+      <p class="form-error" id="scrapeError"></p>
+
+      <p class="count" id="channelCount"></p>
+      <button class="plain-btn" id="doneBtn" type="button">Done</button>
     </div>
   `;
 
-  document.getElementById("doneBtn").addEventListener("click", () => {
-    window.close();
-  });
-
-  const listEl = document.getElementById("chList");
-  channels.forEach((ch, i) => {
-    if (!ch) return; // skipped number — no channel assigned to this slot
-    const li = document.createElement("li");
-    li.innerHTML = `
-      <span class="num">${CHANNEL_START + i}</span>
-      <span class="label">${ch.label}</span>
-      <button class="remove" data-index="${i}">Remove</button>
-    `;
-    listEl.appendChild(li);
-  });
-
-  listEl.addEventListener("click", async (e) => {
-    if (!e.target.matches(".remove")) return;
-    const index = Number(e.target.dataset.index);
-    const updated = await getChannels();
-    // Clear the slot rather than splicing, so other channels keep their number.
-    updated[index] = null;
-    while (updated.length && !updated[updated.length - 1]) updated.pop();
-    await applyChannelsChange(updated);
-  });
+  renderAll();
 
   const scrapeBtn = document.getElementById("scrapeBtn");
-  const scrapeResultsEl = document.getElementById("scrapeResults");
-  if (channelCount >= MAX_CHANNELS) scrapeBtn.disabled = true;
+  const scrapeError = document.getElementById("scrapeError");
 
   scrapeBtn.addEventListener("click", async () => {
     scrapeBtn.disabled = true;
     scrapeBtn.textContent = "Scanning guide…";
-    scrapeResultsEl.innerHTML = "";
+    scrapeError.textContent = "";
 
     const res = await send({ type: "scrapeGuide" });
 
@@ -83,71 +169,38 @@ async function renderSettings(channels) {
     scrapeBtn.textContent = "Find channels";
 
     if (!res.ok || !res.channels.length) {
-      scrapeResultsEl.innerHTML = `<p class="form-error">Couldn't read the guide — make sure you're signed into tv.youtube.com and try again.</p>`;
+      scrapeError.textContent = "Couldn't read the guide — make sure you're signed into tv.youtube.com and try again.";
       return;
     }
 
-    const existingUrls = new Set(channels.filter(Boolean).map((ch) => ch.url));
-    const found = res.channels.filter((ch) => !existingUrls.has(ch.url));
+    const knownUrls = new Set([
+      ...draft.filter(Boolean).map((ch) => ch.url),
+      ...available.map((ch) => ch.url)
+    ]);
+    const found = res.channels.filter((ch) => !knownUrls.has(ch.url));
 
     if (!found.length) {
-      scrapeResultsEl.innerHTML = `<p class="count">Every channel in the guide is already added.</p>`;
+      scrapeError.textContent = "Every channel in the guide is already placed or available.";
       return;
     }
 
-    renderScrapeResults(found, scrapeResultsEl);
+    available = available.concat(found);
+    renderAll();
+  });
+
+  document.getElementById("doneBtn").addEventListener("click", async () => {
+    const doneBtn = document.getElementById("doneBtn");
+    doneBtn.disabled = true;
+
+    const updated = draft.slice();
+    while (updated.length && !updated[updated.length - 1]) updated.pop();
+
+    const res = await send({ type: "getSession" });
+    if (res.ok && res.session) await send({ type: "stop" });
+    await setChannels(updated);
+
+    window.close();
   });
 }
 
-// Renders the checklist of scraped-but-not-yet-added channels under the
-// "Find channels" button, capped at however many dial slots are still free.
-function renderScrapeResults(found, scrapeResultsEl) {
-  getChannels().then((channels) => {
-    const openSlots = MAX_CHANNELS - channels.filter(Boolean).length;
-
-    if (openSlots <= 0) {
-      scrapeResultsEl.innerHTML = `<p class="count">${MAX_CHANNELS} channel max reached — remove one first.</p>`;
-      return;
-    }
-
-    scrapeResultsEl.innerHTML = `
-      <p class="count">${found.length} found — pick up to ${openSlots} to add</p>
-      <ul class="scrape-list" id="scrapeList">
-        ${found.map((ch, i) => `
-          <li>
-            <label class="scrape-row">
-              <input type="checkbox" data-index="${i}">
-              <span class="label">${ch.label}</span>
-            </label>
-          </li>
-        `).join("")}
-      </ul>
-      <button class="add-btn" id="addSelectedBtn" type="button">Add selected</button>
-    `;
-
-    const checkboxes = () => [...scrapeResultsEl.querySelectorAll('input[type="checkbox"]')];
-
-    document.getElementById("scrapeList").addEventListener("change", () => {
-      const checkedCount = checkboxes().filter((cb) => cb.checked).length;
-      checkboxes().forEach((cb) => { if (!cb.checked) cb.disabled = checkedCount >= openSlots; });
-    });
-
-    document.getElementById("addSelectedBtn").addEventListener("click", async () => {
-      const selected = checkboxes().filter((cb) => cb.checked).map((cb) => found[Number(cb.dataset.index)]);
-      if (!selected.length) return;
-
-      const updated = await getChannels();
-      for (const ch of selected) {
-        const newChannel = { label: ch.label.toUpperCase().slice(0, 12), url: ch.url };
-        const emptyIndex = updated.findIndex((c) => !c);
-        if (emptyIndex !== -1) updated[emptyIndex] = newChannel;
-        else updated.push(newChannel);
-      }
-      await applyChannelsChange(updated);
-    });
-  });
-}
-
-(async () => {
-  renderSettings(await getChannels());
-})();
+init();

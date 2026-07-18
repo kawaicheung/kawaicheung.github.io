@@ -14,6 +14,7 @@ const MAX_CHANNELS = 12; // dial has 12 slots (numbers 2..13), matches sidepanel
 // this shared page instead of being unreachable. One tab serves every empty
 // slot, same as any other channel would share a tab if it were reused.
 const STATIC_URL = chrome.runtime.getURL("static.html");
+const SETTINGS_URL = chrome.runtime.getURL("settings.html");
 
 // `number` is the dial position (2..13) each channel lands on. Numbers don't
 // need to be contiguous — leave gaps for channels you haven't assigned yet.
@@ -155,8 +156,35 @@ async function launch(windowId) {
   // The tab was just created — give its content script a moment to load
   // before trying to message it.
   setTimeout(() => announceChannel(tabsByUrl[activeUrl], activeUrl), 800);
+  checkTvFocus();
 
   return { ok: true, session };
+}
+
+// Whether the tab the user is actually looking at right now is part of the
+// TV (a channel tab, the shared static tab — already just another entry in
+// tabsByUrl — or the settings tab) rather than something unrelated they
+// clicked or opened over top of it.
+function isKnownTab(tab, session) {
+  if (!tab || !session) return false;
+  return Object.values(session.tabsByUrl).includes(tab.id) || tab.url === SETTINGS_URL;
+}
+
+async function getTvFocus(session) {
+  session = session || (await getSession());
+  if (!session) return { ok: true, away: false };
+  const [tab] = await chrome.tabs.query({ active: true, lastFocusedWindow: true });
+  return { ok: true, away: !isKnownTab(tab, session) };
+}
+
+// Lets the side panel park the dial's rotor at the vanity "U" slot whenever
+// focus wanders off the TV — a lightweight "you've tabbed away" signal, kept
+// separate from the session itself, which stays live and untouched.
+async function checkTvFocus() {
+  const session = await getSession();
+  if (!session) return;
+  const { away } = await getTvFocus(session);
+  chrome.runtime.sendMessage({ type: "tvFocusChanged", away }).catch(() => {});
 }
 
 // Puts every channel tab into one named, colored group. Reuses the previous
@@ -257,21 +285,36 @@ async function scrapeChannels() {
 
 async function stop() {
   const session = await getSession();
+  const sessionTabIds = session ? Object.values(session.tabsByUrl) : [];
+
+  // OFF should mean everything's actually off — sweep up every
+  // tv.youtube.com tab (any path: /live, /watch/..., whatever), not just
+  // the ones this particular session happens to know about. Covers tabs
+  // opened by hand, leftovers from a stale/crashed session, etc.
+  const strayTabs = await chrome.tabs.query({ url: "https://tv.youtube.com/*" });
+  const tabIds = [...new Set([...sessionTabIds, ...strayTabs.map((t) => t.id)])];
+
   if (session) {
-    const tabIds = Object.values(session.tabsByUrl);
     // Clear first, then remove: removing a tab fires tabs.onRemoved, whose
     // listener below reads the session and writes it back (to drop that
     // tab from a still-live session). If that write landed after this
     // cleared the session, it would resurrect a phantom one — clearing
     // first means that listener already sees no session and bails out.
     await clearSession();
+  }
+
+  if (tabIds.length) {
     try { await chrome.tabs.remove(tabIds); } catch {}
+  }
+
+  if (session) {
     // Settings now lives in its own tab and can trigger a stop (forcing the
     // TV off after a channel edit) while the side panel is showing the dial
     // — let it know the session's gone rather than leaving it stuck showing
     // a channel that's no longer live.
     chrome.runtime.sendMessage({ type: "sessionChanged", session: null }).catch(() => {});
   }
+
   return { ok: true };
 }
 
@@ -315,11 +358,22 @@ chrome.tabs.onRemoved.addListener(async (tabId) => {
   chrome.runtime.sendMessage({ type: "sessionChanged", session }).catch(() => {});
 });
 
+// Any of these can change which tab the user is actually looking at —
+// switching tabs, switching windows (including away from Chrome entirely,
+// which reports back to whatever tab/window Chrome had focused last), or a
+// tab navigating to a new URL while it's the active one.
+chrome.tabs.onActivated.addListener(checkTvFocus);
+chrome.windows.onFocusChanged.addListener(checkTvFocus);
+chrome.tabs.onUpdated.addListener((_tabId, changeInfo, tab) => {
+  if (changeInfo.status === "complete" && tab.active) checkTvFocus();
+});
+
 chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
   (async () => {
     if (msg.type === "launch") sendResponse(await launch(msg.windowId));
     else if (msg.type === "switch") sendResponse(await switchChannel(msg.url, msg.number, msg.label));
     else if (msg.type === "stop") sendResponse(await stop());
+    else if (msg.type === "getTvFocus") sendResponse(await getTvFocus());
     else if (msg.type === "scrapeGuide") sendResponse(await scrapeChannels());
     else if (msg.type === "getSession") sendResponse({ ok: true, session: await getSession() });
     else sendResponse({ ok: false, error: "unknown-message" });
