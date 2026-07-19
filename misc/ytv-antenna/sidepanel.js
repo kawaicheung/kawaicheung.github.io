@@ -73,8 +73,26 @@ async function openSettingsTab() {
   if (existing) {
     await chrome.tabs.update(existing.id, { active: true });
     await chrome.windows.update(existing.windowId, { focused: true });
-  } else {
-    await chrome.tabs.create({ url: SETTINGS_URL });
+    return;
+  }
+
+  const res = await send({ type: "getSession" });
+  const session = res.ok ? res.session : null;
+  const tab = await chrome.tabs.create({
+    windowId: session ? session.windowId : undefined,
+    url: SETTINGS_URL
+  });
+
+  // Ride along in the same tab group as the channels, if the TV's on and one
+  // exists — keeps settings sitting with the rest of the WHYTV tabs instead
+  // of landing as a loose tab off to the side. No session yet (first run,
+  // TV off) just means no group to join.
+  if (session && session.groupId != null) {
+    try {
+      await chrome.tabs.group({ tabIds: [tab.id], groupId: session.groupId });
+    } catch (err) {
+      console.error("failed to group settings tab:", err);
+    }
   }
 }
 
@@ -418,8 +436,8 @@ async function renderDialView(channels, session) {
         </div>
       </div>
     </div>
-    ${pictureBoxHtml(filters)}
     ${powerRowHtml()}
+    ${pictureBoxHtml(filters)}
   `;
 
   const dialEl = document.querySelector(".dial");

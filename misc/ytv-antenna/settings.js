@@ -211,8 +211,13 @@ async function init() {
     while (updated.length && !updated[updated.length - 1]) updated.pop();
 
     const res = await send({ type: "getSession" });
-    if (res.ok && res.session) await send({ type: "stop" });
+    const session = res.ok ? res.session : null;
+    if (session) await send({ type: "stop" });
     await setChannels(updated);
+    // Relaunch into the same window so edited channels take effect
+    // immediately — a fresh set of tabs built off the just-saved list,
+    // rather than leaving the old ones (or none) sitting there stale.
+    if (session) await send({ type: "launch", windowId: session.windowId });
 
     window.close();
   });
