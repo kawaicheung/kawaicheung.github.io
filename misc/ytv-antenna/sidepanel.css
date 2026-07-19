@@ -30,6 +30,7 @@ body {
 }
 
 #content {
+  position: relative;
   width: 100%;
   flex: 1;
   display: flex;
@@ -74,7 +75,6 @@ body {
   text-transform: uppercase;
   margin-bottom: 10px;
   display: flex;
-  justify-content: space-between;
   align-items: center;
   padding: 0 8px;
 }
@@ -84,27 +84,48 @@ body {
   font-size: 14px;
   letter-spacing: 0.2rem;
 }
-.brand-right { display: flex; align-items: center; gap: 10px; }
 
+/* Sits inside #content (rebuilt into its template on every render — see
+   sidepanel.js), pinned to the upper-right corner of the case rather than
+   living in the outer chrome bar. Same metal palette as .dial-metal/
+   .dial-knob-face, just linear instead of conic, so it reads as a little
+   riveted cap. */
 .gear {
-  background: none;
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  z-index: 5;
+  width: 30px;
+  height: 30px;
   border: none;
-  color: var(--phosphor-dim);
+  border-radius: 50%;
   cursor: pointer;
   padding: 0;
   display: flex;
   align-items: center;
   justify-content: center;
+  color: #47412f;
+  background:
+    repeating-linear-gradient(180deg,
+      rgba(255,255,255,0.3) 0px, rgba(255,255,255,0.3) 0.5px,
+      rgba(0,0,0,0.12) 0.5px, rgba(0,0,0,0.12) 1px,
+      transparent 1px, transparent 1.5px),
+    linear-gradient(180deg, var(--metal-hi), var(--metal-mid) 55%, var(--metal-lo));
+  box-shadow:
+    inset 0 0 0 1px rgba(0,0,0,0.35),
+    inset 0 2px 3px rgba(0,0,0,0.4),
+    inset 0 -1px 2px rgba(255,255,255,0.4),
+    0 2px 5px rgba(0,0,0,0.5);
 
   & svg {
-    width: 18px;
-    height: 18px;
+    width: 20px;
+    height: 20px;
     display: block;
   }
 
   &:hover,
   &.on {
-    color: var(--phosphor);
+    color: #241f14;
   }
 }
 
