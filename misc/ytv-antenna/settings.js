@@ -158,7 +158,7 @@ async function init() {
   const scrapeBtn = document.getElementById("scrapeBtn");
   const scrapeError = document.getElementById("scrapeError");
 
-  scrapeBtn.addEventListener("click", async () => {
+  async function scrapeChannels() {
     scrapeBtn.disabled = true;
     scrapeBtn.textContent = "Scanning guide…";
     scrapeError.textContent = "";
@@ -186,7 +186,14 @@ async function init() {
 
     available = available.concat(found);
     renderAll();
-  });
+  }
+
+  scrapeBtn.addEventListener("click", scrapeChannels);
+
+  // Scan automatically on open so the available grid is populated without
+  // requiring the user to click "Find channels" first; the button stays for
+  // re-scanning after the guide changes.
+  scrapeChannels();
 
   document.getElementById("doneBtn").addEventListener("click", async () => {
     const doneBtn = document.getElementById("doneBtn");
