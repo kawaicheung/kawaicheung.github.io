@@ -31,13 +31,20 @@ const DEFAULT_FILTER = { color: 100, contrast: 100, brightness: 100, hue: 0, lin
 // 50%. Kept in sync with content.js's MAX_SEPIA.
 const MAX_SEPIA = 0.5;
 
+// Same scanline treatment as content.js's wrapPlayer/content.css's
+// .retro-tv-wrapper::after, just targeting .bars::after (in static.html's
+// inline <style>) since this page has no player wrapper of its own.
+const MAX_SCANLINE_OPACITY = 0.55;
+
 function buildFilterString(f) {
   const sepia = (f.lines / 100) * MAX_SEPIA;
   return `sepia(${sepia}) saturate(${f.color}%) contrast(${f.contrast}%) brightness(${f.brightness}%) hue-rotate(${f.hue}deg)`;
 }
 
 function applyFilter(filterSettings) {
-  document.body.style.filter = buildFilterString({ ...DEFAULT_FILTER, ...(filterSettings || {}) });
+  const f = { ...DEFAULT_FILTER, ...(filterSettings || {}) };
+  document.body.style.filter = buildFilterString(f);
+  document.body.style.setProperty("--scanline-opacity", (f.lines / 100) * MAX_SCANLINE_OPACITY);
 }
 
 // Renamed from "filterSettings" to leave any stale saved values behind and

@@ -474,11 +474,11 @@ body {
 }
 
 .mini-dial-label {
-  font-size: 10px;
-  font-weight: 800;
-  letter-spacing: 0.1em;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
   text-transform: uppercase;
-  color: var(--phosphor-dim);
+  color: rgba(255, 255, 255, 0.6);
 }
 
 .mini-dial {

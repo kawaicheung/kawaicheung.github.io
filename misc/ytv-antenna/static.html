@@ -34,6 +34,24 @@
     flex: 1;
   }
 
+  /* Same overlay as content.css's .retro-tv-wrapper::after, driven by the
+     same --scanline-opacity var (set in static.js from the TRK slider) —
+     this page has no player wrapper of its own, so it lands on .bars. */
+  .bars::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+      to bottom,
+      rgba(0,0,0,var(--scanline-opacity, 0.165)) 0px,
+      rgba(0,0,0,var(--scanline-opacity, 0.165)) 1px,
+      transparent 2px,
+      transparent 4px
+    );
+    mix-blend-mode: multiply;
+  }
+
   /* Same look as the real channels' OSD banner (content.css's
      .retro-tv-osd) but permanently shown rather than fading after 5s —
      there's no video to identify here beyond the channel number itself. */
