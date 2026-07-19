@@ -208,12 +208,24 @@ body {
     border-radius: 1px;
   }
 
+  /* Set once this slot's own tab has actually finished loading (see
+     loadedChannelUrls in sidepanel.js) — lights up one at a time as
+     launch()'s warm-up loop works through the channels, not all at once
+     just because a slot has a channel assigned to it. */
   &.lit {
     color: #ffffff;
+    text-shadow:
+      0 0 3px rgba(255, 255, 255, 0.85),
+      0 0 9px rgba(255, 255, 255, 0.4);
 
     &::after {
       box-shadow: 0 0 6px var(--phosphor);
     }
+  }
+
+  /* No css for now */
+  &.active {
+
   }
 }
 

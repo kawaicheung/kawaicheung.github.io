@@ -140,6 +140,11 @@ async function launch(windowId) {
       tabsByUrl[channel.url] = tab.id;
       await waitForTabComplete(tab.id);
     }
+    // Broadcast per-channel so the side panel can light up each dial number
+    // the moment its own tab is ready, in step with the flicker above,
+    // instead of waiting for the whole launch() loop (all channels) to
+    // finish before anything lights up.
+    chrome.runtime.sendMessage({ type: "channelLoaded", url: channel.url }).catch(() => {});
   }
 
   const activeUrl = channels[0] ? channels[0].url : STATIC_URL;

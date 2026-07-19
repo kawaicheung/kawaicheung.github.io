@@ -47,6 +47,8 @@ function renderAvailable() {
     return;
   }
 
+  available.sort((a, b) => a.label.localeCompare(b.label));
+
   grid.innerHTML = available.map((ch, i) => `
     <div class="available-tile" draggable="true" data-index="${i}" title="${ch.label}">${ch.label}</div>
   `).join("");
@@ -140,13 +142,19 @@ async function init() {
 
   contentEl.innerHTML = `
     <div class="settings-body">
-      <p class="section-label">Channels (2&ndash;13)</p>
-      <div class="slots" id="slots"></div>
+      <div class="settings-columns">
+        <div class="settings-col settings-col-available">
+          <p class="section-label">Available channels</p>
+          <button class="plain-btn" id="scrapeBtn" type="button">Find channels</button>
+          <div class="available-grid" id="availableGrid"></div>
+          <p class="form-error" id="scrapeError"></p>
+        </div>
 
-      <p class="section-label">Available channels</p>
-      <button class="plain-btn" id="scrapeBtn" type="button">Find channels</button>
-      <div class="available-grid" id="availableGrid"></div>
-      <p class="form-error" id="scrapeError"></p>
+        <div class="settings-col settings-col-channels">
+          <p class="section-label">Channels (2&ndash;13)</p>
+          <div class="slots" id="slots"></div>
+        </div>
+      </div>
 
       <p class="count" id="channelCount"></p>
       <button class="plain-btn" id="doneBtn" type="button">Done</button>

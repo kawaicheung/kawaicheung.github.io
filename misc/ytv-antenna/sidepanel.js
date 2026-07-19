@@ -48,6 +48,12 @@ let currentDialIndex = null;
 // snaps the rotor straight back to whatever's actually playing.
 let awayFromTV = false;
 
+// Urls whose tab has actually finished loading — populated live from
+// background.js's per-channel "channelLoaded" broadcasts during launch()'s
+// warm-up loop, so each dial number can light up the moment its own tab is
+// ready instead of all at once when the whole session finally goes live.
+let loadedChannelUrls = new Set();
+
 // Clears remembered dial position/rotation state. Needed on power-off and
 // whenever the channel lineup changes — a stale "parked on slot 3" index
 // can end up pointing at a totally different channel once slots are
@@ -57,6 +63,7 @@ function resetDialState() {
   lastRotorAngle = NEUTRAL_ANGLE;
   pendingRotorSteps = null;
   awayFromTV = false;
+  loadedChannelUrls = new Set();
 }
 
 // Settings now lives in its own tab (checklist scraping + the channel list
@@ -416,7 +423,16 @@ async function renderDialView(channels, session) {
     const channel = channels[i];
     const angle = i * SLOT_ANGLE;
     const num = document.createElement("span");
-    num.className = "dial-num" + (channel ? " lit" : "");
+    // Lit tracks the tab actually being loaded/ready — live via
+    // loadedChannelUrls while launch() is still warming up, and (after a
+    // panel reload mid-session) straight off session.tabsByUrl once it's
+    // already there — not just "this slot has a channel configured", which
+    // said nothing about whether its tab was really up yet.
+    const isLoaded = !!channel && (
+      loadedChannelUrls.has(channel.url) ||
+      (session && channel.url in session.tabsByUrl)
+    );
+    num.className = "dial-num" + (isLoaded ? " lit" : "");
     num.textContent = String(CHANNEL_START + i);
     // No counter-rotation: the number keeps the `angle` rotation, so it
     // radiates — upright only once the rotor below brings it to the top,
@@ -510,6 +526,9 @@ chrome.runtime.onMessage.addListener((msg) => {
   if (msg.type === "sessionChanged") render();
   else if (msg.type === "tvFocusChanged") {
     awayFromTV = msg.away;
+    render();
+  } else if (msg.type === "channelLoaded") {
+    loadedChannelUrls.add(msg.url);
     render();
   }
 });
