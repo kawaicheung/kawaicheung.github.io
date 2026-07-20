@@ -1,5 +1,6 @@
 const MAX_CHANNELS = 12; // dial runs 2 through 13, VHF-style
 const CHANNEL_START = 2;
+const STATIC_URL = chrome.runtime.getURL("static.html");
 
 function send(msg) {
   return chrome.runtime.sendMessage(msg);
@@ -19,11 +20,23 @@ async function setChannels(channels) {
 // `available` holds scraped-but-unplaced channels shown in the grid.
 let draft = new Array(MAX_CHANNELS).fill(null);
 let available = [];
+// Snapshot of `draft` as loaded, so Done can tell whether anything actually
+// changed before paying the cost of a full stop/relaunch.
+let originalChannels = [];
 
 async function loadDraft() {
   const saved = await getChannels();
   draft = Array.from({ length: MAX_CHANNELS }, (_, i) => saved[i] || null);
+  originalChannels = draft.slice();
   available = [];
+}
+
+// Trailing-null-trimmed url list, for comparing two channel sets regardless
+// of how many empty slots pad the end of each.
+function channelSignature(channels) {
+  const trimmed = channels.slice();
+  while (trimmed.length && !trimmed[trimmed.length - 1]) trimmed.pop();
+  return trimmed.map((ch) => (ch ? ch.url : null)).join("|");
 }
 
 function renderAll() {
@@ -186,17 +199,59 @@ async function init() {
 
     const updated = draft.slice();
     while (updated.length && !updated[updated.length - 1]) updated.pop();
+    const changed = channelSignature(draft) !== channelSignature(originalChannels);
 
     const res = await send({ type: "getSession" });
     const session = res.ok ? res.session : null;
-    if (session) await send({ type: "stop" });
-    await setChannels(updated);
-    // Relaunch into the same window so edited channels take effect
-    // immediately — a fresh set of tabs built off the just-saved list,
-    // rather than leaving the old ones (or none) sitting there stale.
-    if (session) await send({ type: "launch", windowId: session.windowId });
 
-    window.close();
+    if (!session) {
+      // TV's off — settings is just a standalone tab with nothing to tune
+      // away to, same as it's always worked.
+      if (changed) await setChannels(updated);
+      window.close();
+      return;
+    }
+
+    if (changed) {
+      // Settings is a normal session tab now (the dial's vanity "U" slot,
+      // created during launch() like any other) — background.js's stop()
+      // recognizes this tab as the caller and excludes it from the sweep,
+      // so this script survives to actually finish setChannels()/launch()
+      // instead of being torn down mid-await by its own stop() call.
+      await send({ type: "stop" });
+      await setChannels(updated);
+      // Relaunch into the same window so edited channels take effect
+      // immediately — a fresh set of tabs built off the just-saved list,
+      // rather than leaving the old ones sitting there stale. launch()
+      // finds this tab still open and reuses it, same as any other.
+      await send({ type: "launch", windowId: session.windowId });
+    } else {
+      // Nothing changed — just tune away like turning the dial to channel
+      // 2, the same place a fresh power-on lands. No stop/relaunch needed,
+      // and switchChannel is the same trusted mechanism used everywhere
+      // else a channel changes, so there's no focus race to get wrong.
+      const channels = await getChannels();
+      const target = channels[0];
+      await send({
+        type: "switch",
+        url: target ? target.url : STATIC_URL,
+        number: CHANNEL_START,
+        label: target ? target.label : "STATIC"
+      });
+    }
+
+    doneBtn.disabled = false;
+  });
+
+  // This tab is reused across visits now instead of being recreated each
+  // time (settings lives permanently at the dial's "U" slot) — resync from
+  // storage whenever it becomes visible again, so tuning back in always
+  // reflects what's actually saved rather than stale state left over from
+  // before it was last tuned away from.
+  document.addEventListener("visibilitychange", async () => {
+    if (document.hidden) return;
+    await loadDraft();
+    renderAll();
   });
 }
 

@@ -65,35 +65,42 @@ function resetDialState() {
   loadedChannelUrls = new Set();
 }
 
-// Settings now lives in its own tab (checklist scraping + the channel list
-// don't need the side panel's cramped width). Reuse an already-open
-// settings tab instead of stacking up duplicates on repeat gear clicks.
+// Settings is just another tab in the rotation now — the vanity "U" slot —
+// created during launch() alongside the static page rather than opened and
+// torn down per visit. So tuning to it while the TV's on is a normal
+// switchChannel call, exactly like turning the dial to any real channel:
+// no ad-hoc tab tracking, no focus-race workarounds, no special-casing.
+// Only when the TV's off (no session, so no tabsByUrl for it to live in
+// yet) does it fall back to being a plain standalone tab.
 async function openSettingsTab() {
+  const res = await send({ type: "getSession" });
+  const session = res.ok ? res.session : null;
+
+  if (session) {
+    const switchRes = await send({
+      type: "switch",
+      url: SETTINGS_URL,
+      number: CHANNEL_START + VANITY_SLOT_INDEX,
+      label: "SETTINGS"
+    });
+    // Matches what turning the dial onto U does to this same state, so a
+    // physical turn right after a gear click continues from U correctly
+    // instead of from wherever the last real channel was.
+    if (switchRes.ok) {
+      currentDialIndex = VANITY_SLOT_INDEX;
+      awayFromTV = false;
+    }
+    render();
+    return;
+  }
+
   const [existing] = await chrome.tabs.query({ url: SETTINGS_URL });
   if (existing) {
     await chrome.tabs.update(existing.id, { active: true });
     await chrome.windows.update(existing.windowId, { focused: true });
     return;
   }
-
-  const res = await send({ type: "getSession" });
-  const session = res.ok ? res.session : null;
-  const tab = await chrome.tabs.create({
-    windowId: session ? session.windowId : undefined,
-    url: SETTINGS_URL
-  });
-
-  // Ride along in the same tab group as the channels, if the TV's on and one
-  // exists — keeps settings sitting with the rest of the WHYTV tabs instead
-  // of landing as a loose tab off to the side. No session yet (first run,
-  // TV off) just means no group to join.
-  if (session && session.groupId != null) {
-    try {
-      await chrome.tabs.group({ tabIds: [tab.id], groupId: session.groupId });
-    } catch (err) {
-      console.error("failed to group settings tab:", err);
-    }
-  }
+  await chrome.tabs.create({ url: SETTINGS_URL });
 }
 
 // The gear button lives inside #content now (renderDialView rebuilds its
@@ -357,12 +364,15 @@ async function changeChannel(delta) {
     }
   }
 
-  // Every one of the 12 physical slots is a valid stop now — an empty one
-  // just tunes to static instead of being skipped.
+  // U is a real 13th stop now too, not just a decorative gap — the dial
+  // wraps through all TOTAL_DIAL_SLOTS positions, landing on settings
+  // itself when you turn all the way past 13 or back before 2.
   const nextIndex = awayFromTV
     ? (delta > 0 ? 0 : MAX_CHANNELS - 1)
-    : (from + delta + MAX_CHANNELS) % MAX_CHANNELS;
-  const nextChannel = channels[nextIndex] || { label: "STATIC", url: STATIC_URL };
+    : (from + delta + TOTAL_DIAL_SLOTS) % TOTAL_DIAL_SLOTS;
+  const nextChannel = nextIndex === VANITY_SLOT_INDEX
+    ? { label: "SETTINGS", url: SETTINGS_URL }
+    : (channels[nextIndex] || { label: "STATIC", url: STATIC_URL });
 
   // Passed straight through rather than left for background.js to look
   // up — every empty slot shares the same STATIC_URL, so a url-based
@@ -482,14 +492,17 @@ async function renderDialView(channels, session) {
     rotorEl.appendChild(num);
   }
 
-  // Decorative only — not a real channel slot, doesn't factor into
-  // changeChannel's indexing. Takes the dedicated slot right after 13, one
-  // of the 13 equally-spaced positions on the face.
+  // Settings lives at this slot — not part of changeChannel's normal
+  // indexing (the dial can't be turned onto it directly, only the gear
+  // button lands here), but it lights up and pulls the rotor to it when
+  // it's genuinely the active tab, the same as any real channel.
+  const settingsActive = displaySession && displaySession.activeUrl === SETTINGS_URL;
   const vanityNum = document.createElement("span");
-  vanityNum.className = "dial-num vanity";
+  vanityNum.className = "dial-num vanity" + (settingsActive ? " active" : "");
   vanityNum.textContent = "U";
   vanityNum.style.transform = `rotate(${VANITY_SLOT_INDEX * SLOT_ANGLE}deg) translateY(-${NUMBER_RADIUS}px)`;
   rotorEl.appendChild(vanityNum);
+  if (settingsActive) activeIndex = VANITY_SLOT_INDEX;
 
   // Tapping the dial (numbers included, since clicks bubble up from the
   // decorative spans) surfs one channel at a time — no picking a specific
@@ -511,12 +524,20 @@ async function renderDialView(channels, session) {
   // otherwise recomputing the bounded formula fresh snaps to whichever way
   // is numerically shorter and can spin backward at the 13-to-2 wrap.
   let rotorAngle;
-  if (activeIndex === -1) {
-    rotorAngle = NEUTRAL_ANGLE;
-  } else if (pendingRotorSteps !== null) {
+  if (pendingRotorSteps !== null) {
     rotorAngle = lastRotorAngle - pendingRotorSteps * SLOT_ANGLE;
   } else {
-    rotorAngle = -(activeIndex * SLOT_ANGLE);
+    // Not a relative dial turn — e.g. the settings tab switching straight to
+    // a channel, or the gear button jumping to U. lastRotorAngle can have
+    // accumulated many full turns' worth of magnitude from earlier clicks
+    // (each relative turn just keeps adding/subtracting from it, on purpose,
+    // so multi-click spins compound), while this snap target is always a
+    // small bounded angle close to 0. Transitioning straight from one to the
+    // other would visibly unwind all that accumulated spin first. Instead,
+    // pick whichever full-turn-equivalent of the target is numerically
+    // closest to lastRotorAngle, so it always turns the short way.
+    const target = activeIndex === -1 ? NEUTRAL_ANGLE : -(activeIndex * SLOT_ANGLE);
+    rotorAngle = target + Math.round((lastRotorAngle - target) / 360) * 360;
   }
   pendingRotorSteps = null;
 
@@ -544,10 +565,8 @@ async function render() {
 
   const res = await send({ type: "getSession" });
   const session = res.ok ? res.session : null;
-  const fullyLaunched = session && channels.every((ch) => !ch || ch.url in session.tabsByUrl);
-  const activeSession = fullyLaunched ? session : null;
 
-  renderDialView(channels, activeSession);
+  renderDialView(channels, session);
 }
 
 chrome.runtime.onMessage.addListener((msg) => {

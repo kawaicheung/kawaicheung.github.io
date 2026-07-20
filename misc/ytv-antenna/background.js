@@ -120,10 +120,12 @@ async function launch(windowId) {
   const existingTabs = await chrome.tabs.query({ windowId });
   const tabsByUrl = {};
 
-  // The static page is appended once here, alongside the real channels —
-  // any empty dial slot switches to this same shared url/tab rather than
-  // needing one of its own.
-  for (const channel of [...channels, { label: "STATIC", url: STATIC_URL }]) {
+  // The static page and settings are appended once here, alongside the real
+  // channels — any empty dial slot switches to the shared static tab rather
+  // than needing one of its own, and settings is just another tab in the
+  // rotation (the vanity "U" slot) instead of a one-off tab created and torn
+  // down on every visit.
+  for (const channel of [...channels, { label: "STATIC", url: STATIC_URL }, { label: "SETTINGS", url: SETTINGS_URL }]) {
     if (channel.url in tabsByUrl) continue; // already handled (e.g. static, deduped)
     const match = existingTabs.find((t) => t.url === channel.url);
     if (match) {
@@ -235,6 +237,13 @@ async function switchChannel(url, number, label) {
   const session = await getSession();
   if (!session) return { ok: false, error: "no-session" };
   if (!(url in session.tabsByUrl)) return { ok: false, error: "unknown-channel" };
+  // Already there — skip the mute/focus/OSD churn. Also what makes this
+  // safe to call defensively (e.g. re-asserting the active channel after
+  // closing settings) without side effects when nothing actually needs to
+  // change. Excludes STATIC_URL: every empty slot shares that one url, so
+  // "already there" doesn't mean "already on this particular slot" — those
+  // still need to fall through and re-announce the right number/label.
+  if (url === session.activeUrl && url !== STATIC_URL) return { ok: true, session };
 
   // Persist the new activeUrl *before* activating the tab. Activation fires
   // tabs.onActivated below, which re-reads the session to detect manual tab
@@ -297,7 +306,7 @@ async function scrapeChannels() {
   }
 }
 
-async function stop() {
+async function stop(exceptTabId) {
   const session = await getSession();
   const sessionTabIds = session ? Object.values(session.tabsByUrl) : [];
 
@@ -306,7 +315,14 @@ async function stop() {
   // the ones this particular session happens to know about. Covers tabs
   // opened by hand, leftovers from a stale/crashed session, etc.
   const strayTabs = await chrome.tabs.query({ url: "https://tv.youtube.com/*" });
-  const tabIds = [...new Set([...sessionTabIds, ...strayTabs.map((t) => t.id)])];
+  // Settings is now a normal session tab, which means a "changed channels"
+  // save (settings.js calling stop() then launch()) can trigger this while
+  // its own tab is one of the ones being swept — excluding the caller's own
+  // tab id keeps that script alive to finish the job instead of closing out
+  // from under itself. launch() finds it still open afterward and reuses it
+  // like any other tab, same as before this ever ran.
+  const tabIds = [...new Set([...sessionTabIds, ...strayTabs.map((t) => t.id)])]
+    .filter((id) => id !== exceptTabId);
 
   if (session) {
     // Clear first, then remove: removing a tab fires tabs.onRemoved, whose
@@ -382,11 +398,11 @@ chrome.tabs.onUpdated.addListener((_tabId, changeInfo, tab) => {
   if (changeInfo.status === "complete" && tab.active) checkTvFocus();
 });
 
-chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
+chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
   (async () => {
     if (msg.type === "launch") sendResponse(await launch(msg.windowId));
     else if (msg.type === "switch") sendResponse(await switchChannel(msg.url, msg.number, msg.label));
-    else if (msg.type === "stop") sendResponse(await stop());
+    else if (msg.type === "stop") sendResponse(await stop(sender.tab ? sender.tab.id : null));
     else if (msg.type === "getTvFocus") sendResponse(await getTvFocus());
     else if (msg.type === "scrapeGuide") sendResponse(await scrapeChannels());
     else if (msg.type === "getSession") sendResponse({ ok: true, session: await getSession() });
