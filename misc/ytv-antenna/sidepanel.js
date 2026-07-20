@@ -415,11 +415,29 @@ document.addEventListener("keydown", (e) => {
 async function renderDialView(channels, session) {
   const filters = await getFilterSettings();
 
-  // First render after turning on with nothing configured yet: land on
-  // slot 0 instead of leaving the dial parked in the decorative U gap —
-  // there's no channel history yet to prefer any other slot.
-  if (currentDialIndex === null && session && session.activeUrl === STATIC_URL) {
-    currentDialIndex = 0;
+  // Keeps currentDialIndex honest against whatever's actually active,
+  // regardless of how it got that way — a dial click or the gear button are
+  // only two of several paths that can change session.activeUrl now (the
+  // settings tab itself can switch channels directly too, e.g. Done landing
+  // on channel 2). A real channel or settings is always unambiguous, so
+  // resync on every render.
+  if (session) {
+    const realChannelIndex = channels.findIndex((ch) => ch && ch.url === session.activeUrl);
+    if (realChannelIndex !== -1) {
+      currentDialIndex = realChannelIndex;
+    } else if (session.activeUrl === SETTINGS_URL) {
+      currentDialIndex = VANITY_SLOT_INDEX;
+    } else if (session.activeUrl === STATIC_URL) {
+      // Every empty slot shares this one url, so which physical slot we're
+      // actually on can't be derived from activeUrl alone — background.js
+      // persists that separately (setStaticChannel) any time it switches to
+      // static, for the static page's own OSD, regardless of what triggered
+      // the switch. That's the one authoritative source here too, rather
+      // than trusting whatever this panel last happened to remember.
+      const { staticChannel } = await chrome.storage.session.get("staticChannel");
+      currentDialIndex = staticChannel ? staticChannel.number - CHANNEL_START
+        : (currentDialIndex !== null ? currentDialIndex : 0);
+    }
   }
 
   // Away from the TV, the numbers ring/rotor render exactly as if nothing
