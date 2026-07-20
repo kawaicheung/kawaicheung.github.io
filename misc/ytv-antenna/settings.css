@@ -1,65 +1,59 @@
-/* Settings runs in a full browser tab rather than the narrow side panel.
-   Plain white/black for now — visual polish comes later. */
-body {
-  justify-content: flex-start;
-  background: #fff;
-  color: #000;
-}
-.brand {
-  width: 80%;
-  max-width: 1000px;
-  justify-content: flex-start;
-  margin-bottom: 10px;
+:root {
+  --plastic: #000;
+  --plastic-light: #3d382e;
+  --plastic-raised: #47412f;
+  --phosphor: #ffb037;
+  --phosphor-dim: #8a5e1f;
+  --paper: #eee6d6;
+  --danger: #c1553d;
+  --metal-hi: #f4f2ec;
+  --metal-mid: #9a958a;
+  --metal-lo: #5c584e;
 }
 
-/* Spoofs the classic TV Guide mark: a red squircle badge, bold sans call
-   sign up top, italic serif "Guide" underneath. */
-.guide-logo {
-  display: inline-flex;
-  flex-direction: column;
-  align-items: center;
+body {
+  display: flex;
   justify-content: center;
-  width: 108px;
-  padding: 10px 6px 8px;
-  corner-shape: squircle;
-  border-radius: 26px;
-  background: #cc1522;
+  align-items: center;
+  height: 100vh;
 }
-.guide-logo-top {
-  font-family: "Orbitron", sans-serif;
-  font-weight: 900;
-  font-size: 19px;
-  letter-spacing: 0.02em;
-  line-height: 1;
-  color: #fff;
-}
-.guide-logo-bottom {
-  font-family: "Orbitron", sans-serif;
-  font-weight: 900;
-  font-size: 14px;
-  letter-spacing: 0.02em;
-  line-height: 1.3;
-  margin-top: 3px;
-  color: #fff;
-}
+
+
 #content {
-  width: 80%;
   max-width: 1000px;
-  padding: 4vh 0;
-  align-items: stretch;
-  background: #fff;
   border: none;
   border-radius: 0;
+  corner-shape: squircle;
+  border-radius: 20%;
+  padding: 3vw;
   box-shadow: none;
+  background: linear-gradient(to bottom, #242424, #111) padding-box, repeating-linear-gradient(to bottom, rgba(0, 0, 0, .75) 0px, rgba(0, 0, 0, .75) 2px, rgba(255, 255, 255, .02) 2px, rgba(255, 255, 255, .02) 4px) padding-box;
+  background-blend-mode: multiply, multiply, normal;
 }
-.settings-body {
-  width: 100%;
-  color: #000;
+
+.setup-intro {
+  margin-bottom: 20px;
+}
+.setup-title {
+  font-weight: 600;
+  letter-spacing: -1px;
+  font-size: 36px;
+  margin: 0 0 6px;
+  color: #fff;
+}
+.setup-copy {
+  font-size: 16px;
+  line-height: 1.5;
+  margin: 0;
+  color: var(--phosphor);
 }
 .settings-columns {
   display: flex;
-  align-items: flex-start;
-  gap: 24px;
+}
+.settings-col {
+  position: relative;
+  box-sizing: border-box;
+  padding: 16px 20px 20px;
 }
 .settings-col-available {
   flex: 0 0 70%;
@@ -69,6 +63,8 @@ body {
   flex: 0 0 30%;
   min-width: 0;
 }
+
+
 .section-label {
   font-size: 13px;
   font-weight: 700;
@@ -111,8 +107,8 @@ body {
   font-size: 12px;
   text-align: center;
   cursor: grab;
-  background: #fff;
-  color: #000;
+  background: #000;
+  color: #fff;
   overflow-wrap: break-word;
   white-space: normal;
 }
@@ -129,7 +125,7 @@ body {
 .slots {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 1px;
   margin-top: 8px;
 }
 .slot {
@@ -144,7 +140,7 @@ body {
   gap: 10px;
   padding: 6px 34px 6px 38px;
   font-size: 13px;
-  color: #000;
+  color: #fff;
 }
 .slot.drag-over {
   background: #eee;
@@ -152,10 +148,18 @@ body {
 .slot .slot-number {
   position: absolute;
   top: 50%;
-  left: 10px;
+  left: 8px;
   transform: translateY(-50%);
-  font-size: 11px;
-  color: #666;
+  width: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  corner-shape: squircle;
+  border-radius: 16px;
+  background: #fff;
+  color: #000;
+  font-size: 13px;
+  font-weight: 700;
 }
 .slot.filled {
   border-style: solid;

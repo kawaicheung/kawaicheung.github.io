@@ -1,8 +1,6 @@
 const MAX_CHANNELS = 12; // dial runs 2 through 13, VHF-style
 const CHANNEL_START = 2;
 
-const contentEl = document.getElementById("content");
-
 function send(msg) {
   return chrome.runtime.sendMessage(msg);
 }
@@ -139,27 +137,6 @@ function placeInSlot(data, targetIndex) {
 
 async function init() {
   await loadDraft();
-
-  contentEl.innerHTML = `
-    <div class="settings-body">
-      <div class="settings-columns">
-        <div class="settings-col settings-col-available">
-          <p class="section-label">Available channels</p>
-          <button class="plain-btn" id="scrapeBtn" type="button">Find channels</button>
-          <div class="available-grid" id="availableGrid"></div>
-          <p class="form-error" id="scrapeError"></p>
-        </div>
-
-        <div class="settings-col settings-col-channels">
-          <p class="section-label">Channels (2&ndash;13)</p>
-          <div class="slots" id="slots"></div>
-        </div>
-      </div>
-
-      <p class="count" id="channelCount"></p>
-      <button class="plain-btn" id="doneBtn" type="button">Done</button>
-    </div>
-  `;
 
   renderAll();
 

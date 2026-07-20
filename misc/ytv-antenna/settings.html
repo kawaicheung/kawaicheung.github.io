@@ -6,19 +6,30 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=League+Gothic&family=Orbitron:wght@900&family=VT323&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="./sidepanel.css">
 <link rel="stylesheet" href="./settings.css">
 </head>
 <body>
-  <div class="brand">
-    <div class="guide-logo">
-      <span class="guide-logo-top">WHYTV</span>
-      <span class="guide-logo-bottom">GUIDE</span>
+  <div id="content">
+    <div class="settings-columns">
+      <div class="settings-col settings-col-available">
+        <div class="setup-intro">
+          <h2 class="setup-title">Setting up your WhyTV</h2>
+          <p class="setup-copy">We're scanning your Youtube TV channels right now. Give it a few moments, and you'll see your list of channels to add to WhyTV.</p>
+        </div>
+        <p class="section-label">Available channels</p>
+        <button class="plain-btn" id="scrapeBtn" type="button">Find channels</button>
+        <div class="available-grid" id="availableGrid"></div>
+        <p class="form-error" id="scrapeError"></p>
+      </div>
+
+      <div class="settings-col settings-col-channels">
+        <p class="section-label">Channels (2&ndash;13)</p>
+        <div class="slots" id="slots"></div>
+        <p class="count" id="channelCount"></p>
+        <button class="plain-btn" id="doneBtn" type="button">Done</button>
+      </div>
     </div>
   </div>
-
-  <div id="content"></div>
-
   <script src="settings.js"></script>
 </body>
 </html>

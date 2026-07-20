@@ -136,8 +136,17 @@ async function launch(windowId) {
       // held until it finishes loading, letting that reveal play out now
       // instead of on the viewer's first real switch to it. This is what
       // causes the brief flicker through channels on power-on.
+      // Created muted so its autoplay attempt qualifies for Chrome's
+      // muted-autoplay exemption — unmuted, it's not a real user gesture,
+      // Chrome blocks the audible autoplay, and the player falls back to a
+      // "press play" prompt instead of starting on its own. The active
+      // channel gets unmuted below once every tab has settled.
       const tab = await chrome.tabs.create({ windowId, url: channel.url, active: true });
       tabsByUrl[channel.url] = tab.id;
+      // `muted` isn't a valid tabs.create property — has to be set via a
+      // follow-up update, done immediately (before awaiting the page load)
+      // so it's in effect before the player's own autoplay attempt fires.
+      await chrome.tabs.update(tab.id, { muted: true });
       await waitForTabComplete(tab.id);
     }
     // Broadcast per-channel so the side panel can light up each dial number
