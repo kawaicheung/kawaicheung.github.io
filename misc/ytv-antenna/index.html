@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Clean Layout</title>
+<link href="https://fonts.googleapis.com/css2?family=League+Gothic&family=Orbitron:wght@900&family=VT323&display=swap" rel="stylesheet">
+<title>WhyTV : A YoutubeTV Chrome extension</title>
 
 <style>
   * {
@@ -11,6 +12,19 @@
     margin: 0;
     padding: 0;
   }
+  :root {
+  --plastic: #000;
+  --plastic-light: #3d382e;
+  --plastic-raised: #47412f;
+  --phosphor: #ffb037;
+  --phosphor-dim: #8a5e1f;
+  --paper: #eee6d6;
+  --danger: #c1553d;
+  --metal-hi: #f4f2ec;
+  --metal-mid: #9a958a;
+  --metal-lo: #5c584e;
+}
+
 
   html,
   body {
@@ -51,7 +65,7 @@
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 2rem;
-    padding: 30px 40px 70px;
+    padding: 50px 40px 70px;
     background: #f6f1e4;
     /* Jagged, irregular bottom edge so the paper reads as torn rather than
        cut clean — top and sides stay square, only the bottom zigzags.
@@ -75,6 +89,43 @@
       8% 96%, 7% 98%, 6% 94%, 5% 94%, 4% 98%, 3% 97%, 2% 95%, 1% 100%,
       0% 99%
     );
+  }
+
+  h2 {
+    font-family: "Orbitron", sans-serif;
+    font-weight: 900;
+    font-size: 14px;
+    letter-spacing: 0.2rem;
+    font-size: 13px;
+    letter-spacing: 0.18em;
+    color: var(--phosphor-dim);
+    text-transform: uppercase;
+    margin-bottom: 1em;
+  }
+
+  /* Full-width row spanning all 4 paragraph columns — brand and tagline
+     share the same line, pinned to opposite ends. */
+  .container-layer {
+    grid-column: 1 / -1;
+  }
+
+  .container-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+
+  .container-header h2 {
+    margin-bottom: 0;
+  }
+
+  .container-header h3 {
+    font-family: "Orbitron", sans-serif;
+    font-weight: 900;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    color: var(--phosphor-dim);
+    text-transform: uppercase;
   }
 
   p {
@@ -313,6 +364,11 @@
 
 <div class="clip-wrapper">
   <div class="container">
+    <div class="container-layer container-header">
+      <h2>WhyTV</h2>
+      <h3>A Chrome extension for Youtube TV</h3>
+    </div>
+
     <p>
       Remember antenna TV? You'd plug it in, mess with the rabbit ears,
       push <em><strong>ON</em></strong>, then turn the dial. Ca-chunk. <em><strong>Channel 2</strong></em>.
@@ -321,20 +377,21 @@
 
     <p>
       No latency. No buffering.
-      No slow-as-molasses menu. No wondering whether <em><strong>EXIT</em></strong>
+      No slow-as-molasses buttons. No wondering whether <em><strong>EXIT</em></strong>
       brings you back to the menu or out of the app altogether.
-      Just live TV.
+      Just immediate live TV.
     </p>
 
     <p>
       This is WhyTV&mdash;a Chrome extension that works with your YouTubeTV account.
-      It's an attempt to bring back TV as it was. 50% nostalgia &amp; 50% wait, this might actually better!
+      An attempt to bring back TV as it was. 50% nostalgia? Yes. But also 50% wait, this is better!
     </p>
 
     <p>
-      Install it <a href="">here</a>. Watch my quick tutorial <a href="">here</a>.
-      And perhaps if you like this fun little thing, you might like some of my other work <a href="">here</a> too.
+      <a href="">Install it now</a>. Watch <a href="">my quick tutorial</a>.
+      And perhaps if you like this fun little thing, you might like some of my  <a href="">other work</a> too.
     </p>
+
   </div>
   <div class="dial-clicker">
     <div class="dial">
