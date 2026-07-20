@@ -94,7 +94,6 @@
     position: relative;
     width: clamp(600px, 70%, 1000px);
     min-width: 800px;
-    rotate: -1deg;
     /* .deco-controls hangs past this box's bottom edge by its own height
        minus the 40px it's inset before being pushed down by
        translateY(100%). body centers on this element's margin box, so
@@ -109,7 +108,6 @@
     grid-template-columns: repeat(4, 1fr);
     gap: 2rem;
     padding: 50px 40px 70px;
-    background: #f6f1e4;
     /* Jagged, irregular bottom edge so the paper reads as torn rather than
        cut clean — top and sides stay square, only the bottom zigzags.
        One point per percent of width reads as fine torn paper fiber
@@ -158,14 +156,32 @@
   }
 
   h3 {
+    font-family: "VT323", "Courier New", monospace;
     font-weight: 400;
-    font-size: 18px;
+    font-size: 32px;
     letter-spacing: 1px;
-    color: var(--phosphor-dim);
+    color: #fff;
   }
 
   p {
+    font-family: "VT323", "Courier New", monospace;
+    font-size: 18px;
+    letter-spacing: 0.3px;
+    color: #fff;
     text-align: justify;
+    line-height: 1.5;
+  }
+
+  /* Black backing that hugs the text itself rather than filling the
+     paragraph's whole box — box-decoration-break: clone re-draws the
+     background/padding on every wrapped line instead of treating the
+     paragraph as one tall rectangle, giving the closed-captioning look. */
+  .caption {
+    display: inline;
+    background: #000;
+    padding: 0.15em 0.35em;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
   }
 
   /* ---------- Decorative dial + mini-dials, grouped bottom-right ----------
@@ -427,28 +443,28 @@
       <h3>A Chrome extension for YouTube TV</h3>
     </div>
 
-    <p>
+    <p><span class="caption">
       Remember antenna TV? You'd plug it in, mess with the rabbit ears,
       push <em><strong>ON</em></strong>, then turn the dial. Ca-chunk. <em><strong>Channel 2</strong></em>.
       Ca-chunk. Ca-chunk. Ca-chunk. <em><strong>Channel 5</strong></em>.
-    </p>
+    </span></p>
 
-    <p>
+    <p><span class="caption">
       No latency. No buffering.
       No slow-as-molasses buttons. No wondering whether <em><strong>EXIT</em></strong>
       brings you back to the menu or out of the app altogether.
       Just immediate live TV.
-    </p>
+    </span></p>
 
-    <p>
+    <p><span class="caption">
       This is WhyTV&mdash;a Chrome extension that works with your YouTubeTV account.
       An attempt to bring back TV as it was. 50% nostalgia? Yes. But also 50% wait, this is better!
-    </p>
+    </span></p>
 
-    <p>
+    <p><span class="caption">
       <a href="">Install it now</a>. Watch <a href="">my quick tutorial</a>.
       And perhaps if you like this fun little thing, you might like some of my  <a href="">other work</a> too.
-    </p>
+    </span></p>
 
   </div>
   <div class="deco-controls">
