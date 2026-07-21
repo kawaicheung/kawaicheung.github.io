@@ -37,6 +37,10 @@ body {
   line-height: 1.5;
   margin: 0;
   color: var(--phosphor);
+
+  a {
+    color: inherit;
+  }
 }
 .settings-columns {
   display: flex;
