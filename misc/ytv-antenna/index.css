@@ -16,6 +16,8 @@
   --metal-mid: #9a958a;
   --metal-lo: #5c584e;
   --phosphor: #ffb037;
+  --font-family--sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-family--tv: "VT323", "Courier New", monospace;
   /* Drives the decorative dial's size (and everything scaled off it —
       arrow, numbers, radius, the wrapper's centering compensation).
       Change this one value to resize the whole assembly. */
@@ -120,10 +122,10 @@ body {
 }
 
 h2 {
-  font-family: "Orbitron", sans-serif;
+  font-family: "Orbitron", var(--font-family--sans-serif);
   font-weight: 900;
   letter-spacing: 0.2rem;
-  font-size: 64px;
+  font-size: clamp(2rem, 5vw, 4rem);
   letter-spacing: 0.18em;
   color: var(--phosphor-dim);
   text-transform: uppercase;
@@ -132,9 +134,9 @@ h2 {
 
 
 h3 {
-  font-family: "VT323", "Courier New", monospace;
+  font-family: var(--font-family--tv);
   font-weight: 400;
-  font-size: 32px;
+  font-size: clamp(1rem, 2.2vw, 2rem);
   letter-spacing: 1px;
   color: #fff;
   display: inline;
@@ -153,8 +155,8 @@ a {
 }
 
 p {
-  font-family: "VT323", "Courier New", monospace;
-  font-size: 18px;
+  font-family: var(--font-family--tv);
+  font-size: clamp(0.9rem, 1.3vw, 1.125rem);
   letter-spacing: 0.3px;
   color: #fff;
   line-height: 1.45;
@@ -242,7 +244,7 @@ p {
   height: calc(var(--deco-height) * 0.125);
   margin: calc(var(--deco-height) * -0.0625) 0 0 calc(var(--deco-height) * -0.0625);
   border-radius: 50%;
-  font-family: system-ui, sans-serif;
+  font-family: var(--font-family--sans-serif);
   font-weight: 400;
   font-size: calc(var(--deco-height) * 0.1);
   display: flex;
@@ -252,18 +254,19 @@ p {
   text-shadow:
     0 0 3px rgba(255, 255, 255, 0.85),
     0 0 9px rgba(255, 255, 255, 0.4);
-}
-.dial-num::after {
-  content: "";
-  position: absolute;
-  bottom: calc(var(--deco-height) * -0.025);
-  left: 50%;
-  width: calc(var(--deco-height) * 0.008333);
-  height: calc(var(--deco-height) * 0.025);
-  transform: translateX(-50%);
-  background: currentColor;
-  border-radius: 1px;
-  box-shadow: 0 0 calc(var(--deco-height) * 0.025) var(--phosphor);
+
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: calc(var(--deco-height) * -0.025);
+    left: 50%;
+    width: calc(var(--deco-height) * 0.008333);
+    height: calc(var(--deco-height) * 0.025);
+    transform: translateX(-50%);
+    background: currentColor;
+    border-radius: 1px;
+    box-shadow: 0 0 calc(var(--deco-height) * 0.025) var(--phosphor);
+  }
 }
 
 .dial-knob {
@@ -289,24 +292,25 @@ p {
     inset 0 3px 8px rgba(0, 0, 0, 0.45),
     inset 0 -2px 5px rgba(255, 255, 255, 0.3),
     0 2px 6px rgba(0, 0, 0, 0.6);
-}
-.dial-knob-face::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 90%;
-  height: 90%;
-  transform: translate(-50%, -50%);
-  border-radius: 50%;
-  background:
-    linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
-    conic-gradient(from 200deg,
-      var(--metal-hi), var(--metal-lo) 15%, var(--metal-hi) 30%,
-      var(--metal-mid) 45%, var(--metal-hi) 60%, var(--metal-lo) 75%,
-      var(--metal-hi) 90%, var(--metal-hi) 100%);
-  background-blend-mode: multiply;
-  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.3);
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 90%;
+    height: 90%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    background:
+      linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+      conic-gradient(from 200deg,
+        var(--metal-hi), var(--metal-lo) 15%, var(--metal-hi) 30%,
+        var(--metal-mid) 45%, var(--metal-hi) 60%, var(--metal-lo) 75%,
+        var(--metal-hi) 90%, var(--metal-hi) 100%);
+    background-blend-mode: multiply;
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.3);
+  }
 }
 
 .dial-knob-handle {
@@ -347,7 +351,7 @@ p {
 }
 
 .mini-dial-label {
-  font-family: sans-serif;
+  font-family: var(--font-family--sans-serif);
   font-size: 10px;
   font-weight: 600;
   letter-spacing: -0.02em;
@@ -397,4 +401,29 @@ p {
   background: #171310;
   border-radius: 2px;
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.6);
+}
+
+/* ---------- Phone layout: stack the header and paragraphs, drop the
+   decorative dial assembly entirely (no room for it at this size). ---------- */
+@media (max-width: 600px) {
+  .clip-wrapper {
+    width: 100%;
+    min-width: 0;
+    margin-bottom: 0;
+  }
+
+  .container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .container-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .deco-controls {
+    display: none;
+  }
 }
