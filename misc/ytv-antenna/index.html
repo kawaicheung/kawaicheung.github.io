@@ -1,576 +1,166 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="https://fonts.googleapis.com/css2?family=League+Gothic&family=Orbitron:wght@900&family=VT323&display=swap" rel="stylesheet">
-<title>WhyTV : A YoutubeTV Chrome extension</title>
-
-<style>
-  * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-  }
-  :root {
-  --plastic: #000;
-  --plastic-light: #3d382e;
-  --plastic-raised: #47412f;
-    --phosphor: #ffb037;
-    --phosphor-dim: #8a5e1f;
-    --paper: #eee6d6;
-    --danger: #c1553d;
-    --metal-hi: #f4f2ec;
-    --metal-mid: #9a958a;
-    --metal-lo: #5c584e;
-    --phosphor: #ffb037;
-    /* Drives the decorative dial's size (and everything scaled off it —
-        arrow, numbers, radius, the wrapper's centering compensation).
-        Change this one value to resize the whole assembly. */
-    --deco-height: 168px;
-  }
-
-  html,
-  body {
-    width: 100%;
-    height: 100%;
-  }
-
-  body {
-    display: grid;
-    place-items: center;
-    min-height: 100vh;
-    font-family: serif;
-    background: #000;
-  }
-
-  /* Same SMPTE color-bars "no signal" pattern as static.html, fixed behind
-     the page content as a backdrop. */
-  .bars {
-    position: fixed;
-    inset: 0;
-    z-index: -1;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .bars-top {
-    display: flex;
-    flex: 0 0 82%;
-  }
-
-  .bars-bottom {
-    display: flex;
-    flex: 1;
-  }
-
-  .bar {
-    flex: 1;
-  }
-
-  .bars::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    background: repeating-linear-gradient(
-      to bottom,
-      rgba(0, 0, 0, 0.165) 0px,
-      rgba(0, 0, 0, 0.165) 1px,
-      transparent 2px,
-      transparent 4px
-    );
-    mix-blend-mode: multiply;
-  }
-
-  /* Holds the paper (.container) and the absolutely-positioned dial
-     widgets as siblings, not as children of .container — clip-path clips
-     an element's own contents, including anything positioned relative to
-     it, so a widget anchored to .container itself gets sliced off wherever
-     the torn edge cuts through it. Anchored to the wrapper instead, they
-     paint outside .container's clip entirely while still lining up with
-     its corners, since the wrapper is sized/rotated to match it exactly. */
-  .clip-wrapper {
-    position: relative;
-    width: clamp(600px, 70%, 1000px);
-    min-width: 800px;
-    /* .deco-controls hangs past this box's bottom edge by its own height
-       minus the 40px it's inset before being pushed down by
-       translateY(100%). body centers on this element's margin box, so
-       without this the dial's overflow throws that centering off —
-       reserving the same amount below balances it. */
-    margin-bottom: calc(var(--deco-height) - 40px);
-  }
-
-  .container {
-    width: 100%;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 2rem;
-    padding: 50px 40px 70px;
-    /* Jagged, irregular bottom edge so the paper reads as torn rather than
-       cut clean — top and sides stay square, only the bottom zigzags.
-       One point per percent of width reads as fine torn paper fiber
-       rather than a handful of big triangular notches. */
-    clip-path: polygon(
-      0% 0%, 100% 0%, 100% 100%,
-      99% 96%, 98% 95%, 97% 97%, 96% 99%, 95% 94%, 94% 94%, 93% 100%,
-      92% 98%, 91% 94%, 90% 96%, 89% 98%, 88% 94%, 87% 98%, 86% 95%,
-      85% 94%, 84% 94%, 83% 97%, 82% 97%, 81% 94%, 80% 95%, 79% 94%,
-      78% 98%, 77% 97%, 76% 94%, 75% 100%, 74% 98%, 73% 94%, 72% 95%,
-      71% 99%, 70% 99%, 69% 98%, 68% 94%, 67% 98%, 66% 98%, 65% 97%,
-      64% 94%, 63% 95%, 62% 94%, 61% 98%, 60% 100%, 59% 95%, 58% 96%,
-      57% 97%, 56% 95%, 55% 98%, 54% 94%, 53% 98%, 52% 96%, 51% 98%,
-      50% 100%, 49% 99%, 48% 95%, 47% 94%, 46% 98%, 45% 98%, 44% 99%,
-      43% 95%, 42% 96%, 41% 94%, 40% 98%, 39% 99%, 38% 94%, 37% 98%,
-      36% 94%, 35% 98%, 34% 95%, 33% 97%, 32% 99%, 31% 98%, 30% 97%,
-      29% 100%, 28% 96%, 27% 97%, 26% 98%, 25% 97%, 24% 96%, 23% 96%,
-      22% 95%, 21% 100%, 20% 95%, 19% 99%, 18% 100%, 17% 95%, 16% 94%,
-      15% 98%, 14% 96%, 13% 98%, 12% 97%, 11% 96%, 10% 99%, 9% 97%,
-      8% 96%, 7% 98%, 6% 94%, 5% 94%, 4% 98%, 3% 97%, 2% 95%, 1% 100%,
-      0% 99%
-    );
-  }
-
-  h2 {
-    font-family: "Orbitron", sans-serif;
-    font-weight: 900;
-    letter-spacing: 0.2rem;
-    font-size: 28px;
-    letter-spacing: 0.18em;
-    color: var(--phosphor-dim);
-    text-transform: uppercase;
-    margin-bottom: 0;
-  }
-
-  /* Full-width row spanning all 4 paragraph columns — brand and tagline
-     share the same line, pinned to opposite ends. */
-  .container-layer {
-    grid-column: 1 / -1;
-  }
-
-  .container-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-  }
-
-  h3 {
-    font-family: "VT323", "Courier New", monospace;
-    font-weight: 400;
-    font-size: 32px;
-    letter-spacing: 1px;
-    color: #fff;
-  }
-
-  p {
-    font-family: "VT323", "Courier New", monospace;
-    font-size: 18px;
-    letter-spacing: 0.3px;
-    color: #fff;
-    text-align: justify;
-    line-height: 1.5;
-  }
-
-  /* Black backing that hugs the text itself rather than filling the
-     paragraph's whole box — box-decoration-break: clone re-draws the
-     background/padding on every wrapped line instead of treating the
-     paragraph as one tall rectangle, giving the closed-captioning look. */
-  .caption {
-    display: inline;
-    background: #000;
-    padding: 0.15em 0.35em;
-    box-decoration-break: clone;
-    -webkit-box-decoration-break: clone;
-  }
-
-  /* ---------- Decorative dial + mini-dials, grouped bottom-right ----------
-     A single flex row anchors both to the container's corner. The dial is
-     built at 70% of the real dial's raw pixel values (not a CSS transform
-     scale), so its box size matches its visual size exactly. */
-  .deco-controls {
-    position: absolute;
-    bottom: 40px;
-    right: 24px;
-    display: flex;
-    align-items: center;
-    transform: translateY(100%);
-    gap: 16px;
-  }
-
-  .dial {
-    position: relative;
-    width: var(--deco-height);
-    height: var(--deco-height);
-    cursor: grab;
-    background: conic-gradient(from 0deg, #222 0%, #121212 14%, #000 25%, #000 75%, #121212 86%, #222 100%);
-    border-radius: 50%;
-  }
-  .dial:active { cursor: grabbing; }
-
-  .dial-metal {
-    position: absolute;
-    inset: 0;
-    border-radius: 50%;
-    background: conic-gradient(from 200deg,
-      var(--metal-hi), var(--metal-lo) 15%, var(--metal-hi) 30%,
-      var(--metal-mid) 45%, var(--metal-hi) 60%, var(--metal-lo) 75%,
-      var(--metal-hi) 90%, var(--metal-hi) 100%);
-    box-shadow:
-      inset 0 0 0 3px rgba(0, 0, 0, 0.35),
-      inset 0 3px 10px rgba(0, 0, 0, 0.45),
-      inset 0 2px 4px rgba(255, 255, 255, 0.5),
-      0 3px 10px rgba(0, 0, 0, 0.55);
-    -webkit-mask-image: radial-gradient(circle, transparent 0%, transparent 65%, #000 70%, #000 100%);
-    mask-image: radial-gradient(circle, transparent 0%, transparent 65%, #000 70%, #000 100%);
-  }
-
-  .dial-arrow {
-    position: absolute;
-    top: calc(var(--deco-height) * -0.083333);
-    left: 50%;
-    width: calc(var(--deco-height) * 0.075);
-    height: calc(var(--deco-height) * 0.058333);
-    margin-left: calc(var(--deco-height) * -0.0375);
-    z-index: 4;
-    clip-path: polygon(0% 0%, 100% 0%, 50% 100%);
-    background: #ccc;
-    box-shadow:
-      inset 0 2px 3px rgba(0, 0, 0, 0.15),
-      inset 0 -1px 0 rgba(255, 255, 255, 0.08);
-  }
-
-  .dial-rotor {
-    position: absolute;
-    inset: 0;
-  }
-
-  .dial-num {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: calc(var(--deco-height) * 0.125);
-    height: calc(var(--deco-height) * 0.125);
-    margin: calc(var(--deco-height) * -0.0625) 0 0 calc(var(--deco-height) * -0.0625);
-    border-radius: 50%;
-    font-family: system-ui, sans-serif;
-    font-weight: 400;
-    font-size: calc(var(--deco-height) * 0.1);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #ffffff;
-    text-shadow:
-      0 0 3px rgba(255, 255, 255, 0.85),
-      0 0 9px rgba(255, 255, 255, 0.4);
-  }
-  .dial-num::after {
-    content: "";
-    position: absolute;
-    bottom: calc(var(--deco-height) * -0.025);
-    left: 50%;
-    width: calc(var(--deco-height) * 0.008333);
-    height: calc(var(--deco-height) * 0.025);
-    transform: translateX(-50%);
-    background: currentColor;
-    border-radius: 1px;
-    box-shadow: 0 0 calc(var(--deco-height) * 0.025) var(--phosphor);
-  }
-
-  .dial-knob {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 60%;
-    height: 60%;
-    transform: translate(-50%, -50%);
-    z-index: 3;
-  }
-
-  .dial-knob-face {
-    position: absolute;
-    inset: 0;
-    border-radius: 50%;
-    background: conic-gradient(from 200deg,
-      var(--metal-hi), var(--metal-lo) 15%, var(--metal-hi) 30%,
-      var(--metal-mid) 45%, var(--metal-hi) 60%, var(--metal-lo) 75%,
-      var(--metal-hi) 90%, var(--metal-hi) 100%);
-    box-shadow:
-      inset 0 0 0 2px rgba(0, 0, 0, 0.3),
-      inset 0 3px 8px rgba(0, 0, 0, 0.45),
-      inset 0 -2px 5px rgba(255, 255, 255, 0.3),
-      0 2px 6px rgba(0, 0, 0, 0.6);
-  }
-  .dial-knob-face::after {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 90%;
-    height: 90%;
-    transform: translate(-50%, -50%);
-    border-radius: 50%;
-    background:
-      linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
-      conic-gradient(from 200deg,
-        var(--metal-hi), var(--metal-lo) 15%, var(--metal-hi) 30%,
-        var(--metal-mid) 45%, var(--metal-hi) 60%, var(--metal-lo) 75%,
-        var(--metal-hi) 90%, var(--metal-hi) 100%);
-    background-blend-mode: multiply;
-    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.3);
-  }
-
-  .dial-knob-handle {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 20%;
-    height: 90%;
-    transform: translate(-50%, -50%);
-    border-radius: 14px 14px 8px 8px;
-    background:
-      linear-gradient(180deg, rgba(255, 255, 255, 0.3), rgba(0, 0, 0, 0.2)),
-      linear-gradient(90deg,
-        var(--metal-lo) 0%, var(--metal-mid) 22%, var(--metal-hi) 38%,
-        #fff 46%, var(--metal-hi) 54%, var(--metal-mid) 75%, var(--metal-lo) 100%);
-    background-blend-mode: multiply, normal;
-    box-shadow:
-      0 1px 2px rgba(0, 0, 0, 0.5),
-      inset 0 0 0 1px rgba(0, 0, 0, 0.25);
-  }
-
-  /* ---------- Mini dials (decorative — Color/Contrast/Hue), same look
-     and rotor mechanics as the extension's own picture-control knobs. ---------- */
-  .mini-dials {
-    display: flex;
-    gap: 14px;
-    padding: 14px 16px;
-    border-radius: 14px;
-    background: #1a1712;
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
-  }
-
-  .mini-dial-cell {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 6px;
-  }
-
-  .mini-dial-label {
-    font-family: sans-serif;
-    font-size: 10px;
-    font-weight: 600;
-    letter-spacing: -0.02em;
-    text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.6);
-  }
-
-  .mini-dial {
-    position: relative;
-    width: 40px;
-    height: 40px;
-    cursor: pointer;
-    user-select: none;
-    -webkit-user-select: none;
-    touch-action: none;
-  }
-
-  .mini-dial-face {
-    position: absolute;
-    inset: 0;
-    border-radius: 50%;
-    background: conic-gradient(from 200deg,
-      var(--metal-hi), var(--metal-lo) 15%, var(--metal-hi) 30%,
-      var(--metal-mid) 45%, var(--metal-hi) 60%, var(--metal-lo) 75%,
-      var(--metal-hi) 90%, var(--metal-hi) 100%);
-    box-shadow:
-      inset 0 0 0 2px rgba(0, 0, 0, 0.3),
-      inset 0 2px 6px rgba(0, 0, 0, 0.45),
-      inset 0 -2px 4px rgba(255, 255, 255, 0.3),
-      0 2px 5px rgba(0, 0, 0, 0.6);
-  }
-
-  .mini-dial-rotor {
-    position: absolute;
-    inset: 0;
-    transition: transform 0.15s ease-out;
-  }
-
-  .mini-dial-tick {
-    position: absolute;
-    bottom: 50%;
-    left: 50%;
-    width: 2px;
-    height: 16px;
-    margin-left: -1px;
-    transform-origin: 50% 100%;
-    background: #171310;
-    border-radius: 2px;
-    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.6);
-  }
-
-</style>
-</head>
-
-<body>
-
-<div class="bars">
-  <div class="bars-top">
-    <div class="bar" style="background:#c3c3c3"></div>
-    <div class="bar" style="background:#c6c93c"></div>
-    <div class="bar" style="background:#4fc3c9"></div>
-    <div class="bar" style="background:#4cbd3f"></div>
-    <div class="bar" style="background:#b232ae"></div>
-    <div class="bar" style="background:#b5211c"></div>
-    <div class="bar" style="background:#1226b0"></div>
-  </div>
-  <div class="bars-bottom">
-    <div class="bar" style="background:#1226b0"></div>
-    <div class="bar" style="background:#131313"></div>
-    <div class="bar" style="background:#b232ae"></div>
-    <div class="bar" style="background:#131313"></div>
-    <div class="bar" style="background:#4fc3c9"></div>
-    <div class="bar" style="background:#131313"></div>
-    <div class="bar" style="background:#c3c3c3"></div>
-  </div>
-</div>
-
-<div class="clip-wrapper">
-  <div class="container">
-    <div class="container-layer container-header">
-      <h2>WhyTV</h2>
-      <h3>A Chrome extension for YouTube TV</h3>
-    </div>
-
-    <p><span class="caption">
-      Remember antenna TV? You'd plug it in, mess with the rabbit ears,
-      push <em><strong>ON</em></strong>, then turn the dial. Ca-chunk. <em><strong>Channel 2</strong></em>.
-      Ca-chunk. Ca-chunk. Ca-chunk. <em><strong>Channel 5</strong></em>.
-    </span></p>
-
-    <p><span class="caption">
-      No latency. No buffering.
-      No slow-as-molasses buttons. No wondering whether <em><strong>EXIT</em></strong>
-      brings you back to the menu or out of the app altogether.
-      Just immediate live TV.
-    </span></p>
-
-    <p><span class="caption">
-      This is WhyTV&mdash;a Chrome extension that works with your YouTubeTV account.
-      An attempt to bring back TV as it was. 50% nostalgia? Yes. But also 50% wait, this is better!
-    </span></p>
-
-    <p><span class="caption">
-      <a href="">Install it now</a>. Watch <a href="">my quick tutorial</a>.
-      And perhaps if you like this fun little thing, you might like some of my  <a href="">other work</a> too.
-    </span></p>
-
-  </div>
-  <div class="deco-controls">
-    <div class="dial-clicker">
-      <div class="dial">
-        <div class="dial-metal"></div>
-        <div class="dial-arrow"></div>
-        <div class="dial-rotor" id="decoDialRotor">
-          <div class="dial-knob">
-            <div class="dial-knob-face"></div>
-            <div class="dial-knob-handle"></div>
-          </div>
-          <span class="dial-num" style="transform: rotate(0deg) translateY(calc(var(--deco-height) * -0.375))">2</span>
-          <span class="dial-num" style="transform: rotate(27.69deg) translateY(calc(var(--deco-height) * -0.375))">3</span>
-          <span class="dial-num" style="transform: rotate(55.38deg) translateY(calc(var(--deco-height) * -0.375))">4</span>
-          <span class="dial-num" style="transform: rotate(83.08deg) translateY(calc(var(--deco-height) * -0.375))">5</span>
-          <span class="dial-num" style="transform: rotate(110.77deg) translateY(calc(var(--deco-height) * -0.375))">6</span>
-          <span class="dial-num" style="transform: rotate(138.46deg) translateY(calc(var(--deco-height) * -0.375))">7</span>
-          <span class="dial-num" style="transform: rotate(166.15deg) translateY(calc(var(--deco-height) * -0.375))">8</span>
-          <span class="dial-num" style="transform: rotate(193.85deg) translateY(calc(var(--deco-height) * -0.375))">9</span>
-          <span class="dial-num" style="transform: rotate(221.54deg) translateY(calc(var(--deco-height) * -0.375))">10</span>
-          <span class="dial-num" style="transform: rotate(249.23deg) translateY(calc(var(--deco-height) * -0.375))">11</span>
-          <span class="dial-num" style="transform: rotate(276.92deg) translateY(calc(var(--deco-height) * -0.375))">12</span>
-          <span class="dial-num" style="transform: rotate(304.62deg) translateY(calc(var(--deco-height) * -0.375))">13</span>
-          <span class="dial-num" style="transform: rotate(332.31deg) translateY(calc(var(--deco-height) * -0.375))">U</span>
-        </div>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=League+Gothic&family=Orbitron:wght@900&family=VT323&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="index.css">
+    <title>WhyTV : A YouTubeTV Chrome extension</title>
+  </head>
+  <body>
+    <div class="bars">
+      <div class="bars-top">
+        <div class="bar" style="background:#c3c3c3"></div>
+        <div class="bar" style="background:#c6c93c"></div>
+        <div class="bar" style="background:#4fc3c9"></div>
+        <div class="bar" style="background:#4cbd3f"></div>
+        <div class="bar" style="background:#b232ae"></div>
+        <div class="bar" style="background:#b5211c"></div>
+        <div class="bar" style="background:#1226b0"></div>
+      </div>
+      <div class="bars-bottom">
+        <div class="bar" style="background:#1226b0"></div>
+        <div class="bar" style="background:#131313"></div>
+        <div class="bar" style="background:#b232ae"></div>
+        <div class="bar" style="background:#131313"></div>
+        <div class="bar" style="background:#4fc3c9"></div>
+        <div class="bar" style="background:#131313"></div>
+        <div class="bar" style="background:#c3c3c3"></div>
       </div>
     </div>
-    <div class="mini-dials">
-      <div class="mini-dial-cell">
-        <span class="mini-dial-label">Color</span>
-        <div class="mini-dial" data-angle="315">
-          <div class="mini-dial-face"></div>
-          <div class="mini-dial-rotor" style="transform: rotate(315deg)">
-            <div class="mini-dial-tick"></div>
+    <div class="clip-wrapper">
+      <div class="container">
+        <div class="container-header">
+          <h2>WhyTV</h2>
+          <h3>A Chrome extension for YouTube TV</h3>
+        </div>
+
+        <p><span class="caption">
+          Remember antenna TV? You'd plug it in, mess with the rabbit ears,
+          push <em><strong>ON</em></strong>, then turn the dial. Ca-chunk. <em><strong>Channel 2</strong></em>.
+          Ca-chunk. Ca-chunk. Ca-chunk. <em><strong>Channel 5</strong></em>.
+        </span></p>
+
+        <p><span class="caption">
+          No latency. No buffering.
+          No slow-as-molasses buttons. No wondering whether <em><strong>EXIT</em></strong>
+          brings you back to the menu or out of the app altogether.
+          Just immediate live TV.
+        </span></p>
+
+        <p><span class="caption">
+          This is WhyTV&mdash;a Chrome extension that works with your YouTubeTV account.
+          An attempt to bring back TV as it was. 50% nostalgia? Yes. But also 50% wait, this is better!
+        </span></p>
+
+        <p><span class="caption">
+          <a href="">Install it now</a>. Watch <a href="">my quick tutorial</a>.
+          And if you like this little thing, you might enjoy some of my <a href="">other work</a> too.
+        </span></p>
+
+      </div>
+      <div class="deco-controls">
+        <div class="dial-clicker">
+          <div class="dial">
+            <div class="dial-metal"></div>
+            <div class="dial-arrow"></div>
+            <div class="dial-rotor" id="decoDialRotor">
+              <div class="dial-knob">
+                <div class="dial-knob-face"></div>
+                <div class="dial-knob-handle"></div>
+              </div>
+              <span class="dial-num" style="transform: rotate(0deg) translateY(calc(var(--deco-height) * -0.375))">2</span>
+              <span class="dial-num" style="transform: rotate(27.69deg) translateY(calc(var(--deco-height) * -0.375))">3</span>
+              <span class="dial-num" style="transform: rotate(55.38deg) translateY(calc(var(--deco-height) * -0.375))">4</span>
+              <span class="dial-num" style="transform: rotate(83.08deg) translateY(calc(var(--deco-height) * -0.375))">5</span>
+              <span class="dial-num" style="transform: rotate(110.77deg) translateY(calc(var(--deco-height) * -0.375))">6</span>
+              <span class="dial-num" style="transform: rotate(138.46deg) translateY(calc(var(--deco-height) * -0.375))">7</span>
+              <span class="dial-num" style="transform: rotate(166.15deg) translateY(calc(var(--deco-height) * -0.375))">8</span>
+              <span class="dial-num" style="transform: rotate(193.85deg) translateY(calc(var(--deco-height) * -0.375))">9</span>
+              <span class="dial-num" style="transform: rotate(221.54deg) translateY(calc(var(--deco-height) * -0.375))">10</span>
+              <span class="dial-num" style="transform: rotate(249.23deg) translateY(calc(var(--deco-height) * -0.375))">11</span>
+              <span class="dial-num" style="transform: rotate(276.92deg) translateY(calc(var(--deco-height) * -0.375))">12</span>
+              <span class="dial-num" style="transform: rotate(304.62deg) translateY(calc(var(--deco-height) * -0.375))">13</span>
+              <span class="dial-num" style="transform: rotate(332.31deg) translateY(calc(var(--deco-height) * -0.375))">U</span>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="mini-dial-cell">
-        <span class="mini-dial-label">Contrast</span>
-        <div class="mini-dial" data-angle="315">
-          <div class="mini-dial-face"></div>
-          <div class="mini-dial-rotor" style="transform: rotate(315deg)">
-            <div class="mini-dial-tick"></div>
+        <div class="mini-dials">
+          <div class="mini-dial-cell">
+            <span class="mini-dial-label">Color</span>
+            <div class="mini-dial" data-angle="315">
+              <div class="mini-dial-face"></div>
+              <div class="mini-dial-rotor" style="transform: rotate(315deg)">
+                <div class="mini-dial-tick"></div>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-      <div class="mini-dial-cell">
-        <span class="mini-dial-label">Hue</span>
-        <div class="mini-dial" data-angle="315">
-          <div class="mini-dial-face"></div>
-          <div class="mini-dial-rotor" style="transform: rotate(315deg)">
-            <div class="mini-dial-tick"></div>
+          <div class="mini-dial-cell">
+            <span class="mini-dial-label">Contrast</span>
+            <div class="mini-dial" data-angle="315">
+              <div class="mini-dial-face"></div>
+              <div class="mini-dial-rotor" style="transform: rotate(315deg)">
+                <div class="mini-dial-tick"></div>
+              </div>
+            </div>
+          </div>
+          <div class="mini-dial-cell">
+            <span class="mini-dial-label">Hue</span>
+            <div class="mini-dial" data-angle="315">
+              <div class="mini-dial-face"></div>
+              <div class="mini-dial-rotor" style="transform: rotate(315deg)">
+                <div class="mini-dial-tick"></div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</div>
+    <script>
+      // Decorative only — no channel/filter data behind any of these, nothing
+      // to snap to. Dragging computes the angle between the pointer and the
+      // dial's own center, so it spins all the way around freely rather than
+      // stepping in fixed increments.
+      function makeFreeSpin(dialEl, rotorEl) {
+        // Seeds from whatever rotation the rotor already starts at (the
+        // mini-dials render with a non-zero rotate() inline already) so the
+        // first drag continues from there instead of jumping to 0.
+        let angle = Number(dialEl.dataset.angle) || 0;
+        let dragging = false;
+        let startPointerAngle = 0;
+        let startRotorAngle = 0;
 
-<script>
-  // Decorative only — no channel/filter data behind any of these, nothing
-  // to snap to. Dragging computes the angle between the pointer and the
-  // dial's own center, so it spins all the way around freely rather than
-  // stepping in fixed increments.
-  function makeFreeSpin(dialEl, rotorEl) {
-    // Seeds from whatever rotation the rotor already starts at (the
-    // mini-dials render with a non-zero rotate() inline already) so the
-    // first drag continues from there instead of jumping to 0.
-    let angle = Number(dialEl.dataset.angle) || 0;
-    let dragging = false;
-    let startPointerAngle = 0;
-    let startRotorAngle = 0;
+        function pointerAngle(e) {
+          const rect = dialEl.getBoundingClientRect();
+          const cx = rect.left + rect.width / 2;
+          const cy = rect.top + rect.height / 2;
+          return Math.atan2(e.clientY - cy, e.clientX - cx) * (180 / Math.PI);
+        }
 
-    function pointerAngle(e) {
-      const rect = dialEl.getBoundingClientRect();
-      const cx = rect.left + rect.width / 2;
-      const cy = rect.top + rect.height / 2;
-      return Math.atan2(e.clientY - cy, e.clientX - cx) * (180 / Math.PI);
-    }
+        dialEl.addEventListener("pointerdown", (e) => {
+          dialEl.setPointerCapture(e.pointerId);
+          dragging = true;
+          startPointerAngle = pointerAngle(e);
+          startRotorAngle = angle;
+        });
 
-    dialEl.addEventListener("pointerdown", (e) => {
-      dialEl.setPointerCapture(e.pointerId);
-      dragging = true;
-      startPointerAngle = pointerAngle(e);
-      startRotorAngle = angle;
-    });
+        dialEl.addEventListener("pointermove", (e) => {
+          if (!dragging) return;
+          angle = startRotorAngle + (pointerAngle(e) - startPointerAngle);
+          rotorEl.style.transform = `rotate(${angle}deg)`;
+        });
 
-    dialEl.addEventListener("pointermove", (e) => {
-      if (!dragging) return;
-      angle = startRotorAngle + (pointerAngle(e) - startPointerAngle);
-      rotorEl.style.transform = `rotate(${angle}deg)`;
-    });
+        dialEl.addEventListener("pointerup", () => { dragging = false; });
+        dialEl.addEventListener("pointercancel", () => { dragging = false; });
+      }
 
-    dialEl.addEventListener("pointerup", () => { dragging = false; });
-    dialEl.addEventListener("pointercancel", () => { dragging = false; });
-  }
+      const bigDialEl = document.querySelector(".dial-clicker .dial");
+      const bigRotorEl = document.getElementById("decoDialRotor");
+      if (bigDialEl && bigRotorEl) makeFreeSpin(bigDialEl, bigRotorEl);
 
-  const bigDialEl = document.querySelector(".dial-clicker .dial");
-  const bigRotorEl = document.getElementById("decoDialRotor");
-  if (bigDialEl && bigRotorEl) makeFreeSpin(bigDialEl, bigRotorEl);
-
-  document.querySelectorAll(".mini-dial").forEach((dialEl) => {
-    makeFreeSpin(dialEl, dialEl.querySelector(".mini-dial-rotor"));
-  });
-</script>
-
-</body>
+      document.querySelectorAll(".mini-dial").forEach((dialEl) => {
+        makeFreeSpin(dialEl, dialEl.querySelector(".mini-dial-rotor"));
+      });
+    </script>
+  </body>
 </html>
