@@ -119,7 +119,7 @@ h2 {
   font-family: "Orbitron", var(--font-family--sans-serif);
   font-weight: 900;
   letter-spacing: 0.2rem;
-  font-size: clamp(2rem, 5vw, 4rem);
+  font-size: clamp(2.4rem, 5vw, 3.8rem);
   letter-spacing: 0.18em;
   color: var(--phosphor-dim);
   text-transform: uppercase;
@@ -130,7 +130,7 @@ h2 {
 h3 {
   font-family: var(--font-family--tv);
   font-weight: 400;
-  font-size: clamp(1rem, 2.2vw, 2rem);
+  font-size: clamp(1.5rem, 2.2vw, 2rem);
   letter-spacing: 1px;
   color: #fff;
   display: inline;
@@ -150,16 +150,12 @@ a {
 
 p {
   font-family: var(--font-family--tv);
-  font-size: clamp(0.9rem, 1.3vw, 1.125rem);
+  font-size: clamp(1rem, 1.5vw, 1.5rem);
   letter-spacing: 0.3px;
   color: #fff;
   line-height: 1.45;
 }
 
-/* Black backing that hugs the text itself rather than filling the
-   paragraph's whole box — box-decoration-break: clone re-draws the
-   background/padding on every wrapped line instead of treating the
-   paragraph as one tall rectangle, giving the closed-captioning look. */
 .caption {
   display: inline;
   background: #000;
@@ -168,11 +164,7 @@ p {
   -webkit-box-decoration-break: clone;
 }
 
-
-/* ---------- Decorative dial + mini-dials, grouped bottom-right ----------
-   A single flex row anchors both to the container's corner. The dial is
-   built at 70% of the real dial's raw pixel values (not a CSS transform
-   scale), so its box size matches its visual size exactly. */
+/* ---------- Decorative dial + mini-dials, grouped bottom-right ----------  */
 .deco-controls {
   position: absolute;
   bottom: 40px;
@@ -408,6 +400,8 @@ p {
   .container {
     display: flex;
     flex-direction: column;
+    padding: 0 5vw;
+    clip-path: none;
   }
 
   .container-header {
