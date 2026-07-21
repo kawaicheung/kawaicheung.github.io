@@ -20,6 +20,7 @@
 
 html,
 body {
+  font-size: 16px;
   width: 100%;
   height: 100%;
 }
@@ -150,7 +151,7 @@ a {
 
 p {
   font-family: var(--font-family--tv);
-  font-size: clamp(1rem, 1.5vw, 1.5rem);
+  font-size: clamp(1rem, 1.5vw, 1.4rem);
   letter-spacing: 0.3px;
   color: #fff;
   line-height: 1.45;
@@ -412,5 +413,94 @@ p {
 
   .deco-controls {
     display: none;
+  }
+}
+
+.shameless-plug {
+  position: fixed;
+  bottom: 0rem;
+  left: 1rem;
+  z-index: 10;
+  align-items: center;
+  display: flex;
+  font-family: var(--font-family--sans-serif);
+  animation: shamelessPlugMovement 5s ease-in-out 1.5s infinite;
+  letter-spacing: -0.05rem;
+
+  img {
+    opacity: 0;
+    width: 60px;      
+    height: 60px;     
+    border-radius: 50%; 
+    object-fit: cover;  
+    border: solid 2px #000;
+    animation: 
+      wigglePlug 3s infinite linear,
+      popPlugImage 0.4s ease-in-out 2s forwards;
+    z-index: 1;
+  }
+
+  a {
+    opacity: 0;
+    background: #000;
+    border-radius: var(--border-radius--slight);
+    color: #fff;
+    padding: 0.4rem 1.2rem;
+    font-weight: 600;
+    font-size: 0.8rem;
+    animation: 
+      wigglePlug 5s infinite linear,
+      popPlugText 0.3s ease-out 2.3s forwards;
+    text-decoration: none;
+    margin: 0 0 50px -10px;
+  }
+}
+
+
+@keyframes shamelessPlugMovement {
+  0% {
+    transform: translateX(0) translateY(0);
+  }
+  50% {
+    transform: translateX(-5px) translateY(10px);
+  }
+  100% {
+    transform: translateX(0) translateY(0);
+  }
+}
+
+@keyframes wigglePlug {
+  0% { rotate: 0; }
+  50% { rotate: -5deg; }
+  100% { rotate: 0; }
+}
+
+@keyframes popPlugText {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  70% {
+    opacity: 1;
+    transform: scale(1.04);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes popPlugImage {
+  0% {
+    opacity: 0;
+    transform: scale(0) rotate(20deg);
+  }
+  70% {
+    opacity: 1;
+    transform: scale(1.2) rotate(-5deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(-5deg);
   }
 }
