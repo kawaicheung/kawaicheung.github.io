@@ -137,6 +137,10 @@ h3 {
   color: #fff;
 }
 
+a {
+  color: yellow;
+}
+
 p {
   font-family: "VT323", "Courier New", monospace;
   font-size: 18px;
@@ -155,11 +159,8 @@ p {
   padding: 0.15em 0.35em;
   box-decoration-break: clone;
   -webkit-box-decoration-break: clone;
-
-  a {
-    color: yellow;
-  }
 }
+
 
 /* ---------- Decorative dial + mini-dials, grouped bottom-right ----------
    A single flex row anchors both to the container's corner. The dial is
