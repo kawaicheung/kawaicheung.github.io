@@ -10,18 +10,24 @@
 </head>
 <body>
   <div id="content">
+    <div class="film-scratches" id="filmScratches" aria-hidden="true">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
     <div class="settings-columns">
       <div class="settings-col settings-col-available">
         <div class="setup-intro">
-          <h2 class="setup-title">Setting up your WhyTV</h2>
-          <p class="setup-copy">We're scanning your Youtube TV channels right now. 
-            Nothing fancy. Just looking at <a href="https://tv.youtube.com/live" target="_blank">tv.youtube.com/live</a> and finding your available channels.
+          <h2 class="setup-title" id="setupTitle">Setting up your WhyTV</h2>
+          <p class="setup-copy" id="setupCopy">Grabbing your YouTubeTV stations. 
             Give it a few moments, and you'll see your list of channels to add to WhyTV.</p>
+          <p class="setup-copy" id="scanFailedMsg" hidden>Couldn't read your channels &mdash; make sure you're signed into tv.youtube.com. <a href="#" id="scanAgainLink">Scan again&hellip;</a></p>
         </div>
-        <p class="section-label">Available channels</p>
-        <button class="plain-btn" id="scrapeBtn" type="button">Find channels</button>
-        <div class="available-grid" id="availableGrid"></div>
-        <p class="form-error" id="scrapeError"></p>
+        <div id="availableSection" hidden>
+          <p class="section-label">Available channels</p>
+          <div class="available-grid" id="availableGrid"></div>
+          <button class="rescan-btn" id="rescanBtn" type="button">Scan again&hellip;</button>
+        </div>
       </div>
 
       <div class="settings-col settings-col-channels">

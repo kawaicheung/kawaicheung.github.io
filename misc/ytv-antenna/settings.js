@@ -45,6 +45,21 @@ function renderAll() {
   renderCount();
 }
 
+// Three states for the initial channel scan: "scanning" (intro copy only),
+// "failed" (retry message, same font as the intro), and "succeeded" (grid
+// shown, title switches from the scanning blurb to the drag instructions).
+let scanState = "scanning";
+
+function renderScanState() {
+  document.getElementById("setupCopy").hidden = scanState !== "scanning";
+  document.getElementById("filmScratches").hidden = scanState !== "scanning";
+  document.getElementById("scanFailedMsg").hidden = scanState !== "failed";
+  document.getElementById("availableSection").hidden = scanState !== "succeeded";
+  document.getElementById("setupTitle").textContent = scanState === "succeeded"
+    ? "Drag stations over to your channels"
+    : "Setting up your WhyTV";
+}
+
 function renderCount() {
   const count = draft.filter(Boolean).length;
   document.getElementById("channelCount").textContent = `${count} / ${MAX_CHANNELS} channels configured`;
@@ -54,7 +69,7 @@ function renderAvailable() {
   const grid = document.getElementById("availableGrid");
 
   if (!available.length) {
-    grid.innerHTML = `<p class="available-empty">No unplaced channels — click "Find channels" to scan the guide.</p>`;
+    grid.innerHTML = `<p class="available-empty">No channels found.</p>`;
     return;
   }
 
@@ -152,22 +167,17 @@ async function init() {
   await loadDraft();
 
   renderAll();
-
-  const scrapeBtn = document.getElementById("scrapeBtn");
-  const scrapeError = document.getElementById("scrapeError");
+  renderScanState();
 
   async function scrapeChannels() {
-    scrapeBtn.disabled = true;
-    scrapeBtn.textContent = "Scanning guide…";
-    scrapeError.textContent = "";
+    scanState = "scanning";
+    renderScanState();
 
     const res = await send({ type: "scrapeGuide" });
 
-    scrapeBtn.disabled = false;
-    scrapeBtn.textContent = "Find channels";
-
     if (!res.ok || !res.channels.length) {
-      scrapeError.textContent = "Couldn't read the guide — make sure you're signed into tv.youtube.com and try again.";
+      scanState = "failed";
+      renderScanState();
       return;
     }
 
@@ -175,22 +185,23 @@ async function init() {
       ...draft.filter(Boolean).map((ch) => ch.url),
       ...available.map((ch) => ch.url)
     ]);
-    const found = res.channels.filter((ch) => !knownUrls.has(ch.url));
+    available = available.concat(res.channels.filter((ch) => !knownUrls.has(ch.url)));
 
-    if (!found.length) {
-      scrapeError.textContent = "Every channel in the guide is already placed or available.";
-      return;
-    }
-
-    available = available.concat(found);
+    scanState = "succeeded";
+    renderScanState();
     renderAll();
   }
 
-  scrapeBtn.addEventListener("click", scrapeChannels);
+  document.getElementById("scanAgainLink").addEventListener("click", (e) => {
+    e.preventDefault();
+    scrapeChannels();
+  });
 
-  // Scan automatically on open so the available grid is populated without
-  // requiring the user to click "Find channels" first; the button stays for
-  // re-scanning after the guide changes.
+  document.getElementById("rescanBtn").addEventListener("click", () => {
+    scrapeChannels();
+  });
+
+  // Scan automatically on open.
   scrapeChannels();
 
   document.getElementById("doneBtn").addEventListener("click", async () => {
@@ -247,10 +258,17 @@ async function init() {
   // time (settings lives permanently at the dial's "U" slot) — resync from
   // storage whenever it becomes visible again, so tuning back in always
   // reflects what's actually saved rather than stale state left over from
-  // before it was last tuned away from.
+  // before it was last tuned away from. Deliberately not loadDraft() here —
+  // that also clears `available`, which would blank out the scan results
+  // shown on the last visit even though scanState still says "succeeded".
+  // Just drop whatever's since been placed into a slot instead.
   document.addEventListener("visibilitychange", async () => {
     if (document.hidden) return;
-    await loadDraft();
+    const saved = await getChannels();
+    draft = Array.from({ length: MAX_CHANNELS }, (_, i) => saved[i] || null);
+    originalChannels = draft.slice();
+    const placedUrls = new Set(draft.filter(Boolean).map((ch) => ch.url));
+    available = available.filter((ch) => !placedUrls.has(ch.url));
     renderAll();
   });
 }
