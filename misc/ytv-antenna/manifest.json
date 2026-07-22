@@ -16,7 +16,7 @@
     {
       "matches": ["https://tv.youtube.com/*"],
       "js": ["content.js"],
-      "css": ["content.css"],
+      "css": ["vars.css", "content.css"],
       "run_at": "document_idle"
     }
   ],

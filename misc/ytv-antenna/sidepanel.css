@@ -4,7 +4,7 @@ html, body {
   margin: 0;
   height: 100%;
   min-height: 100vh;
-  color: var(--paper);
+  color: var(--ytv-color-paper);
 }
 body {
   flex: 1;
@@ -13,7 +13,7 @@ body {
   align-items: center;
   min-height: 0;
   padding: 10px;
-  background-color: #fff;
+  background-color: var(--ytv-color-white);
 }
 
 #content {
@@ -34,31 +34,31 @@ body {
   background:
     linear-gradient(
       to bottom,
-      #242424,
-      #111
+      var(--ytv-color-panel-hi),
+      var(--ytv-color-panel-lo)
     ) padding-box,
     repeating-linear-gradient(
       to bottom,
-      rgba(0,0,0,.75) 0px,
-      rgba(0,0,0,.75) 2px,
-      rgba(255,255,255,.02) 2px,
-      rgba(255,255,255,.02) 4px
+      var(--ytv-color-overlay-black-75) 0px,
+      var(--ytv-color-overlay-black-75) 2px,
+      var(--ytv-color-overlay-white-02) 2px,
+      var(--ytv-color-overlay-white-02) 4px
     ) padding-box;
 
   background-blend-mode: multiply, multiply, normal;
   /* Inset shadow just inside the metal frame so the whole panel reads as
      sunk into the case rather than sitting flush with it. */
   box-shadow:
-    inset 0 6px 18px rgba(0,0,0,0.65),
-    inset 0 -4px 14px rgba(0,0,0,0.5),
-    inset 0 0 0 1px rgba(0,0,0,0.35);
+    inset 0 6px 18px var(--ytv-color-overlay-black-65),
+    inset 0 -4px 14px var(--ytv-color-overlay-black-50),
+    inset 0 0 0 1px var(--ytv-color-overlay-black-35);
 }
 
 .brand {
   width: 100%;
   font-size: 13px;
   letter-spacing: 0.18em;
-  color: var(--phosphor-dim);
+  color: var(--ytv-color-phosphor-dim);
   text-transform: uppercase;
   margin-bottom: 10px;
   display: flex;
@@ -91,18 +91,18 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #47412f;
+  color: var(--ytv-color-plastic-raised);
   background:
     repeating-linear-gradient(180deg,
-      rgba(255,255,255,0.3) 0px, rgba(255,255,255,0.3) 0.5px,
-      rgba(0,0,0,0.12) 0.5px, rgba(0,0,0,0.12) 1px,
+      var(--ytv-color-overlay-white-30) 0px, var(--ytv-color-overlay-white-30) 0.5px,
+      var(--ytv-color-overlay-black-10) 0.5px, var(--ytv-color-overlay-black-10) 1px,
       transparent 1px, transparent 1.5px),
-    linear-gradient(180deg, var(--metal-hi), var(--metal-mid) 55%, var(--metal-lo));
+    linear-gradient(180deg, var(--ytv-color-metal-hi), var(--ytv-color-metal-mid) 55%, var(--ytv-color-metal-lo));
   box-shadow:
-    inset 0 0 0 1px rgba(0,0,0,0.35),
-    inset 0 2px 3px rgba(0,0,0,0.4),
-    inset 0 -1px 2px rgba(255,255,255,0.4),
-    0 2px 5px rgba(0,0,0,0.5);
+    inset 0 0 0 1px var(--ytv-color-overlay-black-35),
+    inset 0 2px 3px var(--ytv-color-overlay-black-40),
+    inset 0 -1px 2px var(--ytv-color-overlay-white-40),
+    0 2px 5px var(--ytv-color-overlay-black-50);
 
   & svg {
     width: 20px;
@@ -112,7 +112,7 @@ body {
 
   &:hover,
   &.on {
-    color: #241f14;
+    color: var(--ytv-color-plastic-deep);
   }
 }
 
@@ -131,7 +131,7 @@ body {
   cursor: pointer;
   /* Barely-there sheen on the black face: lightest at the top (0%/100%,
      same value so the wrap is seamless), darkening toward the bottom. */
-  background: conic-gradient(from 0deg, #222 0%,#121212 14%, #000 25%, #000 75%, #121212 86%, #222 100%);
+  background: conic-gradient(from 0deg, var(--ytv-color-dial-ring-hi) 0%,var(--ytv-color-dial-ring-lo) 14%, var(--ytv-color-black) 25%, var(--ytv-color-black) 75%, var(--ytv-color-dial-ring-lo) 86%, var(--ytv-color-dial-ring-hi) 100%);
   border-radius: 50%;
 }
 
@@ -140,20 +140,20 @@ body {
   inset: 0;
   border-radius: 50%;
   background: conic-gradient(from 200deg,
-    var(--metal-hi), var(--metal-lo) 15%, var(--metal-hi) 30%,
-    var(--metal-mid) 45%, var(--metal-hi) 60%, var(--metal-lo) 75%,
-    var(--metal-hi) 90%, var(--metal-hi) 100%);
+    var(--ytv-color-metal-hi), var(--ytv-color-metal-lo) 15%, var(--ytv-color-metal-hi) 30%,
+    var(--ytv-color-metal-mid) 45%, var(--ytv-color-metal-hi) 60%, var(--ytv-color-metal-lo) 75%,
+    var(--ytv-color-metal-hi) 90%, var(--ytv-color-metal-hi) 100%);
   box-shadow:
-    inset 0 0 0 3px rgba(0,0,0,0.35),
-    inset 0 3px 10px rgba(0,0,0,0.45),
-    inset 0 2px 4px rgba(255,255,255,0.5),
-    0 3px 10px rgba(0,0,0,0.55);
+    inset 0 0 0 3px var(--ytv-color-overlay-black-35),
+    inset 0 3px 10px var(--ytv-color-overlay-black-45),
+    inset 0 2px 4px var(--ytv-color-overlay-white-50),
+    0 3px 10px var(--ytv-color-overlay-black-55);
   /* Ring mask: keeps the conic-gradient's full-size math intact (so its
      angles/colors don't distort) while only painting it — background,
      border-radius, and the box-shadow bevel together — in a band near the
      rim. The hole reveals .dial's black background behind it. */
-  -webkit-mask-image: radial-gradient(circle, transparent 0%, transparent 65%, #000 70%, #000 100%);
-  mask-image: radial-gradient(circle, transparent 0%, transparent 65%, #000 70%, #000 100%);
+  -webkit-mask-image: radial-gradient(circle, transparent 0%, transparent 65%, var(--ytv-color-black) 70%, var(--ytv-color-black) 100%);
+  mask-image: radial-gradient(circle, transparent 0%, transparent 65%, var(--ytv-color-black) 70%, var(--ytv-color-black) 100%);
 }
 
 /* The fixed indicator notch above the dial — never rotates. Whichever
@@ -167,11 +167,11 @@ body {
   margin-left: -9px;
   z-index: 4;
   clip-path: polygon(0% 0%, 100% 0%, 50% 100%);
-  background: #ccc;
+  background: var(--ytv-color-gray-light);
 
   box-shadow:
-    inset 0 2px 3px rgba(0,0,0,0.15),
-    inset 0 -1px 0 rgba(255,255,255,0.08);
+    inset 0 2px 3px var(--ytv-color-overlay-black-15),
+    inset 0 -1px 0 var(--ytv-color-overlay-white-08);
 
 }
 
@@ -195,8 +195,8 @@ body {
   font-family: inherit;
   font-weight: 400;
   font-size: 24px;
-  color: #6b6559;
-  text-shadow: 0 1px 0 rgba(255,255,255,0.35), 0 -1px 1px rgba(0,0,0,0.4);
+  color: var(--ytv-color-label-muted);
+  text-shadow: 0 1px 0 var(--ytv-color-overlay-white-35), 0 -1px 1px var(--ytv-color-overlay-black-40);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -221,13 +221,13 @@ body {
      launch()'s warm-up loop works through the channels, not all at once
      just because a slot has a channel assigned to it. */
   &.lit {
-    color: #ffffff;
+    color: var(--ytv-color-white);
     text-shadow:
-      0 0 3px rgba(255, 255, 255, 0.85),
-      0 0 9px rgba(255, 255, 255, 0.4);
+      0 0 3px var(--ytv-color-overlay-white-85),
+      0 0 9px var(--ytv-color-overlay-white-40);
 
     &::after {
-      box-shadow: 0 0 6px var(--phosphor);
+      box-shadow: 0 0 6px var(--ytv-color-phosphor);
     }
   }
 
@@ -255,14 +255,14 @@ body {
   inset: 0;
   border-radius: 50%;
   background: conic-gradient(from 200deg,
-    var(--metal-hi), var(--metal-lo) 15%, var(--metal-hi) 30%,
-    var(--metal-mid) 45%, var(--metal-hi) 60%, var(--metal-lo) 75%,
-    var(--metal-hi) 90%, var(--metal-hi) 100%);
+    var(--ytv-color-metal-hi), var(--ytv-color-metal-lo) 15%, var(--ytv-color-metal-hi) 30%,
+    var(--ytv-color-metal-mid) 45%, var(--ytv-color-metal-hi) 60%, var(--ytv-color-metal-lo) 75%,
+    var(--ytv-color-metal-hi) 90%, var(--ytv-color-metal-hi) 100%);
   box-shadow:
-    inset 0 0 0 2px rgba(0,0,0,0.3),
-    inset 0 3px 8px rgba(0,0,0,0.45),
-    inset 0 -2px 5px rgba(255,255,255,0.3),
-    0 2px 6px rgba(0,0,0,0.6);
+    inset 0 0 0 2px var(--ytv-color-overlay-black-30),
+    inset 0 3px 8px var(--ytv-color-overlay-black-45),
+    inset 0 -2px 5px var(--ytv-color-overlay-white-30),
+    0 2px 6px var(--ytv-color-overlay-black-60);
 
   /* Inset disc, same conic pattern darkened via multiply so it reads as a
      recessed inner cap rather than a flat re-tint. */
@@ -276,13 +276,13 @@ body {
     transform: translate(-50%, -50%);
     border-radius: 50%;
     background:
-      linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)),
+      linear-gradient(var(--ytv-color-overlay-black-40), var(--ytv-color-overlay-black-40)),
       conic-gradient(from 200deg,
-        var(--metal-hi), var(--metal-lo) 15%, var(--metal-hi) 30%,
-        var(--metal-mid) 45%, var(--metal-hi) 60%, var(--metal-lo) 75%,
-        var(--metal-hi) 90%, var(--metal-hi) 100%);
+        var(--ytv-color-metal-hi), var(--ytv-color-metal-lo) 15%, var(--ytv-color-metal-hi) 30%,
+        var(--ytv-color-metal-mid) 45%, var(--ytv-color-metal-hi) 60%, var(--ytv-color-metal-lo) 75%,
+        var(--ytv-color-metal-hi) 90%, var(--ytv-color-metal-hi) 100%);
     background-blend-mode: multiply;
-    box-shadow: inset 0 0 0 1px rgba(0,0,0,0.3);
+    box-shadow: inset 0 0 0 1px var(--ytv-color-overlay-black-30);
   }
 }
 
@@ -298,14 +298,14 @@ body {
   transform: translate(-50%, -50%);
   border-radius: 14px 14px 8px 8px;
   background:
-    linear-gradient(180deg, rgba(255,255,255,0.3), rgba(0,0,0,0.2)),
+    linear-gradient(180deg, var(--ytv-color-overlay-white-30), var(--ytv-color-overlay-black-20)),
     linear-gradient(90deg,
-      var(--metal-lo) 0%, var(--metal-mid) 22%, var(--metal-hi) 38%,
-      #fff 46%, var(--metal-hi) 54%, var(--metal-mid) 75%, var(--metal-lo) 100%);
+      var(--ytv-color-metal-lo) 0%, var(--ytv-color-metal-mid) 22%, var(--ytv-color-metal-hi) 38%,
+      var(--ytv-color-white) 46%, var(--ytv-color-metal-hi) 54%, var(--ytv-color-metal-mid) 75%, var(--ytv-color-metal-lo) 100%);
   background-blend-mode: multiply, normal;
   box-shadow:
-    0 1px 2px rgba(0,0,0,0.5),
-    inset 0 0 0 1px rgba(0,0,0,0.25);
+    0 1px 2px var(--ytv-color-overlay-black-50),
+    inset 0 0 0 1px var(--ytv-color-overlay-black-25);
 }
 
 
@@ -322,14 +322,14 @@ body {
   /* Same gradient-border trick as .dial-grid: fill to the padding-box,
      metal conic-gradient to the border-box, so only the 1px ring shows it. */
   background:
-    linear-gradient(#16130e, #16130e) padding-box,
+    linear-gradient(var(--ytv-color-bezel-face), var(--ytv-color-bezel-face)) padding-box,
     conic-gradient(from 200deg,
-      var(--metal-hi), var(--metal-lo) 15%, var(--metal-hi) 30%,
-      var(--metal-mid) 45%, var(--metal-hi) 60%, var(--metal-lo) 75%,
-      var(--metal-hi) 90%, var(--metal-hi) 100%) border-box;
+      var(--ytv-color-metal-hi), var(--ytv-color-metal-lo) 15%, var(--ytv-color-metal-hi) 30%,
+      var(--ytv-color-metal-mid) 45%, var(--ytv-color-metal-hi) 60%, var(--ytv-color-metal-lo) 75%,
+      var(--ytv-color-metal-hi) 90%, var(--ytv-color-metal-hi) 100%) border-box;
   box-shadow:
-    inset 0 2px 5px rgba(0,0,0,0.8),
-    inset 0 1px 0 rgba(255,255,255,0.03);
+    inset 0 2px 5px var(--ytv-color-overlay-black-80),
+    inset 0 1px 0 var(--ytv-color-overlay-white-03);
   /* Lets the two buttons tilt in 3D like a rocker switch, hinged at the
      seam between them, instead of just flat-swapping color. The raised
      side pops proud of the plate, so it's allowed to spill past the
@@ -349,8 +349,8 @@ body {
   left: 50%;
   width: 2px;
   margin-left: -1px;
-  background: rgba(0,0,0,0.55);
-  box-shadow: 1px 0 0 rgba(255,255,255,0.2);
+  background: var(--ytv-color-overlay-black-55);
+  box-shadow: 1px 0 0 var(--ytv-color-overlay-white-20);
   pointer-events: none;
 }
 
@@ -361,12 +361,12 @@ body {
   font-size: 12px;
   font-weight: 800;
   text-transform: uppercase;
-  color: #4a4638;
+  color: var(--ytv-color-metal-text);
   border: none;
-  text-shadow: 0 1px 0 rgba(255,255,255,0.4);
+  text-shadow: 0 1px 0 var(--ytv-color-overlay-white-40);
   /* Plain top-light/bottom-dark linear gradient (not the conic metal used
      elsewhere) so the face reads as a simple brushed-metal button. */
-  background: linear-gradient(180deg, var(--metal-hi), var(--metal-mid) 60%, var(--metal-lo));
+  background: linear-gradient(180deg, var(--ytv-color-metal-hi), var(--ytv-color-metal-mid) 60%, var(--ytv-color-metal-lo));
  
 
   &:active {
@@ -399,21 +399,21 @@ body {
   /* Same darkened-multiply trick as .dial-knob-face's recessed cap — the
      unselected side reads as unlit/shadowed next to the engaged one. */
   background:
-    linear-gradient(rgba(0,0,0,0.15), rgba(0,0,0,0.15)),
-    linear-gradient(180deg, var(--metal-hi), var(--metal-mid) 60%, var(--metal-lo));
+    linear-gradient(var(--ytv-color-overlay-black-15), var(--ytv-color-overlay-black-15)),
+    linear-gradient(180deg, var(--ytv-color-metal-hi), var(--ytv-color-metal-mid) 60%, var(--ytv-color-metal-lo));
   background-blend-mode: multiply;
 }
 
 .power-row.on .power-btn.off {
   border-top-left-radius: 4px;
   border-bottom-left-radius: 4px;
-  border-left: solid 3px #555;
+  border-left: solid 3px var(--ytv-color-gray-mid-dark);
   transform: rotateY(28deg);
 }
 .power-row.off .power-btn.on {
   border-top-right-radius: 4px;
   border-bottom-right-radius: 4px;
-  border-right: solid 3px #555;
+  border-right: solid 3px var(--ytv-color-gray-mid-dark);
   transform: rotateY(-28deg);
 }
 
@@ -446,11 +446,11 @@ body {
      with the border itself transparent only the 1px ring shows the metal
      underneath. Same metal formula as .dial-metal/.dial-knob-face. */
   background:
-    linear-gradient(#000, #000) padding-box,
+    linear-gradient(var(--ytv-color-black), var(--ytv-color-black)) padding-box,
     conic-gradient(from 200deg,
-      var(--metal-hi), var(--metal-lo) 15%, var(--metal-hi) 30%,
-      var(--metal-mid) 45%, var(--metal-hi) 60%, var(--metal-lo) 75%,
-      var(--metal-hi) 90%, var(--metal-hi) 100%) border-box;
+      var(--ytv-color-metal-hi), var(--ytv-color-metal-lo) 15%, var(--ytv-color-metal-hi) 30%,
+      var(--ytv-color-metal-mid) 45%, var(--ytv-color-metal-hi) 60%, var(--ytv-color-metal-lo) 75%,
+      var(--ytv-color-metal-hi) 90%, var(--ytv-color-metal-hi) 100%) border-box;
 }
 
 .mini-dial-cell {
@@ -465,7 +465,7 @@ body {
   font-weight: 500;
   letter-spacing: -0.02em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.6);
+  color: var(--ytv-color-overlay-white-60);
 }
 
 .mini-dial {
@@ -483,14 +483,14 @@ body {
   inset: 0;
   border-radius: 50%;
   background: conic-gradient(from 200deg,
-    var(--metal-hi), var(--metal-lo) 15%, var(--metal-hi) 30%,
-    var(--metal-mid) 45%, var(--metal-hi) 60%, var(--metal-lo) 75%,
-    var(--metal-hi) 90%, var(--metal-hi) 100%);
+    var(--ytv-color-metal-hi), var(--ytv-color-metal-lo) 15%, var(--ytv-color-metal-hi) 30%,
+    var(--ytv-color-metal-mid) 45%, var(--ytv-color-metal-hi) 60%, var(--ytv-color-metal-lo) 75%,
+    var(--ytv-color-metal-hi) 90%, var(--ytv-color-metal-hi) 100%);
   box-shadow:
-    inset 0 0 0 2px rgba(0,0,0,0.3),
-    inset 0 2px 6px rgba(0,0,0,0.45),
-    inset 0 -2px 4px rgba(255,255,255,0.3),
-    0 2px 5px rgba(0,0,0,0.6);
+    inset 0 0 0 2px var(--ytv-color-overlay-black-30),
+    inset 0 2px 6px var(--ytv-color-overlay-black-45),
+    inset 0 -2px 4px var(--ytv-color-overlay-white-30),
+    0 2px 5px var(--ytv-color-overlay-black-60);
 }
 
 .mini-dial-rotor {
@@ -509,9 +509,9 @@ body {
   height: 22px;
   margin-left: -1.5px;
   transform-origin: 50% 100%;
-  background: #171310;
+  background: var(--ytv-color-bezel);
   border-radius: 2px;
-  box-shadow: inset 0 1px 1px rgba(0,0,0,0.6);
+  box-shadow: inset 0 1px 1px var(--ytv-color-overlay-black-60);
 }
 
 /* ---------- Lines slider (scanline intensity) ---------- */
@@ -543,8 +543,8 @@ body {
   width: 6px;
   margin-left: -3px;
   border-radius: 3px;
-  background: #3a352b;
-  box-shadow: inset 0 1px 3px rgba(0,0,0,0.6), inset 0 0 0 1px rgba(0,0,0,0.4);
+  background: var(--ytv-color-plastic-mid);
+  box-shadow: inset 0 1px 3px var(--ytv-color-overlay-black-60), inset 0 0 0 1px var(--ytv-color-overlay-black-40);
 }
 
 /* The knob: a flat rectangular slab (not a circular cap like the mini-dials),
@@ -556,19 +556,19 @@ body {
   width: 28px;
   height: 16px;
   transform: translate(-50%, 50%);
-  border: 1px solid #171310;
+  border: 1px solid var(--ytv-color-bezel);
   border-radius: 3px;
-  background: linear-gradient(180deg, var(--metal-hi), var(--metal-mid) 60%, var(--metal-lo));
+  background: linear-gradient(180deg, var(--ytv-color-metal-hi), var(--ytv-color-metal-mid) 60%, var(--ytv-color-metal-lo));
   box-shadow:
-    inset 0 0 0 1px rgba(0,0,0,0.3),
-    inset 0 2px 4px rgba(0,0,0,0.4),
-    inset 0 -1px 3px rgba(255,255,255,0.3),
-    0 2px 5px rgba(0,0,0,0.6);
+    inset 0 0 0 1px var(--ytv-color-overlay-black-30),
+    inset 0 2px 4px var(--ytv-color-overlay-black-40),
+    inset 0 -1px 3px var(--ytv-color-overlay-white-30),
+    0 2px 5px var(--ytv-color-overlay-black-60);
 }
 
 .field-label {
   font-size: 13px;
-  color: var(--phosphor-dim);
+  color: var(--ytv-color-phosphor-dim);
   text-transform: uppercase;
   letter-spacing: 0.05em;
   display: block;
@@ -576,9 +576,9 @@ body {
 }
 input {
   width: 100%;
-  background: var(--plastic-light);
-  border: 1px solid #55503f;
-  color: var(--paper);
+  background: var(--ytv-color-plastic-light);
+  border: 1px solid var(--ytv-color-metal-border);
+  color: var(--ytv-color-paper);
   padding: 8px 10px;
   font-family: inherit;
   font-size: 15px;
@@ -587,8 +587,8 @@ input {
 .add-btn {
   width: 100%;
   margin-top: 10px;
-  background: var(--phosphor-dim);
-  color: #1a1712;
+  background: var(--ytv-color-phosphor-dim);
+  color: var(--ytv-color-bezel-deep);
   border: none;
   padding: 9px;
   font-family: inherit;
@@ -599,8 +599,8 @@ input {
   text-transform: uppercase;
   font-size: 15px;
 
-  &:hover { background: var(--phosphor); }
-  &:disabled { opacity: 0.5; cursor: default; background: var(--phosphor-dim); }
+  &:hover { background: var(--ytv-color-phosphor); }
+  &:disabled { opacity: 0.5; cursor: default; background: var(--ytv-color-phosphor-dim); }
 }
 /* Same brushed-metal face as .power-btn, but as its own standalone rounded
    button rather than one half of the on/off rocker. */
@@ -613,16 +613,16 @@ input {
   font-weight: 800;
   letter-spacing: 0.05em;
   text-transform: uppercase;
-  color: #4a4638;
+  color: var(--ytv-color-metal-text);
   border: none;
   border-radius: 4px;
-  text-shadow: 0 1px 0 rgba(255,255,255,0.4);
-  background: linear-gradient(180deg, var(--metal-hi), var(--metal-mid) 60%, var(--metal-lo));
+  text-shadow: 0 1px 0 var(--ytv-color-overlay-white-40);
+  background: linear-gradient(180deg, var(--ytv-color-metal-hi), var(--ytv-color-metal-mid) 60%, var(--ytv-color-metal-lo));
 
   &:active { transform: translateY(1px); }
 }
 .form-error {
-  color: var(--danger);
+  color: var(--ytv-color-danger);
   font-size: 13px;
   min-height: 14px;
   margin-top: 4px;
@@ -644,7 +644,7 @@ input {
   align-items: center;
   gap: 8px;
   padding: 7px 10px;
-  background: var(--plastic-light);
+  background: var(--ytv-color-plastic-light);
   border-radius: 3px;
   font-size: 14px;
   cursor: pointer;
@@ -662,18 +662,18 @@ input {
     align-items: center;
     gap: 8px;
     padding: 8px 10px;
-    background: var(--plastic-light);
+    background: var(--ytv-color-plastic-light);
     border-radius: 3px;
     margin-bottom: 5px;
   }
 
-  & .num { color: var(--phosphor-dim); font-size: 14px; width: 22px; }
+  & .num { color: var(--ytv-color-phosphor-dim); font-size: 14px; width: 22px; }
   & .label { flex: 1; font-size: 15px; }
 
   & .remove {
     background: none;
     border: none;
-    color: var(--danger);
+    color: var(--ytv-color-danger);
     cursor: pointer;
     font-size: 12px;
     text-transform: uppercase;

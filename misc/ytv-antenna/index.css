@@ -16,7 +16,7 @@ body {
   place-items: center;
   min-height: 100vh;
   font-family: serif;
-  background: #000;
+  background: var(--ytv-color-black);
 }
 
 /* Same SMPTE color-bars "no signal" pattern as static.html, fixed behind
@@ -24,24 +24,8 @@ body {
 .bars {
   position: fixed;
   inset: 0;
-  z-index: -1;
   display: flex;
   flex-direction: column;
-
-  &::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    background: repeating-linear-gradient(
-      to bottom,
-      rgba(0, 0, 0, 0.05) 0px,
-      rgba(0, 0, 0, 0.02) 1px,
-      transparent 2px,
-      transparent 4px
-    );
-    mix-blend-mode: multiply;
-  }
 }
 
 .bars-top {
@@ -58,11 +42,11 @@ body {
   flex: 1;
 }
 
-.clip-wrapper {
+.content {
   position: relative;
   width: clamp(600px, 70%, 1000px);
   min-width: 800px;
-  margin-bottom: calc(var(--deco-height) - 40px);
+  margin-bottom: calc(var(--ytv-color-deco-height) - 40px);
 }
 
 .container {
@@ -103,26 +87,26 @@ body {
 }
 
 h2 {
-  font-family: "Orbitron", var(--font-family--sans-serif);
+  font-family: "Orbitron", var(--ytv-color-font-family--sans-serif);
   font-weight: 900;
   letter-spacing: 0.2rem;
   font-size: clamp(2.4rem, 5vw, 3.8rem);
   letter-spacing: 0.18em;
-  color: var(--phosphor-dim);
+  color: var(--ytv-color-phosphor-dim);
   text-transform: uppercase;
   margin-bottom: 0;
 }
 
 
 h3 {
-  font-family: var(--font-family--tv);
+  font-family: var(--ytv-color-font-family--tv);
   font-weight: 400;
   font-size: clamp(1.5rem, 2.2vw, 2rem);
   letter-spacing: 1px;
-  color: #fff;
+  color: var(--ytv-color-white);
   display: inline;
   height: fit-content;
-  background: #000;
+  background: var(--ytv-color-black);
   padding: 0.15em 0.35em;
   box-decoration-break: clone;
   -webkit-box-decoration-break: clone;
@@ -136,16 +120,16 @@ a {
 }
 
 p {
-  font-family: var(--font-family--tv);
+  font-family: var(--ytv-color-font-family--tv);
   font-size: clamp(1rem, 1.5vw, 1.4rem);
   letter-spacing: 0.3px;
-  color: #fff;
+  color: var(--ytv-color-white);
   line-height: 1.45;
 }
 
 .caption {
   display: inline;
-  background: #000;
+  background: var(--ytv-color-black);
   padding: 0.15em 0.35em;
   box-decoration-break: clone;
   -webkit-box-decoration-break: clone;
@@ -164,10 +148,10 @@ p {
 
 .dial {
   position: relative;
-  width: var(--deco-height);
-  height: var(--deco-height);
+  width: var(--ytv-color-deco-height);
+  height: var(--ytv-color-deco-height);
   cursor: grab;
-  background: conic-gradient(from 0deg, #222 0%, #121212 14%, #000 25%, #000 75%, #121212 86%, #222 100%);
+  background: conic-gradient(from 0deg, var(--ytv-color-dial-ring-hi) 0%, var(--ytv-color-dial-ring-lo) 14%, var(--ytv-color-black) 25%, var(--ytv-color-black) 75%, var(--ytv-color-dial-ring-lo) 86%, var(--ytv-color-dial-ring-hi) 100%);
   border-radius: 50%;
 }
 .dial:active { cursor: grabbing; }
@@ -177,31 +161,31 @@ p {
   inset: 0;
   border-radius: 50%;
   background: conic-gradient(from 200deg,
-    var(--metal-hi), var(--metal-lo) 15%, var(--metal-hi) 30%,
-    var(--metal-mid) 45%, var(--metal-hi) 60%, var(--metal-lo) 75%,
-    var(--metal-hi) 90%, var(--metal-hi) 100%);
+    var(--ytv-color-metal-hi), var(--ytv-color-metal-lo) 15%, var(--ytv-color-metal-hi) 30%,
+    var(--ytv-color-metal-mid) 45%, var(--ytv-color-metal-hi) 60%, var(--ytv-color-metal-lo) 75%,
+    var(--ytv-color-metal-hi) 90%, var(--ytv-color-metal-hi) 100%);
   box-shadow:
-    inset 0 0 0 3px rgba(0, 0, 0, 0.35),
-    inset 0 3px 10px rgba(0, 0, 0, 0.45),
-    inset 0 2px 4px rgba(255, 255, 255, 0.5),
-    0 3px 10px rgba(0, 0, 0, 0.55);
-  -webkit-mask-image: radial-gradient(circle, transparent 0%, transparent 65%, #000 70%, #000 100%);
-  mask-image: radial-gradient(circle, transparent 0%, transparent 65%, #000 70%, #000 100%);
+    inset 0 0 0 3px var(--ytv-color-overlay-black-35),
+    inset 0 3px 10px var(--ytv-color-overlay-black-45),
+    inset 0 2px 4px var(--ytv-color-overlay-white-50),
+    0 3px 10px var(--ytv-color-overlay-black-55);
+  -webkit-mask-image: radial-gradient(circle, transparent 0%, transparent 65%, var(--ytv-color-black) 70%, var(--ytv-color-black) 100%);
+  mask-image: radial-gradient(circle, transparent 0%, transparent 65%, var(--ytv-color-black) 70%, var(--ytv-color-black) 100%);
 }
 
 .dial-arrow {
   position: absolute;
-  top: calc(var(--deco-height) * -0.083333);
+  top: calc(var(--ytv-color-deco-height) * -0.083333);
   left: 50%;
-  width: calc(var(--deco-height) * 0.075);
-  height: calc(var(--deco-height) * 0.058333);
-  margin-left: calc(var(--deco-height) * -0.0375);
+  width: calc(var(--ytv-color-deco-height) * 0.075);
+  height: calc(var(--ytv-color-deco-height) * 0.058333);
+  margin-left: calc(var(--ytv-color-deco-height) * -0.0375);
   z-index: 4;
   clip-path: polygon(0% 0%, 100% 0%, 50% 100%);
-  background: #ccc;
+  background: var(--ytv-color-gray-light);
   box-shadow:
-    inset 0 2px 3px rgba(0, 0, 0, 0.15),
-    inset 0 -1px 0 rgba(255, 255, 255, 0.08);
+    inset 0 2px 3px var(--ytv-color-overlay-black-15),
+    inset 0 -1px 0 var(--ytv-color-overlay-white-08);
 }
 
 .dial-rotor {
@@ -213,32 +197,32 @@ p {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: calc(var(--deco-height) * 0.125);
-  height: calc(var(--deco-height) * 0.125);
-  margin: calc(var(--deco-height) * -0.0625) 0 0 calc(var(--deco-height) * -0.0625);
+  width: calc(var(--ytv-color-deco-height) * 0.125);
+  height: calc(var(--ytv-color-deco-height) * 0.125);
+  margin: calc(var(--ytv-color-deco-height) * -0.0625) 0 0 calc(var(--ytv-color-deco-height) * -0.0625);
   border-radius: 50%;
-  font-family: var(--font-family--sans-serif);
+  font-family: var(--ytv-color-font-family--sans-serif);
   font-weight: 400;
-  font-size: calc(var(--deco-height) * 0.1);
+  font-size: calc(var(--ytv-color-deco-height) * 0.1);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #ffffff;
+  color: var(--ytv-color-white);
   text-shadow:
-    0 0 3px rgba(255, 255, 255, 0.85),
-    0 0 9px rgba(255, 255, 255, 0.4);
+    0 0 3px var(--ytv-color-overlay-white-85),
+    0 0 9px var(--ytv-color-overlay-white-40);
 
   &::after {
     content: "";
     position: absolute;
-    bottom: calc(var(--deco-height) * -0.025);
+    bottom: calc(var(--ytv-color-deco-height) * -0.025);
     left: 50%;
-    width: calc(var(--deco-height) * 0.008333);
-    height: calc(var(--deco-height) * 0.025);
+    width: calc(var(--ytv-color-deco-height) * 0.008333);
+    height: calc(var(--ytv-color-deco-height) * 0.025);
     transform: translateX(-50%);
     background: currentColor;
     border-radius: 1px;
-    box-shadow: 0 0 calc(var(--deco-height) * 0.025) var(--phosphor);
+    box-shadow: 0 0 calc(var(--ytv-color-deco-height) * 0.025) var(--ytv-color-phosphor);
   }
 }
 
@@ -257,14 +241,14 @@ p {
   inset: 0;
   border-radius: 50%;
   background: conic-gradient(from 200deg,
-    var(--metal-hi), var(--metal-lo) 15%, var(--metal-hi) 30%,
-    var(--metal-mid) 45%, var(--metal-hi) 60%, var(--metal-lo) 75%,
-    var(--metal-hi) 90%, var(--metal-hi) 100%);
+    var(--ytv-color-metal-hi), var(--ytv-color-metal-lo) 15%, var(--ytv-color-metal-hi) 30%,
+    var(--ytv-color-metal-mid) 45%, var(--ytv-color-metal-hi) 60%, var(--ytv-color-metal-lo) 75%,
+    var(--ytv-color-metal-hi) 90%, var(--ytv-color-metal-hi) 100%);
   box-shadow:
-    inset 0 0 0 2px rgba(0, 0, 0, 0.3),
-    inset 0 3px 8px rgba(0, 0, 0, 0.45),
-    inset 0 -2px 5px rgba(255, 255, 255, 0.3),
-    0 2px 6px rgba(0, 0, 0, 0.6);
+    inset 0 0 0 2px var(--ytv-color-overlay-black-30),
+    inset 0 3px 8px var(--ytv-color-overlay-black-45),
+    inset 0 -2px 5px var(--ytv-color-overlay-white-30),
+    0 2px 6px var(--ytv-color-overlay-black-60);
 
   &::after {
     content: "";
@@ -276,13 +260,13 @@ p {
     transform: translate(-50%, -50%);
     border-radius: 50%;
     background:
-      linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+      linear-gradient(var(--ytv-color-overlay-black-40), var(--ytv-color-overlay-black-40)),
       conic-gradient(from 200deg,
-        var(--metal-hi), var(--metal-lo) 15%, var(--metal-hi) 30%,
-        var(--metal-mid) 45%, var(--metal-hi) 60%, var(--metal-lo) 75%,
-        var(--metal-hi) 90%, var(--metal-hi) 100%);
+        var(--ytv-color-metal-hi), var(--ytv-color-metal-lo) 15%, var(--ytv-color-metal-hi) 30%,
+        var(--ytv-color-metal-mid) 45%, var(--ytv-color-metal-hi) 60%, var(--ytv-color-metal-lo) 75%,
+        var(--ytv-color-metal-hi) 90%, var(--ytv-color-metal-hi) 100%);
     background-blend-mode: multiply;
-    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.3);
+    box-shadow: inset 0 0 0 1px var(--ytv-color-overlay-black-30);
   }
 }
 
@@ -295,14 +279,14 @@ p {
   transform: translate(-50%, -50%);
   border-radius: 14px 14px 8px 8px;
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.3), rgba(0, 0, 0, 0.2)),
+    linear-gradient(180deg, var(--ytv-color-overlay-white-30), var(--ytv-color-overlay-black-20)),
     linear-gradient(90deg,
-      var(--metal-lo) 0%, var(--metal-mid) 22%, var(--metal-hi) 38%,
-      #fff 46%, var(--metal-hi) 54%, var(--metal-mid) 75%, var(--metal-lo) 100%);
+      var(--ytv-color-metal-lo) 0%, var(--ytv-color-metal-mid) 22%, var(--ytv-color-metal-hi) 38%,
+      var(--ytv-color-white) 46%, var(--ytv-color-metal-hi) 54%, var(--ytv-color-metal-mid) 75%, var(--ytv-color-metal-lo) 100%);
   background-blend-mode: multiply, normal;
   box-shadow:
-    0 1px 2px rgba(0, 0, 0, 0.5),
-    inset 0 0 0 1px rgba(0, 0, 0, 0.25);
+    0 1px 2px var(--ytv-color-overlay-black-50),
+    inset 0 0 0 1px var(--ytv-color-overlay-black-25);
 }
 
 /* ---------- Mini dials ---------- */
@@ -311,8 +295,8 @@ p {
   gap: 14px;
   padding: 14px 16px;
   border-radius: 14px;
-  background: #1a1712;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
+  background: var(--ytv-color-bezel-deep);
+  box-shadow: 0 6px 16px var(--ytv-color-overlay-black-35);
 }
 
 .mini-dial-cell {
@@ -323,12 +307,12 @@ p {
 }
 
 .mini-dial-label {
-  font-family: var(--font-family--sans-serif);
+  font-family: var(--ytv-color-font-family--sans-serif);
   font-size: 10px;
   font-weight: 600;
   letter-spacing: -0.02em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.6);
+  color: var(--ytv-color-overlay-white-60);
 }
 
 .mini-dial {
@@ -346,14 +330,14 @@ p {
   inset: 0;
   border-radius: 50%;
   background: conic-gradient(from 200deg,
-    var(--metal-hi), var(--metal-lo) 15%, var(--metal-hi) 30%,
-    var(--metal-mid) 45%, var(--metal-hi) 60%, var(--metal-lo) 75%,
-    var(--metal-hi) 90%, var(--metal-hi) 100%);
+    var(--ytv-color-metal-hi), var(--ytv-color-metal-lo) 15%, var(--ytv-color-metal-hi) 30%,
+    var(--ytv-color-metal-mid) 45%, var(--ytv-color-metal-hi) 60%, var(--ytv-color-metal-lo) 75%,
+    var(--ytv-color-metal-hi) 90%, var(--ytv-color-metal-hi) 100%);
   box-shadow:
-    inset 0 0 0 2px rgba(0, 0, 0, 0.3),
-    inset 0 2px 6px rgba(0, 0, 0, 0.45),
-    inset 0 -2px 4px rgba(255, 255, 255, 0.3),
-    0 2px 5px rgba(0, 0, 0, 0.6);
+    inset 0 0 0 2px var(--ytv-color-overlay-black-30),
+    inset 0 2px 6px var(--ytv-color-overlay-black-45),
+    inset 0 -2px 4px var(--ytv-color-overlay-white-30),
+    0 2px 5px var(--ytv-color-overlay-black-60);
 }
 
 .mini-dial-rotor {
@@ -370,9 +354,9 @@ p {
   height: 16px;
   margin-left: -1px;
   transform-origin: 50% 100%;
-  background: #171310;
+  background: var(--ytv-color-bezel);
   border-radius: 2px;
-  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.6);
+  box-shadow: inset 0 1px 1px var(--ytv-color-overlay-black-60);
 }
 
 /* ---------- Phone layout: stack the header and paragraphs, drop the
@@ -409,7 +393,7 @@ p {
   z-index: 10;
   align-items: center;
   display: flex;
-  font-family: var(--font-family--sans-serif);
+  font-family: var(--ytv-color-font-family--sans-serif);
   animation: shamelessPlugMovement 5s ease-in-out 1.5s infinite;
   letter-spacing: -0.05rem;
 
@@ -419,7 +403,7 @@ p {
     height: 60px;     
     border-radius: 50%; 
     object-fit: cover;  
-    border: solid 2px #000;
+    border: solid 2px var(--ytv-color-black);
     animation: 
       wigglePlug 3s infinite linear,
       popPlugImage 0.4s ease-in-out 2s forwards;
@@ -428,9 +412,9 @@ p {
 
   a {
     opacity: 0;
-    background: #000;
+    background: var(--ytv-color-black);
     border-radius: var(--border-radius--slight);
-    color: #fff;
+    color: var(--ytv-color-white);
     padding: 0.4rem 1.2rem;
     font-weight: 600;
     font-size: 0.8rem;
