@@ -1,0 +1,17 @@
+:root {
+  --phosphor: #ffb037;
+  --phosphor-dim: #8a5e1f;
+  --metal-hi: #f4f2ec;
+  --metal-mid: #9a958a;
+  --metal-lo: #5c584e;
+  --plastic: #000;
+  --plastic-light: #3d382e;
+  --plastic-raised: #47412f;
+  --paper: #eee6d6;
+  --danger: #c1553d;
+  --font-family--sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-family--tv: "VT323", "Courier New", monospace;
+  /* Drives index.html's decorative dial size (and everything scaled off
+     it — arrow, numbers, radius, the wrapper's centering compensation). */
+  --deco-height: 168px;
+}
