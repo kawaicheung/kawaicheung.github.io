@@ -155,7 +155,7 @@ p {
 .dial-rotor {
   position: absolute;
   inset: 0;
-  animation: dial-spin 120s linear infinite;
+  animation: dial-spin 120s linear infinite reverse;
 }
 
 @keyframes dial-spin {
