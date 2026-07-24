@@ -25,8 +25,8 @@
  *   ShamelessPlug.init({...})   // re-mount with new options
  */
 (function (global) {
-  const STYLE_ID = 'shameless-plug-styles';
-  const ROOT_ID = 'shameless-plug-root';
+  const STYLE_ID = 'kcsp-styles';
+  const ROOT_ID = 'kcsp-root';
 
   const DEFAULTS = {
     delay: 1.5,
@@ -57,7 +57,7 @@
   }
 
   const CSS = `
-    .shameless-plug {
+    .kcsp-plug {
       position: fixed;
       bottom: 0rem;
       left: 1rem;
@@ -67,7 +67,7 @@
       font-size: 16px;
       font-family: sans-serif;
       letter-spacing: -0.05rem;
-      animation: shamelessPlugMovement 5s ease-in-out var(--sp-delay, 1.5s) infinite;
+      animation: kcsp_shamelessPlugMovement 5s ease-in-out var(--kcsp-delay, 1.5s) infinite;
     
       img {
         opacity: 0;
@@ -78,8 +78,8 @@
         border: solid 2px #000;
         z-index: 1;
         animation:
-          wigglePlug 3s infinite linear,
-          popPlugImage 0.4s ease-in-out calc(var(--sp-delay, 1.5s) + 0.5s) forwards;
+          kcsp_wigglePlug 3s infinite linear,
+          kcsp_popPlugImage 0.4s ease-in-out calc(var(--kcsp-delay, 1.5s) + 0.5s) forwards;
       }
 
       a {
@@ -92,37 +92,37 @@
         text-decoration: none;
         margin: 0 0 50px -10px;
         animation:
-          wigglePlug 5s infinite linear,
-          popPlugText 0.3s ease-out calc(var(--sp-delay, 1.5s) + 0.8s) forwards;
+          kcsp_wigglePlug 5s infinite linear,
+          kcsp_popPlugText 0.3s ease-out calc(var(--kcsp-delay, 1.5s) + 0.8s) forwards;
       }
     }
 
-    @keyframes shamelessPlugMovement {
+    @keyframes kcsp_shamelessPlugMovement {
       0% { transform: translateX(0) translateY(0); }
       50% { transform: translateX(-5px) translateY(10px); }
       100% { transform: translateX(0) translateY(0); }
     }
 
-    @keyframes wigglePlug {
+    @keyframes kcsp_wigglePlug {
       0% { rotate: 0; }
       50% { rotate: -5deg; }
       100% { rotate: 0; }
     }
 
-    @keyframes popPlugText {
+    @keyframes kcsp_popPlugText {
       0% { opacity: 0; transform: scale(0); }
       70% { opacity: 1; transform: scale(1.04); }
       100% { opacity: 1; transform: scale(1); }
     }
 
-    @keyframes popPlugImage {
+    @keyframes kcsp_popPlugImage {
       0% { opacity: 0; transform: scale(0) rotate(20deg); }
       70% { opacity: 1; transform: scale(1.2) rotate(-5deg); }
       100% { opacity: 1; transform: scale(1) rotate(-5deg); }
     }
 
     @media (max-width: 768px) {
-      .shameless-plug--hide-mobile {
+      .kcsp--hide-mobile {
         display: none;
       }
     }
@@ -138,10 +138,10 @@
 
   function buildMarkup(opts) {
     const wrapper = document.createElement('div');
-    wrapper.className = 'shameless-plug';
+    wrapper.className = 'kcsp';
     wrapper.id = ROOT_ID;
-    wrapper.style.setProperty('--sp-delay', `${opts.delay}s`);
-    if (opts.mobileHide) wrapper.classList.add('shameless-plug--hide-mobile');
+    wrapper.style.setProperty('--kcsp-delay', `${opts.delay}s`);
+    if (opts.mobileHide) wrapper.classList.add('kcsp--hide-mobile');
 
     const img = document.createElement('img');
     img.src = opts.img;
@@ -182,7 +182,7 @@
 
     setDelay(seconds) {
       if (!this._el) return this;
-      this._el.style.setProperty('--sp-delay', `${seconds}s`);
+      this._el.style.setProperty('--kcsp-delay', `${seconds}s`);
       return this;
     },
 
