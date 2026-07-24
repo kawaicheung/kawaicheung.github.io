@@ -3,14 +3,14 @@
  * Host this file at kawaicheung.io/shamelessplug.js and drop this
  * one line on any subdomain — no init() call needed:
  *
- *   <script src="https://kawaicheung.io/shared-scripts/shamelessplug.js" defer></script>
+ *   <script src="https://kawaicheung.io/shared-scripts/shameless-plug.js" defer></script>
  *
  * It auto-mounts on load using DEFAULTS below. To override per-page,
  * add data-attributes to the same script tag (no separate <script> needed):
  *
- *   <script src="https://kawaicheung.io/shared-scripts/shamelessplug.js"
+ *   <script src="https://kawaicheung.io/shared-scripts/shameless-plug.js"
  *           data-delay="3"
- *           data-img="https://kawaicheung.io/images/kc.png"
+ *           data-img="https://kawaicheung.io/shared-scripts/img/kc.png"
  *           data-href="https://buymeacoffee.com/kawaicheung"
  *           data-text="Check out RunKWC.<br>Support it <u>here</u>!"
  *           defer></script>
