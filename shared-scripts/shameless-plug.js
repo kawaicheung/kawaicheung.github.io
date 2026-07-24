@@ -3,17 +3,21 @@
  * Host this file at kawaicheung.io/shamelessplug.js and drop this
  * one line on any subdomain — no init() call needed:
  *
- *   <script src="https://kawaicheung.io/shared-scripts/shameless-plug.js" defer></script>
+ *   <script src="https://kawaicheung.io/shared-scriptsshamelessplug.js" defer></script>
  *
  * It auto-mounts on load using DEFAULTS below. To override per-page,
  * add data-attributes to the same script tag (no separate <script> needed):
  *
- *   <script src="https://kawaicheung.io/shared-scripts/shameless-plug.js"
+ *   <script src="https://kawaicheung.io/shared-scriptsshamelessplug.js"
  *           data-delay="3"
  *           data-img="https://kawaicheung.io/shared-scripts/img/kc.png"
  *           data-href="https://buymeacoffee.com/kawaicheung"
  *           data-text="Check out RunKWC.<br>Support it <u>here</u>!"
+ *           data-mobile-hide
  *           defer></script>
+ *
+ * data-mobile-hide (bare attr, or "true"/"false") hides the plug via
+ * `display:none` at max-width:768px.
  *
  * Manual control is still available post-mount via window.ShamelessPlug:
  *   ShamelessPlug.setText('New message here')
@@ -27,12 +31,13 @@
 
   const DEFAULTS = {
     delay: 1.5,
-    img: 'https://kawaicheung.io/shared-scripts/img/kc.png',
+    img: 'https://kawaicheung.io/images/kc.png',
     href: 'https://buymeacoffee.com/kawaicheung',
     target: '_blank',
+    mobileHide: false,
     text:
-      'Another ad-free, cost-free project by Ka Wai Cheung.<br>' +
-      "I'd love your support! <u>Buy me a coffee</u>!",
+      'OneSpot is a free Chrome extension by Ka Wai Cheung.<br>' +
+      "I'd love your support. <u>Buy me a coffee</u>!",
   };
 
   // Pull overrides off the <script> tag itself so every subdomain can
@@ -48,6 +53,7 @@
     if (d.href !== undefined) opts.href = d.href;
     if (d.target !== undefined) opts.target = d.target;
     if (d.text !== undefined) opts.text = d.text;
+    if (d.mobileHide !== undefined) opts.mobileHide = d.mobileHide !== 'false';
     return opts;
   }
 
@@ -114,6 +120,12 @@
       70% { opacity: 1; transform: scale(1.2) rotate(-5deg); }
       100% { opacity: 1; transform: scale(1) rotate(-5deg); }
     }
+
+    @media (max-width: 768px) {
+      .shameless-plug--hide-mobile {
+        display: none;
+      }
+    }
   `;
 
   function injectStyles() {
@@ -129,6 +141,7 @@
     wrapper.className = 'shameless-plug';
     wrapper.id = ROOT_ID;
     wrapper.style.setProperty('--sp-delay', `${opts.delay}s`);
+    if (opts.mobileHide) wrapper.classList.add('shameless-plug--hide-mobile');
 
     const img = document.createElement('img');
     img.src = opts.img;
