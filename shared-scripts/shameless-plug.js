@@ -27,7 +27,7 @@
 
   const DEFAULTS = {
     delay: 1.5,
-    img: 'https://kawaicheung.io/images/kc.png',
+    img: 'https://kawaicheung.io/shared-scripts/img/kc.png',
     href: 'https://buymeacoffee.com/kawaicheung',
     target: '_blank',
     text:
