@@ -57,7 +57,7 @@
   }
 
   const CSS = `
-    .kcsp-plug {
+    .kcsp {
       position: fixed;
       bottom: 0rem;
       left: 1rem;
@@ -122,7 +122,7 @@
     }
 
     @media (max-width: 768px) {
-      .kcsp--hide-mobile {
+      .kcsp-hide-mobile {
         display: none;
       }
     }
@@ -141,7 +141,7 @@
     wrapper.className = 'kcsp';
     wrapper.id = ROOT_ID;
     wrapper.style.setProperty('--kcsp-delay', `${opts.delay}s`);
-    if (opts.mobileHide) wrapper.classList.add('kcsp--hide-mobile');
+    if (opts.mobileHide) wrapper.classList.add('kcsp-hide-mobile');
 
     const img = document.createElement('img');
     img.src = opts.img;
