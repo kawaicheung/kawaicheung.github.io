@@ -31,8 +31,8 @@
     href: 'https://buymeacoffee.com/kawaicheung',
     target: '_blank',
     text:
-      'OneSpot is a free Chrome extension by Ka Wai Cheung.<br>' +
-      "I'd love your support. <u>Buy me a coffee</u>!",
+      'Another ad-free, cost-free project by Ka Wai Cheung.<br>' +
+      "I'd love your support! <u>Buy me a coffee</u>!",
   };
 
   // Pull overrides off the <script> tag itself so every subdomain can
