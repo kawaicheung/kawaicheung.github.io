@@ -53,9 +53,8 @@ body {
 }
 
 h2 {
-  font-family: "Orbitron", var(--ytv-font-family--sans-serif);
+  font-family: var(--ytv-font-family--orbitron);
   font-weight: 900;
-  letter-spacing: 0.2rem;
   font-size: clamp(2.4rem, 5vw, 3.8rem);
   letter-spacing: 0.18em;
   color: var(--ytv-color-phosphor-dim);
@@ -71,14 +70,9 @@ h3 {
   letter-spacing: 1px;
   color: var(--ytv-color-white);
   display: inline;
-  height: fit-content;
   background: var(--ytv-color-black);
   padding: 0.15em 0.35em;
-  box-decoration-break: clone;
-  -webkit-box-decoration-break: clone;
   white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 a {
@@ -91,15 +85,16 @@ p {
   letter-spacing: 0.3px;
   color: var(--ytv-color-white);
   line-height: 1.45;
+
+  span {
+    display: inline;
+    background: var(--ytv-color-black);
+    padding: 0.15em 0.35em;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+  }
 }
 
-.caption {
-  display: inline;
-  background: var(--ytv-color-black);
-  padding: 0.15em 0.35em;
-  box-decoration-break: clone;
-  -webkit-box-decoration-break: clone;
-}
 
 /* ---------- Decorative dial + mini-dials, grouped bottom-right ----------  */
 .deco-controls {
@@ -346,7 +341,6 @@ p {
     display: flex;
     flex-direction: column;
     padding: 0 5vw;
-    clip-path: none;
   }
 
   .content-header {
@@ -387,7 +381,6 @@ p {
   a {
     opacity: 0;
     background: var(--ytv-color-black);
-    border-radius: var(--border-radius--slight);
     color: var(--ytv-color-white);
     padding: 0.4rem 1.2rem;
     font-weight: 600;

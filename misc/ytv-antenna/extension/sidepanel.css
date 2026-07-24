@@ -66,7 +66,7 @@ body {
   padding: 0 8px;
 }
 .brand-title {
-  font-family: "Orbitron", sans-serif;
+  font-family: var(--ytv-font-family--orbitron);
   font-weight: 900;
   font-size: 14px;
   letter-spacing: 0.2rem;
