@@ -30,13 +30,13 @@
 
   const DEFAULTS = {
     delay: 1.5,
-    img: 'https://kawaicheung.io/images/kc.png',
-    href: 'https://buymeacoffee.com/kawaicheung',
+    img: 'https://kawaicheung.io/shared-scripts/img/kc.png',
+    href: 'https://kawaicheung.io/software',
     target: '_blank',
     mobileHide: false,
     text:
-      'OneSpot is a free Chrome extension by Ka Wai Cheung.<br>' +
-      "I'd love your support. <u>Buy me a coffee</u>!",
+      'A no-cost, no-tracking, no-ad project by Ka Wai Cheung.<br>' +
+      "<u>Tap to learn more about my work.</u>",
   };
 
   // Pull overrides off the <script> tag itself so every subdomain can
