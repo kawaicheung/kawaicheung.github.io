@@ -1,9 +1,8 @@
 /**
- * ShamelessPlug — self-contained, self-mounting widget.
- * Host this file at kawaicheung.io/shamelessplug.js and drop this
- * one line on any subdomain — no init() call needed:
+ * ShamelessPlug by Ka Wai Cheung
+ * Drop this one line on any subdomain of kawaicheung.io:
  *
- *   <script src="https://kawaicheung.io/shared-scriptsshamelessplug.js" defer></script>
+ *   <script src="https://kawaicheung.io/shared-scripts/shamelessplug.js" defer></script>
  *
  * It auto-mounts on load using DEFAULTS below. To override per-page,
  * add data-attributes to the same script tag (no separate <script> needed):
@@ -65,36 +64,37 @@
       z-index: 10;
       align-items: center;
       display: flex;
-      font-family: var(--ytv-font-family--sans-serif, sans-serif);
+      font-size: 16px;
+      font-family: sans-serif;
       letter-spacing: -0.05rem;
       animation: shamelessPlugMovement 5s ease-in-out var(--sp-delay, 1.5s) infinite;
-    }
+    
+      img {
+        opacity: 0;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: solid 2px #000;
+        z-index: 1;
+        animation:
+          wigglePlug 3s infinite linear,
+          popPlugImage 0.4s ease-in-out calc(var(--sp-delay, 1.5s) + 0.5s) forwards;
+      }
 
-    .shameless-plug img {
-      opacity: 0;
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: solid 2px var(--ytv-color-black, #000);
-      z-index: 1;
-      animation:
-        wigglePlug 3s infinite linear,
-        popPlugImage 0.4s ease-in-out calc(var(--sp-delay, 1.5s) + 0.5s) forwards;
-    }
-
-    .shameless-plug a {
-      opacity: 0;
-      background: var(--ytv-color-black, #000);
-      color: var(--ytv-color-white, #fff);
-      padding: 0.4rem 1.2rem;
-      font-weight: 600;
-      font-size: 0.8rem;
-      text-decoration: none;
-      margin: 0 0 50px -10px;
-      animation:
-        wigglePlug 5s infinite linear,
-        popPlugText 0.3s ease-out calc(var(--sp-delay, 1.5s) + 0.8s) forwards;
+      a {
+        opacity: 0;
+        background: #000;
+        color: #fff;
+        padding: 0.4rem 1.2rem;
+        font-weight: 600;
+        font-size: 0.8rem;
+        text-decoration: none;
+        margin: 0 0 50px -10px;
+        animation:
+          wigglePlug 5s infinite linear,
+          popPlugText 0.3s ease-out calc(var(--sp-delay, 1.5s) + 0.8s) forwards;
+      }
     }
 
     @keyframes shamelessPlugMovement {
