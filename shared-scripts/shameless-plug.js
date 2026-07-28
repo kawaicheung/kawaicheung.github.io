@@ -91,6 +91,7 @@
         font-size: 0.8rem;
         text-decoration: none;
         margin: 0 0 50px -10px;
+        line-height: 1.4;
         animation:
           kcsp_wigglePlug 5s infinite linear,
           kcsp_popPlugText 0.3s ease-out calc(var(--kcsp-delay, 1.5s) + 0.8s) forwards;
