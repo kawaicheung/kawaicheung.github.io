@@ -35,8 +35,8 @@
     target: '_blank',
     mobileHide: false,
     text:
-      'A no-cost, no-tracking, no-ad project by Ka Wai Cheung.<br>' +
-      "<u>Tap to learn more about my work.</u>",
+      'A finished project by Ka Wai Cheung.<br>' +
+      "<u>Tap to see more of my work.</u>",
   };
 
   // Pull overrides off the <script> tag itself so every subdomain can
