@@ -35,7 +35,7 @@
     target: '_blank',
     mobileHide: false,
     text:
-      'A finished project by Ka Wai Cheung.<br>' +
+      'A piece of simple software by Ka Wai Cheung.<br>' +
       "<u>Tap to see more of my work.</u>",
   };
 
