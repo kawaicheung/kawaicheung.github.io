@@ -1,0 +1,500 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<title>Scoop</title>
+<style>
+  :root {
+    color-scheme: light;
+    --ink: #111111;
+    --paper: #fafaf8;
+    --line: #111111;
+    --color-cup: #2f6fed;
+    --color-tsp: #e0473b;
+    --color-tbsp: #8b5cf6;
+  }
+
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; user-select: none; }
+
+  html, body {
+    height: 100%;
+    margin: 0;
+    overscroll-behavior: none;
+    touch-action: manipulation;
+  }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    height: 100dvh;
+    width: 100vw;
+    overflow: hidden;
+    padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+  }
+
+  /* ---------- TOP: circle + petals ---------- */
+
+  .top {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  .dial {
+    position: relative;
+    width: min(84vw, 330px);
+    aspect-ratio: 1 / 1.1;
+    margin: 0 auto;
+    --circle: clamp(140px, 40vw, 185px);
+    --petal-h: clamp(122px, 33vw, 158px);
+    --petal-w: clamp(78px, 22vw, 104px);
+    --tuck: 34px;
+    --item-h: clamp(30px, 9vw, 38px);
+  }
+
+  /* spoke: a zero-size pivot at the circle's center, rotated toward
+     the direction its petal points. Rotating this carries the petal
+     with it, so the petal's inner edge always meets at the same point. */
+  .spoke {
+    position: absolute;
+    left: 50%;
+    top: 60%;
+    width: 0;
+    height: 0;
+  }
+  .spoke-cup  { transform: rotate(0deg); }
+  .spoke-tsp  { transform: rotate(-132deg); }
+  .spoke-tbsp { transform: rotate(132deg); }
+
+  .petal {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: var(--petal-w);
+    height: var(--petal-h);
+    border: none;
+    /* only the outward tip is rounded — the base stays square and
+       tucks fully under the circle so no corner peeks past its edge */
+    border-radius: 20px 20px 0 0;
+    padding: 0;
+    cursor: pointer;
+    /* push the petal outward along the spoke's axis; --tuck lets its
+       base dip slightly under the circle so it reads as emanating
+       from the center rather than floating near it */
+    transform: translate(-50%, calc(var(--tuck) - var(--petal-h) - (var(--circle) / 2)));
+    transition: filter 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .petal:active {
+    filter: brightness(0.8);
+  }
+
+  .petal[data-unit="cup"]  { background: var(--color-cup); }
+  .petal[data-unit="tsp"]  { background: var(--color-tsp); }
+  .petal[data-unit="tbsp"] { background: var(--color-tbsp); }
+
+  .petal[data-unit="cup"].active  { box-shadow: 0 0 0 3px var(--paper), 0 0 0 5px var(--color-cup); }
+  .petal[data-unit="tsp"].active  { box-shadow: 0 0 0 3px var(--paper), 0 0 0 5px var(--color-tsp); }
+  .petal[data-unit="tbsp"].active { box-shadow: 0 0 0 3px var(--paper), 0 0 0 5px var(--color-tbsp); }
+
+  /* counter-rotate the label/value so text stays upright no matter
+     which way the petal itself is tilted */
+  .petal-inner {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: 16%;
+    pointer-events: none;
+  }
+  .spoke-cup  .petal-inner { transform: rotate(0deg); }
+  .spoke-tsp  .petal-inner { transform: rotate(132deg); }
+  .spoke-tbsp .petal-inner { transform: rotate(-132deg); }
+
+  .petal-label {
+    color: #fff;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    font-size: clamp(12px, 3.4vw, 15px);
+  }
+
+  .convert-value {
+    position: absolute;
+    top: -1.8em;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: clamp(13px, 4vw, 17px);
+    font-weight: 800;
+    color: var(--ink);
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.15s ease;
+  }
+
+  .convert-value.show {
+    opacity: 1;
+  }
+
+  .circle {
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    width: var(--circle);
+    aspect-ratio: 1 / 1;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    background: var(--paper);
+    border: 3px solid #000;
+    overflow: hidden;
+    z-index: 3;
+    box-shadow: 0 0 0 5px rgba(0,0,0,0.08);
+    transition: background 0.15s ease, border-color 0.15s ease;
+    --circle-bg: var(--paper);
+  }
+
+  /* --active-color is set by JS to the selected unit's color */
+  .circle.filled {
+    background: var(--active-color);
+    border-color: var(--active-color);
+    --circle-bg: var(--active-color);
+  }
+
+  /* ---------- wheel picker inside the circle ---------- */
+
+  .wheel {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow-y: scroll;
+    scroll-snap-type: y mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    z-index: 1;
+  }
+  .wheel::-webkit-scrollbar {
+    display: none;
+  }
+
+  .wheel-pad {
+    height: calc(50% - (var(--item-h) / 2));
+    scroll-snap-align: none;
+  }
+
+  .wheel-item {
+    height: var(--item-h);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    scroll-snap-align: center;
+    font-weight: 800;
+    font-size: clamp(15px, 4.6vw, 19px);
+    color: #000;
+    cursor: pointer;
+    transition: color 0.15s ease;
+  }
+
+  .circle.filled .wheel-item {
+    color: #fff;
+  }
+
+  .wheel-fade {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 36%;
+    pointer-events: none;
+    z-index: 2;
+    transition: background 0.15s ease;
+  }
+  .wheel-fade-top {
+    top: 0;
+    background: linear-gradient(to bottom, var(--circle-bg) 0%, transparent 100%);
+  }
+  .wheel-fade-bottom {
+    bottom: 0;
+    background: linear-gradient(to top, var(--circle-bg) 0%, transparent 100%);
+  }
+
+  /* ---------- BOTTOM: reset ---------- */
+
+  .bottom {
+    flex: 0 0 auto;
+    display: flex;
+    justify-content: center;
+    padding: 4% 10% max(4%, env(safe-area-inset-bottom));
+  }
+
+  .reset-btn {
+    width: 100%;
+    max-width: 280px;
+    background: transparent;
+    border: 2px solid #000;
+    border-radius: 14px;
+    color: #000;
+    font-size: clamp(13px, 4vw, 16px);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    padding: 3.2vw 0;
+    cursor: pointer;
+  }
+
+  .reset-btn:active {
+    background: #000;
+    color: #fff;
+  }
+</style>
+</head>
+<body>
+
+  <div class="top">
+    <div class="dial">
+      <div class="spoke spoke-cup">
+        <button class="petal" data-unit="cup">
+          <span class="petal-inner">
+            <span class="convert-value" id="conv-cup"></span>
+            <span class="petal-label">CUP</span>
+          </span>
+        </button>
+      </div>
+      <div class="spoke spoke-tsp">
+        <button class="petal" data-unit="tsp">
+          <span class="petal-inner">
+            <span class="convert-value" id="conv-tsp"></span>
+            <span class="petal-label">TSP</span>
+          </span>
+        </button>
+      </div>
+      <div class="spoke spoke-tbsp">
+        <button class="petal" data-unit="tbsp">
+          <span class="petal-inner">
+            <span class="convert-value" id="conv-tbsp"></span>
+            <span class="petal-label">TBSP</span>
+          </span>
+        </button>
+      </div>
+      <div class="circle" id="circle">
+        <div class="wheel" id="wheel"></div>
+        <div class="wheel-fade wheel-fade-top"></div>
+        <div class="wheel-fade wheel-fade-bottom"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bottom">
+    <button class="reset-btn" id="reset">RESET</button>
+  </div>
+
+<script>
+  const FRACTIONS = [
+    { label: '½', value: 1/2 },
+    { label: '⅓', value: 1/3 },
+    { label: '¼', value: 1/4 },
+    { label: '⅛', value: 1/8 },
+    { label: '⅔', value: 2/3 },
+    { label: '¾', value: 3/4 },
+  ];
+
+  // 1/8 -> 10, mixing whole numbers with the fraction set above
+  function buildWheelItems() {
+    const sorted = [...FRACTIONS].sort((a, b) => a.value - b.value);
+    const items = [];
+    for (let w = 0; w <= 9; w++) {
+      sorted.forEach(f => {
+        items.push({ fraction: f, value: w + f.value, label: w ? `${w}${f.label}` : f.label });
+      });
+      items.push({ fraction: null, value: w + 1, label: `${w + 1}` });
+    }
+    return items;
+  }
+
+  const WHEEL_ITEMS = buildWheelItems();
+  const DEFAULT_INDEX = WHEEL_ITEMS.findIndex(item => item.value === 1);
+
+  const state = {
+    index: DEFAULT_INDEX,
+    unit: null, // 'cup' | 'tsp' | 'tbsp'
+  };
+
+  const dialEl = document.querySelector('.dial');
+  const circleEl = document.getElementById('circle');
+  const wheelEl = document.getElementById('wheel');
+
+  const rootStyle = getComputedStyle(document.documentElement);
+  const unitColor = unit => rootStyle.getPropertyValue(`--color-${unit}`).trim();
+
+  function getItemHeight() {
+    return parseFloat(getComputedStyle(dialEl).getPropertyValue('--item-h'));
+  }
+
+  function buildWheelDOM() {
+    const padTop = document.createElement('div');
+    padTop.className = 'wheel-pad';
+    wheelEl.appendChild(padTop);
+
+    WHEEL_ITEMS.forEach((item, i) => {
+      const el = document.createElement('div');
+      el.className = 'wheel-item';
+      el.textContent = item.label;
+      el.addEventListener('click', () => scrollToIndex(i, true));
+      wheelEl.appendChild(el);
+    });
+
+    const padBottom = document.createElement('div');
+    padBottom.className = 'wheel-pad';
+    wheelEl.appendChild(padBottom);
+  }
+
+  function itemEls() {
+    return wheelEl.querySelectorAll('.wheel-item');
+  }
+
+  function scrollToIndex(index, smooth) {
+    const el = itemEls()[index];
+    if (!el) return;
+    const target = el.offsetTop + el.offsetHeight / 2 - wheelEl.clientHeight / 2;
+    wheelEl.scrollTo({ top: target, behavior: smooth ? 'smooth' : 'auto' });
+  }
+
+  function updateWheelVisuals() {
+    const itemH = getItemHeight();
+    const wheelRect = wheelEl.getBoundingClientRect();
+    const centerY = wheelRect.top + wheelRect.height / 2;
+    itemEls().forEach(el => {
+      const r = el.getBoundingClientRect();
+      const dist = Math.abs((r.top + r.height / 2) - centerY);
+      const norm = Math.min(dist / (itemH * 2), 1);
+      el.style.opacity = (1 - norm * 0.85).toFixed(2);
+      el.style.transform = `scale(${(1 - norm * 0.35).toFixed(2)})`;
+    });
+  }
+
+  function nearestIndex() {
+    const wheelRect = wheelEl.getBoundingClientRect();
+    const centerY = wheelRect.top + wheelRect.height / 2;
+    let best = 0;
+    let bestDist = Infinity;
+    itemEls().forEach((el, i) => {
+      const r = el.getBoundingClientRect();
+      const dist = Math.abs((r.top + r.height / 2) - centerY);
+      if (dist < bestDist) { bestDist = dist; best = i; }
+    });
+    return best;
+  }
+
+  let tickingVisuals = false;
+  let settleTimeout;
+  wheelEl.addEventListener('scroll', () => {
+    if (!tickingVisuals) {
+      tickingVisuals = true;
+      requestAnimationFrame(() => { updateWheelVisuals(); tickingVisuals = false; });
+    }
+    clearTimeout(settleTimeout);
+    settleTimeout = setTimeout(() => {
+      const idx = nearestIndex();
+      if (idx !== state.index) {
+        state.index = idx;
+        render();
+      }
+    }, 120);
+  }, { passive: true });
+
+  let resizeTimeout;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(() => {
+      scrollToIndex(state.index, false);
+      updateWheelVisuals();
+    }, 150);
+  });
+
+  document.querySelectorAll('.petal').forEach(petal => {
+    petal.addEventListener('click', () => {
+      const unit = petal.dataset.unit;
+      state.unit = state.unit === unit ? null : unit;
+      render();
+    });
+  });
+
+  document.getElementById('reset').addEventListener('click', () => {
+    state.unit = null;
+    state.index = DEFAULT_INDEX;
+    scrollToIndex(DEFAULT_INDEX, true);
+    render();
+  });
+
+  function currentQuantity() {
+    return WHEEL_ITEMS[state.index].value;
+  }
+
+  // 1 cup = 48 tsp = 16 tbsp; 1 tbsp = 3 tsp
+  const TO_TSP = { cup: 48, tbsp: 3, tsp: 1 };
+
+  function convert(qty, fromUnit, toUnit) {
+    const tsp = qty * TO_TSP[fromUnit];
+    return tsp / TO_TSP[toUnit];
+  }
+
+  function formatAmount(num) {
+    if (num <= 0) return '0';
+    const whole = Math.floor(num + 1e-9);
+    const rem = num - whole;
+    if (rem < 0.02) return `${whole}`;
+
+    let nearest = FRACTIONS[0];
+    let bestDiff = Infinity;
+    FRACTIONS.forEach(f => {
+      const diff = Math.abs(rem - f.value);
+      if (diff < bestDiff) { bestDiff = diff; nearest = f; }
+    });
+
+    if (bestDiff < 0.02) {
+      return whole ? `${whole}${nearest.label}` : nearest.label;
+    }
+    return `${Math.round(num * 100) / 100}`;
+  }
+
+  function render() {
+    circleEl.classList.toggle('filled', !!state.unit);
+    if (state.unit) {
+      circleEl.style.setProperty('--active-color', unitColor(state.unit));
+    } else {
+      circleEl.style.removeProperty('--active-color');
+    }
+
+    document.querySelectorAll('.petal').forEach(petal => {
+      const unit = petal.dataset.unit;
+      petal.classList.toggle('active', state.unit === unit);
+    });
+
+    ['cup', 'tsp', 'tbsp'].forEach(unit => {
+      const el = document.getElementById(`conv-${unit}`);
+      if (state.unit && state.unit !== unit) {
+        const qty = currentQuantity();
+        const converted = convert(qty, state.unit, unit);
+        el.textContent = `${formatAmount(converted)} ${unit.toUpperCase()}`;
+        el.classList.add('show');
+      } else {
+        el.textContent = '';
+        el.classList.remove('show');
+      }
+    });
+  }
+
+  buildWheelDOM();
+  requestAnimationFrame(() => {
+    scrollToIndex(state.index, false);
+    updateWheelVisuals();
+  });
+  render();
+</script>
+</body>
+</html>
