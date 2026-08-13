@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+	    <meta charset="UTF-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <title>Ka Wai Cheung | The Thing to Think About with Feature Gating</title>
+	  	<link rel="icon" href="/favicon.ico" type="image/x-icon">
+      <link rel="stylesheet" href="/styles/styles.css?p=030426">
+	</head>
+	<body>
+		<nav>
+      <a href="/"><img src="/img/kc.png" /></a>
+			<ul>
+				<li><a href="/software">Solo software</a></li>
+				<li><a href="/random">Side projects</a></li>
+				<li><a href="/temperament">How I work</a></li>
+        <li><a href="/web">Career</a></li>
+				<li><a href="/essays" class="selected">Essays</a></li>
+				<li><a href="/books">Books</a></li>
+			</ul>
+		</nav>
+		<div>
+			<a class="header-link" href="/">Ka Wai Cheung</a>
+			<h2 class="solid">The Thing to Think About with Feature Gating.</h2>
+			<div class="pub-date">Dec 2023</div>
+			
+			<p>
+				I've been thinking about how to create an architecture around feature gating. It's part of some new work I'm beginning for <a href="https://www.donedone.com">DoneDone</a>. Feature gating is the concept of limiting features in your software product to certain users&mdash;for instance, opening them up for more expensive plans while closing them off for cheaper ones.
+			</p>
+			<p>
+				This seems, at first, like a simple (but not necessarily easy) operation. Create some object knowledgeable of an account's feature allowances and&mdash;at least as a primitive approach&mdash;splatter conditional statements around such features. If you have the feature you get it; if you don't, you don't. That kind of thing.
+			</p>
+			<p>
+				There are more sophisticated and professional ways of doing this I'm sure.
+			</p>
+			<p>
+				Initially, it feels like the challenge lives in how you architect the flagging piece. But I've come to find that the real challenge is what you do when someone<em> had the feature before and now they don't</em>.
+			</p>
+			<p>
+				<strong>Example:</strong> I'm building a new ticket portal feature that will be limited to certain pricing plans. It's an extension to DoneDone's existing mailboxes feature&mdash;it gives customers that have previously sent an email to a mailbox the ability to view and reply to their "tickets" via this browser-based ticket portal. This way they don't have to go fishing for the conversation in their own inboxes.
+			</p>
+			<p>
+				If an account has this ticket portal feature, then they can enable it&mdash;it's off by default. If they don't have this feature, then they can't. Simple. But, what if they had the ticket portal feature for a while, enabled the ticket portal, then downgraded their account so they no longer have the feature? I need to ensure the portal goes away.
+			</p>
+			<p>
+				<strong>My immediate thought is this: </strong>Any method related to the ticket portal must check whether the account has this feature available.
+			</p>
+			<ul class="postList">
+				<li>The method for setting up and customizing the portal (i.e. the place an account can turn the portal on or off as well as do some custom branding).</li>
+				<li>The customer ticket listing and detail <code>GET</code> methods.</li>
+				<li>The portal-specific authentication methods.</li>
+				<li>The customer reply <code>POST</code> method.</li>
+			</ul>
+			<p>
+				I need to sprinkle the check in all of these areas. Those latter customer-centric methods would also have to confirm two things (annoyingly)&mdash;both that the ticket portal feature isn't gated for that account <em>and</em> that the account has turned on the ticket portal.
+			</p>
+			<p>
+				I don't love this approach though. One of those mental sensors that becomes almost automatic the more you code is the one that tells you there's something a bit repetitive going on. Not always in the obvious way like there's an opportunity to DRY up code. Sometimes it's just in a conceptual way.
+			</p>
+			<p>
+				What gnaws at my senses is this feeling that I'm doing more feature gate checks than I need to do; I <em>feel</em> like I should be doing less. A singular linchpin&mdash;somehow. Maybe I'm just visualizing the concept of this one large gate around the ticket portal estate and what I've drawn up on the mental whiteboard are a bunch of little gates. Your intuition usually knows something that you'll soon figure out.
+			</p>
+			<p>
+				Here's what I eventually figure out. The really important part of feature gating is deciding <strong>what feature you are actually gating</strong>. To say that the feature is "the ticket portal" is, as it turns out, too broad. A play acted out in several scenes. There's a way around this&mdash;the way my intuition saw first. I can see the feature only as "the ability to turn on the ticket portal." One very small but powerful act.
+			</p>
+			<p>
+				In other words, I can limit the gate checking to <em>just</em> the toggling of the portal. OK, maybe it's a couple checks (there are <code>GET</code> and <code>PUT</code> methods for this) but conceptually it's a check of one scene of the bigger act.
+			</p>
+			<p>
+				If a user can't turn on the ticket portal to begin with, then the rest of the feature gating checks can disappear! The methods to authorize a customer, grab ticket data (for a list or an individual detail) and allow a customer to reply to the ticket via the portal only need to check that the portal is turned on&mdash;it couldn't be turned on in the first place if "the ability to turn on the ticket portal" isn't granted.
+			</p>
+			<p>
+				Except, of course, in the case where a privileged account which had enabled the ticket portal now <em>downgrades</em> to a plan that doesn't give "the ability to turn on the ticket portal." But in this case, all I need to do is turn off the ticket portal in the same transaction as the downgrade.
+			</p>
+			<p>
+				I suppose I should've thought of it this way all along&mdash;a feature gate is about deciding what the <em>gate</em> is more than the complete <em>feature</em>, after all. There are other new features that we'll be gating in our future pricing updates. Not all of them fall in a similar pattern; not all of them as clear-cut as this one. But, what I'm thinking about for each of them now is the linchpin.
+			</p>
+			<p>
+				Where is that singular gate? And what do I need to do to ensure the remaining pieces of the feature go back behind the gate if the keys are handed back?
+			</p>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+	    <meta charset="UTF-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <title>Ka Wai Cheung | Why Cache Invalidation is Hard</title>
+	  	<link rel="icon" href="/favicon.ico" type="image/x-icon">
+      <link rel="stylesheet" href="/styles/styles.css?p=030426">
+	</head>
+	<body>
+		<nav>
+      <a href="/"><img src="/img/kc.png" /></a>
+			<ul>
+				<li><a href="/software">Solo software</a></li>
+				<li><a href="/random">Side projects</a></li>
+				<li><a href="/temperament">How I work</a></li>
+        <li><a href="/web">Career</a></li>
+				<li><a href="/essays" class="selected">Essays</a></li>
+				<li><a href="/books">Books</a></li>
+			</ul>
+		</nav>
+		<div>
+			<a class="header-link" href="/">Ka Wai Cheung</a>
+			<h2 class="solid">Why Cache Invalidation is Hard.</h2>
+			<div class="pub-date">Dec 2023</div>
+			<h3>No one seems to explain the other part of Phil Karlton's famous quote on computer science simply.</h3>
+			
+			<p>
+				Write code long enough and you eventually stumble on that famous quote by Phil Karlton.
+			</p>
+			<blockquote>
+				There are only two hard things in Computer Science: cache invalidation and naming things.
+			</blockquote>
+			<p>
+				If you've done any kind of difficult programming, you know why naming is hard. But what about cache invalidation? No one seems to explain why this is hard in a straightforward way.
+			</p>
+			<p>
+				So, what follows is my reason.
+			</p>
+			<p>
+				I find cache invalidation difficult because oftentimes the data I am caching can be updated within the application from many different sources, and it's easy to forget what pieces of cached data need to be invalidated when updates from a seemingly disparate place happen.
+			</p>
+			<p>
+				For example, suppose I cache a <code>UserProfile</code> object that I originally pulled from a single SQL query and hydrate into the object. The <code>UserProfile</code> contains say, the name, email, and number of projects assigned to the user (via joining on a project memberships table and getting a <code>COUNT</code>).
+			</p>
+			<p>
+				The key for that object might be something like <code>UserProfile-{UserID}.</code>
+			</p>
+			<p>
+				Now, every time there's a case where any of those values might change, I need to invalidate that cache key.
+			</p>
+			<p>
+				For name and email, this is pretty straightforward. The user updates their name or email, I invalidate that record. But what about the "number of projects assigned" bit? Here are some of the events that require me to invalidate that record:
+			</p>
+			<ol>
+				<li>When an admin adds the user to a project.</li>
+				<li>When an admin removes that user from a project.</li>
+				<li>When that project is archived or deleted.</li>
+				<li>When that project is reactivated (if it was archived).</li>
+			</ol>
+			<p>
+				#1 and #2 are again fairly straightforward as at the place that happens, you have the users <code>ID</code> at hand, but #3 and #4 need a bit more work. When the project's accessibility changes, I would also have to grab <em>all</em> the current members of those projects and then invalidate each user's cached profile since all of their "number of projects assigned" values have been downgraded or upgraded.
+			</p>
+			<p>
+				You can extrapolate this problem to far more complex objects that have even more data entangled in other areas of the app and see that the amount of work you have to do to ensure valid cached records gets rapidly more complex.
+			</p>
+			<p>
+				The antidote may be to cache more simple record types. But then again, usually the more complex a record is to manifest from its data sources, the more beneficial a cached record is to the system.
+			</p>
+			<p>
+				The art of it all is deciding what makes sense enough to cache regularly&mdash;data that doesn't change often, that has a meaningful performance hit to the system when accessed directly, and that isn't a pain to invalidate (especially as the system grows in functionality).
+			</p>
+			<p>
+				It's hard to foresee the last bit, so as systems grow, the chance for invalid cached data grows too.
+			</p>
+			<p>
+				This is why invalidating cached data gets hard.
+			</p>
+		</div>
+	</body>
+</html>

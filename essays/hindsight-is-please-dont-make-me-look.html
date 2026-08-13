@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+	    <meta charset="UTF-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <title>Ka Wai Cheung | Hindsight is…please don’t make me look</title>
+	  	<link rel="icon" href="/favicon.ico" type="image/x-icon">
+      <link rel="stylesheet" href="/styles/styles.css?p=030426">
+	</head>
+	<body>
+		<nav>
+      <a href="/"><img src="/img/kc.png" /></a>
+			<ul>
+				<li><a href="/software">Solo software</a></li>
+				<li><a href="/random">Side projects</a></li>
+				<li><a href="/temperament">How I work</a></li>
+        <li><a href="/web">Career</a></li>
+				<li><a href="/essays" class="selected">Essays</a></li>
+				<li><a href="/books">Books</a></li>
+			</ul>
+		</nav>
+		<div>
+			<a class="header-link" href="/">Ka Wai Cheung</a>
+			<h2 class="solid">Hindsight is…please don’t make me look.</h2>
+			<div class="pub-date">Feb 2017</div>
+			<p>
+				<img src="/img/logo--donedone.png" class="side-icon" />
+				Jeff Bezos admits to Amazon launching their service with a pretty horrific bug. For some (presumably) small amount of time, you could order a <em>negative</em> number of books. Amazon would <em>credit</em> you with the amount of the purchase.
+			</p>
+			<img src="/essays/img/hindsight-is-01.png" style="max-width:100%;height:auto;display:block;align-self:flex-start;border:solid 1px var(--color--border-line);border-radius:0.5rem;margin-bottom:1.4rem;" />
+			<p style="font-size:0.65rem;margin-top:-1rem;margin-bottom:1.4rem;"><em>I tried ordering -10,000 mattresses today on Amazon and it didn't work.</em></p>
+			<p>
+				I think all developers can look back on <em>something</em> they shipped with version 1.0 of their software with a bit of horror and a smirk. Some strange dependency. Some complete oversight. Something no one ever thought to test for.
+			</p>
+			<p>
+				When we first launched DoneDone, we integrated a third-party payment service called <a href="https://www.zuora.com/">Zuora</a> to handle our monthly recurring billing. Back then, we billed customers on a per-project basis&mdash;A $15 base fee for three projects, then $2 per each additional project per month, with a cap at $99. Each time a customer created a new project, the app made a connection to Zuora to update the project count so the customer was properly billed at the end of the month.
+			</p>
+			<p>
+				However, DoneDone also connected to Zuora each time a user logged in. It would then grab an account's current monthly cost&mdash;based on project usage&mdash;so the amount could be shown if you were about to add a new project. <em>By the way, showing someone how much they're going to owe each time they add a project isn't exactly the best way to increase lifetime customer value either. We've since changed our </em><a href="https://www.getdonedone.com/plans-pricing/"><em>billing strategy</em></a><em> completely</em>.
+			</p>
+			<p>
+				Here's where we made a horrendously silly mistake. If Zuora was down (which, like all services especially back then, was more than we'd like to admit), our application went down with it. We let the connection exception bubble up. That meant that if you were logged out, you couldn't log in. If you were logged in, you couldn't add a new project.
+			</p>
+			<p>
+				Eventually, we pushed all the data and logic needed to derive the information Zuora was giving us into our own data store and codebase. In reality, this was some simple arithmetic. It was a few lines of innocuous code on our end.
+			</p>
+			<p>
+				In looking back, I think we had made the initial decision to push off this work to Zuora so we had a single "source of truth" on billing. But, the math was simple. The redundancy of the billing logic wasn't a huge deal. Certainly, not as much as a hard dependency on a third-party service's uptime. We just made a really bad, silly trade-off. A rookie mistake.
+			</p>
+			<p>
+				Like crediting an account for a negative quantity of items, it's a mistake you'll usually make just once.
+			</p>
+		</div>
+	</body>
+</html>

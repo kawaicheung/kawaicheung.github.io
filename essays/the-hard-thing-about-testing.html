@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+	    <meta charset="UTF-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <title>Ka Wai Cheung | The hard thing about testing</title>
+	  	<link rel="icon" href="/favicon.ico" type="image/x-icon">
+      <link rel="stylesheet" href="/styles/styles.css?p=030426">
+	</head>
+	<body>
+		<nav>
+      <a href="/"><img src="/img/kc.png" /></a>
+			<ul>
+				<li><a href="/software">Solo software</a></li>
+				<li><a href="/random">Side projects</a></li>
+				<li><a href="/temperament">How I work</a></li>
+        <li><a href="/web">Career</a></li>
+				<li><a href="/essays" class="selected">Essays</a></li>
+				<li><a href="/books">Books</a></li>
+			</ul>
+		</nav>
+		<div>
+			<a class="header-link" href="/">Ka Wai Cheung</a>
+			<h2 class="solid">The hard thing about testing.</h2>
+			<div class="pub-date">Oct 2014</div>
+			<p>
+				Why are bugs in software inevitable? One of my arguments is that <em>knowing what to test</em> is one of the most difficult parts of testing itself. Bugs creep up in the areas we never thought to look. As software gets more complex, those undiscovered areas get bigger and more disparate.
+			</p>
+			<p>
+				I recently had the privilege of speaking about this topic at the <a href="http://www.digitalqasummit.com/">QA Summit for Digital Marketing</a>. I wanted to summarize this particular argument here, alongside a few of the slides from my session.
+			</p>
+			<p>
+				<a href="http://www.digitalqasummit.com/2014-qa-summit/">You can listen to the entire session and view the slides here</a>.
+			</p>
+			<p>
+				It's easiest to see the loopholes in our test plans by looking at an ostensibly obvious solution to a problem. So, let's get away from software for a moment altogether.
+			</p>
+			<h4>A lightbulb moment</h4>
+			<p>
+				Suppose we are aliens from a far-away planet and we've finally decided to land our UFO (for us aliens, it refers to an <em>U</em>ltra-<em>F</em>ast <em>O</em>bject) onto planet Earth. As all UFOs do, we land near some remote farmhouse in a cornfield in Iowa. We exit our aircraft, quietly head into the barn, and come upon a simple invention that we've never quite seen before: The lightbulb and switch.
+			</p>
+			<img src="/essays/img/hard-thing-testing-01.jpeg" style="max-width:100%;height:auto;display:block;align-self:flex-start;border:solid 1px var(--color--border-line);border-radius:0.5rem;margin-bottom:1.4rem;" />
+			<p>
+				We observe how the light bulb works in relation to the switch. What are the behaviors we notice? Flip the switch on; the lightbulb glows. Flip the switch off; the lightbulb shuts off. We can screw in the lightbulb and take the lightbulb out. Through centuries of advancement in our own home planet&mdash;you know&hellip;full of robotic maids, self-cleaning homes, and invisible paint&mdash;it never dawned on us to create a switchable light source!
+			</p>
+			<p>
+				We take copious notes on this novel idea before escaping back to our home planet. The next morning, after a generous helping of alien pancakes and coffee, we get started on replicating this great find. (At this point, let's just assume we've got all the other necessary tools, like electricity, screws, and filaments, to build the components of our alien light bulb and switch. We've got robotic maids after all!)
+			</p>
+			<p>
+				After a few hours, we've come up with a perfect replica&mdash;we think. Here's how we confirm that our lightbulb and switch works just like the one we saw outside of Sioux City the day earlier:
+			</p>
+			<img src="/essays/img/hard-thing-testing-02.jpeg" style="max-width:100%;height:auto;display:block;align-self:flex-start;border:solid 1px var(--color--border-line);border-radius:0.5rem;margin-bottom:1.4rem;" />
+			<p>
+				At this point, we've solved it! Our lightbulb and switch work as it was intended to! Or, has it? Are there scenarios we may be missing?
+			</p>
+			<ul class="postList">
+				<li>For instance, <strong>what happens when we unscrew the lightbulb while the switch is turned on?</strong> Based on our earthly observations, we'd expect the lightbulb to turn off, but, what if it didn't? Did our version of the lightbulb happen to somehow store the energy needed to keep it lit even without being tied to the switch? (The argument about whether this would technically be a feature or bug we can leave for another day).</li>
+				<li><strong>What happens if we turn the switch on and then screw the lightbulb in?</strong> Would the lightbulb immediately turn on as the earthlings would expect? And, if it didn't? Perhaps, we'd find that the order-of-operations matters in our version&mdash;that the bulb needs to be set prior to the switch setting. There's another scenario that may have escaped us.</li>
+				<li>And finally, <strong>what if we took the lightbulb out altogether? </strong>The lightbulb shouldn't be affected by toggling the switch at that point&hellip;right? But, what if the untethered lightbulb lit when we turned the switch on? Maybe we unintentionally built wireless electricity!</li>
+			</ul>
+			<p>
+				Here's a more rigorous set of tests to perform:
+			</p>
+			<img src="/essays/img/hard-thing-testing-03.jpeg" style="max-width:100%;height:auto;display:block;align-self:flex-start;border:solid 1px var(--color--border-line);border-radius:0.5rem;margin-bottom:1.4rem;" />
+			<h4>The ridiculous isn't so ridiculous</h4>
+			<p>
+				While you may think that some of these potential <em>what-ifs</em> sound ludicrous, they <em>could</em> fail. And if they do, there is a fathomable explanation as to why a seemingly obvious result doesn't actually happen in the way we expect.
+			</p>
+			<p>
+				In software, these at-first-seemingly-ridiculous cases happen so much <em>more</em> frequently. A flawed conditional, a mis-scoped variable, an uncaught exception&mdash;there are too many little mistakes we make in software that can lead to very odd behavior. As developers, we need to get out of the tunnel-vision mindset of testing (the on/off scenario), and start uncovering the "unlikely" corner cases that happen quite often in our work.
+			</p>
+		</div>
+	</body>
+</html>

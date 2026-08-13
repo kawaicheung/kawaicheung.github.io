@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+	    <meta charset="UTF-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <title>Ka Wai Cheung | Sometimes archaic technology is the most effective kind</title>
+	  	<link rel="icon" href="/favicon.ico" type="image/x-icon">
+      <link rel="stylesheet" href="/styles/styles.css?p=030426">
+	</head>
+	<body>
+		<nav>
+      <a href="/"><img src="/img/kc.png" /></a>
+			<ul>
+				<li><a href="/software">Solo software</a></li>
+				<li><a href="/random">Side projects</a></li>
+				<li><a href="/temperament">How I work</a></li>
+        <li><a href="/web">Career</a></li>
+				<li><a href="/essays" class="selected">Essays</a></li>
+				<li><a href="/books">Books</a></li>
+			</ul>
+		</nav>
+		<div>
+			<a class="header-link" href="/">Ka Wai Cheung</a>
+			<h2 class="solid">Sometimes archaic technology is the most effective kind.</h2>
+			<div class="pub-date">May 2016</div>
+			<p>
+				Ten years ago, I sported a Motorola Razr V3 flip phone and wrote code on a 10-pound Dell Inspiron laptop. It was around this same time that I began using a web application called <a href="http://tadalist.com/">Ta-da List</a>. Even in 2006, it was on the far-left side of the SaaS complexity spectrum.
+			</p>
+			<p>
+				This is how Ta-da List works: You can create a to-do list, add new items to it, edit them, re-order them, check them off, and delete them. That's it. I use Ta-da List to organize the work I have each day, and I've been using it for nearly ten years.
+			</p>
+			<p>
+				Here's the rub. Ta-da List looks and behaves largely the same way it did when it launched. The creators at <a href="http://www.37signals.com/">37signals (now Basecamp)</a> didn't make any significant upgrades to it after it was released. In fact, they even stopped accepting new signups a few years back. Even so, when I start work every morning, one of the first things I open up is the same app I opened up on a typical morning ten years ago&mdash;Ta-da List. There are so many more advanced applications out there. Why am I still using this archaic, unsupported POS (that's&hellip;.piece of <em>software</em>)?
+			</p>
+			<img src="/essays/img/archaic-technology-01.gif" style="max-width:100%;height:auto;display:block;align-self:flex-start;border:solid 1px var(--color--border-line);border-radius:0.5rem;margin-bottom:1.4rem;" />
+			<p style="font-size:0.65rem;margin-top:-1rem;margin-bottom:1.4rem;"><em>The app I've been using to manage my daily tasks for a decade.</em></p>
+			<p>
+				For starters, I have a very particular way I use Ta-da List. I wrote about it in <a href="http://www.thedeveloperscode.com/">The Developer's Code</a>, and you can <a href="http://www.thedeveloperscode.com/old-book.htm#lesson-22">read about my methodology here</a> (this site is a bit archaic too&mdash;it won't read well on your phone). Ta-da List does exactly what I need and nothing more. In fact, if it did anything more it would be <em>worse</em>. Even some of its unanticipated limitations have helped me become a better self-manager. Let me explain.
+			</p>
+			<h4>It doesn't sync to anything.</h4>
+			<p>
+				Ta-da List won't automatically add meetings based on what shows up in my Google calendar or any other app. It doesn't try to add to-dos by hooking into my emails looking for natural keywords that suggested I promised something to someone at some time.
+			</p>
+			<p>
+				I have to manually type the to-dos I have for the following day by spending ten minutes each afternoon looking through my calendar and my other work apps. At first, this sounds like a software problem. But, in reality, it's one of the most <em>important</em> moments of my day.
+			</p>
+			<p>
+				When I go through the exercise of writing out what I have to do the next day, I get to envision how the following day will go. I can also make some judgment calls&mdash;what's important and what's not? Is there a meeting or task I can remove because it just didn't matter as much as I thought it did a few days ago? If everything were auto-synced to my to-do list, I'd stop actively managing it. I'd become captive to it. Because nothing syncs, I'm (gratefully) forced to plan my day actively the afternoon before. I get to envision what my next day looks like to make sure my goals are actually feasible.
+			</p>
+			<h4>It has no other accessories.</h4>
+			<p>
+				There are no due dates, no categories, no filters in Ta-da List. I cannot convert a list to a Kanban-style board. I don't have alerts popping up telling me my next item is due in five minutes. Instead, I see one vertical list of tasks that I have to actively look at throughout the day.
+			</p>
+			<p>
+				A feature also means there's a new thing to manage. I don't need to manage anything else. The dearth of features keeps me focused on what matters. I'm not managing where a to-do should be filed or thinking about when it's due in the future. I simply know what my day's tasks are from the visioning I did the day prior.
+			</p>
+			<h4>It gets super slow as items accumulate.</h4>
+			<p>
+				For nearly a year, I kept updating the same single to-do list. But, suddenly, the app started to behave oddly. When I would re-order my to-do lists, the updates wouldn't catch up in time&mdash;a page refresh would revert my new ordering. My guess is the way ordering is stored on the server-side isn't particularly efficient (it also likely accounts for items I've checked off as well). At scale, some race conditions are probably coming into play. I also imagine there wasn't a whole lot of time spent on performance analysis at large scales and they weren't going to do anything about it anytime soon.
+			</p>
+			<p>
+				To get around this problem, I have to periodically create a new list from scratch and port over the items from my old one. At first, this felt like a nuisance. But, this gives me another natural opportunity to purge items that I don't think matter anymore. I only have to do this a couple times a year&mdash;and I treat it more as spring cleaning than as a nuisance of the product. I'm certainly not suggesting that slowly-performing software is a good thing, but for my use case, it actually isn't a bad thing.
+			</p>
+			<h4>Game of Thrones started in DOS</h4>
+			<p>
+				<a href="http://www.georgerrmartin.com/">George R. R. Martin</a>, the science fiction novelist most known for writing a series of fantasy novels that would later be adapted to the HBO series, <a href="https://en.wikipedia.org/wiki/Game_of_Thrones">Game of Thrones</a>, uses WordStar 4.0 on DOS. His reasons are simple:
+			</p>
+			<blockquote>
+				<em>"I actually like it&hellip;It does everything I want a word processing program to do and it doesn't do </em>anything else<em>. I don't want any help&hellip;I hate some of these modern systems where you type a lowercase letter and it becomes a capital. I don't want a capital. If I wanted a capital, I would've typed a capital."</em>
+			</blockquote>
+			<p>
+				<a href="https://youtu.be/X5REM-3nWHg">https://youtu.be/X5REM-3nWHg</a>
+			</p>
+			<p>
+				If Martin was forced to move to a modern word processor&mdash;with aides like automatic spell-checking and grammar hints&mdash;would he be as productive? That extra "help" might've done him (and the rest of us) a huge disservice.
+			</p>
+			<p>
+				In the end, remember that the real value in software is not in the tool itself, but our relationship with it. It's not always about what it can do for us. Sometimes, what it leaves for <em>us</em> to do is where the real value lies.
+			</p>
+		</div>
+	</body>
+</html>

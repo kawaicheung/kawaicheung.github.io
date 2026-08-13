@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+	    <meta charset="UTF-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <title>Ka Wai Cheung | Building the optimal user database model for your application</title>
+	  	<link rel="icon" href="/favicon.ico" type="image/x-icon">
+      <link rel="stylesheet" href="/styles/styles.css?p=030426">
+	</head>
+	<body>
+		<nav>
+      <a href="/"><img src="/img/kc.png" /></a>
+			<ul>
+				<li><a href="/software">Solo software</a></li>
+				<li><a href="/random">Side projects</a></li>
+				<li><a href="/temperament">How I work</a></li>
+        <li><a href="/web">Career</a></li>
+				<li><a href="/essays" class="selected">Essays</a></li>
+				<li><a href="/books">Books</a></li>
+			</ul>
+		</nav>
+		<div>
+			<a class="header-link" href="/">Ka Wai Cheung</a>
+			<h2 class="solid">Building the optimal user database model for your application.</h2>
+			<div class="pub-date">May 2015</div>
+			<p>
+				In the past, I've often wrestled with designing an optimal relational database model to represent users in a multi-tenant system. I've wanted to get the model just right-enough structure to accomodate future enhancements without bloating the schema with excessive JOINs, overly-wide tables, or any other number of typical relational-database "sins".
+			</p>
+			<p>
+				Over four years into our current iteration of DoneDone, I can happily say that the database model we've built has been resilient to all sorts of feature updates we've made over the years.* I wanted to share our thought process behind how it's designed, starting with a simple database model and evolving it into the model we currently use.
+			</p>
+			<h4>A simple model</h4>
+			<p>
+				Let's start with the most bare-bones relational model to represent users in a system like ours. Naturally, we'll start with a table called <code>Users</code>. The attributes within <code>Users</code> fall within one of three general groups of data.
+			</p>
+			<ul class="postList">
+				<li><strong>Personal information: </strong>Name, email address, phone, avatar, Twitter handle, etc.</li>
+				<li><strong>Login credentials: </strong>Username, password salt and hash, and any 3rd-party auth tokens</li>
+				<li><strong>Foreign keys:</strong> Most likely, one to an <code>Accounts</code> table to link a user to an account.</li>
+			</ul>
+			<p>
+				So, our starting model looks something like this, with unique constraints on items like <code>Username</code> and <code>EmailAddress</code>:
+			</p>
+			<img src="/essays/img/optimal-users-database-01.png" style="max-width:100%;height:auto;display:block;align-self:flex-start;border:solid 1px var(--color--border-line);border-radius:0.5rem;margin-bottom:1.4rem;" />
+			<p style="font-size:0.65rem;margin-top:-1rem;margin-bottom:1.4rem;"><em>A simple starting point for database modeling users in a system</em></p>
+			<p>
+				I've used many systems whose model follows closely to this two-table architecture. But, there's one very large drawback to this system: The foreign key from <code>Users</code> to <code>Accounts</code> restricts a user's access to only one account in the system. If someone wants to have access to multiple accounts, they are forced to create a new user record with another email address. That quickly becomes a nuisance to manage for the user.
+			</p>
+			<h4>Associating users to multiple accounts</h4>
+			<p>
+				So, unless I am 100% sure that the system will never allow a user access to multiple accounts (and, sometimes, even if I <em>am</em> 100% sure), I prefer breaking this relationship out as a many-to-many by introducing an association table in between. In DoneDone, we call this a<em> membership</em>.
+			</p>
+			<img src="/essays/img/optimal-users-database-02.png" style="max-width:100%;height:auto;display:block;align-self:flex-start;border:solid 1px var(--color--border-line);border-radius:0.5rem;margin-bottom:1.4rem;" />
+			<p style="font-size:0.65rem;margin-top:-1rem;margin-bottom:1.4rem;"><em>Adding a Memberships table to allow users access to multiple accounts</em></p>
+			<p>
+				The <code>Memberships</code> table holds foreign keys to both <code>Users</code> and <code>Accounts</code>, so that we can both associate any number of users to an account (e.g. employees in a company) as well as any number of accounts to a user (e.g. a user's freelance account along with their company account).
+			</p>
+			<p>
+				We can also add membership-specific columns to <code>Memberships</code>. In DoneDone, for instance, the <code>Memberships</code> table can hold columns like an office phone number or fax, as well as an account-specific email address. This way, we can send profile information and password reset links to the user's global email address, stored in <code>Users</code>, while sending email updates on specific DoneDone issues to the account-level email address, stored in <code>Memberships</code>.
+			</p>
+			<p>
+				Additionally, the <code>Memberships</code> table can hold information like roles-a user might be an administrator in one account, a regular user in another account, and an account owner in a third account.
+			</p>
+			<p>
+				Finally, the <code>Memberships</code> table helps clarify the <em>intent</em> of certain database relationships involving a user. For instance, in DoneDone, we tie system alerts to a<em> membership</em> record. This lets us create a specific alert to a person's specific account (say, a billing notice to an account owner). However, we tie issue relationships to a <em>user</em> record. If a person creates an issue, and then leaves a company, we can delete their <code>Memberships</code> record while still preserving their relationship to that issue.
+			</p>
+			<p>
+				As I mentioned earlier, even if I'm fairly certain that users will not belong to multiple accounts, I still prefer the additional table in the design. If you avoid it now, should the business one day decide to support multiple accounts for a user, you not only need to massage your data into a new data model, you'll need to provide some mechanism for a user to link once-disparate accounts together.
+			</p>
+			<h4>Improving performance and database integrity</h4>
+			<p>
+				This three-table architecture provides a lot of flexibility, but there are still other ways we can improve. In DoneDone, we segment off the authentication information away from the <code>Users</code> table into a separate <code>Logins</code> table. We then add a required foreign key from <code>Logins</code> to <code>Users</code> (a login must be associated to an existing user). Since a user can only have one set of credentials, we could further tighten the data integrity by placing a unique constraint against the foreign key.
+			</p>
+			<img src="/essays/img/optimal-users-database-03.png" style="max-width:100%;height:auto;display:block;align-self:flex-start;border:solid 1px var(--color--border-line);border-radius:0.5rem;margin-bottom:1.4rem;" />
+			<p style="font-size:0.65rem;margin-top:-1rem;margin-bottom:1.4rem;"><em>Extracting credentials into its own table has several relational modeling benefits</em></p>
+			<p>
+				There are a few different reasons why I prefer this separation.
+			</p>
+			<p>
+				First, it provides a cleaner way of representing users in a system who <em>do not </em>have credentials to login. If we don't extract credentials to a separate table, we're left with only the unsavory option of allowing <code>NULL</code> values for usernames and password salts/hashes. Even further, many database systems (Sql Server 2008 and prior) do not support an out-of-the-box "unique if not null" constraint. This means that you can't place a unique constraint on, say, username, if you had more than one unregistered user (i.e. two or more records with username equal to <code>NULL</code>). As a workaround, you might be left with managing uniqueness on usernames solely outside of the database-a game I'd rather not play.
+			</p>
+			<p>
+				You may be asking why you'd ever want users in your system who can't login. Where would this come into play? Here are two examples:
+			</p>
+			<ul class="postList">
+				<li>A closed system that pre-populates the database with all allowable users. This would be common for a company intranet, or any kind of in-house system. When a user registers, they must match on personal information tied to an unregistered user already in the database.</li>
+				<li>A system that allows partial access to features without requiring an explicit login. This, in fact, is how we manage <a href="https://web.archive.org/web/20150910045746/http://www.donedone.com/public-issues">Public Issues</a> in DoneDone. Anyone who sends a public issue email into DoneDone will have a user record logged in our database, but they won't necessarily have credentials tied to them.</li>
+			</ul>
+			<p>
+				Secondly, creating a separate <code>Logins</code> table lets you keep credential information in as thin a table as possible. This will only help with indexing and any lazy selects ( <code>select * from Logins</code>). Since the <code>Logins</code> table will usually have significantly more reads than writes, the more efficient those reads are, the better.
+			</p>
+			<p>
+				Finally, while you could argue placing the foreign key on <code>Users</code> (since this is a one-to-one relationship), I find more benefits placing it on <code>Logins</code>. This way, we can make the relationship required, which again avoids adding any nullable columns or "unique if not null" issues in your data model.
+			</p>
+			<h4>Adding access to groups of users</h4>
+			<p>
+				The last step we've made in DoneDone is to add a <code>Companies</code> table between <code>Memberships</code> and <code>Accounts</code>. This lets us further differentiate access levels between groups of users in an account. For example, in DoneDone, we can mark a company as an admin company, and only allow users associated to the admin company to be administrators or account owners. A <code>Companies</code> table also would allow you to easily make certain messages private amongst a user's respective company.
+			</p>
+			<p>
+				With this in place, here is the current user data model we've used in DoneDone.
+			</p>
+			<img src="/essays/img/optimal-users-database-04.png" style="max-width:100%;height:auto;display:block;align-self:flex-start;border:solid 1px var(--color--border-line);border-radius:0.5rem;margin-bottom:1.4rem;" />
+			<p style="font-size:0.65rem;margin-top:-1rem;margin-bottom:1.4rem;"><em>Our full-blown database architecture for modeling users</em></p>
+			<p>
+				We've been really happy with this level of architecture in DoneDone thus far, and I hope this helps your product as well.
+			</p>
+			<p>
+				<em>*-Much credit goes to former DoneDone colleague Mustafa Shabib for his influence on the data model design that's largely withstood significant changes since it was released.</em>
+			</p>
+		</div>
+	</body>
+</html>

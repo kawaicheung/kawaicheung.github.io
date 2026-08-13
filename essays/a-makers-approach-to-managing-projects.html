@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+	    <meta charset="UTF-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <title>Ka Wai Cheung | A maker’s approach to managing projects</title>
+	  	<link rel="icon" href="/favicon.ico" type="image/x-icon">
+      <link rel="stylesheet" href="/styles/styles.css?p=030426">
+	</head>
+	<body>
+		<nav>
+      <a href="/"><img src="/img/kc.png" /></a>
+			<ul>
+				<li><a href="/software">Solo software</a></li>
+				<li><a href="/random">Side projects</a></li>
+				<li><a href="/temperament">How I work</a></li>
+        <li><a href="/web">Career</a></li>
+				<li><a href="/essays" class="selected">Essays</a></li>
+				<li><a href="/books">Books</a></li>
+			</ul>
+		</nav>
+		<div>
+			<a class="header-link" href="/">Ka Wai Cheung</a>
+			<h2 class="solid">A maker’s approach to managing projects.</h2>
+			<div class="pub-date">Mar 2017</div>
+			<p>
+				On the spectrum of what Paul Graham would call makers versus managers, I'm as far to the maker's side as one can be. I've always had a penchant for creating things. Managing, by contrast, has never felt natural to me. So, when it comes to managing a project, I do things a little out of the norm&mdash;with what I'll call a maker's approach.
+			</p>
+			<p>
+				Over the past six months, I've overseen two very different kinds of development projects for our products, <a href="http://www.getdonedone.com">DoneDone</a> and <a href="https://kinhr.com">Kin</a>. Between August and December, I oversaw the development of our iOS mobile app. Then, for seven weeks from early January to late February, I oversaw the development of Kin's eSignature feature.
+			</p>
+			<img src="/essays/img/makers-approach-01.jpg" style="max-width:100%;height:auto;display:block;align-self:flex-start;border:solid 1px var(--color--border-line);border-radius:0.5rem;margin-bottom:1.4rem;" />
+			<p style="font-size:0.65rem;margin-top:-1rem;margin-bottom:1.4rem;"><em>DoneDone Mobile, now available on iOS devices, lets you create, view, and respond to issues.</em></p>
+			<p>
+				<em>Both are now out in the wild. You can download DoneDone Mobile from the </em><a href="https://www.getdonedone.com/donedone-for-ios-app-is-finally-here/"><em>AppStore</em></a><em> to your iOS device, and you can create </em><a href="http://www.kinhr.com/esignatures"><em>Kin eSignature documents</em></a><em> with any Kin account.</em>
+			</p>
+			<img src="/essays/img/makers-approach-02.png" style="max-width:100%;height:auto;display:block;align-self:flex-start;border:solid 1px var(--color--border-line);border-radius:0.5rem;margin-bottom:1.4rem;" />
+			<p style="font-size:0.65rem;margin-top:-1rem;margin-bottom:1.4rem;"><em>Kin's eSignature feature lets HR managers create and share signable documents within Kin.</em></p>
+			<p>
+				In both projects, we worked with just a few veteran developers and without a whole lot of upfront planning. We dug into the build as early as possible. While this might seem hairy to some, it's a kind of environment that can work with a maker's mindset. Here are a few approaches I take as a maker in a manager's role in these situations.
+			</p>
+			<h4>The Jam Session</h4>
+			<p>
+				I'm an advocate of keeping the beginning of a development cycle as free of constraints as possible. Given there isn't anything tangible to chew on yet, I don't like to prescribe the order in which development should flow right from the beginning.
+			</p>
+			<p>
+				For DoneDone Mobile, did I care what the team worked on first? Did it matter if I could test out the behavior of issue lists before I could create an issue? Did it make a difference if the activity feed was built out before the search filter for the activity screen? Nope, nope and nope.
+			</p>
+			<p>
+				We also had a unique challenge while developing the mobile app. The entire development team (Grant, Jeremy, and Chris) was simultaneously ramping up to <a href="https://www.xamarin.com/">Xamarin</a>&mdash;the .Net framework for building mobile apps we used for DoneDone. Grant had already completed his training and certification; but applying any learned knowledge to a real project is always a mental leap-of-faith.
+			</p>
+			<p>
+				So, for the first two weeks of development, after I had carved out a one-page feature set to work from, I gave Grant a singular initiative:<em> Start anywhere</em>. Pick a place to start implementing and go. The only goal in this early phase of development is to <em>make progress. </em>At the same time, our designer Mike took those two weeks to build out designs against the feature set I prepared for the team. His initiative? Start anywhere as well.
+			</p>
+			<p>
+				Toward the end of those two weeks, Grant had completed some of the underlying plumbing and rudimentary views and Mike wrapped up the design for those views. Jeremy then came in to focus on the details of the UI. Again, I didn't care about the order. Jeremy bounced between building some of the overall UI structure and polishing the views that Grant had hooked up earlier.
+			</p>
+			<img src="/essays/img/makers-approach-03.jpeg" style="max-width:100%;height:auto;display:block;align-self:flex-start;border:solid 1px var(--color--border-line);border-radius:0.5rem;margin-bottom:1.4rem;" />
+			<p style="font-size:0.65rem;margin-top:-1rem;margin-bottom:1.4rem;"><em>Good things usually happen when a development team has some time to create without constraints.</em></p>
+			<p>
+				I liken this phase of development to a jam session. Cerebral freedom eliminates any friction that a strict early development roadmap introduces. Pieces of the art come together in surprising ways. In the end work still gets done&mdash;-and usually at a faster pace than if we had prescribed a roadmap to begin with.
+			</p>
+			<p>
+				By keeping the objectives open, people get to work on the pieces that are most interesting to them at the moment. They get to move around the app at-will, when it makes sense to them naturally. They get to find out what the initially-unforeseen obstacles are and what to do about them. Most importantly, I think this approach helps developers build <em>momentum.</em>
+			</p>
+			<p>
+				Now, at a certain point, the boundlessness of a jam session becomes more of a hindrance than a help. Enough of the initial hustle has turned into the actual product. It's at this point that it makes sense to flush out the roadmap to the remaining work ahead.
+			</p>
+			<p>
+				There's no precise science behind when this happens. It's a feeling in the room. But, ideally, the jam session should take no more than 20% of the overall time you have to build. That leaves 80% of the schedule left to flush out how to tactically approach what's left&mdash;&mdash; with the immense benefit of momentum and the understanding of what the team's learned during the jam session.
+			</p>
+			<h4>Spiraling QA</h4>
+			<p>
+				Traditionally, formal quality assurance testing begins toward the end of the development process. It's parked somewhere between development completion just before release. However, I far prefer beginning QA as early as possible <em>during</em> development. In the case of DoneDone Mobile, it was shortly after the jam session was complete.
+			</p>
+			<p>
+				It works best to start QA with broad stroke testing. Over time, you gradually get into the devilish details. The QA process we went through in both of these projects was like traveling down a spiral.
+			</p>
+			<img src="/essays/img/makers-approach-04.jpeg" style="max-width:100%;height:auto;display:block;align-self:flex-start;border:solid 1px var(--color--border-line);border-radius:0.5rem;margin-bottom:1.4rem;" />
+			<p>
+				At the beginning, I focused on big picture functional issues ("I can't create an issue" or "I'm not getting an email notification when I'm assigned a document"). Even though there are obvious UI improvements, as a tester, I tend to leave those out of my initial rounds of testing&mdash;they're just not as critical to the feature at the moment. It's also not where a developer's focus may be at. As iterations improve, the issues get more granular ("The spacing between selectors on the issue search screen isn't consistent"). Eventually, we spiral downward to the actual feature we want.
+			</p>
+			<p>
+				Because QA and development focus on roughly the same level of scope at the same time (big things in the beginning gradually spiraling toward finer details later on), spiraling QA also allows for a lot of iteration. I find this takes some of the time and pressure away from figuring out too much of the feature at the beginning&mdash;particularly all the little details. In other words, we exchange some scoping time at the beginning of a traditional feature cycle in order to begin development (and spiraling QA) earlier. This gives us more time to iterate against something real versus something sketched. I think the end result is always better.
+			</p>
+			<h4>Development baseball</h4>
+			<p>
+				When I manage a project, I don't actively manage the thing 100% of the time&mdash;there simply isn't a need to do so at every given moment of a project's lifecycle. Doing so usually creates all the unnecessary extra <a href="http://www.paulgraham.com/makersschedule.html">time disruption for makers that Paul Graham has described</a>. I don't like to schedule out daily or weekly check-ins weeks in advance. I think it's far more valuable to plan meetings a week at a time. Some weeks you need more, some weeks you need less. Let the work-at-hand dictate that.
+			</p>
+			<p>
+				Instead, I look at my role more like the hybrid player-manager of a bygone era in baseball. While I manage, I look for opportunities where it makes sense to implant myself as a developer. The benefits are many-fold:
+			</p>
+			<ul class="postList">
+				<li>First, I get full exposure to the code my team is working on. It helps me understand where the pain points might be. I can manage with more context of what's really going on.</li>
+				<li>Second, it often helps with the extra push needed to get something out on a fixed time. It gives our team a little more confidence in hitting a deadline when there's some flexibility with developer bandwidth. Because I'm already immersed in the project in other ways (scoping, QA, etc.), my extra hand <em>should</em> help rather than hurt&mdash;it doesn't result in Brooks's infamous law: "Adding manpower to a late software project makes it later."</li>
+			</ul>
+			<p>
+				Where I lend a hand will differ from project-to-project. For DoneDone Mobile, it made the most sense for me to come in late and help refactor some of the debt naturally introduced with a team who was learning a new framework. I've called this <a href="http://wam.staging.wpengine.com/2008/11/quality-starts-and-save-starter">Starter/Reliever development</a> in the past.
+			</p>
+			<img src="/essays/img/makers-approach-05.jpeg" style="max-width:100%;height:auto;display:block;align-self:flex-start;border:solid 1px var(--color--border-line);border-radius:0.5rem;margin-bottom:1.4rem;" />
+			<p style="font-size:0.65rem;margin-top:-1rem;margin-bottom:1.4rem;"><em>Sometimes, as a maker/manager, you help your team by coming in as a developer reliever.</em></p>
+			<p>
+				By contrast, for Kin's eSignature feature, I supported the development team at the very beginning. While Jeremy and Waylon were busy building the infrastructure within Kin to support eSignatures, I spent the first week of our development cycle investigating the best third-party integration for document uploading and signing. For the record, we ended up integrating with <a href="http://www.hellosign.com">HelloSign</a> and are ecstatic with the results.
+			</p>
+			<p>
+				By week's end, I had built proof-of-concepts in C# to create, embed, and share documents that I handed off to the team. In a sense, I played the role of a pinch hitter&mdash;working on a silo'd one-off task that the "starters" later incorporated into the actual build.
+			</p>
+			<h4>Trust usurps heavy process</h4>
+			<p>
+				The methods I use to manage a project aren't textbook. The lucidity of each method requires a whole lot of faith and trust between your teammates. If I've only worked with members of my development team for a few months, I'd be a little weary of how, say, a jam session might run. But, I have the luxury of teammates I've worked with for over five years.
+			</p>
+			<p>
+				With the longevity of a development team, <a href="https://dev.to/developerscode/there-are-rockstars-and-there-are-bands">trust becomes the largest weight of confidence for me</a>. And, the results surely prove it.
+			</p>
+		</div>
+	</body>
+</html>

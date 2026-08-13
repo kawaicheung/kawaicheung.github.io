@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+	    <meta charset="UTF-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <title>Ka Wai Cheung | Old School Workarounds: Keeping the Screen Up to Date</title>
+	  	<link rel="icon" href="/favicon.ico" type="image/x-icon">
+      <link rel="stylesheet" href="/styles/styles.css?p=030426">
+	</head>
+	<body>
+		<nav>
+      <a href="/"><img src="/img/kc.png" /></a>
+			<ul>
+				<li><a href="/software">Solo software</a></li>
+				<li><a href="/random">Side projects</a></li>
+				<li><a href="/temperament">How I work</a></li>
+        <li><a href="/web">Career</a></li>
+				<li><a href="/essays" class="selected">Essays</a></li>
+				<li><a href="/books">Books</a></li>
+			</ul>
+		</nav>
+		<div>
+			<a class="header-link" href="/">Ka Wai Cheung</a>
+			<h2 class="solid">Old School Workarounds: Keeping the Screen Up to Date.</h2>
+			<div class="pub-date">May 2024</div>
+			
+			<p>
+				Years ago, it was common assumption that when a page loaded, nothing about it would change until you manually refreshed the page.
+			</p>
+			<p>
+				That's not the case with SaaS products anymore. Today, if you're on a dashboard, list screen, or detail page, when someone has updated something on the screen you're looking at, you <em>expect</em> to see the update automatically, even if you let a page sit quietly in a separate tab that you bounce back to hours later.
+			</p>
+			<p>
+				<a href="https://www.donedone.com">DoneDone</a> is an old app (15 years and running!) built in a time before this expectation was ubiquitous. And though we released an entirely new version in 2018, the infrastructure started as a copy-over from the original version.
+			</p>
+			<p>
+				So, when it came time to add auto-updating, I wanted to do it in the least invasive way possible. Here's my approach.
+			</p>
+			<p>
+				<strong><em>Note:</em></strong><em> DoneDone has two main features: </em><a href="https://www.donedone.com/features/task-management"><em>Projects</em></a><em> (where tasks are tracked) and </em><a href="https://www.donedone.com/features/shared-inboxes"><em>mailboxes</em></a><em> (where email conversations are tracked). For the purposes of this post, they're nearly identical concepts, so I'll just talk about the </em><strong><em>projects</em></strong><em> side of DoneDone.</em>
+			</p>
+			<h4>Where auto-updates should happen</h4>
+			<p>
+				I wanted to have three key areas of the app auto-update whenever new information is available.
+			</p>
+			<h4>(1) The Dashboard</h4>
+			<p>
+				The dashboard shows your projects as cards. I wanted the "last updated" times, a count of active tickets, and a count of tickets assigned to you auto-updated whenever they changed.
+			</p>
+			<img src="/essays/img/screen-up-to-date-01.jpeg" style="max-width:100%;height:auto;display:block;align-self:flex-start;border:solid 1px var(--color--border-line);border-radius:0.5rem;margin-bottom:1.4rem;" />
+			<p style="font-size:0.65rem;margin-top:-1rem;margin-bottom:1.4rem;"><em>Project cards on the DoneDone Dashboard</em></p>
+			<h4>(2) Project landing pages</h4>
+			<p>
+				Within a project's landing page, I wanted tasks to auto-update whenever a meaningful change was made to any one of them. DoneDone projects have both a listing view and kanban board view, but ostensibly they show the same information.
+			</p>
+			<img src="/essays/img/screen-up-to-date-02.png" style="max-width:100%;height:auto;display:block;align-self:flex-start;border:solid 1px var(--color--border-line);border-radius:0.5rem;margin-bottom:1.4rem;" />
+			<img src="/essays/img/screen-up-to-date-03.png" style="max-width:100%;height:auto;display:block;align-self:flex-start;border:solid 1px var(--color--border-line);border-radius:0.5rem;margin-bottom:1.4rem;" />
+			<p style="font-size:0.65rem;margin-top:-1rem;margin-bottom:1.4rem;"><em><strong>Project list</strong> and <strong>kanban</strong> board views</em></p>
+			<h4>(3) Task detail pages</h4>
+			<p>
+				I wanted the individual details to auto-update whenever a meaningful update was made to them.
+			</p>
+			<img src="/essays/img/screen-up-to-date-04.png" style="max-width:100%;height:auto;display:block;align-self:flex-start;border:solid 1px var(--color--border-line);border-radius:0.5rem;margin-bottom:1.4rem;" />
+			<h4>The Approach</h4>
+			<p>
+				Here's the approach I used to create the auto-update behavior starting with the data we need to detect updates.
+			</p>
+			<h4>Storing the last updated dates in the database</h4>
+			<p>
+				The linchpin to the approach starts in the relational database. I track a <code>lastUpdated</code> date field on the tables whose records I care to know got updated.
+			</p>
+			<p>
+				In my case, it's just two tables:
+			</p>
+			<ul class="postList">
+				<li><code>ActionableItems</code>&mdash;All task tickets are stored in this table and have a related foreign key to their specific project in the <code>Projects</code> table.</li>
+				<li><code>Projects</code>&mdash;All base information for projects (like their name and access level) are stored in this table.</li>
+			</ul>
+			<p>
+				Theoretically, I don't <strong>need</strong> the <code>lastUpdated</code> column on <code>Projects</code>because in practice, this column only updates when a task within a project is updated (At the current moment, I don't consider events like changing the name of a project or adding members to it as an update I care to broadcast to idle screens).
+			</p>
+			<p>
+				This means I could always find the last updated date for a project by finding out which task has the most recent updated date. Something like <code>SELECT TOP(1) LastUpdated FROM ActionableItems WHERE RelatedProjectID = @project_id_in_question ORDER BY LastUpdated DESC</code> .
+			</p>
+			<p>
+				But, I'm worried about performance here (even with an index on <code>RelatedProjectID</code>), especially as our <code>ActionableItems</code> table grows into the tens or hundreds of millions of records. So, I'd rather track the <code>lastUpdated</code> value for a project in its own column directly on <code>Projects</code> .
+			</p>
+			<p>
+				In code, whenever any updates happen to a task<em>,</em> DoneDone will also update the <code>lastUpdated</code> column to the current moment (<code>now</code>) for that ticket's <code>ActionableItems</code> record in the same transaction.
+			</p>
+			<img src="/essays/img/screen-up-to-date-05.jpeg" style="max-width:100%;height:auto;display:block;align-self:flex-start;border:solid 1px var(--color--border-line);border-radius:0.5rem;margin-bottom:1.4rem;" />
+			<p style="font-size:0.65rem;margin-top:-1rem;margin-bottom:1.4rem;"><em>This line of code is sprinkled in 13 places in code, for database actions like adding a comment to a task, updating priority, changing status, modifying due date, re-assigning a task&hellip;you get the idea. Any action that meaningfully changes the task.</em></p>
+			<p>
+				Similarly, when any updates happen to a task, I update the <code>lastUpdated</code>field for its project once the task update has transacted.
+			</p>
+			<img src="/essays/img/screen-up-to-date-06.jpeg" style="max-width:100%;height:auto;display:block;align-self:flex-start;border:solid 1px var(--color--border-line);border-radius:0.5rem;margin-bottom:1.4rem;" />
+			<p style="font-size:0.65rem;margin-top:-1rem;margin-bottom:1.4rem;"><em>Here, a priority level for a task is updated first (which in turn, updates the task's lastUpdated field). Then, the lastUpdated field of the project it's associated to is updated.</em></p>
+			<p>
+				This sets all the data I need in the database:
+			</p>
+			<ul class="postList">
+				<li>For any given task, I can find out when it was last updated.</li>
+				<li>For any given project, I can find out when the last task update was made.</li>
+			</ul>
+			<h4>Pulling back the current timestamp when an updatable screen renders</h4>
+			<p>
+				When one of these three areas (the dashboard, the list views, or the task detail) is accessed, the app makes a few calls to the DoneDone API to hydrate the components of the screen with the data it needs.
+			</p>
+			<p>
+				I happen to use <a href="https://vuejs.org/">Vue.js</a> on the front end so calls are generally executed on Vue's <code>created()</code> event callback method of the main components' lifecycle.
+			</p>
+			<p>
+				In each case, one of these API calls (namely, the one that's pulling back data related to tasks) also passes back a numeric property called <code>accessEpochTime</code>. This is just the<strong> </strong>current date/time converted to <a href="https://en.wikipedia.org/wiki/Unix_time">UNIX epoch time</a> in milliseconds.
+			</p>
+			<img src="/essays/img/screen-up-to-date-07.jpeg" style="max-width:100%;height:auto;display:block;align-self:flex-start;border:solid 1px var(--color--border-line);border-radius:0.5rem;margin-bottom:1.4rem;" />
+			<img src="/essays/img/screen-up-to-date-08.jpeg" style="max-width:100%;height:auto;display:block;align-self:flex-start;border:solid 1px var(--color--border-line);border-radius:0.5rem;margin-bottom:1.4rem;" />
+			<img src="/essays/img/screen-up-to-date-09.jpeg" style="max-width:100%;height:auto;display:block;align-self:flex-start;border:solid 1px var(--color--border-line);border-radius:0.5rem;margin-bottom:1.4rem;" />
+			<p style="font-size:0.65rem;margin-top:-1rem;margin-bottom:1.4rem;"><em>The API calls when navigating to the <strong>dashboard</strong>, <strong>project listing</strong>, or <strong>task detail</strong> also return the current UNIX epoch time (accessEpochTime).</em></p>
+			<p>
+				Since the data related to tasks is pulled on the same request as the <code>accessEpochTime</code> value, I can be certain (to a degree of accuracy I'm willing to accept) that nothing else has changed to the data as of the <code>accessEpochTime</code> timestamp.
+			</p>
+			<p>
+				The value of <code>accessEpochTime</code> is stored on the Vue component side. It's what I use to compare against to determine if the screen's data has gotten stale.
+			</p>
+			<h4>Pinging the API for timestamp updates</h4>
+			<p>
+				For each of these three screens, at the end of the <code>created()</code> method, I leverage trusty old <code>setInterval()</code> to make periodic calls to the DoneDone API to see if updates to tasks exist. I happen to set the interval calls to every 19 seconds.
+			</p>
+			<p>
+				Now I <em>could</em> simply call the same API methods on these intervals as I do on the <code>created()</code>method. But the majority of those interval calls would just return the exact same data each time. DoneDone isn't an app where transactions to a specific account are happening every second of every day. So, I'd like to minimize calling those heftier queries whenever I can.
+			</p>
+			<p>
+				Instead, these intervals each call an API method that <em>only</em> return the relevant last updated date (returned, again, as UNIX epoch time in milliseconds).
+			</p>
+			<img src="/essays/img/screen-up-to-date-10.png" style="max-width:100%;height:auto;display:block;align-self:flex-start;border:solid 1px var(--color--border-line);border-radius:0.5rem;margin-bottom:1.4rem;" />
+			<p style="font-size:0.65rem;margin-top:-1rem;margin-bottom:1.4rem;"><em>Periodic pings to the API for the relevant last updated date with setInterval(). I could've used something like web sockets here too but, I'm keeping it old school.</em></p>
+			<ul class="postList">
+				<li><strong>The task detail screen's </strong><code><strong>setInterval</strong></code> calls the API for the last update on the specific <em>task</em> in question.</li>
+				<li><strong>The project listing/kanban board screens' </strong><code><strong>setInterval</strong></code> calls the API for the last update on the specific <em>project</em> in question.</li>
+				<li><strong>The dashboard screens' </strong><code><strong>setInterval</strong></code> calls the API for the most recent last update amongst all projects the user belongs to.</li>
+			</ul>
+			<p>
+				Each of these calls is lightweight.
+			</p>
+			<p>
+				The task detail call is grabbing the <code>lastUpdated</code> value from the database by filtering directly against its task's primary key (<code>id</code>). Fast!
+			</p>
+			<p>
+				The project listing and kanban board calls are similarly grabbing the <code>lastUpdated</code> value from the database by filtering directly against its project's primary key (<code>id</code>). (Hence why I decided to add the extra column in the first place).
+			</p>
+			<p>
+				The dashboard's call is also lightweight&mdash;on the backend I'm just selecting the <code>TOP(1)</code> value of all <code>lastUpdated</code> project values filtered from a list of the user's accessible project IDs.
+			</p>
+			<h4>Refetching the data if necessary</h4>
+			<p>
+				Once the call is completed, I check whether the stored <code>accessEpochTime</code> is less than the <code>lastUpdated</code> value returned. If it is, I can assume a data update has been made and then make that heavier data call immediately.
+			</p>
+			<p>
+				The one exception is with the task detail. Rather than automatically refresh the task's information on the page, I surface a little "updated" notification on the lower-right corner of the page and only refresh when clicked. This avoids the scenario where you're reading a long comment only to see it update magically before your eyes.
+			</p>
+			<img src="/essays/img/screen-up-to-date-11.png" style="max-width:100%;height:auto;display:block;align-self:flex-start;border:solid 1px var(--color--border-line);border-radius:0.5rem;margin-bottom:1.4rem;" />
+			<p style="font-size:0.65rem;margin-top:-1rem;margin-bottom:1.4rem;"><em>On the "task detail" screen, a notification pops up when the task has been updated since data was last fetched.</em></p>
+			<p>
+				In all scenarios, I then set <code>accessEpochTime</code> on the client to the newly fetched value for the future interval calls.
+			</p>
+			<p>
+				Finally, when a user leaves the screen, I use <code>clearInterval</code> to ensure pings aren't continually being made. In Vue, I detect this through <code>beforeDestroy()</code> .
+			</p>
+			<h4>Things I like and things I can live with</h4>
+			<p>
+				As with any technical implementation, there are imperfections (and also happy little accidents).
+			</p>
+			<p>
+				One nice side effect of this strategy is that if I open multiple tabs to the same screen, each tab will refresh <em>on its own time&mdash;</em>because each one is pulling back its own unique <code>accessEpochTime</code> to start.
+			</p>
+			<p>
+				There's also a gotcha though. For the project listing and dashboard scenarios, it's very possible that even though there had been an update, the data refresh wouldn't show anything new.
+			</p>
+			<p>
+				For instance, it could be that the project listing had a filter against just tasks with high priority and instead, an update was made to a task of medium priority. On the dashboard, it could be that none of the tasks related to the user in question were updated, so their counts would remain the same. In both scenarios, we'd be fetching new data and have nothing to show for it.
+			</p>
+			<p>
+				I'm OK with this false positive. There's no inherent harm in reloading the same data (save wasting data transfer bytes). And, as mentioned earlier, transactions aren't occurring at a blazing rate.
+			</p>
+			<p>
+				So, I still get <em>most </em>of the benefit of saving data transfer on the big reads even if occasionally the reads being made aren't necessary.
+			</p>
+			<p>
+				The alternative would be to have a more granular fabric of <code>lastUpdated</code> scenarios&mdash;the permutations of which would grow pretty fast. For another app, this might be worth it, just not this one.
+			</p>
+			<p>
+				I'm a stickler for simple "old school" solutions. But getting to the best version of <em>simple </em>is always about weighing trade-offs. And trade-offs are not only app-specific, but can often be a very subjective thing.
+			</p>
+			<p>
+				If you liked this one, here's another I wrote recently on interstitial states:
+			</p>
+			<p><a href="/essays/old-school-workarounds-the-interstitial-state.html"><strong>Old School Workarounds: The Interstitial State</strong><br/><em>I feel fortunate to have been working on the web (as we know it) since its infancy, which I'll consider to be the late&hellip;</em>medium.com</a><a href="/essays/old-school-workarounds-the-interstitial-state.html"></a></p>
+			<p>
+				Thanks for reading!
+			</p>
+		</div>
+	</body>
+</html>

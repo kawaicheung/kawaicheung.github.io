@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+	    <meta charset="UTF-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <title>Ka Wai Cheung | Life imitates code: Three life lessons I’ve learned from programming</title>
+	  	<link rel="icon" href="/favicon.ico" type="image/x-icon">
+      <link rel="stylesheet" href="/styles/styles.css?p=030426">
+	</head>
+	<body>
+		<nav>
+      <a href="/"><img src="/img/kc.png" /></a>
+			<ul>
+				<li><a href="/software">Solo software</a></li>
+				<li><a href="/random">Side projects</a></li>
+				<li><a href="/temperament">How I work</a></li>
+        <li><a href="/web">Career</a></li>
+				<li><a href="/essays" class="selected">Essays</a></li>
+				<li><a href="/books">Books</a></li>
+			</ul>
+		</nav>
+		<div>
+			<a class="header-link" href="/">Ka Wai Cheung</a>
+			<h2 class="solid">Life imitates code: Three life lessons I’ve learned from programming.</h2>
+			<div class="pub-date">Jul 2014</div>
+			<p>
+				This year will mark my seventeenth year programming on the Web. It all started in the late nineties in college, dabbling in table-based web design, classic ASP, and Microsoft Access databases. What started off as a hobby has become a career and a passion. I've spent half of my life learning, stumbling, succeeding, failing, and always being humbled by the beautiful and complex nature of code.
+			</p>
+			<p>
+				I've been around code long enough to see languages and platforms come and go, long enough to see patterns popularized, condemned, and then re-popularized. At some point, I began to separate <em>trend</em> from <em>truth</em>.
+			</p>
+			<p>
+				Programming trends are ephemeral, but the rules that stick with me&mdash;those which I'm confident to call <em>truths</em>&mdash;also tend to work well as truths in other parts of my life. Indeed, life imitates code. Here are three great lessons that have come back again and again in programming as they do in life. There are certainly many more.
+			</p>
+			<h4>Arguable decisions are about weighing tradeoffs.</h4>
+			<p>
+				Great debates always go on in the development community. Whether it's the recent <a href="https://martinfowler.com/articles/is-tdd-dead/">debate on TDD as a viable approach to web development</a> or to what extent developers should use ORMs (or micro-ORMs). Whether to favor .NET MVC over WebForms or Javascript-centric apps over page-based apps, the answer&mdash;to me&mdash;is always the same: What are you trading off?
+			</p>
+			<p>
+				In any debate where two popular methodologies are up for questioning, the lean toward one or the other is simply a lean toward the better tradeoff. Early on in my career, I sought the <em>right</em> answer. It felt like progress was linear: We shed the old way of doing something for the new-and-better way. There was a time when I was convinced that writing your own SQL queries was an antiquated exercise and ORMs were the end-all-be-all future.
+			</p>
+			<p>
+				But, I've learned that the better way is all about context. For instance, todays full-blown ORMs do a great service to insulate the tedious plumbing of mapping relational data grids into objects, but the insulation also makes certain kinds of non-standard queries difficult and potentially inefficient. The <a href="http://stackoverflow.com/questions/97197/what-is-the-n1-selects-issue">n+1 select problem</a> is the classic tradeoff between writing less code and writing more efficient code. The extent of my use of an ORM is entirely influenced by the amount of data I expect an application to consume, the potential time constraints I am under, and the long-term scalability needs of an app. (As an aside, I'm currently a big fan of micro-ORMs like <a href="https://code.google.com/p/dapper-dot-net/">Dapper</a>, which gives me the benefits of both writing my own SQL and some slick object-relational mapping).
+			</p>
+			<p>
+				I've applied this truth to other aspects of my life, as well. Should I buy a condo or rent for awhile longer? Should I start my own business or work for an already-established company? There is no silver bullet. Life's difficult questions are more confidently answered when deciding which tradeoff is better for <em>you</em>.
+			</p>
+			<h4>Clarity is not always about concision.</h4>
+			<p>
+				Like most engineers, I salivate at the opportunity to continually refactor my way down to the most minuscule and concise amount of code as possible. Given the choice of less code versus more code to accomplish the same task, why would I ever choose more? Usually, more concise language leads to better communicated language. The added fluff gets in the way of the core message. But, the end goal shouldn't be concision&mdash;it should be communication. To me, the following straightforward code, while lengthier&hellip;
+			</p>
+			<pre>if (HasFarm() && HasBoat()) {   Broadcast("You are wealthy!"); } else if (HasFarm() && !HasBoat()) {   Broadcast("You are OK!"); } else if (!HasFarm() && HasBoat()) {   Broadcast("You are OK!"); } else if (!HasFarm() && !HasBoat()) {   Broadcast("You are poor!"); }</pre>
+			<p>
+				&hellip;is far more explicit than this more concise version.
+			</p>
+			<pre>(HasFarm() && HasBoat()) ? Broadcast("You are wealthy!") : (HasFarm() || HasBoat()) ? Broadcast("You are OK!") : Broadcast("You are poor!");</pre>
+			<p>
+				While it's a matter of taste (some people might full well find the latter more obvious), my point here is that sometimes the greatest path to explaining something isn't always to reduce. As it applies to life, I've taken more time to think about what conveys a message better to the person receiving it&mdash;and sometimes the more verbose route isn't fluff at all, but essential to communicating the message more clearly.
+			</p>
+			<p>
+				For instance, I might want to be more explicit and verbose about telling my dad how to turn off his iPad ("Hold the button on the right for awhile&hellip;"). Or, while I may be casual about typing to a fellow developer about a commit I've made into a local branch ("Just committed that bug fix."), when it comes to deploying those updates to production, I'll be very explicit about which exact commits are being merged and moving up ("Revisions 4812&ndash;4822, which include the DoneDone issues in the 6/15 release build, are going up in tonight's production release.").
+			</p>
+			<h4>Accrue good debt, and pay it back consistently.</h4>
+			<p>
+				I grew up in a family that absolutely dreaded any kind of debt. In the mid-eighties, my parents scraped together nearly everything they had earned to put down a 75% down payment on their first home and paid off the remainder of the balance within seven years. Paying with cash was the norm. Paying on credit was nearly a sin. As a child, I understood that debt was wholly bad. I was never exposed to using debt to your own advantage.
+			</p>
+			<p>
+				It was only when I saw how other people treated debt&mdash;sometime in my early-20s&mdash;that I finally grasped how it could be beneficial. If you take on debt for the right reasons, you'll get ahead later on. If there's a better upside to borrowing a little now to accelerate your growth later, debt can be a great <em>asset</em>.
+			</p>
+			<p>
+				This is the truth in code, too. Sometimes its worth taking on a little debt now&mdash;a missed abstraction opportunity, some less-than-optimized SQL code&mdash;if it can get you to ship something faster for an ever-growing audience. The key is understanding you'll have to pay it back, and that you <em>can</em> pay it back in the right amount of time.
+			</p>
+			<p>
+				This is the trick with debt in both life and programming. Paying back your debts needs to be done consistently. Spending 10% of your week on just refactoring is the coding equivalent of paying your credit card bill on time. If you get into a mindset of constant, sustainable repayments, accruing debt will actually be good for you.
+			</p>
+		</div>
+	</body>
+</html>

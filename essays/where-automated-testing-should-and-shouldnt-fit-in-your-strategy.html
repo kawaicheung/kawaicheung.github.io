@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+	    <meta charset="UTF-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <title>Ka Wai Cheung | Where automated testing should (and shouldn’t) fit in your strategy</title>
+	  	<link rel="icon" href="/favicon.ico" type="image/x-icon">
+      <link rel="stylesheet" href="/styles/styles.css?p=030426">
+	</head>
+	<body>
+		<nav>
+      <a href="/"><img src="/img/kc.png" /></a>
+			<ul>
+				<li><a href="/software">Solo software</a></li>
+				<li><a href="/random">Side projects</a></li>
+				<li><a href="/temperament">How I work</a></li>
+        <li><a href="/web">Career</a></li>
+				<li><a href="/essays" class="selected">Essays</a></li>
+				<li><a href="/books">Books</a></li>
+			</ul>
+		</nav>
+		<div>
+			<a class="header-link" href="/">Ka Wai Cheung</a>
+			<h2 class="solid">Where automated testing should (and shouldn’t) fit in your strategy.</h2>
+			<div class="pub-date">Apr 2015</div>
+			<p>
+				Having worked with automated testing in various forms for a few years now, I've come to a few conclusions about where it fits in the mindset of a software developer&mdash;and about how it can become a crutch in programmer behavior if we fit it improperly.
+			</p>
+			<h4>Testing vs. checking</h4>
+			<p>
+				For a while now, something's felt strange to me about the way that automated tests are often marketed to the development community. For one, I think the term "test" itself is quite misleading. It conjures up this idea that we've found a viable replacement to manual testing; that&mdash;if all tests pass&mdash;we are guaranteed bug-free software. But, automated tests aren't really testing a system at-large, so much as they are <em>checking</em> specific behavior within a system.
+			</p>
+			<p>
+				For example, suppose I want to test out the security around our billing page. I could write a couple of integration tests, by using a tool like <a href="http://www.seleniumhq.org/">Selenium</a>, to confirm the following assumptions:
+			</p>
+			<ul class="postList">
+				<li>"If I login as an account owner, I should be able to access the billing page."</li>
+				<li>"If I login as a normal user, I should not have access to the billing page."</li>
+			</ul>
+			<p>
+				These tests confirm what we expect to happen actually happens, but they don't confirm that what we <em>don't</em> expect to happen (because we aren't testing for it) actually won't happen. For instance, neither test would prove that going to the billing page doesn't, say, inadvertently kick off a process that deletes your user account, or the infinite number of other possibilities that could go wrong. We aren't testing that a system actually works; We are merely checking that specific assumptions we made aren't broken.
+			</p>
+			<p>
+				The same is true for unit tests. While they test very narrow and well-defined functionality, they aren't going to test for, as <a href="http://blog.8thlight.com/uncle-bob/2014/04/30/When-tdd-does-not-work.html">Uncle Bob states</a>, "the stuff out at the boundaries of the system." Also, with unit tests, there is often the talk of "100% code coverage." <a href="http://www.rbcs-us.com/documents/Why-Most-Unit-Testing-is-Waste.pdf">James O Coplien argues that it's pragmatically impossible to achieve</a> if we define this as:
+			</p>
+			<p>
+				<em>&hellip;having examined all possible combinations of all possible paths through all methods of a class, having reproduced every possible configuration of data bits accessible to those methods, at every machine language instruction along the paths of execution.</em>
+			</p>
+			<p>
+				If we truly achieved this, he argues, we'd have on the order of trillions of scenarios to test for even modest software.
+			</p>
+			<p>
+				So, where does this get us? I often visualize automated tests like building a frame (the tests we write) around a constantly morphing structure (the true behavior we want). We can nail lots of posts together to build a frame that begins to resemble the behavior we want, but we'll never quite get there.
+			</p>
+			<img src="/essays/img/automated-testing-01.jpg" style="max-width:100%;height:auto;display:block;align-self:flex-start;border:solid 1px var(--color--border-line);border-radius:0.5rem;margin-bottom:1.4rem;" />
+			<p style="font-size:0.65rem;margin-top:-1rem;margin-bottom:1.4rem;"><em>Writing automated tests provide basic boundaries for bug-free code, but are by no means an end-all solution.</em></p>
+			<p>
+				Writing automated tests provide basic boundaries for bug-free code, but are by no means an end-all solution.
+			</p>
+			<p>
+				So, what's a better way to describe these things? The term "automated checks" feels much more appropriate to me, and others agree. As <a href="http://www.satisfice.com/blog/archives/856">James Bach writes</a>, there is a big difference between what humans can do and what automated tools can do.
+			</p>
+			<p>
+				<em>In the Rapid Software Testing methodology, we distinguish between aspects of the testing process that machines can do versus those that only skilled humans can do. We have done this linguistically by adapting the ordinary English word "checking" to refer to what tools can do.</em>
+			</p>
+			<p>
+				With that said, Bach comes up with a differentiation between software testing and software checking.
+			</p>
+			<p>
+				Testing<em> is the process of evaluating a product by learning about it through exploration and experimentation, which includes to some degree: questioning, study, modeling, observation, inference, etc&hellip;.</em>Checking<em> is the process of making evaluations by applying algorithmic decision rules to specific observations of a product.</em>
+			</p>
+			<p>
+				<strong>Automated tests are really automated checks</strong>. And, checking is just one small part of a complete testing strategy. It's one kind of insurance policy amongst a whole suite of policies designed to make bugs more unlikely (but, certainly, not impossible) to introduce into a system.
+			</p>
+			<h4>Maintaining your own human vigilance against bugs</h4>
+			<p>
+				So, what's the big deal about calling a "check" a "test"? When we start becoming <em>overly confident</em> in our ability to write bug-free code simply based on a successful series of automated tests, the returns begin to diminish&mdash;rapidly. Our minds start to let go of some of the natural deliberateness we may have once put into code prior to the feeble safety net of automated tests. At its worst, it means we become narrowly-focused developers, using one relatively brittle measure of success as false justification that our testing is now complete.
+			</p>
+			<p>
+				If we were to truly <em>test</em> every possible scenario in even a modest system, there would quickly be orders of magnitude more tests to write than would be practical. We best rely on a series of other strategies&mdash;in addition to automated checks&mdash;to cover all the other permutations.
+			</p>
+			<h4>The TDD debate and the real question we should be answering</h4>
+			<p>
+				Is test-driven development (er, check-driven development) a good approach to writing code? If you read the <a href="http://david.heinemeierhansson.com/2014/tdd-is-dead-long-live-testing.html">tech</a> <a href="http://butunclebob.com/ArticleS.UncleBob.TheThreeRulesOfTdd">pundits</a> <a href="http://martinfowler.com/articles/is-tdd-dead/">today</a>, most everyone has a very strong opinion on the matter. But, I think we're asking the wrong question. Asking if you should be employing TDD is like asking a basketball coach whether they should play a 2&ndash;1&ndash;2 zone, 2&ndash;3 zone, or man-on-man defense. They can all work and they can all not work. I've seen quality software written both with and without a TDD approach.
+			</p>
+			<p>
+				The real question we should ask is, how do we pragmatically make the introduction of bugs as improbable as possible, (while weighing all the other important matters of software, like new features, deadlines, etc.)? To me, it starts with the right programmer mentality.
+			</p>
+			<p>
+				We should be talking just as much about these other things, because they are just as important, if not more important, than automated testing:
+			</p>
+			<ul class="postList">
+				<li><strong>Writing expressive code. </strong>Many bugs and points of confusion can be mitigated by focusing on code clarity. As Phil Karlton once said, naming things is one of the two hardest skills in programming. Devoting more time to <a href="http://www.itiseezee.com/?p=83">precise and meaningful naming</a> can be a big benefit.</li>
+				<li><strong>Peer code review</strong>. Have your colleague review code you're going to check in to play devil's advocate. (The <a href="https://help.github.com/articles/using-pull-requests/">Git pull request</a> concept is a great facilitator for this). They will almost certainly see your code from a different angle, and they'll spot things you might not have been looking for.</li>
+				<li><strong>Writing in small iterations. </strong>Get in the habit of committing incremental changes to your source control repository. This helps someone else visualize how you got from point A to point B, and makes it easier to see where things might have gone wrong.</li>
+				<li><strong>Use the software you write</strong>. This sounds so simple, but is actually a thing most of us don't really do fully. So many obvious bugs would be caught if we took off our development cap periodically, closed the debugger, and used the software as a consumer prior to committing any code. Even with the luxury of a dedicated QA team, this is something every developer should put into their own arsenal.</li>
+				<li><strong>Think through all the possibilities</strong>. Automated checks are only as good as what they test for. So, we should spend more time discussing <em>what</em> to test. I've written about knowing what to test in a couple prior posts:</li>
+				<li><a href="https://www.getdonedone.com/five-test-cases-for-fewer-bugs/">Here are five cases to test</a> with every kind of object you manage in your system.</li>
+				<li>Here's a <a href="https://www.getdonedone.com/the-hard-thing-about-testing/">more general approach</a> to thinking through your checking scenarios.</li>
+				<li>Finally, a <a href="https://www.getdonedone.com/cut-problem-half/">general heuristic</a> for tackling mysterious bugs.</li>
+			</ul>
+			<p>
+				To be clear, automated checks have a very important place in building sound software. But we need to be careful with our expectations. Placing too much value into them might give us a false sense of security making us even more prone to introducing bugs. We need to make sure that our long-tested human processes still play a majority role in our overall testing strategy.
+			</p>
+		</div>
+	</body>
+</html>

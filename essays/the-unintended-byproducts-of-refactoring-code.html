@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+	    <meta charset="UTF-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <title>Ka Wai Cheung | The unintended byproducts of refactoring code</title>
+	  	<link rel="icon" href="/favicon.ico" type="image/x-icon">
+      <link rel="stylesheet" href="/styles/styles.css?p=030426">
+	</head>
+	<body>
+		<nav>
+      <a href="/"><img src="/img/kc.png" /></a>
+			<ul>
+				<li><a href="/software">Solo software</a></li>
+				<li><a href="/random">Side projects</a></li>
+				<li><a href="/temperament">How I work</a></li>
+        <li><a href="/web">Career</a></li>
+				<li><a href="/essays" class="selected">Essays</a></li>
+				<li><a href="/books">Books</a></li>
+			</ul>
+		</nav>
+		<div>
+			<a class="header-link" href="/">Ka Wai Cheung</a>
+			<h2 class="solid">The unintended byproducts of refactoring code.</h2>
+			<div class="pub-date">May 2016</div>
+			<p>
+				Whenever I start on a large refactoring, I need to justify that the exercise is truly worthwhile. Am I objectively and unequivocally improving the understandability of the codebase? If I've finished and the codebase is no more readable or maintainable than it was when I began, I'd argue there were better ways to have used my time.
+			</p>
+			<p>
+				While the goal might seem obvious, executing on it is often trickier than you'd think.
+			</p>
+			<h4>The two goals of any refactoring</h4>
+			<p>
+				Every refactoring has two goals. The immediate goal is technical. I have <em>something</em> in my code that doesn't feel quite right. Perhaps it's a leaky abstraction, a convoluted dependency, repeated code, or a poorly encapsulated concept that festers throughout the entire application.
+			</p>
+			<p>
+				I then start laying out the roadmap to get from the code-at-present-moment to the glorious vision of my future code. With the completion of each small step, I re-run my automated tests, commit, then move on. After enough iterations, my plan slowly begins aligning like the pieces on a Tetris board. Eventually, I get to that one final, satisfying refactoring step&mdash;the long piece, if you will.
+			</p>
+			<img src="/essays/img/byproducts-refactoring-01.jpg" style="max-width:100%;height:auto;display:block;align-self:flex-start;border:solid 1px var(--color--border-line);border-radius:0.5rem;margin-bottom:1.4rem;" />
+			<p style="font-size:0.65rem;margin-top:-1rem;margin-bottom:1.4rem;"><em>Ahhh&hellip;.the long-awaited completion of a refactoring</em></p>
+			<p>
+				It is at this point where the abscess has been removed and whatever smelled in my codebase no longer smells. I'm ready to pull the fresh new code into our master branch. However, It's easy to fall into the trap of assuming the work is done.
+			</p>
+			<p>
+				That's because the second goal of a refactoring is the more important one. Has the understandability of the codebase actually improved? If you've achieved the technical goal (the leak is gone!), then, you'd think the codebase would automatically be more readable and maintainable. But, I've found that the tunnel-vision attention required to achieve the technical goal-at-hand can blind me to this second&mdash;more critical&mdash;goal.
+			</p>
+			<h4>That new refactoring smell</h4>
+			<p>
+				If refactoring is like carpentry, then, accomplishing its technical goals will leave some unwanted byproducts&mdash;discarded pieces left unknowingly on the workbench or a film of sawdust hovering over the entire body of work. In order to make a refactoring truly complete, we need to go back, wipe up our workspace, and apply some polish.
+			</p>
+			<p>
+				After you celebrate the technical achievements of your newly-updated code, look back at your work holistically to see if you haven't inadvertently introduced some new smells. Make sure you haven't simply traded off <em>old technical debt</em> for <em>new technical debt </em>that you'll need to pay back later.
+			</p>
+			<h4>Code appendages</h4>
+			<p>
+				A refactoring sometimes introduces a bunch of appendages into your code. Are there any no-longer-necessary parameters passed into refactored methods? Are there local variables that are now lying around with nothing specific to do? For instance, if you're moving a piece of functionality out of a method that's doing too many things, it's very likely that the original method now has extra references that just aren't needed anymore.
+			</p>
+			<p>
+				In the midst of the refactoring, you may be so focused on the extraction, that you forget to clean these bits up. And, by cleaning it up, you may uncover a trail of other code that can go into the trash bin as well. Without this cleanup, you've just added the debt of useless code to your system. That might make the newly refactored codebase just as hard to read.
+			</p>
+			<h4>Misleading names</h4>
+			<p>
+				When you've moved code around your application to get the pieces fitting just right, revisit how you've named the methods, properties, and classes that have undergone the facelift. Do these names still make sense? Do the comments around these methods still apply?
+			</p>
+			<p>
+				When you're in the same code daily, you might not even notice that the name of a variable or method is misleading because you're so familiar with it. But, to someone coming into the codebase fresh (or, if you happen to take a few weeks off and come back later), misleading names will be detrimental to their understanding of the system.
+			</p>
+			<h4>Uncovering other smells</h4>
+			<p>
+				Often, a refactoring of one thing uncovers other code smells that weren't as obvious before. In a recent refactoring I did, my end goal was to standardize how we handle business-level permissions. The technical goal was to consolidate this code to a single class and move the responsibility of using this class from lower-level classes to higher-level classes. By doing so, I also exposed some places in our code where the same permissions checks were now being done multiple times in these higher-level class.
+			</p>
+			<p>
+				This redundancy was always there. It just wasn't obvious&mdash;it had been hidden because the calls were done lower in the chain by separate methods. Had I stopped the refactoring without taking another look at the code after the fact, I may have missed the opportunity to keep the code <a href="https://en.wikipedia.org/wiki/Don%27t_repeat_yourself">DRY</a>. I'd be leaving in (now more obvious) technical debt.
+			</p>
+			<p>
+				For most of the unintended cruft left after a refactoring, there are tools at our disposal that can help us. As a .NET programmer, a tool like <a href="https://www.jetbrains.com/resharper/">Resharper</a> can detect these common smells so we don't have to go hunting them down ourselves. In the end, a refactoring isn't truly complete until we've re-assessed our work and can objectively say the code is now more understandable.
+			</p>
+		</div>
+	</body>
+</html>

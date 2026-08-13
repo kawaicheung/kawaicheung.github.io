@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+	    <meta charset="UTF-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <title>Ka Wai Cheung | The one-person product: Throwing the AI train in reverse</title>
+	  	<link rel="icon" href="/favicon.ico" type="image/x-icon">
+      <link rel="stylesheet" href="/styles/styles.css?p=030426">
+	</head>
+	<body>
+		<nav>
+      <a href="/"><img src="/img/kc.png" /></a>
+			<ul>
+				<li><a href="/software">Solo software</a></li>
+				<li><a href="/random">Side projects</a></li>
+				<li><a href="/temperament">How I work</a></li>
+        <li><a href="/web">Career</a></li>
+				<li><a href="/essays" class="selected">Essays</a></li>
+				<li><a href="/books">Books</a></li>
+			</ul>
+		</nav>
+		<div>
+			<a class="header-link" href="/">Ka Wai Cheung</a>
+			<h2 class="solid">The one-person product: Throwing the AI train in reverse.</h2>
+			<div class="pub-date">Jul 2024</div>
+			<h3>My latest adventures in the software space</h3>
+			
+			<p>
+				A common anxiety among technologists today is to figure out <em>what to do with AI</em>. We're all jumping onto a train steered down tracks just being laid as we cross them. The ride is exhilarating for some, petrifying for others, and certainly bumpy for everyone onboard.
+			</p>
+			<p>
+				The loudest voices these days still come from the same places. More of this thing every tech narcissist craves to do&mdash;<em>disrupt&mdash;</em>leading to more of the thing they crave to be&mdash;<em>big</em>. More powerful. More loud. AI is just the latest fodder.
+			</p>
+			<p>
+				I'm looking at it differently because with something as big and loud as AI and the people that are carrying its torch, there's also an opportunity for something different. For the exact opposite. Because everything after awhile gets old and stale and people crave the other thing.
+			</p>
+			<p>
+				I see an opportunity to build smaller things by yourself. Both because the tools are always getting better and because AI&mdash;as one such tool&mdash;is a tremendous assistant when it comes to writing code. It's been core to what I've been doing recently&mdash;ramping up on Ruby on Rails*, a framework I've known about since its inception 20 years ago but just got around to installing a few months ago.
+			</p>
+			<p>
+				<em>*- My ramp-up in RoR over the past two months has been a combination of the </em><a href="https://pragmaticstudio.com/courses/rails"><em>Rails</em></a><em> and </em><a href="https://pragmaticstudio.com/hotwire-rails"><em>Hotwire</em></a><em> video series from </em><a href="https://pragmaticstudio.com/"><em>Pragmatic Studio</em></a><em> along with having ChatGPT as an assistant to write nitty gritty Ruby stuff.</em>
+			</p>
+			<h4>After all, there is an "AI" in Rails&hellip;</h4>
+			<p>
+				I've always loved the culture around Rails. Specifically that it tries to be as much a philosophy as it is a programming framework.
+			</p>
+			<p>
+				These philosophies, like convention over configuration, Ruby's emphasis on succinctness, and the viability of a <a href="https://world.hey.com/dhh/the-one-person-framework-711e6318">one-person framework</a> sometimes seem to come at the expense of some other more traditional ones. And that rubs some programmers the wrong way.
+			</p>
+			<p>
+				But I've become more fond of its opinions (and the simple fact that it <em>has opinions</em>) as I've gotten older. Even more so in a time where some folks are eschewing learning to write code altogether in the shadows of these AI assistants.
+			</p>
+			<p>
+				As I've dug into writing a Rails app, I find myself smiling, nodding, sometimes frowning, but altogether excited about this thing I've known about forever but never used. Some stuff I don't love.
+			</p>
+			<p>
+				Two quick examples:
+			</p>
+			<ul class="postList">
+				<li>I find the convention over configuration thing sometimes makes understanding what's going on a bit harder, though my opinion is already changing as I get more comfortable with them.</li>
+				<li>I find the automatic return of the last output of a method a bit too cute while opening up the possibilities for confusing results. But then again, it's an available feature of the language you can leave at the table if you'd like. I'm just used to being told there is no option.</li>
+			</ul>
+			<p>
+				But most of the stuff I do. Anyways, that's how any good thing should be right?
+			</p>
+			<p>
+				With Rails, I'm trying to build simpler, complete, one-person products. By one-person I mean I'm the only one doing all of it&mdash;database, design, front-end, back-end, marketing, pricing.
+			</p>
+			<p>
+				Because while the AI train seems headed toward the usual mountains and valleys of big tech, it might also be leaving room for people like me that just love to make useful and beautiful things in a time where it seems more and more possible.
+			</p>
+			<p>
+				And room for products that make what's already out there&hellip;better.
+			</p>
+			<h4>DNS Digest: My first "one person" product</h4>
+			<p>
+				My first such attempt is (tentatively) called DNS Digest. It's a tool that reads DNS records directly from your name servers and displays them in a human-friendly and informative way.
+			</p>
+			<img src="/essays/img/one-person-product-01.png" style="max-width:100%;height:auto;display:block;align-self:flex-start;border:solid 1px var(--color--border-line);border-radius:0.5rem;margin-bottom:1.4rem;" />
+			<img src="/essays/img/one-person-product-02.png" style="max-width:100%;height:auto;display:block;align-self:flex-start;border:solid 1px var(--color--border-line);border-radius:0.5rem;margin-bottom:1.4rem;" />
+			<img src="/essays/img/one-person-product-03.png" style="max-width:100%;height:auto;display:block;align-self:flex-start;border:solid 1px var(--color--border-line);border-radius:0.5rem;margin-bottom:1.4rem;" />
+			<p style="font-size:0.65rem;margin-top:-1rem;margin-bottom:1.4rem;"><em>Early screenshots of a few screens of DNS Digest v1.</em></p>
+			<p>
+				It also lets you annotate your DNS records so you remember why they're there and when you delete a record from your actual DNS server, DNS Digest will keep an archived copy of it&hellip;.just in case.
+			</p>
+			<img src="/essays/img/one-person-product-04.png" style="max-width:100%;height:auto;display:block;align-self:flex-start;border:solid 1px var(--color--border-line);border-radius:0.5rem;margin-bottom:1.4rem;" />
+			<p>
+				It's a simple idea. But not one I've seen on the market. Maybe it's an idea too small for most companies to want to chew&mdash;but just right for someone like me, who still loves to create meaningful things, in a time like now, where the tools available make it feasible to build whole products by yourself.
+			</p>
+			<p>
+				More to come in the coming weeks&hellip;
+			</p>
+		</div>
+	</body>
+</html>

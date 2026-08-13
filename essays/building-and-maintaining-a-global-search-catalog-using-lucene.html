@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+	    <meta charset="UTF-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <title>Ka Wai Cheung | Building and maintaining a global search catalog using Lucene</title>
+	  	<link rel="icon" href="/favicon.ico" type="image/x-icon">
+      <link rel="stylesheet" href="/styles/styles.css?p=030426">
+	</head>
+	<body>
+		<nav>
+      <a href="/"><img src="/img/kc.png" /></a>
+			<ul>
+				<li><a href="/software">Solo software</a></li>
+				<li><a href="/random">Side projects</a></li>
+				<li><a href="/temperament">How I work</a></li>
+        <li><a href="/web">Career</a></li>
+				<li><a href="/essays" class="selected">Essays</a></li>
+				<li><a href="/books">Books</a></li>
+			</ul>
+		</nav>
+		<div>
+			<a class="header-link" href="/">Ka Wai Cheung</a>
+			<h2 class="solid">Building and maintaining a global search catalog using Lucene.</h2>
+			<div class="pub-date">Sep 2016</div>
+			<p>
+				In 2013, I built the global search for DoneDone. This feature allows you to search for any set of words across all issues you have access to. How did I build our search engine and how does it stay up-to-date?
+			</p>
+			<p>
+				Rather than add full-text cataloging to our master SQL Server database, I built the search database separately using <a href="http://lucenenet.apache.org/">Lucene.Net</a>&mdash;-a port of the Lucene search software originally written in Java by <a href="https://en.wikipedia.org/wiki/Doug_Cutting">Doug Cutting</a>. Isolating the search feature away from our master database was a pragmatic decision. It let me focus on building out search without having to worry about affecting performance on our master database.
+			</p>
+			<h4>A (quick) introduction to Lucene</h4>
+			<p>
+				Lucene is an open-source document database that comes with its own code library and querying language optimized for searching against text.
+			</p>
+			<p>
+				A document database takes the traditional approach of a NoSQL database: The entirety of the data concerning a business object lives inside <em>one record</em>, called a <strong>document</strong>. In contrast, our master database is relational&mdash;it tends to store pieces of information for a business object in multiple records across multiple tables to keep data normalized. In Lucene, we don't care about normalization. We flatten out (and sometimes repeat) data so it's optimized for search and retrieval.
+			</p>
+			<p>
+				A document consists of a set of <strong>fields</strong>. Fields have a unique string name and a string value. It also has a store type and an index type. We'll touch upon the latter a bit later.
+			</p>
+			<p>
+				At a high level, search is straightforward. Once you've created a collection of documents within Lucene, you can run a query against the fields within these documents. Lucene will then return matching documents (i.e. a set of records) in order of relevance. You can then access the fields within these documents to display search results any way you want.
+			</p>
+			<h4>Lucene's low-level magic</h4>
+			<p>
+				At a lower level, there's a good amount of magic (read: code we don't have to write) that goes on behind-the-scenes. With the querying language, you can tell Lucene which matches are required. You can also weigh matches against certain fields over others. As a simple example, if you have a <code>Title</code> and <code>Description</code> field in your documents, a search query like the one below will prioritize a match on title twice as much as it would on description.
+			</p>
+			<pre>Title:“Hello world” ^2 Description:“Hello world”</pre>
+			<p>
+				The benefit of weighting is order. With the right selection of weights, you can push more relevant matches to the top of your search results.
+			</p>
+			<p>
+				Lucene also takes care of highlighting and fragmenting descriptions where the best matches occur. Suppose you perform a search for "lazy dog" in the <code>Description</code> field of a document with this value:
+			</p>
+			<p>
+				<code>"The quick brown fox jumps over the lazy dog. It is a very rainy day, so the fox is lucky that it didn't slip when it jumped. The lazy dog was, as you might expect, none the wiser. The lazy dog is, after all, a lazy dog."</code>
+			</p>
+			<p>
+				In Lucene's code library, the <code>Highlighter</code> class's <code>GetBestFragments()</code> method will return a <em>tailored</em> string. You can tell Lucene how to stylize relevant matches, how to concatenate matches within long strings, and how many matches to return. In this case, I tell it to display matches as bold text, use ellipses to separate fragments, and return only two matches. The result from Lucene will be something like:
+			</p>
+			<p>
+				"The quick brown fox jumps over the<strong> lazy dog</strong>&hellip;The <strong>lazy dog</strong> was, as you might expect, none the wiser."
+			</p>
+			<p>
+				There are plenty more magical bits to Lucene. As is the case with most open-source projects, documentation is a bit hard to find (<a href="http://codeclimber.net.nz/archive/2009/08/27/how-to-get-started-with-lucene.net.aspx">here's one good resource</a>). But, the library itself provides detailed comments for you to go hunting around.
+			</p>
+			<h4>Defining our document structure</h4>
+			<p>
+				Here's what a typical search result looks like in DoneDone:
+			</p>
+			<img src="/essays/img/lucene-search-01.png" style="max-width:100%;height:auto;display:block;align-self:flex-start;border:solid 1px var(--color--border-line);border-radius:0.5rem;margin-bottom:1.4rem;" />
+			<p style="font-size:0.65rem;margin-top:-1rem;margin-bottom:1.4rem;"><em>DoneDone's global search feature</em></p>
+			<p>
+				So, what does the anatomy of a document in our search database look like? Ideally, I want everything I need to display, search, filter, and manage a search result comprised within one single document. That includes the data <em>exposed</em> in our search results as well as data I need <em>behind-the-scenes</em> to manage each document.
+			</p>
+			<p>
+				From just looking at the data I display, I already know a few fields we'll need in each document: the issue title, the issue number, the project, the date, and the description. I'll also need the priority level (so that I can display the appropriate priority color) and the status type (I strike through the issue title if that issue is closed or fixed).
+			</p>
+			<p>
+				Here's a breakdown of how I named those fields in our documents, whether they are used in the search query, and how they are displayed in the search results:
+			</p>
+			<img src="/essays/img/lucene-search-02.png" style="max-width:100%;height:auto;display:block;align-self:flex-start;border:solid 1px var(--color--border-line);border-radius:0.5rem;margin-bottom:1.4rem;" />
+			<p style="font-size:0.65rem;margin-top:-1rem;margin-bottom:1.4rem;"><em>*-Searchability depends on the document, which we'll explain below.</em></p>
+			<h4>How indexes work</h4>
+			<p>
+				As I mentioned earlier, a field not only consists of a name and a value, but an <strong>index type</strong>. The index type tells Lucene if and how to index that field in the database. For our purposes, I use one of three options: <code>NO</code>, <code>ANALYZED</code>, or <code>NOT_ANALYZED</code>.
+			</p>
+			<p>
+				If you don't index a field, you won't be able to search against the value of that field. If you choose an <code>ANALYZED</code> index, Lucene will be able to partially match against the value of the field&mdash;you can specify if the query requires some or all of the text to match in order for a document to be returned. A <code>NOT_ANALYZED</code> index requires an <em>exact</em> match for that field's document to be returned.
+			</p>
+			<p>
+				In my case, I want to place an <code>ANALYZED</code> index on the <code>Description</code> field. This lets me do all the Lucene magic of partial text matching I discussed earlier. In contrast, I don't place an index on the <code>CreatedOn</code>, <code>Status</code>, or <code>Priority</code> fields. Those fields simply come along for the ride if a document matches on the other fields, so they can be used in the displayed results.
+			</p>
+			<p>
+				I place a <code>NOT_ANALYZED</code> index on the <code>ProjectID</code> field. This field serves three purposes:
+			</p>
+			<ul class="postList">
+				<li>First, I use it to map to a list of project id/name pairs available in memory after the search executes. This allows me to display the project name alongside the search result.</li>
+				<li>Secondly, I allow users to filter results by project. When a specific project is selected, I add an additional query parameter that tells Lucene to only return documents whose <code>ProjectID</code> value <em>exactly matches the value</em> from the incoming request.</li>
+				<li>Lastly, and along similar lines, the <code>ProjectID</code> field also ensures the user doing the search has permission to that search result. Since our search catalog is global rather than partitioned by account, I need a way to ensure a user doesn't get results from a project they don't belong to. Along with each request, I pass in a list of project ids that a user has access to in DoneDone. That list of ids gets passed into the query. If a document's <code>ProjectID</code> doesn't match any ids a user has access to, it doesn't get returned.</li>
+			</ul>
+			<p>
+				With <code>IssueTitle</code> and <code>IssueNum</code>, things get a little more interesting.
+			</p>
+			<h4>Variable indexing on an issue's title and number</h4>
+			<p>
+				In DoneDone, an issue starts with a title and a description. After that, there might be edits and various comments on the issue. It displays this additional dialogue chronologically on the issue detail page. Internally, each update to an issue (including the initial creation of the issue) is stored as an individual issue history record.
+			</p>
+			<img src="/essays/img/lucene-search-03.png" style="max-width:100%;height:auto;display:block;align-self:flex-start;border:solid 1px var(--color--border-line);border-radius:0.5rem;margin-bottom:1.4rem;" />
+			<p style="font-size:0.65rem;margin-top:-1rem;margin-bottom:1.4rem;"><em>Issue detail pages are composed of a series of issue history records</em></p>
+			<p>
+				We want to break down the searchable pieces of an issue in a similar fashion. If you stuffed the contents of an entire issue into one search document, you'd lose the flexibility of better contextual matching.
+			</p>
+			<p>
+				For instance, you might have a dozen matching results for a single issue spread across five different comments from five different people. You want to list those as five separate search results rather than one result. Doing this also lets us directly link to the matching comment for each result (via an in-page anchor), rather than to the top of the issue detail page.
+			</p>
+			<p>
+				In order to get this granularity in the search results, each issue history record in our master database corresponds to a single document in our search database. If an issue has 12 histories (including the creation of the issue), there will be 12 corresponding documents in our search database. The comment added to each history corresponds to the <code>Description</code> field in the search document.
+			</p>
+			<p>
+				However, this also presents a conundrum. I include the <code>IssueTitle</code> and <code>IssueNum</code> for <em>each</em> search document. At first glance, I might want to add an <code>ANALYZED</code> index on the <code>IssueTitle</code>, just as I do for the <code>Description</code>. I also might want to add a <code>NOT_ANALYZED</code> index for the <code>IssueNum</code> (this allows users to search for matches by issue number&mdash;e.g. #188).
+			</p>
+			<p>
+				But, if I applied the index to <em>all</em> search documents, then, a match on an issue's title will return all documents for that issue. If an issue's title matched a search query and had 12 histories, 12 documents for that issue would return.
+			</p>
+			<p>
+				Instead, I only apply an index on <code>IssueTitle</code> and <code>IssueNum</code> if the corresponding issue history record has a type of <code>CREATION</code>. For all other histories (status updates, priority updates, fixer and tester reassignments, general comments or edits), I don't apply an index at all. Instead, they are merely used for display purposes. The ability to index a field for certain documents lets you get pretty creative with your search logic.
+			</p>
+			<h4>Rounding out the document structure</h4>
+			<p>
+				So far, I've only discussed the fields in a search document that directly affect how a result displays. But, a few more fields are required to correctly <em>update and manage </em>existing documents.
+			</p>
+			<p>
+				Behind the scenes, there are a few other identifiers I need within the document to be able to manage additions, updates and deletions:
+			</p>
+			<img src="/essays/img/lucene-search-04.png" style="max-width:100%;height:auto;display:block;align-self:flex-start;border:solid 1px var(--color--border-line);border-radius:0.5rem;margin-bottom:1.4rem;" />
+			<p>
+				I include the <code>IssueHistoryID</code> (a search document's corresponding issue history id in the master database) for two reasons. First, it lets me create the URL for each result which includes an in-page anchor to the specific comment where the search query matched. Second, I leverage this id if an issue history is updated. That's why I put a <code>NOT_ANALYZED</code> index on this field.
+			</p>
+			<p>
+				I include the <code>IssueHistoryType</code> so that I can track whether the <code>IssueTitle</code> and <code>IssueNum</code> should be indexed as I described earlier. When the document is initially added to the search database, I don't need to access this field. But, when an issue is updated, I will. More on this in a bit.
+			</p>
+			<p>
+				Finally, I include the <code>IssueID</code> (the id of an issue in the master database). If the title of an issue is ever updated, we'd need to update the title on all issue histories related to that issue. That's also why I put a <code>NOT_ANALYZED</code> index on this field.
+			</p>
+			<h4>Adding documents</h4>
+			<p>
+				When someone creates a new issue or adds a new comment, the data is immediately stored in our master relational database. However, it isn't immediately added to our search database. Instead, DoneDone runs a separate, out-of-band process to update our search database. We do this mainly to avoid any additional performance weight to the application.
+			</p>
+			<p>
+				To accomplish this, I created a standalone processor which we'll call the <strong>LuceneUpdater</strong>. It lives on a jobs server, separate from our web and master database servers. Every five minutes, it queries the master database to determine what documents need to be added to the search database.
+			</p>
+			<img src="/essays/img/lucene-search-05.png" style="max-width:100%;height:auto;display:block;align-self:flex-start;border:solid 1px var(--color--border-line);border-radius:0.5rem;margin-bottom:1.4rem;" />
+			<p>
+				Earlier, you saw how each document in the search database maps to one issue history record in our master database. In order for LuceneUpdater to know what new records have been added to the master database since it last ran, it stores the <code>IssueHistoryID</code> of the last record processed at the end of each run.
+			</p>
+			<p>
+				Because these ids auto-increment in the master database, when it queries the master database for the next run, it grabs all issue histories whose <code>ID</code> is greater than the most recently stored <code>IssueHistoryID</code>.
+			</p>
+			<p>
+				So, where does LuceneUpdater store this all-important ID? It creates a solitary Lucene document in a separate folder path which contains a field named <code>LastIssueHistoryIDUpdated</code>. Each time LuceneUpdater runs, it first looks up this document and retrieves the value of <code>LastIssueHistoryIDUpdated</code>.
+			</p>
+			<p>
+				If the document doesn't exist, LuceneUpdater simply starts from the beginning again (i.e. the very first <code>IssueHistoryID</code>). So, if I ever wanted to dump and rebuild the search catalog, I would just manually delete both the search database documents and this one-off document that stores <code>LastIssueHistoryIDUpdated</code>.
+			</p>
+			<p>
+				LuceneUpdater also adds a cap to the number of records it will process in one go. So, if I rebuild the search catalog, it won't try to create millions of documents on one attempt (as of this writing, there are nearly 12 million issue history records globally in DoneDone). Instead, it will build a maximum of 500,000 documents per cycle. It will then store the last issue history record ID, and start with the next highest one five minutes later. Eventually (on the order of a couple of hours right now), LuceneUpdater will catch up to all the issue history records in the master database.
+			</p>
+			<p>
+				Of course, a complete rebuild is an exceptional case. During a normal five minute cycle at peak periods, there may be a couple hundred records to process at most.
+			</p>
+			<h4>Managing updates and deletes</h4>
+			<p>
+				You might think this is all you need to do to keep the search database updated with our master database, but there are actually several other scenarios I need to account for:
+			</p>
+			<ul class="postList">
+				<li><strong>At any point, someone can decide to update an issue</strong>. If they change the title, description, status, or priority of the issue, these updates need to be reflected in the search database.</li>
+				<li><strong>Users can also move an issue to a new project.</strong> Not only does this change an issue's project, but also its number. <em>(Note: issue numbers are assigned sequentially per project. So, if issue #123 in Project A is moved to a Project B that only has 21 issues, it will have a new number&mdash;#22)</em>. Both of these updates need to be reflected in all documents relating to moved issues. Otherwise, they'd not only see outdated projects and issue numbers, but could also see incorrect results when filtering search queries by project.</li>
+				<li><strong>Users can also edit their issue comments for up to 30 minutes after they're added.</strong> Naturally, the search document corresponding to the issue history record also needs to be updated.</li>
+				<li><strong>In addition, someone can delete an issue altogether.</strong> When an issue is deleted, it shouldn't be available anywhere, including a text search.</li>
+			</ul>
+			<p>
+				Because the search database is managed asynchronously from the actions that happen within the application, I need a way of tracking all of these updates that might occur between each run of the LuceneUpdater.
+			</p>
+			<p>
+				I do this by leveraging another part of the DoneDone architecture&mdash;our caching layer. In our case, I use Membase (a key/value store) as our persistent cache. I primarily use Membase to store a number of different types of data to improve the performance of the app in various ways.
+			</p>
+			<p>
+				For the purposes of maintaining the search database, I store three additional key/value pairs to account for all of the potential issue update scenarios I just described. I'll briefly describe each Membase key/value pair and then detail how I employ them in LuceneUpdater.
+			</p>
+			<p>
+				<strong>Membase key/value records used to manage updates and deletions of exiting Lucene records:</strong>
+			</p>
+			<ul class="postList">
+				<li><code>IssueUpdateForSearch</code> Stores a list of issue ids. Each time an issue's title, description, file attachments, status, priority, or project is updated, the issue's id is added to the list.</li>
+				<li><code>IssueHistoryUpdateForSearch</code> Stores a list of issue history ids. Each time a comment for an issue history is updated by a DoneDone user, the history id is added to this list.</li>
+				<li><code>IssueDeleteForSearch</code> Stores a list of issue IDs. Each time an issue is deleted from the master database, the ID is tracked in this list.</li>
+			</ul>
+			<h4>The complete LuceneUpdater workflow</h4>
+			<p>
+				Each time LuceneUpdater runs, here's what happens:
+			</p>
+			<p>
+				First, it reads the list of issue history ids from the <code>IssueHistoryUpdateForSearch</code> record in Membase. It then queries the master database, grabbing the relevant data from the issue history records with a matching id in the list. Then, LuceneUpdater queries the search document store for an exact match on the <code>IssueHistoryID</code> field. For each returned document, the other fields are updated to match the data from the result set in the master database. Finally, it clears <code>IssueHistoryUpdateForSearch</code> from Membase.
+			</p>
+			<p>
+				(Note: the record will be re-added/updated in between updater runs should there be any issue history updates in that time span.)
+			</p>
+			<p>
+				Next, LuceneUpdater reads the list of issue IDs off the <code>IssueUpdateForSearch</code> record in Membase. Similarly, it queries several tables in the master database to gather the necessary history data relating to each issue whose id exists in the list. Then, LuceneUpdater queries the search document store for an exact match on the <code>IssueID</code> field. Unlike the issue history update, there will likely be several document matches on one <code>IssueID</code> field (since a new document is made for each issue's history).
+			</p>
+			<p>
+				Fields like <code>IssueNumber</code>, <code>IssueTitle</code>, and <code>ProjectID</code> are updated to match the data from the master database. However, the description field is <strong>only</strong> modified for documents with an IssueHistoryType of <code>CREATION</code>, since all other documents would relate to an issue history record rather than the issue itself (see our first post for a deeper explanation). When the process is completed, <code>IssueUpdateForSearch</code> is cleared from Membase.
+			</p>
+			<p>
+				LuceneUpdater then moves on to removing documents in the search database related to deleted issues. After reading the list of issue IDs from <code>IssueDeleteForSearch</code>, it queries the search database for an exact match on <code>IssueID</code> and removes each of document related to a deleted issue. When the process is completed, <code>IssueDeleteForSearch</code> is cleared from Membase.
+			</p>
+			<p>
+				With the issue history updates, issue updates, and deletes complete, LuceneUpdater then adds all new issue histories in the manner we discussed earlier.
+			</p>
+			<img src="/essays/img/lucene-search-06.png" style="max-width:100%;height:auto;display:block;align-self:flex-start;border:solid 1px var(--color--border-line);border-radius:0.5rem;margin-bottom:1.4rem;" />
+			<p style="font-size:0.65rem;margin-top:-1rem;margin-bottom:1.4rem;"><em>Order of tasks that LuceneUpdater performs during each five-minute cycle</em></p>
+			<h4>Accepting the right amount of staleness</h4>
+			<p>
+				Because DoneDone updates the search database asynchronously, we introduce a potential problem. The search database will never be fully updated in real-time. Any updates or additions made in the five minute span between the re-execution of LuceneUpdater won't appear until the next run. In other words, there is, <em>at most</em>, a five-minute delay.
+			</p>
+			<p>
+				For the most part, this is fine. It's good <em>enough</em>. We're willing to take the tradeoff of a small amount of staleness for all the benefits of a separately maintained and updated search catalog.
+			</p>
+			<p>
+				However, one scenario might not be good enough for our customers&mdash;deleting an issue. Suppose someone accidentally entered in production credentials into an issue and only realized it a half hour later. If they go back to delete the issue, the issue details would still exist in the search database until the next LuceneUpdater run, even if only for a few minutes.
+			</p>
+			<p>
+				I wanted issue deletes to be <em>instantaneous</em>. They should be gone from the site the instant someone deletes it and they shouldn't be accessible via the search.
+			</p>
+			<p>
+				To achieve this, I rely on Membase again. When a set of documents are returned from a search request, prior to displaying these results on screen, DoneDone reads the <code>IssueDeleteForSearch</code> key/value pair. If any issue ids in the list match the <code>IssueID</code> for a document, that document is skipped when assembling the search results view. So, even though the documents for a deleted issue might not yet be removed by LuceneUpdater, they will never get included on any search queries.
+			</p>
+			<p>
+				In summary, I'm OK with content taking up to five minutes to update. With deletes, we circumvent the search database to ensure what's deleted doesn't resurface.
+			</p>
+			<h4>Optimizing the index</h4>
+			<p>
+				Lucene's library also comes with a method in its <code>IndexWriter</code> class called <code>Optimize()</code>. This method reorganizes the document structure to make sure the searches work as quickly as possible (the details of what goes on behind-the-scenes I'll leave to the Lucene team). DoneDone runs a separate process to ensure the search document indexes are optimized once per day.
+			</p>
+			<p>
+				So there you have it. If you're thinking of implementing a search catalog in your application, I hope this insight helps you out!
+			</p>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+	    <meta charset="UTF-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <title>Ka Wai Cheung | Most Bugs Live in the Permutations</title>
+	  	<link rel="icon" href="/favicon.ico" type="image/x-icon">
+      <link rel="stylesheet" href="/styles/styles.css?p=030426">
+	</head>
+	<body>
+		<nav>
+      <a href="/"><img src="/img/kc.png" /></a>
+			<ul>
+				<li><a href="/software">Solo software</a></li>
+				<li><a href="/random">Side projects</a></li>
+				<li><a href="/temperament">How I work</a></li>
+        <li><a href="/web">Career</a></li>
+				<li><a href="/essays" class="selected">Essays</a></li>
+				<li><a href="/books">Books</a></li>
+			</ul>
+		</nav>
+		<div>
+			<a class="header-link" href="/">Ka Wai Cheung</a>
+			<h2 class="solid">Most Bugs Live in the Permutations.</h2>
+			<div class="pub-date">Mar 2024</div>
+			
+			<p>
+				Unit tests test for code at the very foundation. Each little possible isolated bit of functionality. Test for all these functions in isolation and you may feel confident in your code.
+			</p>
+			<p>
+				Your full count of tests for a particular area of code is the summation of these tests.
+			</p>
+			<blockquote>
+				3 + 6 + 3 + 4 + 2 + 3 + 2 + 5 + 4 + 5 = 37
+			</blockquote>
+			<p>
+				In reality, the number of potential pathways through related tests is more like a multiplier of each unit test grouping: Every possible combination of these tests grouped by the section of code they are testing.
+			</p>
+			<blockquote>
+				3 x 6 x 3 x 4 x 2 x 3 x 2 x 5 x 4 x 5 = 259200
+			</blockquote>
+			<p>
+				I've found nearly all bugs live in the <em>combination</em> of these unit outcomes&mdash;in the leaks through the pathways.
+			</p>
+			<p>
+				Unit tests are good for you if you understand their limitations. But if you listen to unit test zealots, they tend to overvalue their reach. I've found spending that amount of time on those sorts of tests is a penny-wise, pound-foolish thing.
+			</p>
+			<p>
+				Much more attention should be placed on the pathways.
+			</p>
+			<p>
+				Of course, you aren't going to write "259,200" integration tests. And even if the vast majority of these combinations don't exist as actual pathways (say only 5% of those pathways are even possible), the number is still much much higher than the number of unit tests you've written.
+			</p>
+			<blockquote>
+				259200 x 0.05 = 12960
+			</blockquote>
+			<p>
+				You still can't practically write tests for all this. And so, confidence must be found in other ways.
+			</p>
+			<p>
+				The way I find confidence is simply by <em>spending a lot of time on one system</em>. Getting intimately familiar with it. All of its pathways. All of its rough edges.
+			</p>
+			<p>
+				Because familiarity with a system is the most critical component of having confidence with the system.
+			</p>
+		</div>
+	</body>
+</html>

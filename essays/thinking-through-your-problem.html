@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+	    <meta charset="UTF-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <title>Ka Wai Cheung | Thinking through your problem</title>
+	  	<link rel="icon" href="/favicon.ico" type="image/x-icon">
+      <link rel="stylesheet" href="/styles/styles.css?p=030426">
+	</head>
+	<body>
+		<nav>
+      <a href="/"><img src="/img/kc.png" /></a>
+			<ul>
+				<li><a href="/software">Solo software</a></li>
+				<li><a href="/random">Side projects</a></li>
+				<li><a href="/temperament">How I work</a></li>
+        <li><a href="/web">Career</a></li>
+				<li><a href="/essays" class="selected">Essays</a></li>
+				<li><a href="/books">Books</a></li>
+			</ul>
+		</nav>
+		<div>
+			<a class="header-link" href="/">Ka Wai Cheung</a>
+			<h2 class="solid">Thinking through your problem.</h2>
+			<div class="pub-date">Aug 2013</div>
+			<p>
+				Working on an issue tracker for the past four years has taught me more than just how to build and maintain a piece of software. It's taught me how to be diligent with my response to people's problems.
+			</p>
+			<p>
+				Here's what I mean. We get feedback&mdash;lots of it&mdash;from our customers. The feedback ranges from high praise to a rant about how we've done a great disservice to someone's life. We get a lot of feedback from our internal team as well. Again, it can vary from "Great work on the new feature!" to "This reminds me of a sh*ttier version of ______."
+			</p>
+			<p>
+				Credit for a job well done feels amazing. Detest for something you've labored over for years is demoralizing&mdash;even if it is someone just nitpicking a small part of your work. You take it personally because you've invested more than just your business-self in what you do.
+			</p>
+			<p>
+				A few years back, on a day where work wasn't going so well, my good friend Ian once said to me that he "just wanted to be of use." I could tell his words came from a very raw and genuinely vulnerable place. It opened my eyes to the fact that <strong>all people, at their core, want to feel <em>of use</em></strong>. A simple reassurance that you are, indeed, serving a useful purpose for someone else's life is sometimes all the fuel you need to keep going.
+			</p>
+			<p>
+				Fortunately, we get plenty of positive feedback from others. We respond to that person with equally kind words, and we go off our merry way. There's actually not that much to think about when responding to good feedback.
+			</p>
+			<p>
+				Now, here's someone that I'd categorize in the latter bucket. We received this email last week from a customer:
+			</p>
+			<blockquote>
+				<em>"I received 50+ emails from DoneDone. Needless to say UNSUBSCRIBE ME from your 'service'. Go away and leave me alone."</em>
+			</blockquote>
+			<p>
+				This email sucks. And, to be honest, it's not even all that bad. Personally, I've had way worse feedback on work I was truly proud of, from people I actually knew.
+			</p>
+			<p>
+				So now what? Why was this person&mdash;we'll call him Doug because I don't know a real-life Doug personally, and it keeps the pain a little less real that way&mdash;so angry? Some people might initially hide away in fear, while others might initially write back in anger.
+			</p>
+			<p>
+				The key is, to do nothing with your initial feeling. Instead, I try to think through the problem from three different angles. After doing so, I can respond with the personal assurance that <strong>I've done my due diligence in thinking through the problem</strong>.
+			</p>
+			<h4>Angle 1: How do I perceive this problem?</h4>
+			<p>
+				The first question I'll ask is "what is the actual problem?" In this case, I didn't perceive any problem&mdash;the software was working as is. DoneDone sends you notification emails when things happen to issues you're working on. If 50 things happen then 50 emails shall be sent. I queried the database and dug through email logs to make sure there wasn't any actual technical problem. Nope. The emails went out properly, the data was right, everything was cool.
+			</p>
+			<p>
+				In fact, last summer we added a feature to disable all notifications on a project in DoneDone because some customers didn't want the email bombardment when projects were "running hot." And, Doug apparently hadn't found that option yet. So, from my vantage point, there was no problem. DoneDone was working as it should.
+			</p>
+			<h4>Angle 2: How could Doug be perceiving this problem?</h4>
+			<p>
+				If I don't think there was a problem, why did Doug think there was (and a big one at that)? Why was he yelling at DoneDone for doing exactly what it's supposed to do?
+			</p>
+			<p>
+				I spent some more time querying timestamps in Doug's account. The records showed that he was assigned to a bunch of issues in late March, and since then, nothing happened&hellip;until last week. Ah, now it's making sense.
+			</p>
+			<p>
+				From Doug's point of view, DoneDone was a service that briefly entered his life late last Spring, drifted off into the ether, and then came roaring back with a vengeance last week. When 50+ emails came in, DoneDone felt no different than a Viagra Ad. Forget that these emails were real people updating real things that should concern Doug. That's clearly not how he perceived the situation.
+			</p>
+			<h4>Angle 3: Would Doug understand the problem from my vantage point?</h4>
+			<p>
+				The first question to answer is the most direct. The second requires a little deduction. The final one requires a little imagination. Knowing how I perceive the problem, and deducing how Doug perceives the problem, can I conjure up an educated guess as to whether Doug could see things from my viewpoint?
+			</p>
+			<p>
+				When several people complained about email overload a year ago, before we built the "unsubscribe from notifications" option, I had enough evidence to see that other people wouldn't buy the response that this was not the original design of the system. So, ultimately, we realized this was a feature <em>worth</em> building in. In Doug's case, would a little nudge to have him go into the application he clearly hates and find this option we built be something he'd be willing to accept?
+			</p>
+			<p>
+				Given what little I know about Doug other than he was very angry, and that the remedy is a rather simple one, I concluded my best approach was to offer the option and be apologetic. Doug had a bad experience with us, regardless of whether it was "technically correct" or not.
+			</p>
+			<img src="/essays/img/thinking-through-problem-01.jpg" style="max-width:100%;height:auto;display:block;align-self:flex-start;border:solid 1px var(--color--border-line);border-radius:0.5rem;margin-bottom:1.4rem;" />
+			<p style="font-size:0.65rem;margin-top:-1rem;margin-bottom:1.4rem;"><em>pathetic response with a remedy</em></p>
+			<p>
+				A symI've found the three angle approach to a problem works well in any situation where someone else is telling you why your actions have created a problem, be it through an anonymous email, a co-worker, or friend.
+			</p>
+			<h4>What exactly is a problem?</h4>
+			<p>
+				The first two questions help me <em>define</em> the problem. But, what exactly <em>is</em> a problem? If you think about it, there is no such thing as a problem in and of itself. <strong>A problem is the combined discrepancy between what <em>is</em> <em>occurring</em> compared to what each party thinks <em>should be occurring</em></strong>. For instance, you could also think of a software bug as not a bug in and of itself. Instead, it's the combined discrepancy between what the application does with what you&mdash;the programmer or the user&mdash;thinks it ought to do.
+			</p>
+			<p>
+				If the first two questions help me decide on the remediation (e.g. Is this something I <em>should</em> fix? Is this something they can <em>help</em> fix with me?), the third question informs me on how to frame my response. Do I need to be more explicit or more sympathetic? What do I need to say for them to see how I perceive the problem?
+			</p>
+			<p>
+				Realize that no matter how well you think you might have answered these questions, you still might not get the response you want back. The important thing is that <strong>you've done your due diligence and thought through the full problem as best you can</strong>.
+			</p>
+			<p>
+				As it turns out, Doug never read this email, because he replied back the next day chastising DoneDone again. Following the same three steps, I had to get more stern the next time around. I cut through the niceties and bold-texted exactly what he had to do. I even suggested he email his account owner to remove him from the account. Problem solved.
+			</p>
+			<p>
+				Or, at least he stopped yelling.
+			</p>
+		</div>
+	</body>
+</html>

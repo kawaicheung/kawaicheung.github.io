@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+	    <meta charset="UTF-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <title>Ka Wai Cheung | Want fewer bugs? Test these five cases</title>
+	  	<link rel="icon" href="/favicon.ico" type="image/x-icon">
+      <link rel="stylesheet" href="/styles/styles.css?p=030426">
+	</head>
+	<body>
+		<nav>
+      <a href="/"><img src="/img/kc.png" /></a>
+			<ul>
+				<li><a href="/software">Solo software</a></li>
+				<li><a href="/random">Side projects</a></li>
+				<li><a href="/temperament">How I work</a></li>
+        <li><a href="/web">Career</a></li>
+				<li><a href="/essays" class="selected">Essays</a></li>
+				<li><a href="/books">Books</a></li>
+			</ul>
+		</nav>
+		<div>
+			<a class="header-link" href="/">Ka Wai Cheung</a>
+			<h2 class="solid">Want fewer bugs? Test these five cases.</h2>
+			<div class="pub-date">Apr 2014</div>
+			<p>
+				Truth be told, DoneDone is a piece of software I want to use as infrequently as possible. If I use DoneDone a lot, it means I'm making (or finding) a lot of mistakes. In a perfect world, there would be no need for an issue tracker because all programmers would write flawless code and all users would stay a safe distance away from edge cases. On the other hand, everyone would be canceling their issue tracker subscription and we'd have to find a new business.
+			</p>
+			<p>
+				But, let's get back to reality. DoneDone thrives because regardless of all the processes we can put into place, <em>bugs will happen</em>. As one programmer put it, if you want to be a "zero-bug" programmer, it's simple&mdash;don't write any code.
+			</p>
+			<p>
+				A study commissioned by the United States Department of Commerce's National Institute of Standards and Technology (NIST) found that software defects <a href="http://www.ibm.com/developerworks/rational/library/4995.html">cost the U.S. economy almost $60 billion per year</a>. Even further, 80 percent of development costs are spent by software developers identifying and correcting defects.
+			</p>
+			<h4>Focus on the leak, not the puddle.</h4>
+			<p>
+				OK then. If we can't be perfect, how do we do the next best thing&mdash;make <em>less</em> bugs? When posed this question, most programmers will automatically start to think about process.
+			</p>
+			<ul class="postList">
+				<li>More test coverage.</li>
+				<li>More code reviews.</li>
+				<li>More QA time.</li>
+				<li>More architecture.</li>
+			</ul>
+			<p>
+				No doubt, considering how to augment your process is a critical step. Deciding how to adjust your architecture to make introducing new bugs less likely is prudent. But, did you notice a common theme? All of these methods focus on mopping up the puddles created by us programmers. Instead, let's start thinking more about how we can fix the leaks we create in the first place.
+			</p>
+			<p>
+				There is one timeless rule every programmer&mdash;regardless of language or medium&mdash;should follow, before code is even ready for someone else to test. When you've coded up something new, ask yourself these five questions, and <em>test</em> for them!
+			</p>
+			<ul class="postList">
+				<li>What happens if something is <strong>null</strong>?</li>
+				<li>What happens if there are <strong>zero</strong> of something?</li>
+				<li>What happens if there is <strong>one</strong> of something?</li>
+				<li>What happens if there are <strong>three</strong> of something?</li>
+				<li>What happens if there are <strong>a lot</strong> of something?</li>
+			</ul>
+			<p>
+				Consider all of these cases, <em>all of the time</em>. It doesn't matter if you work in Python, Ruby, or C#. Or, if you spend most of your time analyzing SQL queries. Or, if your day is spent working through HTML and CSS. These questions are ubiquitous for anyone developing any kind of software anywhere on the stack. Even the most thorough amongst us will occasionally let the answers to these questions slip away from us.
+			</p>
+			<img src="/essays/img/fewer-bugs-01.jpg" style="max-width:100%;height:auto;display:block;align-self:flex-start;border:solid 1px var(--color--border-line);border-radius:0.5rem;margin-bottom:1.4rem;" />
+			<p style="font-size:0.65rem;margin-top:-1rem;margin-bottom:1.4rem;"><em>The five crucial quantities to test.</em></p>
+			<p>
+				The fact is, many bugs manifest because we simply haven't covered cases of <em>quantity</em> in our code. While it would be entirely impractical to test from 0 to infinity, you'll get really good coverage by simply focusing on these five amounts: null, 0, 1, 3, and "a lot." (We'll get to what "a lot" means, exactly, later.) So, before a new feature even gets to internal QA, or even committed to your local Git repository, ask whether your updated code handles all five of these cases the way you'd expect.
+			</p>
+			<h4>Null is nothing&hellip;to overlook.</h4>
+			<p>
+				If you pull up a Google search right now, there are over <strong><em>16,800,000</em></strong> results for the infamous <code>NullReferenceException</code> message that every seasoned C# developer has become intimately familiar with. Let's all say it together now:
+			</p>
+			<img src="/essays/img/fewer-bugs-02.png" style="max-width:100%;height:auto;display:block;align-self:flex-start;border:solid 1px var(--color--border-line);border-radius:0.5rem;margin-bottom:1.4rem;" />
+			<p>
+				Hello darkness, my old friend.
+			</p>
+			<p>
+				Is your code assuming an object is instantiated when it might not be? When we're coding up a feature, our first inclination is to start testing with perfectly hydrated objects to see that our logic is playing nicely.
+			</p>
+			<p>
+				But, don't move on to something else until you've vetted that you're accounting and handling situations when your objects are null. In fact, improper initialization (a common mistake leading to null references) was ranked among <a href="http://got-bugs.blogspot.com/2011/11/top-25-list-of-software-errors.html">the top 25 most common programming errors </a>according to the NSA and the Director of National Intelligence.
+			</p>
+			<h4>Be a hero, not a zero.</h4>
+			<p>
+				If you're a front-end developer, ask yourself how a dynamically-driven piece of UI will behave when there aren't any items to display. Sure, the files you received from your designer look great with those mocked out items. But, how does the implementation look when there are zero results? Should there be a message informing users of what normally would go inside this currently empty space?
+			</p>
+			<p>
+				The unchecked zero case is also often the culprit when it comes to issues like the length of a string. You may want to grab the last letter of a zero-based index string, but <code>myString.IndexOf(myString.Length - 1)</code> will throw a fit if your string has zero length.
+			</p>
+			<h4>One really is the loneliest number.</h4>
+			<p>
+				Consider all the times you've used a piece of software and were greeted with a message like "Thanks! One users have been notified!" It happens all the time. And, it's easy to forget that lone case in most western languages where a numerical descriptor must be paired with the <em>singular</em> form of the noun as opposed to the plural. But, it is a bug. And it can be caught by having tested through the case when you have only one of somethings&hellip;I mean, something.
+			</p>
+			<p>
+				If you're a back-end developer, are you making an assumption somewhere in your code that you only ever expect one record, without any technical constraints in place to ensure it? For instance, make sure you are placing <code>unique</code> constraints on appropriate columns in your relational database schema to ensure data integrity.
+			</p>
+			<img src="/essays/img/fewer-bugs-03.jpg" style="max-width:100%;height:auto;display:block;align-self:flex-start;border:solid 1px var(--color--border-line);border-radius:0.5rem;margin-bottom:1.4rem;" />
+			<p style="font-size:0.65rem;margin-top:-1rem;margin-bottom:1.4rem;"><em>How <a href="http://www.kinhr.com/">KinHR</a> visually handles the zero, one, and "a few" cases for its employee overview page.</em></p>
+			<h4>Three is more important than two.</h4>
+			<p>
+				From personal experience, I find a lot of low-hanging bugs occur because a programmer hasn't considered the null, zero, and single item cases; Particularly, when the UI or object model calls for a list of items. When we're building out lists in code, we'll naturally start by mocking out a scenario where we have multiple items&mdash;a list of users in an account, projects with a client, tracked time within a day, and so forth.
+			</p>
+			<p>
+				So, how do we pragmatically test for the normal use case involving "a few" items to work with? You aren't going to be testing every <em>n</em> from 0 to infinity. That's not very practical. But, it's easy to get lazy and mock out an object with just <em>two</em> items. After all, two is the smallest amount of items it takes to make a <em>collection</em> of something&hellip;.Two users, two projects, two tracked time entries. Why go beyond that?
+			</p>
+			<img src="/essays/img/fewer-bugs-04.jpg" style="max-width:100%;height:auto;display:block;align-self:flex-start;border:solid 1px var(--color--border-line);border-radius:0.5rem;margin-bottom:1.4rem;" />
+			<p style="font-size:0.65rem;margin-top:-1rem;margin-bottom:1.4rem;"><em>Two things is a collection anomaly. Three things behave more similarly to any list greater than 3.</em></p>
+			<p>
+				There's a simple conceptual problem here though. A multiple-element list with two items is the <em>only</em> such list that has no middle. Sure, you can confirm your code is traversing a list of two items properly, but how can you be assured that your middle items are being accounted for properly? Perhaps you have some special tags dynamically applied to the first and last item in your HTML list. You'll surely want to test your middle items aren't getting those special tags.
+			</p>
+			<p>
+				So, when testing a few, make sure you're not just testing for two. Three tells you even more of the story.
+			</p>
+			<h4>Test a big number to see the hidden leaks.</h4>
+			<p>
+				Finally, test for a realistic big number in your particular scenario. What happens if your app becomes well-used, and customers are logging thousands of items in your database? Does the app buckle under its knees when there are 574 widgets returning from the request? Is there a script being executed 574 times accidentally when perhaps it needs only be called once?
+			</p>
+			<p>
+				Much like the <em>zero</em> case, you may not have thought about the user experience when there are a lot of items on the page. Can your servers handle a scenario that entails thousands of records being retrieved and displayed? Does your database need some smart indexing and more strategically written SQL to get the data you want without greatly impacting performance? Does your UI handle them elegantly or was it optimized for handling just a handful? Or, can you simply avoid the problem altogether by only allowing a handful to page back at a time?
+			</p>
+			<p>
+				When dealing with big numbers, consider running performance times against something like <a href="http://www.red-gate.com/products/dotnet-development/ants-performance-profiler/">Red Gate Software's ANTS Performance Profiler</a>. There are also plenty of<a href="http://www.red-gate.com/products/sql-development/sql-data-generator/"> mock data generators</a> out there to help you test through such scenarios without a lot of heavy lifting.
+			</p>
+			<h4>Writing bug-free code is a battle of attrition.</h4>
+			<p>
+				Testing process and architectural patterns often get the front-page press when you read about writing more resilient code. But, what sorely needs more attention these days is <em>thought-process</em>. How do you improve the way you write code from the get-go rather than just improve the processes around validating it? Thinking through these five questions while writing code is one such way.
+			</p>
+			<p>
+				In the end, writing bug-free code is a battle of attrition. The more obstacles <em>you</em> can put in place to trip up potential bugs, the better off your codebase will be. Having more mental tools in your arsenal&mdash;<em>as you are developing new code</em>&mdash;not only keeps bugs from even manifesting during QA and automated testing, but also keeps you focused on building rather than fixing.
+			</p>
+		</div>
+	</body>
+</html>

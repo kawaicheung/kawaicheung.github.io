@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+	    <meta charset="UTF-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <title>Ka Wai Cheung | Using CSS Classes as Markers</title>
+	  	<link rel="icon" href="/favicon.ico" type="image/x-icon">
+      <link rel="stylesheet" href="/styles/styles.css?p=030426">
+	</head>
+	<body>
+		<nav>
+      <a href="/"><img src="/img/kc.png" /></a>
+			<ul>
+				<li><a href="/software">Solo software</a></li>
+				<li><a href="/random">Side projects</a></li>
+				<li><a href="/temperament">How I work</a></li>
+        <li><a href="/web">Career</a></li>
+				<li><a href="/essays" class="selected">Essays</a></li>
+				<li><a href="/books">Books</a></li>
+			</ul>
+		</nav>
+		<div>
+			<a class="header-link" href="/">Ka Wai Cheung</a>
+			<h2 class="solid">Using CSS Classes as Markers.</h2>
+			<div class="pub-date">Dec 2023</div>
+			
+			<p>
+				I used to think of CSS classes only as a way to connect HTML elements to their style definitions. It wasn't until John Resig created jQuery (in 2006!) when I saw the possibilities of classes fully realized&mdash;a way to easily reference specific elements in the DOM, and, in this case, manipulate them in the many ways JavaScript allows you to manipulate them.
+			</p>
+			<p>
+				There are many tools these days that focus on a particular aspect of the front-end experience so you don't have to. For instance, a service like <a href="https://www.appcues.com/">Appcues</a> lets you build tooltips, guides, and tours on top of your existing product.
+			</p>
+			<p>
+				Of course you could code all this stuff by hand too, but it's nice to move some of these generic front-end commodities away from the trenches of your own code.
+			</p>
+			<p>
+				Appcues, like most similar tools, needs to identify elements in your DOM to do the work it needs to do. You (the developer) tell it which CSS selectors on your app you need it to act upon.
+			</p>
+			<p>
+				In their editing tool, they make it easy for you&mdash;just aim your cursor over the specific element in question and it will deduce the selector for you. There may be multiple unique selectors for any particular element you roll over so it lets you pick the "best" selector. You might have a dynamic page that might not have the exact same structure every time, so picking the best selector isn't always trivial.
+			</p>
+			<p>
+				A really simple way around this is to add additional marker classes to the elements you want Appcues (or whichever tool you use) to identify. In other words, it may just be that the element you want Appcues to apply a tooltip over is the one defined by the <code>body &gt; div.main &gt; a:first-child &gt; span</code> selector. Or even the one uniquely defined by the <code>#main</code> ID.
+			</p>
+			<p>
+				But my preference is to add an additional class that specifically identifies the element you want Appcues to find (and otherwise has no other reason for being). A class like <code>.appcues-tour-main-link</code> (or whatever makes semantic sense). As in&hellip;
+			</p>
+			<pre><span class=“my-style-class appcues-tour-main-link”>…</span></pre>
+			<p>
+				Adding additional class names on your targeted elements does two nice things.
+			</p>
+			<p>
+				First, it makes the selection a lot less vulnerable to future changes (even minor ones) to the structure of your HTML.
+			</p>
+			<p>
+				Second, when you do make a future update that involves changing (or removing) said elements, these marker classes are like SOS flares staring you right in the face. You'll know that the change you're about to make can be a breaking one.
+			</p>
+			<p>
+				And warning signals at the <em>moment</em> you need to be warned&mdash;no sooner or later&mdash;are the best kind, aren't they?
+			</p>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+	    <meta charset="UTF-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <title>Ka Wai Cheung | Old School Workarounds: The Interstitial State</title>
+	  	<link rel="icon" href="/favicon.ico" type="image/x-icon">
+      <link rel="stylesheet" href="/styles/styles.css?p=030426">
+	</head>
+	<body>
+		<nav>
+      <a href="/"><img src="/img/kc.png" /></a>
+			<ul>
+				<li><a href="/software">Solo software</a></li>
+				<li><a href="/random">Side projects</a></li>
+				<li><a href="/temperament">How I work</a></li>
+        <li><a href="/web">Career</a></li>
+				<li><a href="/essays" class="selected">Essays</a></li>
+				<li><a href="/books">Books</a></li>
+			</ul>
+		</nav>
+		<div>
+			<a class="header-link" href="/">Ka Wai Cheung</a>
+			<h2 class="solid">Old School Workarounds: The Interstitial State.</h2>
+			<div class="pub-date">Jan 2024</div>
+			
+			<p>
+				I feel fortunate to have been working on the web (as we know it) since its infancy, which I'll consider to be the late 1990s. Long before Typescript, JS frameworks, and web containers, when web development was flat files and FTP. When even using Javascript was for the fancy-pants crowd.
+			</p>
+			<p>
+				Occasionally&mdash;whether by nostalgia, practicality, or boredom&mdash;I will still do a very Web 1.0 thing. And when I do, I can't help but smirk. It's like turning the key inside a car sitting in the garage for a dozen years and hearing the engine hum with ease. Satisfying.
+			</p>
+			<p>
+				I've done it twice fairly recently in <a href="https://www.donedone.com">DoneDone</a> and so the act now moves from happenstance to pattern: The interstitial screen pattern, I'll call it.
+			</p>
+			<p>
+				The pattern is to mimic the feel of a single-page app (enough) while still keeping true to the old school "full-page refresh" <code>POST</code> paradigm. You'll recall back in the day when the internet did all of its processing with an embossed button click, a scratch of the chin, and a long awaited refresh of the same page, yes?
+			</p>
+			<p>
+				Back then, we were conditioned to wait&mdash;we <em>knew</em> to wait. And we knew that if we closed the browser or otherwise manipulated the page while it was making its return trip during a <code>POST</code>, something strange might happen and it was our fault for being impatient. So we waited patiently.
+			</p>
+			<p>
+				Of course, that's not as true now. When the button is clicked, we expect to see the visual cues that processes are happening, lest we think we didn't actually click on the button. We also expect the "page" to remain as is with only the requisite parts changing, so it feels like an app and not a bunch of random files.
+			</p>
+			<p>
+				In the places in DoneDone where I <em>don't</em> have a SPA framework set up and I <em>am</em> using old school pages, I can have my cake and eat it too by introducing the interstitial state: The state between the click and the full-page refresh.
+			</p>
+			<p>
+				I've done this in a couple of different ways.
+			</p>
+			<p>
+				When a user updates their credit card information through Stripe's checkout UI, Stripe <em>should</em> redirect back to the billing page on our side&mdash;except that the billing page usually takes a few seconds to load because it requires some calls back to Stripe.
+			</p>
+			<img src="/essays/img/interstitial-state-01.png" style="max-width:100%;height:auto;display:block;align-self:flex-start;border:solid 1px var(--color--border-line);border-radius:0.5rem;margin-bottom:1.4rem;" />
+			<p>
+				So instead, I have Stripe redirect to an interstitial page showing a CSS loading animation while it's waiting for the response.
+			</p>
+			<img src="/essays/img/interstitial-state-02.png" style="max-width:100%;height:auto;display:block;align-self:flex-start;border:solid 1px var(--color--border-line);border-radius:0.5rem;margin-bottom:1.4rem;" />
+			<p>
+				The interstitial calls a redirect to the slower billing page via old reliable <code>window.location.href</code> and once the slow page response has completed it's rendered.
+			</p>
+			<img src="/essays/img/interstitial-state-03.png" style="max-width:100%;height:auto;display:block;align-self:flex-start;border:solid 1px var(--color--border-line);border-radius:0.5rem;margin-bottom:1.4rem;" />
+			<p>
+				In DoneDone's back-office admin tool, we manage <a href="/essays/the-thing-to-think-about-with-feature-gating.html">feature gates</a> via toggle buttons on the account detail page. When you click on a button, the <code>POST</code> leads to a refresh of the entire page&mdash;which again, will take a few seconds to load.
+			</p>
+			<img src="/essays/img/interstitial-state-04.png" style="max-width:100%;height:auto;display:block;align-self:flex-start;border:solid 1px var(--color--border-line);border-radius:0.5rem;margin-bottom:1.4rem;" />
+			<p>
+				So while you're waiting, a full-page <code>div</code> immediately surfaces on click (via, in this case, manipulating the <code>div</code>'s visibility with JS) while the full-page <code>POST</code> refresh executes.
+			</p>
+			<img src="/essays/img/interstitial-state-05.png" style="max-width:100%;height:auto;display:block;align-self:flex-start;border:solid 1px var(--color--border-line);border-radius:0.5rem;margin-bottom:1.4rem;" />
+			<p>
+				Of course, it naturally goes away when the page has refreshed.
+			</p>
+			<img src="/essays/img/interstitial-state-06.png" style="max-width:100%;height:auto;display:block;align-self:flex-start;border:solid 1px var(--color--border-line);border-radius:0.5rem;margin-bottom:1.4rem;" />
+			<p>
+				With modern speeds this actually has the feel of a snappy SPA app, unlike the really old days where pages had to spend noticeable time rendering. Layered on top of current speeds, you get the effect of SPA with some old school implementations using the most basic in-page Javascript.
+			</p>
+			<p>
+				A fun blast from the past that is simple and still <em>good enough</em>.
+			</p>
+		</div>
+	</body>
+</html>

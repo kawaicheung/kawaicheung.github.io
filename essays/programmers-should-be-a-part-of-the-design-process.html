@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+	    <meta charset="UTF-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <title>Ka Wai Cheung | Why programmers should be a part of the design process — DoneDone</title>
+	  	<link rel="icon" href="/favicon.ico" type="image/x-icon">
+      <link rel="stylesheet" href="/styles/styles.css?p=030426">
+	</head>
+	<body>
+		<nav>
+      <a href="/"><img src="/img/kc.png" /></a>
+			<ul>
+				<li><a href="/software">Solo software</a></li>
+				<li><a href="/random">Side projects</a></li>
+				<li><a href="/temperament">How I work</a></li>
+        <li><a href="/web">Career</a></li>
+				<li><a href="/essays" class="selected">Essays</a></li>
+				<li><a href="/books">Books</a></li>
+			</ul>
+		</nav>
+		<div>
+			<a class="header-link" href="/">Ka Wai Cheung</a>
+			<h2 class="solid">Why programmers should be a part of the design process — DoneDone.</h2>
+			<div class="pub-date">Feb 2015</div>
+			<p>
+				"It just works."
+			</p>
+			<p>
+				This has become the hackneyed answer given by many a proud software builder to questions about user interface design. Push this big green button here, and your document is instantly everywhere. How did such magic occur? You don't know. You don't care. It just works.
+			</p>
+			<p>
+				I love the idea that a thing just worked. What a great release of burden on us. We no longer need to be bothered with the details of how an intricate process&mdash;with every right to fail&mdash;succeeded. That is the true mark of innovation.
+			</p>
+			<p>
+				Of course, this wasn't always the case. Look at any old car, toaster, video game console, or television. Then, go look at an even <em>older</em> car, toaster, video game console, or television. The general trend in understanding product design goes from "it just works" to something more like "I know it works because I am staring at the hot orange glow caused by the resistance of the wires against the current of the electricity I exposed by turning that dial."
+			</p>
+			<img src="/essays/img/programmers-design-process-01.jpg" style="max-width:100%;height:auto;display:block;align-self:flex-start;border:solid 1px var(--color--border-line);border-radius:0.5rem;margin-bottom:1.4rem;" />
+			<p style="font-size:0.65rem;margin-top:-1rem;margin-bottom:1.4rem;"><em>An old toaster design leaves little to the imagination.</em></p>
+			<p>
+				Once upon a time, user interface design was far more crude. The barrier between interface and implementation was much thinner, if not missing altogether. Appropriately, engineers played a far bigger role in design because there wasn't as much stuff shoved behind the curtains. The internal detail was often the design itself.
+			</p>
+			<p>
+				With all the attention we give to prettying-up and simplifying design these days, we seem to have segregated the role of interface design away from the engineers as well. Keep the stage crew behind the stage, if you will. In a lot of organizations, back-end developers don't work with interface designers. In some cases, even front-end engineers barely talk with interface designers. Leave the "it just" part to the Photoshop folks, and the "works" part to the rest of the team. This is a huge mistake.
+			</p>
+			<p>
+				More than ever, these groups must work together intimately. When the two factions work separately, neither can learn from the other's mistakes. An isolated design team may trip over the same stumbling blocks that the programmers discovered yesterday.
+			</p>
+			<h4>Designing together</h4>
+			<p>
+				Let's take a simple example with DoneDone. Suppose we wanted to add a new feature to the "Edit People" screen inside of the project settings section. The new feature would allow an administrator to send a welcome email to people on the project. To accomplish this feature, a designer might think to add a button at the bottom of the "Edit People" screen that says "Send welcome emails." Seems straightforward enough.
+			</p>
+			<img src="/essays/img/programmers-design-process-02.png" style="max-width:100%;height:auto;display:block;align-self:flex-start;border:solid 1px var(--color--border-line);border-radius:0.5rem;margin-bottom:1.4rem;" />
+			<p style="font-size:0.65rem;margin-top:-1rem;margin-bottom:1.4rem;"><em>Who receives the welcome emails?</em></p>
+			<p>
+				But, as the development team implements the new feature, they suddenly hit a roadblock. What happens if a user checks off new people on the project and then clicks "Send welcome emails" before hitting the "Save Changes" button? Should the new people receive an email even though they haven't been saved yet? Or, should only the current members of the project receive emails? Or, should the new people automatically be saved and everyone gets a welcome email? You could argue in favor of any of these three options.
+			</p>
+			<p>
+				A designer may not always catch experiential ambiguities like this during the design process. It's difficult to account for all these nuanced options when you're designing from scratch. Developers, however, stumble upon these ambiguities while in the thick of the implementation. They often find themselves in a spot where there are several routes to take, with no route seeming to be any clearer than another.
+			</p>
+			<p>
+				If the two teams don't have a culture of open communication, developers might just take one of the available forks in the road. The user is left wondering who exactly got their welcome message and who exactly was saved to the project. If they do communicate regularly, the design team has the opportunity to flush the experience out with the programmers. It may be a small tweak in messaging, a re-positioning of elements, or an introduction of an interstitial state. Regardless of the outcome, when the two groups work hand-in-hand, the best user experience&mdash;one that feels confident and deeply considered&mdash;tends to surface.
+			</p>
+			<h4>The psychological problem with segregating design</h4>
+			<p>
+				Segregating design input from programmers also has another detrimental effect. Programmers have gotten accustomed to the idea that they <em>are not</em> designers. On one level, this punts the responsibility off of them. They are completely happy eschewing design input from their set of skills. Encapsulate all design input with the designers&mdash;that idea certainly has a very programmatic ring to it.
+			</p>
+			<img src="/essays/img/programmers-design-process-03.png" style="max-width:100%;height:auto;display:block;align-self:flex-start;border:solid 1px var(--color--border-line);border-radius:0.5rem;margin-bottom:1.4rem;" />
+			<p style="font-size:0.65rem;margin-top:-1rem;margin-bottom:1.4rem;"><em>So long as the engineers and designers, together, make it so.</em></p>
+			<p>
+				On a deeper level, this segregation makes programmers <em>believe</em> they aren't good at designing a user experience. Throughout my career, I've heard a disproportionate number of programmers say "interface design is just not my strength" or "I'm not really good at design." Why is this? It's unlikely due to years and years of trying and ultimately failing. It's far more likely they were never given the opportunity.
+			</p>
+			<p>
+				Funny thing, though. Programmers design every day. The mental model of turning pages of code into working behavior is no less ambiguous than turning a blank canvas into a full user experience. Both are <em>design</em>. Programmers are also obsessive with aesthetic: the way their environment is set up, how their shortcut keys allow for a more fluid coding experience, how they structure their code, how they name their objects and methods.
+			</p>
+			<p>
+				An age where all things must "just work" calls for an age where all people involved in the end product just work together.
+			</p>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+	    <meta charset="UTF-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <title>Ka Wai Cheung | The least you can do</title>
+	  	<link rel="icon" href="/favicon.ico" type="image/x-icon">
+      <link rel="stylesheet" href="/styles/styles.css?p=030426">
+	</head>
+	<body>
+		<nav>
+      <a href="/"><img src="/img/kc.png" /></a>
+			<ul>
+				<li><a href="/software">Solo software</a></li>
+				<li><a href="/random">Side projects</a></li>
+				<li><a href="/temperament">How I work</a></li>
+        <li><a href="/web">Career</a></li>
+				<li><a href="/essays" class="selected">Essays</a></li>
+				<li><a href="/books">Books</a></li>
+			</ul>
+		</nav>
+		<div>
+			<a class="header-link" href="/">Ka Wai Cheung</a>
+			<h2 class="solid">The least you can do.</h2>
+			<div class="pub-date">May 2014</div>
+			<p>
+				When on the hook to solve a new problem, I always try to answer the following question: <strong>"What is the least amount of output required to achieve the desired goal?"</strong>
+			</p>
+			<p>
+				There is a stigma in our world that the <em>least</em> is bad. It's lazy. It's not enough. To me, this is mainly due to a gross misinterpretation of what the least <em>is</em>. When answering this question truthfully, finding the least is a habit of the diligent, not the lazy. And, it quite often takes a whole lot of effort.
+			</p>
+			<h4>Answering both sides of the question</h4>
+			<p>
+				So, what is the least amount of output needed to achieve the desired goal? This question actually manifests as two parts.
+			</p>
+			<p>
+				First, how will we know we've achieved the goal? For a support team, it may mean providing fantastic customer service. But, how do we know we've done it? Is a 15-minute average support response time better than a 30-minute one? What if faster response times cause the quality of our support to go down? Where is the pivot point that gives us the optimal response time and quality?
+			</p>
+			<p>
+				For developers, it may mean making a software workflow as user friendly as possible. But, does that mean reducing the number of clicks to as close to zero as possible? Or, could it be that an extra click (or two) helps the user understand how the system is organized, and prevents them from getting lost?
+			</p>
+			<p>
+				Down in the details, figuring out what constitutes achieving the goal is hard, hard work. Often times, the metrics aren't easily extractable yet to know for sure. So, we may have to guess at first, and plan out a system to monitor whether we're achieving the goal once we've deployed the solution.
+			</p>
+			<p>
+				In software, we don't ask ourselves this question frequently enough. Programmers, and even technical architects, often focus too narrowly on the technical details (for good reason) to clearly see whether the details and the goal actually match up. Business strategists and high-level thinkers might stop at "we need better customer service" rather than formulate how broad-stroke visions actually manifest into tangible tasks. The tedious work of bridging the idea-to-implementation divide is then left unattended. As Derek Sivers points out, <a href="http://sivers.org/multiply">ideas are just a multiplier of execution</a>. But figuring out the correct execution? That's difficult work. In the end, it requires everyone's input to bridge that gap.
+			</p>
+			<p>
+				Then, there's the second question. How do you achieve the goal with the least amount of implementation?
+			</p>
+			<p>
+				As a writer, I'm always thinking about what words I can remove. What's not adding to, or even muddling, the point I'm trying to make? One of my favorite fables about removing words is the story that Benjamin Franklin recalled to Thomas Jefferson while editing the original draft of the Declaration of Independence.
+			</p>
+			<blockquote>
+				<em>Jefferson was very proud of his initial draft, and became very upset when the other members of the committee began to hack away at it with various revisions and amendments. So in attempt to make him feel better, Benjamin Franklin told him a story about a friend of his, a hatter, who planned to adorn his new hat shop with a sign bearing the words "John Thompson, hatter, makes and sells hats for ready money" above a picture of a hat.</em>
+			</blockquote>
+			<blockquote>
+				<em>Thompson showed the sign to a group of friends and asked them what they thought. The first remarked that the words "makes and sells hats" made the word "hatter" redundant. The second pointed out that "makes" could also be scratched as few customers would care who made them. The third observed that it was not the custom locally to sell on credit, rendering the words "for ready money" unnecessary.</em>
+			</blockquote>
+			<blockquote>
+				<em>These changes left a sign reading: "John Thompson sells hats." Then the fourth friend said, "But no one would expect you to give them away, so what is the point of 'sells'?" Finally, someone pointed out that, given the painted picture of a hat, even the word "hats" was unnecessary. So the final sign bore only the words "John Thompson" and the picture of a hat.</em>
+			</blockquote>
+			<blockquote>
+				Courtesy: <a href="http://www.speaklikeapro.co.uk/Founding_Father_Anecdotes.htm">speaklikeapro.co.uk</a>
+			</blockquote>
+			<p>
+				As a software programmer, I <em>obsess</em> over the least. As a simple example, I ask myself whether a SQL query I've written contains any unnecessary <code>JOIN</code>s. Or, I'll analyze whether everything in the <code>SELECT</code> statement is needed from all calling methods.
+			</p>
+			<pre>/* Get the number of users in account with ID = 28 */</pre>
+			<pre>SELECT COUNT(1) FROM Users u INNER JOIN AccountMemberships am on u.ID = am.RelatedUserIDINNER JOIN Accounts acct on acct.ID = am.RelatedAccountIDWHERE acct.ID = 28</pre>
+			<pre>/* Or, alternatively, less code and no joins... */</pre>
+			<pre>SELECT COUNT(1) FROM AccountMemberships am WHERE am.RelatedAccountID = 28</pre>
+			<p>
+				And what do the well-worn development principles of KISS (Keep it simple, stupid), DRY (Don't repeat yourself) and YAGNI (You ain't gonna need it) have in common? All hint at providing the least amount of output to solve the problem.
+			</p>
+			<h4>The least as an overarching strategy</h4>
+			<p>
+				Almost always, the outcome of <em>implementing the least to achieve the desired goal </em>results in the following benefits:
+			</p>
+			<ul class="postList">
+				<li><strong>A crystal clear message.</strong> Less words or less code, the end result is as refined and concise a message as possible. It results in less confusion and misinterpretation.</li>
+				<li><strong>A maintainable result for the future.</strong> The less superfluousness we add to the message now, the less we need to maintain, worry, or wonder about in the future.</li>
+				<li><strong>The smallest amount of strain on resources.</strong> Less stuff means we have less to transport or explain. It means everything from smaller packets to send across a wire to quicker roundtable meetings. Using the least output strategy will never go out of fashion.</li>
+			</ul>
+			<h4>Why the least is hard work</h4>
+			<p>
+				Answering the initial question successfully requires <em>diligence</em>.
+			</p>
+			<img src="/essays/img/least-you-can-do-01.png" style="max-width:100%;height:auto;display:block;align-self:flex-start;border:solid 1px var(--color--border-line);border-radius:0.5rem;margin-bottom:1.4rem;" />
+			<p style="font-size:0.65rem;margin-top:-1rem;margin-bottom:1.4rem;"><em>Thinking about and doing the least amount needed requires some diligence.</em></p>
+			<p>
+				As doers and implementers, it's easy to fall into the lazy habit of simply trying to do as little as possible&mdash;at the sacrifice of the original goal. As thinkers and dreamers, it's easy to fall into the lazy habit of doing more. More words, more servers, more features! These are easily contrived when we're simply thinking about the problem on the back of a napkin. Honing in on what you can remove to clarify your message is where the hard work comes in.
+			</p>
+		</div>
+	</body>
+</html>

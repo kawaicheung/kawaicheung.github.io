@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+	    <meta charset="UTF-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <title>Ka Wai Cheung | The psychological battle of big refactorings</title>
+	  	<link rel="icon" href="/favicon.ico" type="image/x-icon">
+      <link rel="stylesheet" href="/styles/styles.css?p=030426">
+	</head>
+	<body>
+		<nav>
+      <a href="/"><img src="/img/kc.png" /></a>
+			<ul>
+				<li><a href="/software">Solo software</a></li>
+				<li><a href="/random">Side projects</a></li>
+				<li><a href="/temperament">How I work</a></li>
+        <li><a href="/web">Career</a></li>
+				<li><a href="/essays" class="selected">Essays</a></li>
+				<li><a href="/books">Books</a></li>
+			</ul>
+		</nav>
+		<div>
+			<a class="header-link" href="/">Ka Wai Cheung</a>
+			<h2 class="solid">The psychological battle of big refactorings.</h2>
+			<div class="pub-date">Sep 2015</div>
+			<p>
+				We usually talk about refactoring code with the same kind of pedantic approach we do with all other kinds of software writing. We come up with recipes to abstract, break apart, and clarify. We fold these techniques together into larger ideas and catchier names like <a href="https://pragprog.com/magazines/2010-06/the-mikado-method">the Mikado method</a>, the Big Bang approach, divide and conquer, or <a href="http://paulhammant.com/2013/07/14/legacy-application-strangulation-case-studies/">strangulation</a>. OK, maybe not all of them are catchy.
+			</p>
+			<p>
+				But, with all these strategic tools in our belt, a <strong>big refactoring</strong> still requires a tremendous amount of mental stamina and perseverance. In fact, what really makes it difficult has more to do with our own <em>psychology</em> than it does with the shape of the code itself.
+			</p>
+			<p>
+				In most big refactorings, we don't have the luxury of a complete rewrite. Features need to be built; bugs need to be squashed. Our only option is to push in-flight production code toward a new direction <em>gradually</em>. We make small changes continuously, seizing opportunities to remold portions of a system when the time is right.
+			</p>
+			<p>
+				And therein lies the rub. Rehabbing code that still needs to serve its customers often requires some extra weight to allow the new code in, while still holding onto the old code we've yet to clean up.
+			</p>
+			<p>
+				A refactoring might necessitate creating ephemeral objects and methods solely so we can fit the old temporarily with the new. While these extra pathways are being created, the code will feel like it's bulging at the seams&mdash;because it <em>is</em>. A big refactoring is rarely as hygienic as swapping an ugly piece for a pretty piece. It often means putting in a whole lot of intermediate structures; the ugly-but-necessary scaffolding to keep our patient able to work on his daily chores while still under the knife.
+			</p>
+			<p>
+				In any big refactoring, you have to cope with two dissonant ideas: <strong>trying to make a codebase better</strong> and the reality that&mdash;<strong>in the midst of it, the code may actually <em>feel</em> a whole lot worse</strong>. This is, perhaps, the real reason that the whole process feels daunting. Every decision in a refactor weighs the short-term pain with the future payoff. And, often, the short-term pain convinces us that today is not the day to begin.
+			</p>
+			<p>
+				However, once you've accepted this, a big refactoring becomes a lot more tolerable. You aren't fighting the devil on your shoulder who wants to scold you for the off-course moves you're making now to get to tomorrow's pot of gold. Eventually, we reach that glorious day where the old abscesses can be completely removed and our new code is in full control. But, until then, the battle is as much in our minds as it is in our code.
+			</p>
+		</div>
+	</body>
+</html>

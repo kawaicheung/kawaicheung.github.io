@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+	    <meta charset="UTF-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <title>Ka Wai Cheung | Cut the problem in half</title>
+	  	<link rel="icon" href="/favicon.ico" type="image/x-icon">
+      <link rel="stylesheet" href="/styles/styles.css?p=030426">
+	</head>
+	<body>
+		<nav>
+      <a href="/"><img src="/img/kc.png" /></a>
+			<ul>
+				<li><a href="/software">Solo software</a></li>
+				<li><a href="/random">Side projects</a></li>
+				<li><a href="/temperament">How I work</a></li>
+        <li><a href="/web">Career</a></li>
+				<li><a href="/essays" class="selected">Essays</a></li>
+				<li><a href="/books">Books</a></li>
+			</ul>
+		</nav>
+		<div>
+			<a class="header-link" href="/">Ka Wai Cheung</a>
+			<h2 class="solid">Cut the problem in half.</h2>
+			<div class="pub-date">Nov 2014</div>
+			<p>
+				What do you do when you're faced with a head-scratching bug? You know, the ones that have you questioning whether 2 + 2 is always 4 (<a href="http://virgil.azwestern.edu/~dag/lol/TwoPlusTwo.html">because apparently sometimes it is not</a>)? The ones where you've spent the entirety of a once-promising day of productivity drowning in a molasses of impossibilities?
+			</p>
+			<p>
+				Regardless of the problem, there is an approach to squashing even the most perplexing bugs that you can always take. When I'm faced with a really bad problem&mdash;especially a mission-critical one where time is of the essence&mdash;I fall back on one particular mantra. Five simple words: <strong>Cut the problem in half</strong>.
+			</p>
+			<p>
+				Then, cut it in half again. Then, a third time. If you've done it right, by the fourth time, you've essentially cornered the problem into a space about 6% the size of the original issue. Not bad for four cuts.
+			</p>
+			<p>
+				Of course, the rationale behind this is basic math. If you cut a problem in half each time, you go from 100% to 50% to 25% to 12.5% to 6.25% after your first four cuts:
+			</p>
+			<img src="/essays/img/cut-problem-in-half-01.png" style="max-width:100%;height:auto;display:block;align-self:flex-start;border:solid 1px var(--color--border-line);border-radius:0.5rem;margin-bottom:1.4rem;" />
+			<p style="font-size:0.65rem;margin-top:-1rem;margin-bottom:1.4rem;"><em>y = (1/2)x&mdash;Or, how the problem space (y) decreases after each cut (x)</em></p>
+			<p>
+				Alright. So, what exactly do I mean by cutting the problem in half?
+			</p>
+			<p>
+				Sometimes, the most efficient way to tackle a very difficult problem is to figure out what question you want to answer first. What question&mdash;when answered&mdash;eliminates as many of the incorrect possibilities as possible? Certainly, if we answer a question that eliminates 99% of the possibilities if the answer is "yes", it might be worth investigating. But, if we're just as confident that the answer could be "no", well&mdash;we could just as likely be spending time that barely reduces the problem space at all. That might not be the best question to investigate first.
+			</p>
+			<p>
+				However, if we can come up with question after question that continue to cut the problem space in half, we're guaranteed to hone in on something rather quickly, every time.
+			</p>
+			<p>
+				Of course, real-world problems aren't going to always be so hygienic. There might not be an accurate way to measure whether an answer to a question neatly divides all possibilities down the middle. But, the mantra is to get you to think about the right questions <em>early on in your investigation</em>, and to avoid the ones where the answers might not tell us much at all.
+			</p>
+			<p>
+				For an application bug, I might first ask, is this bug happening on everyone's environment or just one specific user? That helps me narrow down my focus between something specific to the codebase vs. something specific to the state of the user. Then, I might ask, is this bug happening on the client or the server? The answer to that question either eliminates a serious amount of browser testing or a few hours of data mining. Rather than diving head first into the code without a plan, focusing my energy on a couple of possibility-dividing solutions from the get-go quickly narrows my scope to a far more detailed sets of questions. It lessens the chance I'm going down the wrong rabbit hole.
+			</p>
+			<p>
+				This all may seem obvious. But in the heat of the moment, when the pressure is running high and your brain goes into panic mode, think of the right questions to answer first, <em>and</em> how those answers reduce your problem space.
+			</p>
+		</div>
+	</body>
+</html>

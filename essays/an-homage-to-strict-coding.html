@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+	    <meta charset="UTF-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <title>Ka Wai Cheung | An homage to strict coding</title>
+	  	<link rel="icon" href="/favicon.ico" type="image/x-icon">
+      <link rel="stylesheet" href="/styles/styles.css?p=030426">
+	</head>
+	<body>
+		<nav>
+      <a href="/"><img src="/img/kc.png" /></a>
+			<ul>
+				<li><a href="/software">Solo software</a></li>
+				<li><a href="/random">Side projects</a></li>
+				<li><a href="/temperament">How I work</a></li>
+        <li><a href="/web">Career</a></li>
+				<li><a href="/essays" class="selected">Essays</a></li>
+				<li><a href="/books">Books</a></li>
+			</ul>
+		</nav>
+		<div>
+			<a class="header-link" href="/">Ka Wai Cheung</a>
+			<h2 class="solid">An homage to strict coding.</h2>
+			<div class="pub-date">Aug 2015</div>
+			<p>
+				When I first began programming, I wrote code with a blissful innocence. In those early days, I learned by tinkering and experimenting, much like how a child learns how the physical world works by picking things up and stumbling on their own feet a few times. I learned largely by avoiding the boundaries of rules.
+			</p>
+			<p>
+				At some point, you build enough confidence to come up with your own opinions on how to write code. As you experience more failures and successes, some opinions stay put while others change. And then, there are those opinions that you go back and forth on, yet inevitably find yourself coming back to the same conclusions. For me, one of those opinions has to do with the concept of <em>strictness</em>. Over the years, I've learned (and re-learned) that the benefits of strict coding far outweigh the initial drawbacks as time goes by.
+			</p>
+			<p>
+				Strictness is not a specific design pattern or best practice, it's much more general than that. <strong>Strictness is about constantly looking for ways to reduce ambiguity in a design</strong>. Coding languages and software tools offer us all sorts of opportunities to do that&mdash;it's up to us to take advantage of them.
+			</p>
+			<p>
+				When I was first coding, enforcing strictness felt kind of arbitrary&mdash;some of these rules seemed like they were there just so old programmers could impose their authority on the newbies. I felt that way because I didn't understand <em>why</em> it was beneficial to be stricter about my code in certain spots.
+			</p>
+			<p>
+				For instance, why would I ever choose to add the line <code>option explicit</code> to my VB code, which forced me to declare and define the type of a variable before I used it? That just seemed like extra code to manage. Or, why would I make a variable <code>private</code> when I could just make it <code>public</code> and modify it outside its class if my code happened to drive me that way later on? It seemed like I was merely adding a rule that might cause me more work later on; without it, I could code more freely.
+			</p>
+			<p>
+				Looking back, it seems elementary why declaring and scoping variables is a really good thing. But, in the beginning, I was applying strictness without really knowing why. It was like my mother telling my childhood-self to eat my vegetables&mdash;I didn't really like what I was doing, I just didn't want to offend my elders.
+			</p>
+			<h4>The tease of looseness is all around us</h4>
+			<p>
+				Today, I find myself fighting the same thoughts I had nearly 20 years ago. Looser styles of programming are becoming more popular. For instance, C# introduced dynamics in 2010, allowing us to instantiate objects on-the-fly, and call methods or access parameters that bypass compile-time checking. Sometimes there are good reasons to use dynamics, but we could just as easily fall into the trap of using them everywhere because it would save us from all the extra rules we'd normally put into our code.
+			</p>
+			<p>
+				Here's another example: NoSQL databases are popular today because they take advantage of the reality of cheap storage, while removing some of the performance tuning required in traditional relational database design. Again, there are great use cases for such databases, but <a href="http://www.orsigiorgio.net/wp-content/papercite-data/pdf/ajo*13.pdf">some of us have sworn off relational design completely</a> in place of a relatively boundless data storage system. Some of us have forgotten how much invaluable stuff we lose from the strictness of a relational database design.
+			</p>
+			<p>
+				The programming industry has fundamentally changed these days. Software has to ship fast and iteratively. We no longer have to think about versions, as we did back in the days of shipping things on disk. So, the discipline of writing strict code seems to be at odds with the opportunities to cut a few corners and anticipate future updates now. The quicker detours offered by loose coding have become more and more enticing today. But, for the very same reasons, now is the time we need to embrace strictness in our code more than ever.
+			</p>
+			<h4>Strictness shows intent more obviously</h4>
+			<p>
+				Strictness gives us a way to let the next programmer know what we originally intended when we were designing the system. A great example of this is in relational database design. By requiring a non-<code>NULL</code> value on certain database columns, we impart much more meaning on a system.
+			</p>
+			<p>
+				Suppose we are designing an app where a user's email is required. In theory, we could design a database table of users and not enforce the email requirement on the database table at all, but, rather, somewhere in code. However, when the next developer comes along, she'll need to investigate more of the application to actually find out that emails are required&mdash;likely, by looking at various methods inside the codebase and confirming that the requirement is forced everywhere an insert/update can be made, then seeing that all the records in the current data set actually <strong>do</strong> have an email address assigned since the constraint is not explicitly applied there.
+			</p>
+			<p>
+				If, instead, we were more strict about our database design, she doesn't have to go on the rabbit hunt around the app for all the evidence, because the intent is explicit by that one simple database constraint. The same can be said for unique constraints, explicit foreign keys, and data types&mdash;a <code>decimal</code> or <code>boolean</code> is far more explicit than a <code>string</code>.
+			</p>
+			<p>
+				Intent is both one of the most difficult-to-describe, yet most critical, aspects to the maintainability of good software. The more intent we can show in our code, the more quickly newer developers (and developers who haven't been inside a codebase for awhile) can gain confidence in working with an older system.
+			</p>
+			<h4>Strictness paves roads with a clear direction</h4>
+			<p>
+				Awhile back, I took a trip to Costa Rica. A bunch of my friends and I drove through the forests along dirt roads that seemed to lead to anywhere. Occasionally, there would be a sign nailed to a tree with an arrow pointing feebly in one direction. This made for an adventurous trip, but it certainly wouldn't have been fun if we needed to get somewhere urgently.
+			</p>
+			<p>
+				Loosely-constructed code has that same negative impact on design. No programmer wants the fun trip through Costa Rica (at least, when looking through code). We want the boring trip down well-paved and well-demarcated roads with signs that are clearly pointing in one direction or another.
+			</p>
+			<p>
+				Once upon a time, when I wrote a new class definition, I'd always start with a parameterless constructor. I'd always start with making all of the properties publicly settable. That just felt right at the time. But, it also came back to haunt me later on. The construction of an instance of that class felt like the Costa Rican roads without defined paths. One developer might decide to use an object in a slightly different context, hydrating just a few of the publicly settable properties rather than all of them. Down the road, another one might decide to access those other properties in that same context, not realizing that they were never intended to be used.
+			</p>
+			<p>
+				Imagine a few iterations of this approach with dozens and dozens of classes. Very quickly, we have a mess of roads going every which way&mdash;we need to set bonfires along the road just to track our way back home.
+			</p>
+			<p>
+				Over the past few years, I've approached class definitions differently. I almost always override my constructors to force a developer to pass all the data in at the time of construction. I start by making public properties readonly. My class definitions have a very clear, singular way of being constructed and used. The pathway is very well defined.
+			</p>
+			<p>
+				Now, in the future, there might be reason to loosen up some of the restrictions. When the time is right, it's easy to do so because you can't introduce an unforeseen bug if you are explicitly making something more flexible than it was prior. <strong>Loosening a strict design is far easier than adding rigidity to a loose design.</strong>
+			</p>
+			<h4>Strictness gives you QA for free</h4>
+			<p>
+				Finally, when we write strict code, we use more of the capabilities of the coding language or framework&mdash;all of the good, relied-upon stuff that's been well-tested and built into our compilers and database engines for years. Essentially, we get a lot of free quality assurance the more you apply strictness into your code.
+			</p>
+			<p>
+				One of the places I get free QA is during a code refactor. Going from already-strict code to more strict code makes refactoring a fairly comfortable&mdash;and dare I say&mdash;enjoyable, task. For instance, most development environments will let us change the name of a strongly-typed variable or method with a few clicks rather than have to comb through the entire application on a search-and-replace hunt (which would also require manual inspection to make sure we aren't changing variables in different scopes that just happen to have the same name). If I update the signature of one of my methods, I simply need to recompile and the compiler will tell me where else I need to fix up my code to complete the refactoring.
+			</p>
+			<p>
+				The stricter we are, the more we can rely on the compiler to play the role of an inspector as we move parts of our code around. Contrast this with loosely-structured and loosely-typed code. The compiler would sit idly by as we'd noodle through all the corners of our application when making even small changes.
+			</p>
+			<h4>Strictness is the antidote to aging code</h4>
+			<p>
+				Enforcing strictness wherever we can is the best way I know how to keep code as maintainable as possible. It took me years to come to this understanding because we rarely spend the time to talk about why it's important. Opinions on the matter tend to sound dogmatic rather than driven from learned lessons.
+			</p>
+			<p>
+				Like a good diet, strictness as a general principle of design helps keep a codebase from aging too quickly. We can always remove the walls later on as we see where the software is leading us.
+			</p>
+		</div>
+	</body>
+</html>

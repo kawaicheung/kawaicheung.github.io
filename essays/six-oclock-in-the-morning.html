@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+	    <meta charset="UTF-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <title>Ka Wai Cheung | Six o’ clock in the morning, you’re the last to hear the warning</title>
+	  	<link rel="icon" href="/favicon.ico" type="image/x-icon">
+      <link rel="stylesheet" href="/styles/styles.css?p=030426">
+	</head>
+	<body>
+		<nav>
+      <a href="/"><img src="/img/kc.png" /></a>
+			<ul>
+				<li><a href="/software">Solo software</a></li>
+				<li><a href="/random">Side projects</a></li>
+				<li><a href="/temperament">How I work</a></li>
+        <li><a href="/web">Career</a></li>
+				<li><a href="/essays" class="selected">Essays</a></li>
+				<li><a href="/books">Books</a></li>
+			</ul>
+		</nav>
+		<div>
+			<a class="header-link" href="/">Ka Wai Cheung</a>
+			<h2 class="solid">Six o’ clock in the morning, you’re the last to hear the warning.</h2>
+			<div class="pub-date">Feb 2017</div>
+			<p>
+				<img src="/img/logo--donedone.png" class="side-icon" />
+				I woke up on a typically cold and dreary February morning in Chicago before the sun rose. I leaned over to check my phone on my nightstand and noticed an abnormal amount of messages in my inbox. <strong>75</strong> to be precise.
+			</p>
+			<p>
+				That's never a good sign.
+			</p>
+			<p>
+				My inbox was flooded with DoneDone support messages from people in Europe and Asia. Twitter was, at least by our standards, "blowing up" with stuff like this:
+			</p>
+			<p>
+				I catapulted out of bed, launched into my desk, and opened up my laptop. The app was up, but when I tried to login, nothing happened.
+			</p>
+			<p>
+				Was the database gone? Did someone, somehow, someway hack into DoneDone and replace our entire infrastructure with a static login page leading to nowhere? Did we somehow coerce a few thousand users to sign up for an issue tracking app when there never actually was an issue tracking app behind login?
+			</p>
+			<p>
+				In a panic, I disregarded all documentation and procedures (much of which I had written myself) and went straight to the servers. All of them were up and running fine. Our database was there. I could query against it. Everything was, at first glance, perfectly normal.
+			</p>
+			<p>
+				After what seemed like several hours (in reality, it was about 20 minutes), I decided to reset our site application pools &mdash;it's kind of the "reboot your machine 3 times" approach to fixing an IIS application.
+			</p>
+			<p>
+				And, just like that, I could login. Everything was back.
+			</p>
+			<p>
+				I figured out the technical details of the <em>Mysterious Case of the Login Button </em>later that day. At login, we were pushing a small bit of user information into our caching server which we retrieved moments later in the same call. However, if our web servers couldn't connect to our caching server, our caching layer would simply return null data rather than throwing an error. (This is <em>somewhat</em> by design).
+			</p>
+			<p>
+				All of our application logic handled this scenario appropriately, usually by fetching the data it needed directly from our data store&mdash;all except our login logic. On this one, particular morning, that issue got exposed. Badly.
+			</p>
+			<p>
+				The next question in my mind was why we weren't alerted of the connectivity issue until users discovered it. We set up AWS monitors on all of our servers that, on a minute-by-minute basis, check availability, throughput, and a host of other metrics. We also have alerts set up via <a href="http://pingdom.com">Pingdom</a> to check DNS and site availability.
+			</p>
+			<p>
+				As it turns out, a rare server event occurred on our caching tier that caused a connection loss to our web servers. But, the caching server was only unavailable for a very short period of time&mdash;shorter than the time threshold necessary for our AWS monitors to alarm something was wrong. However, it was long enough to kill the static connection from the application code to the caching tier.
+			</p>
+			<p>
+				Meanwhile, Pingdom was also able to access the application because it was set up to only check that a static file was accessible. Ostensibly, everything was just fine&mdash;when it wasn't.
+			</p>
+			<p>
+				The problem was kind of like the guy that dodges all the laser beams to break into the museum in Ocean's Twelve&mdash;the bug managed to evade all the checks we had in place to alert our team of any issues.
+			</p>
+			<img src="/essays/img/six-oclock-morning-01.jpeg" style="max-width:100%;height:auto;display:block;align-self:flex-start;border:solid 1px var(--color--border-line);border-radius:0.5rem;margin-bottom:1.4rem;" />
+			<p>
+				We ended up remedying a few things after this incident. First, we got rid of the hard reliance on caching layer accessibility for login. Second, we updated the page that Pingdom hits to check for site availability. Rather than hit a static page, it hit a route that internally pushes and retrieves a Guid into the caching layer. The page also checks that it can open and close a connection to our database layer as well. If either task fails, the page responds with a 5xx error and Pingdom alerts us.
+			</p>
+			<p>
+				There were a lot of technical lessons learned. But, perhaps more dishearteningly, we had disappointed a lot of our customers. That afternoon, I cobbled together a letter of apology, sent to all account owners using DoneDone. Here's that letter:
+			</p>
+			<blockquote>
+				<strong>As many of you experienced, we had an outage earlier today, February 4th, from 8:35AM to 1:04PM UTC.</strong>
+			</blockquote>
+			<blockquote>
+				First off, we are truly sorry for the downtime. This certainly had its greatest impact on our friends across both the Atlantic and Pacific. We want to apologize for the hours of productivity you may have lost during your Tuesday mornings and afternoons. We also want to thank you for the overwhelming sense of understanding we've gotten from you as we responded back to your emails and tweets&mdash;from "It happens" to a simple "Thanks for the help!"
+			</blockquote>
+			<blockquote>
+				<strong>What exactly happened? </strong>At approximately 8:35AM UTC, connectivity was lost to one of our servers that holds our caching database. The connections came back within a few minutes, but, the DoneDone application itself was not able to connect. We restarted our applications to restore connectivity. In the end, it was a simple fix. While we were down, <em>no data was lost and all issues sent via email were submitted properly</em>.
+			</blockquote>
+			<blockquote>
+				While technical issues are inevitable, having them arise without any response for 4 hours is unacceptable. We did a bad job today.
+			</blockquote>
+			<blockquote>
+				<strong>What are we doing to avoid this type of outage again? </strong>We're going to do a few things to help mitigate this situation from happening again. As with most problems in production, the things we can do vary from the quick short-term solutions to more long-term ones.
+			</blockquote>
+			<blockquote>
+				For the short-term, <em>we will have better alerts in place to notify our IT team when critical events like this happen, particularly during the overnight hours in Chicago</em>. While we aren't yet at the point of having a customer support team available 24/7, we can ensure that downtime like this doesn't take hours to respond to.
+			</blockquote>
+			<blockquote>
+				Longer term, we are investigating a better fault-tolerance plan. Though we now know how to remedy this situation, we want to ensure that the application can handle this in a better way&mdash;that doesn't rely on manual intervention.
+			</blockquote>
+			<blockquote>
+				<strong>A sincere thank you.</strong>
+			</blockquote>
+			<blockquote>
+				We pride ourselves on keeping DoneDone up-and-running smoothly. This is our first significant outage in over sixteen months, but we know we can do even better. Thank you again for taking this outage in stride with us. We live, we learn, we improve.
+			</blockquote>
+			<blockquote>
+				Should you have any further questions or comments, don't hesitate to reply back to us. We're all ears.
+			</blockquote>
+			<p>
+				That evening, we received some kind words from our customers. In fact, overwhelmingly, the positive feedback outweighed the negative ones.
+			</p>
+			<blockquote>
+				"Thanks for the honesty guys&mdash;love that more than anything."
+			</blockquote>
+			<blockquote>
+				"Nice touch guys. Keep up the good work!"
+			</blockquote>
+			<blockquote>
+				Y'all are Aces! Don't take it on the chin.
+			</blockquote>
+			<p>
+				We licked a lot of wounds from that mistake. It made us re-evaluate some of our existing code and, out of this, we made the application even more fault tolerant.
+			</p>
+			<p>
+				It was an experience I'm personally glad I went through. I grew up a lot that day.
+			</p>
+		</div>
+	</body>
+</html>

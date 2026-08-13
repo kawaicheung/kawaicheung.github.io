@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+	    <meta charset="UTF-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <title>Ka Wai Cheung | The Big Migration</title>
+	  	<link rel="icon" href="/favicon.ico" type="image/x-icon">
+      <link rel="stylesheet" href="/styles/styles.css?p=030426">
+	</head>
+	<body>
+		<nav>
+      <a href="/"><img src="/img/kc.png" /></a>
+			<ul>
+				<li><a href="/software">Solo software</a></li>
+				<li><a href="/random">Side projects</a></li>
+				<li><a href="/temperament">How I work</a></li>
+        <li><a href="/web">Career</a></li>
+				<li><a href="/essays" class="selected">Essays</a></li>
+				<li><a href="/books">Books</a></li>
+			</ul>
+		</nav>
+		<div>
+			<a class="header-link" href="/">Ka Wai Cheung</a>
+			<h2 class="solid">The Big Migration.</h2>
+			<div class="pub-date">Feb 2017</div>
+			<p>
+				<img src="/img/logo--donedone.png" class="side-icon" />
+				In the problem space of software development, few things I can think of are as daunting a task as migrating a living, breathing, heavily-trafficked web application from one environment to another. While there may be more technically challenging feats in software development, none require the kind of critical pre-planning, meticulous coordination, and flawless execution that goes into making the <em>Big Migration</em> a successful one.
+			</p>
+			<p>
+				I find this kind of migration far more gut-twisting than the launch of a <em>new</em> application. While that involves a similar leap of faith, you start from zero. Early production issues on a new system come without much baggage&mdash;you have no long-time users yet.
+			</p>
+			<p>
+				The mid-flight migration&mdash;the one that requires an intricate orchestration of chess-like moves to minimize any disruption to your now-reliant customer base&mdash;those make me sweat. No matter how much testing you've done on your new environment prior to the actual deployment, the distinct possibility remains that something doesn't work out the way you were sure it would before the proverbial switch is flipped. And usually, it's some <em>things</em>.
+			</p>
+			<img src="/essays/img/big-migration-01.jpeg" style="max-width:100%;height:auto;display:block;align-self:flex-start;border:solid 1px var(--color--border-line);border-radius:0.5rem;margin-bottom:1.4rem;" />
+			<p style="font-size:0.65rem;margin-top:-1rem;margin-bottom:1.4rem;"><em>The office scene from the first Big Migration in 2011. That's me in the middle, closely watching a console app migrate data from our single-tenant infrastructure to our new multi-tenant one, while our gigantic yucca tree looks on.</em></p>
+			<p>
+				We've undergone two such migrations in eight years at DoneDone, one in 2011 (action shot above) and one in 2013. Both went without some minor hiccups, but thankfully, also without major ones.
+			</p>
+			<p>
+				Our most recent <em>Big Migration</em> was in November 2013. We moved our infrastructure from dedicated physical hardware on Rackspace to virtual servers on AWS. The migration was by no means a simple data and application transfer either. We simultaneously leveraged some newer features now available to us on the Cloud, like <a href="https://aws.amazon.com/sqs/">queues</a> and <a href="https://aws.amazon.com/ses/">e-mail as a service</a>. We added new VMs to handle data caching and off-cycle jobs. There were significant moving parts.
+			</p>
+			<p>
+				Migration night was set for 8pm on Friday, November 9th. We typically release new feature updates during the week. But, for a big migration, I prefer the weekend. The weekend gives you time to rollback should some unforeseen catastrophe beckon. It also gives you a day or two to sanity check everything before the bulk of your users come back on Monday morning. You sacrifice a weekend of leisure, but that's what you occasionally do for a <a href="/essays/the-worst-part-of-caring.html">labor of love</a>.
+			</p>
+			<img src="/essays/img/big-migration-02.png" style="max-width:100%;height:auto;display:block;align-self:flex-start;border:solid 1px var(--color--border-line);border-radius:0.5rem;margin-bottom:1.4rem;" />
+			<p style="font-size:0.65rem;margin-top:-1rem;margin-bottom:1.4rem;"><em>All the little configurations, tests, bug fixes, and other miscellany verified in the weeks before our second big migration in 2013.</em></p>
+			<p>
+				That Friday morning, I had met with the migration team&mdash;myself, our systems administrator Ameer, and systems developer Paul. We had a step-by-step plan laid out with a surgeon's precision. Nearly every single item on the migration list had been tested multiple times in the course of the past three months leading up to this seminal moment.
+			</p>
+			<p>
+				We'd all been involved in getting the different pieces of the engine ready. There was a precise order to the madness. Everyone was clear and confident on the order of events.
+			</p>
+			<p>
+				An 8pm migration means that much of day is spent anxiously waiting.
+			</p>
+			<p>
+				I wonder what others do in anticipation of their "big moments". Some athletes have bizarre pre-game rituals. Wade Boggs, for instance, was notorious for them.
+			</p>
+			<blockquote>
+				"He ate <a href="https://en.wikipedia.org/wiki/Chicken_%28food%29">chicken</a> before every game (<a href="https://en.wikipedia.org/wiki/Jim_Rice">Jim Rice</a> once called Boggs "chicken man"), woke up at the same time every day, took exactly 117 <a href="https://en.wikipedia.org/wiki/Ground_ball">ground balls</a> in pre-game practice, took batting practice at 5:17 pm, and <a href="https://en.wikipedia.org/wiki/Sprint_%28running%29">ran sprints</a> at 7:17 pm". <a href="https://en.wikipedia.org/wiki/Wade_Boggs">https://en.wikipedia.org/wiki/Wade_Boggs</a>
+			</blockquote>
+			<p>
+				Many surgeons are also known for playing classical music while performing surgeries. Studies have shown that music lowers blood pressure and pulse rates. In a way, a big migration feels a bit like surgery: Routine at best, but always with the risk of something unanticipated.
+			</p>
+			<p>
+				On the night of our migration, the music of choice in the house wasn't of the orchestral type. Instead, it was Europe's <em>The Final Countdown.</em> Programmers are weird like that. Three months of effort that culminated in one final moment of proverbial flip-switching didn't feel right under the sonic background of Bach's <em>Minuet in G minor</em>. 80's hair metal rock it was.
+			</p>
+			<p>
+				At precisely 8pm, we all sat at our desks ready to go down our checklist of tasks. "Let's do this!" I yelled. As I began the first set of operations on our to-do list, Ameer proclaimed "Alright, DNS has been switched over!"
+			</p>
+			<p>
+				"Wait, what?? No not yet!"
+			</p>
+			<p>
+				In my haste, I must've yelled out the code word for the<em> last step</em> as I was beginning the first one. We'd sewed up the patient before cutting him open.
+			</p>
+			<p>
+				Ameer quickly reverted the DNS rules.
+			</p>
+			<p>
+				The rest of the evening went largely as planned. In retrospect, I'm glad we had that small gaffe at the very beginning. It cut the tension and it shook away our nerves.
+			</p>
+		</div>
+	</body>
+</html>

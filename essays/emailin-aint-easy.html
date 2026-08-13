@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+	    <meta charset="UTF-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <title>Ka Wai Cheung | Emailin’ ain’t easy</title>
+	  	<link rel="icon" href="/favicon.ico" type="image/x-icon">
+      <link rel="stylesheet" href="/styles/styles.css?p=030426">
+	</head>
+	<body>
+		<nav>
+      <a href="/"><img src="/img/kc.png" /></a>
+			<ul>
+				<li><a href="/software">Solo software</a></li>
+				<li><a href="/random">Side projects</a></li>
+				<li><a href="/temperament">How I work</a></li>
+        <li><a href="/web">Career</a></li>
+				<li><a href="/essays" class="selected">Essays</a></li>
+				<li><a href="/books">Books</a></li>
+			</ul>
+		</nav>
+		<div>
+			<a class="header-link" href="/">Ka Wai Cheung</a>
+			<h2 class="solid">Emailin’ ain’t easy.</h2>
+			<div class="pub-date">Feb 2017</div>
+			<p>
+				<img src="/img/logo--donedone.png" class="side-icon" />
+				We launched one of our biggest features in August, 2013: <a href="http://getdonedone.com/public-issues">Public Issues</a>. Public Issues extend DoneDone from an issue tracking tool for internal teams to a customer support portal for everyone.
+			</p>
+			<p>
+				Each project comes with a uniquely-generated email address (like <a href="mailto:b7d6c327074@mydonedone.com">abcde123456@mydonedone.com</a>) that anyone can send emails to. DoneDone converts the email into a public issue which provide all the same internal goodies of a normal issue, but with the added ability to reply directly to the customer. This way, you can simultaneously work on the issue with your team inside of DoneDone while having a tracked conversation with your customer over email. From the vantage point of the outside customer, the UI for public issues is plain old <strong>email</strong>.
+			</p>
+			<p>
+				Here's the play-by-play of how a public issue's created and updated through an email chain:
+			</p>
+			<ul class="postList">
+				<li>Someone sends an email to DoneDone's uniquely-generated project email address. (Many of our subscribers actually use their own support email address that forwards to the generated email)</li>
+				<li>The email comes into DoneDone's catch-all Gmail account and forwards the email to <a href="http://postmarkapp.com">Postmark</a>, a wonderful service by the team at <a href="http://wildbit.com">Wildbit</a>. Postmark then parses the email to a programmatically-useful JSON object and sends the data securely over the wire to a webhook on our side.</li>
+				<li>DoneDone receives the data, vets the uniquely-generated address and creates a public issue in the project based on the email address it was delivered to. The email subject converts to an issue title. The email body converts to an issue description. The original sender becomes the "submitter" of the issue whom the internal team can reply to through the system. The submitter interacts with the internal team strictly over email.</li>
+				<li>When internal team members reply to the submitter, DoneDone creates a new unique reply-to address on the email sent to the customer so any replies to that email will correctly map back to the right issue.</li>
+			</ul>
+			<p>
+				After we launched, many customers wanted us to track cc'd users. This made a lot of sense to us&mdash;if public issues felt like email to an outsider, well then, it should feel like email in <em>every</em> way. So, we added some additional functionality to capture cc'd email addresses from the outsider, and also allowed the internal team to add and edit cc'd email addresses inside of DoneDone.
+			</p>
+			<p>
+				There's a fair bit of complexity here, but overall it was a straightforward initial implementation. Or, so we thought.
+			</p>
+			<p>
+				What happens if an outsider replies to an email from DoneDone while also cc'ing a random separate public issue address? <em>So, we added a check that if more than one DoneDone address is added to an incoming email, a replied email would take priority, and any other emails processed would be disregarded.</em>
+			</p>
+			<p>
+				What if a cc'd user replies to the <em>original</em> email someone sent into DoneDone? We wouldn't want to create a new public issue; instead, it would be more appropriate to add a comment in the issue that was created by the original email. <em>So, we added some new logic to store every incoming email's </em><a href="https://en.wikipedia.org/wiki/Message-ID"><em>message ID</em></a><em>, a GUID applied to every email in flight so that we could check any replies to the same message before assuming an email was truly "new".</em>
+			</p>
+			<p>
+				What if the email address of the submitter of a public issue was actually the forwarding address to a DoneDone public issue address? Then, any replies to the submitter would boomerang the email right back into DoneDone&mdash;we'd be emailing into a mirror.
+			</p>
+			<p>
+				Granted, no one in their right mind would set things up that way, except the guy that hooked up his Amazon Echo and Google Home in an infinite calendar reminder loop. <em>So, we added some additional logic to disregard any emails original sent from DoneDone.</em>
+			</p>
+			<p>
+				All kinds of these strange scenarios cropped up in the first few weeks of our release. It led to some pretty wild, head-banging-against-the-wall scenarios that we needed to account for, which in turn, led to some pretty fantastic code comments.
+			</p>
+			<img src="/essays/img/emailin-aint-easy-01.png" style="max-width:100%;height:auto;display:block;align-self:flex-start;border:solid 1px var(--color--border-line);border-radius:0.5rem;margin-bottom:1.4rem;" />
+			<p style="font-size:0.65rem;margin-top:-1rem;margin-bottom:1.4rem;"><em>"Code Tells You How, Comments Tell You Why"&mdash;Jeff Atwood</em></p>
+			<p>
+				The lesson in all of this? For as much as most of us view email as a relic of a time long ago, it holds a lot more complexity than you might think at first glance. Emailin' ain't easy.
+			</p>
+		</div>
+	</body>
+</html>

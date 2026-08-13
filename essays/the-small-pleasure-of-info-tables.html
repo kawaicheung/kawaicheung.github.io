@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+	    <meta charset="UTF-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <title>Ka Wai Cheung | The Small Pleasure of Info Tables</title>
+	  	<link rel="icon" href="/favicon.ico" type="image/x-icon">
+      <link rel="stylesheet" href="/styles/styles.css?p=030426">
+	</head>
+	<body>
+		<nav>
+      <a href="/"><img src="/img/kc.png" /></a>
+			<ul>
+				<li><a href="/software">Solo software</a></li>
+				<li><a href="/random">Side projects</a></li>
+				<li><a href="/temperament">How I work</a></li>
+        <li><a href="/web">Career</a></li>
+				<li><a href="/essays" class="selected">Essays</a></li>
+				<li><a href="/books">Books</a></li>
+			</ul>
+		</nav>
+		<div>
+			<a class="header-link" href="/">Ka Wai Cheung</a>
+			<h2 class="solid">The Small Pleasure of Info Tables.</h2>
+			<div class="pub-date">Dec 2023</div>
+			
+			<p>
+				Most coding approaches don't have to be big enough where we feel compelled to call them patterns, frameworks, or architectures. Maybe <em>technique</em> is a good label for these unsung heroes.
+			</p>
+			<p>
+				I love those satisfying little techniques you use over and over again. The ones where you go "that makes sense" but you keep finding yourself rediscovering your happiness with it.
+			</p>
+			<p>
+				Here's one such technique I've used for years. The subject: Relational data modeling.
+			</p>
+			<p>
+				When I data model, I generally find myself creating one-to-one<em> </em>mappings between major domain concepts and database tables. Users have a <code>Users</code> table. Accounts have an <code>Accounts</code> table. Projects have a <code>Projects</code> table.
+			</p>
+			<p>
+				Associative concepts like account memberships (a user's accounts) and project memberships (a user's projects within an account) translate cleanly across the code-database divide as well, in the form of associative (<em>or</em> join <em>or</em> many-to-many <em>or</em> intersection <em>or</em> linking <em>or</em> whatever we're calling them) tables.
+			</p>
+			<p>
+				For many reasons, you try to keep these big domain concept tables relatively narrow. One of them is simply the drudgery of adding a new column. I shiver at the idea of messing around with the structure of a table that's been doing its good work for years&mdash;thus tempting the fate of the performance gods (because if you're like me, part of successful index tuning involves a good prayer or two).
+			</p>
+			<p>
+				Here's the technique: Every major domain table can benefit from a related extension table which I will call an info table (you might call it an extension table).
+			</p>
+			<p>
+				A terribly vague name I know. But that's for good reason. It's where you store all sorts of one-off informative nuggets about records yet live on the main table. Metaphorically speaking, the kind of stuff you might list as interesting snippets about yourself at a corporate social icebreaker.
+			</p>
+			<p>
+				The schema of an info table needs three components: A key (string), a value (larger string), and a foreign key back to the related parent table. It's really then just a simple key-value store with a link back up to the main record.
+			</p>
+			<p>
+				The <code>Accounts</code> table has a relationship to the <code>AccountInfos</code> table; <code>Users</code> to the <code>UserInfos</code> table; <code>Projects</code> to the <code>ProjectInfos</code> table, and so forth. This goes for the associative tables too. An <code>AccountMembershipInfos</code> table or a <code>ProjectMembershipInfos</code> table come in quite handy.
+			</p>
+			<p>
+				Having tended to a mature software product for well over a decade now, I find most new features we introduce can be managed in the database by adding key-value records to these tables alone. Rarely do I need brand new tables and even more rarely do I feel it best to widen an existing table.
+			</p>
+			<p>
+				When software reaches a certain point in its life, most of the new stuff you're adding is decorative. It's not this big new spaceship you're trying to land in the alleyway as much as it is adding shiny new knobs to the spaceship's dashboard.
+			</p>
+			<p>
+				The keys for the various info records are managed in code. As simple as a static class of const strings (For example, a static class called <code>ProjectMembershipInfoKeys</code>):
+			</p>
+			<img src="/essays/img/info-tables-01.png" style="max-width:100%;height:auto;display:block;align-self:flex-start;border:solid 1px var(--color--border-line);border-radius:0.5rem;margin-bottom:1.4rem;" />
+			<p>
+				Along with a couple of foundational methods&mdash;one to pull a particular entity's value based on the key and one to upsert an entity's value based on that key, you have what you need to take care of the storage side of most new features.
+			</p>
+			<p>
+				So, let's say I'm adding a new feature that lets someone favorite a project. They see a list of project cards in their dashboard and there's a star on the corner of them that they can click. Favorites bring those cards to the top of the list.
+			</p>
+			<p>
+				From the database side, this means we need to store a note (let's just say a boolean) to mark a project as someone's favorite. I can add this tidbit as a record into the <code>ProjectMembershipInfos</code> table using a key like <code>"FAVORITED"</code>:
+			</p>
+			<img src="/essays/img/info-tables-02.png" style="max-width:100%;height:auto;display:block;align-self:flex-start;border:solid 1px var(--color--border-line);border-radius:0.5rem;margin-bottom:1.4rem;" />
+			<p>
+				And then, on the storage side, I can add a couple of database-connected methods to favorite or unfavorite the project which basically wrap against those foundational ones.
+			</p>
+			<img src="/essays/img/info-tables-03.png" style="max-width:100%;height:auto;display:block;align-self:flex-start;border:solid 1px var(--color--border-line);border-radius:0.5rem;margin-bottom:1.4rem;" />
+			<p>
+				In this case, I also have a <code>removeProjectMembershipInfos</code> method that I use for unfavoriting. I could've also passed in a false parameter.
+			</p>
+			<p>
+				And, wherever I need to pull this data out, it's a simple matter of selecting out the requisite <code>ProjectMembershipInfos</code> record for a given project and user with the key <code>"FAVORITED"</code>.
+			</p>
+			<p>
+				Of course, there's all sorts of other work to get this feature off the ground&mdash;the UI, API, and other code plumbing. But the database work is largely trivial stuff, something I don't have to reinvent every time a new feature is on the horizon.
+			</p>
+			<p>
+				Here's a sampling of some of the other kinds of features, specific to my work on DoneDone, whose main storage work involves info tables. Some store booleans as the value, others might store a guid/code/token, or a comma-delimited list of IDs, or some enum converted to a string.
+			</p>
+			<ul class="postList">
+				<li>Toggling due date notifications for a project (A boolean value for a<code> "DUE DATE NOTIFICATIONS"</code> key off of <code>ProjectMembershipInfos</code>)</li>
+				<li>The type of updates you want to get emailed for in a project (An <code>enum</code> value for a <code>"EMAIL SUBSCRIPTION TYPES"</code> key off of <code>ProjectMembershipInfos</code>)</li>
+				<li>The channel ID and token of a Slack room connected to a project to broadcast updates to (A pipe-delimited <code>token|channelID</code> string for a <code>"SLACK_TOKEN_AND_CHANNEL"</code> key off of <code>ProjectInfos</code>)</li>
+				<li>Whether a project is a "sample" and not a real one (A boolean value for a <code>"SAMPLE_PROJECT"</code> key off of <code>ProjectInfos</code>)</li>
+				<li>The generated unique email reply address for an email conversation (A string value for a <code>"CONVO_EMAIL_INBOX_ALIAS</code>" key off of <code>ActionableItemInfos</code>)</li>
+				<li>Storing the public API key for a user (A guid for a <code>"PUBLIC_API_KEY"</code> key off of <code>UserInfos</code>)</li>
+				<li>Marking whether a user logged on with Google (A boolean for a <code>"LOGIN_VIA_GOOGLE"</code> key off of <code>UserInfos</code>)</li>
+				<li>Storing <em>pinned</em> task and conversations for a user on their account dashboard (A pipe-delimited list of IDs on the <code>AccountMembershipInfos</code>)</li>
+				<li>Whether an account has the ability to use the "Workflow Jobs" feature (A boolean for a <code>"FEATURE_FLAG__JOBS"</code> key off of <code>AccountInfos</code>)</li>
+			</ul>
+			<p>
+				Not every kind of feature fits well with the info table approach. If some feature requires very large values (where an <code>NTEXT</code> or <code>NVARCHAR(MAX)</code> field is required), I'll opt for a new column on the parent table or some other new table). Or, if the feature's <em>value</em> needs to be searched or queried upon, I'd put it somewhere else too&mdash;I don't have indexes on these value columns. The lookups are relegated to the key column and its foreign key alone.
+			</p>
+			<p>
+				There are a wide range of features I've implemented over the years whose database underpinnings live in these simple, gloriously narrow info tables. The best natural fits are the ones where you've got the entity in-hand already (or at least its primary key), and you just need that extra "stuff" after the fact.
+			</p>
+		</div>
+	</body>
+</html>

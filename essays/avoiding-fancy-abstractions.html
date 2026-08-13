@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+	    <meta charset="UTF-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <title>Ka Wai Cheung | Avoiding Fancy Abstractions</title>
+	  	<link rel="icon" href="/favicon.ico" type="image/x-icon">
+      <link rel="stylesheet" href="/styles/styles.css?p=030426">
+	</head>
+	<body>
+		<nav>
+      <a href="/"><img src="/img/kc.png" /></a>
+			<ul>
+				<li><a href="/software">Solo software</a></li>
+				<li><a href="/random">Side projects</a></li>
+				<li><a href="/temperament">How I work</a></li>
+        <li><a href="/web">Career</a></li>
+				<li><a href="/essays" class="selected">Essays</a></li>
+				<li><a href="/books">Books</a></li>
+			</ul>
+		</nav>
+		<div>
+			<a class="header-link" href="/">Ka Wai Cheung</a>
+			<h2 class="solid">Avoiding Fancy Abstractions.</h2>
+			<div class="pub-date">Jan 2024</div>
+			
+			<p>
+				I avoid fancy abstractions until I need it and I find that I rarely do. <a href="https://www.donedone.com">DoneDone's</a> codebase almost never uses interfaces and even subclassing is rare.
+			</p>
+			<p>
+				The kind of code that I like to write is the one that is most easy to read and to dive into at any point. There's a balance here certainly. The easiest kind of code you could come up with might be a laundry list of booleans like <code>isTwoPlusThreeEqualToFive</code> or <code>isUsersPasswordEqualToPassword1</code> but it would be painful to write anything useful with this approach.
+			</p>
+			<p>
+				On the complete opposite end of the spectrum is a codebase littered with interfaces, generics, multilevel inheritance and any other assortment of concepts that are meant to widen the net of a codebase's extensibility. It feels professional.
+			</p>
+			<p>
+				Well considered. <br/>Sophisticated. <br/>Elegant.
+			</p>
+			<p>
+				Because it probably is.
+			</p>
+			<p>
+				When the time comes to add something new, a fanci-fied codebase might be able to support <em>that new thing</em> more easily than one that had more rigid edges and pathways. Except for the fact that it will be a human being who will need to know how to do this correctly.
+			</p>
+			<p>
+				And a codebase written in a way to shield code from large changes in the future will almost always make code less obvious and understandable to the human now.
+			</p>
+			<p>
+				The painful part of adding more code is not the amount of code or the amount of changes or the amount of touchpoints. It is someone's confidence in understanding how all of the existing code relates to the new code. And fancy abstractions are a way to guarantee less of this confidence.
+			</p>
+			<p>
+				When I write code, my goal is not to shield code from large changes in the future. It is to make code as obvious and understandable as possible now. Because the former is not the harder task for humans.
+			</p>
+			<p>
+				The latter is.
+			</p>
+		</div>
+	</body>
+</html>
