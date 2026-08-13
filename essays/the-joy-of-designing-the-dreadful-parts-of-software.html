@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+	    <meta charset="UTF-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <title>Ka Wai Cheung | The joy of designing the dreadful parts of software</title>
+	  	<link rel="icon" href="/favicon.ico" type="image/x-icon">
+      <link rel="stylesheet" href="/styles/styles.css?p=030426">
+	</head>
+	<body>
+		<nav>
+      <a href="/"><img src="/img/kc.png" /></a>
+			<ul>
+				<li><a href="/software">Solo software</a></li>
+				<li><a href="/random">Side projects</a></li>
+				<li><a href="/temperament">How I work</a></li>
+        <li><a href="/web">Career</a></li>
+				<li><a href="/essays" class="selected">Essays</a></li>
+				<li><a href="/books">Books</a></li>
+			</ul>
+		</nav>
+		<div>
+			<a class="header-link" href="/">Ka Wai Cheung</a>
+			<h2 class="green">The joy of designing the dreadful parts of software.</h2>
+			<h3>Some of the most satisfying work I've done has been on the not-so-glorious underbelly of software. The tedious features that have to be in place for the rest of the machine to shine.</h3>
+			<p>
+				During my fifteen years of working on <a href="https://www.donedone.com">DoneDone</a>, one of my proudest dream-ups
+				is a feature that helps you set up auto-forwarding a Google email address into a DoneDone mailbox.
+			</p>
+			<p>
+				The hard part was that at the time, there was no Google API option to set up auto-forwarding. So any user experience
+				would require said user to go off to Google's mail settings section&mdash;their own underbelly of their massive
+				email enterprise.
+			</p>
+			<p>
+				But I still felt the process could feel friendlier and more guided. So, I ended up with a wizard-y approach.
+			</p>
+			<p>
+				It starts on this screen with a link that opens up Gmail in a new tab:
+			</p>
+			<img src="/essays/img/dreadful-parts-01.png" style="width:100%;border:solid 1px var(--color--border-line);border-radius:0.5rem;margin-bottom:1.4rem;" />
+			<p>
+				Once you've come back to this tab and clicked &ldquo;I've signed in to Gmail&rdquo;, the wizard slides to the next
+				task&mdash;copying DoneDone's generated auto-forwarding address using Javascript's Clipboard class. Once you've
+				clicked the email address, the email address is automatically copied, and the &ldquo;Continue to the next step!&rdquo;
+				button slides into view:
+			</p>
+			<img src="/essays/img/dreadful-parts-02.png" style="width:100%;border:solid 1px var(--color--border-line);border-radius:0.5rem;margin-bottom:1rem;" />
+			<img src="/essays/img/dreadful-parts-03.png" style="width:100%;border:solid 1px var(--color--border-line);border-radius:0.5rem;margin-bottom:1.4rem;" />
+			<p>
+				The next screen walks you through the process of adding the generated email address as an auto-forwarding address
+				into Gmail, which then sends a confirmation link to that address ensuring you actually have access to the address
+				you added.
+			</p>
+			<p>
+				This gets to an archaic part of Google's UI as it involves three distinct clicks (on &ldquo;Next&rdquo;,
+				&ldquo;Proceed&rdquo;, and &ldquo;OK&rdquo;) to get the address added.
+			</p>
+			<img src="/essays/img/dreadful-parts-04.png" style="width:100%;border:solid 1px var(--color--border-line);border-radius:0.5rem;margin-bottom:1.4rem;" />
+			<p>
+				<strong><em>Sidenote:</em></strong> <em>The one drawback to this screen is that it would have to get updated
+				whenever Google changes the way you add an auto-forwarding address&mdash;even if the change were as minor as
+				naming the button &ldquo;Proceed&rdquo; to &ldquo;Continue&rdquo;. But, the underbellies of software rarely get a
+				facelift, especially if its part of a monstrous enterprise like Google. And I'm using that to my benefit here.</em>
+			</p>
+			<p>
+				At this point, Google will send an email to the auto-forwarding address. In a typical scenario, the user would have
+				to open yet another tab, log into the inbox of that address, find the email Google sent, and then click the
+				confirmation link. But that opens up another opportunity where the guide could help that along.
+			</p>
+			<p>
+				Once the next screen slides in, the app runs a setInterval() method which make a call to our own API. The API call
+				looks up the most recent emails received in that particular mailbox and parses out the contents of the emails to
+				regex match against the Google generated confirmation link (e.g. starting with
+				&ldquo;https://mail-settings.google.com&rdquo;).
+			</p>
+			<img src="/essays/img/dreadful-parts-05.png" style="width:100%;border:solid 1px var(--color--border-line);border-radius:0.5rem;margin-bottom:1.4rem;" />
+			<p>
+				This continues every few seconds for a couple of minutes. If it never finds a match, the screen will flip to an
+				error state, but in the expected happy case, we surface the link directly on the screen. The user just needs to
+				click it and then hit the &ldquo;Confirm&rdquo; button on Google's side.
+			</p>
+			<img src="/essays/img/dreadful-parts-06.png" style="width:100%;border:solid 1px var(--color--border-line);border-radius:0.5rem;margin-bottom:1.4rem;" />
+			<p>
+				Most people will rightfully assume that the auto-forwarding work is done after this step. But Google has one more
+				onerous bit here many miss.
+			</p>
+			<p>
+				Google requires you to go back to your mail settings and manually grant the freshly added address as the forwarding
+				address.
+			</p>
+			<p>
+				Once again, this is a process that hasn't been touched in their end for years&mdash;exemplified by the fact that you
+				need to scroll to the bottom of the lengthy settings page to &ldquo;Save changes.&rdquo;
+			</p>
+			<p>
+				All of this is detailed on the next screen after you click &ldquo;I've clicked the link and the Confirm button.&rdquo;
+			</p>
+			<img src="/essays/img/dreadful-parts-07.png" style="width:100%;border:solid 1px var(--color--border-line);border-radius:0.5rem;margin-bottom:1.4rem;" />
+			<p>
+				Now, we've finished Google's auto-forwarding setup. As a final step, we test the complete loop on our side once a
+				user clicks &ldquo;Test that auto-forwarding is working!&rdquo;
+			</p>
+			<img src="/essays/img/dreadful-parts-08.png" style="width:100%;border:solid 1px var(--color--border-line);border-radius:0.5rem;margin-bottom:1.4rem;" />
+			<p>
+				When a user clicks the button, an API call is made to send a test email to the Google-owned email address. Then, we
+				start another setInterval() on an API method that waits for that email to land back on our side.
+			</p>
+			<img src="/essays/img/dreadful-parts-09.png" style="width:100%;border:solid 1px var(--color--border-line);border-radius:0.5rem;margin-bottom:1.4rem;" />
+			<p>
+				Once the email hits, we surface the success page. I thought I'd have fun with this and found a few congratulatory
+				GIFs that the UI will randomly select from.
+			</p>
+			<img src="/essays/img/dreadful-parts-10.png" style="width:100%;border:solid 1px var(--color--border-line);border-radius:0.5rem;margin-bottom:1.4rem;" />
+			<p>
+				Most products that have a feature that requires auto-forwarding will include a help document on how to forward your
+				Google mail their way, like
+				<a href="https://docs.helpscout.com/article/54-auto-forward-from-google-workspace-to-help-scout">this one from Help
+				Scout</a>. It's a tedious read because&mdash;well&mdash;the process is tedious.
+			</p>
+			<p>
+				But these are the opportunities I relish. The possibility of making something you'd expect to be drab just a little
+				better. Handholding wherever it's possible.
+			</p>
+			<hr />
+			<p>
+				<em>Originally published on Medium, January 2025.</em>
+			</p>
+		</div>
+	</body>
+</html>
