@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+	    <meta charset="UTF-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <title>Ka Wai Cheung | Make less interface when you can</title>
+	  	<link rel="icon" href="/favicon.ico" type="image/x-icon">
+      <link rel="stylesheet" href="/styles/styles.css?p=030426">
+	</head>
+	<body>
+		<nav>
+      <a href="/"><img src="/img/kc.png" /></a>
+			<ul>
+				<li><a href="/software">Solo software</a></li>
+				<li><a href="/random">Side projects</a></li>
+				<li><a href="/temperament">How I work</a></li>
+        <li><a href="/web">Career</a></li>
+				<li><a href="/essays" class="selected">Essays</a></li>
+				<li><a href="/books">Books</a></li>
+			</ul>
+		</nav>
+		<div>
+			<a class="header-link" href="/">Ka Wai Cheung</a>
+			<h2 class="solid">Make less interface when you can.</h2>
+			<div class="pub-date">Feb 2009</div>
+			<p>
+				Smart programming isn't always about the hard stuff. Sometimes, it's just doing the simple, but clever, things. Here's a tiny example.
+			</p>
+			<p>
+				I spent a few hours this weekend implementing the <a href="http://www.basecamphq.com/">Basecamp</a> API into <a href="http://www.wam.staging.wpengine.com/sprout/labels/BugSpray.html">BugSpray</a>, our home-grown, web-based bug tracking tool. This lets Basecamp users import a project, companies, and users from Basecamp over to BugSpray.
+			</p>
+			<p>
+				To access any call to the API, four things must be known:
+			</p>
+			<ol>
+				<li>The URL domain to someone's Basecamp project.</li>
+				<li>A valid Basecamp user name.</li>
+				<li>A valid Basecamp password.</li>
+				<li>Whether the project is running under SSL (http v. https).</li>
+			</ol>
+			<p>
+				From an interface perspective, this seems pretty straightforward. Three text fields, one set of "http/https" radio buttons, and off-you-go! But, that user experience is rather odd.
+			</p>
+			<p>
+				The obnoxious bit is, you need to know whether you are indeed running Basecamp under SSL. I'd imagine most users don't know. The instructions "Login to your Basecamp account and see if the URL in your browser has http:// or https:// in front of it" sounds kinda-like-not-a-great-time.
+			</p>
+			<p>
+				Instead, I simplified the UI to this:
+			</p>
+			<img src="/essays/img/less-interface-01.jpg" style="width:100%;border:solid 1px var(--color--border-line);border-radius:0.5rem;margin-bottom:1.4rem;" />
+			<p>
+				When a user passes BugSpray the info, the code makes two calls. First, it tries calling the URL with login credentials under httphttps. If it gets through, yippee. If it fails, it tries calling the URL with login credentials under httpshttp. If it gets through, yippee. If it fails, then it notifies the user that the login credentials are probably wrong. *(see addendum)
+			</p>
+			<p>
+				The SSL issue is still there, it's just a business logic issue rather than a user experience issue. Instead of asking the user, "Is your Basecamp site under SSL?" it just tries both. The slight performance hit of the potential extra call is certainly worth the user experience gain of not having to think about whether you're Aych-Tee-Tee-Pee-Essin' it. And, once the code successfully connects to the API the first time, we already know the answer to the https question for that user. Subsequent calls to the API don't have to run through the double try-catch block.
+			</p>
+			<p>
+				Before you go filing this post under the "ho hum" programming tip of the day, just remember all the tiny little clever things you can do under the covers to make less interface.
+			</p>
+			<blockquote>
+				* An addendum regarding authentication security<br/>In my original post, I stated that I first test the Basecamp call using http, and if it fails, I use https. A commenter correctly pointed out this is a horrible idea since those who have SSL on will have their credentials initially sent over http under clear text (technically base64-encoded because the authorization happens over <a href="http://en.wikipedia.org/wiki/Basic_access_authentication">basic authentication</a>).<br/><br/>Here's how I've fixed this issue.<br/><br/>Now, I call https first, and if it fails, I call http. Now, a Basecamp account under SSL will successfully login without worry of sending credentials over clear text since the https call attempt happens first.<br/><br/>But, there's still a loophole. Suppose the credentials were typed incorrectly. Then, the https call will fail and the http call will be attempted. But, if the Basecamp account is, indeed, under SSL, we're sending credentials (albeit the incorrect ones) over http. That's not good enough security.<br/><br/>To stymie the loophole, I now check the error response on the initial https attempt. If the error is an unauthorized error (401), I know that the credentials themselves are wrong (regardless of whether https or http is the correct protocol since the server authorization occurs before the page is requested). In this case, I don't attempt the http call at all since the credentials are wrong.<br/><br/>Otherwise, I check if the error is a <a href="http://msdn.microsoft.com/en-us/library/system.net.protocolviolationexception.aspx">protocol violation exception</a>. This means that the credentials are correct, but the protocol is wrong. Only then do I attempt the call under http.<br/><br/>A bit more thinking then initially anticipated, but now we still get to keep it out of the UI without the security issue.
+			</blockquote>
+		</div>
+	</body>
+</html>

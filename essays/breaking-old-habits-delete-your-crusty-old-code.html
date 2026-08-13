@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+	    <meta charset="UTF-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <title>Ka Wai Cheung | Breaking old habits: Delete your crusty old code</title>
+	  	<link rel="icon" href="/favicon.ico" type="image/x-icon">
+      <link rel="stylesheet" href="/styles/styles.css?p=030426">
+	</head>
+	<body>
+		<nav>
+      <a href="/"><img src="/img/kc.png" /></a>
+			<ul>
+				<li><a href="/software">Solo software</a></li>
+				<li><a href="/random">Side projects</a></li>
+				<li><a href="/temperament">How I work</a></li>
+        <li><a href="/web">Career</a></li>
+				<li><a href="/essays" class="selected">Essays</a></li>
+				<li><a href="/books">Books</a></li>
+			</ul>
+		</nav>
+		<div>
+			<a class="header-link" href="/">Ka Wai Cheung</a>
+			<h2 class="solid">Breaking old habits: Delete your crusty old code.</h2>
+			<div class="pub-date">Mar 2009</div>
+			<p>
+				Lately, I've been trying to become a better programmer&mdash;not by learning new languages or new concepts, but by kicking old habits. One habit I've successfully kicked is code hoarding.
+			</p>
+			<p>
+				Code hoarding happens when you get into the malicious routine of commenting out code you think you probably might re-use later. I used to do this a lot. It usually happened when I had a change of heart during the implementation. I'd either decide what I was building actually wasn't helping the application, or, I would think of a completely new way of coding it. In both cases, I commented out code because, why just delete it? What a waste of my precious thinking.
+			</p>
+			<img src="/essays/img/crusty-code-01.jpg" style="width:100%;border:solid 1px var(--color--border-line);border-radius:0.5rem;margin-bottom:1.4rem;" />
+			<p style="font-size:0.65rem;margin-top:-1rem;margin-bottom:1.4rem;"><em>Not a lot of good can come out of this</em></p>
+			<p>
+				A few weeks ago, Mustafa (a non-hoarder) mentioned that I was "doing it again." We version control all of our code anyways, so there isn't a good reason to comment out unused code in the first place. Code hoarding isn't just unnecessary, but it's counter-productive.
+			</p>
+			<p>
+				The reality is, 99% of the time, I never un-comment code that I commented out days or weeks ago. Instead, the blobs of monochromatic jibberish are interspersed with the actual code I'm writing at the moment. It's annoying to look at. Every time I work on something around the old code, it's distracting me from what matters right now.
+			</p>
+			<p>
+				Even if I do decide to re-implement something I wrote awhile back, the code I commented out usually doesn't fit properly anyways. Maybe, I've moved that entire piece of logic somewhere else. Objects or methods I reference in the old code may have changed. Trying to bring old code back to life means I'm spending time jerry-rigging things rather than writing it correctly and cleanly again. The code I wrote last week was written by a version of me that only knew what last week's application looked like.
+			</p>
+			<h4>Look beneath the surface</h4>
+			<p>
+				Code hoarding is one of many habits that seem right on the surface. It's a carryover from other staple engineering principles that aren't really relevant to programming. If you were building a car, you would save all your scraps and half-built parts. You could reuse them later. It would be stupid do dump them.
+			</p>
+			<p>
+				Labor, time, and material are really critical in traditional engineering. It's much easier to finagle something almost-right in the physical world than to rip it apart and start over again.
+			</p>
+			<p>
+				In programming, we tend to overvalue labor (typing is not that hard), time (whether we save time by hoarding is debatable), and material (there really isn't any). In the same breath, it's also easy to undervalue really critical aspects of efficient programming:
+			</p>
+			<ul class="postList">
+				<li>Keeping your code clean. What's on the page should reflect exactly how the app works right now. Nothing more, nothing less.</li>
+				<li>Maintaining your zone. Programmers think and implement at the same time. In traditional engineering, you think through everything before you implement. Having unused code lying around or trying to resuscitate old code breaks your train of thought.</li>
+			</ul>
+			<p>
+				On the off chance that I've rewritten logic I originally deleted, I haven't found the experience to be all that bad. It gives me a chance to make it more elegant this time (that's probably why it was commented out in the first place). I don't spend time comparing the old solution to the new solution (If the new one works, who cares what the old one did?). And, I maintain my train of thought better.
+			</p>
+			<h4>How do you know which habits to break?</h4>
+			<p>
+				In the end, it comes down to relevance. Are your methods actually relevant to the way you work today?
+			</p>
+			<p>
+				Many find agile (or even semi-agile) development a better fit for web apps than traditional waterfall methods. Refactoring wouldn't be practical in the traditional engineering sense, but is extremely helpful in programming. You can even make the case for the advantages of loosely-typed languages over strongly-typed ones.
+			</p>
+			<p>
+				Deleting code follows along these same lines. It's just not relevant to hoard your code.
+			</p>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+	    <meta charset="UTF-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <title>Ka Wai Cheung | .NET MVC/LINQ/jQuery let you care about the details later</title>
+	  	<link rel="icon" href="/favicon.ico" type="image/x-icon">
+      <link rel="stylesheet" href="/styles/styles.css?p=030426">
+	</head>
+	<body>
+		<nav>
+      <a href="/"><img src="/img/kc.png" /></a>
+			<ul>
+				<li><a href="/software">Solo software</a></li>
+				<li><a href="/random">Side projects</a></li>
+				<li><a href="/temperament">How I work</a></li>
+        <li><a href="/web">Career</a></li>
+				<li><a href="/essays" class="selected">Essays</a></li>
+				<li><a href="/books">Books</a></li>
+			</ul>
+		</nav>
+		<div>
+			<a class="header-link" href="/">Ka Wai Cheung</a>
+			<h2 class="solid">.NET MVC/LINQ/jQuery let you care about the details later.</h2>
+			<div class="pub-date">Aug 2009</div>
+			<p>
+				This past August, we made a huge shift in our server-side programming tools. Out were .NET web forms and in was ASP.NET MVC. Out were stored procedures and in was LINQ. Out was Anthem (a now unsupported library of .NET classes that added Ajax-y features to .NET) and in was jQuery. I'd become accustomed to everything good and excepting of everything bad about the old tools. But, change was necessary. We'd heard too much about what all the kids were doing.
+			</p>
+			<p>
+				It's a bit dizzying to turn your workflow completely upside-down. But, a few days into it, things already started feeling really good. The decision felt right. MVC, as it always does in any programming language (see Cairngorm), at first feels a bit like your running in circles. But, once you finally wrap your head around the fact that URLs are routes, and not calling any pages at all, things start getting crystal clear. And, the nice conventions behind Controller names, default routes, and passing form variables from Views to Controllers rids any feeling that you're doing too much setup (a typical feeling when you start MVC). LINQ literally feels like backwards SQL, but once you get it, you get it. And once you look past the dollar-signs, jQuery is a really easy syntax to grasp.
+			</p>
+			<p>
+				However, there's one overwhelming feeling I have when I'm immersed in the .NET MVC/LINQ/jQuery triumvirate. In their own unique ways, each is conducive to caring about the fine-tuning details later. Here's how each set of languages really let you care about important things late in the game.
+			</p>
+			<h4>.NET MVC lets you care about workflow later</h4>
+			<p>
+				Separating UI from actions has it's real benefit when workflows have to change. We recently built a tool for a client to moderate messages submitted by thousands of users. Our first build followed the conventional listing/detail format. Search for messages, get a list, click into each one to view detail info, and then decide to accept or reject it. Doing this a few hundred times wasn't gonna cut it. So, we moved the moderation portion into the listing page. Because the UI is completely separated from the actions, you really just need to move the buttons.
+			</p>
+			<p>
+				In traditional web form world, we'd probably would have to move a bunch code-shifting, code-behind changes, and managing post back states&mdash;annoying grunt work that I'd fully accepted with web forms. MVC let us change the workflow of our application late in the game.
+			</p>
+			<h4>LINQ lets you care about filtering, sorting, and performance later</h4>
+			<p>
+				LINQ-to-SQL's DataLoadOptions let you care about optimizing performance later. LINQ-to-Object lets you decide, at the last instant, if you want to do more intricate sorting and filtering. I can pull a category's related subjects, decide to filter only the subjects that start with "A" and sort them alphabetically, on the View level, as opposed to caring about it at the stored procedure or even the Controller level.
+			</p>
+			<p>
+				Whether or not that's a best practice is up for debate&mdash;but the option is there and there aren't severe repercussions unless we're mining a huge number of records.
+			</p>
+			<h4>JQuery lets you care about polishing your UI later</h4>
+			<p>
+				Unobtrusive JavaScript is a great thing. Not only does it let you build apps that don't have to rely on JavaScript, but it also let's you care about polishing your UI later. JQuery components can be swapped in at the end. <a href="http://tinymce.moxiecode.com/">TinyMCE</a> has a jQuery implementation that replaces all textarea elements with a rich text editor.
+			</p>
+			<p>
+				You can care about more sophisticated components or polished effects without worrying about rewriting or infiltrating your HTML.
+			</p>
+			<p>
+				The .NET MVC/LINQ/jQuery mix has been a great success for us so far. It let's us not sweat the details until late in the game with minimal consequences.. It lets us build more and plan less.
+			</p>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+	    <meta charset="UTF-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <title>Ka Wai Cheung | Building an ISV on top of a client business</title>
+	  	<link rel="icon" href="/favicon.ico" type="image/x-icon">
+      <link rel="stylesheet" href="/styles/styles.css?p=030426">
+	</head>
+	<body>
+		<nav>
+      <a href="/"><img src="/img/kc.png" /></a>
+			<ul>
+				<li><a href="/software">Solo software</a></li>
+				<li><a href="/random">Side projects</a></li>
+				<li><a href="/temperament">How I work</a></li>
+        <li><a href="/web">Career</a></li>
+				<li><a href="/essays" class="selected">Essays</a></li>
+				<li><a href="/books">Books</a></li>
+			</ul>
+		</nav>
+		<div>
+			<a class="header-link" href="/">Ka Wai Cheung</a>
+			<h2 class="solid">Building an ISV on top of a client business.</h2>
+			<div class="pub-date">Aug 2009</div>
+			<p>
+				I work at a small web shop. We do work for clients. Six guys in a wide-open room building microsites, web sites, and rich applications for big agencies and startup clients.
+			</p>
+			<p>
+				We're also a small ISV. We've built two web products for public release: a data-modeling platform for Flash and Flex developers called X2O, and a web-based issue tracking tool called <a href="https://www.donedone.com">DoneDone</a>.
+			</p>
+			<p>
+				Since launching both of these apps in the past year, we've had to do some in-house juggling&mdash;support our grassroots ISV business <em>while</em> maintaining our client work. In the meantime, we've stumbled upon some great lessons and observations from the trenches.
+			</p>
+			<p>
+				Here's how we got our own products out the door and started making money while our client business thrives more now than ever.
+			</p>
+			<h4>Build products that'll help your business right now</h4>
+			<p>
+				It's hard to justify building apps that might not actually make a dime for months and months when there are clients willing to pay for your services right now. So, hedge your bets. <strong>Build products that help your business now.</strong> That's reason enough to build a product anyways. Looking at it in reverse, if you're already building internal apps for your own business, why can't you turn it into a product?
+			</p>
+			<p>
+				We built X2O to get rid of the tedious nuances of building database-driven Flash and Flex applications for our clients. Instead of building database schemas, SQL queries, server-side code, web services, and client-side data parsers by hand for every client project, we wrote code generators to handle that for us. After a few months using it internally, we decided to wrap all of those generators up and built a web client on top of it, and&mdash;voila! A product was made. X2O was a product we needed <em>anyway</em>. The months we spent on it were helping us build apps for clients much faster.
+			</p>
+			<p>
+				The same thing was true for DoneDone. We paid $120 a month for a web-based issue tracking tool that flat out sucked. A horrible UI, too many dropdown boxes and filters, and not enough direction. We searched for other tools and they all did too much. So, I started to write my own, with our own rules and unique focus. In three months, we were using it to track our own bugs. Two months later, we threw a billing component behind it and started selling subscriptions to other similarly-jaded companies.
+			</p>
+			<p>
+				Building apps you'll use anyways takes the pressure off. I worked on DoneDone for weeks at a time while the other five focused on client projects. If DoneDone weren't something we could use right away, the pressure would <em>really</em> be on. If this app doesn't succeed, what's to become of me???
+			</p>
+			<h4>Avoid the "pet project" syndrome</h4>
+			<p>
+				Client projects are rarely completed on-time. But pet projects are never completed&hellip;period. If you're serious about building a microISV, better treat your product as part of a client project and not just a pet project. There's a chance in hell that it might actually get out the door. If you build tools that you need anyways, make them a natural part of your client work.
+			</p>
+			<p>
+				It also helps maintain momentum. Deadlines don't have to be arbitrary. With X2O, we added big features (like a CMS generator) and small tweaks (like support for non-western languages) when we needed them for our clients. The due dates for X2O fell in line with due dates for other client deliverables.
+			</p>
+			<p>
+				Bonus? Your testing infrastructure is already set up. There's something tangible to test your product against. The hypothetical get answered right away. <em>If we were actually using this bug tracker&hellip;wait, we are actually using the bug tracker!</em>
+			</p>
+			<p>
+				Pet projects don't have the same sense of urgency that client projects do. Make your products as much a part of your client work and you'll notice a huge difference.
+			</p>
+			<h4>Be the good client to your own products</h4>
+			<p>
+				There's an interesting psychological switch that happens when you start building your own products after years of building products for someone else. You're thrust into the role of being your own client. <em>When should we launch? Can we launch without A, B, and C? Can we just add this one little piece? It can't be that hard, can't it?</em> Suddenly, you become that client&mdash;the one that keeps you awake at night is now staring you directly in the mirror.
+			</p>
+			<p>
+				Be the good client. Don't get caught up in the weedy details and focus on what makes the app better, not what makes everyone in your room happy. Do it to get your product up and running faster. It may just be a refreshing new way to work as well.
+			</p>
+			<h4>Decisions in groups of three</h4>
+			<p>
+				We don't have big roundtable discussions for our apps. We don't need a dozen opinions. If one of us wants to add email-to-ticket support to DoneDone, or RSS feeds for our issues, we decide what to do right now.
+			</p>
+			<p>
+				We found that decisions should be made in a group of three. We debate for 20 minutes and take a vote. Majority wins. Usually, we're unanimous by the end of a debate. And, if three people think it's a good idea, it's likely that four, or five, or six people will to.
+			</p>
+			<p>
+				We have to make decisions quickly because there's other work to do.
+			</p>
+			<h4>Let your apps rest</h4>
+			<p>
+				You should always rest a steak when it comes off the grill. Cut it open too quickly and all the juices flow out. Once it gets tough there's no going back.
+			</p>
+			<p>
+				The same is true for your product once you've launched. Early on with DoneDone, we kept tweaking it. Slightly new iterations would pop up on an almost-daily basis. There's a tendency to finagle too much with your own products because, well, they're yours. Stop working on your app constantly. When you've gone live, making constant iterations (especially interface tweaks and functional additions) can hurt the user experience. Even if a new version is better, it's unnerving to have things change so soon. Let users get used to what's there before you adjust it again. It'll give them a chance to tell you what really needs to be fixed.
+			</p>
+			<p>
+				As an added reason, there's other client work to keep us occupied&mdash;work that's generating revenue right now. If products were the only thing we worked on, then we probably would feel the itch to add new features to them constantly. In a way, having client work still be the focus of our business makes our products mature better.
+			</p>
+			<p>
+				So, if you've been thinking about dabbling into products, it doesn't have to be an all-or-nothing proposition. In fact, it very well may enhance your client business, not hamper it.
+			</p>
+			<p>
+				Now, what happens as your product grows its customer base and you need to start adding support? Price it just right and the amount of effort you expend on it will be worth the increased time you need to devote to it. It just becomes a bigger client of yours.
+			</p>
+			<p>
+				Oh, and how do you price software <em>just</em> right? I'll leave that question to someone else.
+			</p>
+		</div>
+	</body>
+</html>

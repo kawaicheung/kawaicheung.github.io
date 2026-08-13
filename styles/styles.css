@@ -133,10 +133,12 @@ body > div h2 {
   width: fit-content;
   position: relative;
   font-size: 2.4rem;
+  line-height: 1.1;
   letter-spacing: -0.05rem;
   font-weight: 800;
   margin-bottom: 2rem;
   word-break: break-word;
+  text-wrap: pretty;
   background-clip: text !important;
   -webkit-background-clip: text !important;
   -webkit-text-fill-color: rgba(0, 0, 0, 0) !important;
@@ -168,13 +170,22 @@ body > div h2.purple {
 body > div h2.green {
   background: linear-gradient(135deg, green 0, limegreen 50%, seagreen 70%);
 }
-body > div h2.black {
-  background: black;
+body > div h2.solid {
+  background: #312e81;
+}
+body > div div.pub-date {
+  font-family: var(--fonts-system);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: -0.01rem;
+  color: #333;
+  margin-top: -1rem;
+  margin-bottom: 2rem;
 }
 body > div h3 {
   font-size: 1.2rem;
   font-weight: 600;
-  line-height: 1.6rem;
+  line-height: 1.2;
   margin-bottom: 2rem;
   letter-spacing: -0.025rem;
 }
@@ -206,7 +217,7 @@ body > div p {
   font-size: 0.8rem;
   font-weight: 400;
   font-family: var(--fonts-serif);
-  line-height: 1.2rem;
+  line-height: 1.5;
   margin-bottom: 1.4rem;
   letter-spacing: -0.01rem;
 }
@@ -217,6 +228,34 @@ body > div p img.side-icon {
   top: 0.4rem;
   border-radius: 4rem;
   border: solid 1px var(--color--border-line);
+}
+body > div blockquote {
+  font-style: italic;
+  font-size: 0.8rem;
+  font-family: var(--fonts-serif);
+  line-height: 1.4;
+  letter-spacing: -0.01rem;
+  border-left: solid 2px var(--color--border-line);
+  padding-left: 1rem;
+  margin-bottom: 1.4rem;
+}
+body > div ol,
+body > div ul.postList {
+  margin-left: 1.4rem;
+  margin-bottom: 1.4rem;
+}
+body > div ol {
+  list-style: decimal;
+}
+body > div ul.postList {
+  list-style: disc;
+}
+body > div ol li,
+body > div ul.postList li {
+  font-size: 0.8rem;
+  font-family: var(--fonts-serif);
+  line-height: 1.4;
+  margin-bottom: 0.4rem;
 }
 hr {
   margin: 0.6rem 0 2rem 0;
@@ -313,7 +352,7 @@ div.just-a-list > ul > li > span {
   }
   body > div h3 {
     font-size: 1rem;
-    line-height: 1.4rem;
+    line-height: 1.4;
   }
   body > div h4 img.book {
     position: relative;
@@ -344,7 +383,7 @@ div.just-a-list > ul > li > span {
   }
   body > div.home h3 {
     font-size: 1rem;
-    line-height: 1.4rem;
+    line-height: 1.4;
   }
   body > div.home h4 img.book {
     display: none;
