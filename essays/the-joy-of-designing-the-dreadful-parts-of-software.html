@@ -39,15 +39,15 @@
 			<p>
 				It starts on this screen with a link that opens up Gmail in a new tab:
 			</p>
-			<img src="/essays/img/dreadful-parts-01.png" style="width:100%;border:solid 1px var(--color--border-line);border-radius:0.5rem;margin-bottom:1.4rem;" />
+			<img src="/essays/img/dreadful-parts-01.png" style="max-width:100%;height:auto;display:block;align-self:flex-start;border:solid 1px var(--color--border-line);border-radius:0.5rem;margin-bottom:1.4rem;" />
 			<p>
 				Once you've come back to this tab and clicked &ldquo;I've signed in to Gmail&rdquo;, the wizard slides to the next
 				task&mdash;copying DoneDone's generated auto-forwarding address using Javascript's Clipboard class. Once you've
 				clicked the email address, the email address is automatically copied, and the &ldquo;Continue to the next step!&rdquo;
 				button slides into view:
 			</p>
-			<img src="/essays/img/dreadful-parts-02.png" style="width:100%;border:solid 1px var(--color--border-line);border-radius:0.5rem;margin-bottom:1rem;" />
-			<img src="/essays/img/dreadful-parts-03.png" style="width:100%;border:solid 1px var(--color--border-line);border-radius:0.5rem;margin-bottom:1.4rem;" />
+			<img src="/essays/img/dreadful-parts-02.png" style="max-width:100%;height:auto;display:block;align-self:flex-start;border:solid 1px var(--color--border-line);border-radius:0.5rem;margin-bottom:1rem;" />
+			<img src="/essays/img/dreadful-parts-03.png" style="max-width:100%;height:auto;display:block;align-self:flex-start;border:solid 1px var(--color--border-line);border-radius:0.5rem;margin-bottom:1.4rem;" />
 			<p>
 				The next screen walks you through the process of adding the generated email address as an auto-forwarding address
 				into Gmail, which then sends a confirmation link to that address ensuring you actually have access to the address
@@ -57,7 +57,7 @@
 				This gets to an archaic part of Google's UI as it involves three distinct clicks (on &ldquo;Next&rdquo;,
 				&ldquo;Proceed&rdquo;, and &ldquo;OK&rdquo;) to get the address added.
 			</p>
-			<img src="/essays/img/dreadful-parts-04.png" style="width:100%;border:solid 1px var(--color--border-line);border-radius:0.5rem;margin-bottom:1.4rem;" />
+			<img src="/essays/img/dreadful-parts-04.png" style="max-width:100%;height:auto;display:block;align-self:flex-start;border:solid 1px var(--color--border-line);border-radius:0.5rem;margin-bottom:1.4rem;" />
 			<p>
 				<strong><em>Sidenote:</em></strong> <em>The one drawback to this screen is that it would have to get updated
 				whenever Google changes the way you add an auto-forwarding address&mdash;even if the change were as minor as
@@ -75,13 +75,13 @@
 				regex match against the Google generated confirmation link (e.g. starting with
 				&ldquo;https://mail-settings.google.com&rdquo;).
 			</p>
-			<img src="/essays/img/dreadful-parts-05.png" style="width:100%;border:solid 1px var(--color--border-line);border-radius:0.5rem;margin-bottom:1.4rem;" />
+			<img src="/essays/img/dreadful-parts-05.png" style="max-width:100%;height:auto;display:block;align-self:flex-start;border:solid 1px var(--color--border-line);border-radius:0.5rem;margin-bottom:1.4rem;" />
 			<p>
 				This continues every few seconds for a couple of minutes. If it never finds a match, the screen will flip to an
 				error state, but in the expected happy case, we surface the link directly on the screen. The user just needs to
 				click it and then hit the &ldquo;Confirm&rdquo; button on Google's side.
 			</p>
-			<img src="/essays/img/dreadful-parts-06.png" style="width:100%;border:solid 1px var(--color--border-line);border-radius:0.5rem;margin-bottom:1.4rem;" />
+			<img src="/essays/img/dreadful-parts-06.png" style="max-width:100%;height:auto;display:block;align-self:flex-start;border:solid 1px var(--color--border-line);border-radius:0.5rem;margin-bottom:1.4rem;" />
 			<p>
 				Most people will rightfully assume that the auto-forwarding work is done after this step. But Google has one more
 				onerous bit here many miss.
@@ -97,22 +97,22 @@
 			<p>
 				All of this is detailed on the next screen after you click &ldquo;I've clicked the link and the Confirm button.&rdquo;
 			</p>
-			<img src="/essays/img/dreadful-parts-07.png" style="width:100%;border:solid 1px var(--color--border-line);border-radius:0.5rem;margin-bottom:1.4rem;" />
+			<img src="/essays/img/dreadful-parts-07.png" style="max-width:100%;height:auto;display:block;align-self:flex-start;border:solid 1px var(--color--border-line);border-radius:0.5rem;margin-bottom:1.4rem;" />
 			<p>
 				Now, we've finished Google's auto-forwarding setup. As a final step, we test the complete loop on our side once a
 				user clicks &ldquo;Test that auto-forwarding is working!&rdquo;
 			</p>
-			<img src="/essays/img/dreadful-parts-08.png" style="width:100%;border:solid 1px var(--color--border-line);border-radius:0.5rem;margin-bottom:1.4rem;" />
+			<img src="/essays/img/dreadful-parts-08.png" style="max-width:100%;height:auto;display:block;align-self:flex-start;border:solid 1px var(--color--border-line);border-radius:0.5rem;margin-bottom:1.4rem;" />
 			<p>
 				When a user clicks the button, an API call is made to send a test email to the Google-owned email address. Then, we
 				start another setInterval() on an API method that waits for that email to land back on our side.
 			</p>
-			<img src="/essays/img/dreadful-parts-09.png" style="width:100%;border:solid 1px var(--color--border-line);border-radius:0.5rem;margin-bottom:1.4rem;" />
+			<img src="/essays/img/dreadful-parts-09.png" style="max-width:100%;height:auto;display:block;align-self:flex-start;border:solid 1px var(--color--border-line);border-radius:0.5rem;margin-bottom:1.4rem;" />
 			<p>
 				Once the email hits, we surface the success page. I thought I'd have fun with this and found a few congratulatory
 				GIFs that the UI will randomly select from.
 			</p>
-			<img src="/essays/img/dreadful-parts-10.png" style="width:100%;border:solid 1px var(--color--border-line);border-radius:0.5rem;margin-bottom:1.4rem;" />
+			<img src="/essays/img/dreadful-parts-10.png" style="max-width:100%;height:auto;display:block;align-self:flex-start;border:solid 1px var(--color--border-line);border-radius:0.5rem;margin-bottom:1.4rem;" />
 			<p>
 				Most products that have a feature that requires auto-forwarding will include a help document on how to forward your
 				Google mail their way, like

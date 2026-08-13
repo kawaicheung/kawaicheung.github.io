@@ -294,6 +294,11 @@ strong {
 strike {
   font: inherit;
 }
+code {
+  font: inherit;
+  font-size: 80%;
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+}
 
 div.just-a-list {
   margin-bottom: 1rem;

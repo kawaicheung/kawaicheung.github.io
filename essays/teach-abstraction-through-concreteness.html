@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+	    <meta charset="UTF-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <title>Ka Wai Cheung | Teach Abstraction Through Concreteness</title>
+	  	<link rel="icon" href="/favicon.ico" type="image/x-icon">
+      <link rel="stylesheet" href="/styles/styles.css?p=030426">
+	</head>
+	<body>
+		<nav>
+      <a href="/"><img src="/img/kc.png" /></a>
+			<ul>
+				<li><a href="/software">Solo software</a></li>
+				<li><a href="/random">Side projects</a></li>
+				<li><a href="/temperament">How I work</a></li>
+        <li><a href="/web">Career</a></li>
+				<li><a href="/essays" class="selected">Essays</a></li>
+				<li><a href="/books">Books</a></li>
+			</ul>
+		</nav>
+		<div>
+			<a class="header-link" href="/">Ka Wai Cheung</a>
+			<h2 class="solid">Teach Abstraction Through Concreteness.</h2>
+			<div class="pub-date">Aug 2012</div>
+			<p>
+				It's a natural tendency for programmers to teach in abstraction.
+			</p>
+			<p>
+				Every kind of programming concept&mdash;from a primitive type to the most enterprise-level architecture&mdash;is an abstraction. It's only until we implement <em>something</em> that the rules of programming become <em>anything</em>.
+			</p>
+			<p>
+				But, people don't learn naturally by thinking abstractly. "Higher-level" thinking is the result you get from repeated experience with concrete things.I didn't learn about gravity and potential energy, then later got myself ready to learn how to walk. Like you probably did, I just learned how to walk first. It's much easier to start with something very concrete before working your way up to understanding the pattern.
+			</p>
+			<h4>Be ridiculously obvious</h4>
+			<p>
+				When I teach programming concepts, I'm very careful to explain things in <em>ridiculously</em> obvious ways. It's too easy to run into a black hole of abstractions and layers that get in the way of the concepts we're trying to explain. It's natural to want to leave out concrete examples, particularly as concepts get more nebulous. There's some fear that concreteness muddies the elegance of the high-level concept.
+			</p>
+			<p>
+				But, we <em>need</em> to start with the concrete in order to see how the elegance unfolds. This is why I'm always on the lookout for really good, real-world examples of big concepts.
+			</p>
+			<p>
+				If it's relational data modeling, I always go to the <strong>School</strong> example. There's no ambiguity, and you can get all three types of cardinality very concretely:
+			</p>
+			<ul class="postList">
+				<li><strong>1-to-Many:</strong> A <strong>Teacher</strong> teaches many <strong>Classes</strong>, but a <strong>Class</strong> only has one teacher.</li>
+				<li><strong>Many-to-Many:</strong> A <strong>Student</strong> takes many <strong>Classes</strong>, and a <strong>Class</strong> has many students.</li>
+				<li><strong>1-to-1:</strong> A <strong>Student</strong> has one <strong>Locker</strong>, and a <strong>Locker</strong> only belongs to one student.</li>
+			</ul>
+			<p>
+				Other nice by-products of the <em>School</em> example? We've got an obvious example of an unrequired relationship (A locker doesn't have to belong to a student&mdash;it could be empty), and a great many-to-many mapping that could store other relevant data. The Student-to-Class mapping table would be the logical place to store a student's grade in that class.
+			</p>
+			<p>
+				Let's try the contrary. If we substituted <em>Teacher</em> for <em>A</em>, <em>Class</em> for <em>B</em>, <em>Student</em> for <em>C</em>, and <em>Locker</em> for <em>D</em> (the abstract approach), what do we have? Some higher-level concepts applied to a bunch of nothings. "Was it <em>D</em> that has or belongs to many <em>A</em><strong><em>'</em></strong>s?"
+			</p>
+			<p>
+				As I write in <a href="http://www.thedeveloperscode.com">The Developer's Code</a>, in my first programming course in college, I was taught about constructors with the unfortunate tendency of very abstract examples. For a teenager who hadn't seen a line of code since I noodled around with Applesoft BASIC as a 7-year old&hellip;
+			</p>
+			<p>
+				<code>Object myObject = new Object();</code>
+			</p>
+			<p>
+				&hellip;looked very much like&hellip;
+			</p>
+			<p>
+				<code><strong><em>Object</em></strong> my<strong><em>Object</em></strong> = new <strong><em>Object</em></strong>();</code>
+			</p>
+			<p>
+				It was very hard to tell what was the class name, the variable name, and the function. Something more concrete would've helped here, like:
+			</p>
+			<p>
+				<code>Human Mary = new Human("Female", "27");</code>
+			</p>
+			<p>
+				That line of code works much better as a starting point. Each little bit of code is much more approachable. I bet someone could easily instantiate a guy named Tim, who just got his driver's license yesterday. And, I bet that same person can start creating Robots named Rosie, or all sorts of Dogs, Cats, and eventually Objects.
+			</p>
+			<h4>Foo for thought</h4>
+			<p>
+				This is why I'm also against <code>foo</code> and <code>bar</code>, <code>baz</code> and <code>qux</code>. They are the Lorem Ipsum of the programming field. Lorem ipsum works in design because the point is to not focus on the actual content (Though, as a side argument, I dispute the notion that real text makes you focus less on the design). I much prefer concrete variables over metasyntatic ones, even as examples where those variables have no real meaning.
+			</p>
+			<p>
+				Whenever I see <code>foo</code> and <code>bar</code>, I subconsciously perform the literal translation in my head anyways&mdash;"OK, foo is just any function and bar is just any old variable". If they were replaced with <code>calculateArea</code> and <code>myCircle</code>, I'd save myself a step in that translation.
+			</p>
+			<p>
+				There's an aversion some have to concreteness when explaining something abstract (which almost all programming concepts are) because we <em>think</em> that the concrete example hides the beauty of the abstraction. But, the truth is in reverse. Obvious examples are the baby steps people need to comprehend where the abstractions can happen.
+			</p>
+		</div>
+	</body>
+</html>

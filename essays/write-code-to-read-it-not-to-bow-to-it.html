@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+	    <meta charset="UTF-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <title>Ka Wai Cheung | Write Code to Read It, Not to Bow to It</title>
+	  	<link rel="icon" href="/favicon.ico" type="image/x-icon">
+      <link rel="stylesheet" href="/styles/styles.css?p=030426">
+	</head>
+	<body>
+		<nav>
+      <a href="/"><img src="/img/kc.png" /></a>
+			<ul>
+				<li><a href="/software">Solo software</a></li>
+				<li><a href="/random">Side projects</a></li>
+				<li><a href="/temperament">How I work</a></li>
+        <li><a href="/web">Career</a></li>
+				<li><a href="/essays" class="selected">Essays</a></li>
+				<li><a href="/books">Books</a></li>
+			</ul>
+		</nav>
+		<div>
+			<a class="header-link" href="/">Ka Wai Cheung</a>
+			<h2 class="solid">Write Code to Read It, Not to Bow to It.</h2>
+			<div class="pub-date">Jan 2013</div>
+			<p>
+				I often stumble upon business logic that's driven by a potentially large permutation of cases. A big series of case statements? Some might argue that's an automatic smell for splitting up those cases into their own functions.
+			</p>
+			<p>
+				But, sometimes those little cases can get rather unwieldy&mdash;and I'd rather swallow the whole mess into a single innocuously-named function regardless of how much kicking and yelling is going on inside the brackets. Even further, many of those cases end up producing nearly identical implementations, and as much as I'm an advocate of the <em>DRY</em> principles of programming, there are times where I actually <em>prefer</em> repeating myself over and over again.
+			</p>
+			<p>
+				So, it seems like I've committed two cardinal sins here. Lots of repeated code buried inside some tangled mess of conditionals or case statements, and burying all of that inside of one <em>big-ass</em> method. But, if writing good code is ultimately about readability, assuming you're not doing too much in the way of sacrificing performance for readability, then sometimes breaking these rules-of-thumb is the way to go. Can the next programmer, or more likely, the you that exists a year from now, easily make an update or rewrite your bit of code if need be?
+			</p>
+			<p>
+				Here's a case where I went for the repeated-code-stuffed-into-one-bread-basket approach. It's a rather simple scenario with straightforward code but highlights my argument for similar code I've written that gets a bit more complex.
+			</p>
+			<p>
+				In <a href="http://www.getdonedone.com">DoneDone</a>, our web-based issue tracker that you're company should be using to get projects done, we calculate "active users" to determine whether you've reached a user limit for the pricing plan you've purchased. Active users are governed by just two simple rules:
+			</p>
+			<ul class="postList">
+				<li>All <strong>admins</strong> count as <strong>an active user</strong></li>
+				<li>All <strong>non-admins</strong> (normal users) are active only <strong>if they belong to one or more projects</strong></li>
+			</ul>
+			<p>
+				Though the logic seems simple, it actually creates a deceptive mess of scenarios that we must make sure get accounted for when users are added or updated. For instance, if a current normal user now becomes an admin, then the active user count goes up by one, unless they already belonged to a project. Then, the active user count doesn't change at all. A normal user who now belongs to ten projects instead of five doesn't change the active user count, nor does a newly created user who isn't a member of any projects.
+			</p>
+			<p>
+				As we start walking through the scenarios of adding and updating users, there are actually twelve different potential scenarios that may or may not have an effect on the active user count. They're drawn up in the regions of code shown below. This bit of code's sole job is to take a few pre-calculated parameters and decide what effect they each have on the account's active user count.
+			</p>
+			<img src="/essays/img/write-code-to-read-01.png" style="max-width:100%;height:auto;display:block;align-self:flex-start;border:solid 1px var(--color--border-line);border-radius:0.5rem;margin-bottom:1.4rem;" />
+			<p style="font-size:0.65rem;margin-top:-1rem;margin-bottom:1.4rem;"><em>Calculating active user counts in DoneDone</em></p>
+			<p>
+				For new users, there are three potential situations&mdash;a new admin is an automatic +1, and a new normal user is either +1 or 0 based on whether they've been assigned projects. In the update case, there are nine scenarios.
+			</p>
+			<p>
+				As it turns out, when you go through each scenario, there are lots of cases provide the exact same result. In fact, exactly 50% of the scenarios yield no net active user change. Shown below are two identical snippets of code inside two distinct cases (creating a new admin and creating a new normal user belonging to at least one project):
+			</p>
+			<img src="/essays/img/write-code-to-read-02.png" style="max-width:100%;height:auto;display:block;align-self:flex-start;border:solid 1px var(--color--border-line);border-radius:0.5rem;margin-bottom:1.4rem;" />
+			<p style="font-size:0.65rem;margin-top:-1rem;margin-bottom:1.4rem;"><em>Similar, sometimes repeated code inside each case</em></p>
+			<p>
+				There might be the natural tendency to, after the fact, go in and refactor all the cases that produced the exact same results into some other abstraction, or at the very least, condense all 6 "net-result-of-zero" producing scenarios into one big <em>if</em> statement and refactor out some of the conditional logic from there. Something, anything, to get rid of this <em>WET</em>ness and excruciatingly verbose area of code. But, in the end, my main goal is readable code. And, in the case of this particular bit of logic, shelling out each permutation of newly created or updated users makes the code super-easy to follow, even if it does produce repeated bits of code.
+			</p>
+			<img src="/essays/img/write-code-to-read-03.png" style="max-width:100%;height:auto;display:block;align-self:flex-start;border:solid 1px var(--color--border-line);border-radius:0.5rem;margin-bottom:1.4rem;" />
+			<p style="font-size:0.65rem;margin-top:-1rem;margin-bottom:1.4rem;"><em>Nope, I will never not understand what this means. And that let's me sleep at night.</em></p>
+			<p>
+				The different scenarios, regardless of whether they produce the same result, are what I care about&mdash;and so, I make that the center of my attention. If we ever change our definition of "active user", I can rest assured that I had accounted for every case in the past and it will be far easier for me to ensure I'm covering all the cases in the future. I bury all these cases inside of one function, instead of breaking them out into smaller encapsulations, because no other part of the app really should concern itself with the deceptive complexities of the question "how many active users does this account have?"
+			</p>
+			<p>
+				In the end, the best measurement of your code's maintainability isn't by strictly adhering to principles&mdash;it's by just looking at it and saying, yes, I understand what I see.
+			</p>
+			<p>
+				<em>Want to read more by Ka Wai Cheung? Ka Wai's new book on the modern-day programmer, </em><a href="http://pragprog.com/book/kcdc/the-developer-s-code"><em>The Developer's Code</em></a><em>, is available in eBook and print. You can follow him on Twitter </em><a href="http://www.twitter.com/developerscode"><em>@developerscode</em></a><em>.</em>
+			</p>
+		</div>
+	</body>
+</html>
