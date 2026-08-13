@@ -169,7 +169,7 @@ body > div h2.green {
   background: linear-gradient(135deg, green 0, limegreen 50%, seagreen 70%);
 }
 body > div h2.black {
-  background: linear-gradient(135deg, orange 0, purple 50%);
+  background: black;
 }
 body > div h3 {
   font-size: 1.2rem;
