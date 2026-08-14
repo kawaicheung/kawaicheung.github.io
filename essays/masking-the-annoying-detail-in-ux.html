@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+	    <meta charset="UTF-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <title>Ka Wai Cheung | Masking the annoying detail in UX</title>
+	  	<link rel="icon" href="/favicon.ico" type="image/x-icon">
+      <link rel="stylesheet" href="/styles/styles.css?p=030426">
+	</head>
+	<body>
+		<nav>
+      <a href="/"><img src="/img/kc.png" /></a>
+			<ul>
+				<li><a href="/software">Solo software</a></li>
+				<li><a href="/random">Side projects</a></li>
+				<li><a href="/temperament">How I work</a></li>
+        <li><a href="/web">Career</a></li>
+				<li><a href="/essays" class="selected">Essays</a></li>
+				<li><a href="/books">Books</a></li>
+			</ul>
+		</nav>
+		<div>
+			<a class="header-link" href="/">Ka Wai Cheung</a>
+			<h2 class="solid">Masking the annoying detail in UX</h2>
+			<div class="pub-date">Oct 2025</div>
+			<p>One of the technical hurdles I faced when building <a href="https://runkwc.com/">RunKWC</a> was how to keep your phone screen from dimming while you’re on your run. Since it’s built directly on the browser, I didn’t have access to mobile platform-specific APIs that can do this natively.</p>
+			<p>Fortunately, most modern browsers now support the <a href="https://developer.mozilla.org/en-US/docs/Web/API/Screen_Wake_Lock_API">Screen Wake Lock API</a>. Through Javascript, you can request a “wake lock” to keep your screen awake. Unfortunately, on iOS, requesting a wake lock requires a user gesture&mdash;a tap, a swipe, something. </p>
+			<p>I’ve seen this used quite often when reading recipe websites on my phone. Once you’ve scrolled a mile and closed a bunch of ads to get to the <em>actual recipe</em>, you might notice one of these little doohickeys:</p>
+			<img src="/essays/img/masking-the-annoying-detail-in-ux-01.jpg" style="max-width:100%;height:auto;display:block;align-self:flex-start;border:solid 1px var(--color--border-line);border-radius:0.5rem;margin-bottom:1.4rem;" />
+			<p style="font-size:0.65rem;margin-top:-1rem;margin-bottom:1.4rem;"><em>Tapping the&nbsp;“Cook Mode” toggle requests a wake lock from the Screen Wake Lock API, preventing your phone from dimming.</em></p>
+			<p>The “Cook Mode” is there to satisfy the iOS user gesture requirement to request the wake lock.</p>
+			<p>I don’t like this experience. Yes, it exposes a detail that users certainly will care about. In this case, preventing you from having to unlock your phone with your knuckles because your fingers are panko-breaded. </p>
+			<p>But it’s not the kind of thing that the user’s thinking about. Not the kind of hurdle most would realize even has to be overcome. <strong>It’s a very clunky technical detail to expose</strong>. </p>
+			<p>But if iOS requires the gesture, how do you get around it?</p>
+			<p>In RunKWC, I implement the same wake lock gesture requirement but I mask the reason. </p>
+			<p>When you start a new run, the first screen reminds you to put in your earbuds. You tap the purple button when you’re ready.</p>
+			<img src="/essays/img/masking-the-annoying-detail-in-ux-02.png" style="max-width:100%;height:auto;display:block;align-self:flex-start;border:solid 1px var(--color--border-line);border-radius:0.5rem;margin-bottom:1.4rem;" />
+			<p style="font-size:0.65rem;margin-top:-1rem;margin-bottom:1.4rem;"><em>Tapping the purple button initiates the wake lock API request without exposing that annoying detail to the runner.</em></p>
+			<p>The tap feels like you’re confirming that your earbuds are in&mdash;a natural first step in getting ready for your run. But it’s also a clever way to implement the gesture required for the app to request the wake lock without the runner knowing it. </p>
+			<p>Upon a successful grant of the wake lock, the button morphs into green with the label “Ears locked in” for a hot second, before moving on to your time selection. (On the rare exception the wake lock request isn’t granted, then it exposes the detail&mdash;it will let the runner know their screen may dim while running).</p>
+			<p>This may seem deceitful. The spirit of the iOS gesture requirement is to give the runner the control of whether their screen can be kept on. They should know what they’re allowing to happen, shouldn’t they? </p>
+			<p>But, <strong>absolutely no one</strong> would want to have the alternative: To keep tapping their phone periodically on a treadmill run to keep their screen awake. And when the runner finishes their run and exits the timer, RunKWC automatically releases the wake lock.  </p>
+			<p>A sleight-of-hand for everyone’s good.</p>
+			<hr />
+			<p>This idea isn’t new. For the same reason it’s why elevators have mirrors, or why Disney rides have themed environments, and games to play while you’re waiting. </p>
+			<p>Embrace constraints. Get crafty and clever. Design with good intentions. </p>
+			<p>And deceive benevolently.</p>
+		</div>
+	</body>
+</html>

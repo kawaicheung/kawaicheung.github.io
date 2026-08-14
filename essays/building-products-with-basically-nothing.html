@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+	    <meta charset="UTF-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <title>Ka Wai Cheung | Building products with basically nothing</title>
+	  	<link rel="icon" href="/favicon.ico" type="image/x-icon">
+      <link rel="stylesheet" href="/styles/styles.css?p=030426">
+	</head>
+	<body>
+		<nav>
+      <a href="/"><img src="/img/kc.png" /></a>
+			<ul>
+				<li><a href="/software">Solo software</a></li>
+				<li><a href="/random">Side projects</a></li>
+				<li><a href="/temperament">How I work</a></li>
+        <li><a href="/web">Career</a></li>
+				<li><a href="/essays" class="selected">Essays</a></li>
+				<li><a href="/books">Books</a></li>
+			</ul>
+		</nav>
+		<div>
+			<a class="header-link" href="/">Ka Wai Cheung</a>
+			<h2 class="solid">Building products with basically nothing</h2>
+			<div class="pub-date">Sep 2025</div>
+			<p>Since <em>forever</em>, I’ve thought of a web product the way you may have: A front-end interface, a back-end database, and some middle layer code that queries, manipulates, and pushes data to the front&hellip;and receives inputs to manipulate and push to the back again. </p>
+			<p>Of course it gets <strong>much</strong> more complicated than that&mdash;but at its core, that’s the elevator pitch I’m giving to the aliens on how our earthly software works.</p>
+			<p>For a few decades now, we’ve taken the raw materials from that initial blueprint and packaged them up into layers we have to be more and more careful with, that get brittler and brittler to maintain, harder and harder to fix. You know&hellip;</p>
+			<ul class="postList">
+			<li>HTML → Templating Engines → Component Frameworks</li>
+			<li>CSS → Sass/LESS → Tailwind/Utility-first frameworks</li>
+			<li>Javascript → jQuery → SPA frameworks</li>
+			<li>SQL → NoSQL → NewSQL</li>
+			<li>FTP’ing → CI → Docker → Kubernetes</li>
+			</ul>
+			<p>The wonderful thing about solo-software development is how easy it is to walk the other way&mdash;the way toward less. <strong>Less of everything to an eccentric degree</strong>. But, I will argue, really no more eccentric than the never-ending path toward complexity<em> </em>that big teams seem hell-bent on.</p>
+			<hr />
+			<p>My latest solo-software project, <a href="https://www.runkwc.com">RunKWC</a>, is a timer for treadmill running with <a href="https://kawai.pika.page/posts/run-kwc-a-different-kind-of-timer-for-your-treadmill-runs#problem-1-normal-time-is-demoralizing">different time visualizations</a> and an <a href="https://kawai.pika.page/posts/run-kwc-a-different-kind-of-timer-for-your-treadmill-runs#an-emphasis-on-ergonomics">emphasis on ergonomics</a>. You can also log the distance of your run once the time has finished.</p>
+			<p>It’s a Rails app, but it doesn’t even have to be that. I use Rails just for the organizational advantages&mdash;the MVC and routing conventions that make the building bit easier. It wouldn’t be a huge stretch to convert this app to a bunch of static HTML, CSS, and JS files&hellip;or even just <strong>one HTML file</strong> with all the goodies jammed into it. (But I will grant myself just a <em>little bit</em> of complexity).</p>
+			<p>You “install” the app through your browser, not through the app store. </p>
+			<p>It also has&hellip;</p>
+			<p>No authentication.<br>No server-side sessions.<br>No cookies.<br>No third-party extensions.<br>No back-end.</p>
+			<p>How does RunKWC stores your distance logs? Through <a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage">local storage</a>&mdash;that wonderfully simple client-side technology that you can access through plain-old Javascript. No opening or closing of connections. No performance issues. No concurrency worries. </p>
+			<p>Because there’s no server-side dynamic-ness, I use a <a href="https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API">service worker</a> (just a plain-old JS file) to cache RunKWC on your phone, so you don’t even need internet to run the full thing after its downloaded. </p>
+			<p>Of course, these constraints mean you can’t access your logged runs from another machine. You can’t sync your data to your Apple Watch. You can’t compare your results with others in the “RunKWC ecosystem”. There are lots of limitations when you strip down what you’re willing to use to the barest essentials. And what you get is an app that focuses on the things that matter.</p>
+			<p>RunKWC, I believe, helps you run better. Logging your runs just on your phone (and nowhere else) gives you just what you want when you want it. You don’t need more. And the app is so easy to maintain because it has such little weight and no dependencies.</p>
+			<p>And when it’s <strong>just you making the thing</strong>, the metrics for success are that much more gettable. The objectives that much more pure. The reason for its existence that much more clear.</p>
+			<hr />
+			<p><strong>How much value can you squeeze out of using almost nothing?</strong> A dish made out of the simplest and fewest ingredients. A song made with the fewest chords. A piece of art with the fewest brushstrokes. That’s a fun exercise. And one you can choose to engage in when you’re going it alone.</p>
+			<p>I’m marching toward “basically nothing” tech. It’s invigorating. <br><br>Come join me.</p>
+		</div>
+	</body>
+</html>
