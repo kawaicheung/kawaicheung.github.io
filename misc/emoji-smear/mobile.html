@@ -390,7 +390,12 @@
   function pressPointFor(bubble) {
     const r = bubble.getBoundingClientRect();
     const isSent = bubble.closest('.row').classList.contains('sent');
-    return { x: isSent ? r.left : r.right, y: r.top - 6 };
+    const OFFSET_X = 12; // push away from the bubble so it covers less of it
+    const OFFSET_Y = 11;
+    return {
+      x: isSent ? r.left - OFFSET_X : r.right + OFFSET_X,
+      y: r.top - OFFSET_Y
+    };
   }
 
   function onPointerDown(e) {
@@ -414,28 +419,33 @@
       originX: point.x,
       originY: point.y,
       pressTimer: null,
-      moodTimer: null
+      moodTimer: null,
+      maxedOut: false,
+      minOut: true
     };
 
     dragState.pressTimer = setTimeout(() => activateThumb(dragState), HOLD_DELAY);
   }
 
+  // only one of these classes should ever be on a bubble at once — otherwise
+  // whichever rule is declared last in the stylesheet wins the cascade and
+  // silently swallows whichever pulse actually just fired
   function pulseBubble(bubble) {
-    bubble.classList.remove('mood-pulse');
+    bubble.classList.remove('mood-pulse-big', 'mood-pulse', 'mood-pulse-subtle');
     void bubble.offsetWidth; // restart animation
     bubble.classList.add('mood-pulse');
     vibrate(15); // matches the mid-size scale bump (1.06 -> 1.16)
   }
 
   function pulseBubbleBig(bubble) {
-    bubble.classList.remove('mood-pulse-big');
+    bubble.classList.remove('mood-pulse-big', 'mood-pulse', 'mood-pulse-subtle');
     void bubble.offsetWidth; // restart animation
     bubble.classList.add('mood-pulse-big');
     vibrate(30); // matches the biggest scale bump (1.06 -> 1.26)
   }
 
   function pulseBubbleSubtle(bubble) {
-    bubble.classList.remove('mood-pulse-subtle');
+    bubble.classList.remove('mood-pulse-big', 'mood-pulse', 'mood-pulse-subtle');
     void bubble.offsetWidth; // restart animation
     bubble.classList.add('mood-pulse-subtle');
     vibrate(8); // matches the smallest scale bump (1.06 -> 1.085)
@@ -512,11 +522,30 @@
 
       glyph.style.transform = `rotate(${rotation}deg)`;
 
-      // haptic-style tick every 30° of rotation, like a detent
-      const step = Math.round(rotation / 30);
-      if (step !== dragState.rotationStep) {
-        dragState.rotationStep = step;
-        pulseBubble(dragState.bubble);
+      if (dy >= MAX_DRAG) {
+        // hit the hard limit — can't rotate further, give it an obvious bump
+        if (!dragState.maxedOut) {
+          dragState.maxedOut = true;
+          dragState.rotationStep = Math.round(rotation / 30);
+          pulseBubbleBig(dragState.bubble);
+        }
+      } else if (rotation <= 0) {
+        // back to the upright thumbs-up — same obvious bump as the other end
+        dragState.maxedOut = false;
+        if (!dragState.minOut) {
+          dragState.minOut = true;
+          dragState.rotationStep = 0;
+          pulseBubbleBig(dragState.bubble);
+        }
+      } else {
+        dragState.maxedOut = false;
+        dragState.minOut = false;
+        // haptic-style tick every 30° of rotation, like a detent
+        const step = Math.round(rotation / 30);
+        if (step !== dragState.rotationStep) {
+          dragState.rotationStep = step;
+          pulseBubble(dragState.bubble);
+        }
       }
 
       return;
