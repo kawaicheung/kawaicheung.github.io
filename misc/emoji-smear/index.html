@@ -124,6 +124,9 @@
     flex-direction: column;
     gap: 14px;
   }
+  .chat.no-scroll {
+    overflow: hidden;
+  }
 
   .date-sep {
     text-align: center;
@@ -152,6 +155,7 @@
     cursor: grab;
     transform: scale(1);
     transition: transform 90ms ease;
+    touch-action: none;
   }
 
   .row.received .bubble {
@@ -541,6 +545,7 @@
     void popInner.offsetWidth; // restart animation
     popInner.classList.add('show');
     pulseBubbleBig(dragState.bubble); // same big bump as the thumb-to-face switch
+    chat.classList.add('no-scroll'); // finger is now driving the popup, not the list
 
     dragState.moodTimer = setTimeout(() => activateMood(dragState), MOOD_DELAY);
   }
@@ -622,6 +627,7 @@
     clearTimeout(dragState.pressTimer);
     clearTimeout(dragState.moodTimer);
     dragState.bubble.classList.remove('pressed');
+    chat.classList.remove('no-scroll');
     dragState = null;
   }
 
@@ -633,6 +639,7 @@
 
     const { bubble, mode } = dragState;
     bubble.classList.remove('pressed');
+    chat.classList.remove('no-scroll');
 
     if (mode === 'waiting') {
       // released before the 0.5s hold completed — no reaction
@@ -661,6 +668,7 @@
     clearTimeout(dragState.pressTimer);
     clearTimeout(dragState.moodTimer);
     dragState.bubble.classList.remove('pressed');
+    chat.classList.remove('no-scroll');
     popInner.classList.remove('show');
     popInner.style.transform = 'scale(0)';
     dragState = null;
