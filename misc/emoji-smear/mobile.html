@@ -135,11 +135,11 @@
 
   .bubble.pressed { transform: scale(1.06); cursor: grabbing; }
   .bubble.mood-pulse-big {
-    animation: bubblePulseBig 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
+    animation: bubblePulseBig 260ms cubic-bezier(0.34, 1.56, 0.64, 1);
   }
   @keyframes bubblePulseBig {
     0%   { transform: scale(1.06); }
-    55%  { transform: scale(1.26); }
+    55%  { transform: scale(1.12); }
     100% { transform: scale(1.06); }
   }
   .bubble.mood-pulse {
@@ -147,7 +147,7 @@
   }
   @keyframes bubblePulse {
     0%   { transform: scale(1.06); }
-    55%  { transform: scale(1.16); }
+    55%  { transform: scale(1.08); }
     100% { transform: scale(1.06); }
   }
   .bubble.mood-pulse-subtle {
@@ -323,10 +323,11 @@
   const popInner = document.getElementById('popInner');
   const glyph = document.getElementById('thumbGlyph');
 
-  const MAX_DRAG = window.innerHeight * 0.20; // 20vh drag range, used both for thumb rotation and mood travel
+  const MAX_DRAG = window.innerHeight * 0.10; // 20vh drag range, used both for thumb rotation and mood travel
   const HOLD_DELAY = 500;    // ms before the thumb appears
   const MOOD_DELAY = 1500;   // ms holding the thumb before it morphs into a mood
   const MOVE_CANCEL_PX = 12; // movement allowed before HOLD_DELAY fires without cancelling
+  const ROTATE_DEADZONE = 14; // px of downward drag ignored before rotation starts, so a small accidental move doesn't tip the thumb
 
   const MOODS = [
     { emoji: '🤣', label: 'Losing it' }, // full drag up — tilted, eyes squeezed shut
@@ -414,6 +415,7 @@
     popInner.style.transform = 'scale(0)';
     void popInner.offsetWidth; // restart animation
     popInner.classList.add('show');
+    pulseBubbleBig(dragState.bubble); // same big bump as the thumb-to-face switch
 
     dragState.moodTimer = setTimeout(() => activateMood(dragState), MOOD_DELAY);
   }
@@ -450,12 +452,16 @@
     if (dragState.mode === 'thumb') {
       let dy = e.clientY - dragState.startY;
       dy = clamp(dy, 0, MAX_DRAG);
-      const rotation = (dy / MAX_DRAG) * 180;
+
+      // ignore the first ROTATE_DEADZONE px of downward drag, then rescale
+      // the remaining travel so 180° is still reached right at MAX_DRAG
+      const effectiveDy = Math.max(0, dy - ROTATE_DEADZONE);
+      const rotation = (effectiveDy / (MAX_DRAG - ROTATE_DEADZONE)) * 180;
       dragState.rotation = rotation;
 
       // dragging the thumb means the person is going for a rotation, not a hold —
       // stop the pending morph into face mode so it doesn't fire mid-drag
-      if (dy > 6 && dragState.moodTimer) {
+      if (dy > ROTATE_DEADZONE && dragState.moodTimer) {
         clearTimeout(dragState.moodTimer);
         dragState.moodTimer = null;
       }
