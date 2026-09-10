@@ -51,7 +51,20 @@
     display: flex;
     flex-direction: column;
     gap: 14px;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
   }
+  .chat::-webkit-scrollbar {
+    display: none;
+  }
+
+  .date-sep {
+    text-align: center;
+    font-size: 12px;
+    color: #8e8e93;
+    padding: 2px 0 6px;
+  }
+  .date-sep .day { font-weight: 600; }
 
   .row {
     display: flex;
@@ -283,6 +296,20 @@
 
 <div class="phone" id="phone">
   <div class="chat" id="chat">
+    <div class="date-sep"><span class="day">Monday</span> 2:15 PM</div>
+    <div class="row received">
+      <div class="bubble" data-id="a1">Omg have you started that new show yet?</div>
+    </div>
+    <div class="row sent">
+      <div class="bubble" data-id="a2">Not yet, work has been insane</div>
+    </div>
+    <div class="row received">
+      <div class="bubble" data-id="a3">You need to make time, trust me</div>
+    </div>
+    <div class="row sent">
+      <div class="bubble" data-id="a4">Adding it to the list, promise</div>
+    </div>
+    <div class="date-sep"><span class="day">Tuesday</span> 6:44 PM</div>
     <div class="row received">
       <div class="bubble" data-id="1">Hey! Did you end up watching that show I told you about?</div>
     </div>
@@ -300,6 +327,18 @@
     </div>
     <div class="row received">
       <div class="bubble" data-id="6">Ok we need to talk about this in person because I have so many theories about what happens next and texting really doesn't do it justice</div>
+    </div>
+    <div class="row sent">
+      <div class="bubble" data-id="7">Lunch tomorrow? I'll bring a notebook, I have theories too</div>
+    </div>
+    <div class="row received">
+      <div class="bubble" data-id="8">A whole notebook lol, deal</div>
+    </div>
+    <div class="row received">
+      <div class="bubble" data-id="9">Noon at the usual place?</div>
+    </div>
+    <div class="row sent">
+      <div class="bubble" data-id="10">Perfect, see you then</div>
     </div>
   </div>
 </div>
