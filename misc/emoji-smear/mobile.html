@@ -402,7 +402,8 @@
     const bubble = e.currentTarget;
     e.preventDefault();
     bubble.setPointerCapture(e.pointerId);
-    bubble.classList.add('pressed');
+    // no 'pressed' scale here — a quick tap should have zero visual bounce;
+    // it's only applied once the hold actually activates the thumb popup
 
     const point = pressPointFor(bubble);
 
@@ -455,6 +456,7 @@
     if (!dragState || dragState !== state) return;
     dragState.mode = 'thumb';
     dragState.rotationStep = 0; // haptic-style detent tracker for rotation
+    dragState.bubble.classList.add('pressed'); // raise the bubble right as the thumb unveils
 
     popup.style.left = dragState.originX + 'px';
     popup.style.top = dragState.originY + 'px';

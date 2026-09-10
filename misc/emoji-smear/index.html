@@ -123,6 +123,16 @@
     display: flex;
     flex-direction: column;
     gap: 14px;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    cursor: grab;
+  }
+  .chat::-webkit-scrollbar {
+    display: none;
+  }
+  .chat.dragging {
+    cursor: grabbing;
+    scroll-behavior: auto;
   }
   .chat.no-scroll {
     overflow: hidden;
@@ -473,8 +483,28 @@
   const MOOD_CENTER = 3;
 
   let dragState = null;
+  let scrollDrag = null; // mouse drag-to-scroll, mimicking a touch-drag pan instead of wheel/scrollbar
 
   function clamp(v, lo, hi) { return Math.max(lo, Math.min(v, hi)); }
+
+  function startScrollDrag(e) {
+    scrollDrag = { pointerId: e.pointerId, startY: e.clientY, startTop: chat.scrollTop };
+    chat.setPointerCapture(e.pointerId);
+    chat.classList.add('dragging');
+  }
+
+  function updateScrollDrag(e) {
+    if (!scrollDrag || e.pointerId !== scrollDrag.pointerId) return false;
+    chat.scrollTop = scrollDrag.startTop - (e.clientY - scrollDrag.startY);
+    return true;
+  }
+
+  function endScrollDrag(e) {
+    if (!scrollDrag || e.pointerId !== scrollDrag.pointerId) return false;
+    chat.classList.remove('dragging');
+    scrollDrag = null;
+    return true;
+  }
 
   function pressPointFor(bubble) {
     const r = bubble.getBoundingClientRect();
@@ -491,7 +521,8 @@
     const bubble = e.currentTarget;
     e.preventDefault();
     bubble.setPointerCapture(e.pointerId);
-    bubble.classList.add('pressed');
+    // no 'pressed' scale here — a quick tap should have zero visual bounce;
+    // it's only applied once the hold actually activates the thumb popup
 
     const point = pressPointFor(bubble);
 
@@ -510,7 +541,8 @@
       pressTimer: null,
       moodTimer: null,
       maxedOut: false,
-      minOut: true
+      minOut: true,
+      startScrollTop: chat.scrollTop
     };
 
     dragState.pressTimer = setTimeout(() => activateThumb(dragState), HOLD_DELAY);
@@ -541,6 +573,7 @@
     if (!dragState || dragState !== state) return;
     dragState.mode = 'thumb';
     dragState.rotationStep = 0; // haptic-style detent tracker for rotation
+    dragState.bubble.classList.add('pressed'); // raise the bubble right as the thumb unveils
 
     popup.style.left = dragState.originX + 'px';
     popup.style.top = dragState.originY + 'px';
@@ -580,12 +613,21 @@
   }
 
   function onPointerMove(e) {
+    if (updateScrollDrag(e)) return;
+
     if (!dragState || e.pointerId !== dragState.pointerId) return;
     dragState.lastY = e.clientY;
 
     if (dragState.mode === 'waiting') {
       const moved = Math.hypot(e.clientX - dragState.startX, e.clientY - dragState.startY);
-      if (moved > MOVE_CANCEL_PX) cancelHold();
+      if (moved > MOVE_CANCEL_PX) {
+        // a quick move before the hold completes reads as a scroll, not a reaction —
+        // hand it off to drag-to-scroll instead of just cancelling in place
+        const startY = dragState.startY;
+        cancelHold();
+        startScrollDrag({ pointerId: e.pointerId, clientY: startY });
+        updateScrollDrag(e);
+      }
       return;
     }
 
@@ -661,6 +703,8 @@
   }
 
   function onPointerUp(e) {
+    if (endScrollDrag(e)) return;
+
     if (!dragState || e.pointerId !== dragState.pointerId) return;
 
     clearTimeout(dragState.pressTimer);
@@ -693,6 +737,8 @@
   }
 
   function onPointerCancel(e) {
+    if (endScrollDrag(e)) return;
+
     if (!dragState || e.pointerId !== dragState.pointerId) return;
     clearTimeout(dragState.pressTimer);
     clearTimeout(dragState.moodTimer);
@@ -721,6 +767,11 @@
 
   document.querySelectorAll('.bubble').forEach(bubble => {
     bubble.addEventListener('pointerdown', onPointerDown);
+  });
+  chat.addEventListener('pointerdown', (e) => {
+    if (e.target.closest('.bubble')) return; // bubbles handle their own press/scroll handoff
+    e.preventDefault();
+    startScrollDrag(e);
   });
   document.addEventListener('pointermove', onPointerMove);
   document.addEventListener('pointerup', onPointerUp);
