@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#ffffff">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<title>Thumb Reaction Prototype</title>
+<style>
+  :root{
+    --bg: #ffffff;
+    --received: #e9e9eb;
+    --sent: #2f8cf7;
+    --text-dark: #1c1c1e;
+    --text-light: #ffffff;
+  }
+
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+  html, body {
+    height: 100%;
+    margin: 0;
+    background: var(--bg);
+    overflow: hidden;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif;
+  }
+
+  .phone {
+    width: 100%;
+    height: 100dvh;
+    background: var(--bg);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    touch-action: none;
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  .chat {
+    flex: 1;
+    overflow-y: auto;
+    padding: 28px 14px 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .row {
+    display: flex;
+    position: relative;
+  }
+  .row.received { justify-content: flex-start; }
+  .row.sent { justify-content: flex-end; }
+
+  .bubble {
+    width: fit-content;
+    max-width: 72%;
+    padding: 10px 14px;
+    border-radius: 20px;
+    font-size: 16px;
+    line-height: 1.35;
+    position: relative;
+    user-select: none;
+    cursor: grab;
+    transform: scale(1);
+    transition: transform 90ms ease;
+  }
+
+  .row.received .bubble {
+    background: var(--received);
+    color: var(--text-dark);
+  }
+
+  .row.sent .bubble {
+    background: var(--sent);
+    color: var(--text-light);
+  }
+
+  /* iMessage-style tail: ::before is a same-color nub tucked behind the bubble
+     (z-index -1) so it only peeks out past the corner's curve; ::after is a
+     page-colored sliver on top that carves the concave curve into it */
+  .row.received .bubble::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    bottom: -2px;
+    left: -7px;
+    width: 20px;
+    height: 20px;
+    background: var(--received);
+    border-bottom-right-radius: 16px;
+  }
+  .row.received .bubble::after {
+    content: "";
+    position: absolute;
+    z-index: 1;
+    bottom: -2px;
+    left: -8px;
+    width: 10px;
+    height: 20px;
+    background: var(--bg);
+    border-bottom-right-radius: 10px;
+  }
+
+  .row.sent .bubble::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    bottom: -2px;
+    right: -7px;
+    width: 20px;
+    height: 20px;
+    background: var(--sent);
+    border-bottom-left-radius: 16px;
+  }
+  .row.sent .bubble::after {
+    content: "";
+    position: absolute;
+    z-index: 1;
+    bottom: -2px;
+    right: -8px;
+    width: 10px;
+    height: 20px;
+    background: var(--bg);
+    border-bottom-left-radius: 10px;
+  }
+
+  .bubble.pressed { transform: scale(1.06); cursor: grabbing; }
+  .bubble.mood-pulse-big {
+    animation: bubblePulseBig 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  @keyframes bubblePulseBig {
+    0%   { transform: scale(1.06); }
+    55%  { transform: scale(1.26); }
+    100% { transform: scale(1.06); }
+  }
+  .bubble.mood-pulse {
+    animation: bubblePulse 260ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  @keyframes bubblePulse {
+    0%   { transform: scale(1.06); }
+    55%  { transform: scale(1.16); }
+    100% { transform: scale(1.06); }
+  }
+  .bubble.mood-pulse-subtle {
+    animation: bubblePulseSubtle 220ms ease-out;
+  }
+  @keyframes bubblePulseSubtle {
+    0%   { transform: scale(1.06); }
+    50%  { transform: scale(1.085); }
+    100% { transform: scale(1.06); }
+  }
+
+  /* reaction badge that lands on the bubble — always upper-right, matching
+     the interaction anchor point */
+  .reaction {
+    position: absolute;
+    top: -12px;
+    right: -8px;
+    width: 26px;
+    height: 26px;
+    background: #fff;
+    border-radius: 50%;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.25);
+  }
+  .reaction.show {
+    display: flex;
+    animation: badgeIn 260ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .reaction .glyph {
+    display: inline-block;
+  }
+  /* trailing circles, progressively smaller off the bottom-right — the
+     classic comic/thought-bubble quote tail */
+  .reaction::before,
+  .reaction::after {
+    content: "";
+    position: absolute;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  }
+  .reaction::before {
+    width: 9px;
+    height: 9px;
+    bottom: -5px;
+    right: -5px;
+  }
+  .reaction::after {
+    width: 4px;
+    height: 4px;
+    bottom: -10px;
+    right: -10px;
+  }
+  @keyframes badgeIn {
+    0% { transform: scale(0); }
+    100% { transform: scale(1); }
+  }
+
+  /* the floating popup thumb — three independent transform layers:
+     .popup (position/drag translate) > .pop-inner (bezier scale in/out) > #thumbGlyph (rotation) */
+  .popup {
+    position: fixed;
+    z-index: 50;
+    width: 0;
+    height: 0;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+  }
+
+  .pop-inner {
+    position: absolute;
+    width: 84px;
+    height: 84px;
+    left: -42px;
+    top: -42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: scale(0);
+  }
+  .pop-inner.show {
+    animation: popIn 200ms cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  }
+  .pop-inner.hide {
+    animation: popOut 120ms ease-in forwards;
+  }
+  @keyframes popIn {
+    0%   { transform: scale(0); }
+    60%  { transform: scale(1.12); }
+    100% { transform: scale(1); }
+  }
+  @keyframes popOut {
+    0%   { transform: scale(1); }
+    100% { transform: scale(0); }
+  }
+
+  #thumbGlyph {
+    display: inline-block;
+    font-size: 64px;
+    filter: drop-shadow(0 2px 6px rgba(0,0,0,0.25));
+    transform: rotate(0deg);
+    transition: transform 20ms linear;
+  }
+  #thumbGlyph.pulse {
+    animation: moodPulse 180ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  @keyframes moodPulse {
+    0%   { transform: scale(0.6); }
+    55%  { transform: scale(1.15); }
+    100% { transform: scale(1); }
+  }
+</style>
+</head>
+<body>
+
+<div class="phone" id="phone">
+  <div class="chat" id="chat">
+    <div class="row received">
+      <div class="bubble" data-id="1">Hey! Did you end up watching that show I told you about?</div>
+    </div>
+    <div class="row sent">
+      <div class="bubble" data-id="2">Yes! Binged the whole season last night</div>
+    </div>
+    <div class="row received">
+      <div class="bubble" data-id="3">No way, what did you think of the ending?</div>
+    </div>
+    <div class="row received">
+      <div class="bubble" data-id="4">I'm still thinking about that twist honestly</div>
+    </div>
+    <div class="row sent">
+      <div class="bubble" data-id="5">Right? I gasped so loud my roommate came running</div>
+    </div>
+    <div class="row received">
+      <div class="bubble" data-id="6">Ok we need to talk about this in person because I have so many theories about what happens next and texting really doesn't do it justice</div>
+    </div>
+  </div>
+</div>
+
+<div class="popup" id="popup">
+  <div class="pop-inner" id="popInner">
+    <span id="thumbGlyph">👍</span>
+  </div>
+</div>
+
+<script>
+(function(){
+  // real haptics via the Vibration API — magnitude mirrors each bubble pulse tier.
+  // Note: supported on Chrome/Android; Safari/iOS does not implement navigator.vibrate.
+  function vibrate(ms) {
+    if (navigator.vibrate) navigator.vibrate(ms);
+  }
+
+  const chat = document.getElementById('chat');
+  const popup = document.getElementById('popup');
+  const popInner = document.getElementById('popInner');
+  const glyph = document.getElementById('thumbGlyph');
+
+  const MAX_DRAG = window.innerHeight * 0.20; // 20vh drag range, used both for thumb rotation and mood travel
+  const HOLD_DELAY = 500;    // ms before the thumb appears
+  const MOOD_DELAY = 1500;   // ms holding the thumb before it morphs into a mood
+  const MOVE_CANCEL_PX = 12; // movement allowed before HOLD_DELAY fires without cancelling
+
+  const MOODS = [
+    { emoji: '🤣', label: 'Losing it' }, // full drag up — tilted, eyes squeezed shut
+    { emoji: '😂', label: 'Hilarious' },
+    { emoji: '😄', label: 'Happy' },
+    { emoji: '🙂', label: 'Neutral' },   // rest position
+    { emoji: '😕', label: 'Annoyed' },
+    { emoji: '😠', label: 'Angry' },
+    { emoji: '🤬', label: 'Fuming' }     // full drag down
+  ];
+  const MOOD_CENTER = 3;
+
+  let dragState = null;
+
+  function clamp(v, lo, hi) { return Math.max(lo, Math.min(v, hi)); }
+
+  function pressPointFor(bubble) {
+    const r = bubble.getBoundingClientRect();
+    return { x: r.right, y: r.top - 6 };
+  }
+
+  function onPointerDown(e) {
+    const bubble = e.currentTarget;
+    e.preventDefault();
+    bubble.setPointerCapture(e.pointerId);
+    bubble.classList.add('pressed');
+
+    const point = pressPointFor(bubble);
+
+    dragState = {
+      bubble,
+      pointerId: e.pointerId,
+      startX: e.clientX,
+      startY: e.clientY,
+      lastY: e.clientY,
+      mode: 'waiting', // 'waiting' -> 'thumb' -> 'emoji'
+      rotation: 0,
+      moodIndex: MOOD_CENTER,
+      modeSwitchY: e.clientY,
+      originX: point.x,
+      originY: point.y,
+      pressTimer: null,
+      moodTimer: null
+    };
+
+    dragState.pressTimer = setTimeout(() => activateThumb(dragState), HOLD_DELAY);
+  }
+
+  function pulseBubble(bubble) {
+    bubble.classList.remove('mood-pulse');
+    void bubble.offsetWidth; // restart animation
+    bubble.classList.add('mood-pulse');
+    vibrate(15); // matches the mid-size scale bump (1.06 -> 1.16)
+  }
+
+  function pulseBubbleBig(bubble) {
+    bubble.classList.remove('mood-pulse-big');
+    void bubble.offsetWidth; // restart animation
+    bubble.classList.add('mood-pulse-big');
+    vibrate(30); // matches the biggest scale bump (1.06 -> 1.26)
+  }
+
+  function pulseBubbleSubtle(bubble) {
+    bubble.classList.remove('mood-pulse-subtle');
+    void bubble.offsetWidth; // restart animation
+    bubble.classList.add('mood-pulse-subtle');
+    vibrate(8); // matches the smallest scale bump (1.06 -> 1.085)
+  }
+
+  function activateThumb(state) {
+    if (!dragState || dragState !== state) return;
+    dragState.mode = 'thumb';
+    dragState.rotationStep = 0; // haptic-style detent tracker for rotation
+
+    popup.style.left = dragState.originX + 'px';
+    popup.style.top = dragState.originY + 'px';
+    popup.style.transform = 'translate(-50%, -50%)';
+
+    glyph.classList.remove('pulse');
+    glyph.textContent = '👍';
+    glyph.style.transform = 'rotate(0deg)';
+
+    popInner.classList.remove('hide');
+    popInner.style.transform = 'scale(0)';
+    void popInner.offsetWidth; // restart animation
+    popInner.classList.add('show');
+
+    dragState.moodTimer = setTimeout(() => activateMood(dragState), MOOD_DELAY);
+  }
+
+  function activateMood(state) {
+    if (!dragState || dragState !== state || dragState.mode !== 'thumb') return;
+    dragState.mode = 'emoji';
+    dragState.modeSwitchY = dragState.lastY; // drag continues smoothly from here, no jump
+    dragState.moodIndex = MOOD_CENTER;
+
+    setMood(MOOD_CENTER);
+    pulseBubbleBig(dragState.bubble); // the big one — switching families, not just moods
+  }
+
+  function setMood(idx) {
+    const mood = MOODS[idx];
+    glyph.style.transform = 'rotate(0deg)';
+    glyph.textContent = mood.emoji;
+    glyph.classList.remove('pulse');
+    void glyph.offsetWidth; // restart animation
+    glyph.classList.add('pulse');
+  }
+
+  function onPointerMove(e) {
+    if (!dragState || e.pointerId !== dragState.pointerId) return;
+    dragState.lastY = e.clientY;
+
+    if (dragState.mode === 'waiting') {
+      const moved = Math.hypot(e.clientX - dragState.startX, e.clientY - dragState.startY);
+      if (moved > MOVE_CANCEL_PX) cancelHold();
+      return;
+    }
+
+    if (dragState.mode === 'thumb') {
+      let dy = e.clientY - dragState.startY;
+      dy = clamp(dy, 0, MAX_DRAG);
+      const rotation = (dy / MAX_DRAG) * 180;
+      dragState.rotation = rotation;
+
+      // dragging the thumb means the person is going for a rotation, not a hold —
+      // stop the pending morph into face mode so it doesn't fire mid-drag
+      if (dy > 6 && dragState.moodTimer) {
+        clearTimeout(dragState.moodTimer);
+        dragState.moodTimer = null;
+      }
+
+      glyph.style.transform = `rotate(${rotation}deg)`;
+
+      // haptic-style tick every 30° of rotation, like a detent
+      const step = Math.round(rotation / 30);
+      if (step !== dragState.rotationStep) {
+        dragState.rotationStep = step;
+        pulseBubble(dragState.bubble);
+      }
+
+      return;
+    }
+
+    if (dragState.mode === 'emoji') {
+      let delta = e.clientY - dragState.modeSwitchY;
+      delta = clamp(delta, -MAX_DRAG, MAX_DRAG);
+      const t = delta / MAX_DRAG; // -1 (full up) .. 1 (full down)
+      const idx = clamp(Math.round(MOOD_CENTER + t * MOOD_CENTER), 0, MOODS.length - 1);
+
+      if (idx !== dragState.moodIndex) {
+        dragState.moodIndex = idx;
+        setMood(idx);
+        pulseBubbleSubtle(dragState.bubble); // gentle tick between moods in the same family
+      }
+    }
+  }
+
+  function cancelHold() {
+    if (!dragState) return;
+    clearTimeout(dragState.pressTimer);
+    clearTimeout(dragState.moodTimer);
+    dragState.bubble.classList.remove('pressed');
+    dragState = null;
+  }
+
+  function onPointerUp(e) {
+    if (!dragState || e.pointerId !== dragState.pointerId) return;
+
+    clearTimeout(dragState.pressTimer);
+    clearTimeout(dragState.moodTimer);
+
+    const { bubble, mode } = dragState;
+    bubble.classList.remove('pressed');
+
+    if (mode === 'waiting') {
+      // released before the 0.5s hold completed — no reaction
+      dragState = null;
+      return;
+    }
+
+    popInner.classList.remove('show');
+    popInner.classList.add('hide');
+    setTimeout(() => {
+      popInner.classList.remove('hide');
+      popInner.style.transform = 'scale(0)';
+    }, 150);
+
+    if (mode === 'thumb') {
+      sendReaction(bubble, { emoji: '👍', rotation: dragState.rotation });
+    } else {
+      sendReaction(bubble, { emoji: MOODS[dragState.moodIndex].emoji, rotation: 0 });
+    }
+
+    dragState = null;
+  }
+
+  function onPointerCancel(e) {
+    if (!dragState || e.pointerId !== dragState.pointerId) return;
+    clearTimeout(dragState.pressTimer);
+    clearTimeout(dragState.moodTimer);
+    dragState.bubble.classList.remove('pressed');
+    popInner.classList.remove('show');
+    popInner.style.transform = 'scale(0)';
+    dragState = null;
+  }
+
+  function sendReaction(bubble, { emoji, rotation }) {
+    let badge = bubble.querySelector('.reaction');
+    if (!badge) {
+      badge = document.createElement('div');
+      badge.className = 'reaction';
+      badge.innerHTML = '<span class="glyph"></span>';
+      bubble.appendChild(badge);
+    }
+    const glyphEl = badge.querySelector('.glyph');
+    glyphEl.textContent = emoji;
+    glyphEl.style.transform = `rotate(${rotation}deg)`;
+    badge.classList.remove('show');
+    void badge.offsetWidth;
+    badge.classList.add('show');
+  }
+
+  document.querySelectorAll('.bubble').forEach(bubble => {
+    bubble.addEventListener('pointerdown', onPointerDown);
+  });
+  document.addEventListener('pointermove', onPointerMove);
+  document.addEventListener('pointerup', onPointerUp);
+  document.addEventListener('pointercancel', onPointerCancel);
+})();
+</script>
+
+</body>
+</html>
