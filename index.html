@@ -80,11 +80,34 @@ html.lock{overflow:hidden}
 #m{position:fixed;left:0;top:0;right:0;bottom:0;z-index:100;display:flex;align-items:center;justify-content:center;background:rgba(25,16,6,.55);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .2s}
 #m.pre{visibility:visible}
 #m.on{opacity:1;pointer-events:auto}
-#mp{position:relative;width:min(940px,94vw);height:92vh;background:#fff;box-shadow:0 24px 70px rgba(0,0,0,.55);transform:translateY(14px);transition:transform .25s}
+#mp{position:relative;width:min(740px,94vw);transform:translateY(14px);transition:transform .25s}
 #m.on #mp{transform:none}
-#m.vid #mp{width:min(1000px,94vw,calc(92vh*16/9));height:auto;aspect-ratio:16/9;background:#000}
-#m.vid #mf{background:#000}
-#mf{display:block;width:100%;height:100%;border:0;background:#fff}
+#m:not(.vid) #mp::before{content:"";position:absolute;left:50%;top:-8px;width:60px;height:18px;margin-left:-30px;background:rgba(240,232,196,.88);transform:rotate(-2deg);z-index:3}
+#mf{display:none;width:100%;height:100%;border:0;background:#000}
+#m.vid #mp{width:min(1000px,94vw,calc(92vh*16/9));aspect-ratio:16/9;background:#000;box-shadow:0 24px 70px rgba(0,0,0,.55)}
+#m.vid #mf{display:block}
+#m.vid #pp{display:none}
+#pp{box-sizing:border-box;max-height:92vh;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;padding:48px 54px 64px 70px;font:19px/29px Georgia,"Times New Roman",serif;color:#222;box-shadow:0 24px 70px rgba(0,0,0,.55)}
+#pp.pe1{background-color:#f6ebb8;background-attachment:local;background-image:linear-gradient(90deg,transparent 46px,#e08a84 46px,#e08a84 47px,transparent 47px),repeating-linear-gradient(transparent 0,transparent 28px,rgba(143,176,200,.32) 28px,rgba(143,176,200,.32) 29px);background-position:0 0,0 53px}
+#pp.pe2{background-color:#fffef6;background-attachment:local;background-image:linear-gradient(90deg,transparent 46px,#e08a84 46px,#e08a84 47px,transparent 47px),repeating-linear-gradient(transparent 0,transparent 28px,rgba(143,176,200,.3) 28px,rgba(143,176,200,.3) 29px);background-position:0 0,0 53px}
+#pp.pe3{background-color:#f1f5ef;background-attachment:local;background-image:linear-gradient(#d3e1e6 1px,transparent 1px),linear-gradient(90deg,#d3e1e6 1px,transparent 1px);background-size:24px 24px;padding-left:54px}
+#pc .pd{display:block;font:normal 11px/29px -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;letter-spacing:1.2px;text-transform:uppercase;color:#777}
+#pc h1{margin:0 0 29px;font-family:var(--ff,"Playfair Display",Georgia,serif);font-weight:400;font-size:calc(36px*var(--k,1));line-height:1.12;letter-spacing:-.4px;color:#111}
+#pc p,#pc ul,#pc ol,#pc blockquote,#pc pre,#pc img{margin:0 0 29px}
+#pc a{color:#111;text-decoration:underline;text-decoration-color:#999;text-underline-offset:3px}
+#pc a:hover{background:#111;color:#fff;text-decoration-color:transparent}
+#pc ul,#pc ol{padding-left:26px}
+#pc ul{list-style:disc}
+#pc li{margin:0 0 7px}
+#pc h3,#pc h4{margin:0;font-size:20px;line-height:29px;font-weight:700}
+#pc img{display:block;max-width:100%;height:auto}
+#pc img.side-icon{float:right;width:64px;margin:4px 0 10px 18px}
+#pc blockquote{padding-left:18px;border-left:2px solid rgba(0,0,0,.25);color:#444}
+#pc pre{padding:12px 14px;background:rgba(0,0,0,.06);overflow-x:auto;font:13px/19px Menlo,Consolas,monospace}
+#pc code{font:.82em Menlo,Consolas,monospace;background:rgba(0,0,0,.06);padding:1px 4px;border-radius:3px}
+#pc pre code{background:none;padding:0}
+#pc hr{border:0;border-top:1px solid rgba(0,0,0,.25);margin:29px 0}
+#pc iframe,#pc video{max-width:100%}
 #mx{position:absolute;right:-13px;top:-13px;width:30px;height:30px;padding:0;border:1px solid #fff;border-radius:50%;background:#000;color:#fff;font:18px/26px -apple-system,Helvetica,Arial,sans-serif;cursor:pointer;z-index:2}
 .stp::before{content:"";position:absolute;left:50%;margin-left:-14px;top:5px;width:28px;height:4px;border-radius:2px;background:linear-gradient(#d4d7d9 0,#d4d7d9 50%,#868a8d 50%,#868a8d 100%);box-shadow:0 .5px 0 rgba(0,0,0,.35);transform:rotate(var(--sa,-30deg));z-index:2}
 </style>
@@ -246,18 +269,46 @@ html.lock{overflow:hidden}
 <a style="--dx:-2px;--r:0.18deg;margin-top:1px;--ts:0.93;--tr:2.8deg" class="t tp n e1 f6 tr2" href="/essays/abstracting-your-writing-is-as-important-as-abstracting-your-code.html"><i>Oct 2006</i><b style="--fs:16px">Abstracting your writing is as important as abstracting your code</b></a>
 </div>
 <button id="rf" type="button" title="Bring back read posts" aria-label="Bring back read posts"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/></svg></button>
-<div id="m"><div id="mp"><button id="mx" type="button" aria-label="Close">&times;</button><iframe id="mf" title="Essay" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe></div></div>
+<div id="m"><div id="mp"><button id="mx" type="button" aria-label="Close">&times;</button><article id="pp"><div id="pc"></div></article><iframe id="mf" title="Video" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe></div></div>
 <script>
 (function(){
 var KEY='kwc-read',read=[];
 try{read=JSON.parse(localStorage.getItem(KEY)||'[]')||[]}catch(e){read=[]}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(read))}catch(e){}}
-var g=document.getElementById('g'),m=document.getElementById('m'),f=document.getElementById('mf'),rf=document.getElementById('rf'),root=document.documentElement,busy=false;
+var g=document.getElementById('g'),m=document.getElementById('m'),f=document.getElementById('mf'),pp=document.getElementById('pp'),pc=document.getElementById('pc'),rf=document.getElementById('rf'),root=document.documentElement,busy=false,tok=0;
 function cls(a){return a.classList.contains('n')?'gone':'rd'}
 [].forEach.call(g.querySelectorAll('a[href^="/essays/"]'),function(a){if(read.indexOf(a.getAttribute('href'))>-1)a.classList.add(cls(a))});
-function load(href,v){f.src=href;m.classList.toggle('vid',!!v);m.classList.add('pre')}
+function video(src){tok++;pc.innerHTML='';m.classList.add('vid','pre');f.src=src}
+function paperOf(a){var c=a?a.closest('.t'):null;if(!c)return null;var k=c.classList;return {p:k.contains('e1')?'pe1':k.contains('e3')?'pe3':'pe2',f:(c.className.match(/\bf\d\b/)||[''])[0]}}
+function abs(h,base){try{var u=new URL(h,base);return u.origin===location.origin?u.pathname+u.search+u.hash:u.href}catch(e){return h}}
+function essay(href,a){
+var t=++tok,pk=paperOf(a);
+m.classList.remove('vid');m.classList.add('pre');f.src='about:blank';
+if(pk)pp.className=pk.p+' '+pk.f;
+pc.innerHTML='';pp.scrollTop=0;
+fetch(href).then(function(r){if(!r.ok)throw 0;return r.text()}).then(function(h){
+if(t!==tok)return;
+var d=new DOMParser().parseFromString(h,'text/html'),box=d.querySelector('body > div');
+if(!box)throw 0;
+var title=(box.querySelector('h2')||{}).textContent||'',date=(box.querySelector('.pub-date')||{}).textContent||'';
+['.header-link','h2','.pub-date','script','style','link','nav'].forEach(function(q){[].forEach.call(box.querySelectorAll(q),function(n){n.remove()})});
+var base=new URL(href,location.href);
+[].forEach.call(box.querySelectorAll('*'),function(n){
+var side=n.classList&&n.classList.contains('side-icon');
+['style','class','width','height'].forEach(function(k){n.removeAttribute(k)});
+if(side)n.className='side-icon';
+if(n.tagName==='A'){var h2=n.getAttribute('href')||'';if(h2&&h2.charAt(0)!=='#'){h2=abs(h2,base);n.setAttribute('href',h2);if(/^https?:/.test(h2)){n.target='_blank';n.rel='noopener'}}}
+if(n.tagName==='IMG'||n.tagName==='IFRAME'){var sc=n.getAttribute('src');if(sc)n.setAttribute('src',abs(sc,base))}
+});
+pc.innerHTML='<span class="pd"></span><h1></h1><div class="pb"></div>';
+pc.querySelector('.pd').textContent=date.trim();
+pc.querySelector('h1').textContent=title.trim();
+pc.querySelector('.pb').innerHTML=box.innerHTML;
+}).catch(function(e){if(t!==tok)return;window.__err=(window.__err||[]).concat(href+' '+(e&&e.message||e));pc.innerHTML='<span class="pd">Couldn\'t load</span><h1>Hmm.</h1><p>That one wouldn\'t open here. <a href="'+href+'" target="_blank" rel="noopener">Read it on its own page</a>.</p>'});
+}
 function reveal(){m.classList.add('on');root.classList.add('lock')}
-function close(){m.classList.remove('on');root.classList.remove('lock');setTimeout(function(){if(!m.classList.contains('on')){m.classList.remove('pre','vid');f.src='about:blank'}busy=false},220)}
+function close(){m.classList.remove('on');root.classList.remove('lock');setTimeout(function(){if(!m.classList.contains('on')){m.classList.remove('pre','vid');f.src='about:blank';pc.innerHTML='';tok++}busy=false},220)}
+function mark(h){if(read.indexOf(h)<0){read.push(h);save()}var c=g.querySelector('a[href="'+h+'"]');if(c)c.classList.add(cls(c))}
 function fall(a,done){
 var dx=parseFloat(a.style.getPropertyValue('--dx'))||0,r=parseFloat(a.style.getPropertyValue('--r'))||0;
 var b=a.getBoundingClientRect(),D=innerHeight-b.top+140,L=Math.random()<.5,s=L?1:-1;
@@ -273,18 +324,24 @@ g.addEventListener('click',function(e){
 if(e.button||e.metaKey||e.ctrlKey||e.shiftKey||e.altKey)return;
 var y=e.target.closest('a[href*="youtube.com/watch"]');
 if(y){var id=(y.href.match(/[?&]v=([\w-]+)/)||[])[1];
-if(id){e.preventDefault();if(busy)return;busy=true;load('https://www.youtube.com/embed/'+id+'?autoplay=1&rel=0&playsinline=1',true);reveal();return}}
+if(id){e.preventDefault();if(busy)return;busy=true;video('https://www.youtube.com/embed/'+id+'?autoplay=1&rel=0&playsinline=1');reveal();return}}
 var a=e.target.closest('a[href^="/essays/"]');
 if(!a)return;
 e.preventDefault();if(busy)return;busy=true;
 var href=a.getAttribute('href');
 if(read.indexOf(href)<0){read.push(href);save()}
-load(href);
+essay(href,a);
 if(a.classList.contains('n'))fall(a,reveal);else{a.classList.add('rd');reveal()}
 });
 rf.addEventListener('click',function(){
 read=[];save();
 [].forEach.call(g.querySelectorAll('.gone,.rd'),function(a){a.classList.remove('gone','rd');a.animate([{opacity:0},{opacity:1}],{duration:450})});
+});
+pc.addEventListener('click',function(e){
+if(e.button||e.metaKey||e.ctrlKey||e.shiftKey||e.altKey)return;
+var a=e.target.closest('a');if(!a)return;
+var h=a.getAttribute('href')||'';
+if(/^\/essays\/[^\/]+\.html$/.test(h)){e.preventDefault();mark(h);essay(h,null)}
 });
 document.getElementById('mx').addEventListener('click',close);
 m.addEventListener('click',function(e){if(e.target===m)close()});
