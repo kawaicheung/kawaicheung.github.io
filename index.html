@@ -70,6 +70,20 @@ body::before{content:"";position:fixed;left:0;top:0;right:0;bottom:0;pointer-eve
 .tr3{clip-path:polygon(0 0,100% 0,100% calc(100% - 5px),93.9% calc(100% - 4.4px),85.8% calc(100% - 3.7px),76.8% calc(100% - 4.1px),71.1% calc(100% - 3.9px),62.7% calc(100% - 4.1px),53.6% calc(100% - 3.6px),48.0% calc(100% - 2.2px),36.7% calc(100% - 2.1px),31.3% calc(100% - 2.4px),24.0% calc(100% - 3.8px),16.0% calc(100% - 2.5px),9.4% calc(100% - 1.5px),0% calc(100% - 2.7px))}
 .tr4{clip-path:polygon(0 0,100% 0,100% calc(100% - 1.5px),93.9% calc(100% - 0.8px),85.7% calc(100% - 2.4px),77.5% calc(100% - 2.8px),70.4% calc(100% - 2.2px),66.0% calc(100% - 3.7px),58.5% calc(100% - 3.4px),50.8% calc(100% - 1.9px),42.3% calc(100% - 0.5px),34.7% calc(100% - 0px),28.5% calc(100% - 0.1px),22.8% calc(100% - 0px),13.6% calc(100% - 0px),6.9% calc(100% - 0px),0% calc(100% - 0.3px))}
 .tr5{clip-path:polygon(0 0,100% 0,100% calc(100% - 2.2px),93.2% calc(100% - 1.0px),88.1% calc(100% - 0px),80.1% calc(100% - 0.9px),74.4% calc(100% - 0.6px),66.7% calc(100% - 2.1px),60.3% calc(100% - 0.8px),53.4% calc(100% - 2.1px),45.3% calc(100% - 2.2px),39.0% calc(100% - 1.2px),34.2% calc(100% - 1.8px),25.5% calc(100% - 0.3px),19.2% calc(100% - 0px),14.3% calc(100% - 0.3px),6.7% calc(100% - 0px),0% calc(100% - 1.3px))}
+.gone{visibility:hidden;pointer-events:none}
+.rd{opacity:.38}
+html{scrollbar-gutter:stable}
+html.lock{overflow:hidden}
+#rf{position:fixed;right:24px;top:14px;z-index:60;width:34px;height:34px;padding:0;border:1px solid #000;border-radius:50%;background:#fff;color:#000;cursor:pointer;display:flex;align-items:center;justify-content:center}
+#rf:hover{background:#000;color:#fff}
+#rf svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+#m{position:fixed;left:0;top:0;right:0;bottom:0;z-index:100;display:flex;align-items:center;justify-content:center;background:rgba(25,16,6,.55);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .2s}
+#m.pre{visibility:visible}
+#m.on{opacity:1;pointer-events:auto}
+#mp{position:relative;width:min(940px,94vw);height:92vh;background:#fff;box-shadow:0 24px 70px rgba(0,0,0,.55);transform:translateY(14px);transition:transform .25s}
+#m.on #mp{transform:none}
+#mf{display:block;width:100%;height:100%;border:0;background:#fff}
+#mx{position:absolute;right:-13px;top:-13px;width:30px;height:30px;padding:0;border:1px solid #fff;border-radius:50%;background:#000;color:#fff;font:18px/26px -apple-system,Helvetica,Arial,sans-serif;cursor:pointer;z-index:2}
 </style>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400&family=Fraunces:opsz,wght@9..144,400&family=Libre+Baskerville:wght@400&family=Lora:wght@400&family=Playfair+Display:wght@400&family=Permanent+Marker&family=Space+Grotesk:wght@400&family=IBM+Plex+Sans:wght@400&family=Archivo+Narrow:wght@400&display=swap">
 </head>
@@ -228,5 +242,47 @@ body::before{content:"";position:fixed;left:0;top:0;right:0;bottom:0;pointer-eve
 <a style="--dx:-1px;--r:0.88deg;margin-top:2px;--ts:0.91;--tr:-1.0deg" class="t tp n e1 f1 tr1" href="/essays/make-your-product-better-in-2-ways-everyday.html"><i>Aug 2007</i><b style="--fs:18px">Make your product better in 2 ways everyday</b></a>
 <a style="--dx:-2px;--r:0.18deg;margin-top:1px;--ts:0.93;--tr:2.8deg" class="t tp n e1 f6 tr2" href="/essays/abstracting-your-writing-is-as-important-as-abstracting-your-code.html"><i>Oct 2006</i><b style="--fs:16px">Abstracting your writing is as important as abstracting your code</b></a>
 </div>
+<button id="rf" type="button" title="Bring back read posts" aria-label="Bring back read posts"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/></svg></button>
+<div id="m"><div id="mp"><button id="mx" type="button" aria-label="Close">&times;</button><iframe id="mf" title="Essay"></iframe></div></div>
+<script>
+(function(){
+var KEY='kwc-read',read=[];
+try{read=JSON.parse(localStorage.getItem(KEY)||'[]')||[]}catch(e){read=[]}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(read))}catch(e){}}
+var g=document.getElementById('g'),m=document.getElementById('m'),f=document.getElementById('mf'),rf=document.getElementById('rf'),root=document.documentElement,busy=false;
+function cls(a){return a.classList.contains('n')?'gone':'rd'}
+[].forEach.call(g.querySelectorAll('a[href^="/essays/"]'),function(a){if(read.indexOf(a.getAttribute('href'))>-1)a.classList.add(cls(a))});
+function load(href){f.src=href;m.classList.add('pre')}
+function reveal(){m.classList.add('on');root.classList.add('lock')}
+function close(){m.classList.remove('on');root.classList.remove('lock');setTimeout(function(){if(!m.classList.contains('on')){m.classList.remove('pre');f.src='about:blank'}busy=false},220)}
+function fall(a,done){
+var dx=parseFloat(a.style.getPropertyValue('--dx'))||0,r=parseFloat(a.style.getPropertyValue('--r'))||0;
+var b=a.getBoundingClientRect(),D=innerHeight-b.top+140,L=Math.random()<.5,s=L?1:-1;
+a.style.transformOrigin=L?'0 0':'100% 0';
+a.style.zIndex=40;
+var an=a.animate([
+{transform:'translateX('+dx+'px) rotate('+r+'deg)'},
+{transform:'translate('+(dx+s*34)+'px,'+D+'px) rotate('+(r+s*52)+'deg)'}
+],{duration:640,easing:'cubic-bezier(.5,0,.85,.5)',fill:'forwards'});
+an.onfinish=function(){a.classList.add('gone');a.style.zIndex='';a.style.transformOrigin='';an.cancel();done()};
+}
+g.addEventListener('click',function(e){
+var a=e.target.closest('a[href^="/essays/"]');
+if(!a||e.button||e.metaKey||e.ctrlKey||e.shiftKey||e.altKey)return;
+e.preventDefault();if(busy)return;busy=true;
+var href=a.getAttribute('href');
+if(read.indexOf(href)<0){read.push(href);save()}
+load(href);
+if(a.classList.contains('n'))fall(a,reveal);else{a.classList.add('rd');reveal()}
+});
+rf.addEventListener('click',function(){
+read=[];save();
+[].forEach.call(g.querySelectorAll('.gone,.rd'),function(a){a.classList.remove('gone','rd');a.animate([{opacity:0},{opacity:1}],{duration:450})});
+});
+document.getElementById('mx').addEventListener('click',close);
+m.addEventListener('click',function(e){if(e.target===m)close()});
+addEventListener('keydown',function(e){if(e.key==='Escape'&&m.classList.contains('on'))close()});
+})();
+</script>
 </body>
 </html>
