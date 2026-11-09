@@ -43,9 +43,9 @@ body{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-r
 .in::after{left:-9px;right:-6px;bottom:-8px;height:14px;transform:rotate(var(--r2))}
 .in>u.s3{left:-8px;top:-9px;bottom:-7px;width:15px;transform:rotate(var(--r3))}
 .in>u.s4{right:-7px;top:-6px;bottom:-9px;width:14px;transform:rotate(var(--r4))}
-.in::before{clip-path:inset(0 100% 0 0)}.in>u.s4{clip-path:inset(0 0 100% 0)}.in::after{clip-path:inset(0 0 0 100%)}.in>u.s3{clip-path:inset(100% 0 0 0)}
+.in::before{clip-path:inset(0 100% 0 0)}.in>u.s4{clip-path:inset(0 0 100% 0)}.in::after{clip-path:inset(0 100% 0 0)}.in>u.s3{clip-path:inset(0 0 100% 0)}
 @keyframes tro{to{clip-path:inset(0)}}
-.in.taped::before{animation:tro .4s ease-out 0s forwards}.in.taped>u.s4{animation:tro .4s ease-out .65s forwards}.in.taped::after{animation:tro .4s ease-out 1.3s forwards}.in.taped>u.s3{animation:tro .4s ease-out 1.95s forwards}
+.in.taped::before{animation:tro .4s ease-out 0s forwards}.in.taped>u.s3{animation:tro .4s ease-out .65s forwards}.in.taped>u.s4{animation:tro .4s ease-out 1.3s forwards}.in.taped::after{animation:tro .4s ease-out 1.95s forwards}
 .in b{font-size:20px;line-height:22px;color:#fff;letter-spacing:-.5px;text-transform:none}
 .in a{color:#fff}
 .t.hid{visibility:hidden;pointer-events:none}.t.hid::before,.t.hid::after,.t.hid>u,.pin.hid .pn::before,.pin.hid .pn::after{visibility:visible}.in a.on{background:#fff;color:#000}
@@ -103,9 +103,9 @@ html{scrollbar-width:none;-ms-overflow-style:none}
 html::-webkit-scrollbar,body::-webkit-scrollbar{display:none;width:0;height:0}
 html.lock{overflow:hidden}
 #rf{display:none}#rf.show{display:flex;animation:rfi .35s}@keyframes rfi{from{opacity:0}}
-#rf{position:fixed;right:24px;top:14px;z-index:60;width:34px;height:34px;padding:0;border:0;border-radius:0;background:none;color:#fff;cursor:pointer;filter:drop-shadow(0 1px 2px rgba(0,0,0,.6));align-items:center;justify-content:center}
+#rf{position:absolute;right:14px;bottom:13px;z-index:3;width:22px;height:22px;padding:0;border:0;border-radius:0;background:none;color:#fff;cursor:pointer;filter:drop-shadow(0 1px 2px rgba(0,0,0,.6));align-items:center;justify-content:center}
 @keyframes rfs{to{transform:rotate(360deg)}}#rf:hover svg{animation:rfs .6s ease-in-out}
-#rf svg{width:26px;height:26px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+#rf svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
 #m{position:fixed;left:0;top:0;right:0;bottom:0;z-index:100;display:flex;align-items:center;justify-content:center;background:rgba(25,16,6,.55);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .2s}
 #m.pre{visibility:visible}
 #m.on{opacity:1;pointer-events:auto}
@@ -114,8 +114,9 @@ html.lock{overflow:hidden}
 #mf{display:none;width:100%;height:100%;border:0;background:#000}
 #m.vid #mp{width:min(1000px,94vw,calc(92vh*16/9));aspect-ratio:16/9;background:#000;box-shadow:0 24px 70px rgba(0,0,0,.55)}
 #m.vid #mf{display:block}
+#mx{position:absolute;left:50%;top:8px;width:44px;height:44px;margin:0 0 0 -22px;padding:0;border:0;border-radius:0;background:none;color:#333;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:5;outline:none}#mx:hover{color:#000}#mx svg{width:28px;height:28px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}#m.vid #mx{top:-50px;color:#fff}#m.vid #mx:hover{color:#ddd}
 #m.vid #pp{display:none}
-#pp{--pr:clamp(2.5vw,calc(11vw - 34px),54px);--pl:calc(var(--pr) + 16px);--pr4:clamp(40px,calc(14vw - 40px),62px);box-sizing:border-box;max-height:92vh;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:none;-ms-overflow-style:none;padding:0;font:18px/29px Georgia,"Times New Roman",serif;color:#222}
+#pp{--pr:clamp(min(5vw,44px),calc(11vw - 34px),44px);--pl:calc(var(--pr) + 14px);--pr4:clamp(40px,calc(14vw - 40px),52px);box-sizing:border-box;max-height:92vh;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:none;-ms-overflow-style:none;padding:0;font:18px/29px Georgia,"Times New Roman",serif;color:#222}
 #pc{position:relative;padding:48px var(--pr) 84px var(--pl)}
 #pc a.po{position:absolute;top:26px;right:26px;cursor:pointer;font:13px/29px Georgia,"Times New Roman",serif;color:#555;text-decoration-color:#aaa}#pp.pe4 #pc a.po{top:40px;right:36px}#pc a.po:hover{background:none;color:#000;text-decoration-color:#000}
 #m:not(:has(#pp.pe4)) #mp{filter:drop-shadow(0 22px 30px rgba(0,0,0,.5))}
@@ -172,7 +173,8 @@ html.lock{overflow:hidden}
 .sp2c>img.hero{display:block;width:calc(100% + 68px);max-width:none;height:auto;margin:18px -34px 8px}
 .sp2c:not(.sp2){padding:28px 24px 30px}
 .n.rk{transform-origin:50% 14px}
-.sbt{display:block;margin-top:9px;font:14px/20px Georgia,serif;color:#444;cursor:pointer}.sbt em{display:block;margin-top:6px;font-style:normal;white-space:nowrap;text-decoration:underline;text-underline-offset:2px;color:#222}.sbt:hover em{color:#b3261e}
+.fc::before,.fc::after,.fc>u,.fc .pn::before,.fc .pn::after{display:none!important}
+.sbt{display:block;margin-top:9px;font:14px/20px Georgia,serif;color:#444;cursor:pointer}.sbt em{display:block;margin-top:6px;font-style:normal;white-space:nowrap;text-decoration:underline;text-underline-offset:2px;color:#222}
 .stp>b[style*="font-size:22px"]{font-family:var(--hand);font-weight:var(--hand-weight);letter-spacing:0;font-size:20px;line-height:24px;text-align:center;text-wrap:balance}
 .hw{display:block;padding:7px 2px 3px;font-family:var(--hand);font-weight:var(--hand-weight);font-size:calc(var(--hand-size)*1.15);line-height:1.2;color:#000;text-align:center;pointer-events:none}
 /* TEMP PINS START - delete through TEMP PINS END to go back to tape on essay cards */
@@ -192,13 +194,14 @@ html.lock{overflow:hidden}
 .vp{position:relative;display:block}
 .vp::before{content:"";position:absolute;left:50%;top:50%;width:46px;height:46px;margin:-23px 0 0 -23px;border-radius:50%;background:rgba(0,0,0,.66);box-shadow:0 0 0 2px rgba(255,255,255,.9);pointer-events:none;z-index:2}
 .vp::after{content:"";position:absolute;left:50%;top:50%;margin:-10px 0 0 -6px;border-style:solid;border-width:10px 0 10px 17px;border-color:transparent transparent transparent #fff;pointer-events:none;z-index:3}
+@media(max-width:560px){#pp{--pl:var(--pr)}#pp.pe1 #pc{background-image:none}#pp.pe2 #pc{background-image:repeating-linear-gradient(transparent 0,transparent 28px,rgba(143,176,200,.3) 28px,rgba(143,176,200,.3) 29px);background-position:0 53px}}
 </style>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400&family=Fraunces:opsz,wght@9..144,400&family=Libre+Baskerville:wght@400&family=Lora:wght@400&family=Playfair+Display:wght@400&family=Permanent+Marker&family=Space+Grotesk:wght@400&family=IBM+Plex+Sans:wght@400&family=Archivo+Narrow:wght@400&family=Courier+Prime:wght@400;700&display=swap">
 </head>
 <body>
 <div id="g">
 <a data-k="e" style="--dx:1px;--r:-0.55deg;margin-top:3px;--ts:0.91;--tr:1.6deg;--pa:-0.83deg;--py:-1.2px;--px:-3.4px" class="t tp n e1 f1 tr1 pc4" href="/essays/designing-for-the-first-5-minutes-and-the-next-20-years.html"><i>Aug 2026</i><b style="--fs:16px">Designing for the first 5 minutes and the next 20 years</b></a>
-<div style="--r:0deg;--r1:-.5deg;--r2:.4deg;--r3:.5deg;--r4:-.4deg" class="t x in"><b>Ka Wai Cheung</b>Making things on the World Wide Web since the 1900s.<br><br><a href="/" data-f="" class="on">Everything</a><a href="/random" data-f="p">Projects</a><a href="https://www.youtube.com/playlist?list=PL_0hiGP3NeojDxJILYeLILioIYwIvDWH6" data-f="v">Videos</a><a href="/essays" data-f="e">Essays</a><a href="/books" data-f="b">Books</a><u class="s3"></u><u class="s4"></u></div>
+<div style="--r:0deg;--r1:-.5deg;--r2:.4deg;--r3:.5deg;--r4:-.4deg" class="t x in"><b>Ka Wai Cheung</b>Making things on the World Wide Web since the 1900s.<br><br><a href="/" data-f="" class="on">Everything</a><a href="/random" data-f="p">Projects</a><a href="https://www.youtube.com/playlist?list=PL_0hiGP3NeojDxJILYeLILioIYwIvDWH6" data-f="v">Videos</a><a href="/essays" data-f="e">Essays</a><a href="/books" data-f="b">Books</a><button id="rf" type="button" title="Bring back read posts" aria-label="Bring back read posts"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/></svg></button><u class="s3"></u><u class="s4"></u></div>
 <a data-k="e" style="--dx:-1px;--r:-0.73deg;margin-top:4px;--ts:0.93;--tr:1.1deg;--pa:0.78deg;--py:-1.6px;--px:4.6px" class="t tp n e3 f6 tr2 pc1" href="/essays/ai-slop-is-a-novelty-act.html"><i>Jul 2026</i><b style="--fs:21px">AI slop is a novelty act</b></a>
 <a data-k="e" style="--dx:-1px;--r:-0.03deg;margin-top:3px;--ts:1.01;--tr:-2.5deg;--pa:0.36deg;--py:-1.6px;--px:4.2px" class="t tp n e1 f2 tr3 pc1" href="/essays/the-confounding-dilemma-of-vibe-coding-small-contained-things.html"><i>Apr 2026</i><b style="--fs:16px">The confounding dilemma of vibe coding small, contained things</b></a>
 <a data-k="p" style="--dx:2px;--r:-0.59deg;margin-top:1px;--sa:0.40deg;--lx:9px;--rx:7px;--blx:10px;--brx:7px;--ly:8px;--ry:8px;--bly:8px;--bry:7px;--la:25deg;--ra:39deg;--bla:32deg;--bra:45deg" class="t stp p" href="https://runkwc.kawaicheung.io"><img src="img/runkwc.jpg" alt="RunKWC"><b style="display:block;font-size:22px;line-height:24px;letter-spacing:-.5px;padding:9px 3px 1px">RunKWC</b><span class="c">treadmill timer + run log</span><u class="s3"></u><u class="s4"></u></a>
@@ -208,6 +211,7 @@ html.lock{overflow:hidden}
 <a data-k="v" style="--dx:1px;--r:-0.11deg;margin-top:3px;--sa:-0.18deg;--lx:5px;--rx:6px;--blx:5px;--brx:7px;--ly:6px;--ry:4px;--bly:6px;--bry:7px;--la:28deg;--ra:43deg;--bla:32deg;--bra:25deg" class="t stp p sq" href="https://www.youtube.com/watch?v=usr33Pyxtao"><span class="vp"><img src="img/real-code-5.jpg" alt="Why stay small? A developer's perspective."></span><u class="s3"></u><u class="s4"></u></a>
 <a data-k="e" style="--dx:-2px;--r:0.98deg;margin-top:0px;--ts:0.98;--tr:2.6deg;--pa:0.76deg;--py:-0.4px;--px:-0.4px" class="t tp n e3 f8 tr1 pc4" href="/essays/one-small-tweak-can-make-it-all-make-sense.html"><i>Jan 2026</i><b style="--fs:18px">One small tweak can make it all make sense</b></a>
 <a data-k="e" style="--dx:-1px;--r:0.32deg;margin-top:2px;--ts:0.94;--tr:-3.3deg;--pa:-0.82deg;--py:-0.9px;--px:-2.3px" class="t tp n e3 f4 tr2 pc1" href="/essays/masking-the-annoying-detail-in-ux.html"><i>Oct 2025</i><b style="--fs:18px">Masking the annoying detail in UX</b></a>
+<a data-k="b" style="--dx:-2px;--r:0.38deg;margin-top:0px;--sa:-0.74deg;--lx:9px;--rx:7px;--blx:11px;--brx:8px;--ly:3px;--ry:7px;--bly:8px;--bry:5px;--la:34deg;--ra:26deg;--bla:38deg;--bra:27deg" class="t stp p" href="https://pragprog.com/titles/kcdc/the-developer-s-code/"><img src="img/book--the-developers-code.png" alt="The Developer's Code, 2012"><span class="c">The Developer's Code, 2012</span><u class="s3"></u><u class="s4"></u></a>
 <a data-k="e" style="--dx:1px;--r:0.16deg;margin-top:1px;--ts:1.04;--tr:0.3deg;--pa:-0.64deg;--py:-0.4px;--px:2.9px" class="t tp n e1 f5 tr3 pc2" href="/essays/the-best-feeling.html"><i>Sep 2025</i><b style="--fs:21px">The best feeling</b></a>
 <a data-k="e" style="--dx:2px;--r:-0.02deg;margin-top:1px;--ts:0.91;--tr:2.9deg;--pa:-0.62deg;--py:-1.1px;--px:3.4px" class="t tp n e1 f1 tr4 pc2" href="/essays/heres-to-the-crafty-web.html"><i>Sep 2025</i><b style="--fs:21px">Here’s to the crafty web</b></a>
 <a data-k="e" style="--dx:-1px;--r:0.46deg;margin-top:3px;--ts:0.95;--tr:-1.1deg;--pa:-0.40deg;--py:-0.2px;--px:-4.5px" class="t tp n e1 f6 tr5 pc3" href="/essays/building-products-with-basically-nothing.html"><i>Sep 2025</i><b style="--fs:18px">Building products with basically nothing</b></a>
@@ -258,7 +262,6 @@ html.lock{overflow:hidden}
 <a data-k="e" style="--dx:1px;--r:-0.26deg;margin-top:0px;--ts:1.09;--tr:-0.9deg;--pa:-0.72deg;--py:-1.8px;--px:2.2px" class="t tp n e3 f3 tr5 pc4" href="/essays/whats-your-weekly-work-pyramid.html"><i>Jun 2017</i><b style="--fs:18px">What’s your weekly work pyramid?</b></a>
 <a data-k="e" style="--dx:-1px;--r:0.56deg;margin-top:3px;--ts:1.13;--tr:2.3deg;--pa:0.58deg;--py:-1.9px;--px:-1.3px" class="t tp n e3 f8 tr1 pc4" href="/essays/where-the-software-ends.html"><i>Apr 2017</i><b style="--fs:21px">Where the software ends</b></a>
 <a data-k="e" style="--dx:-2px;--r:-0.96deg;margin-top:1px;--ts:1.06;--tr:-3.3deg;--pa:0.03deg;--py:-1.3px;--px:0.8px" class="t tp n e1 f4 tr2 pc4" href="/essays/sometimes-its-life-work-balance.html"><i>Apr 2017</i><b style="--fs:18px">Sometimes, it’s life-work balance</b></a>
-<a data-k="b" style="--dx:-2px;--r:0.38deg;margin-top:0px;--sa:-0.74deg;--lx:9px;--rx:7px;--blx:11px;--brx:8px;--ly:3px;--ry:7px;--bly:8px;--bry:5px;--la:34deg;--ra:26deg;--bla:38deg;--bra:27deg" class="t stp p" href="https://pragprog.com/titles/kcdc/the-developer-s-code/"><img src="img/book--the-developers-code.png" alt="The Developer's Code, 2012"><span class="c">The Developer's Code, 2012</span><u class="s3"></u><u class="s4"></u></a>
 <a data-k="e" style="--dx:2px;--r:-0.08deg;margin-top:5px;--ts:1.12;--tr:3.4deg;--pa:0.37deg;--py:-0.9px;--px:-0.5px" class="t tp n e1 f5 tr3 pc4" href="/essays/finding-big-passions-in-small-things.html"><i>Apr 2017</i><b style="--fs:18px">Finding big passions in small things</b></a>
 <a data-k="e" style="--dx:2px;--r:-0.75deg;margin-top:2px;--ts:1.11;--tr:1.2deg;--pa:-0.05deg;--py:-1.1px;--px:2.4px" class="t tp n e1 f1 tr4 pc4" href="/essays/being-brief.html"><i>Apr 2017</i><b style="--fs:21px">Being brief</b></a>
 <a data-k="e" style="--dx:2px;--r:0.58deg;margin-top:0px;--ts:1.11;--tr:1.2deg;--pa:-0.58deg;--py:-1.7px;--px:1.1px" class="t tp n e1 f6 tr5 pc4" href="/essays/when-i-first-learned-about-the-impact-of-design.html"><i>Mar 2017</i><b style="--fs:18px">When I first learned about the impact of design</b></a>
@@ -354,8 +357,7 @@ html.lock{overflow:hidden}
 <a data-k="e" style="--dx:-1px;--r:0.88deg;margin-top:2px;--ts:0.91;--tr:-1.0deg;--pa:-0.78deg;--py:-1.4px;--px:3.7px" class="t tp n e1 f1 tr1 pc3" href="/essays/make-your-product-better-in-2-ways-everyday.html"><i>Aug 2007</i><b style="--fs:18px">Make your product better in 2 ways everyday</b></a>
 <a data-k="e" style="--dx:-2px;--r:0.18deg;margin-top:1px;--ts:0.93;--tr:2.8deg;--pa:0.98deg;--py:-0.4px;--px:4.0px" class="t tp n e3 f6 tr2 pc1" href="/essays/abstracting-your-writing-is-as-important-as-abstracting-your-code.html"><i>Oct 2006</i><b style="--fs:16px">Abstracting your writing is as important as abstracting your code</b></a>
 </div>
-<button id="rf" type="button" title="Bring back read posts" aria-label="Bring back read posts"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/></svg></button>
-<div id="m"><div id="mp"><article id="pp"><div id="pc"></div></article><iframe id="mf" title="Video" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe></div></div>
+<div id="m"><div id="mp"><article id="pp"><div id="pc"></div></article><iframe id="mf" title="Video" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe><button id="mx" type="button" aria-label="Close"><svg viewBox="0 0 24 24"><path d="M7 7l10 10M17 7L7 17"/></svg></button></div></div>
 <script>
 (function(){
 var g=document.getElementById('g');g.classList.add('intro');
@@ -445,17 +447,24 @@ document.body.appendChild(p);a.classList.add('pinoff');
 return function(){p.remove();a.classList.remove('pinoff')};
 }
 function fall(a,done,cls){
-var rel=holdPin(a);
-var dx=parseFloat(a.style.getPropertyValue('--dx'))||0,r=parseFloat(a.style.getPropertyValue('--r'))||0;
-var b=a.getBoundingClientRect(),D=innerHeight-b.top+140,L=Math.random()<.5,s=L?1:-1;
-a.style.transformOrigin=L?'0 0':'100% 0';
-a.style.zIndex=40;
-var an=a.animate([
-{transform:'translateX('+dx+'px) rotate('+r+'deg)',easing:'cubic-bezier(.15,.8,.3,1)'},
-{transform:'translate('+(dx+s*3)+'px,34px) rotate('+(r+s*5)+'deg)',offset:.17,easing:'cubic-bezier(.55,0,.9,.5)'},
-{transform:'translate('+(dx+s*40)+'px,'+(D+34)+'px) rotate('+(r+s*56)+'deg)'}
+a.getAnimations().forEach(function(x){x.cancel()});
+var r=a.getBoundingClientRect(),w=a.offsetWidth,h=a.offsetHeight,c=a.cloneNode(true);
+var dx=parseFloat(a.style.getPropertyValue('--dx'))||0,r0=parseFloat(a.style.getPropertyValue('--r'))||0;
+var D=innerHeight-r.top+140,L=Math.random()<.5,s=L?1:-1;
+c.removeAttribute('href');c.removeAttribute('data-k');
+c.className=a.className.replace(/\b(hid|gone|rd|pinoff|rk)\b/g,'')+' fc';
+c.style.cssText=a.style.cssText;
+c.style.position='fixed';c.style.margin='0';c.style.zIndex=40;c.style.pointerEvents='none';
+c.style.left=(r.left+r.width/2-w/2)+'px';c.style.top=(r.top+r.height/2-h/2)+'px';c.style.width=w+'px';
+c.style.transformOrigin=L?'0 0':'100% 0';
+document.body.appendChild(c);
+a.classList.add(cls||'gone');sync();
+var an=c.animate([
+{transform:'translateX('+dx+'px) rotate('+r0+'deg)',easing:'cubic-bezier(.15,.8,.3,1)'},
+{transform:'translate('+(dx+s*3)+'px,34px) rotate('+(r0+s*5)+'deg)',offset:.17,easing:'cubic-bezier(.55,0,.9,.5)'},
+{transform:'translate('+(dx+s*40)+'px,'+(D+34)+'px) rotate('+(r0+s*56)+'deg)'}
 ],{duration:720,fill:'forwards'});
-an.onfinish=function(){a.classList.add(cls||'gone');sync();if(rel)rel();a.style.zIndex='';a.style.transformOrigin='';an.cancel();done()};
+an.onfinish=function(){c.remove();done()};
 }
 g.addEventListener('mouseover',function(e){
 if(!matchMedia('(hover:hover)').matches)return;
@@ -496,7 +505,7 @@ els.forEach(function(a,i){
 setTimeout(function(){
 var card=a.classList.contains('n'),tr=getComputedStyle(a).transform;tr=tr==='none'?'':tr+' ';
 a.classList.remove('gone','rd','pinoff');
-a.animate([{transform:tr+'scale('+(card?.3:.94)+')',opacity:0},{transform:tr+'scale(1)',opacity:1}],{duration:420,easing:'cubic-bezier(.3,1.6,.5,1)'});
+a.animate([{transform:tr+'scale('+(card?.88:.97)+')',opacity:0},{transform:tr+'scale(1)',opacity:1}],{duration:340,easing:'cubic-bezier(.2,.8,.3,1)'});
 if(i===els.length-1)setTimeout(function(){rfb=false},440);
 },i*step);
 });
@@ -508,6 +517,7 @@ var h=a.getAttribute('href')||'';
 if(/^\/essays\/[^\/]+\.html$/.test(h)){e.preventDefault();mark(h);essay(h,null)}
 });
 m.addEventListener('click',function(e){if(e.target===m)close()});
+document.getElementById('mx').addEventListener('click',close);
 addEventListener('keydown',function(e){if(e.key==='Escape'&&m.classList.contains('on'))close()});
 })();
 </script>
@@ -532,7 +542,7 @@ links.forEach(function(a){a.classList.toggle('on',a.getAttribute('data-f')===k)}
 try{history.replaceState(null,'',k?'#'+nm[k]:location.pathname+location.search)}catch(e){}
 var step=Math.min(35,900/Math.max(1,shown.length)),base=fell.length?350:0;
 shown.forEach(function(o,i){var a=o.c,card=a.classList.contains('n'),tr=getComputedStyle(a).transform;tr=tr==='none'?'':tr+' ';
-a.animate([{transform:tr+'scale('+(card?.3:.94)+')',opacity:0},{transform:tr+'scale(1)',opacity:1}],{duration:380,delay:base+i*step,fill:'backwards',easing:'cubic-bezier(.3,1.6,.5,1)'})});
+a.animate([{transform:tr+'scale('+(card?.88:.97)+')',opacity:0},{transform:tr+'scale(1)',opacity:1}],{duration:340,delay:base+i*step,fill:'backwards',easing:'cubic-bezier(.2,.8,.3,1)'})});
 }
 g.addEventListener('click',function(e){
 if(e.button||e.metaKey||e.ctrlKey||e.shiftKey||e.altKey)return;
@@ -559,7 +569,7 @@ setTimeout(function(){
 var card=a.classList.contains('n'),tr=getComputedStyle(a).transform;tr=tr==='none'?'':tr+' ';
 a.classList.add('pi2');
 if(a.classList.contains('in')){a.animate([{transform:tr+'translateY(-140px)'},{transform:tr}],{duration:170,easing:'cubic-bezier(.2,.8,.3,1)'});setTimeout(function(){a.classList.add('taped')},170);if(k===vis.length-1)setTimeout(function(){g.classList.remove('intro');[].forEach.call(g.children,function(c){c.classList.remove('pi2')})},200);return}
-a.animate([{transform:tr+'scale('+(card?.3:.94)+')',opacity:0},{transform:tr+'scale(1)',opacity:1}],{duration:420,easing:'cubic-bezier(.3,1.6,.5,1)'});
+a.animate([{transform:tr+'scale('+(card?.88:.97)+')',opacity:0},{transform:tr+'scale(1)',opacity:1}],{duration:340,easing:'cubic-bezier(.2,.8,.3,1)'});
 if(k===vis.length-1)setTimeout(function(){g.classList.remove('intro');[].forEach.call(g.children,function(c){c.classList.remove('pi2')})},460);
 },k*step);
 });
