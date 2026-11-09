@@ -179,6 +179,9 @@ html.lock{overflow:hidden}#m{touch-action:none}#pp{touch-action:pan-y}
 #g.intro>.t:not(.gone):not(.pi2){opacity:0}
 .sp2c>img.hero{display:block;width:calc(100% + 68px);max-width:none;height:auto;margin:18px -34px 8px}
 .sp2c:not(.sp2){padding:28px 24px 30px}
+.xm{position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;z-index:1;overflow:visible;opacity:.85;contain:strict;will-change:contents}
+.xm path{fill:none;stroke:#c8312b;stroke-width:8;stroke-linecap:round;stroke-linejoin:round}
+.xm.xo{opacity:0;transition:opacity .3s}
 .n.rk{transform-origin:50% 14px}
 .fc::before,.fc::after,.fc>u,.fc .pn::before,.fc .pn::after{display:none!important}
 .sbt{display:block;margin-top:9px;font:14px/20px Georgia,serif;color:#444;cursor:pointer}.sbt em{display:block;margin-top:6px;font-style:normal;white-space:nowrap;text-decoration:underline;text-underline-offset:2px;color:#222}
@@ -422,9 +425,15 @@ var KEY='kwc-read',read=[];
 try{read=JSON.parse(localStorage.getItem(KEY)||'[]')||[]}catch(e){read=[]}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(read))}catch(e){}}
 var g=document.getElementById('g'),m=document.getElementById('m'),f=document.getElementById('mf'),pp=document.getElementById('pp'),pc=document.getElementById('pc'),rf=document.getElementById('rf'),root=document.documentElement,busy=false,tok=0;
-function cls(a){return a.classList.contains('n')?'gone':'rd'}
-[].forEach.call(g.querySelectorAll('a[href^="/essays/"]'),function(a){if(read.indexOf(a.getAttribute('href'))>-1)a.classList.add(cls(a))});
-function sync(){rf.classList.toggle('show',!!g.querySelector('.gone'))}sync();
+function xs(w,h){var r=Math.random;function j(v,k){return (v+(r()-.5)*k).toFixed(1)}
+function P(x1,y1,x2,y2){var o=r()<.5?-1:1,ex=j(x2*w,w*.04),ey=j(y2*h,h*.05),dx=(x2-x1)*w,dy=(y2-y1)*h,d=Math.sqrt(dx*dx+dy*dy)||1,ux=dx/d,uy=dy/d,bk=5+r()*3;
+return '<path pathLength="1" d="M'+j(x1*w,w*.05)+' '+j(y1*h,h*.06)+'C'+j((x1+(x2-x1)*.35)*w,w*.06)+' '+j((y1+(y2-y1)*.3)*h,h*.06)+' '+j((x1+(x2-x1)*.65)*w,w*.06)+' '+j((y1+(y2-y1)*.7)*h,h*.06)+' '+ex+' '+ey+'L'+(ex-ux*bk-uy*o*1.5).toFixed(1)+' '+(ey-uy*bk+ux*o*1.5).toFixed(1)+'"/>'}
+return '<svg class="xm" viewBox="0 0 '+w+' '+h+'" preserveAspectRatio="none" aria-hidden="true">'+P(.07,.09,.94,.93)+P(.93,.08,.08,.92)+'</svg>'}
+function addX(a,anim){if(a.classList.contains('xd'))return;a.insertAdjacentHTML('beforeend',xs(a.clientWidth||200,a.clientHeight||120));var sv=a.lastElementChild;a.classList.add('xd');
+if(anim)[].forEach.call(sv.querySelectorAll('path'),function(pt,i){pt.style.strokeDasharray='1 3';pt.animate([{strokeDashoffset:1.03},{strokeDashoffset:0}],{duration:200,delay:i*170,easing:'cubic-bezier(.3,.1,.4,1)',fill:'backwards'})})}
+function applyRead(a,anim){if(a.classList.contains('n'))addX(a,anim);else a.classList.add('rd')}
+[].forEach.call(g.querySelectorAll('a[href^="/essays/"]'),function(a){if(read.indexOf(a.getAttribute('href'))>-1)applyRead(a,false)});
+function sync(){rf.classList.toggle('show',!!g.querySelector('.gone,.xd'))}sync();
 function video(src){tok++;pc.innerHTML='';m.classList.add('vid','pre');f.src=src}
 function paperOf(a){var c=a?a.closest('.t'):null;if(!c)return null;var k=c.classList;return {p:(k.contains('ddw')||k.contains('dd'))?'pe4':k.contains('e1')?'pe1':k.contains('e4')?'pe5':k.contains('e3')?'pe3':'pe2',f:(c.className.match(/\bf\d\b/)||[''])[0]}}
 function abs(h,base){try{var u=new URL(h,base);return u.origin===location.origin?u.pathname+u.search+u.hash:u.href}catch(e){return h}}
@@ -463,7 +472,7 @@ function lockOn(){if(lk)return;lk=true;sy=window.pageYOffset||0;var b=document.b
 function lockOff(){if(!lk)return;lk=false;var b=document.body.style;b.position='';b.top='';b.left='';b.right='';root.classList.remove('lock');window.scrollTo(0,sy)}
 function reveal(){m.classList.add('on');lockOn()}
 function close(){m.classList.remove('on');lockOff();setTimeout(function(){if(!m.classList.contains('on')){m.classList.remove('pre','vid');f.src='about:blank';pc.innerHTML='';tok++}busy=false},220)}
-function mark(h){if(read.indexOf(h)<0){read.push(h);save()}var c=g.querySelector('a[href="'+h+'"]');if(c)c.classList.add(cls(c))}
+function mark(h){if(read.indexOf(h)<0){read.push(h);save()}var c=g.querySelector('a[href="'+h+'"]');if(c){applyRead(c,true);sync()}}
 function holdPin(a){
 var tb=a.classList.contains('tb'),pin=/\bpc\d\b/.test(a.className)&&!tb;
 if(!pin&&!tb)return null;
@@ -518,19 +527,20 @@ e.preventDefault();if(busy)return;busy=true;
 var href=a.getAttribute('href');
 if(read.indexOf(href)<0){read.push(href);save()}
 essay(href,a);
-if(a.classList.contains('n'))fall(a,reveal);else{a.classList.add('rd');reveal()}
+if(a.classList.contains('n')){if(a.classList.contains('xd'))reveal();else{addX(a,true);sync();setTimeout(reveal,450)}}else{a.classList.add('rd');reveal()}
 });
 var rfb=false;
 rf.addEventListener('click',function(){
 if(rfb)return;
 var order=read.slice();read=[];save();rf.classList.remove('show');
-var els=order.map(function(h){return g.querySelector('a[href="'+h+'"]')}).filter(function(a){return a&&(a.classList.contains('gone')||a.classList.contains('rd'))});
-[].forEach.call(g.querySelectorAll('.gone,.rd,.pinoff'),function(a){if(els.indexOf(a)<0)els.push(a)});
+var els=order.map(function(h){return g.querySelector('a[href="'+h+'"]')}).filter(function(a){return a&&(a.classList.contains('xd')||a.classList.contains('gone')||a.classList.contains('rd'))});
+[].forEach.call(g.querySelectorAll('.xd,.gone,.rd,.pinoff'),function(a){if(els.indexOf(a)<0)els.push(a)});
 if(!els.length)return;
 rfb=true;
 var step=Math.max(60,Math.min(200,2400/els.length));
 els.forEach(function(a,i){
 setTimeout(function(){
+if(a.classList.contains('xd')){var xv=a.querySelector('.xm');if(xv){xv.classList.add('xo');setTimeout(function(){xv.remove();a.classList.remove('xd')},320)}else a.classList.remove('xd');if(i===els.length-1)setTimeout(function(){rfb=false},360);return}
 var card=a.classList.contains('n'),tr=getComputedStyle(a).transform;tr=tr==='none'?'':tr+' ';
 a.classList.remove('gone','rd','pinoff');
 a.animate([{transform:tr+'scale('+(card?.88:.97)+')',opacity:0},{transform:tr+'scale(1)',opacity:1}],{duration:340,easing:'cubic-bezier(.2,.8,.3,1)'});
