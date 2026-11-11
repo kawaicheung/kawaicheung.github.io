@@ -51,7 +51,7 @@ body{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-r
 @keyframes tro{to{clip-path:inset(0)}}
 .in.taped::before{animation:tro .4s ease-out 0s forwards}.in.taped>u.s3{animation:tro .4s ease-out .65s forwards}.in.taped>u.s4{animation:tro .4s ease-out 1.3s forwards}.in.taped::after{animation:tro .4s ease-out 1.95s forwards}
 .in b{font-size:20px;line-height:22px;color:#fff;letter-spacing:-.5px;text-transform:none}
-.in a{color:#fff;width:calc(100% - 40px)}
+.in a{color:#fff;width:100%}
 .t.hid{visibility:hidden;pointer-events:none}.t.hid::before,.t.hid::after,.t.hid>u,.pin.hid .pn::before,.pin.hid .pn::after{visibility:visible}.in a.on{background:#fff;color:#000}
 .in a:hover{background:#fff;color:#000}
 @media(max-width:520px){body{padding:40px 16px 0}#g{column-width:150px;column-gap:16px}}
@@ -108,10 +108,6 @@ body::before{content:"";position:fixed;left:0;top:0;right:0;bottom:0;pointer-eve
 html{scrollbar-width:none;-ms-overflow-style:none}
 html::-webkit-scrollbar,body::-webkit-scrollbar{display:none;width:0;height:0}
 html.lock{overflow:hidden}#m{touch-action:none}#pp{touch-action:pan-y}
-#rf{display:none}#rf.show{display:flex;animation:rfi .35s}@keyframes rfi{from{opacity:0}}
-#rf{position:absolute;right:14px;bottom:13px;z-index:3;width:22px;height:22px;padding:0;border:0;border-radius:0;background:none;color:#fff;cursor:pointer;filter:drop-shadow(0 1px 2px rgba(0,0,0,.6));align-items:center;justify-content:center}
-@keyframes rfs{to{transform:rotate(360deg)}}#rf:hover svg{animation:rfs .6s ease-in-out}
-#rf svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
 #m{position:fixed;left:0;top:0;right:0;bottom:0;z-index:2000000000;display:flex;align-items:center;justify-content:center;background:rgba(25,16,6,.55);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .2s}
 #m.pre{visibility:visible}
 #m.on{opacity:1;pointer-events:auto}
@@ -297,7 +293,7 @@ i.pp.dn::after{width:8px}
 <body>
 <div id="g">
 <a data-k="e" style="--dx:1px;--r:-0.55deg;margin-top:3px;--ts:0.91;--tr:1.6deg;--pa:-0.83deg;--py:-1.2px;--px:-3.4px;--hy:57%" class="t n e4 f1 tr1 p2c" href="/essays/designing-for-the-first-5-minutes-and-the-next-20-years.html"><i>Aug 2026</i><b style="--fs:16px">Designing for the first 5 minutes and the next 20 years</b><s class="ph" data-s="l" data-x=".09" style="left:9%;--pc:#cf3b31"></s><s class="ph" data-s="r" data-x=".91" style="left:91%;--pc:#3a74d4"></s></a>
-<div style="--r:0deg;--r1:-.5deg;--r2:.4deg;--r3:.5deg;--r4:-.4deg" class="t x in"><b>Ka Wai Cheung</b><br><a href="/" data-f="" class="on">Everything</a><a href="/random" data-f="p">Projects</a><a href="https://www.youtube.com/playlist?list=PL_0hiGP3NeojDxJILYeLILioIYwIvDWH6" data-f="v">Videos</a><a href="/essays" data-f="e">Essays</a><a href="/books" data-f="b">Books</a><a href="#donedone" data-f="d">DoneDone</a><a href="#mammoth" data-f="w">We Are Mammoth</a><button id="rf" type="button" title="Bring back read posts" aria-label="Bring back read posts"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/></svg></button><u class="s3"></u><u class="s4"></u></div>
+<div style="--r:0deg;--r1:-.5deg;--r2:.4deg;--r3:.5deg;--r4:-.4deg" class="t x in"><b>Ka Wai Cheung</b><br><a href="/" data-f="" class="on">Everything</a><a href="/random" data-f="p">Projects</a><a href="https://www.youtube.com/playlist?list=PL_0hiGP3NeojDxJILYeLILioIYwIvDWH6" data-f="v">Videos</a><a href="/essays" data-f="e">Essays</a><a href="/books" data-f="b">Books</a><a href="#donedone" data-f="d">DoneDone</a><a href="#mammoth" data-f="w">We Are Mammoth</a><u class="s3"></u><u class="s4"></u></div>
 <a data-k="e" style="--dx:-1px;--r:-0.73deg;margin-top:4px;--ts:0.93;--tr:1.1deg;--pa:0.78deg;--py:-1.6px;--px:4.6px" class="t tp n e3 f6 tr2 pc1" href="/essays/ai-slop-is-a-novelty-act.html"><i>Jul 2026</i><b style="--fs:21px">AI slop is a novelty act</b></a>
 <a data-k="e" style="--dx:-1px;--r:-0.03deg;margin-top:3px;--ts:1.01;--tr:-2.5deg;--pa:0.36deg;--py:-1.6px;--px:4.2px" class="t tp n e1 f2 tr3 pc1" href="/essays/the-confounding-dilemma-of-vibe-coding-small-contained-things.html"><i>Apr 2026</i><b style="--fs:16px">The confounding dilemma of vibe coding small, contained things</b></a>
 <div data-k="p" style="--dx:2px;--r:-0.59deg;margin-top:1px;--sa:0.40deg;--lx:9px;--rx:7px;--blx:10px;--brx:7px;--ly:8px;--ry:8px;--bly:8px;--bry:7px;--la:25deg;--ra:39deg;--bla:32deg;--bra:45deg" class="t stp p sp2 rk"><a class="rl" href="https://runkwc.kawaicheung.io"><img src="img/runkwc.jpg" alt="RunKWC"></a><a class="rkv" href="https://www.youtube.com/watch?v=u4YdO6xDOic"><span class="vp"><img src="img/runkwc-vid.jpg" alt="RunKWC video"></span></a><u class="s3"></u><u class="s4"></u></div>
@@ -502,7 +498,7 @@ if(document.fonts&&document.fonts.ready)document.fonts.ready.then(q);
 var KEY='kwc-read',read=[];
 try{read=JSON.parse(localStorage.getItem(KEY)||'[]')||[]}catch(e){read=[]}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(read))}catch(e){}}
-var g=document.getElementById('g'),m=document.getElementById('m'),f=document.getElementById('mf'),pp=document.getElementById('pp'),pc=document.getElementById('pc'),rf=document.getElementById('rf'),root=document.documentElement,busy=false,tok=0;
+var g=document.getElementById('g'),m=document.getElementById('m'),f=document.getElementById('mf'),pp=document.getElementById('pp'),pc=document.getElementById('pc'),rf=document.createElement('button'),root=document.documentElement,busy=false,tok=0;
 function xs(w,h){var r=Math.random;function j(v,k){return (v+(r()-.5)*k).toFixed(1)}
 function P(x1,y1,x2,y2){var o=r()<.5?-1:1,ex=j(x2*w,w*.04),ey=j(y2*h,h*.05),dx=(x2-x1)*w,dy=(y2-y1)*h,d=Math.sqrt(dx*dx+dy*dy)||1,ux=dx/d,uy=dy/d,bk=5+r()*3;
 return '<path pathLength="1" d="M'+j(x1*w,w*.05)+' '+j(y1*h,h*.06)+'C'+j((x1+(x2-x1)*.35)*w,w*.06)+' '+j((y1+(y2-y1)*.3)*h,h*.06)+' '+j((x1+(x2-x1)*.65)*w,w*.06)+' '+j((y1+(y2-y1)*.7)*h,h*.06)+' '+ex+' '+ey+'L'+(ex-ux*bk-uy*o*1.5).toFixed(1)+' '+(ey-uy*bk+ux*o*1.5).toFixed(1)+'"/>'}
