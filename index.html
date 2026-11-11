@@ -7,7 +7,7 @@
 <link rel="icon" href="/favicon.ico" type="image/x-icon">
 <style>
 /* handwriting: change the family here (and add it to the Google Fonts link below) */
-:root{--hand:"Rock Salt","Marker Felt",cursive;--hand-weight:400;--hand-size:11px}
+:root{--hand:"Permanent Marker","Marker Felt",cursive;--hand-weight:400;--hand-size:12px}
 html{background:#b98c5a}
 body{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility;margin:0;padding:40px 28px 0;font:12px/17px -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:#000;background-color:#b98c5a;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='f'><feTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' seed='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.22 0 0 0 0 0.12 0 0 0 0 0.05 9 0 0 0 -4.6'/></filter><rect width='100%' height='100%' filter='url(%23f)'/></svg>"),url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='f'><feTurbulence type='fractalNoise' baseFrequency='.7' numOctaves='2' seed='11' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.93 0 0 0 0 0.74 0 0 0 0 0.5 0 9 0 0 -5.2'/></filter><rect width='100%' height='100%' filter='url(%23f)'/></svg>"),url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='f'><feTurbulence type='fractalNoise' baseFrequency='.025' numOctaves='3' seed='5' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.35 0 0 0 0 0.2 0 0 0 0 0.08 0 0 0 1.6 -.55'/></filter><rect width='100%' height='100%' filter='url(%23f)'/></svg>");-webkit-text-size-adjust:none}
 #g{column-width:200px;column-gap:14px}
@@ -50,7 +50,7 @@ body{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-r
 .in::before{clip-path:inset(0 100% 0 0)}.in>u.s4{clip-path:inset(0 0 100% 0)}.in::after{clip-path:inset(0 100% 0 0)}.in>u.s3{clip-path:inset(0 0 100% 0)}
 @keyframes tro{to{clip-path:inset(0)}}
 .in.taped::before{animation:tro .4s ease-out 0s forwards}.in.taped>u.s3{animation:tro .4s ease-out .65s forwards}.in.taped>u.s4{animation:tro .4s ease-out 1.3s forwards}.in.taped::after{animation:tro .4s ease-out 1.95s forwards}
-.in b{font-family:"Rock Salt",cursive;font-weight:400;font-size:19px;line-height:28px;color:#fff;letter-spacing:0;text-transform:none}
+.in b{font-size:20px;line-height:22px;color:#fff;letter-spacing:-.5px;text-transform:none}
 .in a{color:#fff;width:calc(100% - 40px)}
 .t.hid{visibility:hidden;pointer-events:none}.t.hid::before,.t.hid::after,.t.hid>u,.pin.hid .pn::before,.pin.hid .pn::after{visibility:visible}.in a.on{background:#fff;color:#000}
 .in a:hover{background:#fff;color:#000}
@@ -193,9 +193,9 @@ a[data-img],a[data-img] *{cursor:zoom-in}
 .stp>u.s4{right:var(--brx);bottom:var(--bry);transform:rotate(calc(var(--bra)*-1))}
 .stp>u{display:none}
 .stp.kb>u{display:block}
-.sb>.c{font-family:var(--hand);font-weight:var(--hand-weight);font-size:12px;line-height:18px;color:#444;padding:8px 0 9px}
-.c.ml,.c.mk{font-family:var(--hand);font-weight:var(--hand-weight);font-size:12px;line-height:18px;color:#444;padding:8px 0 9px}
-.stp.wam>u{display:block}.wam>.c{font-family:var(--hand);font-weight:var(--hand-weight);font-size:12px;line-height:18px;color:#444;padding:8px 0 9px}
+.sb>.c{font-family:var(--hand);font-weight:var(--hand-weight);font-size:14px;line-height:18px;color:#444;padding:8px 0 9px}
+.c.ml,.c.mk{font-family:var(--hand);font-weight:var(--hand-weight);font-size:14px;line-height:18px;color:#444;padding:8px 0 9px}
+.stp.wam>u{display:block}.wam>.c{font-family:var(--hand);font-weight:var(--hand-weight);font-size:14px;line-height:18px;color:#444;padding:8px 0 9px}
 .t.sp2c{background-image:none;background-color:var(--cb,#f7f2e7);clip-path:none;text-align:center;padding:30px 44px 34px;box-shadow:inset 0 0 0 9px var(--cb,#f7f2e7),inset 0 0 0 10px rgba(70,50,20,.5)}.sp2c .sbt{margin-top:11px}
 .n.tp.sp2c::before,.n.tp.sp2c::after,.sp2c>u{content:"";position:absolute;display:block;margin:0;width:calc(44px*var(--s,1));height:calc(15px*var(--s,1));border-radius:0;background:rgba(240,232,196,.82);box-shadow:none;z-index:2}
 .n.tp.sp2c::before{left:var(--x1);right:auto;top:var(--y1);transform:rotate(var(--r1));--s:var(--s1)}
@@ -233,7 +233,7 @@ a[data-img],a[data-img] *{cursor:zoom-in}
 .n.tp.rotating::after{transform-origin:50% 0;transform:translate(0,11px) rotate(calc(var(--rot,0)*-1deg)) translate(0,-11px) rotate(var(--pa,0deg))}
 .fc::before,.fc::after,.fc>u,.fc .pn::before,.fc .pn::after{display:none!important}
 .sbt{display:block;margin-top:9px;font:14px/20px Georgia,serif;color:#444;cursor:pointer}.sbt em{display:block;margin-top:6px;font-style:normal;white-space:nowrap;text-decoration:underline;text-underline-offset:2px;color:#222}
-.stp>b[style*="font-size:22px"]{font-family:var(--hand);font-weight:var(--hand-weight);letter-spacing:0!important;font-size:14px!important;line-height:22px!important;text-align:center;text-wrap:balance;padding-top:7px!important;padding-bottom:9px!important}
+.stp>b[style*="font-size:22px"]{font-family:var(--hand);font-weight:var(--hand-weight);letter-spacing:0!important;font-size:20px!important;line-height:24px!important;text-align:center;text-wrap:balance;padding-top:7px!important;padding-bottom:9px!important}
 .hw{display:block;padding:7px 2px 3px;font-family:var(--hand);font-weight:var(--hand-weight);font-size:calc(var(--hand-size)*1.15);line-height:1.2;color:#000;text-align:center;pointer-events:none}
 /* TEMP PINS START - delete through TEMP PINS END to go back to tape on essay cards */
 .n.pc1{--pc:#cf3b31}.n.pc2{--pc:#3a74d4}.n.pc3{--pc:#e3b02a}.n.pc4{--pc:#3f9a58}
@@ -283,7 +283,7 @@ i.pp.dn::after{width:8px}
 @media(max-width:520px){#lg{margin:-6px -16px 0}}
 .lt,.c.ml,.c.mk,.sb>.c,.wam>.c,.hw,.stp>b[style*="font-size:22px"],.in b{-webkit-text-stroke:0}
 </style>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400&family=Fraunces:opsz,wght@9..144,400&family=Libre+Baskerville:wght@400&family=Lora:wght@400&family=Playfair+Display:wght@400&family=Permanent+Marker&family=Rock+Salt&family=Space+Grotesk:wght@400&family=IBM+Plex+Sans:wght@400&family=Archivo+Narrow:wght@400&family=Courier+Prime:wght@400;700&family=Inter:wght@600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400&family=Fraunces:opsz,wght@9..144,400&family=Libre+Baskerville:wght@400&family=Lora:wght@400&family=Playfair+Display:wght@400&family=Permanent+Marker&family=Space+Grotesk:wght@400&family=IBM+Plex+Sans:wght@400&family=Archivo+Narrow:wght@400&family=Courier+Prime:wght@400;700&family=Inter:wght@600&display=swap">
 </head>
 <body>
 <div id="g">
