@@ -99,15 +99,15 @@ body::before{content:"";position:fixed;left:0;top:0;right:0;bottom:0;pointer-eve
 .pin{background:none;padding:0;text-align:center;overflow:visible}
 .pin>.lt{z-index:1}.pin>.pn{z-index:2}
 .pn{position:relative;display:block;width:100px;height:100px;margin:8px auto 0;box-sizing:border-box;padding:2px;border-radius:50%;background:linear-gradient(135deg,#f2f2f2,#cdcdcd 55%,#e6e6e6);box-shadow:0 3px 6px rgba(0,0,0,.45),inset 0 0 0 1px rgba(0,0,0,.18)}
-.pn::before{content:"";position:absolute;left:50%;top:-2.2px;width:7.4px;height:7.4px;margin-left:-3.7px;border-radius:50%;background:radial-gradient(circle at 35% 30%,rgba(255,255,255,.4) 0,rgba(255,255,255,0) 38%),#cf3b31;box-shadow:2px 4px 3px rgba(0,0,0,.26),inset 0 0 0 1px rgba(90,15,10,.3);z-index:3}
+.pn::before{content:"";position:absolute;left:50%;top:-2.2px;width:7.4px;height:7.4px;margin-left:-3.7px;border-radius:50%;background:radial-gradient(circle at 35% 30%,rgba(255,255,255,.4) 0,rgba(255,255,255,0) 38%),#cf3b31;box-shadow:-4px 2px 3px rgba(0,0,0,.26),inset 0 0 0 1px rgba(90,15,10,.3);z-index:3}
 .pn{--pc:#cf3b31}.pn.z1{--pc:#3a74d4}
 .pn.pinoff::before,.pn.pinoff::after{display:none}.pn.rel,.rkv.rel,.bkv.rel,.bkb.rel,.shot.rel,.bk .lt.rel{visibility:hidden;pointer-events:none}.pn.fc::before,.pn.fc::after{display:none!important}
-.pn.z1::before{background:radial-gradient(circle at 35% 30%,rgba(255,255,255,.4) 0,rgba(255,255,255,0) 38%),#3a74d4;box-shadow:2px 4px 3px rgba(0,0,0,.26),inset 0 0 0 1px rgba(10,30,80,.3)}
+.pn.z1::before{background:radial-gradient(circle at 35% 30%,rgba(255,255,255,.4) 0,rgba(255,255,255,0) 38%),#3a74d4;box-shadow:-4px 2px 3px rgba(0,0,0,.26),inset 0 0 0 1px rgba(10,30,80,.3)}
 .pi{position:relative;display:block;width:100%;height:100%;border-radius:50%;overflow:hidden}
 .pi::after{content:"";position:absolute;left:0;top:0;right:0;bottom:0;border-radius:50%;background:radial-gradient(circle at 30% 24%,rgba(255,255,255,.2),rgba(255,255,255,0) 42%),radial-gradient(circle at 70% 85%,rgba(0,0,0,.09),rgba(0,0,0,0) 50%)}
 .pn img{display:block;width:100%;height:100%;transform:scale(1.4)}
 .pn.z1 img{transform:scale(1.06)}
-.pn::after{content:"";position:absolute;left:50%;top:1.5px;width:1.1px;height:7.3px;margin-left:-.55px;border-radius:1px;background:linear-gradient(90deg,#e7e9eb,#8b9094);transform-origin:50% 0;transform:rotate(-8deg);box-shadow:1.5px 2px 2px rgba(0,0,0,.24);z-index:2}
+.pn::after{content:"";position:absolute;left:50%;top:1.5px;width:1.1px;height:7.3px;margin-left:-.55px;border-radius:1px;background:linear-gradient(90deg,#e7e9eb,#8b9094);transform-origin:50% 0;transform:rotate(-8deg);box-shadow:-3px 2px 2px rgba(0,0,0,.24);z-index:2}
 .lt{position:relative;display:block;width:max-content;max-width:100%;box-sizing:border-box;margin:10px auto 0;padding:9px 7px 8px;white-space:nowrap;background:rgba(240,232,196,.94);font:var(--hand-weight) var(--hand-size)/17px var(--hand);color:#1b1b1b;transform:rotate(-2.2deg)}
 .lt.lt2{font-size:calc(var(--hand-size)*.9);line-height:15px;padding:8px 9px 7px}
 .sq{padding:7px}
@@ -251,16 +251,16 @@ a[data-img],a[data-img] *{cursor:zoom-in}
 .hw{display:block;padding:7px 2px 3px;font-family:var(--hand);font-weight:var(--hand-weight);font-size:calc(var(--hand-size)*1.15);line-height:1.2;color:#000;text-align:center;pointer-events:none}
 /* TEMP PINS START - delete through TEMP PINS END to go back to tape on essay cards */
 .n.pc1{--pc:#cf3b31}.n.pc2{--pc:#3a74d4}.n.pc3{--pc:#e3b02a}.n.pc4{--pc:#3f9a58}
-.n.tp::before{left:calc(50% + var(--px,0px));top:calc(-1.7px + var(--py,0px));width:7.4px;height:7.4px;margin-left:-3.7px;border-radius:50%;transform:none;background:radial-gradient(circle at 35% 30%,rgba(255,255,255,.4) 0,rgba(255,255,255,0) 38%),var(--pc,#cf3b31);box-shadow:2px 4px 3px rgba(0,0,0,.26),inset 0 0 0 1px rgba(0,0,0,.2);z-index:3}
-.n.tp::after{content:"";position:absolute;left:calc(50% + var(--px,0px));top:calc(2.7px + var(--py,0px));width:1.1px;height:6px;margin-left:-.55px;border-radius:1px;background:linear-gradient(90deg,#e7e9eb,#8b9094);transform-origin:50% 0;transform:rotate(var(--pa,0deg));box-shadow:1.5px 2px 2px rgba(0,0,0,.24);z-index:2}
+.n.tp::before{left:calc(50% + var(--px,0px));top:calc(-1.7px + var(--py,0px));width:7.4px;height:7.4px;margin-left:-3.7px;border-radius:50%;transform:none;background:radial-gradient(circle at 35% 30%,rgba(255,255,255,.4) 0,rgba(255,255,255,0) 38%),var(--pc,#cf3b31);box-shadow:-4px 2px 3px rgba(0,0,0,.26),inset 0 0 0 1px rgba(0,0,0,.2);z-index:3}
+.n.tp::after{content:"";position:absolute;left:calc(50% + var(--px,0px));top:calc(2.7px + var(--py,0px));width:1.1px;height:6px;margin-left:-.55px;border-radius:1px;background:linear-gradient(90deg,#e7e9eb,#8b9094);transform-origin:50% 0;transform:rotate(var(--pa,0deg));box-shadow:-3px 2px 2px rgba(0,0,0,.24);z-index:2}
 .n.tp.tb::before{left:50%;top:0;width:calc(54px*var(--ts,1));height:calc(17px*var(--ts,1));margin-left:calc(-27px*var(--ts,1));border-radius:0;background:rgba(240,232,196,.82);box-shadow:none;transform:translateY(-50%) rotate(var(--tr,0deg));z-index:2}
 .n.tp.tb::after{content:none}
 .n.pinoff::before,.n.pinoff::after{display:none}
 .n.gone::before,.n.gone::after{visibility:visible}
 .pt{position:fixed;width:calc(54px*var(--ts,1));height:calc(17px*var(--ts,1));margin-left:calc(-27px*var(--ts,1));background:rgba(240,232,196,.82);transform:translateY(-50%) rotate(var(--tr,0deg));z-index:60;pointer-events:none}
 .pf{position:fixed;width:0;height:0;z-index:60;pointer-events:none}
-.pf i{z-index:2;position:absolute;left:-3.7px;top:-3.7px;width:7.4px;height:7.4px;border-radius:50%;background:radial-gradient(circle at 35% 30%,rgba(255,255,255,.4) 0,rgba(255,255,255,0) 38%),var(--pc,#cf3b31);box-shadow:2px 4px 3px rgba(0,0,0,.26),inset 0 0 0 1px rgba(0,0,0,.2)}
-.pf b{z-index:1;position:absolute;left:-.55px;top:.7px;width:1.1px;height:7.4px;border-radius:1px;background:linear-gradient(90deg,#e7e9eb,#8b9094);transform-origin:50% 0;transform:rotate(var(--pa,0deg));box-shadow:1.5px 2px 2px rgba(0,0,0,.24)}
+.pf i{z-index:2;position:absolute;left:-3.7px;top:-3.7px;width:7.4px;height:7.4px;border-radius:50%;background:radial-gradient(circle at 35% 30%,rgba(255,255,255,.4) 0,rgba(255,255,255,0) 38%),var(--pc,#cf3b31);box-shadow:-4px 2px 3px rgba(0,0,0,.26),inset 0 0 0 1px rgba(0,0,0,.2)}
+.pf b{z-index:1;position:absolute;left:-.55px;top:.7px;width:1.1px;height:7.4px;border-radius:1px;background:linear-gradient(90deg,#e7e9eb,#8b9094);transform-origin:50% 0;transform:rotate(var(--pa,0deg));box-shadow:-3px 2px 2px rgba(0,0,0,.24)}
 /* TEMP PINS END */
 #g a,#g a:focus,#g a:focus-visible,#g a:active,#rf:focus,#rf:focus-visible{outline:none;-webkit-tap-highlight-color:transparent}
 .vp{position:relative;display:block}
@@ -297,8 +297,8 @@ i.pp.dn::after{width:5.3px}
 @media(max-width:520px){#lg{margin:-6px -16px 0}}
 .lt,.c.ml,.c.mk,.sb>.c,.wam>.c,.hw,.stp>b[style*="font-size:22px"],.in b{-webkit-text-stroke:0}
 .p2c .ph{right:auto;top:2px;transform-origin:50% 20.7px;transform:rotate(calc(var(--rot,0)*-1deg))}
-.p2c .ph::before{content:"";position:absolute;left:50%;top:50%;width:7.4px;height:7.4px;margin:-3.7px 0 0 -3.7px;border-radius:50%;background:radial-gradient(circle at 35% 30%,rgba(255,255,255,.4) 0,rgba(255,255,255,0) 38%),var(--pc,#cf3b31);box-shadow:2px 4px 3px rgba(0,0,0,.26),inset 0 0 0 1px rgba(0,0,0,.2);z-index:3}
-.p2c .ph::after{content:"";position:absolute;left:50%;top:14.7px;width:1.1px;height:6px;margin-left:-.55px;border-radius:1px;background:linear-gradient(90deg,#e7e9eb,#8b9094);box-shadow:1.5px 2px 2px rgba(0,0,0,.24);z-index:2}
+.p2c .ph::before{content:"";position:absolute;left:50%;top:50%;width:7.4px;height:7.4px;margin:-3.7px 0 0 -3.7px;border-radius:50%;background:radial-gradient(circle at 35% 30%,rgba(255,255,255,.4) 0,rgba(255,255,255,0) 38%),var(--pc,#cf3b31);box-shadow:-4px 2px 3px rgba(0,0,0,.26),inset 0 0 0 1px rgba(0,0,0,.2);z-index:3}
+.p2c .ph::after{content:"";position:absolute;left:50%;top:14.7px;width:1.1px;height:6px;margin-left:-.55px;border-radius:1px;background:linear-gradient(90deg,#e7e9eb,#8b9094);box-shadow:-3px 2px 2px rgba(0,0,0,.24);z-index:2}
 .p2c .ph[data-y="b"]{top:calc(100% - 18px)}
 .stp.p2c::before,.stp.p2c::after,.stp.p2c>u{display:none!important}
 .n.p2c,.in.p2c,.stp.p2c{touch-action:pan-y;-webkit-user-drag:none;-webkit-touch-callout:none}
@@ -956,9 +956,9 @@ var last=performance.now(),acc=0;card.__sim=1;card.__th=th;
 card.__stop=function(){card.__sim=null;card.__stop=null;clear(card)};
 (function f(t){if(!card.__sim)return;
 var dt=Math.min(.05,(t-last)/1000||.016);last=t;acc+=dt;var H=1/240;
-while(acc>=H){var a=-K*Math.sin(th)-(Math.abs(w)>7?1.1:3)*w;w+=a*H;th+=w*H;acc-=H}
+while(acc>=H){var lo=Math.abs(w)<.45&&Math.abs(Math.sin(th))<.06,a=-K*Math.sin(th)-(Math.abs(w)>7?1.1:lo?7:3)*w;w+=a*H;th+=w*H;acc-=H}
 card.__th=th;put(card,T,r,th);
-if(Math.abs(w)<.06&&Math.abs(Math.sin(th))<.01){clear(card);return}
+if(Math.abs(w)<.004&&Math.abs(Math.sin(th))<.0005){clear(card);return}
 requestAnimationFrame(f)})(last)}
 function end(e){
 if(!cur||e.pointerId!==cur.id)return;var c=cur;cur=null;if(!c.on)return;
@@ -1004,9 +1004,10 @@ c.__stop=function(){s.run=0;c.__stop=null;c.classList.remove('rotating');relz(s)
 var last=performance.now(),acc=0,H=1/240;
 (function f(t){if(!s.run)return;
 var dt=Math.min(.05,(t-last)/1000||.016);last=t;acc+=dt;var p=s.psi/R2D;
-while(acc>=H){var a=-s.K*Math.sin(p-s.eq)-(s.dm||D)*s.w;s.w+=a*H;p+=s.w*H;acc-=H}
+var eqL=s.eq+(s.lean||0);
+while(acc>=H){var dd=s.dm||D;if(Math.abs(s.w)<.35&&Math.abs(wrap(p-eqL))<.05)dd=Math.max(dd,5);var a=-s.K*Math.sin(p-eqL)-dd*s.w;s.w+=a*H;p+=s.w*H;acc-=H}
 s.psi=p*R2D;put(c,s);
-if(Math.abs(s.w)<.08&&Math.abs(wrap(p-s.eq))<.008){s.run=0;c.__stop=null;c.classList.remove('rotating');relz(s);
+if(Math.abs(s.w)<.006&&Math.abs(wrap(p-eqL))<.0006){s.run=0;c.__stop=null;c.classList.remove('rotating');relz(s);
 if(isBase)toBase(c,s);else{s.psi=s.eq*R2D;put(c,s)}return}
 requestAnimationFrame(f)})(last)}
 function recompute(c,spawn){
@@ -1050,27 +1051,30 @@ if(P.length===1)swing(k.c,k.s,P[0],w);else{k.c.classList.remove('rotating')}}
 
 document.addEventListener('pointerup',fend);document.addEventListener('pointercancel',fend);
 document.addEventListener('click',function(e){if(ff){e.preventDefault();e.stopPropagation();ff=false}},true);
-var wv={x:0,y:0,t:0,vx:0,on:false},shk=0;
-function shake(dvx){
-if(document.getElementById('m').classList.contains('on'))return;
+var wv={x:0,y:0,t:0,vx:0,on:false,act:false};
+function shake(v){
+var any=false;
+if(document.getElementById('m').classList.contains('on'))return false;
 var H=innerHeight,cand=document.querySelectorAll('#g .n,#g .t.in,#g .pn,#g .stp.p2c,#g .bkv,#g .bkb,#g .shot,#g .rkv');
 for(var i=0;i<cand.length;i++){var c=cand[i];if(!c.offsetParent||c.classList.contains('rel')||c.classList.contains('gone')||c.classList.contains('hid'))continue;
 if(!part(c)||!owns(c)&&!c.matches('.n[class*=" pc"],.p2c,.pn'))continue;
 var r=c.getBoundingClientRect();if(r.bottom<-50||r.top>H+50)continue;
 var P=pins(c);if(P.length!==1)continue;
-var sx=st(c);if(sx.dragging)continue;
-var pn=P[0],w=c.offsetWidth,h=c.offsetHeight,vx=w/2-pn.x,vy=h/2-pn.y,L=Math.hypot(vx,vy);if(L<4)continue;
-var dw=dvx*.17*L/(L*L+(w*w+h*h)/12);dw=Math.max(-1.4,Math.min(1.4,dw));if(Math.abs(dw)<.01)continue;
-if(sx.run)sx.w=Math.max(-5,Math.min(5,sx.w+dw));else swing(c,sx,pn,dw,null)}}
+var sx=st(c),pn=P[0],w=c.offsetWidth,h=c.offsetHeight,L=Math.hypot(w/2-pn.x,h/2-pn.y);if(L<4)continue;
+var tgt=Math.max(-.24,Math.min(.24,v*.00015)),cur=sx.lean||0,nl=cur+(tgt-cur)*.35;if(Math.abs(nl)<.002&&Math.abs(tgt)<.002)nl=0;
+if(nl===0&&cur===0)continue;
+sx.lean=nl;any=true;
+if(!sx.run)swing(c,sx,pn,1e-4,null)}
+return any}
 (function(){
 function tick(t){requestAnimationFrame(tick);
 var x=window.screenX!=null?window.screenX:window.screenLeft;
 if(typeof x!=='number'||document.hidden){wv.on=false;return}
 if(!wv.on){wv.x=x;wv.t=t;wv.vx=0;wv.on=true;return}
 var dt=(t-wv.t)/1000;if(dt<.004)return;
-var v=(x-wv.x)/dt,sv=wv.vx*.45+v*.55,dv=sv-wv.vx;
+var sv=wv.vx*.6+((x-wv.x)/dt)*.4;
 wv.x=x;wv.t=t;wv.vx=sv;window.__wv=wv;
-if(Math.abs(dv)>60)shake(dv)}
+if(Math.abs(sv)>6||wv.act)wv.act=shake(Math.abs(sv)>6?sv:0)}
 requestAnimationFrame(tick)})();
 window.__PP={
 owns:owns,
