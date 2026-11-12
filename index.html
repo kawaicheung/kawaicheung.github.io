@@ -305,7 +305,7 @@ i.pp.dn::after{width:5.3px}
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400&family=Fraunces:opsz,wght@9..144,400&family=Libre+Baskerville:wght@400&family=Lora:wght@400&family=Playfair+Display:wght@400&family=Permanent+Marker&family=Space+Grotesk:wght@400&family=IBM+Plex+Sans:wght@400&family=Archivo+Narrow:wght@400&family=Courier+Prime:wght@400;700&family=Inter:wght@600&display=swap">
 </head>
 <body>
-<div id="sc"><a href="https://x.com/kcheungio" target="_blank" rel="noopener" aria-label="X"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/></svg></a><a href="https://www.linkedin.com/in/kawaicheung/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a></div>
+<div id="sc"><a href="https://x.com/kcheungio" target="_blank" rel="noopener" aria-label="X"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/></svg></a><a href="https://www.linkedin.com/in/ka-wai-cheung/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a></div>
 <nav id="nv" aria-label="Filter the board"><a href="/" data-f="" class="on">Everything</a><a href="/random" data-f="p">Projects</a><a href="https://www.youtube.com/playlist?list=PL_0hiGP3NeojDxJILYeLILioIYwIvDWH6" data-f="v">Videos</a><a href="/essays" data-f="e">Essays</a><a href="/books" data-f="b">Books</a><a href="#donedone" data-f="d">DoneDone</a><a href="#mammoth" data-f="w">WAM</a></nav>
 <div id="g">
 <div style="--r:0deg;--dx:0px" class="t x in sp2 p2c"><span class="qt">Ka Wai Cheung has been making things on the information superhighway since the 1900s.</span><s class="ph" aria-hidden="true" data-x=".5006" data-fy=".4" style="left:50.06%;top:calc(40% - 7.2px);--pc:#cf3b31"></s></div>
@@ -1033,7 +1033,7 @@ document.addEventListener('click',function(e){if(ff){e.preventDefault();e.stopPr
 window.__PP={
 owns:owns,
 pose:function(c,deg){var P=pins(c);if(P.length!==1)return;var s=st(c),a=-deg;setT(c,s,[P[0].x,P[0].y],off(c,s));s.psi=a;put(c,s);__zTop(zc(c))},
-sway:function(c){var P=pins(c);if(P.length!==1)return;var s=st(c),eq=Math.atan2(c.offsetWidth/2-P[0].x,c.offsetHeight/2-P[0].y)*R2D;swing(c,s,P[0],-10,.9)},
+sway:function(c,kick,damp){var P=pins(c);if(P.length!==1)return;var s=st(c),eq=Math.atan2(c.offsetWidth/2-P[0].x,c.offsetHeight/2-P[0].y)*R2D;swing(c,s,P[0],kick==null?-10:kick,damp||.9)},
 added:function(c,i){if(!part(c))return;var s=st(c),r=c.getBoundingClientRect(),pr=i.getBoundingClientRect(),v=rot(-s.psi/R2D,pr.left+pr.width/2-(r.left+r.width/2),pr.top+pr.height/2-(r.top+r.height/2)),w=c.offsetWidth,h=c.offsetHeight;
 i.__f=[(w/2+v[0])/w,(h/2+v[1])/h];recompute(c)},
 removed:function(c,i){if(part(c))recompute(c)},
@@ -1057,10 +1057,10 @@ var ink=vis.filter(function(c){return c.classList.contains('in')});vis=vis.filte
 var step=Math.min(45,1600/Math.max(1,vis.length));
 vis.forEach(function(a,k){
 setTimeout(function(){
-if(a.classList.contains('in')&&window.__PP&&innerWidth>520)__PP.pose(a,8);
+if(a.classList.contains('in')&&window.__PP)__PP.pose(a,innerWidth>520?8:3);
 var card=a.classList.contains('n'),tr=getComputedStyle(a).transform;tr=tr==='none'?'':tr+' ';
 a.classList.add('pi2');
-if(a.classList.contains('in')){a.animate([{scale:1.08,opacity:0},{scale:1,opacity:1,offset:.85},{scale:1,opacity:1}],{duration:170,easing:'linear'});if(innerWidth>520)setTimeout(function(){if(window.__PP)__PP.sway(a)},0);if(k===vis.length-1)setTimeout(function(){g.classList.remove('intro');[].forEach.call(g.children,function(c){c.classList.remove('pi2')})},200);return}
+if(a.classList.contains('in')){a.animate([{scale:1.08,opacity:0},{scale:1,opacity:1,offset:.85},{scale:1,opacity:1}],{duration:170,easing:'linear'});setTimeout(function(){if(window.__PP)innerWidth>520?__PP.sway(a):__PP.sway(a,-.3,1.6)},0);if(k===vis.length-1)setTimeout(function(){g.classList.remove('intro');[].forEach.call(g.children,function(c){c.classList.remove('pi2')})},200);return}
 a.animate([{transform:tr+'scale('+(card?.88:.97)+')',opacity:0},{transform:tr+'scale(1)',opacity:1}],{duration:340,easing:'cubic-bezier(.2,.8,.3,1)'});
 if(k===vis.length-1)setTimeout(function(){g.classList.remove('intro');[].forEach.call(g.children,function(c){c.classList.remove('pi2')})},460);
 },k*step);
