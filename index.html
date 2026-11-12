@@ -311,7 +311,7 @@ i.pp.dn::after{width:5.3px}
 <div id="sc"><a href="https://x.com/kcheungio" target="_blank" rel="noopener" aria-label="X"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/></svg></a><a href="https://www.linkedin.com/in/ka-wai-cheung/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a></div>
 <nav id="nv" aria-label="Filter the board"><a href="/" data-f="" class="on">Everything</a><a href="/random" data-f="p">Projects</a><a href="https://www.youtube.com/playlist?list=PL_0hiGP3NeojDxJILYeLILioIYwIvDWH6" data-f="v">Videos</a><a href="/essays" data-f="e">Essays</a><a href="/books" data-f="b">Books</a><a href="#donedone" data-f="d">DoneDone</a><a href="#mammoth" data-f="w">WAM</a></nav>
 <div id="g">
-<div style="--r:0deg;--dx:0px" class="t x in sp2 p2c"><span class="qt">Ka Wai Cheung has been making things on the information superhighway since the 1900s.</span><s class="ph" aria-hidden="true" data-x=".5006" data-fy=".4" style="left:50.06%;top:calc(40% - 7.2px);--pc:#cf3b31"></s></div>
+<div style="--r:0deg;--dx:0px" class="t x in sp2 p2c"><span class="qt">Ka Wai Cheung has been making things on the information superhighway since the 1900s.</span><s class="ph" aria-hidden="true" data-x=".504" data-fy=".14" style="left:50.4%;top:calc(14% - 7.2px);--pc:#cf3b31"></s></div>
 <a data-k="e" style="--dx:1px;--r:-0.55deg;margin-top:3px;--ts:0.91;--tr:1.6deg;--pa:-0.83deg;--py:-1.2px;--px:-3.4px;--hy:57%" class="t n e4 f1 tr1 p2c" href="/essays/designing-for-the-first-5-minutes-and-the-next-20-years.html"><i>Aug 2026</i><b style="--fs:16px">Designing for the first 5 minutes and the next 20 years</b><s class="ph" data-s="l" data-x=".09" style="left:9%;--pc:#cf3b31"></s><s class="ph" data-s="r" data-x=".91" style="left:91%;--pc:#3a74d4"></s></a>
 <a data-k="e" style="--dx:-1px;--r:-0.73deg;margin-top:4px;--ts:0.93;--tr:1.1deg;--pa:0.78deg;--py:-1.6px;--px:4.6px" class="t tp n e3 f6 tr2 pc1" href="/essays/ai-slop-is-a-novelty-act.html"><i>Jul 2026</i><b style="--fs:21px">AI slop is a novelty act</b></a>
 <a data-k="e" style="--dx:-1px;--r:-0.03deg;margin-top:3px;--ts:1.01;--tr:-2.5deg;--pa:0.36deg;--py:-1.6px;--px:4.2px" class="t tp n e1 f2 tr3 pc1" href="/essays/the-confounding-dilemma-of-vibe-coding-small-contained-things.html"><i>Apr 2026</i><b style="--fs:16px">The confounding dilemma of vibe coding small, contained things</b></a>
@@ -992,7 +992,7 @@ return out}
 function stop(c,s){s.run=0;if(c.__stop)c.__stop();c.__stop=null;c.classList.remove('rotating');relz(s)}
 function swing(c,s,pin,w0,dm){
 var w=c.offsetWidth,h=c.offsetHeight,vx=w/2-pin.x,vy=h/2-pin.y,L=Math.hypot(vx,vy),isBase=pin.k==='o'&&pin.base,wasBase=!s.O;
-if(isBase&&wasBase)return;
+if(isBase&&wasBase&&!w0)return;
 if(L<5&&!isBase&&w0==null)return;
 var eq=isBase||L<5?num(c,'--r')/R2D:wrap(Math.atan2(vx,vy)),cur=s.psi/R2D;
 setT(c,s,[pin.x,pin.y],off(c,s));
@@ -1049,6 +1049,28 @@ if(P.length===1)swing(k.c,k.s,P[0],w);else{k.c.classList.remove('rotating')}}
 
 document.addEventListener('pointerup',fend);document.addEventListener('pointercancel',fend);
 document.addEventListener('click',function(e){if(ff){e.preventDefault();e.stopPropagation();ff=false}},true);
+var wv={x:0,y:0,t:0,vx:0,on:false},shk=0;
+function shake(dvx){
+if(document.getElementById('m').classList.contains('on'))return;
+var H=innerHeight,cand=document.querySelectorAll('#g .n,#g .t.in,#g .pn,#g .stp.p2c,#g .bkv,#g .bkb,#g .shot,#g .rkv');
+for(var i=0;i<cand.length;i++){var c=cand[i];if(!c.offsetParent||c.classList.contains('rel')||c.classList.contains('gone')||c.classList.contains('hid'))continue;
+if(!part(c)||!owns(c)&&!c.matches('.n[class*=" pc"],.p2c,.pn'))continue;
+var r=c.getBoundingClientRect();if(r.bottom<-50||r.top>H+50)continue;
+var P=pins(c);if(P.length!==1)continue;
+var sx=st(c);if(sx.dragging)continue;
+var pn=P[0],w=c.offsetWidth,h=c.offsetHeight,vx=w/2-pn.x,vy=h/2-pn.y,L=Math.hypot(vx,vy);if(L<4)continue;
+var dw=dvx*.17*L/(L*L+(w*w+h*h)/12);dw=Math.max(-1.4,Math.min(1.4,dw));if(Math.abs(dw)<.01)continue;
+if(sx.run)sx.w=Math.max(-5,Math.min(5,sx.w+dw));else swing(c,sx,pn,dw,null)}}
+(function(){
+function tick(t){requestAnimationFrame(tick);
+var x=window.screenX!=null?window.screenX:window.screenLeft;
+if(typeof x!=='number'||document.hidden){wv.on=false;return}
+if(!wv.on){wv.x=x;wv.t=t;wv.vx=0;wv.on=true;return}
+var dt=(t-wv.t)/1000;if(dt<.004)return;
+var v=(x-wv.x)/dt,sv=wv.vx*.45+v*.55,dv=sv-wv.vx;
+wv.x=x;wv.t=t;wv.vx=sv;window.__wv=wv;
+if(Math.abs(dv)>60)shake(dv)}
+requestAnimationFrame(tick)})();
 window.__PP={
 owns:owns,
 adopt:function(c){(c.__dp||[]).forEach(function(i){var s=st(c),r=c.getBoundingClientRect(),pr=i.getBoundingClientRect(),v=rot(-s.psi/R2D,pr.left+pr.width/2-(r.left+r.width/2),pr.top+pr.height/2-(r.top+r.height/2)),w=c.offsetWidth,h=c.offsetHeight;i.__f=[(w/2+v[0])/w,(h/2+v[1])/h]});recompute(c)},
@@ -1156,10 +1178,10 @@ var ink=vis.filter(function(c){return c.classList.contains('in')});vis=vis.filte
 var step=Math.min(45,1600/Math.max(1,vis.length));
 vis.forEach(function(a,k){
 setTimeout(function(){
-if(a.classList.contains('in')&&window.__PP)__PP.pose(a,3);
+if(a.classList.contains('in')&&window.__PP)__PP.pose(a,9);
 var card=a.classList.contains('n'),tr=getComputedStyle(a).transform;tr=tr==='none'?'':tr+' ';
 a.classList.add('pi2');
-if(a.classList.contains('in')){a.animate([{scale:1.08,opacity:0},{scale:1,opacity:1,offset:.85},{scale:1,opacity:1}],{duration:170,easing:'linear'});setTimeout(function(){if(window.__PP)__PP.sway(a,-.3,1.6)},0);if(k===vis.length-1)setTimeout(function(){g.classList.remove('intro');[].forEach.call(g.children,function(c){c.classList.remove('pi2')})},200);return}
+if(a.classList.contains('in')){a.animate([{scale:1.08,opacity:0},{scale:1,opacity:1,offset:.85},{scale:1,opacity:1}],{duration:170,easing:'linear'});setTimeout(function(){if(window.__PP)__PP.sway(a,-1,1.1)},0);if(k===vis.length-1)setTimeout(function(){g.classList.remove('intro');[].forEach.call(g.children,function(c){c.classList.remove('pi2')})},200);return}
 a.animate([{transform:tr+'scale('+(card?.88:.97)+')',opacity:0},{transform:tr+'scale(1)',opacity:1}],{duration:340,easing:'cubic-bezier(.2,.8,.3,1)'});
 if(k===vis.length-1)setTimeout(function(){g.classList.remove('intro');[].forEach.call(g.children,function(c){c.classList.remove('pi2')})},460);
 },k*step);
