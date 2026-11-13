@@ -42,7 +42,7 @@ body{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-r
 .m{display:flex;margin-top:2px}.m u{flex:none;width:30px;font-size:10px}.m>div{flex:1;min-width:0}.m>div a{margin-bottom:4px}.m>div a:last-child{margin-bottom:0}
 .e{font-size:11px;line-height:15px}
 .e b{font-size:30px;line-height:32px;letter-spacing:-1px;text-transform:none}
-.in,.sg{background-color:#000;color:#fff;padding:18px;box-shadow:inset 0 0 0 4px #000,inset 0 0 0 6px #fff}
+.in,.sg{background-color:#0a1636;color:#fff;padding:18px;box-shadow:inset 0 0 0 4px #0a1636,inset 0 0 0 6px #fff}
 .in::before,.in::after{display:none!important}.in>u{display:none}.in::before,.in::after,.in>u{content:"";position:absolute;display:block;background:rgba(240,232,196,.82);z-index:2}
 .in::before{left:-7px;right:-9px;top:-8px;height:15px;transform:rotate(var(--r1))}
 .in::after{left:-9px;right:-6px;bottom:-8px;height:14px;transform:rotate(var(--r2))}
@@ -53,15 +53,18 @@ body{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-r
 .in.taped::before{animation:tro .4s ease-out 0s forwards}.in.taped>u.s3{animation:tro .17s ease-out .45s forwards}.in.taped>u.s4{animation:tro .17s ease-out .66s forwards}.in.taped::after{animation:tro .4s ease-out .87s forwards}
 .in b,.in .qt,.sg .qt{display:block;font:800 22px/25px "Helvetica Neue",Helvetica,Arial,sans-serif;letter-spacing:-.6px;color:#fff;text-transform:none;text-wrap:balance}
 .in .qt,.sg .qt{margin-top:0}
-.sg{box-shadow:inset 0 0 0 4px #000,inset 0 0 0 5px #fff}
+.sg{box-shadow:inset 0 0 0 4px #0a1636,inset 0 0 0 5px #fff}
 .sg .qt{font-size:20px;line-height:23px}
 #nv{position:fixed;top:14px;right:28px;z-index:1500;display:flex;flex-wrap:wrap;justify-content:flex-end;gap:2px 22px;max-width:calc(100vw - 56px);animation:nvi .5s .15s backwards}
 @keyframes nvi{from{opacity:0}}
-#nb{position:fixed;left:0;right:0;top:0;height:var(--nbh,48px);background:rgba(0,0,0,.72);-webkit-backdrop-filter:blur(7px);backdrop-filter:blur(7px);z-index:1400;pointer-events:none;opacity:0;transition:opacity .18s;box-shadow:0 2px 8px rgba(0,0,0,.35)}
+#nb{position:fixed;left:0;right:0;top:0;height:var(--nbh,44px);background:linear-gradient(to bottom,rgb(10,22,54) 0,rgba(10,22,54,0) 100%);z-index:1400;pointer-events:none;opacity:0;transition:opacity .18s}
 html.scr #nb{opacity:1}
 #sc{position:fixed;top:16px;left:28px;z-index:1500;display:flex;gap:16px;animation:nvi .5s .15s backwards}
 #sc a{display:block;width:21px;height:21px;color:#fff;filter:drop-shadow(0 1px 2px rgba(0,0,0,.6));-webkit-tap-highlight-color:transparent;outline:none}
 #sc svg{display:block;width:100%;height:100%}
+#rs{display:block;position:relative;padding:3px 0;margin:0;border:0;background:none;color:#fff;cursor:pointer;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .18s,visibility .18s;-webkit-tap-highlight-color:transparent;outline:none}
+#rs.show{opacity:1;visibility:visible;pointer-events:auto}
+#rs svg{display:block;width:29px;height:19px;fill:currentColor;stroke:currentColor;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 1px 2px rgba(0,0,0,.6))}
 #nv a{position:relative;isolation:isolate;display:block;padding:3px 0;font:600 13.5px/19px -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:#fff;text-decoration:none;text-shadow:0 1px 2px rgba(0,0,0,.6);-webkit-tap-highlight-color:transparent;outline:none}
 #nv a::before{content:"";position:absolute;z-index:-1;left:-9px;right:-9px;top:0;bottom:0;background:rgba(240,232,196,.9);display:none;box-shadow:0 1px 1px rgba(0,0,0,.14);transform:rotate(-1.4deg);}
 #nv a.on{color:#241d10;text-shadow:none}
@@ -192,7 +195,7 @@ a[data-img],a[data-img] *{cursor:zoom-in}
 .rk{padding-bottom:7px}
 .rkv{position:absolute;right:4%;top:52%;width:33%;box-sizing:border-box;padding:5px;background:#fff;transform:rotate(3deg);box-shadow:0 1px 1px rgba(0,0,0,.25),1px 4px 7px rgba(0,0,0,.35);z-index:3}
 .rkv img{display:block;width:100%;height:auto;box-shadow:0 0 0 1px rgba(0,0,0,.2)}
-.rkv .vp::before{width:30px;height:30px;margin:-15px 0 0 -15px}.rkv .vp::after{margin:-7px 0 0 -4px;border-width:7px 0 7px 12px}
+.rkv .vp::before{width:30px;height:30px;margin:-15px 0 0 -15px}.rkv .vp::after{width:16px;height:16px;margin:-8px 0 0 -6px}
 .rkv::before,.rkv::after{content:"";position:absolute;left:10%;width:80%;height:14px;background:rgba(240,232,196,.82);z-index:4}
 .rkv::before{top:-7px;transform:rotate(-.6deg)}.rkv::after{bottom:-7px;transform:rotate(.5deg)}
 .t.bk{background:none;border-top:0;aspect-ratio:200/420}
@@ -216,6 +219,11 @@ a[data-img],a[data-img] *{cursor:zoom-in}
 .c.ml,.c.mk{font-family:var(--hand);font-weight:var(--hand-weight);font-size:14px;line-height:18px;color:#444;padding:8px 0 9px}
 .stp.wam>u{display:block}.wam>.c{font-family:var(--hand);font-weight:var(--hand-weight);font-size:14px;line-height:18px;color:#444;padding:8px 0 9px}
 .t.sp2c{background-image:none;background-color:var(--cb,#f7f2e7);clip-path:none;text-align:center;padding:30px 44px 34px;box-shadow:inset 0 0 0 9px var(--cb,#f7f2e7),inset 0 0 0 10px rgba(70,50,20,.5)}.sp2c .sbt{margin-top:11px}
+.vt4::before,.vt4::after,.vt4>u{content:"";position:absolute;display:block;margin:0;width:44px;height:15px;background:rgba(240,232,196,.82);z-index:2}
+.vt4::before{left:var(--x1);top:var(--y1);transform:rotate(var(--r1))}
+.vt4::after{right:var(--x2);top:var(--y2);transform:rotate(var(--r2))}
+.vt4>u.s3{left:var(--x3);bottom:var(--y3);transform:rotate(var(--r3))}
+.vt4>u.s4{right:var(--x4);bottom:var(--y4);transform:rotate(var(--r4))}
 .n.tp.sp2c::before,.n.tp.sp2c::after,.sp2c>u{content:"";position:absolute;display:block;margin:0;width:calc(44px*var(--s,1));height:calc(15px*var(--s,1));border-radius:0;background:rgba(240,232,196,.82);box-shadow:none;z-index:2}
 .n.tp.sp2c::before{left:var(--x1);right:auto;top:var(--y1);transform:rotate(var(--r1));--s:var(--s1)}
 .n.tp.sp2c::after{left:auto;right:var(--x2);top:var(--y2);transform:rotate(var(--r2));--s:var(--s2)}
@@ -267,10 +275,10 @@ a[data-img],a[data-img] *{cursor:zoom-in}
 .pf i{z-index:2;position:absolute;left:-3.7px;top:-3.7px;width:7.4px;height:7.4px;border-radius:50%;background:radial-gradient(circle at 35% 30%,rgba(255,255,255,.4) 0,rgba(255,255,255,0) 38%),var(--pc,#cf3b31);box-shadow:-4px 2px 3px rgba(0,0,0,.26),inset 0 0 0 1px rgba(0,0,0,.2)}
 .pf b{z-index:1;position:absolute;left:-.55px;top:.7px;width:1.1px;height:7.4px;border-radius:1px;background:linear-gradient(90deg,#e7e9eb,#8b9094);transform-origin:50% 0;transform:rotate(var(--pa,0deg));box-shadow:-3px 2px 2px rgba(0,0,0,.24)}
 /* TEMP PINS END */
-#g a,#g a:focus,#g a:focus-visible,#g a:active,#rf:focus,#rf:focus-visible{outline:none;-webkit-tap-highlight-color:transparent}
+#g a,#g a:focus,#g a:focus-visible,#g a:active,#rs:focus,#rs:focus-visible{outline:none;-webkit-tap-highlight-color:transparent}
 .vp{position:relative;display:block}
 .vp::before{content:"";position:absolute;left:50%;top:50%;width:46px;height:46px;margin:-23px 0 0 -23px;border-radius:50%;background:rgba(0,0,0,.38);box-shadow:0 0 0 2px rgba(255,255,255,.6);pointer-events:none;z-index:2}
-.vp::after{content:"";position:absolute;left:50%;top:50%;margin:-10px 0 0 -6px;border-style:solid;border-width:10px 0 10px 17px;border-color:transparent transparent transparent rgba(255,255,255,.85);pointer-events:none;z-index:3}
+.vp::after{content:"";position:absolute;left:50%;top:50%;width:22px;height:22px;margin:-11px 0 0 -9px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 22 22'%3E%3Cpath d='M6.5 4.5 L17 11 L6.5 17.5 Z' fill='%23fff' stroke='%23fff' stroke-width='4' stroke-linejoin='round' opacity='.85'/%3E%3C/svg%3E") center/100% 100% no-repeat;pointer-events:none;z-index:3}
 @media(max-width:560px){#pp.pe5 #pc{background-image:none}#m:not(.vid){align-items:flex-start}#m:not(.vid) #mp{width:100vw;transform:none}#pp{max-height:calc(100vh - 25vw);max-height:calc(100dvh - 25vw)}#pp{--pl:var(--pr)}#pp.pe1 #pc{background-image:none}#pp.pe2 #pc{background-image:repeating-linear-gradient(transparent 0,transparent 28px,rgba(143,176,200,.3) 28px,rgba(143,176,200,.3) 29px);background-position:0 53px}}
 body{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
 #m,#m *{-webkit-user-select:text;user-select:text;-webkit-touch-callout:default}
@@ -321,19 +329,19 @@ i.pp.dn::after{width:5.3px}
 <body>
 <div id="nb" aria-hidden="true"></div>
 <div id="sc"><a href="https://x.com/kcheungio" target="_blank" rel="noopener" aria-label="X"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/></svg></a><a href="https://www.linkedin.com/in/ka-wai-cheung/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a></div>
-<nav id="nv" aria-label="Filter the board"><a href="/" data-f="" class="on">Everything</a><a href="/random" data-f="p">Projects</a><a href="/essays" data-f="e">Essays</a><a href="/books" data-f="b">Books</a><a href="#donedone" data-f="d">DoneDone</a><a href="#mammoth" data-f="w">WAM</a></nav>
+<nav id="nv" aria-label="Filter the board"><button id="rs" type="button" aria-label="Reset the board" title="Reset the board"><svg viewBox="0 0 28 20" aria-hidden="true"><path d="M3 4 H4.2 V16 H3 Z M15 5 V15 L7.2 10 Z M25 5 V15 L17.2 10 Z"/></svg></button><a href="/" data-f="" class="on">All</a><a href="/random" data-f="p">Projects</a><a href="/essays" data-f="e">Essays</a><a href="/books" data-f="b">Books</a><a href="#donedone" data-f="d">DoneDone</a><a href="#mammoth" data-f="w">WAM</a></nav>
 <div id="g">
 <div style="--r:0deg;--dx:0px" class="t x in sp2 p2c"><span class="qt">Ka Wai Cheung has been making things on the information superhighway since the 1900s.</span><s class="ph" aria-hidden="true" data-x=".504" data-fy=".08" style="left:50.4%;top:calc(8% - 7.2px);--pc:#cf3b31"></s></div>
 <a data-k="e" style="--dx:1px;--r:-0.55deg;margin-top:3px;--ts:0.91;--tr:1.6deg;--pa:-0.83deg;--py:-1.2px;--px:-3.4px;--hy:57%" class="t n e4 f1 tr1 p2c" href="/essays/designing-for-the-first-5-minutes-and-the-next-20-years.html"><i>Aug 2026</i><b style="--fs:16px">Designing for the first 5 minutes and the next 20 years</b><s class="ph" data-s="l" data-x=".09" style="left:9%;--pc:#cf3b31"></s><s class="ph" data-s="r" data-x=".91" style="left:91%;--pc:#3a74d4"></s></a>
 <a data-k="e" style="--dx:-1px;--r:-0.73deg;margin-top:4px;--ts:0.93;--tr:1.1deg;--pa:0.78deg;--py:-1.6px;--px:4.6px" class="t tp n e3 f6 tr2 pc1" href="/essays/ai-slop-is-a-novelty-act.html"><i>Jul 2026</i><b style="--fs:21px">AI slop is a novelty act</b></a>
 <a data-k="e" style="--dx:-1px;--r:-0.03deg;margin-top:3px;--ts:1.01;--tr:-2.5deg;--pa:0.36deg;--py:-1.6px;--px:4.2px" class="t tp n e1 f2 tr3 pc1" href="/essays/the-confounding-dilemma-of-vibe-coding-small-contained-things.html"><i>Apr 2026</i><b style="--fs:16px">The confounding dilemma of vibe coding small, contained things</b></a>
 <div data-k="p" style="--dx:2px;--r:-0.59deg;margin-top:1px;--sa:0.40deg;--lx:9px;--rx:7px;--blx:10px;--brx:7px;--ly:8px;--ry:8px;--bly:8px;--bry:7px;--la:25deg;--ra:39deg;--bla:32deg;--bra:45deg" class="t stp p sp2 rk"><a class="rl" href="https://runkwc.kawaicheung.io"><img src="img/runkwc.jpg" alt="RunKWC"></a><a class="rkv" href="https://www.youtube.com/watch?v=u4YdO6xDOic"><span class="vp"><img src="img/runkwc-vid.jpg" alt="RunKWC video"></span></a><u class="s3"></u><u class="s4"></u></div>
-<div data-k="p" style="--r:-0.5deg;--dx:0px;margin-top:3px" class="t x sg p2c"><span class="qt">Since 2024, I&rsquo;ve been a semi-retired full-time caretaker building lightweight, niche projects for fun.</span><s class="ph" aria-hidden="true" data-x=".504" data-fy=".08" style="left:50.4%;top:calc(8% - 7.2px);--pc:#3a74d4"></s></div>
+<div data-k="p" style="--r:-0.5deg;--dx:0px;margin-top:3px" class="t x sg p2c"><span class="qt">Currently spend my days taking care of my family while building lightweight, niche products on the side.</span><s class="ph" aria-hidden="true" data-x=".504" data-fy=".08" style="left:50.4%;top:calc(8% - 7.2px);--pc:#3a74d4"></s></div>
 <a data-k="p" style="--dx:1px;--r:0.43deg;margin-top:5px;--sa:0.61deg;--lx:9px;--rx:5px;--blx:8px;--brx:8px;--ly:5px;--ry:6px;--bly:8px;--bry:7px;--la:27deg;--ra:43deg;--bla:31deg;--bra:32deg" class="t stp p" href="https://flick.kawaicheung.io"><img src="img/flick.jpg" alt="Flick"><b style="display:block;font-size:22px;line-height:24px;letter-spacing:-.5px;padding:9px 3px 1px">Flick</b><u class="s3"></u><u class="s4"></u></a>
 <a data-k="e" style="--dx:-1px;--r:-0.82deg;margin-top:1px;--ts:1.08;--tr:1.6deg;--pa:-0.33deg;--py:-1.6px;--px:-4.0px" class="t tp n e1 f7 tr4 pc4" href="/essays/inertia-vs-friction.html"><i>Mar 2026</i><b style="--fs:21px">Inertia vs. friction</b></a>
 <a data-k="e" style="--dx:1px;--r:-0.58deg;margin-top:4px;--x1:-8px;--y1:-6px;--r1:-34deg;--s1:1.05;--x2:-9px;--y2:-5px;--r2:30deg;--s2:.96;--x3:-7px;--y3:-5px;--r3:35deg;--s3:1.1;--x4:-9px;--y4:-4px;--r4:-31deg;--s4:.92;--cb:#e6eef4" class="t tp n e1 f1 tr4 sp2c" href="/web"><i>Career</i><b style="--fs:16px">The story of the stuff I created, the things I learned, and the friends I made along the way.</b><u class="s3"></u><u class="s4"></u></a>
 <a data-k="e" style="--dx:-1px;--r:-0.05deg;margin-top:3px;--ts:1.07;--tr:1.3deg;--pa:0.93deg;--py:-1.7px;--px:4.3px;--hy:40%" class="t tp n e4 f3 tr5 pc1" href="/essays/satisfaction-needs-time-to-brew.html"><i>Feb 2026</i><b style="--fs:18px">Satisfaction needs time to brew</b></a>
-<a data-k="v d" style="--dx:1px;--r:-0.11deg;margin-top:3px;--sa:-0.18deg;--lx:5px;--rx:6px;--blx:5px;--brx:7px;--ly:6px;--ry:4px;--bly:6px;--bry:7px;--la:28deg;--ra:43deg;--bla:32deg;--bra:25deg" class="t stp p sq" href="https://www.youtube.com/watch?v=usr33Pyxtao"><span class="vp"><img src="img/real-code-5.jpg" alt="Why stay small? A developer's perspective."></span><u class="s3"></u><u class="s4"></u></a>
+<a data-k="v d" style="--dx:1px;--r:-0.11deg;margin-top:3px;--sa:-0.18deg;--lx:5px;--rx:6px;--blx:5px;--brx:7px;--ly:6px;--ry:4px;--bly:6px;--bry:7px;--la:28deg;--ra:43deg;--bla:32deg;--bra:25deg" class="t stp p sq" href="https://www.youtube.com/watch?v=usr33Pyxtao"><span class="vp"><img src="img/real-code-5.jpg" alt="Why stay small? A developer's perspective."></span></a>
 <a data-k="e" style="--dx:-2px;--r:0.98deg;margin-top:0px;--ts:0.98;--tr:2.6deg;--pa:0.76deg;--py:-0.4px;--px:-0.4px" class="t tp n e3 f8 tr1 pc4" href="/essays/one-small-tweak-can-make-it-all-make-sense.html"><i>Jan 2026</i><b style="--fs:18px">One small tweak can make it all make sense</b></a>
 <a data-k="e" style="--dx:-1px;--r:0.32deg;margin-top:2px;--ts:0.94;--tr:-3.3deg;--pa:-0.82deg;--py:-0.9px;--px:-2.3px;--hy:62%" class="t tp n e4 f4 tr2 pc1" href="/essays/masking-the-annoying-detail-in-ux.html"><i>Oct 2025</i><b style="--fs:18px">Masking the annoying detail in UX</b></a>
 <a data-k="b" style="--dx:-2px;--r:0.38deg;margin-top:0px;--sa:-0.74deg;--lx:9px;--rx:7px;--blx:11px;--brx:8px;--ly:3px;--ry:7px;--bly:8px;--bry:5px;--la:34deg;--ra:26deg;--bla:38deg;--bra:27deg" class="t stp p" href="https://pragprog.com/titles/kcdc/the-developer-s-code/"><img src="img/book--the-developers-code.png" alt="The Developer's Code, 2012"><span class="c">2012</span><u class="s3"></u><u class="s4"></u></a>
@@ -343,7 +351,7 @@ i.pp.dn::after{width:5.3px}
 <a data-k="e" style="--dx:-2px;--r:-0.73deg;margin-top:4px;--ts:0.90;--tr:1.5deg;--pa:0.11deg;--py:-1.4px;--px:-3.3px" class="t tp n e1 f2 tr1 pc3" href="/essays/i-think-mobile-designs-cause-forgetfulness.html"><i>Aug 2025</i><b style="--fs:18px">I think mobile designs cause forgetfulness</b></a>
 <a data-k="e" style="--dx:-1px;--r:0.90deg;margin-top:3px;--ts:1.01;--tr:-2.4deg;--pa:-0.32deg;--py:-1.4px;--px:-2.6px;--hy:49%" class="t tp n e4 f7 tr2 pc2" href="/essays/im-feeling-pretty-good-about-writing.html"><i>Jul 2025</i><b style="--fs:18px">I’m feeling pretty good about writing</b></a>
 <a data-k="e d" style="--dx:-2px;--r:-0.29deg;margin-top:2px;--ts:1.01;--tr:-3.4deg;--pa:-0.85deg;--py:-0.2px;--px:-1.7px" class="t tp n e1 f7 tr3 pc3" href="/essays/37signals-almost.html"><i>Jul 2025</i><b style="--fs:21px">37signals? Almost.</b></a>
-<a data-k="v d" style="--dx:-1px;--r:-0.93deg;margin-top:4px;--sa:-0.56deg;--lx:10px;--rx:6px;--blx:8px;--brx:7px;--ly:4px;--ry:6px;--bly:4px;--bry:3px;--la:29deg;--ra:44deg;--bla:44deg;--bra:39deg" class="t stp p sq" href="https://www.youtube.com/watch?v=S7yrFHigvxI"><span class="vp"><img src="img/real-code-2.jpg" alt="How do you store the sort order of a Kanban board in a database?"></span><u class="s3"></u><u class="s4"></u></a>
+<a data-k="v d" style="--x1:-9px;--y1:-6px;--r1:-33deg;--x2:-10px;--y2:-5px;--r2:31deg;--x3:-8px;--y3:-5px;--r3:34deg;--x4:-10px;--y4:-4px;--r4:-30deg;--dx:-1px;--r:-0.93deg;margin-top:4px;--sa:-0.56deg;--lx:10px;--rx:6px;--blx:8px;--brx:7px;--ly:4px;--ry:6px;--bly:4px;--bry:3px;--la:29deg;--ra:44deg;--bla:44deg;--bra:39deg" class="t vt4 p sq" href="https://www.youtube.com/watch?v=S7yrFHigvxI"><span class="vp"><img src="img/real-code-2.jpg" alt="How do you store the sort order of a Kanban board in a database?"></span><u class="s3"></u><u class="s4"></u></a>
 <a data-k="e" style="--dx:1px;--r:-0.31deg;margin-top:0px;--ts:0.95;--tr:-2.2deg;--pa:-0.81deg;--py:-0.6px;--px:-0.3px;--hy:66%" class="t tp n e4 f8 tr4 pc4" href="/essays/holding-on-to-the-feeling-of-making.html"><i>Jun 2025</i><b style="--fs:18px">Holding on to the feeling of making</b></a>
 <a data-k="e" style="--dx:2px;--r:-0.15deg;margin-top:3px;--ts:0.95;--tr:1.6deg;--pa:0.52deg;--py:-0.1px;--px:1.8px" class="t tp n e1 f4 tr5 pc2" href="/essays/a-new-word-for-simple.html"><i>Jun 2025</i><b style="--fs:21px">A new word for simple</b></a>
 <div data-k="w" style="--r:0.45deg;--dx:0px;margin-top:2px" class="t x sg p2c"><span class="qt">We Are Mammoth (WAM) was a Chicago-based web dev agency I co-founded/co-ran from 2006-2017.</span><s class="ph" aria-hidden="true" data-x=".504" data-fy=".08" style="left:50.4%;top:calc(8% - 7.2px);--pc:#cf3b31"></s></div>
@@ -358,7 +366,7 @@ i.pp.dn::after{width:5.3px}
 <a data-k="e" style="--dx:2px;--r:-0.69deg;margin-top:4px;--ts:1.01;--tr:-2.8deg;--pa:0.37deg;--py:-1.0px;--px:4.8px" class="t tp n e3 f3 tr1 pc4" href="/essays/the-one-person-product-throwing-the-ai-train-in-reverse.html"><i>Jul 2024</i><b style="--fs:16px">The one-person product: Throwing the AI train in reverse</b></a>
 <a data-k="e d" style="--dx:1px;--r:-0.62deg;margin-top:1px;--ts:0.97;--tr:1.3deg;--pa:0.97deg;--py:-0.4px;--px:-0.0px;--hy:45%" class="t tp n e4 f8 tr2 pc2" href="/essays/old-school-workarounds-keeping-the-screen-up-to-date.html"><i>May 2024</i><b style="--fs:18px">Old school workarounds: Keeping the screen up to date</b></a>
 <a data-k="e" style="--dx:1px;--r:0.49deg;margin-top:2px;--ts:0.96;--tr:-1.1deg;--pa:-0.07deg;--py:-0.9px;--px:1.7px" class="t tp n e3 f4 tr3 pc4" href="/essays/why-we-shouldnt-be-surprised-that-code-gets-to-the-way-it-is.html"><i>Apr 2024</i><b style="--fs:18px">We shouldn’t be surprised that code gets that way</b></a>
-<a data-k="v d" style="--dx:-2px;--r:-0.06deg;margin-top:3px;--sa:0.72deg;--lx:6px;--rx:6px;--blx:5px;--brx:11px;--ly:3px;--ry:4px;--bly:4px;--bry:4px;--la:30deg;--ra:34deg;--bla:35deg;--bra:31deg" class="t stp p sq" href="https://www.youtube.com/watch?v=zqMg-OCoW1g"><span class="vp"><img src="img/real-code-1.jpg" alt="Using marker classes for 3rd-party integrations"></span><u class="s3"></u><u class="s4"></u></a>
+<a data-k="v d" style="--dx:-2px;--r:-0.06deg;margin-top:3px;--sa:0.72deg;--lx:6px;--rx:6px;--blx:5px;--brx:11px;--ly:3px;--ry:4px;--bly:4px;--bry:4px;--la:30deg;--ra:34deg;--bla:35deg;--bra:31deg" class="t stp p sq" href="https://www.youtube.com/watch?v=zqMg-OCoW1g"><span class="vp"><img src="img/real-code-1.jpg" alt="Using marker classes for 3rd-party integrations"></span></a>
 <a data-k="e d w" style="--dx:1px;--r:-0.58deg;margin-top:4px;--x1:-9px;--y1:-4px;--r1:-31deg;--s1:1.05;--x2:-7px;--y2:-7px;--r2:36deg;--s2:.96;--x3:-8px;--y3:-4px;--r3:33deg;--s3:1.1;--x4:-10px;--y4:-5px;--r4:-28deg;--s4:.92" class="t tp n e1 f5 tr4 sp2 sp2c" href="/essays/my-25-year-career-in-web-design-through-the-eyes-of-the-wayback-machine.html"><i>Apr 2024</i><b style="--fs:16px">My 25-year career in web design through the eyes of the Wayback Machine</b><img class="hero" src="img/wayback-hero.jpg" alt=""><span class="sbt" data-ext="https://medium.com/@kawai-cheung/my-25-year-career-in-web-design-through-the-eyes-of-the-wayback-machine-4e37f3ec94d8">Remembering the excitement of a new medium, coming to terms with its ephemerality, and rediscovering some embarrassing little treasures.<em>Staff pick on Medium &rarr;</em></span><u class="s3"></u><u class="s4"></u></a>
 <a data-k="e" style="--dx:1px;--r:-0.64deg;margin-top:3px;--ts:0.99;--tr:-3.3deg;--pa:-0.61deg;--py:-0.3px;--px:-2.2px;--hy:65%" class="t tp n e4 f1 tr5 pc1" href="/essays/championing-the-doer.html"><i>Apr 2024</i><b style="--fs:21px">Championing the doer</b></a>
 <a data-k="p" style="--dx:1px;--r:0.82deg;margin-top:4px;--sa:-0.20deg;--lx:9px;--rx:10px;--blx:10px;--brx:6px;--ly:4px;--ry:8px;--bly:4px;--bry:6px;--la:34deg;--ra:25deg;--bla:36deg;--bra:38deg" class="t stp p" href="https://1x.kawaicheung.io"><img src="img/1x.jpg" alt="1X"><b style="display:block;font-size:22px;line-height:24px;letter-spacing:-.5px;padding:9px 3px 1px">1X</b><u class="s3"></u><u class="s4"></u></a>
@@ -369,7 +377,7 @@ i.pp.dn::after{width:5.3px}
 <a data-k="e" style="--dx:2px;--r:0.43deg;margin-top:3px;--ts:1.03;--tr:2.5deg;--pa:-0.03deg;--py:-1.5px;--px:-4.0px" class="t tp n e3 f7 tr3 pc4" href="/essays/most-bugs-live-in-the-permutations.html"><i>Mar 2024</i><b style="--fs:18px">Most bugs live in the permutations</b></a>
 <a data-k="e" style="--dx:2px;--r:-0.55deg;margin-top:1px;--ts:0.88;--tr:-3.1deg;--pa:-0.77deg;--py:-0.9px;--px:0.4px" class="t tp n e3 f3 tr4 pc3" href="/essays/its-ok-to-want-to-work-alone.html"><i>Mar 2024</i><b style="--fs:18px">It’s OK to want to work alone</b></a>
 <a data-k="e d" style="--dx:-1px;--r:0.45deg;margin-top:5px;--ts:1.04;--tr:3.3deg;--pa:0.93deg;--py:-1.8px;--px:3.2px" class="t tp n e1 f8 tr5 pc1" href="/essays/old-school-workarounds-the-interstitial-state.html"><i>Jan 2024</i><b style="--fs:18px">Old school workarounds: The interstitial state</b></a>
-<a data-k="v d" style="--dx:-1px;--r:-0.58deg;margin-top:3px;--sa:0.23deg;--lx:6px;--rx:6px;--blx:7px;--brx:5px;--ly:5px;--ry:5px;--bly:7px;--bry:7px;--la:25deg;--ra:44deg;--bla:35deg;--bra:27deg" class="t stp p sq" href="https://www.youtube.com/watch?v=PNnenqznRD4"><span class="vp"><img src="img/real-code-9.jpg" alt="Less words, more meaning."></span><u class="s3"></u><u class="s4"></u></a>
+<a data-k="v d" style="--dx:-1px;--r:-0.58deg;margin-top:3px;--sa:0.23deg;--lx:6px;--rx:6px;--blx:7px;--brx:5px;--ly:5px;--ry:5px;--bly:7px;--bry:7px;--la:25deg;--ra:44deg;--bla:35deg;--bra:27deg" class="t stp p sq" href="https://www.youtube.com/watch?v=PNnenqznRD4"><span class="vp"><img src="img/real-code-9.jpg" alt="Less words, more meaning."></span></a>
 <a data-k="e" style="--dx:1px;--r:0.66deg;margin-top:4px;--ts:0.90;--tr:3.7deg;--pa:0.89deg;--py:-0.4px;--px:-4.9px" class="t tp n e3 f4 tr1 pc3" href="/essays/encapsulation-is-a-messy-art.html"><i>Jan 2024</i><b style="--fs:18px">Encapsulation is a messy art</b></a>
 <a data-k="e" style="--dx:-1px;--r:0.00deg;margin-top:2px;--ts:1.02;--tr:2.0deg;--pa:0.10deg;--py:-1.0px;--px:-4.9px;--hy:51%" class="t tp n e4 f5 tr2 pc4" href="/essays/beware-the-blind-faith-of-tests.html"><i>Jan 2024</i><b style="--fs:18px">Beware the blind faith of tests</b></a>
 <a data-k="e" style="--dx:-1px;--r:-0.99deg;margin-top:4px;--ts:0.95;--tr:-3.4deg;--pa:-0.43deg;--py:-0.4px;--px:2.0px;--hy:34%" class="t tp n e4 f1 tr3 pc2" href="/essays/avoiding-fancy-abstractions.html"><i>Jan 2024</i><b style="--fs:21px">Avoiding fancy abstractions</b></a>
@@ -387,7 +395,7 @@ i.pp.dn::after{width:5.3px}
 <a data-k="e d" style="--dx:-1px;--r:0.25deg;margin-top:2px;--ts:1.15;--tr:-1.8deg;--pa:0.35deg;--py:-0.8px;--px:0.7px" class="t tp n e3 f6 tr2 pc4" href="/essays/its-the-end-and-i-feel-fine.html"><i>Dec 2023</i><b style="--fs:18px">It’s the end…and I feel fine</b></a>
 <a data-k="e" style="--dx:-1px;--r:-0.45deg;margin-top:5px;--ts:0.99;--tr:-1.1deg;--pa:0.63deg;--py:-0.3px;--px:2.4px" class="t tp n e3 f2 tr3 pc1" href="/essays/how-i-build-software-like-a-musician.html"><i>Dec 2023</i><b style="--fs:18px">How I build software (like a musician)</b></a>
 <a data-k="e" style="--dx:-1px;--r:0.58deg;margin-top:5px;--ts:1.00;--tr:-2.1deg;--pa:-0.82deg;--py:-0.8px;--px:4.6px;--hy:44%" class="t tp n e4 f7 tr4 pc4" href="/essays/code-as-the-design-medium.html"><i>Dec 2023</i><b style="--fs:21px">Code as the design medium</b></a>
-<a data-k="v d" style="--dx:-1px;--r:-0.50deg;margin-top:2px;--sa:0.35deg;--lx:8px;--rx:5px;--blx:10px;--brx:6px;--ly:7px;--ry:4px;--bly:3px;--bry:4px;--la:39deg;--ra:36deg;--bla:41deg;--bra:36deg" class="t stp p sq" href="https://www.youtube.com/watch?v=pJ9TiCs0TSQ"><span class="vp"><img src="img/real-code-4.jpg" alt="Optimistic response handling"></span><u class="s3"></u><u class="s4"></u></a>
+<a data-k="v d" style="--dx:-1px;--r:-0.50deg;margin-top:2px;--sa:0.35deg;--lx:8px;--rx:5px;--blx:10px;--brx:6px;--ly:7px;--ry:4px;--bly:3px;--bry:4px;--la:39deg;--ra:36deg;--bla:41deg;--bra:36deg" class="t stp p sq" href="https://www.youtube.com/watch?v=pJ9TiCs0TSQ"><span class="vp"><img src="img/real-code-4.jpg" alt="Optimistic response handling"></span></a>
 <a data-k="e" style="--dx:1px;--r:-0.26deg;margin-top:0px;--ts:1.09;--tr:-0.9deg;--pa:-0.72deg;--py:-1.8px;--px:2.2px" class="t tp n e3 f3 tr5 pc4" href="/essays/whats-your-weekly-work-pyramid.html"><i>Jun 2017</i><b style="--fs:18px">What’s your weekly work pyramid?</b></a>
 <a data-k="e" style="--dx:-1px;--r:0.56deg;margin-top:3px;--ts:1.13;--tr:2.3deg;--pa:0.58deg;--py:-1.9px;--px:-1.3px" class="t tp n e3 f8 tr1 pc4" href="/essays/where-the-software-ends.html"><i>Apr 2017</i><b style="--fs:21px">Where the software ends</b></a>
 <a data-k="e" style="--dx:-2px;--r:-0.96deg;margin-top:1px;--ts:1.06;--tr:-3.3deg;--pa:0.03deg;--py:-1.3px;--px:0.8px;--hy:37%" class="t tp n e4 f4 tr2 pc4" href="/essays/sometimes-its-life-work-balance.html"><i>Apr 2017</i><b style="--fs:18px">Sometimes, it’s life-work balance</b></a>
@@ -399,7 +407,7 @@ i.pp.dn::after{width:5.3px}
 <a data-k="p" style="--dx:-1px;--r:-0.72deg;margin-top:5px;--sa:-0.36deg;--lx:6px;--rx:7px;--blx:9px;--brx:9px;--ly:5px;--ry:4px;--bly:5px;--bry:5px;--la:42deg;--ra:27deg;--bla:34deg;--bra:35deg" class="t stp p" href="https://onespot.kawaicheung.io"><img src="img/onespot.jpg" alt="OneSpot"><b style="display:block;font-size:22px;line-height:24px;letter-spacing:-.5px;padding:9px 3px 1px">OneSpot</b><u class="s3"></u><u class="s4"></u></a>
 <a data-k="e d" style="--dx:-1px;--r:0.79deg;margin-top:1px;--ts:0.99;--tr:2.3deg;--pa:-0.27deg;--py:-1.0px;--px:4.7px;--hy:42%" class="t tp n e4 f3 tr3 pc1" href="/essays/a-makers-approach-to-managing-projects.html"><i>Mar 2017</i><b style="--fs:18px">A maker’s approach to managing projects</b></a>
 <a data-k="e" style="--dx:2px;--r:0.29deg;margin-top:0px;--ts:0.95;--tr:-3.7deg;--pa:-0.91deg;--py:-0.1px;--px:-2.8px" class="t tp n e1 f8 tr4 pc3" href="/essays/why-sports-matter-to-some-of-us.html"><i>Nov 2016</i><b style="--fs:18px">Why sports matter to some of us</b></a>
-<a data-k="v d" style="--dx:-1px;--r:-0.58deg;margin-top:1px;--sa:0.63deg;--lx:7px;--rx:6px;--blx:11px;--brx:5px;--ly:8px;--ry:4px;--bly:8px;--bry:8px;--la:34deg;--ra:40deg;--bla:30deg;--bra:26deg" class="t stp p sq" href="https://www.youtube.com/watch?v=amUCxkcRhVo"><span class="vp"><img src="img/real-code-6.jpg" alt="Improving UX by omitting validations"></span><u class="s3"></u><u class="s4"></u></a>
+<a data-k="v d" style="--dx:-1px;--r:-0.58deg;margin-top:1px;--sa:0.63deg;--lx:7px;--rx:6px;--blx:11px;--brx:5px;--ly:8px;--ry:4px;--bly:8px;--bry:8px;--la:34deg;--ra:40deg;--bla:30deg;--bra:26deg" class="t stp p sq" href="https://www.youtube.com/watch?v=amUCxkcRhVo"><span class="vp"><img src="img/real-code-6.jpg" alt="Improving UX by omitting validations"></span></a>
 <a data-k="e" style="--dx:1px;--r:0.01deg;margin-top:2px;--ts:0.97;--tr:1.6deg;--pa:0.58deg;--py:-1.5px;--px:-4.8px" class="t tp n e3 f4 tr5 pc1" href="/essays/whats-the-greatest-piece-of-advice-youve-ever-received.html"><i>Nov 2016</i><b style="--fs:16px">What’s the greatest piece of advice you’ve ever received?</b></a>
 <a data-k="e" style="--dx:-1px;--r:0.66deg;margin-top:0px;--ts:0.89;--tr:-2.5deg;--pa:-0.70deg;--py:-1.4px;--px:-3.1px;--hy:62%" class="t tp n e4 f5 tr1 pc1" href="/essays/how-about-a-refactorthon.html"><i>Nov 2016</i><b style="--fs:21px">How about a refactorthon?</b></a>
 <a data-k="e" style="--dx:2px;--r:0.54deg;margin-top:3px;--ts:1.03;--tr:0.6deg;--pa:0.40deg;--py:-1.6px;--px:2.1px" class="t tp n e1 f1 tr2 pc1" href="/essays/camaraderie-and-recognition-inside-the-development-team.html"><i>Oct 2016</i><b style="--fs:16px">Camaraderie and recognition inside the development team</b></a>
@@ -410,7 +418,7 @@ i.pp.dn::after{width:5.3px}
 <a data-k="e" style="--dx:2px;--r:0.87deg;margin-top:3px;--ts:0.97;--tr:1.0deg;--pa:-0.50deg;--py:-0.2px;--px:4.4px;--hy:65%" class="t tp n e4 f3 tr1 pc2" href="/essays/there-are-rockstars-and-there-are-bands.html"><i>Aug 2016</i><b style="--fs:18px">There are rockstars and there are bands</b></a>
 <a data-k="e" style="--dx:-1px;--r:0.47deg;margin-top:5px;--ts:1.06;--tr:1.2deg;--pa:-0.33deg;--py:-0.6px;--px:-2.7px" class="t tp n e3 f8 tr2 pc1" href="/essays/remembering-the-rabbits-a-fond-farewell-to-flash.html"><i>Aug 2016</i><b style="--fs:18px">Remembering the rabbits: A fond farewell to Flash</b></a>
 <a data-k="e" style="--dx:-2px;--r:-0.94deg;margin-top:1px;--ts:1.01;--tr:-0.1deg;--pa:0.25deg;--py:-2.0px;--px:3.5px" class="t tp n e3 f4 tr3 pc4" href="/essays/the-unintended-byproducts-of-refactoring-code.html"><i>May 2016</i><b style="--fs:18px">The unintended byproducts of refactoring code</b></a>
-<a data-k="v d" style="--dx:2px;--r:-0.94deg;margin-top:5px;--sa:0.33deg;--lx:8px;--rx:6px;--blx:5px;--brx:10px;--ly:3px;--ry:6px;--bly:5px;--bry:4px;--la:29deg;--ra:43deg;--bla:29deg;--bra:45deg" class="t stp p sq" href="https://www.youtube.com/watch?v=--8hGDjHEh4"><span class="vp"><img src="img/real-code-8.jpg" alt="Discovering UX as you go"></span><u class="s3"></u><u class="s4"></u></a>
+<a data-k="v d" style="--dx:2px;--r:-0.94deg;margin-top:5px;--sa:0.33deg;--lx:8px;--rx:6px;--blx:5px;--brx:10px;--ly:3px;--ry:6px;--bly:5px;--bry:4px;--la:29deg;--ra:43deg;--bla:29deg;--bra:45deg" class="t stp p sq" href="https://www.youtube.com/watch?v=--8hGDjHEh4"><span class="vp"><img src="img/real-code-8.jpg" alt="Discovering UX as you go"></span></a>
 <a data-k="e" style="--dx:-2px;--r:0.12deg;margin-top:2px;--ts:0.91;--tr:-1.9deg;--pa:0.46deg;--py:-0.8px;--px:2.3px" class="t tp n e3 f5 tr4 pc2" href="/essays/the-mythical-couch-lift.html"><i>May 2016</i><b style="--fs:21px">The mythical couch-lift</b></a>
 <a data-k="e" style="--dx:1px;--r:0.57deg;margin-top:5px;--ts:0.95;--tr:1.5deg;--pa:-0.99deg;--py:-1.8px;--px:1.1px;--hy:64%" class="t tp n e4 f1 tr5 pc1" href="/essays/sometimes-archaic-technology-is-the-most-effective-kind.html"><i>May 2016</i><b style="--fs:16px">Sometimes archaic technology is the most effective kind</b></a>
 <a data-k="e" data-mb="16" style="--dx:1px;--r:-0.58deg;margin-top:4px;--x1:-10px;--y1:-4px;--r1:-29deg;--s1:1.05;--x2:-6px;--y2:-8px;--r2:38deg;--s2:.96;--x3:-9px;--y3:-3px;--r3:28deg;--s3:1.1;--x4:-7px;--y4:-6px;--r4:-36deg;--s4:.92;--cb:#e6f0df" class="t tp n e3 f2 tr4 sp2 sp2c lt2" href="/temperament"><i>Philosophy</i><b style="--fs:16px">I hold strong opinions loosely but here are the few that keep tightening their grip over time.</b><u class="s3"></u><u class="s4"></u></a>
@@ -421,7 +429,7 @@ i.pp.dn::after{width:5.3px}
 <a data-k="e" style="--dx:-1px;--r:-0.59deg;margin-top:4px;--ts:1.07;--tr:-2.6deg;--pa:0.62deg;--py:-0.5px;--px:3.9px" class="t tp n e1 f3 tr4 pc4" href="/essays/hiring-into-boundaries.html"><i>Jan 2016</i><b style="--fs:21px">Hiring into boundaries</b></a>
 <a data-k="e" style="--dx:-1px;--r:0.01deg;margin-top:0px;--ts:0.89;--tr:2.3deg;--pa:0.68deg;--py:-0.5px;--px:4.6px" class="t tp n e1 f8 tr5 pc3" href="/essays/why-it-is-hard-to-write-about-code-2015.html"><i>Sep 2015</i><b style="--fs:18px">Why it is hard to write about code</b></a>
 <a data-k="e" style="--dx:-2px;--r:-0.56deg;margin-top:5px;--ts:0.98;--tr:3.6deg;--pa:-0.72deg;--py:-1.7px;--px:-4.8px" class="t tp n e1 f4 tr1 pc4" href="/essays/the-psychological-battle-of-big-refactorings.html"><i>Sep 2015</i><b style="--fs:18px">The psychological battle of big refactorings</b></a>
-<a data-k="v d" style="--dx:-2px;--r:0.91deg;margin-top:1px;--sa:-0.66deg;--lx:9px;--rx:11px;--blx:6px;--brx:9px;--ly:6px;--ry:6px;--bly:8px;--bry:8px;--la:35deg;--ra:40deg;--bla:33deg;--bra:34deg" class="t stp p sq" href="https://www.youtube.com/watch?v=xcdbuI29YC0"><span class="vp"><img src="img/real-code-7.jpg" alt="The building of a small feature"></span><u class="s3"></u><u class="s4"></u></a>
+<a data-k="v d" style="--dx:-2px;--r:0.91deg;margin-top:1px;--sa:-0.66deg;--lx:9px;--rx:11px;--blx:6px;--brx:9px;--ly:6px;--ry:6px;--bly:8px;--bry:8px;--la:35deg;--ra:40deg;--bla:33deg;--bra:34deg" class="t stp p sq" href="https://www.youtube.com/watch?v=xcdbuI29YC0"><span class="vp"><img src="img/real-code-7.jpg" alt="The building of a small feature"></span></a>
 <a data-k="e" style="--dx:2px;--r:0.91deg;margin-top:0px;--ts:0.88;--tr:1.7deg;--pa:0.44deg;--py:-0.7px;--px:-1.5px" class="t tp n e3 f5 tr2 pc3" href="/essays/an-homage-to-strict-coding.html"><i>Aug 2015</i><b style="--fs:21px">An homage to strict coding</b></a>
 <a data-k="e" style="--dx:-2px;--r:-0.37deg;margin-top:0px;--ts:1.14;--tr:1.9deg;--pa:-0.83deg;--py:-1.4px;--px:-4.7px" class="t tp n e3 f1 tr3 pc4" href="/essays/a-primer-on-delivering-a-good-presentation.html"><i>Jul 2015</i><b style="--fs:18px">A primer on delivering a good presentation</b></a>
 <a data-k="e" style="--dx:2px;--r:0.15deg;margin-top:5px;--ts:0.96;--tr:-3.6deg;--pa:0.07deg;--py:-1.0px;--px:3.1px" class="t tp n e3 f6 tr4 pc3" href="/essays/the-personal-lessons-ive-learned-in-business.html"><i>Jun 2015</i><b style="--fs:18px">The personal lessons I’ve learned in business</b></a>
@@ -444,8 +452,8 @@ i.pp.dn::after{width:5.3px}
 <a data-k="e d" style="--dx:-1px;--r:0.11deg;margin-top:1px;--ts:0.99;--tr:1.4deg;--pa:-0.20deg;--py:-1.5px;--px:-1.0px" class="t tp n e3 f5 tr3 pc3" href="/essays/the-redesign-the-wait-and-the-response.html"><i>Mar 2014</i><b style="--fs:18px">The redesign, the wait, and the response — DoneDone</b></a>
 <a data-k="p" style="--dx:-1px;--r:-0.77deg;margin-top:2px;--sa:0.29deg;--lx:7px;--rx:9px;--blx:10px;--brx:10px;--ly:5px;--ry:6px;--bly:5px;--bry:8px;--la:34deg;--ra:35deg;--bla:45deg;--bra:30deg" class="t stp p" href="https://logonerd.kawaicheung.io"><img src="img/logonerd.jpg" alt="LogoNerd"><b style="display:block;font-size:22px;line-height:24px;letter-spacing:-.5px;padding:9px 3px 1px">LogoNerd</b><u class="s3"></u><u class="s4"></u></a>
 <a data-k="e" style="--dx:2px;--r:-0.32deg;margin-top:1px;--ts:1.03;--tr:-1.9deg;--pa:0.74deg;--py:-0.5px;--px:-1.2px" class="t tp n e1 f1 tr4 pc2" href="/essays/quiet-please-the-benefits-of-online-chat.html"><i>Mar 2014</i><b style="--fs:16px">Quiet please: The benefits of online chat in the workplace</b></a>
-<a data-k="v d" style="--dx:-2px;--r:-0.14deg;margin-top:4px;--sa:0.89deg;--lx:9px;--rx:11px;--blx:5px;--brx:8px;--ly:7px;--ry:5px;--bly:5px;--bry:8px;--la:33deg;--ra:39deg;--bla:34deg;--bra:41deg" class="t stp p sq" href="https://www.youtube.com/watch?v=sLmnJFcjHig"><span class="vp"><img src="img/real-code-10.jpg" alt="How we use DoneDone...at DoneDone"></span><span class="hw">DoneDone - Intro</span><u class="s3"></u><u class="s4"></u></a>
-<a data-k="v d" style="--dx:1px;--r:0.42deg;margin-top:4px;--sa:-0.5deg;--lx:9px;--rx:11px;--blx:5px;--brx:8px;--ly:7px;--ry:5px;--bly:5px;--bry:8px;--la:33deg;--ra:39deg;--bla:34deg;--bra:41deg" class="t stp p sq" href="https://www.youtube.com/watch?v=a-HS_nWZKy8"><span class="vp"><img src="img/donedone-story.jpg" alt="DoneDone - Our Story"></span><span class="hw">DoneDone - Our Story</span><u class="s3"></u><u class="s4"></u></a>
+<a data-k="v d" style="--dx:-2px;--r:-0.14deg;margin-top:4px;--sa:0.89deg;--lx:9px;--rx:11px;--blx:5px;--brx:8px;--ly:7px;--ry:5px;--bly:5px;--bry:8px;--la:33deg;--ra:39deg;--bla:34deg;--bra:41deg" class="t stp p sq" href="https://www.youtube.com/watch?v=sLmnJFcjHig"><span class="vp"><img src="img/real-code-10.jpg" alt="How we use DoneDone...at DoneDone"></span><span class="hw">DoneDone - Intro</span></a>
+<a data-k="v d" style="--dx:1px;--r:0.42deg;margin-top:4px;--sa:-0.5deg;--lx:9px;--rx:11px;--blx:5px;--brx:8px;--ly:7px;--ry:5px;--bly:5px;--bry:8px;--la:33deg;--ra:39deg;--bla:34deg;--bra:41deg" class="t stp p sq" href="https://www.youtube.com/watch?v=a-HS_nWZKy8"><span class="vp"><img src="img/donedone-story.jpg" alt="DoneDone - Our Story"></span><span class="hw">DoneDone - Our Story</span></a>
 <a data-k="e d" style="--dx:2px;--r:-0.35deg;margin-top:4px;--ts:0.91;--tr:-2.1deg;--pa:-0.03deg;--py:-1.7px;--px:-4.9px;--hy:65%" class="t tp n e4 f6 tr5 pc3" href="/essays/a-fast-code-culture.html"><i>Feb 2014</i><b style="--fs:21px">A fast code culture</b></a>
 <div data-k="e d" style="--dx:2px;--r:-0.6deg;margin-top:3px;--ts:1.05;--tr:2.5deg;--x1:-8px;--y1:-5px;--r1:-33deg;--s1:1.08;--x2:-10px;--y2:-8px;--r2:38deg;--s2:.94;--x3:-9px;--y3:-3px;--r3:29deg;--s3:1;--x4:-6px;--y4:-6px;--r4:-36deg;--s4:1.1" class="t tp ddw"><div class="e2 dd ddt x"><img class="ddl" src="img/logo--donedone.png" alt="DoneDone"><i>2017</i><b>The making of DoneDone</b><div class="ddk"><a href="/essays/the-ridiculous-thing-we-do-every-day.html">The ridiculous thing we do every day</a><a href="/essays/sweating-the-big-migration.html">The Big Migration</a><a href="/essays/six-oclock-in-the-morning.html">Six o’ clock in the morning, you’re the last to hear the warning</a><a href="/essays/project-bugspray.html">Project BugSpray</a><a href="/essays/processlessness.html">Processlessness</a><a href="/essays/one-vote-of-influence.html">One vote of influence</a><a href="/essays/the-worst-part-of-caring.html">Love hurts</a><a href="/essays/how-an-early-feature-was-born.html">How an early feature was born</a><a href="/essays/hindsight-is-please-dont-make-me-look.html">Hindsight is…please don’t make me look</a><a href="/essays/george-washingtons-axe.html">George Washington’s axe</a><a href="/essays/emailin-aint-easy.html">Emailin’ ain’t easy</a><a href="/essays/customer-0000001.html">Customer #000001</a><a href="/essays/the-glam-of-maintaining.html">The glam of maintaining</a></div></div><u class="s3"></u><u class="s4"></u></div>
 <a data-k="e d" style="--dx:-1px;--r:0.68deg;margin-top:2px;--ts:0.98;--tr:2.2deg;--pa:0.22deg;--py:-0.5px;--px:-4.5px" class="t tp n e3 f2 tr1 pc2" href="/essays/thinking-through-your-problem.html"><i>Aug 2013</i><b style="--fs:18px">Thinking through your problem</b></a>
@@ -471,7 +479,7 @@ i.pp.dn::after{width:5.3px}
 <a data-k="e" style="--dx:1px;--r:-0.12deg;margin-top:5px;--ts:1.13;--tr:-0.2deg;--pa:0.27deg;--py:-1.4px;--px:2.9px" class="t tp n e1 f2 tr2 pc3" href="/essays/the-benefits-of-the-imperfect-art-of-handwriting.html"><i>Oct 2010</i><b style="--fs:18px">The benefits of the imperfect art of handwriting</b></a>
 <a data-k="e" style="--dx:2px;--r:0.30deg;margin-top:5px;--ts:1.11;--tr:-3.5deg;--pa:-0.05deg;--py:-0.6px;--px:3.8px" class="t tp n e1 f7 tr3 pc1" href="/essays/selling-the-process-with-the-product.html"><i>Mar 2010</i><b style="--fs:18px">Selling the process with the product</b></a>
 <a data-k="e" style="--dx:2px;--r:-0.80deg;margin-top:0px;--ts:0.92;--tr:1.7deg;--pa:0.71deg;--py:-1.0px;--px:1.0px" class="t tp n e1 f3 tr4 pc2" href="/essays/recalibrating-your-senses.html"><i>Mar 2010</i><b style="--fs:21px">Recalibrating your senses</b></a>
-<a data-k="v d" style="--dx:-1px;--r:0.35deg;margin-top:5px;--sa:-0.65deg;--lx:10px;--rx:5px;--blx:6px;--brx:6px;--ly:7px;--ry:6px;--bly:7px;--bry:8px;--la:30deg;--ra:32deg;--bla:30deg;--bra:45deg" class="t stp p sq" href="https://www.youtube.com/watch?v=Ujj_BKpiQHE"><span class="vp"><img src="img/real-code-3.jpg" alt="Diagrams as documentation"></span><u class="s3"></u><u class="s4"></u></a>
+<a data-k="v d" style="--dx:-1px;--r:0.35deg;margin-top:5px;--sa:-0.65deg;--lx:10px;--rx:5px;--blx:6px;--brx:6px;--ly:7px;--ry:6px;--bly:7px;--bry:8px;--la:30deg;--ra:32deg;--bla:30deg;--bra:45deg" class="t stp p sq" href="https://www.youtube.com/watch?v=Ujj_BKpiQHE"><span class="vp"><img src="img/real-code-3.jpg" alt="Diagrams as documentation"></span></a>
 <a data-k="e" style="--dx:-2px;--r:0.14deg;margin-top:5px;--ts:0.92;--tr:-2.0deg;--pa:0.29deg;--py:-0.3px;--px:5.0px" class="t tp n e3 f2 tr5 pc1" href="/essays/treat-time-as-an-ingredient-not-a-currency.html"><i>Feb 2010</i><b style="--fs:18px">Treat time as an ingredient, not a currency</b></a>
 <a data-k="e" style="--dx:-2px;--r:-0.94deg;margin-top:2px;--ts:0.96;--tr:0.2deg;--pa:0.37deg;--py:-1.8px;--px:-0.1px" class="t tp n e3 f4 tr1 pc1" href="/essays/being-your-own-boss-is-about-being-your-own-employee.html"><i>Jan 2010</i><b style="--fs:18px">Being your own boss is about being your own employee</b></a>
 <a data-k="p" style="--dx:-2px;--r:-0.75deg;margin-top:2px;--sa:0.44deg;--lx:10px;--rx:5px;--blx:8px;--brx:6px;--ly:4px;--ry:3px;--bly:4px;--bry:3px;--la:35deg;--ra:30deg;--bla:40deg;--bra:31deg" class="t stp p" href="https://pix.kawaicheung.io"><img src="img/pix.jpg" alt="Pix"><b style="display:block;font-size:22px;line-height:24px;letter-spacing:-.5px;padding:9px 3px 1px">Pix</b><u class="s3"></u><u class="s4"></u></a>
@@ -540,7 +548,7 @@ if(document.fonts&&document.fonts.ready)document.fonts.ready.then(q);
 var KEY='kwc-read',read=[];
 try{read=JSON.parse(localStorage.getItem(KEY)||'[]')||[]}catch(e){read=[]}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(read))}catch(e){}}
-var g=document.getElementById('g'),m=document.getElementById('m'),f=document.getElementById('mf'),pp=document.getElementById('pp'),pc=document.getElementById('pc'),rf=document.createElement('button'),root=document.documentElement,busy=false,tok=0;
+var g=document.getElementById('g'),m=document.getElementById('m'),f=document.getElementById('mf'),pp=document.getElementById('pp'),pc=document.getElementById('pc'),rf=document.getElementById('rs'),dirtyFlag=false,root=document.documentElement,busy=false,tok=0;
 function xs(w,h){var r=Math.random;function j(v,k){return (v+(r()-.5)*k).toFixed(1)}
 function P(x1,y1,x2,y2){var o=r()<.5?-1:1,ex=j(x2*w,w*.04),ey=j(y2*h,h*.05),dx=(x2-x1)*w,dy=(y2-y1)*h,d=Math.sqrt(dx*dx+dy*dy)||1,ux=dx/d,uy=dy/d,bk=5+r()*3;
 return '<path pathLength="1" d="M'+j(x1*w,w*.05)+' '+j(y1*h,h*.06)+'C'+j((x1+(x2-x1)*.35)*w,w*.06)+' '+j((y1+(y2-y1)*.3)*h,h*.06)+' '+j((x1+(x2-x1)*.65)*w,w*.06)+' '+j((y1+(y2-y1)*.7)*h,h*.06)+' '+ex+' '+ey+'L'+(ex-ux*bk-uy*o*1.5).toFixed(1)+' '+(ey-uy*bk+ux*o*1.5).toFixed(1)+'"/>'}
@@ -549,7 +557,7 @@ function addX(a,anim){if(a.classList.contains('xd'))return;a.insertAdjacentHTML(
 if(anim)[].forEach.call(sv.querySelectorAll('path'),function(pt,i){pt.style.strokeDasharray='1 3';pt.animate([{strokeDashoffset:1.03},{strokeDashoffset:0}],{duration:140,delay:i*105,easing:'cubic-bezier(.2,.7,.3,1)',fill:'backwards'})})}
 function applyRead(a,anim){if(a.classList.contains('n'))addX(a,anim);else a.classList.add('rd')}
 [].forEach.call(g.querySelectorAll('a[href^="/essays/"]'),function(a){if(read.indexOf(a.getAttribute('href'))>-1)applyRead(a,false)});
-function sync(){rf.classList.toggle('show',!!g.querySelector('.gone,.xd,.rel,.pinoff'))}sync();document.addEventListener('kwc-rel',sync);
+function sync(){rf.classList.toggle('show',dirtyFlag||read.length>0||!!g.querySelector('.gone,.xd,.rd,.rel,.pinoff,.hp,.tz,.tz-a,.tz-b'))}sync();document.addEventListener('kwc-rel',sync);document.addEventListener('kwc-dirty',function(){if(rfb)return;dirtyFlag=true;sync()});
 function video(src){tok++;pc.innerHTML='';m.classList.remove('img');m.classList.add('vid','pre');f.src=src}
 var mi=document.getElementById('mi');
 function photo(src){tok++;pc.innerHTML='';m.classList.remove('vid');m.classList.add('img','pre');f.src='about:blank';mi.src=src}
@@ -640,23 +648,40 @@ if(a.classList.contains('n')){if(a.classList.contains('xd'))reveal();else{addX(a
 });
 var rfb=false;
 rf.addEventListener('click',function(){
-if(rfb)return;
-var order=read.slice();read=[];save();rf.classList.remove('show');
+if(rfb)return;rfb=true;
+var order=read.slice();read=[];save();dirtyFlag=false;
+var all=[].slice.call(g.querySelectorAll('*'));
+/* things that are still hidden/fallen get a staggered pop back below */
 var els=order.map(function(h){return g.querySelector('a[href="'+h+'"]')}).filter(function(a){return a&&(a.classList.contains('xd')||a.classList.contains('gone')||a.classList.contains('rd'))});
 [].forEach.call(g.querySelectorAll('.xd,.gone,.rd,.pinoff,.rel'),function(a){if(els.indexOf(a)<0)els.push(a)});
-if(!els.length)return;
-rfb=true;
-var step=Math.max(60,Math.min(200,2400/els.length));
+/* 1) stop anything still swinging or spinning and return every card to its pose */
+all.forEach(function(e){
+if(e.__stop){try{e.__stop()}catch(_){}}
+if(e.__sim){e.__sim=null;e.style.transform='';e.style.transformOrigin='';e.style.removeProperty('--rot');e.classList.remove('rotating')}
+if(window.__PP&&e.__ps)__PP.reset(e)});
+/* 2) every pin back where it started */
+if(window.__pinsRestore)__pinsRestore();
+all.forEach(function(e){if(e.__dp)e.__dp=[];if(e.__pc)e.__pc=0;if(e.__ls)e.__ls=[];if(e.__loose)e.__loose=null;if(e.__blocked)e.__blocked=false;e.classList.remove('hp')});
+[].forEach.call(g.querySelectorAll('.ph.off'),function(q){q.classList.remove('off')});
+/* 3) all tape and staples back on, torn-off pieces gone */
+if(window.__tpReset)__tpReset();
+/* 4) stapler and tape roll back on the ledge */
+if(window.__stpReset)__stpReset();
+/* 5) filter back to All */
+if(window.__filterAll)__filterAll();
+/* 6) read marks and fallen cards come back one after another */
+var step=Math.max(40,Math.min(160,2000/Math.max(1,els.length)));
+if(!els.length){rfb=false;sync();return}
 els.forEach(function(a,i){
 setTimeout(function(){
-if(a.classList.contains('xd')){var xv=a.querySelector('.xm');if(xv){xv.classList.add('xo');setTimeout(function(){xv.remove();a.classList.remove('xd')},320)}else a.classList.remove('xd');if(i===els.length-1)setTimeout(function(){rfb=false},360);return}
+var last=i===els.length-1;
+if(a.classList.contains('xd')){var xv=a.querySelector('.xm');if(xv){xv.classList.add('xo');setTimeout(function(){xv.remove();a.classList.remove('xd');sync()},320)}else{a.classList.remove('xd')}if(last)setTimeout(function(){rfb=false;sync()},360);return}
 var card=a.classList.contains('n'),tr=getComputedStyle(a).transform;tr=tr==='none'?'':tr+' ';
 if(window.__PP&&a.__ps)__PP.reset(a);if(a.classList.contains('rel')&&window.__paperBack)__paperBack(a);a.classList.remove('gone','rd','pinoff','rel');
 a.animate([{transform:tr+'scale('+(card?.88:.97)+')',opacity:0},{transform:tr+'scale(1)',opacity:1}],{duration:340,easing:'cubic-bezier(.2,.8,.3,1)'});
-if(i===els.length-1)setTimeout(function(){rfb=false},440);
-},i*step);
-});
-});
+if(last)setTimeout(function(){rfb=false;sync()},440);
+},i*step)});
+sync()});
 pc.addEventListener('click',function(e){
 if(e.button||e.metaKey||e.ctrlKey||e.shiftKey||e.altKey)return;
 var a=e.target.closest('a');if(!a)return;if(a.classList.contains('po')){e.preventDefault();location.href=a.href;return}
@@ -700,7 +725,8 @@ window.scrollTo(0,0);addEventListener('load',function(){scrollTo(0,0)});
 (function(){var st=0;function chk(){st=0;document.documentElement.classList.toggle('scr',(window.pageYOffset||0)>4)}addEventListener('scroll',function(){if(!st)st=requestAnimationFrame(chk)},{passive:true});chk()})();['gesturestart','gesturechange','gestureend'].forEach(function(k){document.addEventListener(k,function(e){e.preventDefault()},{passive:false})});
 document.addEventListener('copy',function(e){var sel=window.getSelection&&getSelection(),n=sel&&sel.anchorNode;n=n&&(n.nodeType===1?n:n.parentNode);if(!n||!n.closest||!n.closest('#m'))e.preventDefault()});
 addEventListener('pageshow',function(e){if(e.persisted)scrollTo(0,0)});
-(function(){var nv=document.getElementById('nv');function fit(){var m=innerWidth<=520,nh=nv.offsetHeight;var sb=document.getElementById('sc').getBoundingClientRect(),nb=nv.getBoundingClientRect();document.documentElement.style.setProperty('--nbh',Math.ceil(Math.max(sb.bottom,nb.bottom)+15)+'px');document.documentElement.style.setProperty('--nvh',(nh+14+8)+'px');document.body.style.paddingTop=(nh+14+26+(m?29:0))+'px'}fit();addEventListener('resize',fit);addEventListener('load',fit);if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fit)})();
+(function(){var nv=document.getElementById('nv');function fit(){var m=innerWidth<=520,nh=nv.offsetHeight;var sb=document.getElementById('sc').getBoundingClientRect(),nb=nv.getBoundingClientRect();document.documentElement.style.setProperty('--nbh',Math.ceil(Math.max(sb.bottom,nb.bottom)+3)+'px');document.documentElement.style.setProperty('--nvh',(nh+14+8)+'px');document.body.style.paddingTop=(nh+14+26+(m?29:0))+'px'}fit();addEventListener('resize',fit);addEventListener('load',fit);if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fit)})();
+window.__filterAll=function(){if(cur!=='')apply('',true)};
 var h=(location.hash||'').slice(1),k0='';for(var k in nm)if(nm[k]===h)k0=k;
 if(k0)apply(k0,false);
 })();
@@ -803,6 +829,7 @@ function attach(b,target){
 target.addEventListener('pointerdown',function(e){
 if(e.button)return;e.preventDefault();
 if(grabB)return;
+document.dispatchEvent(new Event('kwc-dirty'));
 initAll();
 var P=b.P,pt=clientToPage(e);cl={x:e.clientX,y:e.clientY};
 var c=Math.cos(P.a),sn=Math.sin(P.a),dx=pt.x-P.x,dy=pt.y-P.y;
@@ -824,6 +851,11 @@ addEventListener('resize',function(){var m=B.filter(function(b){return b.moved})
 window.__paperAdd=function(wrap,inner,poly,st){initAll();var b=body(wrap,inner,'p',.3);b.poly=poly;b.e=.06;b.air=1.1;b.free=true;geo(b);b.moved=true;b.P=st;b.mode='fly';b.sleep=0;wrap.classList.add('mv');env();draw(b);go();return b};
 window.__paperDel=function(wrap){var k=-1;B.forEach(function(b,i){if(b.wrap===wrap)k=i});if(k>-1)B.splice(k,1);if(wrap.parentNode)wrap.parentNode.removeChild(wrap)};
 window.__stp={B:B,get floor(){return floorL}};
+window.__stpReset=function(){B.slice().forEach(function(b){
+if(b.free){if(window.__paperDel)__paperDel(b.wrap);return}
+if(!b.moved)return;if(grabB===b)grabB=null;
+b.mode='rest';b.moved=false;b.held=false;b.sleep=0;b.fly=0;b.P.x=b.bx;b.P.y=b.by;b.P.a=0;b.P.vx=0;b.P.vy=0;b.P.w=0;
+b.wrap.classList.remove('held','mv');b.wrap.style.transform='';b.inner.style.transform=''})};
 })();
 </script>
 <script>
@@ -831,7 +863,7 @@ window.__stp={B:B,get floor(){return floorL}};
 var held=null,off={x:0,y:0},cl={x:0,y:0};
 function place(){if(!held)return;var x=cl.x+scrollX+off.x,y=cl.y+scrollY+off.y,W=document.documentElement.clientWidth,H=document.documentElement.scrollHeight;
 x=Math.max(8,Math.min(W-8,x));y=Math.max(8,Math.min(H-8,y));held.style.left=x+'px';held.style.top=y+'px'}
-var wkT=0;function bumpPins(){window.__pinVer=(window.__pinVer||0)+1;clearTimeout(wkT);wkT=setTimeout(function(){if(window.__wakeBlocked)__wakeBlocked()},40)}
+var wkT=0;function bumpPins(){document.dispatchEvent(new Event('kwc-dirty'));window.__pinVer=(window.__pinVer||0)+1;clearTimeout(wkT);wkT=setTimeout(function(){if(window.__wakeBlocked)__wakeBlocked()},40)}
 function addDrop(c,i){bumpPins();c.__pc=(c.__pc||0)+1;(c.__dp=c.__dp||[]).push(i);c.classList.add('hp');i.__card=c;if(window.__PP)__PP.added(c,i)}
 function rmDrop(c,i){bumpPins();c.__pc=Math.max(0,(c.__pc||1)-1);if(c.__dp){var k=c.__dp.indexOf(i);if(k>-1)c.__dp.splice(k,1)}if(!c.__pc)c.classList.remove('hp');i.__card=null;if(window.__PP)__PP.removed(c,i)}
 window.__unpinAll=function(c){(c.__dp||[]).forEach(function(i){i.__card=null});c.__dp=[];c.__pc=0;c.classList.remove('hp')};
@@ -881,6 +913,12 @@ window.__heldCheck=function(o){if(o.__tn>0||o.classList.contains('rel'))return;i
 window.__paperBack=function(card){if(card.__wrap&&window.__paperDel)__paperDel(card.__wrap);card.__wrap=null;
 var i=card.__loose;if(i){__pinRm(i);card.__loose=null}}
 window.__pinRm=function(i){if(!i)return;if(i.__card)rmDrop(i.__card,i);if(i===held)held=null;if(i.parentNode)i.parentNode.removeChild(i)};
+var PS0=[].map.call(document.querySelectorAll('i.pp'),function(i){return {html:i.outerHTML,par:i.parentNode}});
+window.__pinsRestore=function(){
+[].forEach.call(document.querySelectorAll('i.pp,i.ppo'),function(i){if(i.parentNode)i.parentNode.removeChild(i)});
+held=null;pend=null;
+PS0.forEach(function(rec){var t=document.createElement('div');t.innerHTML=rec.html;if(t.firstChild)rec.par.appendChild(t.firstChild)});
+window.__pinVer=(window.__pinVer||0)+1};
 function mkph(){[].forEach.call(document.querySelectorAll('#g .t.pin .pn'),function(pn){if(pn.querySelector('.ph'))return;var sp=document.createElement('s');sp.className='ph';sp.setAttribute('aria-hidden','true');sp.setAttribute('data-tx',(pn.offsetWidth/2+1.02).toFixed(2));sp.setAttribute('data-ty','8.73');sp.style.setProperty('--py','-.5px');pn.appendChild(sp)});
 [].forEach.call(document.querySelectorAll('#g .n[class*=" pc"]:not(.tb)'),function(c){if(c.querySelector('.ph'))return;var sp=document.createElement('s');sp.className='ph';sp.setAttribute('aria-hidden','true');c.appendChild(sp)})}
 function mkmulti(){
@@ -889,7 +927,7 @@ function hs(t){var h=2166136261;for(var k=0;k<t.length;k++){h^=t.charCodeAt(k);h
 function rg(seed){var a=seed;return function(){a=(a+0x6D2B79F5)|0;var t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
 [].forEach.call(document.querySelectorAll('#g a.n.tp[class*=" pc"]:not(.tb):not(.sp2c):not(.p2c)'),function(c){
 var rnd=rg(hs((c.getAttribute('href')||'')+'multi-pins'));
-if(rnd()>=.22)return;
+if(rnd()>=.088)return;
 var m=/\bpc(\d)\b/.exec(c.className),ci=m?PK['pc'+m[1]]:0,pat=0,j=function(a){return(rnd()-.5)*a},L=[];
 L=[[.09+j(.04),'t'],[.91+j(.04),'t']];
 if(rnd()<.5)L.reverse();
@@ -906,7 +944,7 @@ function rg(seed){var a=seed;return function(){a=(a+0x6D2B79F5)|0;var t=Math.imu
 [].forEach.call(document.querySelectorAll('#g>.t.stp[data-k]'),function(c,idx){
 var k=(' '+c.getAttribute('data-k')+' ');if(k.indexOf(' p ')<0&&k.indexOf(' v ')<0)return;
 if(c.classList.contains('tt')||c.querySelector('.ph'))return;
-var rnd=rg(hs((c.getAttribute('href')||'')+'|'+idx+'media-pins')),two=rnd()<.5,L=two?[.13+(rnd()-.5)*.04,.87+(rnd()-.5)*.04]:[.5+(rnd()-.5)*.04];
+var rnd=rg(hs((c.getAttribute('href')||'')+'|'+idx+'media-pins')),two=rnd()<.2,L=two?[.13+(rnd()-.5)*.04,.87+(rnd()-.5)*.04]:[.5+(rnd()-.5)*.04];
 var ci=Math.floor(rnd()*4);
 c.classList.add('p2c');
 L.forEach(function(x,n){var sp=document.createElement('s');sp.className='ph';sp.setAttribute('aria-hidden','true');sp.setAttribute('data-x',x.toFixed(3));sp.style.left=(x*100).toFixed(1)+'%';sp.style.setProperty('--pc',PC[(ci+n*2)%4]);c.appendChild(sp)})})}
@@ -1065,6 +1103,7 @@ if(!col)return to;var d=to-from,n=Math.max(1,Math.ceil(Math.abs(d)/1)),prev=from
 for(var i=1;i<=n;i++){var a=from+d*i/n;if(hits(col,a/R2D))return prev;prev=a}
 return to}
 function relz(s){}
+function keepLanding(c,s,bl){if(c.classList.contains('in')&&!c.__landed&&s.O&&s.T)c.__landed={psi:s.psi,O:s.O.slice(),T:s.T.slice(),bl:bl}}
 function zc(c){return (c.classList.contains('pn')||c.matches('.bkv,.bkb,.shot,.rkv'))?(c.closest('.t')||c):c}
 function pins(c){var w=c.offsetWidth,h=c.offsetHeight,out=[];
 [].forEach.call(c.querySelectorAll('.ph'),function(ph){if(ph.classList.contains('off'))return;var dx=ph.getAttribute('data-x');out.push({k:'o',ph:ph,base:dx==null,x:ph.getAttribute('data-tx')!=null?parseFloat(ph.getAttribute('data-tx')):dx!=null?w*parseFloat(dx):w/2+num(c,'--px'),y:ph.getAttribute('data-fy')!=null?ph.offsetTop+14+c.clientTop+6.7:ph.getAttribute('data-ty')!=null?parseFloat(ph.getAttribute('data-ty')):ph.getAttribute('data-y')==='b'?h-8:20.7+(dx!=null?0:num(c,'--py'))})});
@@ -1087,9 +1126,10 @@ var dt=Math.min(.05,(t-last)/1000||.016);last=t;acc+=dt;var p=s.psi/R2D;
 var eqL=s.eq+(s.lean||0);
 while(acc>=H){var dd=s.dm||D;if(Math.abs(s.w)<.35&&Math.abs(wrap(p-eqL))<.05)dd=Math.max(dd,5);var a=-s.K*Math.sin(p-eqL)-dd*s.w;s.w+=a*H;var np=p+s.w*H;if(COL&&hits(COL,np)){s.w*=-.2;blk++}else{p=np;blk=0}acc-=H}
 s.psi=p*R2D;put(c,s);
-if(blk>60){s.run=0;c.__stop=null;c.classList.remove('rotating');relz(s);s.blocked=true;return}
+if(blk>60){s.run=0;c.__stop=null;c.classList.remove('rotating');relz(s);s.blocked=true;keepLanding(c,s,true);return}
 if(Math.abs(s.w)<.006&&Math.abs(wrap(p-eqL))<.0006){s.run=0;c.__stop=null;c.classList.remove('rotating');relz(s);
-if(isBase)toBase(c,s);else{s.psi=s.eq*R2D;put(c,s)}return}
+if(isBase)toBase(c,s);else{s.psi=s.eq*R2D;put(c,s)}
+if(!isBase)keepLanding(c,s,false);return}
 requestAnimationFrame(f)})(last)}
 function recompute(c,spawn){
 if(c.__sim&&c.__stop)c.__stop();
@@ -1176,11 +1216,12 @@ added:function(c,i){if(!part(c))return;var s=st(c),r=c.getBoundingClientRect(),p
 i.__f=[(w/2+v[0])/w,(h/2+v[1])/h];recompute(c)},
 removed:function(c,i){if(part(c))recompute(c);else if(window.__heldCheck&&c.__tn===0)window.__heldCheck(c)},
 pulled:function(c,ph,spawn){if(!part(c)){spawn(c);return}ph.classList.add('off');c.classList.add('pinoff');document.dispatchEvent(new Event('kwc-rel'));recompute(c,spawn)},
-reset:function(c){var s=c.__ps;if(!s)return;stop(c,s);zc(c).style.zIndex='';if(zc(c)!==c)c.style.zIndex='';if(s.pz){s.pz.style.zIndex='';s.pz=null}s.cz=null;
+reset:function(c){var s=c.__ps;if(!s)return;if(c.classList.contains('in')&&!c.__landed)return;stop(c,s);s.lean=0;s.blocked=false;zc(c).style.zIndex='';if(zc(c)!==c)c.style.zIndex='';if(s.pz){s.pz.style.zIndex='';s.pz=null}s.cz=null;
 if(window.__unpinAll)__unpinAll(c);
 (c.__ls||[]).splice(0).forEach(function(i){window.__pinRm(i)});if(c.__loose){window.__pinRm(c.__loose);c.__loose=null}
 c.style.setProperty('--r',s.r0);toBase(c,s);c.classList.remove('rotating','pinoff');
-[].forEach.call(c.querySelectorAll('.ph'),function(p){p.classList.remove('off')})}};
+[].forEach.call(c.querySelectorAll('.ph'),function(p){p.classList.remove('off')});
+if(c.classList.contains('in')&&c.__landed){var L=c.__landed;s.O=L.O.slice();s.T=L.T.slice();s.psi=L.psi;s.blocked=!!L.bl;c.style.transformOrigin=s.O[0].toFixed(2)+'px '+s.O[1].toFixed(2)+'px';put(c,s)}}};
 })();
 </script>
 <script>
@@ -1237,7 +1278,12 @@ var hit=pieceAt(card,e.clientX,e.clientY);
 if(hov&&hov!==card)setCls(hov,0);
 setCls(card,hit);hov=hit?card:null}
 document.addEventListener('pointermove',function(e){if(drag||e.pointerType==='touch'||e.buttons)return;lastE=e;if(!raf)raf=requestAnimationFrame(hover)},{passive:true});
-function conceal(pc,on){
+window.__tpReset=function(){
+[].forEach.call(document.querySelectorAll('.tz,.tz-a,.tz-b'),function(e){e.classList.remove('tz','tz-a','tz-b')});
+[].forEach.call(g.querySelectorAll('*'),function(e){if(e.__tp)e.__tp=null;if(e.__tn!==undefined)e.__tn=undefined});
+[].forEach.call(document.querySelectorAll('body>.pw'),function(p){if(window.__paperDel)__paperDel(p);else if(p.parentNode)p.parentNode.removeChild(p)});
+[].forEach.call(g.querySelectorAll('.rel'),function(e){if(e.classList.contains('t')&&e.__wrap)return;if(e.matches('.bkv,.bkb,.shot,.rkv'))e.classList.remove('rel')})};
+function conceal(pc,on){if(on)document.dispatchEvent(new Event('kwc-dirty'));
 if(pc.ps){pc.el.classList.toggle(pc.ps==='::before'?'tz-b':'tz-a',on)}else pc.el.classList.toggle('tz',on)}
 document.addEventListener('pointerdown',function(e){
 if(e.button||e.pointerType==='touch'||drag)return;
