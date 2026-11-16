@@ -11,7 +11,7 @@
 /* handwriting: change the family here (and add it to the Google Fonts link below) */
 :root{--hand:"Permanent Marker","Marker Felt",cursive;--hand-weight:400;--hand-size:12px}
 html{background:#b98c5a}
-body{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility;margin:0;padding:65px 28px 0;font:12px/17px -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:#000;background-color:#b98c5a;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='f'><feTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' seed='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.22 0 0 0 0 0.12 0 0 0 0 0.05 9 0 0 0 -4.6'/></filter><rect width='100%' height='100%' filter='url(%23f)'/></svg>"),url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='f'><feTurbulence type='fractalNoise' baseFrequency='.7' numOctaves='2' seed='11' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.93 0 0 0 0 0.74 0 0 0 0 0.5 0 9 0 0 -5.2'/></filter><rect width='100%' height='100%' filter='url(%23f)'/></svg>"),url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='f'><feTurbulence type='fractalNoise' baseFrequency='.025' numOctaves='3' seed='5' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.35 0 0 0 0 0.2 0 0 0 0 0.08 0 0 0 1.6 -.55'/></filter><rect width='100%' height='100%' filter='url(%23f)'/></svg>");-webkit-text-size-adjust:none}
+body{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility;margin:0;padding:65px 28px 0;font:12px/17px -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:#000;position:relative;-webkit-text-size-adjust:none}
 #g{column-width:200px;column-gap:14px}
 @media(min-width:521px){.dd.w2 .ddk{column-count:2;column-gap:28px}}.dd.w2 a{break-inside:avoid}
 #g.mz{position:relative;column-width:auto}#g.mz>.t{position:absolute;margin:0;left:0;top:0}
@@ -96,6 +96,7 @@ html.scr #nb{opacity:1}
 .dd i{font-family:"Inter",Helvetica,Arial,sans-serif;font-weight:600;font-size:9px;line-height:12px;letter-spacing:.4px;text-transform:uppercase;color:#4a4a4a;margin-bottom:8px}
 .dd b{font-weight:700;font-family:"Courier Prime","Courier New",Courier,monospace;font-size:19px;line-height:22px;letter-spacing:-.6px;text-transform:none;margin-bottom:10px}
 .dd a{font-family:"Courier Prime","Courier New",Courier,monospace;font-weight:400;font-size:12px;line-height:14px;margin-bottom:7px}
+body::after{content:"";position:absolute;left:0;top:0;right:0;bottom:0;z-index:-1;pointer-events:none;background-color:#b98c5a;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='f'><feTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' seed='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.22 0 0 0 0 0.12 0 0 0 0 0.05 9 0 0 0 -4.6'/></filter><rect width='100%' height='100%' filter='url(%23f)'/></svg>"),url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='f'><feTurbulence type='fractalNoise' baseFrequency='.7' numOctaves='2' seed='11' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.93 0 0 0 0 0.74 0 0 0 0 0.5 0 9 0 0 -5.2'/></filter><rect width='100%' height='100%' filter='url(%23f)'/></svg>"),url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='f'><feTurbulence type='fractalNoise' baseFrequency='.025' numOctaves='3' seed='5' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.35 0 0 0 0 0.2 0 0 0 0 0.08 0 0 0 1.6 -.55'/></filter><rect width='100%' height='100%' filter='url(%23f)'/></svg>");filter:blur(.4px)}
 body::before{content:"";position:fixed;left:0;top:0;right:0;bottom:0;pointer-events:none;z-index:50;box-shadow:inset 0 0 46px rgba(40,22,5,.45)}
 .f1{--ff:"Playfair Display",Georgia,serif;--k:.92}
 .f2{--ff:"EB Garamond",Garamond,Georgia,serif;--k:1.14}
@@ -177,6 +178,8 @@ html.lock{overflow:hidden}#m{touch-action:none}#pp{touch-action:pan-y}
 #mx svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}
 
 #pc .pd{display:block;font:normal 600 10px/29px "Inter",Helvetica,Arial,sans-serif;letter-spacing:.5px;text-transform:uppercase;color:#4a4a4a}
+#pc .by{display:flex;align-items:center;gap:10px;margin:-6px 0 29px;font:600 13px/29px "Inter",Helvetica,Arial,sans-serif;color:#444;letter-spacing:.1px}
+#pc .by img{display:block;width:28px;height:28px;margin:0;border-radius:50%;object-fit:cover;box-shadow:0 0 0 1px rgba(0,0,0,.12)}
 #pc h1{margin:0 0 29px;font-family:var(--ff,"Playfair Display",Georgia,serif);font-weight:400;font-size:calc(36px*var(--k,1));line-height:1.12;letter-spacing:-.4px;color:#111}
 #pc p,#pc ul,#pc ol,#pc blockquote,#pc pre,#pc img{margin:0 0 29px}
 #pc a{color:#111;text-decoration:underline;text-decoration-color:#999;text-underline-offset:3px}
@@ -300,6 +303,7 @@ body{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
 a,img,svg,#g *{-webkit-user-drag:none}
 @media(max-width:520px),(pointer:coarse){html,body{overflow-x:clip;max-width:100%;touch-action:pan-y;overscroll-behavior-x:none}}
 #ft{position:relative;height:120px;margin-top:36px;pointer-events:none}
+@media(pointer:coarse){.ph,i.pp,i.ppo{pointer-events:none!important}}
 i.pp,i.ppo{border-radius:50%;position:absolute;left:var(--x,0);top:var(--y,0);width:22px;height:22px;margin:-11px 0 0 -11px;transform:rotate(var(--a));pointer-events:auto;cursor:grab;touch-action:none;-webkit-user-select:none;user-select:none}
 i.ppo{transform:rotate(90deg)!important;touch-action:none}
 i.pp::before,i.ppo::before{content:"";position:absolute;left:7.3px;top:7.3px;width:7.4px;height:7.4px;border-radius:50%;background:radial-gradient(circle at 35% 30%,rgba(255,255,255,.4) 0,rgba(255,255,255,0) 38%),var(--pc);box-shadow:2px 4px 3px rgba(0,0,0,.26),inset 0 0 0 1px rgba(0,0,0,.2);z-index:2}
@@ -606,7 +610,7 @@ if(side)n.className='side-icon';
 if(n.tagName==='A'){var h2=n.getAttribute('href')||'';if(h2&&h2.charAt(0)!=='#'){h2=abs(h2,base);n.setAttribute('href',h2);if(/^https?:/.test(h2)){n.target='_blank';n.rel='noopener'}}}
 if(n.tagName==='IMG'||n.tagName==='IFRAME'){var sc=n.getAttribute('src');if(sc)n.setAttribute('src',abs(sc,base))}
 });
-pc.innerHTML='<a class="po" href="" title="Go to original post" aria-label="Go to original post"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6"/><path d="M10 14L21 3"/></svg></a><span class="pd"></span><h1></h1><div class="pb"></div>';
+pc.innerHTML='<a class="po" href="" title="Go to original post" aria-label="Go to original post"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6"/><path d="M10 14L21 3"/></svg></a><span class="pd"></span><h1></h1><div class="by"><img src="img/avatar.jpg" alt="" width="28" height="28"><span>Ka Wai Cheung</span></div><div class="pb"></div>';
 pc.querySelector('.po').href=href;
 pc.querySelector('.pd').textContent=date.trim();
 if(MKD.indexOf(href.replace(/^.*\//,'').replace(/\.html$/,''))>-1)pc.querySelector('.pd').insertAdjacentHTML('afterbegin','<img class="dl" src="img/logo--donedone.png" alt="DoneDone" width="26" height="26">');
@@ -997,6 +1001,7 @@ var fmT;addEventListener('resize',function(){clearTimeout(fmT);fmT=setTimeout(fi
 mkph();
 document.addEventListener('pointerdown',function(e){
 if(e.button||held)return;
+if(e.pointerType==='touch'||(window.matchMedia&&matchMedia('(pointer:coarse)').matches))return;/* no pin pulling on touch screens */
 var ph=e.target.closest&&e.target.closest('.ph');
 if(ph){e.preventDefault();pend={ph:ph,x:e.clientX,y:e.clientY,id:e.pointerId};return}
 var i=e.target.closest&&e.target.closest('i.pp');if(!i)return;
