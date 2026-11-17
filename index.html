@@ -554,7 +554,10 @@ var lg=document.getElementById('lg');
 if(lg){var lt=g.offsetTop+(lg.getBoundingClientRect().top-g.getBoundingClientRect().top),need=innerHeight-12-lt;if(need>0){H+=need;g.style.height=H+'px'}}
 window.__pinVer=(window.__pinVer||0)+1;
 if(g.__H!==H){var first=g.__H==null;g.__H=H;if(!first)dispatchEvent(new Event('resize'))}
-kids.forEach(function(c,i){var o=oldPos[i];c.__laid=true;if(glide!=null&&o&&(o[0]!==c.style.left||o[1]!==c.style.top)){var l=c.style.left,t=c.style.top;c.style.left=o[0];c.style.top=o[1];c.getBoundingClientRect();c.style.transition='left .5s cubic-bezier(.3,.7,.2,1) '+glide+'s,top .5s cubic-bezier(.3,.7,.2,1) '+glide+'s';c.style.left=l;c.style.top=t;clearTimeout(c.__gt);c.__gt=setTimeout(function(){c.style.transition=''},(glide+.6)*1000)}})
+kids.forEach(function(c,i){var o=oldPos[i];c.__laid=true;if(glide!=null&&o&&(o[0]!==c.style.left||o[1]!==c.style.top)){var l=c.style.left,t=c.style.top,Hh=innerHeight,ot=parseFloat(o[1]),nt=parseFloat(t),dist=Math.hypot(parseFloat(o[0])-parseFloat(l),ot-nt);
+/* short moves near the screen glide; a long trip (more than a screen) would be a blur, so that card just fades in at its new spot, and one that ends offscreen simply snaps */
+if(dist<=Hh&&Math.min(ot,nt)<Hh){c.style.left=o[0];c.style.top=o[1];c.getBoundingClientRect();c.style.transition='left .5s cubic-bezier(.3,.7,.2,1) '+glide+'s,top .5s cubic-bezier(.3,.7,.2,1) '+glide+'s';c.style.left=l;c.style.top=t;clearTimeout(c.__gt);c.__gt=setTimeout(function(){c.style.transition=''},(glide+.6)*1000)}
+else if(nt<Hh)c.__far=true}})
 }
 var raf=0;function q(){cancelAnimationFrame(raf);raf=requestAnimationFrame(function(){lay()})}
 lay();
@@ -762,7 +765,8 @@ if(window.__layGlide)__layGlide(anim?0:undefined);
 pend.forEach(function(c){if(!c.__fl&&!hides(c,cur))c.classList.remove('hid')});
 if(!anim)return;
 var H2=innerHeight;
-shown=pend.filter(function(c){return !c.classList.contains('hid')&&!c.classList.contains('gone')}).map(function(c){var r=c.getBoundingClientRect();return {c:c,top:r.top,left:r.left,on:r.bottom>0&&r.top<H2}}).filter(function(o){return o.on});
+var far=[].filter.call(g.children,function(c){if(!c.__far)return false;c.__far=false;return true});
+shown=pend.concat(far).filter(function(c){return !c.classList.contains('hid')&&!c.classList.contains('gone')}).map(function(c){var r=c.getBoundingClientRect();return {c:c,top:r.top,left:r.left,on:r.bottom>0&&r.top<H2}}).filter(function(o){return o.on});
 shown.sort(ord);
 var step=Math.min(35,900/Math.max(1,shown.length));
 shown.forEach(function(o,i){var a=o.c,card=a.classList.contains('n'),tr=getComputedStyle(a).transform;tr=tr==='none'?'':tr+' ';
