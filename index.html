@@ -184,7 +184,7 @@ html.lock{overflow:hidden}#m{touch-action:none}#pp{touch-action:pan-y}
 #pc .pd{display:block;margin-bottom:32px;font:normal 500 12px/29px "JetBrains Mono","SF Mono",Menlo,Consolas,monospace;letter-spacing:-.5px;text-transform:uppercase;color:#4a4a4a}
 #pc .by{display:flex;align-items:center;gap:10px;margin:-6px 0 29px;font:600 13px/29px "Inter",Helvetica,Arial,sans-serif;color:#444;letter-spacing:.1px}
 #pc .by img{display:block;width:28px;height:28px;margin:0;border-radius:50%;object-fit:cover;box-shadow:0 0 0 1px rgba(0,0,0,.12)}
-#pc .pd .dial{display:inline-block;vertical-align:middle;height:54px;margin:-12px 0;clip-path:inset(0 -40px)}
+#pc .pd .dial{display:inline-block;vertical-align:middle;height:54px;margin:-12px 0;clip-path:inset(0 -40px);-webkit-mask-image:linear-gradient(transparent 0,rgba(0,0,0,.85) 15px,#000 21px,#000 33px,rgba(0,0,0,.85) 39px,transparent 54px);mask-image:linear-gradient(transparent 0,rgba(0,0,0,.85) 15px,#000 21px,#000 33px,rgba(0,0,0,.85) 39px,transparent 54px)}
 #pc .pd .dial .ds{display:block}
 #pc .pd .dial .ds span{display:block;height:18px;line-height:18px;white-space:nowrap;opacity:0;will-change:opacity}
 #pc .pd .dm{margin-right:8px}
@@ -625,9 +625,9 @@ el.setAttribute('aria-label',txt);
 el.innerHTML=col('m','dm')+col('y','dy');
 var R=18,idx=rows.length-2,strips=[].slice.call(el.querySelectorAll('.ds')),touched=[[],[]];
 function paint(p){strips.forEach(function(st,n){st.style.transform='translateY('+(R-p*R).toFixed(2)+'px)';
-touched[n].forEach(function(r){r.style.opacity=''});touched[n]=[];
+touched[n].forEach(function(r){r.style.opacity='';r.style.fontWeight=''});touched[n]=[];
 var kids=st.children,lo=Math.max(0,Math.floor(p)-2),hi=Math.min(kids.length-1,Math.ceil(p)+2);
-for(var i=lo;i<=hi;i++){var d=Math.abs(i-p),r=kids[i];r.style.opacity=Math.max(0,1-d*.5).toFixed(3);touched[n].push(r)}})}
+for(var i=lo;i<=hi;i++){var d=Math.abs(i-p),r=kids[i];r.style.opacity=Math.max(0,1-d*.5).toFixed(3);r.style.fontWeight=d<.5?'700':'';touched[n].push(r)}})}
 paint(idx);
 /* the spin runs once the popup is actually on screen (see spinDate) */
 el.__go=idx>0?function(){el.__go=null;var D=Math.min(1900,900+idx*9),t0=performance.now()+150;
