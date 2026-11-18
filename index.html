@@ -262,12 +262,12 @@ a[data-img],a[data-img] *{cursor:zoom-in}
 .t.rotating{z-index:80}
 .t.pin{touch-action:pan-y;-webkit-user-drag:none;-webkit-touch-callout:none;-webkit-user-select:none;user-select:none}
 .pin .pn{cursor:grab}.pin.rotating .pn{cursor:grabbing}
-.pin.rotating .pn,.pn.rotating{background:linear-gradient(calc(135deg - var(--rot,0)*1deg),#f2f2f2,#cdcdcd 55%,#e6e6e6);box-shadow:calc(3px*sin(var(--rot,0)*1deg)) calc(3px*cos(var(--rot,0)*1deg)) 6px rgba(0,0,0,.45),inset 0 0 0 1px rgba(0,0,0,.18)}
-.pin.rotating .pi::after,.pn.rotating .pi::after{transform:rotate(calc(var(--rot,0)*-1deg))}
-.pin.rotating .pn::before,.pn.rotating::before{transform:translate(1.02px,7.23px) rotate(calc(var(--rot,0)*-1deg)) translate(-1.02px,-7.23px)}
-.pin.rotating .pn::after,.pn.rotating::after{transform:translate(1.02px,7.23px) rotate(calc(var(--rot,0)*-1deg)) translate(-1.02px,-7.23px) rotate(-8deg)}
-.n.tp.rotating::before{transform:translate(0,6.7px) rotate(calc(var(--rot,0)*-1deg)) translate(0,-6.7px)}
-.n.tp.rotating::after{transform-origin:50% 0;transform:translate(0,6px) rotate(calc(var(--rot,0)*-1deg)) translate(0,-6px) rotate(var(--pa,0deg))}
+.pn[style*="--rot"]{background:linear-gradient(calc(135deg - var(--rot,0)*1deg),#f2f2f2,#cdcdcd 55%,#e6e6e6);box-shadow:calc(3px*sin(var(--rot,0)*1deg)) calc(3px*cos(var(--rot,0)*1deg)) 6px rgba(0,0,0,.45),inset 0 0 0 1px rgba(0,0,0,.18)}
+.pn[style*="--rot"] .pi::after{transform:rotate(calc(var(--rot,0)*-1deg))}
+.pn[style*="--rot"]::before{transform:translate(1.02px,7.23px) rotate(calc(var(--rot,0)*-1deg)) translate(-1.02px,-7.23px)}
+.pn[style*="--rot"]::after{transform:translate(1.02px,7.23px) rotate(calc(var(--rot,0)*-1deg)) translate(-1.02px,-7.23px) rotate(-8deg)}
+.n.tp[style*="--rot"]::before{transform:translate(0,6.7px) rotate(calc(var(--rot,0)*-1deg)) translate(0,-6.7px)}
+.n.tp[style*="--rot"]::after{transform-origin:50% 0;transform:translate(0,6px) rotate(calc(var(--rot,0)*-1deg)) translate(0,-6px) rotate(var(--pa,0deg))}
 .fc::before,.fc::after,.fc>u,.fc .pn::before,.fc .pn::after{display:none!important}
 .sbt{display:block;margin-top:9px;font:14px/20px Georgia,serif;color:#444;cursor:pointer}.sbt em{display:block;margin-top:6px;font-style:normal;white-space:nowrap;text-decoration:underline;text-underline-offset:2px;color:#222}
 .stp>b[style*="font-size:22px"]{font-family:var(--hand);font-weight:var(--hand-weight);letter-spacing:0!important;font-size:20px!important;line-height:24px!important;text-align:center;text-wrap:balance;padding-top:7px!important;padding-bottom:9px!important}
