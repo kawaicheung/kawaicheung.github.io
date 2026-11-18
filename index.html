@@ -598,7 +598,7 @@ if(a.classList.contains('xd')){var xv=a.querySelector('.xm');if(xv){xv.classList
 else a.classList.remove('rd')},i*step)})});
 function video(src){tok++;pc.innerHTML='';m.classList.remove('img');m.classList.add('vid','pre');f.src=src}
 var mi=document.getElementById('mi');
-function photo(src,cap){tok++;var mc=document.getElementById('mc');mc.textContent=cap||'';m.classList.toggle('cap',!!cap);pc.innerHTML='';m.classList.remove('vid');m.classList.add('img','pre');f.src='about:blank';mi.src=src}
+function photo(src,cap,done){tok++;var mc=document.getElementById('mc');mc.textContent=cap||'';m.classList.toggle('cap',!!cap);pc.innerHTML='';m.classList.remove('vid');m.classList.add('img','pre');f.src='about:blank';mi.removeAttribute('src');var my=tok,pre=new Image();/* wait for the picture before showing the frame, so it never opens as an empty squashed box */pre.onload=pre.onerror=function(){if(my!==tok)return;mi.src=src;(mi.decode?mi.decode():Promise.resolve()).catch(function(){}).then(function(){if(my===tok&&done)done()})};pre.src=src}
 function paperOf(a){var c=a?a.closest('.t'):null;if(!c)return null;var k=c.classList;return {p:(k.contains('ddw')||k.contains('dd'))?'pe4':k.contains('e1')?'pe1':k.contains('e4')?'pe5':k.contains('e3')?'pe3':'pe2',f:(c.className.match(/\bf\d\b/)||[''])[0]}}
 function abs(h,base){try{var u=new URL(h,base);return u.origin===location.origin?u.pathname+u.search+u.hash:u.href}catch(e){return h}}
 var MONS=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
@@ -691,7 +691,7 @@ var fl=e.target.closest('a.fl[data-f]');if(fl&&!e.button&&!e.metaKey&&!e.ctrlKey
 var ex=e.target.closest('[data-ext]');if(ex&&!e.button){e.preventDefault();e.stopPropagation();window.open(ex.getAttribute('data-ext'),'_blank','noopener');return}
 if(e.button||e.metaKey||e.ctrlKey||e.shiftKey||e.altKey)return;
 var im=e.target.closest('a[data-img]');
-if(im){e.preventDefault();if(busy)return;busy=true;photo(im.getAttribute('data-img'),im.getAttribute('data-cap'));reveal();return}
+if(im){e.preventDefault();if(busy)return;busy=true;photo(im.getAttribute('data-img'),im.getAttribute('data-cap'),reveal);return}
 var y=e.target.closest('a[href*="youtube.com/watch"]');
 if(y){var id=(y.href.match(/[?&]v=([\w-]+)/)||[])[1];
 if(id){e.preventDefault();if(busy)return;busy=true;video('https://www.youtube.com/embed/'+id+'?autoplay=1&rel=0&playsinline=1');reveal();return}}
