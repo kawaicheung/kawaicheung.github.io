@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="tvp">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
@@ -10,7 +10,7 @@
 <style>
 /* handwriting: change the family here (and add it to the Google Fonts link below) */
 :root{/* stacking tiers above the board, lowest to highest: stapler and tape roll at rest, ledge, pins just bumped, falling cards and pieces, stapler/tape roll while held, a dragged tape piece, the popup, a pin in your hand */--z-rest:999999990;--z-ledge:999999995;--z-pinhit:1500000000;--z-fall:1600000000;--z-held:1700000000;--z-drag:1999999999;--z-modal:2000000000;--z-pinheld:2147483000;--hand:"Permanent Marker","Marker Felt",cursive;--hand-weight:400;--hand-size:12px}
-html{background:#b98c5a}
+html{background:#b98c5a;overflow-x:hidden}
 body{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility;margin:0;padding:65px 28px 0;font:12px/17px -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:#000;background-color:#b98c5a;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='f'><feTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' seed='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.22 0 0 0 0 0.12 0 0 0 0 0.05 9 0 0 0 -4.6'/></filter><rect width='100%' height='100%' filter='url(%23f)'/></svg>"),url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='f'><feTurbulence type='fractalNoise' baseFrequency='.7' numOctaves='2' seed='11' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.93 0 0 0 0 0.74 0 0 0 0 0.5 0 9 0 0 -5.2'/></filter><rect width='100%' height='100%' filter='url(%23f)'/></svg>"),url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='f'><feTurbulence type='fractalNoise' baseFrequency='.025' numOctaves='3' seed='5' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.35 0 0 0 0 0.2 0 0 0 0 0.08 0 0 0 1.6 -.55'/></filter><rect width='100%' height='100%' filter='url(%23f)'/></svg>");-webkit-text-size-adjust:none}
 #g{column-width:200px;column-gap:14px}
 @media(min-width:521px){.dd.w2 .ddk{column-count:2;column-gap:28px}}.dd.w2 a{break-inside:avoid}
@@ -22,7 +22,40 @@ body{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-r
 .t.tt::after{content:none}
 .tt>u{position:absolute;left:19%;bottom:0;width:62%;height:17px;background:rgba(240,232,196,.82);transform:translateY(46%) rotate(-.7deg);z-index:2;pointer-events:none}
 .tp::before{content:"";position:absolute;left:50%;top:0;width:calc(54px*var(--ts,1));height:calc(17px*var(--ts,1));margin-left:calc(-27px*var(--ts,1));background:rgba(240,232,196,.82);transform:translateY(-50%) rotate(var(--tr,0deg));z-index:2}
-.p{padding:7px 7px 0}
+.p{padding:7px 7px 0}.p:has(>img+.yr){padding-bottom:7px}
+/* experiment: a 90s black TV with a squircle tube and a row of rectangular buttons sits at the bottom right in front of everything, on All and Projects, playing Project99 v3 */
+body{position:relative}
+/* the TV sits inside a clipping strip along the bottom of the page, so it can hang over the right and bottom edges without adding any scroll */
+#tvw{position:absolute;left:0;right:0;bottom:0;height:640px;overflow:hidden;z-index:2147483647;display:none;pointer-events:none}
+#tv{position:absolute;right:34px;bottom:22px;width:262px;pointer-events:none;perspective:900px;perspective-origin:70% 20%;--tvs:1.25;transform:scale(var(--tvs));transform-origin:100% 100%;filter:drop-shadow(0 0 4px rgba(0,0,0,.4)) drop-shadow(8px 11px 15px rgba(0,0,0,.4)) drop-shadow(22px 30px 38px rgba(0,0,0,.26))}
+html.tvp #tvw{display:block}#m.on ~ #tvw{opacity:0}
+.tvc{position:relative;padding:7px 7px 8px;border-radius:5px 0 0 3px;background:linear-gradient(#303033,#161617 35%,#0b0b0c);box-shadow:inset 0 1px 0 rgba(255,255,255,.2),inset 0 0 0 1px #000,inset 0 -3px 7px rgba(0,0,0,.7)}
+.tvc::before{content:"";position:absolute;bottom:-7px;left:12px;right:0;height:8px;background:linear-gradient(#18181a,#050505);border-radius:0 0 0 6px}
+.tvs{padding:11px 7px 11px 7px;border-radius:5px;background:#040404;box-shadow:inset 0 3px 8px #000,0 1px 0 rgba(255,255,255,.12)}
+.tvg{position:relative;overflow:hidden;aspect-ratio:1.42;border-radius:7%/9%;background:#000;box-shadow:inset 0 0 22px rgba(0,0,0,.75)}
+.tvg video{position:absolute;left:0;top:0;width:100%;height:100%;object-fit:cover;transform:scale(1.03);display:block}/* the recording has the screen-capture selection outline in its edges, so it is scaled up a touch inside the tube */
+/* colour test card shown for two seconds when the TV is first reached: bars, a reverse strip and a pluge strip, like an old SMPTE pattern */
+.tvt{position:absolute;inset:0;transition:opacity .25s;background:linear-gradient(90deg,#c0c0c0 0 14.28%,#c0c000 0 28.56%,#00c0c0 0 42.84%,#00c000 0 57.12%,#c000c0 0 71.4%,#c00000 0 85.68%,#0000c0 0) 0 0/100% 78%,linear-gradient(90deg,#0000c0 0 14.28%,#131313 0 28.56%,#c000c0 0 42.84%,#131313 0 57.12%,#00c0c0 0 71.4%,#131313 0 85.68%,#c0c0c0 0) 0 84%/100% 6%,linear-gradient(90deg,#00214c 0 17.8%,#fff 0 35.6%,#32006a 0 53.4%,#131313 0 71.2%,#090909 0 78%,#131313 0 83.4%,#1d1d1d 0 89%,#131313 0) 0 100%/100% 14% no-repeat;background-repeat:no-repeat}
+.tvg.on .tvt{opacity:0;pointer-events:none}
+.tvg:not(.on) video{visibility:hidden}
+.tvg::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:radial-gradient(ellipse at 28% 14%,rgba(255,255,255,.26),rgba(255,255,255,0) 46%),repeating-linear-gradient(0deg,rgba(0,0,0,.16) 0 1px,rgba(0,0,0,0) 1px 3px);box-shadow:inset 0 0 26px 4px rgba(0,0,0,.55),inset 22px 0 18px -8px rgba(0,0,0,.85)}
+.tvf{display:flex;align-items:center;gap:6px;margin-top:8px;padding:0 6px}
+.tvf i{display:block;width:24px;height:9px;border-radius:2px;background:linear-gradient(#4a4a4d,#252527);box-shadow:0 1px 0 rgba(255,255,255,.12) inset,0 1px 2px #000}
+.tvf b{display:block;flex:1;text-align:right;font:500 7.5px/9px "JetBrains Mono","SF Mono",Menlo,monospace;letter-spacing:.8px;color:#7d7d82;text-transform:uppercase}
+.tvf u{display:block;width:6px;height:6px;margin-left:2px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#ff9a8c,#d12a1c 60%,#6a0f08);box-shadow:0 0 5px 1px rgba(255,70,50,.55);text-decoration:none}
+/* a shallow real-3D box: the front face is the TV, and a slim left side and top are visible because the whole thing is turned a few degrees toward the middle of the page */
+.tvx{position:relative;transform-style:preserve-3d;transform:rotateY(-15deg) rotateX(1deg);transform-origin:50% 100%}
+.tvc{transform:translateZ(40px)}
+.tvr{position:absolute;display:block;backface-visibility:hidden}
+.tvr{right:0;top:0;bottom:0;width:80px;transform-origin:0 0;transform:translateX(100%) translateZ(40px) rotateY(90deg);border-radius:0;background:repeating-linear-gradient(90deg,rgba(255,255,255,.07) 0 1px,rgba(0,0,0,0) 1px 7px),linear-gradient(90deg,#3a3a3f,#1b1b1e 55%,#0a0a0b);box-shadow:inset 0 1px 0 rgba(255,255,255,.18)}
+.tva{position:absolute;display:block;backface-visibility:hidden;transform-origin:0 0;border-radius:0 4px 4px 0}
+/* the CRT housing: one slightly shorter block continuing the side panel back */
+.tva{right:0;top:5%;height:90%;width:300px;transform:translateX(100%) translateZ(-40px) rotateY(90deg);background:repeating-linear-gradient(90deg,rgba(255,255,255,.06) 0 1px,rgba(0,0,0,0) 1px 10px),linear-gradient(180deg,rgba(255,255,255,.1),rgba(255,255,255,0) 8%),linear-gradient(90deg,#2b2b2f,#18181b 45%,#0b0b0c)}
+/* the base: its right side runs back under the housing, in the same 3D as the cabinet */
+.tvq{position:absolute;display:block;right:0;top:93%;bottom:-7px;width:290px;transform-origin:0 0;transform:translateX(100%) translateZ(40px) rotateY(90deg);border-radius:0;background:linear-gradient(90deg,#2b2b2f,#18181b 45%,#0b0b0c);backface-visibility:hidden}
+.tvk{position:absolute;left:-26px;right:-30px;bottom:-3px;height:14px;transform:translateZ(-44px);background:radial-gradient(ellipse at 50% 50%,rgba(0,0,0,.55),rgba(0,0,0,0) 70%);filter:blur(5px);pointer-events:none}
+/* phones: the same 3D TV, scaled to fit and pulled toward the right edge */
+@media(max-width:520px){#tv{right:26px;bottom:12px;--tvs:.72}}
 .p img{display:block;width:100%;height:auto;box-shadow:0 0 0 1px rgba(0,0,0,.2)}
 .p.sm img{width:auto;max-width:100%;margin:14px auto 6px}
 .xs{position:absolute;top:2px;right:7px;width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#111;color:#fff;box-shadow:0 0 0 2px #fff,0 1px 3px rgba(0,0,0,.45);transform:rotate(8deg);cursor:pointer;z-index:2;transition:transform .42s cubic-bezier(.34,2.2,.45,.95)}.xs svg{width:13px;height:13px}.xs:hover{transform:rotate(8deg) scale(1.18)}
@@ -303,21 +336,21 @@ i.pp.dn{z-index:0}
 i.pp.dn::before{box-shadow:2px 4px 3px rgba(0,0,0,.26),inset 0 0 0 1px rgba(0,0,0,.22)}
 i.pp.dn::after{width:5.3px}
 @media(max-width:520px){#ft{height:110px;margin-top:24px}i.pp{left:var(--xm);top:var(--ym)}}
-#rl{position:relative;height:150px;margin-top:-118px;pointer-events:none}
-#rl .rw{position:absolute;left:46px;bottom:0;width:135px;height:135px;filter:drop-shadow(2px 2px 2px rgba(0,0,0,.24)) drop-shadow(7px 5px 6px rgba(0,0,0,.2)) drop-shadow(14px 8px 12px rgba(0,0,0,.13))}
-#rl .rt{position:relative;width:135px;height:135px}
-#rl b{position:absolute;left:0;top:0;width:135px;height:135px;border-radius:50%;background:repeating-radial-gradient(circle at 50% 50%,rgba(238,229,190,.93) 0,rgba(238,229,190,.93) 2.34px,rgba(231,221,181,.93) 2.34px,rgba(231,221,181,.93) 4.68px),radial-gradient(circle at 50% 50%,rgba(255,255,255,.18) 0,rgba(255,255,255,0) 70%);-webkit-mask-image:radial-gradient(circle at 50% 50%,transparent 46.8px,#000 47.2px);mask-image:radial-gradient(circle at 50% 50%,transparent 46.8px,#000 47.2px);box-shadow:inset 0 0 0 1px rgba(150,130,80,.25)}
-#rl b::before{content:"";position:absolute;left:5px;top:5px;right:5px;bottom:5px;border-radius:50%;background:radial-gradient(circle at 50% 50%,transparent 46.8px,#efe9db 46.8px,#efe9db 49.5px,transparent 49.9px)}
-#rl .sw{position:absolute;left:236px;bottom:0;width:188px;filter:drop-shadow(2px 2px 2px rgba(0,0,0,.26)) drop-shadow(8px 5px 6px rgba(0,0,0,.21)) drop-shadow(16px 9px 13px rgba(0,0,0,.15))}
+#rl{position:relative;height:75px;margin-top:-43px;pointer-events:none}
+#rl .rw{position:absolute;left:23px;bottom:0;width:67.5px;height:67.5px;filter:drop-shadow(1px 1px 1px rgba(0,0,0,.24)) drop-shadow(3.5px 2.5px 3px rgba(0,0,0,.2)) drop-shadow(7px 4px 6px rgba(0,0,0,.13))}
+#rl .rt{position:relative;width:67.5px;height:67.5px}
+#rl b{position:absolute;left:0;top:0;width:67.5px;height:67.5px;border-radius:50%;background:repeating-radial-gradient(circle at 50% 50%,rgba(238,229,190,.93) 0,rgba(238,229,190,.93) 1.17px,rgba(231,221,181,.93) 1.17px,rgba(231,221,181,.93) 2.34px),radial-gradient(circle at 50% 50%,rgba(255,255,255,.18) 0,rgba(255,255,255,0) 70%);-webkit-mask-image:radial-gradient(circle at 50% 50%,transparent 23.4px,#000 23.6px);mask-image:radial-gradient(circle at 50% 50%,transparent 23.4px,#000 23.6px);box-shadow:inset 0 0 0 1px rgba(150,130,80,.25)}
+#rl b::before{content:"";position:absolute;left:2.5px;top:2.5px;right:2.5px;bottom:2.5px;border-radius:50%;background:radial-gradient(circle at 50% 50%,transparent 23.4px,#efe9db 23.4px,#efe9db 24.75px,transparent 24.95px)}
+#rl .sw{position:absolute;left:118px;bottom:0;width:94px;filter:drop-shadow(1px 1px 1px rgba(0,0,0,.26)) drop-shadow(4px 2.5px 3px rgba(0,0,0,.21)) drop-shadow(8px 4.5px 6.5px rgba(0,0,0,.15))}
 #rl .stpl{display:block;width:100%;height:auto}
 #rl b::after{content:"";position:absolute;left:0;top:0;right:0;bottom:0;border-radius:50%;background:url("data:image/svg+xml;utf8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 135 135%22%3E%3Cg fill=%22none%22 stroke=%22%236e6e70%22 stroke-opacity=%22.62%22 stroke-width=%22.95%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Cpath d=%22M84.8 14.7 L87.0 12.6 L87.6 14.1 L88.1 17.0 L88.9 18.4 L91.2 16.5 L93.0 15.3 L93.9 16.7 L93.8 20.2 L94.7 20.6 L97.4 19.2 L99.3 18.6 L99.4 20.7 L98.9 23.7 L100.5 23.8 L103.3 22.4 L105.3 22.5 L104.8 24.6 L104.2 27.6 L105.2 28.0 L108.7 26.7 L110.1 27.3 L109.4 29.9 L108.5 32.0 L110.3 32.2 L113.1 31.7 L114.8 32.2 L113.4 34.9 L112.7 37.4 L114.5 37.6 L117.6 37.2 L118.5 38.1 L116.8 40.7 L116.3 42.9 L117.8 43.2 L121.4 43.2 L121.4 44.9 L119.8 46.8 L118.7 48.7 L121.4 49.0 L123.8 49.6 L124.0 51.2 L121.3 53.3 L120.5 54.8 L123.8 55.6%22/%3E%3C/g%3E%3C/svg%3E") center/100% 100% no-repeat}
-@media(max-width:520px){#rl .sw{left:146px;width:125px}#rl{height:110px;margin-top:0}#rl .rw,#rl .rt,#rl b{width:99px;height:99px}#rl .rw{left:22px}#rl b{-webkit-mask-image:radial-gradient(circle at 50% 50%,transparent 33.75px,#000 34.15px);mask-image:radial-gradient(circle at 50% 50%,transparent 33.75px,#000 34.15px)}#rl b::before{background:radial-gradient(circle at 50% 50%,transparent 33.75px,#efe9db 33.75px,#efe9db 36.45px,transparent 36.8px)}}
+@media(max-width:520px){#rl .sw{left:73px;width:63px}#rl{height:55px;margin-top:55px}#rl .rw,#rl .rt,#rl b{width:49.5px;height:49.5px}#rl .rw{left:11px}#rl b{-webkit-mask-image:radial-gradient(circle at 50% 50%,transparent 16.9px,#000 17.1px);mask-image:radial-gradient(circle at 50% 50%,transparent 16.9px,#000 17.1px)}#rl b::before{background:radial-gradient(circle at 50% 50%,transparent 16.9px,#efe9db 16.9px,#efe9db 18.2px,transparent 18.4px)}}
 #rl .stpl,#rl b{pointer-events:auto;cursor:grab;touch-action:none;-webkit-user-select:none;user-select:none}
 #rl .rw,#rl .sw,#rl .rt,#rl .stpl{will-change:transform;backface-visibility:hidden}
-#rl .mv{filter:drop-shadow(9px 7px 6px rgba(0,0,0,.3))!important}
-#rl .held{z-index:5;filter:drop-shadow(13px 18px 9px rgba(0,0,0,.27))!important}
+/* the shadow stays the same when grabbed or moving */
 #rl .held .stpl,#rl .held b{cursor:grabbing}
-#rl{z-index:var(--z-rest)}#rl:has(.held){z-index:var(--z-held)}
+/* the stapler and the tape roll each carry their own stacking level (the container has none), so only the one in your hand rises above the ledge and the other stays behind it */
+#rl .rw,#rl .sw{z-index:var(--z-rest)}#rl .rw.held,#rl .sw.held{z-index:var(--z-held)}
 #lg{position:relative;z-index:var(--z-ledge);height:12px;margin:-6px -28px 0;background:linear-gradient(#f0cf9f 0,#f0cf9f 1.5px,#d9ae77 1.5px,#c99a63 100%);box-shadow:0 -1px 2px rgba(0,0,0,.2),0 -6px 10px rgba(0,0,0,.14)}
 @media(max-width:520px){#lg{margin:-6px -16px 0}}
 .lt,.c.ml,.c.mk,.sb>.c,.wam>.c,.hw,.stp>b[style*="font-size:22px"],.in b{-webkit-text-stroke:0}
@@ -511,6 +544,7 @@ i.pp.dn::after{width:5.3px}
 <div id="rl" aria-hidden="true"><div class="rw"><div class="rt"><b></b></div></div><div class="sw"><svg class="stpl" viewBox="0 0 160 92" aria-hidden="true"><g transform="translate(0 30)"><path d="M6 47h146a4 4 0 0 1 4 4v6a4 4 0 0 1-4 4H10a4 4 0 0 1-4-4z" fill="#232529"/><path d="M6 51h150" stroke="rgba(255,255,255,.08)" stroke-width="1"/><rect x="112" y="43" width="40" height="4.5" rx="1" fill="#b9bec6"/><rect x="112" y="43" width="40" height="1.4" rx=".7" fill="#e6e9ed"/><path d="M118 45.5h5M127 45.5h5M136 45.5h5" stroke="#6d727a" stroke-width="1.2" stroke-linecap="round"/><g transform="translate(0 -3)"><path d="M80.5 36.9L152 26.8V39H80.5z" fill="#a9aeb6"/><path d="M80.5 37.4H152V39H80.5z" fill="#dfe2e7"/><path d="M80.5 36.9L152 26.8V29L80.5 39.1z" fill="#6a6f77" opacity=".55"/><g transform="rotate(-8 15 38)"><path d="M7 41c0-12 12-18 33-19l88-3c18 0 28 6 28 18v7a3 3 0 0 1-3 3H10a3 3 0 0 1-3-3z" fill="#34373d"/><path d="M15 28c14-4 34-5 56-6l57-3" stroke="rgba(255,255,255,.2)" stroke-width="2" fill="none" stroke-linecap="round"/><rect x="42" y="18" width="52" height="3" rx="1.5" fill="#4b4f57"/><path d="M7 45h149" stroke="#15161a" stroke-width="1.5"/></g></g><path d="M6 61V36a6 6 0 0 1 6-6h28c5 0 9 3 11 17v14z" fill="#26282c"/><path d="M12 30.8h28c3 0 5.5 1.4 7.5 5" stroke="rgba(255,255,255,.14)" stroke-width="1.4" fill="none" stroke-linecap="round"/><path d="M6 47h45" stroke="#15161a" stroke-width="1.2"/><circle cx="15" cy="38" r="3.2" fill="#5a5f68"/><circle cx="15" cy="38" r="1.3" fill="#2a2c30"/></g></svg></div></div>
 <div id="lg" aria-hidden="true"></div>
 <div id="m"><div id="mp"><article id="pp"><div id="pc"></div></article><iframe id="mf" title="Video" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe><img id="mi" alt=""><div id="mc"></div><button id="mx" type="button" aria-label="Close"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19"/></svg></button></div></div>
+<div id="tvw" aria-hidden="true"><div id="tv"><div class="tvx"><i class="tvr"></i><i class="tva"></i><i class="tvq"></i><div class="tvc"><div class="tvs"><div class="tvg"><video data-src="img/project99-v3.webm" muted loop playsinline preload="none"></video><div class="tvt"></div></div></div><div class="tvf"><i></i><i></i><i></i><i></i><b>Project99 v3</b><u></u></div></div><i class="tvk"></i></div></div></div>
 <script>document.addEventListener('dragstart',function(e){e.preventDefault()});
 /* what counts as a card that hangs from a pin: any post card with a pin colour class (pc1..pc4), except the ones taped up (.tb), which behave like every other taped or stapled card */
 window.PIN_CARD='.n[class*=" pc"]:not(.tb)';
@@ -530,7 +564,7 @@ cw=parseFloat(cs.getPropertyValue('--cw'))||(innerWidth<=520?150:200),
 n=Math.max(1,Math.floor((W+gap)/(cw+gap))),w=(W-gap*(n-1))/n,h=[],i;
 g.classList.add('mz');
 var vids=[];for(i=0;i<n;i++)h.push(0);
-var kids=[].filter.call(g.children,function(c){return c.classList.contains('t')&&(!window.__hides||!__hides(c))}),done=[],oldPos=[].map.call(kids,function(c){return c.__laid?[c.style.left,c.style.top]:null});
+var kids=[].filter.call(g.children,function(c){return c.classList.contains('t')&&(!window.__hides||!__hides(c))}),sec=window.__sec?__sec():'';/* inside a single section (not All or KWC) its sign card always comes first */if(sec&&sec!=='m')kids=kids.filter(function(c){return c.classList.contains('sg')}).concat(kids.filter(function(c){return !c.classList.contains('sg')}));var done=[],oldPos=[].map.call(kids,function(c){return c.__laid?[c.style.left,c.style.top]:null});
 [].forEach.call(g.children,function(c){if(c.classList.contains('t')&&kids.indexOf(c)<0){c.__laid=false;if(c.classList.contains('hid')){c.style.left='0px';c.style.top='0px'}}});
 function spanOf(c){return (c.classList.contains('ddw')||c.classList.contains('sp2'))&&n>1?2:1}
 function setW(c,span){c.style.width=(w*span+gap*(span-1))+'px'}
@@ -743,12 +777,12 @@ addEventListener('keydown',function(e){if(e.key==='Escape'&&m.classList.contains
 (function(){
 var g=document.getElementById('g'),nm={p:'projects',v:'videos',e:'writing',d:'donedone',w:'mammoth',m:'me'},cur='',links=[].slice.call(document.querySelectorAll('#nv a'));
 function hides(c,k){if(c.classList.contains('in'))return k!==''&&k!=='m';/* the Ka Wai Cheung sign only shows on All and KWC */return !!k&&(' '+c.getAttribute('data-k')+' ').indexOf(' '+k+' ')<0}
-window.__hides=function(c){return hides(c,cur)};
+window.__hides=function(c){return hides(c,cur)};window.__sec=function(){return cur};
 var seq=0,FALL_ON_NAV=false;/* nav switches only: true = filtered-out cards drop off the board, false = they vanish at once (tape/pin falls are unaffected) */
 function apply(k,anim){
 if(anim)scrollTo({top:0,left:0,behavior:'instant'});
 if(anim&&window.__resetBoard)__resetBoard();
-cur=k;
+cur=k;document.documentElement.classList.toggle('tvp',k===''||k==='p');
 var cards=[].filter.call(g.children,function(c){return c.classList.contains('t')}),H=innerHeight,info=cards.map(function(c){var r=c.getBoundingClientRect();return {c:c,top:r.top,left:r.left,on:r.bottom>0&&r.top<H}});
 var shown=[],fell=[],pend=[],my=++seq;
 info.forEach(function(o){var c=o.c,was=c.classList.contains('hid'),hide=hides(c,k);
@@ -873,7 +907,9 @@ while(wa>Math.PI)wa-=2*Math.PI;while(wa<-Math.PI)wa+=2*Math.PI;
 P.w+=(40*(-wa)+16*Math.max(-.5,Math.min(.5,diff))-13*P.w)*dt;P.a+=P.w*dt;c=Math.cos(P.a);sn=Math.sin(P.a)}
 else{P.w*=.96;P.a+=P.w*dt;c=Math.cos(P.a);sn=Math.sin(P.a)}
 P.x=pt.x-(b.g0[0]*c-b.g0[1]*sn);P.y=pt.y-(b.g0[0]*sn+b.g0[1]*c);
-if(b.kind==='p'){var ca=Math.cos(P.a),sa=Math.sin(P.a),my=-1e9,q;for(q=0;q<b.R.length;q++){var yy=b.R[q][0]*sa+b.R[q][1]*ca;if(yy>my)my=yy}P.y=Math.min(P.y,floorL-b.s-my)}else P.y=Math.min(P.y,floorL-b.rad);
+/* while held, the piece is kept a few px above the ledge floor (the resting 6px sink plus a hair) so it rises clear of the ledge's lip instead of overlapping it; it eases up on grab and drops back on release */
+b.hv=(b.hv||0)+(7-(b.hv||0))*Math.min(1,dt*20);var FL=floorL-b.hv;
+if(b.kind==='p'){var ca=Math.cos(P.a),sa=Math.sin(P.a),my=-1e9,q;for(q=0;q<b.R.length;q++){var yy=b.R[q][0]*sa+b.R[q][1]*ca;if(yy>my)my=yy}P.y=Math.min(P.y,FL-b.s-my)}else P.y=Math.min(P.y,FL-b.rad);
 hist.push([t,P.x,P.y]);while(hist.length>1&&t-hist[0][0]>90)hist.shift();
 var h0=hist[0],h1=hist[hist.length-1],hd=(h1[0]-h0[0])/1000;if(hd>.008){P.vx=Math.max(-2600,Math.min(2600,(h1[1]-h0[1])/hd));P.vy=Math.max(-2600,Math.min(2600,(h1[2]-h0[2])/hd))}else{P.vx=P.vy=0}
 draw(b);any=true}
@@ -906,7 +942,7 @@ target.addEventListener('pointermove',function(e){if(grabB===b)cl={x:e.clientX,y
 function rel(){if(grabB!==b)return;b.wrap.classList.remove('held');
 var a=hist[0],z=hist[hist.length-1],dt=(z[0]-a[0])/1000,P=b.P;
 if(dt>.01){P.vx=Math.max(-2600,Math.min(2600,(z[1]-a[1])/dt));P.vy=Math.max(-2600,Math.min(2600,(z[2]-a[2])/dt))}else{P.vx=P.vy=0}
-P.w=Math.max(-5,Math.min(5,P.w));b.held=false;b.mode='fly';b.sleep=0;b.fly=0;b.wrap.classList.add('mv');grabB=null;env();go()}
+P.w=Math.max(-5,Math.min(5,P.w));b.held=false;b.hv=0;b.mode='fly';b.sleep=0;b.fly=0;b.wrap.classList.add('mv');grabB=null;env();go()}
 target.addEventListener('pointerup',rel);target.addEventListener('pointercancel',rel)}
 var stp=document.querySelector('#rl .stpl'),rt=document.querySelector('#rl .rt'),rb=document.querySelector('#rl b');
 if(stp){var sb=body(stp.parentNode,stp,'p',1);attach(sb,stp)}
@@ -1411,6 +1447,21 @@ if(k===vis.length-1)setTimeout(function(){g.classList.remove('intro');[].forEach
 }
 if(document.readyState==='complete')setTimeout(go,50);else addEventListener('load',function(){setTimeout(go,50)});
 })();
+</script>
+<script>
+/* the TV: nothing happens until it scrolls into view. It then shows a colour test card for two seconds, switches to the Project99 clip, and from then on plays only while visible (not filtered out, not scrolled away, tab in front) */
+(function(){
+var tv=document.getElementById('tv'),g=tv&&tv.querySelector('.tvg'),v=g&&g.querySelector('video');if(!v)return;
+var vis=false,started=false,t0=0;
+function seen(){var r=tv.getBoundingClientRect(),h=r.height||1,vh=Math.min(r.bottom,innerHeight)-Math.max(r.top,0);return vh/h>=.3&&r.right>0&&r.left<innerWidth}
+function show(){vis=seen();return vis&&!document.hidden&&document.documentElement.classList.contains('tvp')&&!document.getElementById('m').classList.contains('on')}
+function upd(){
+if(!show()){if(started&&!v.paused)v.pause();return}
+if(!started){started=true;if(!v.getAttribute('src'))v.src=v.getAttribute('data-src');v.load();
+setTimeout(function(){g.classList.add('on');v.currentTime=0;var p=v.play();if(p&&p.catch)p.catch(function(){})},2000);return}
+if(g.classList.contains('on')&&v.paused){var p2=v.play();if(p2&&p2.catch)p2.catch(function(){})}}
+if(window.MutationObserver)new MutationObserver(upd).observe(document.documentElement,{attributes:true,attributeFilter:['class']});
+document.addEventListener('visibilitychange',upd);addEventListener('scroll',function(){upd()},{passive:true});addEventListener('resize',upd);setInterval(upd,700);upd()})();
 </script>
 </body>
 </html>
