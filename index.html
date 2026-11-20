@@ -29,19 +29,27 @@ body{position:relative}
 #tvw{position:absolute;left:0;right:0;top:0;bottom:0;overflow:hidden;z-index:2147483647;display:none;pointer-events:none}
 #tv{position:absolute;right:34px;bottom:36px;width:262px;pointer-events:none;perspective:900px;perspective-origin:70% 20%;--tvs:1;/* --tvs is the size relative to the TV as designed on desktop: 1 = the current desktop size (the 262px base at 1.25x) */transform:scale(calc(var(--tvs)*1.25));transform-origin:100% 100%;filter:drop-shadow(0 0 4px rgba(0,0,0,.4)) drop-shadow(8px 11px 15px rgba(0,0,0,.4)) drop-shadow(22px 30px 38px rgba(0,0,0,.26))}
 html.tvp #tvw{display:block}#m.on ~ #tvw{opacity:0}
-.tvc{position:relative;padding:7px 7px 8px;border-radius:5px 0 0 3px;background:linear-gradient(#303033,#161617 35%,#0b0b0c);box-shadow:inset 0 1px 0 rgba(255,255,255,.2),inset 0 0 0 1px #000,inset 0 -3px 7px rgba(0,0,0,.7)}
+/* a thicker front frame: the padding around the screen goes from 7px to 20px on the top and right (16px on the left), and the box keeps its exact outer size (262 x 219) so the TV's proportions, the side panel and the base do not change; the screen simply gets a bit smaller, at the same shape, and any rounding leftover goes to the chin */
+.tvc{position:relative;box-sizing:border-box;min-height:219px;padding:20px 20px 9px 16px;/* the left rim is a little thinner (12px vs 15px) because that side of the front face is farther from the viewer; the screen takes the 3px, and the chin gives back 2px of height so the box stays 262 x 219 (the inner black bezel is likewise 2px thinner on the left: 5px vs 7px, which also makes the screen 2px wider, and the chin pads 1px less to keep the height) */border-radius:5px 0 0 3px;background:linear-gradient(#303033,#161617 35%,#0b0b0c);box-shadow:inset 0 1px 0 rgba(255,255,255,.2),inset 0 0 0 1px #000,inset 0 0 0 8px rgba(255,255,255,.028),inset 0 -3px 7px rgba(0,0,0,.7)}
 .tvc::before{content:"";position:absolute;bottom:-7px;left:12px;right:0;height:8px;background:linear-gradient(#18181a,#050505);border-radius:0 0 0 6px}
-.tvs{padding:11px 7px 11px 7px;border-radius:5px;background:#040404;box-shadow:inset 0 3px 8px #000,0 1px 0 rgba(255,255,255,.12)}
+.tvs{padding:9px 0 7px 8px;border-radius:5px;background:#040404;box-shadow:inset 0 3px 8px #000,0 1px 0 rgba(255,255,255,.12)}
 /* Safari on iOS often ignores rounded overflow clipping on a playing video inside a 3D-turned box and draws the video's straight, stair-stepped edge instead; isolation plus a mask (the usual workaround) forces a proper rounded clip, and the video is enlarged with real size instead of a transform so it is not a second transformed layer inside the clip */
 .tvg{position:relative;overflow:hidden;aspect-ratio:1.42;border-radius:5%/6.5%;background:#000;isolation:isolate;-webkit-mask-image:-webkit-radial-gradient(#fff,#000);mask-image:radial-gradient(#fff,#000)}
 .tvg video{position:absolute;left:calc((1 - var(--vs,1.03)) * 50%);top:calc((1 - var(--vs,1.03)) * 50%);width:calc(100% * var(--vs,1.03));height:calc(100% * var(--vs,1.03));object-fit:cover;display:block}/* the recording has the screen-capture selection outline in its edges, so it is scaled up a touch inside the tube */
 /* colour test card shown for two seconds when the TV is first reached: bars, a reverse strip and a pluge strip, like an old SMPTE pattern */
 .tvt{position:absolute;inset:0;transition:opacity .25s;background:linear-gradient(90deg,#c0c0c0 0 14.28%,#c0c000 0 28.56%,#00c0c0 0 42.84%,#00c000 0 57.12%,#c000c0 0 71.4%,#c00000 0 85.68%,#0000c0 0) 0 0/100% 78%,linear-gradient(90deg,#0000c0 0 14.28%,#131313 0 28.56%,#c000c0 0 42.84%,#131313 0 57.12%,#00c0c0 0 71.4%,#131313 0 85.68%,#c0c0c0 0) 0 84%/100% 6%,linear-gradient(90deg,#00214c 0 17.8%,#fff 0 35.6%,#32006a 0 53.4%,#131313 0 71.2%,#090909 0 78%,#131313 0 83.4%,#1d1d1d 0 89%,#131313 0) 0 100%/100% 14% no-repeat;background-repeat:no-repeat}
 .tvg.on .tvt{opacity:0;pointer-events:none}
+/* the test-card crawl: a black strip across the middle of the screen with the message scrolling through it in the same VT323 look as the channel number */
+.tvm{position:absolute;left:0;right:0;top:50%;height:30px;margin-top:-15px;background:#000;z-index:1;overflow:hidden;opacity:0;visibility:hidden;pointer-events:none}
+.tvm.on{opacity:1;visibility:visible}
+.tvm span{position:absolute;left:0;top:0;white-space:nowrap;font:400 22px/30px "VT323","Courier New",monospace;text-transform:uppercase;color:#f5e6c8;transform:translate3d(100vw,0,0);will-change:transform;backface-visibility:hidden;-webkit-font-smoothing:antialiased}/* a smooth crawl: the text is its own GPU layer, rasterised once and slid with translate3d (no per-frame repainting, and no blurred text-shadow to redraw) */
+.tvm{contain:layout paint;-webkit-transform:translateZ(0)}
+/* while the crawl runs no video is showing, so the rounded-edge mask that keeps playing video clipped on iOS is switched off: it makes the browser redraw the whole screen through a mask on every frame, which is what makes a slow slide judder */
+.tvg.crawl{-webkit-mask-image:none;mask-image:none}
 .tvg video{visibility:hidden}.tvg.on video.cur{visibility:visible}
 /* the flat (non-gradient) shade along the left and top of the glass is an SVG ring-shaped path that follows the rounded top-left corner, so the glass looks sunk into its frame. The inner screen shadow is one round vignette (centred a little right of middle so the left edge is deepest), drawn with a gradient, not an inset box-shadow: Safari on iOS skips inset shadows inside a 3D-transformed, animating, clipped element until the animation ends, so the shadow only showed up after the TV had landed and stopped rocking; gradients paint with the layer from the first frame */
-.tvg::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;transform:translateZ(0);box-sizing:border-box;border:2px solid #000;/* a 2px black rim inside the glass edge: the glass is clipped with rounded corners inside a 3D-turned, animated box, and iOS Safari does not smooth the edge of such a layer, so the rim hides the stair-stepping against the black bezel */background:url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 142 100' preserveAspectRatio='none'%3E%3Cpath fill-rule='evenodd' fill='rgba(0,0,0,.2)' d='M7.1 0H142V100H7.1A7.1 6.5 0 0 1 0 93.5V6.5A7.1 6.5 0 0 1 7.1 0Z M13.4 2.4A7.1 6.5 0 0 0 6.3 8.9V110H150V2.4Z'/%3E%3C/svg%3E") 0 0/100% 100% no-repeat,linear-gradient(90deg,rgba(0,0,0,.22),rgba(0,0,0,.1) 14%,rgba(0,0,0,.03) 30%,rgba(0,0,0,0) 44%),radial-gradient(ellipse farthest-corner at 57% 50%,rgba(0,0,0,0) 38%,rgba(0,0,0,.07) 58%,rgba(0,0,0,.2) 78%,rgba(0,0,0,.4) 100%),radial-gradient(ellipse at 28% 14%,rgba(255,255,255,.26),rgba(255,255,255,0) 46%);background-origin:border-box,padding-box,padding-box,padding-box;background-clip:border-box,padding-box,padding-box,padding-box}/* the flat shade (the first layer) is painted out to the very outer edge, underneath the 2px black rim, so no thin unshaded line of orange can be left between the rim and the shade when a browser rounds the two edges differently */
-.tvf{display:flex;align-items:center;gap:2px;margin-top:8px;padding:0 6px}
+.tvg::after{content:"";position:absolute;inset:0;z-index:5;/* above the test-card strip, the channel number and the static, so the inset shadow always sits on top of them */border-radius:inherit;pointer-events:none;transform:translateZ(0);box-sizing:border-box;border:2px solid #000;/* a 2px black rim inside the glass edge: the glass is clipped with rounded corners inside a 3D-turned, animated box, and iOS Safari does not smooth the edge of such a layer, so the rim hides the stair-stepping against the black bezel */background:url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 142 100' preserveAspectRatio='none'%3E%3Cpath fill-rule='evenodd' fill='rgba(0,0,0,.2)' d='M7.1 0H142V100H7.1A7.1 6.5 0 0 1 0 93.5V6.5A7.1 6.5 0 0 1 7.1 0Z M13.4 2.4A7.1 6.5 0 0 0 6.3 8.9V110H150V2.4Z'/%3E%3C/svg%3E") 0 0/100% 100% no-repeat,linear-gradient(90deg,rgba(0,0,0,.22),rgba(0,0,0,.1) 14%,rgba(0,0,0,.03) 30%,rgba(0,0,0,0) 44%),radial-gradient(ellipse farthest-corner at 57% 50%,rgba(0,0,0,0) 38%,rgba(0,0,0,.07) 58%,rgba(0,0,0,.2) 78%,rgba(0,0,0,.4) 100%),radial-gradient(ellipse at 28% 14%,rgba(255,255,255,.15),rgba(255,255,255,0) 46%);background-origin:border-box,padding-box,padding-box,padding-box;background-clip:border-box,padding-box,padding-box,padding-box}/* the flat shade (the first layer) is painted out to the very outer edge, underneath the 2px black rim, so no thin unshaded line of orange can be left between the rim and the shade when a browser rounds the two edges differently */
+.tvf{display:flex;align-items:center;gap:2px;margin-top:11px;padding:0 6px}
 /* each button is a little block: the right side face shows (a darker edge with a light rim) because the whole set is turned a little to the left, like the cabinet */
 .tvf button{display:block;flex:none;width:16px;height:8px;margin-right:3px;padding:0;border:0;border-radius:2px 1px 1px 2px;background:linear-gradient(#3a3a3d,#1f1f22);box-shadow:inset 0 1px 0 rgba(255,255,255,.11),inset -1px 0 0 rgba(255,255,255,.04),1px 0 0 #2b2b2e,2px 0 0 #1e1e21,3px 0 0 #101012;pointer-events:auto;cursor:pointer;-webkit-tap-highlight-color:transparent;position:relative}
 .tvf button::after{content:"";position:absolute;left:-6px;right:-6px;top:-8px;bottom:-8px}/* a bigger hit area than the tiny button */
@@ -55,8 +63,21 @@ html.tvp #tvw{display:block}#m.on ~ #tvw{opacity:0}
 .tvz{position:absolute;inset:0;z-index:1;opacity:0;pointer-events:none;background:url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-color:#777;background-blend-mode:multiply}
 .tvz.go{animation:tvz .3s steps(1) both}
 @keyframes tvz{0%{opacity:.95;background-position:0 0}20%{opacity:.9;background-position:-70px 40px}45%{opacity:.8;background-position:50px -90px}70%{opacity:.55;background-position:-30px 110px}100%{opacity:0}}
-.tvf b{display:block;flex:1;text-align:right;font:500 7.5px/9px "JetBrains Mono","SF Mono",Menlo,monospace;letter-spacing:.8px;color:#7d7d82;text-transform:uppercase}
-.tvf u{display:block;width:3px;height:8px;margin:0 3px 0 2px;border-radius:0 0 2px 2px;background:linear-gradient(90deg,#f6ffb0,#d4ee5c 55%,#9bbd28);box-shadow:0 0 2px rgba(210,240,90,.22);transform:rotate(9deg);text-decoration:none}
+.tvf b{visibility:hidden;/* TEMPORARILY HIDDEN: delete this one declaration to bring the label back; the label keeps its space so the green light stays at the right */display:block;flex:1;text-align:right;font:400 6.5px/9px "Michroma","Eurostile","Microgramma","Inter",Helvetica,Arial,sans-serif;letter-spacing:.35px;color:#8a8a8f;text-transform:uppercase;white-space:nowrap;-webkit-text-stroke:.45px #8a8a8f;paint-order:stroke fill}/* Michroma only comes in one weight, so the thicker look is a thin stroke in the same colour around each letter */
+/* the indicator is a button-shaped block, styled like the channel buttons, with a small horizontal yellow-green light set into it */
+.tvf u{position:relative;display:block;flex:none;width:14px;height:8px;margin:0 3px 0 2px;cursor:pointer;pointer-events:auto;-webkit-tap-highlight-color:transparent;outline:none;border-radius:2px 1px 1px 2px;background:linear-gradient(#3a3a3d,#1f1f22);box-shadow:inset 0 1px 0 rgba(255,255,255,.11),inset -1px 0 0 rgba(255,255,255,.04),1px 0 0 #2b2b2e,2px 0 0 #1e1e21,3px 0 0 #101012;text-decoration:none}
+.tvf u::after{content:"";position:absolute;left:25%;right:25%;top:3.25px;height:1.5px;border-radius:1px;background:linear-gradient(#f6ffb0,#cfe84f);box-shadow:0 0 2px rgba(210,240,90,.4)}
+.tvf u::before{content:"";position:absolute;left:-6px;right:-6px;top:-8px;bottom:-8px}/* a bigger hit area than the tiny button */
+.tvf u:active{transform:translate(2px,1px);box-shadow:inset 0 1px 0 rgba(255,255,255,.08),1px 0 0 #101012}
+.tvf u:focus-visible{outline:1px solid #f5e6c8;outline-offset:2px}
+/* power: clicking the light button turns the TV off (a dark glass, the clip stops, the light goes out) and on again */
+.tvf u.dim::after{background:#3c421a;box-shadow:none}
+/* the picture layers (clips, test card, crawl, static, channel number) live in one wrapper so power-off can collapse them together */
+.tvw0{position:absolute;inset:0;transform-origin:50% 50%}
+.tvb0{position:absolute;inset:0;z-index:3;background:radial-gradient(ellipse at 28% 14%,rgba(255,255,255,.06),rgba(255,255,255,0) 46%),#050505;opacity:0;pointer-events:none;transition:opacity .22s}
+.tvg.off .tvb0{opacity:1;transition:none}/* the dark glass appears instantly when switching off (a fade here let the whole picture flash back for a moment as the shut-off animation was cleaned up); it still fades away when switching on */
+/* the white line of the shut-off animation: hidden except while the TV is switching off */
+.tvln{position:absolute;left:0;right:0;top:50%;height:2px;margin-top:-1px;z-index:4;background:#fff;box-shadow:0 0 6px 1px rgba(255,255,255,.7);opacity:0;pointer-events:none}
 /* a shallow real-3D box: the front face is the TV, and a slim left side and top are visible because the whole thing is turned a few degrees toward the middle of the page */
 .tvx{position:relative;transform-style:preserve-3d;transform:rotateY(-15deg) rotateX(1deg);transform-origin:50% 100%}
 .tvc{transform:translateZ(40px)}
@@ -391,7 +412,7 @@ i.pp.dn::after{width:5.3px}
 .t.tz-b::before{visibility:hidden!important}.t.tz-a::after,.tz-a::after{visibility:hidden!important}.tz-b::before{visibility:hidden!important}.tz{visibility:hidden!important}
 #g .tgrab,#g .tgrab *,html.tdrag,html.tdrag *{cursor:grab!important}html.tdrag,html.tdrag *{cursor:grabbing!important;-webkit-user-select:none;user-select:none}
 </style>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400&family=Fraunces:opsz,wght@9..144,400&family=Libre+Baskerville:wght@400&family=Lora:wght@400&family=Playfair+Display:wght@400&family=Permanent+Marker&family=Space+Grotesk:wght@400&family=IBM+Plex+Sans:wght@400&family=Archivo+Narrow:wght@400&family=Courier+Prime:wght@400;700&family=JetBrains+Mono:wght@500;700&family=Inter:wght@600&family=VT323&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400&family=Fraunces:opsz,wght@9..144,400&family=Libre+Baskerville:wght@400&family=Lora:wght@400&family=Playfair+Display:wght@400&family=Permanent+Marker&family=Space+Grotesk:wght@400&family=IBM+Plex+Sans:wght@400&family=Archivo+Narrow:wght@400&family=Courier+Prime:wght@400;700&family=JetBrains+Mono:wght@500;700&family=Inter:wght@600;800&family=VT323&family=Michroma&display=swap">
 </head>
 <body>
 <div id="nb" aria-hidden="true"></div>
@@ -573,7 +594,7 @@ i.pp.dn::after{width:5.3px}
 <div id="wl" aria-hidden="true"></div>
 <div id="dk" aria-hidden="true"></div>
 <div id="m"><div id="mp"><article id="pp"><div id="pc"></div></article><iframe id="mf" title="Video" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe><img id="mi" alt=""><div id="mc"></div><button id="mx" type="button" aria-label="Close"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19"/></svg></button></div></div>
-<div id="tvw" role="group" aria-label="PROJECT99.TV"><div id="tv"><i class="tvk"></i><div class="tvx"><i class="tvr"></i><i class="tvq"></i><div class="tvc"><div class="tvs"><div class="tvg"><video class="cur" data-src="img/project99-v1.webm" muted loop playsinline preload="none"></video><video data-src="img/project99-v2.webm" muted loop playsinline preload="none"></video><video style="--vs:1.09" data-src="img/project99-v3.webm" muted loop playsinline preload="none"></video><div class="tvt"></div><div class="tvz"></div><span class="tvo">2000 - V1</span></div></div><div class="tvf"><button type="button" class="on" data-ch="0" aria-label="Channel V1" title="V1"></button><button type="button" data-ch="1" aria-label="Channel V2" title="V2"></button><button type="button" data-ch="2" aria-label="Channel V3" title="V3"></button><b>PROJECT99.TV</b><u></u></div></div></div></div></div>
+<div id="tvw" role="group" aria-label="PROJECT99.TV"><div id="tv"><i class="tvk"></i><div class="tvx"><i class="tvr"></i><i class="tvq"></i><div class="tvc"><div class="tvs"><div class="tvg"><div class="tvw0"><video class="cur" data-src="img/project99-v1.webm" muted loop playsinline preload="none"></video><video data-src="img/project99-v2.webm" muted loop playsinline preload="none"></video><video style="--vs:1.09" data-src="img/project99-v3.webm" muted loop playsinline preload="none"></video><div class="tvt"></div><div class="tvm" aria-hidden="true"><span>WE NOW RETURN YOU TO YOUR REGULARLY SCHEDULED FLASH PROGRAMMING.</span></div><div class="tvz"></div><span class="tvo">2000 - V1</span></div><div class="tvb0" aria-hidden="true"></div><div class="tvln" aria-hidden="true"></div></div></div><div class="tvf"><button type="button" class="on" data-ch="0" aria-label="Channel V1" title="V1"></button><button type="button" data-ch="1" aria-label="Channel V2" title="V2"></button><button type="button" data-ch="2" aria-label="Channel V3" title="V3"></button><b>PROJECT99.TV</b><u role="button" tabindex="0" aria-label="Power" title="Power"></u></div></div></div></div></div>
 <script>document.addEventListener('dragstart',function(e){e.preventDefault()});
 /* what counts as a card that hangs from a pin: any post card with a pin colour class (pc1..pc4), except the ones taped up (.tb), which behave like every other taped or stapled card */
 window.PIN_CARD='.n[class*=" pc"]:not(.tb)';
@@ -1511,13 +1532,25 @@ var vs=[].slice.call(g.querySelectorAll('video')),bs=[].slice.call(tv.querySelec
 function seen(){var r=tv.getBoundingClientRect(),h=r.height||1,vh=Math.min(r.bottom,innerHeight)-Math.max(r.top,0);return vh/h>=.3&&r.right>0&&r.left<innerWidth}
 /* while the TV is being held back for its entrance (opacity 0) nothing starts; when it begins to fall, the sequence starts at once even though it is still above the screen, so the colour test card is seen on the way down */
 function held(){return tv.style.opacity==='0'}
-/* on every fall (not just the first) the screen shows the colour test card from the start of the drop until the TV first touches the desk (landMs), then cuts to channel V1. The first time, it also waits for the clip to be ready (up to about a second, since iOS only buffers video once it plays) so it never lands on a blank screen. */
+/* the start-up sequence, on every fall and the first time the TV is reached on its own: the colour bars; after about a second a black strip crosses the screen with "WE NOW RETURN YOU TO YOUR REGULARLY SCHEDULED FLASH PROGRAMMING." scrolling through it; when the message has crossed, the screen cuts to channel V1 (waiting, up to about a second, for the clip to be ready: iOS only buffers video once it plays). */
+var pw=tv.querySelector('.tvf u'),introDone=false;
+var mq=g.querySelector('.tvm'),mqt=mq&&mq.querySelector('span'),seqT=0,seqB=0,seqA=null,seqDone=true,SPEED=140;
+function stopTest(){clearTimeout(seqT);clearTimeout(seqB);if(seqA){try{seqA.cancel()}catch(e){}seqA=null}mq.classList.remove('on');g.classList.remove('crawl')}
+function cutIn(n){n=typeof n==='number'?n:10;if(n>0&&vs[0].getAttribute('src')&&vs[0].readyState<2){seqB=setTimeout(function(){cutIn(n-1)},100);return}fallMode=false;mq.classList.remove('on');g.classList.remove('crawl');g.classList.add('on');introDone=true;go(0,true)}
+function endTest(){if(seqDone)return;seqDone=true;if(seqA){try{seqA.cancel()}catch(e){}seqA=null}cutIn()}
+function runTest(){stopTest();seqDone=false;g.classList.remove('on');
+seqT=setTimeout(function(){var cw=mq.offsetWidth,sw=mqt.offsetWidth;
+if(!cw||!sw||!mq.animate){endTest();return}
+mq.classList.add('on');var dur=Math.round((cw+sw)/SPEED*1000);
+g.classList.add('crawl');seqA=mqt.animate([{transform:'translate3d('+cw+'px,0,0)'},{transform:'translate3d('+(-sw)+'px,0,0)'}],{duration:dur,easing:'linear'});
+seqA.onfinish=endTest;
+seqB=setTimeout(endTest,dur+250)},1000)}
 window.__tvForce=function(landMs){forceUntil=performance.now()+1600;
-if(landMs!=null){fallMode=true;clearTimeout(landT);
-if(started){g.classList.remove('on');vs.forEach(function(v){if(!v.paused)v.pause()});osd.classList.remove('show')}
-landT=setTimeout(function cutIn(n){n=typeof n==='number'?n:10;if(n>0&&vs[0].getAttribute('src')&&vs[0].readyState<2){landT=setTimeout(function(){cutIn(n-1)},100);return}fallMode=false;g.classList.add('on');go(0,true)},landMs)}
+if(landMs!=null){fallMode=true;
+if(started){vs.forEach(function(v){if(!v.paused)v.pause()});osd.classList.remove('show')}
+runTest()}
 upd()};
-function show(){vis=seen()||performance.now()<forceUntil;return !held()&&vis&&!document.hidden&&document.documentElement.classList.contains('tvp')&&!document.getElementById('m').classList.contains('on')}
+function show(){vis=seen()||performance.now()<forceUntil;return !g.classList.contains('off')&&!held()&&vis&&!document.hidden&&document.documentElement.classList.contains('tvp')&&!document.getElementById('m').classList.contains('on')}
 function play(v){var p=v.play();if(p&&p.catch)p.catch(function(){})}
 var YRS=[2000,2001,2002];
 function label(n){osd.textContent=YRS[n]+' - V'+(n+1);osd.classList.add('show');clearTimeout(ot);ot=setTimeout(function(){osd.classList.remove('show')},2600)}
@@ -1538,11 +1571,44 @@ bs.forEach(function(b,k){b.classList.toggle('on',k===n)});
 cur=n;var v=vs[n];v.currentTime=0;if(show())play(v);
 label(n);
 if(!first)burst()}
-bs.forEach(function(b){b.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();if(!started)return;if(b.getBoundingClientRect().bottom<(parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--nbh'))||0))return;go(+b.getAttribute('data-ch'))})});
+bs.forEach(function(b){b.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();if(!started||g.classList.contains('off'))return;if(b.getBoundingClientRect().bottom<(parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--nbh'))||0))return;
+var n=+b.getAttribute('data-ch');
+/* pressing a channel button during the intro (bars or crawl) skips the rest of it and goes straight to that channel */
+if(!seqDone){stopTest();seqDone=true;fallMode=false;introDone=true;mq.classList.remove('on');g.classList.remove('crawl');g.classList.add('on');go(n,true);if(n!==0)burst();return}
+go(n)})});
+/* power button: off = dark glass, everything stops; on = the current channel comes back with a burst of static, or, if the intro had not finished, the intro starts again */
+/* the CRT shut-off, quick and with no flare: the picture squashes vertically to the middle (0.15s), a plain white line holds for a beat, then snaps in from the sides and is gone (0.3s in all) */
+var powerBusy=false,w0=g.querySelector('.tvw0'),ln=g.querySelector('.tvln');
+function collapse(done){
+if(!w0.animate||!ln.animate){done();return}
+powerBusy=true;var fin=false,a1,a2;
+function end(){if(fin)return;fin=true;done();powerBusy=false;try{a1.cancel()}catch(e){}try{a2.cancel()}catch(e){}}
+a1=w0.animate([
+{transform:'scale(1,1)',opacity:1,offset:0,easing:'cubic-bezier(.6,0,.9,.4)'},
+{transform:'scale(1,.012)',opacity:1,offset:.5},
+{transform:'scale(1,.012)',opacity:0,offset:.52},
+{transform:'scale(1,.012)',opacity:0,offset:1}],{duration:300,fill:'forwards'});
+a2=ln.animate([
+{opacity:0,transform:'scaleX(1)',offset:0},
+{opacity:0,transform:'scaleX(1)',offset:.46},
+{opacity:1,transform:'scaleX(1)',offset:.52},
+{opacity:1,transform:'scaleX(1)',offset:.7,easing:'cubic-bezier(.5,0,1,.5)'},
+{opacity:1,transform:'scaleX(.02)',offset:.94},
+{opacity:0,transform:'scaleX(0)',offset:1}],{duration:300,fill:'forwards'});
+a2.onfinish=end;setTimeout(end,460)}
+function power(){
+if(!started||powerBusy)return;
+var off=!g.classList.contains('off');
+if(off){if(powerBusy)return;stopTest();seqDone=true;fallMode=false;pw.classList.add('dim');vs.forEach(function(v){if(!v.paused)v.pause()});clearTimeout(ot);if(zanim){try{zanim.cancel()}catch(e){}zanim=null}zap.style.opacity='0';
+collapse(function(){g.classList.add('off');osd.classList.remove('show');mq.classList.remove('on')})}
+else{g.classList.remove('off');pw.classList.remove('dim');
+if(introDone){g.classList.add('on');go(cur,true);burst()}else{runTest()}upd()}}
+if(pw){pw.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();if(pw.getBoundingClientRect().bottom<(parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--nbh'))||0))return;power()});
+pw.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();power()}})}
 function upd(){
 if(!show()){if(started&&!vs[cur].paused)vs[cur].pause();return}
 if(!started){started=true;vs.forEach(function(v){if(!v.getAttribute('src')){v.src=v.getAttribute('data-src');v.preload='auto';v.load()}});
-if(!fallMode)setTimeout(function(){g.classList.add('on');go(cur,true)},2000);return}
+if(!fallMode)runTest();return}
 if(g.classList.contains('on')&&vs[cur].paused)play(vs[cur])}
 if(window.MutationObserver)new MutationObserver(upd).observe(document.documentElement,{attributes:true,attributeFilter:['class']});
 document.addEventListener('visibilitychange',upd);addEventListener('scroll',function(){upd()},{passive:true});addEventListener('resize',upd);setInterval(upd,700);upd()})();
