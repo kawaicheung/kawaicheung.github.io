@@ -27,18 +27,19 @@ body{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-r
 body{position:relative}
 /* the TV sits inside a clipping strip along the bottom of the page, so it can hang over the right and bottom edges without adding any scroll */
 #tvw{position:absolute;left:0;right:0;top:0;bottom:0;overflow:hidden;z-index:2147483647;display:none;pointer-events:none}
-#tv{position:absolute;right:34px;bottom:36px;width:262px;pointer-events:none;perspective:900px;perspective-origin:70% 20%;--tvs:1.25;transform:scale(var(--tvs));transform-origin:100% 100%;filter:drop-shadow(0 0 4px rgba(0,0,0,.4)) drop-shadow(8px 11px 15px rgba(0,0,0,.4)) drop-shadow(22px 30px 38px rgba(0,0,0,.26))}
+#tv{position:absolute;right:34px;bottom:36px;width:262px;pointer-events:none;perspective:900px;perspective-origin:70% 20%;--tvs:1;/* --tvs is the size relative to the TV as designed on desktop: 1 = the current desktop size (the 262px base at 1.25x) */transform:scale(calc(var(--tvs)*1.25));transform-origin:100% 100%;filter:drop-shadow(0 0 4px rgba(0,0,0,.4)) drop-shadow(8px 11px 15px rgba(0,0,0,.4)) drop-shadow(22px 30px 38px rgba(0,0,0,.26))}
 html.tvp #tvw{display:block}#m.on ~ #tvw{opacity:0}
 .tvc{position:relative;padding:7px 7px 8px;border-radius:5px 0 0 3px;background:linear-gradient(#303033,#161617 35%,#0b0b0c);box-shadow:inset 0 1px 0 rgba(255,255,255,.2),inset 0 0 0 1px #000,inset 0 -3px 7px rgba(0,0,0,.7)}
 .tvc::before{content:"";position:absolute;bottom:-7px;left:12px;right:0;height:8px;background:linear-gradient(#18181a,#050505);border-radius:0 0 0 6px}
 .tvs{padding:11px 7px 11px 7px;border-radius:5px;background:#040404;box-shadow:inset 0 3px 8px #000,0 1px 0 rgba(255,255,255,.12)}
-.tvg{position:relative;overflow:hidden;aspect-ratio:1.42;border-radius:5%/6.5%;background:#000;box-shadow:inset 0 0 22px rgba(0,0,0,.75)}
+.tvg{position:relative;overflow:hidden;aspect-ratio:1.42;border-radius:5%/6.5%;background:#000}
 .tvg video{position:absolute;left:0;top:0;width:100%;height:100%;object-fit:cover;transform:scale(var(--vs,1.03));display:block}/* the recording has the screen-capture selection outline in its edges, so it is scaled up a touch inside the tube */
 /* colour test card shown for two seconds when the TV is first reached: bars, a reverse strip and a pluge strip, like an old SMPTE pattern */
 .tvt{position:absolute;inset:0;transition:opacity .25s;background:linear-gradient(90deg,#c0c0c0 0 14.28%,#c0c000 0 28.56%,#00c0c0 0 42.84%,#00c000 0 57.12%,#c000c0 0 71.4%,#c00000 0 85.68%,#0000c0 0) 0 0/100% 78%,linear-gradient(90deg,#0000c0 0 14.28%,#131313 0 28.56%,#c000c0 0 42.84%,#131313 0 57.12%,#00c0c0 0 71.4%,#131313 0 85.68%,#c0c0c0 0) 0 84%/100% 6%,linear-gradient(90deg,#00214c 0 17.8%,#fff 0 35.6%,#32006a 0 53.4%,#131313 0 71.2%,#090909 0 78%,#131313 0 83.4%,#1d1d1d 0 89%,#131313 0) 0 100%/100% 14% no-repeat;background-repeat:no-repeat}
 .tvg.on .tvt{opacity:0;pointer-events:none}
 .tvg video{visibility:hidden}.tvg.on video.cur{visibility:visible}
-.tvg::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:radial-gradient(ellipse at 28% 14%,rgba(255,255,255,.26),rgba(255,255,255,0) 46%),repeating-linear-gradient(0deg,rgba(0,0,0,.1) 0 1px,rgba(0,0,0,0) 1px 3px);box-shadow:inset 0 0 24px 3px rgba(0,0,0,.46),inset 20px 0 17px -8px rgba(0,0,0,.72)}
+/* the inner screen shadow is drawn with gradients, not an inset box-shadow: Safari on iOS skips inset shadows inside a 3D-transformed, animating, clipped element until the animation ends, so the shadow only showed up after the TV had landed and stopped rocking; gradients paint with the layer from the first frame */
+.tvg::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;transform:translateZ(0);background:linear-gradient(90deg,rgba(0,0,0,.72),rgba(0,0,0,.3) 9px,rgba(0,0,0,0) 26px),linear-gradient(90deg,rgba(0,0,0,.4),rgba(0,0,0,0) 22px),linear-gradient(270deg,rgba(0,0,0,.4),rgba(0,0,0,0) 22px),linear-gradient(180deg,rgba(0,0,0,.4),rgba(0,0,0,0) 22px),linear-gradient(0deg,rgba(0,0,0,.4),rgba(0,0,0,0) 22px),radial-gradient(ellipse at 28% 14%,rgba(255,255,255,.26),rgba(255,255,255,0) 46%),repeating-linear-gradient(0deg,rgba(0,0,0,.1) 0 1px,rgba(0,0,0,0) 1px 3px)}
 .tvf{display:flex;align-items:center;gap:2px;margin-top:8px;padding:0 6px}
 /* each button is a little block: the right side face shows (a darker edge with a light rim) because the whole set is turned a little to the left, like the cabinet */
 .tvf button{display:block;flex:none;width:16px;height:8px;margin-right:3px;padding:0;border:0;border-radius:2px 1px 1px 2px;background:linear-gradient(#3a3a3d,#1f1f22);box-shadow:inset 0 1px 0 rgba(255,255,255,.11),inset -1px 0 0 rgba(255,255,255,.04),1px 0 0 #2b2b2e,2px 0 0 #1e1e21,3px 0 0 #101012;pointer-events:auto;cursor:pointer;-webkit-tap-highlight-color:transparent;position:relative}
@@ -59,17 +60,18 @@ html.tvp #tvw{display:block}#m.on ~ #tvw{opacity:0}
 .tvx{position:relative;transform-style:preserve-3d;transform:rotateY(-15deg) rotateX(1deg);transform-origin:50% 100%}
 .tvc{transform:translateZ(40px)}
 .tvr{position:absolute;display:block;backface-visibility:hidden}
-.tvr{right:0;top:0;bottom:0;width:80px;transform-origin:0 0;transform:translateX(100%) translateZ(40px) rotateY(90deg);border-radius:0;background:repeating-linear-gradient(90deg,rgba(255,255,255,.07) 0 1px,rgba(0,0,0,0) 1px 7px),linear-gradient(90deg,#3a3a3f,#1b1b1e 55%,#0a0a0b);box-shadow:inset 0 1px 0 rgba(255,255,255,.18)}
+/* the cabinet's side panel runs all the way down to the bottom of the base (it overlaps the base's own side piece for its first 150px, and sits 0.6px proud of it so the two do not flicker against each other) */
+.tvr{right:0;top:0;bottom:-7px;width:150px;transform-origin:0 0;transform:translateX(calc(100% - 1px)) translateZ(40px) rotateY(90deg) translateZ(.6px);border-radius:0;background:repeating-linear-gradient(90deg,rgba(255,255,255,.07) 0 1px,rgba(0,0,0,0) 1px 7px),linear-gradient(to bottom left,#46464b,#2a2a2e 35%,#161618 65%,#080809);box-shadow:inset 0 1px 0 rgba(255,255,255,.18)}/* lit from the top right: the light runs diagonally across the panel, bright at the top right corner and falling off toward the bottom left */
 .tva{position:absolute;display:block;backface-visibility:hidden;transform-origin:0 0;border-radius:0 4px 4px 0}
 /* the CRT housing: one slightly shorter block continuing the side panel back */
-.tva{right:0;top:5%;height:90%;width:300px;transform:translateX(100%) translateZ(-40px) rotateY(90deg);background:repeating-linear-gradient(90deg,rgba(255,255,255,.06) 0 1px,rgba(0,0,0,0) 1px 10px),linear-gradient(180deg,rgba(255,255,255,.1),rgba(255,255,255,0) 8%),linear-gradient(90deg,#2b2b2f,#18181b 45%,#0b0b0c)}
+.tva{right:0;top:5%;height:90%;width:300px;transform:translateX(100%) translateZ(-110px) rotateY(90deg);background:repeating-linear-gradient(90deg,rgba(255,255,255,.06) 0 1px,rgba(0,0,0,0) 1px 10px),linear-gradient(180deg,rgba(255,255,255,.1),rgba(255,255,255,0) 8%),linear-gradient(90deg,#2b2b2f,#18181b 45%,#0b0b0c)}
 /* the base: its right side runs back under the housing, in the same 3D as the cabinet */
 .tvq{position:absolute;display:block;right:0;top:93%;bottom:-7px;width:290px;transform-origin:0 0;transform:translateX(100%) translateZ(40px) rotateY(90deg);border-radius:0;background:linear-gradient(90deg,#2b2b2f,#18181b 45%,#0b0b0c);backface-visibility:hidden}
 /* the shadow the TV casts on the desk: a tight dark line right under the base, and a broad soft shade that falls forward and toward the middle of the table (to the left) */
-.tvk{position:absolute;left:-250px;right:-20px;bottom:-52px;height:96px;z-index:0;background:radial-gradient(ellipse 34% 30% at 78% 52%,rgba(0,0,0,.6),rgba(0,0,0,0) 100%),radial-gradient(ellipse 52% 42% at 56% 56%,rgba(0,0,0,.5),rgba(0,0,0,.22) 55%,rgba(0,0,0,0) 100%);filter:blur(6px);pointer-events:none}
+.tvk{position:absolute;left:-250px;right:-70px;bottom:-62px;height:122px;z-index:0;background:radial-gradient(ellipse 34% 30% at 84% 62%,rgba(0,0,0,.95),rgba(0,0,0,0) 100%),radial-gradient(ellipse 52% 44% at 62% 60%,rgba(0,0,0,.88),rgba(0,0,0,.5) 52%,rgba(0,0,0,0) 100%),radial-gradient(ellipse 70% 40% at 55% 50%,rgba(0,0,0,.45),rgba(0,0,0,0) 100%);filter:blur(6px);pointer-events:none}
 .tvx{z-index:1}
 /* phones: the same 3D TV, scaled to fit and pulled toward the right edge */
-@media(max-width:520px){#tv{right:26px;bottom:26px;--tvs:.72}}
+@media(max-width:520px){#tv{right:6vw;bottom:26px;--tvs:.88}}
 .p img{display:block;width:100%;height:auto;box-shadow:0 0 0 1px rgba(0,0,0,.2)}
 .p.sm img{width:auto;max-width:100%;margin:14px auto 6px}
 .xs{position:absolute;top:2px;right:7px;width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#111;color:#fff;box-shadow:0 0 0 2px #fff,0 1px 3px rgba(0,0,0,.45);transform:rotate(8deg);cursor:pointer;z-index:2;transition:transform .42s cubic-bezier(.34,2.2,.45,.95)}.xs svg{width:13px;height:13px}.xs:hover{transform:rotate(8deg) scale(1.18)}
@@ -369,11 +371,14 @@ i.pp.dn::after{width:5.3px}
 @media(max-width:520px){#lg{margin:-6px -16px 0}}
 /* below the pinboard: a stretch of white wall, then a dark wood desk (grain running left to right) that the TV stands on, on every section */
 #wl,#dk{display:block;position:relative;margin:0 -28px;pointer-events:none}
-#wl{height:64px;background:#fdfcf9}
-#wl::before{content:"";position:absolute;left:0;right:0;top:0;height:22px;background:linear-gradient(rgba(60,40,15,.2),rgba(60,40,15,0))}
-#dk{height:96px;background:#7b5232}
+#wl{height:90px;background:#f0efe7}
+/* two matching shadows on the wall, one under the ledge and one above the table: a dark 1px line right under the ledge, then three flat see-through bands laid over each other (transparency over transparency), each small and stepping lighter to a crisp edge */
+#wl::before{content:"";position:absolute;left:0;right:0;top:0;height:9px;background:linear-gradient(rgba(40,24,8,.4),rgba(40,24,8,.4)) 0 0/100% 1px no-repeat,linear-gradient(rgba(60,40,15,.11),rgba(60,40,15,.11)) 0 0/100% 3px no-repeat,linear-gradient(rgba(60,40,15,.11),rgba(60,40,15,.11)) 0 0/100% 6px no-repeat,linear-gradient(rgba(60,40,15,.11),rgba(60,40,15,.11)) 0 0/100% 9px no-repeat}
+#dk{height:70px;background:#7b5232}
+/* a soft shadow on the wall along the table's back edge, so the table reads as standing a little way out from the wall */
+#dk::after{content:"";position:absolute;left:0;right:0;bottom:100%;height:7px;pointer-events:none;background:linear-gradient(rgba(40,24,8,.4),rgba(40,24,8,.4)) 0 100%/100% 1px no-repeat,linear-gradient(0deg,rgba(0,0,0,.3),rgba(0,0,0,.2) 35%,rgba(0,0,0,.1) 75%,rgba(0,0,0,.07))}/* above the table: a dark 1px line right at the table edge (matching the one under the ledge), then one smooth fade that still ends in a crisp edge */
 #dk::before{content:"";position:absolute;left:0;right:0;top:0;bottom:0;background:url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='900' height='200'%3E%3Cfilter id='g' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.0035 .42' numOctaves='3' seed='7' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .05 0 0 0 0 .025 0 0 0 0 .01 0.6 0 0 0 -.26'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E") 0 0/900px 200px,url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='700' height='160'%3E%3Cfilter id='g' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.006 .6' numOctaves='2' seed='19' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .62 0 0 0 0 .4 0 0 0 0 .24 0.4 0 0 0 -.18'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E") 0 0/700px 160px,linear-gradient(#97693f,#855830 55%,#7a4f2c);box-shadow:inset 0 1px 0 rgba(255,225,180,.22)}
-@media(max-width:520px){#wl,#dk{margin:0 -16px}#wl{height:44px}#dk{height:70px}}
+@media(max-width:520px){#wl,#dk{margin:0 -16px}#wl{height:64px}#dk{height:50px}}
 .lt,.c.ml,.c.mk,.sb>.c,.wam>.c,.hw,.stp>b[style*="font-size:22px"],.in b{-webkit-text-stroke:0}
 .p2c .ph{right:auto;top:2px;transform-origin:50% 20.7px;transform:rotate(calc(var(--rot,0)*-1deg))}
 .p2c .ph::before{content:"";position:absolute;left:50%;top:50%;width:7.4px;height:7.4px;margin:-3.7px 0 0 -3.7px;border-radius:50%;background:radial-gradient(circle at 35% 30%,rgba(255,255,255,.4) 0,rgba(255,255,255,0) 38%),var(--pc,#cf3b31);box-shadow:-4px 2px 3px rgba(0,0,0,.26),inset 0 0 0 1px rgba(0,0,0,.2);z-index:3}
@@ -612,6 +617,7 @@ if(!vids.some(function(q){return k>=q.c-1&&k<=q.c+1&&q.y<yy+ch+50&&q.b>yy-50})){
 y=h[col]}
 put(c,col,y,span,mt)});
 var H=Math.max.apply(null,h);g.style.height=H+'px';
+if(window.__fitTv)__fitTv();
 /* the page is never shorter than the screen: the pinboard grows until the very end of the page (the ledge, or the wall and desk where they show) reaches the bottom edge */
 var need=innerHeight-document.body.offsetHeight;if(need>0){H+=need;g.style.height=H+'px'}
 window.__pinVer=(window.__pinVer||0)+1;
@@ -1508,13 +1514,23 @@ function show(){vis=seen()||performance.now()<forceUntil;return !held()&&vis&&!d
 function play(v){var p=v.play();if(p&&p.catch)p.catch(function(){})}
 var YRS=[2000,2001,2002];
 function label(n){osd.textContent=YRS[n]+' - V'+(n+1);osd.classList.add('show');clearTimeout(ot);ot=setTimeout(function(){osd.classList.remove('show')},2600)}
+/* the burst of static: a Web Animation that always returns to fully transparent when it ends or is cancelled (fill none). The old CSS-class version, restarted by removing and re-adding the class, could be left part-way on iOS Safari, which showed up as a grey, faded haze over the screen after some channel changes */
+var zanim=null,ZK=[[.95,'0 0'],[.9,'-70px 40px'],[.8,'50px -90px'],[.55,'-30px 110px'],[0,'0 0']],ZT=[0,.2,.45,.7,1];
+function burst(){
+if(zanim){try{zanim.cancel()}catch(e){}zanim=null}
+zap.classList.remove('go');zap.style.opacity='0';
+if(!zap.animate){void zap.offsetWidth;zap.classList.add('go');return}
+zanim=zap.animate(ZK.map(function(k,i){return {opacity:k[0],backgroundPosition:k[1],offset:ZT[i],easing:i<ZK.length-1?'step-end':'linear'}}),{duration:300,fill:'none'});
+var mine=zanim;mine.onfinish=mine.oncancel=function(){if(zanim===mine)zanim=null;zap.style.opacity='0'};
+/* belt and braces: whatever the browser does with the finish event, the haze is cleared shortly after the burst should have ended */
+clearTimeout(burst.t);burst.t=setTimeout(function(){if(zanim===mine){try{mine.cancel()}catch(e){}zanim=null}zap.style.opacity='0'},420)}
 function go(n,first){
 if(!first&&n===cur)return;
 vs.forEach(function(v,k){v.classList.toggle('cur',k===n);if(k!==n&&!v.paused)v.pause()});
 bs.forEach(function(b,k){b.classList.toggle('on',k===n)});
 cur=n;var v=vs[n];v.currentTime=0;if(show())play(v);
 label(n);
-if(!first){zap.classList.remove('go');void zap.offsetWidth;zap.classList.add('go')}}
+if(!first)burst()}
 bs.forEach(function(b){b.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();if(!started)return;if(b.getBoundingClientRect().bottom<(parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--nbh'))||0))return;go(+b.getAttribute('data-ch'))})});
 function upd(){
 if(!show()){if(started&&!vs[cur].paused)vs[cur].pause();return}
@@ -1523,6 +1539,17 @@ setTimeout(function(){g.classList.add('on');go(cur,true)},2000);return}
 if(g.classList.contains('on')&&vs[cur].paused)play(vs[cur])}
 if(window.MutationObserver)new MutationObserver(upd).observe(document.documentElement,{attributes:true,attributeFilter:['class']});
 document.addEventListener('visibilitychange',upd);addEventListener('scroll',function(){upd()},{passive:true});addEventListener('resize',upd);setInterval(upd,700);upd()})();
+</script>
+<script>
+/* phones: the TV is about 75% of the screen width, and the white wall above the desk grows just enough that the TV (which stands over the pin area and the ledge) never covers the last cards: it sits below the projects. On wider screens the TV keeps its fixed size and the wall its usual height. */
+(function(){var tv=document.getElementById('tv'),w=document.getElementById('wl'),g=document.getElementById('g');if(!tv||!w||!g)return;
+window.__fitTv=function(){var m=innerWidth<=520,html=document.documentElement;
+if(!m){tv.style.removeProperty('--tvs');w.style.height='';return}
+var sc=Math.max(.6,innerWidth*.75/262);tv.style.setProperty('--tvs',(sc/1.25).toFixed(3));w.style.height='';
+if(!html.classList.contains('tvp'))return;
+var tvH=tv.offsetHeight*sc,need=tvH+26+6,gb=g.getBoundingClientRect().bottom+scrollY,pb=document.body.getBoundingClientRect().bottom+scrollY,avail=pb-gb;
+if(need>avail)w.style.height=(w.offsetHeight+(need-avail))+'px'};
+addEventListener('load',function(){__fitTv()});addEventListener('resize',function(){__fitTv()})})();
 </script>
 </body>
 </html>
