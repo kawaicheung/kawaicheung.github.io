@@ -9,7 +9,7 @@
 <link rel="icon" href="/favicon.ico" type="image/x-icon">
 <style>
 /* handwriting: change the family here (and add it to the Google Fonts link below) */
-:root{/* stacking tiers above the board, lowest to highest: stapler and tape roll at rest, ledge, pins just bumped, falling cards and pieces, stapler/tape roll while held, a dragged tape piece, the popup, a pin in your hand */--z-rest:999999990;--z-ledge:999999995;--z-pinhit:1500000000;--z-fall:1600000000;--z-held:1700000000;--z-drag:1999999999;--z-modal:2000000000;--z-pinheld:2147483000;--hand:"Permanent Marker","Marker Felt",cursive;--hand-weight:400;--hand-size:12px}
+:root{/* stacking tiers above the board, lowest to highest: stapler and tape roll at rest, ledge, pins just bumped, falling cards and pieces, stapler/tape roll while held, a dragged tape piece, the popup, a pin in your hand */--z-rest:999999990;--z-ledge:999999995;--z-pinhit:1500000000;--z-fall:1600000000;--z-held:1700000000;--z-drag:1999999999;--z-modal:2147483647;--z-pinheld:2147483000;--hand:"Permanent Marker","Marker Felt",cursive;--hand-weight:400;--hand-size:12px}
 html{background:#b98c5a;overflow-x:hidden}
 body{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility;margin:0;padding:65px 28px 0;font:12px/17px -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:#000;background-color:#b98c5a;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='f'><feTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' seed='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.22 0 0 0 0 0.12 0 0 0 0 0.05 9 0 0 0 -4.6'/></filter><rect width='100%' height='100%' filter='url(%23f)'/></svg>"),url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='f'><feTurbulence type='fractalNoise' baseFrequency='.7' numOctaves='2' seed='11' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.93 0 0 0 0 0.74 0 0 0 0 0.5 0 9 0 0 -5.2'/></filter><rect width='100%' height='100%' filter='url(%23f)'/></svg>"),url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='f'><feTurbulence type='fractalNoise' baseFrequency='.025' numOctaves='3' seed='5' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.35 0 0 0 0 0.2 0 0 0 0 0.08 0 0 0 1.6 -.55'/></filter><rect width='100%' height='100%' filter='url(%23f)'/></svg>");-webkit-text-size-adjust:none}
 #g{column-width:200px;column-gap:14px}
@@ -26,14 +26,16 @@ body{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-r
 /* experiment: a 90s black TV with a squircle tube and a row of rectangular buttons sits at the bottom right in front of everything, on All and Projects, playing Project99 v3 */
 body{position:relative}
 /* the TV sits inside a clipping strip along the bottom of the page, so it can hang over the right and bottom edges without adding any scroll */
-#tvw{position:absolute;left:0;right:0;top:0;bottom:0;overflow:hidden;z-index:2147483647;display:none;pointer-events:none}
+#tvw{position:absolute;left:0;right:0;top:0;bottom:0;overflow:hidden;z-index:2147483646;display:none;pointer-events:none}
 #tv{position:absolute;right:34px;bottom:36px;width:262px;pointer-events:none;perspective:900px;perspective-origin:70% 20%;--tvs:1;/* --tvs is the size relative to the TV as designed on desktop: 1 = the current desktop size (the 262px base at 1.25x) */transform:scale(calc(var(--tvs)*1.25));transform-origin:100% 100%;filter:drop-shadow(0 0 4px rgba(0,0,0,.4)) drop-shadow(8px 11px 15px rgba(0,0,0,.4)) drop-shadow(22px 30px 38px rgba(0,0,0,.26))}
-html.tvp #tvw{display:block}#m.on ~ #tvw{opacity:0}
+html.tvp #tvw{display:block}/* the TV stays visible behind any popup: the popup (2147483647) sits one level above the TV (2147483646), which is still above everything else on the page, including a pin in your hand */
 /* a thicker front frame: the padding around the screen goes from 7px to 20px on the top and right (16px on the left), and the box keeps its exact outer size (262 x 219) so the TV's proportions, the side panel and the base do not change; the screen simply gets a bit smaller, at the same shape, and any rounding leftover goes to the chin */
 .tvc{position:relative;box-sizing:border-box;min-height:219px;padding:20px 20px 9px 16px;/* the left rim is a little thinner (12px vs 15px) because that side of the front face is farther from the viewer; the screen takes the 3px, and the chin gives back 2px of height so the box stays 262 x 219 (the inner black bezel is likewise 2px thinner on the left: 5px vs 7px, which also makes the screen 2px wider, and the chin pads 1px less to keep the height) */border-radius:5px 0 0 3px;background:linear-gradient(#303033,#161617 35%,#0b0b0c);box-shadow:inset 0 1px 0 rgba(255,255,255,.2),inset 0 0 0 1px #000,inset 0 0 0 8px rgba(255,255,255,.028),inset 0 -3px 7px rgba(0,0,0,.7)}
 .tvc::before{content:"";position:absolute;bottom:-7px;left:12px;right:0;height:8px;background:linear-gradient(#18181a,#050505);border-radius:0 0 0 6px}
 .tvs{padding:9px 0 7px 8px;border-radius:5px;background:#040404;box-shadow:inset 0 3px 8px #000,0 1px 0 rgba(255,255,255,.12)}
 /* Safari on iOS often ignores rounded overflow clipping on a playing video inside a 3D-turned box and draws the video's straight, stair-stepped edge instead; isolation plus a mask (the usual workaround) forces a proper rounded clip, and the video is enlarged with real size instead of a transform so it is not a second transformed layer inside the clip */
+/* the picture is clickable (it opens the recording in the popup) only while a channel is playing */
+.tvg.on:not(.off){pointer-events:auto;cursor:zoom-in}
 .tvg{position:relative;overflow:hidden;aspect-ratio:1.42;border-radius:5%/6.5%;background:#000;isolation:isolate;-webkit-mask-image:-webkit-radial-gradient(#fff,#000);mask-image:radial-gradient(#fff,#000)}
 .tvg video{position:absolute;left:calc((1 - var(--vs,1.03)) * 50%);top:calc((1 - var(--vs,1.03)) * 50%);width:calc(100% * var(--vs,1.03));height:calc(100% * var(--vs,1.03));object-fit:cover;display:block}/* the recording has the screen-capture selection outline in its edges, so it is scaled up a touch inside the tube */
 /* colour test card shown for two seconds when the TV is first reached: bars, a reverse strip and a pluge strip, like an old SMPTE pattern */
@@ -89,7 +91,8 @@ html.tvp #tvw{display:block}#m.on ~ #tvw{opacity:0}
 .tvr::after{content:"";position:absolute;left:15%;right:15%;top:16%;height:36%;border-radius:2px;background:repeating-linear-gradient(180deg,rgba(0,0,0,.85) 0 2px,rgba(255,255,255,.07) 2px 3px,rgba(0,0,0,0) 3px 5px);box-shadow:inset 0 0 0 1px rgba(0,0,0,.45),0 1px 0 rgba(255,255,255,.06);pointer-events:none}
 .tvq{position:absolute;display:block;right:0;top:93%;bottom:-7px;width:290px;transform-origin:0 0;transform:translateX(100%) translateZ(40px) rotateY(90deg);border-radius:0;background:repeating-linear-gradient(90deg,rgba(255,255,255,.03) 0 1px,rgba(0,0,0,0) 1px 7px),linear-gradient(to bottom left,#1a1a1c,#0f0f11 40%,#060607 70%,#020202);backface-visibility:hidden}
 /* the shadow the TV casts on the desk: a tight dark line right under the base, and a broad soft shade that falls forward and toward the middle of the table (to the left) */
-.tvk{position:absolute;left:-250px;right:-70px;bottom:-62px;height:122px;z-index:0;background:radial-gradient(ellipse 34% 30% at 84% 62%,rgba(0,0,0,.95),rgba(0,0,0,0) 100%),radial-gradient(ellipse 52% 44% at 62% 60%,rgba(0,0,0,.88),rgba(0,0,0,.5) 52%,rgba(0,0,0,0) 100%),radial-gradient(ellipse 70% 40% at 55% 50%,rgba(0,0,0,.45),rgba(0,0,0,0) 100%);filter:blur(6px);pointer-events:none}
+/* the TV's shadow on the desk: one flat, solid, see-through shape with hard edges (no gradient, no blur), fanning outward from the bottom-left corner of the frame (to the left and front) and again from the bottom-right backing of the base (to the right and front). Its box starts at the desk's back edge so it never reaches the wall */
+.tvk{position:absolute;left:-250px;right:-200px;bottom:-62px;height:89px;z-index:0;background:rgba(0,0,0,.32);clip-path:polygon(250px 30px,712px 0,712px 89px,81px 89px);pointer-events:none}/* in px of the box (712 wide, 89 tall): from the frame's bottom-left corner out to the left, and on the right all the way under and beyond the side panel, up to the desk's back edge */
 .tvx{z-index:1}
 /* phones: the same 3D TV, scaled to fit and pulled toward the right edge */
 @media(max-width:520px){#tv{right:6vw;bottom:26px;--tvs:.88}}
@@ -212,7 +215,7 @@ html.lock{overflow:hidden}#m{touch-action:none}#pp{touch-action:pan-y}
 #mp{position:relative;transform:translateY(14px);transition:transform .25s;filter:drop-shadow(0 22px 30px rgba(0,0,0,.5))}
 #m.on #mp{transform:none;transition:none}
 /* essay popup (neither video nor photo): a full-bleed sheet, text in a centred column, no ruling or torn edge */
-#m:not(.vid):not(.img) #mp{width:100%;height:100%;filter:none;transform:none}
+#m:not(.vid):not(.img):not(.mov) #mp{width:100%;height:100%;filter:none;transform:none}
 #mf{display:none;width:100%;height:100%;border:0;background:#000}
 #m.vid #mp{width:min(1000px,94vw,calc(92vh*16/9));aspect-ratio:16/9;background:#000}
 #m.vid #mf{display:block}
@@ -220,6 +223,10 @@ html.lock{overflow:hidden}#m{touch-action:none}#pp{touch-action:pan-y}
 #mi{display:none;max-width:min(1200px,94vw);max-height:92vh;width:auto;height:auto;box-sizing:border-box;border:9px solid #fff;border-bottom-width:9px;background:#fff}
 #mc{display:none}#m.img.cap #mc{display:flex;align-items:center;justify-content:center;text-align:center;width:0;min-width:100%;min-height:62px;box-sizing:border-box;background:#fff;padding:10px 22px 12px;font:500 13px/20px "JetBrains Mono","SF Mono",Menlo,Consolas,monospace;letter-spacing:-.2px;color:#4a4a4a;text-wrap:pretty}#m.img.cap #mi{border-bottom:0;max-height:calc(92vh - 62px)}
 #m.img #mi{display:block}#m.img #pp,#m.img #mf{display:none}#m.img #mp{width:auto;max-width:94vw}
+/* a recording in the popup: the same white frame and caption strip as a photo, with playback controls */
+#mv{display:none;max-width:min(1200px,94vw);max-height:calc(92vh - 62px);width:auto;height:auto;box-sizing:border-box;border:9px solid #fff;border-bottom:0;background:#fff;outline:none}
+#m.mov #mv{display:block}#m.mov #mi,#m.mov #pp,#m.mov #mf{display:none}#m.mov #mp{width:auto;max-width:94vw}#m.mov #mx{display:none}
+#m.mov #mc{display:flex;align-items:center;justify-content:center;text-align:center;width:0;min-width:100%;min-height:62px;box-sizing:border-box;background:#fff;padding:10px 22px 12px;font:500 13px/20px "JetBrains Mono","SF Mono",Menlo,Consolas,monospace;letter-spacing:-.2px;color:#4a4a4a;text-wrap:pretty}
 /* overscroll-behavior:contain (not none) keeps the popup's scrolling from chaining out to the page behind it but lets iOS keep its elastic rubber-band at the top and bottom of a post; "none" switched that bounce off, which made the text hard-stop at the end */
 #pp{box-sizing:border-box;height:100%;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;scrollbar-width:none;-ms-overflow-style:none;padding:0;font:18px/29px Georgia,"Times New Roman",serif;color:#222}
 #pp::-webkit-scrollbar{display:none;width:0;height:0}
@@ -391,15 +398,17 @@ i.pp.dn::after{width:5.3px}
 #rl .rw,#rl .sw{z-index:var(--z-rest)}#rl .rw.held,#rl .sw.held{z-index:var(--z-held)}
 #lg{position:relative;z-index:var(--z-ledge);height:12px;margin:-6px -28px 0;background:linear-gradient(#f0cf9f 0,#f0cf9f 1.5px,#d9ae77 1.5px,#c99a63 100%);box-shadow:0 -1px 2px rgba(0,0,0,.2),0 -6px 10px rgba(0,0,0,.14)}
 @media(max-width:520px){#lg{margin:-6px -16px 0}}
-/* below the pinboard: a stretch of white wall, then a dark wood desk (grain running left to right) that the TV stands on, on every section */
-#wl,#dk{display:block;position:relative;margin:0 -28px;pointer-events:none}
-#wl{height:90px;background:#f0efe7}
+/* below the pinboard: a stretch of white wall, then a dark wood desk (grain running left to right) that the TV stands on, only on All and Projects */
+#wl,#dk{display:none;position:relative;margin:0 -28px;pointer-events:none}
+html.tvp #wl,html.tvp #dk{display:block}/* the wall and table only show where the TV does (All and Projects) */
+/* the wall is gently stuccoed: three transparent noise layers of different tile sizes (457, 613 and 1171px wide, which do not divide into each other) over the White Dove paint: fine dark pits, fine pale peaks, and a very soft large mottle. Their repeats never line up, so no pattern shows */
+#wl{height:90px;background:url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='457' height='311'%3E%3Cfilter id='f' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.62' numOctaves='3' seed='5' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .36 0 0 0 0 .31 0 0 0 0 .22 -1.7 0 0 0 .68'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f)'/%3E%3C/svg%3E") 0 0/457px 311px,url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='613' height='379'%3E%3Cfilter id='f' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.48' numOctaves='3' seed='11' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 .99 1.7 0 0 0 -.98'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f)'/%3E%3C/svg%3E") 0 0/613px 379px,url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1171' height='743'%3E%3Cfilter id='f' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.011' numOctaves='2' seed='23' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .52 0 0 0 0 .46 0 0 0 0 .34 .5 0 0 0 -.2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f)'/%3E%3C/svg%3E") 0 0/1171px 743px,#f0efe7}
 /* two matching shadows on the wall, one under the ledge and one above the table: a dark 1px line right under the ledge, then three flat see-through bands laid over each other (transparency over transparency), each small and stepping lighter to a crisp edge */
 #wl::before{content:"";position:absolute;left:0;right:0;top:0;height:9px;background:linear-gradient(rgba(40,24,8,.4),rgba(40,24,8,.4)) 0 0/100% 1px no-repeat,linear-gradient(rgba(60,40,15,.11),rgba(60,40,15,.11)) 0 0/100% 3px no-repeat,linear-gradient(rgba(60,40,15,.11),rgba(60,40,15,.11)) 0 0/100% 6px no-repeat,linear-gradient(rgba(60,40,15,.11),rgba(60,40,15,.11)) 0 0/100% 9px no-repeat}
-#dk{height:70px;background:#7b5232}
+#dk{height:70px;background:#8a5530}
 /* a soft shadow on the wall along the table's back edge, so the table reads as standing a little way out from the wall */
 #dk::after{content:"";position:absolute;left:0;right:0;bottom:100%;height:7px;pointer-events:none;background:linear-gradient(rgba(40,24,8,.4),rgba(40,24,8,.4)) 0 100%/100% 1px no-repeat,linear-gradient(0deg,rgba(0,0,0,.3),rgba(0,0,0,.2) 35%,rgba(0,0,0,.1) 75%,rgba(0,0,0,.07))}/* above the table: a dark 1px line right at the table edge (matching the one under the ledge), then one smooth fade that still ends in a crisp edge */
-#dk::before{content:"";position:absolute;left:0;right:0;top:0;bottom:0;background:url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='900' height='200'%3E%3Cfilter id='g' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.0035 .42' numOctaves='3' seed='7' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .05 0 0 0 0 .025 0 0 0 0 .01 0.6 0 0 0 -.26'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E") 0 0/900px 200px,url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='700' height='160'%3E%3Cfilter id='g' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.006 .6' numOctaves='2' seed='19' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .62 0 0 0 0 .4 0 0 0 0 .24 0.4 0 0 0 -.18'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E") 0 0/700px 160px,linear-gradient(#97693f,#855830 55%,#7a4f2c);box-shadow:inset 0 1px 0 rgba(255,225,180,.22)}
+#dk::before{content:"";position:absolute;left:0;right:0;top:0;bottom:0;background:linear-gradient(rgba(0,0,0,.38),rgba(0,0,0,.13) 55%,rgba(0,0,0,0)) 0 0/100% 100% no-repeat,linear-gradient(rgba(225,105,20,.26),rgba(225,105,20,.26)) 0 0/100% 100% no-repeat,url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='900' height='200'%3E%3Cfilter id='g' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.0035 .42' numOctaves='3' seed='7' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .05 0 0 0 0 .025 0 0 0 0 .01 0.6 0 0 0 -.26'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E") 0 0/900px 200px,url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='700' height='160'%3E%3Cfilter id='g' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.006 .6' numOctaves='2' seed='19' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .62 0 0 0 0 .4 0 0 0 0 .24 0.4 0 0 0 -.18'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E") 0 0/700px 160px,linear-gradient(#a56a36,#94602d 55%,#895626);box-shadow:inset 0 1px 0 rgba(255,225,180,.22)}
 @media(max-width:520px){#wl,#dk{margin:0 -16px}#wl{height:64px}#dk{height:50px}}
 .lt,.c.ml,.c.mk,.sb>.c,.wam>.c,.hw,.stp>b[style*="font-size:22px"],.in b{-webkit-text-stroke:0}
 .p2c .ph{right:auto;top:2px;transform-origin:50% 20.7px;transform:rotate(calc(var(--rot,0)*-1deg))}
@@ -593,7 +602,7 @@ i.pp.dn::after{width:5.3px}
 <div id="lg" aria-hidden="true"></div>
 <div id="wl" aria-hidden="true"></div>
 <div id="dk" aria-hidden="true"></div>
-<div id="m"><div id="mp"><article id="pp"><div id="pc"></div></article><iframe id="mf" title="Video" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe><img id="mi" alt=""><div id="mc"></div><button id="mx" type="button" aria-label="Close"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19"/></svg></button></div></div>
+<div id="m"><div id="mp"><article id="pp"><div id="pc"></div></article><iframe id="mf" title="Video" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe><img id="mi" alt=""><video id="mv" controls playsinline loop preload="none"></video><div id="mc"></div><button id="mx" type="button" aria-label="Close"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19"/></svg></button></div></div>
 <div id="tvw" role="group" aria-label="PROJECT99.TV"><div id="tv"><i class="tvk"></i><div class="tvx"><i class="tvr"></i><i class="tvq"></i><div class="tvc"><div class="tvs"><div class="tvg"><div class="tvw0"><video class="cur" data-src="img/project99-v1.webm" muted loop playsinline preload="none"></video><video data-src="img/project99-v2.webm" muted loop playsinline preload="none"></video><video style="--vs:1.09" data-src="img/project99-v3.webm" muted loop playsinline preload="none"></video><div class="tvt"></div><div class="tvm" aria-hidden="true"><span>WE NOW RETURN YOU TO YOUR REGULARLY SCHEDULED FLASH PROGRAMMING.</span></div><div class="tvz"></div><span class="tvo">2000 - V1</span></div><div class="tvb0" aria-hidden="true"></div><div class="tvln" aria-hidden="true"></div></div></div><div class="tvf"><button type="button" class="on" data-ch="0" aria-label="Channel V1" title="V1"></button><button type="button" data-ch="1" aria-label="Channel V2" title="V2"></button><button type="button" data-ch="2" aria-label="Channel V3" title="V3"></button><b>PROJECT99.TV</b><u role="button" tabindex="0" aria-label="Power" title="Power"></u></div></div></div></div></div>
 <script>document.addEventListener('dragstart',function(e){e.preventDefault()});
 /* what counts as a card that hangs from a pin: any post card with a pin colour class (pc1..pc4), except the ones taped up (.tb), which behave like every other taped or stapled card */
@@ -681,9 +690,15 @@ var step=Math.max(30,Math.min(120,1500/Math.max(1,els.length)));
 els.forEach(function(a,i){setTimeout(function(){
 if(a.classList.contains('xd')){var xv=a.querySelector('.xm');if(xv){xv.classList.add('xo');setTimeout(function(){xv.remove();a.classList.remove('xd')},320)}else a.classList.remove('xd')}
 else a.classList.remove('rd')},i*step)})});
-function video(src){tok++;pc.innerHTML='';m.classList.remove('img');m.classList.add('vid','pre');f.src=src}
-var mi=document.getElementById('mi');
-function photo(src,cap,done){tok++;var mc=document.getElementById('mc');mc.textContent=cap||'';m.classList.toggle('cap',!!cap);pc.innerHTML='';m.classList.remove('vid');m.classList.add('img','pre');f.src='about:blank';mi.removeAttribute('src');var my=tok,pre=new Image();/* wait for the picture before showing the frame, so it never opens as an empty squashed box */pre.onload=pre.onerror=function(){if(my!==tok)return;mi.src=src;(mi.decode?mi.decode():Promise.resolve()).catch(function(){}).then(function(){if(my===tok&&done)done()})};pre.src=src}
+function video(src){tok++;pc.innerHTML='';m.classList.remove('img','mov');m.classList.add('vid','pre');f.src=src}
+var mi=document.getElementById('mi'),mv=document.getElementById('mv');
+function photo(src,cap,done){tok++;var mc=document.getElementById('mc');mc.textContent=cap||'';m.classList.toggle('cap',!!cap);pc.innerHTML='';m.classList.remove('vid','mov');m.classList.add('img','pre');f.src='about:blank';mi.removeAttribute('src');var my=tok,pre=new Image();/* wait for the picture before showing the frame, so it never opens as an empty squashed box */pre.onload=pre.onerror=function(){if(my!==tok)return;mi.src=src;(mi.decode?mi.decode():Promise.resolve()).catch(function(){}).then(function(){if(my===tok&&done)done()})};pre.src=src}
+/* open a screen recording in the popup, with a caption in the white strip under it like the photos; the frame only appears once the clip's size is known so it never opens squashed */
+window.__openMovie=function(src,cap){if(busy)return;busy=true;tok++;var my=tok,mc=document.getElementById('mc'),shown=false;
+mc.textContent=cap||'';m.classList.toggle('cap',!!cap);pc.innerHTML='';m.classList.remove('vid','img');m.classList.add('mov','pre');f.src='about:blank';mi.removeAttribute('src');
+function show(){if(shown||my!==tok)return;shown=true;mv.currentTime=0;reveal();var p=mv.play();if(p&&p.catch)p.catch(function(){})}
+mv.onloadedmetadata=show;mv.onerror=show;setTimeout(show,2500);
+mv.src=src;mv.load()};
 function paperOf(a){var c=a?a.closest('.t'):null;if(!c)return null;var k=c.classList;return {p:(k.contains('ddw')||k.contains('dd'))?'pe4':k.contains('e1')?'pe1':k.contains('e4')?'pe5':k.contains('e3')?'pe3':'pe2',f:(c.className.match(/\bf\d\b/)||[''])[0]}}
 function abs(h,base){try{var u=new URL(h,base);return u.origin===location.origin?u.pathname+u.search+u.hash:u.href}catch(e){return h}}
 var MONS=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
@@ -711,7 +726,7 @@ function spinDate(){var d=pc.querySelector('.pd');if(d&&d.__go&&m.classList.cont
 var MKD=['customer-0000001','hindsight-is-please-dont-make-me-look','how-an-early-feature-was-born','project-bugspray','the-glam-of-maintaining','the-ridiculous-thing-we-do-every-day','one-vote-of-influence','emailin-aint-easy','the-worst-part-of-caring','processlessness','george-washingtons-axe','six-oclock-in-the-morning','sweating-the-big-migration'];
 function essay(href,a){
 var t=++tok,pk=paperOf(a);
-m.classList.remove('vid','img');m.classList.add('pre');f.src='about:blank';
+m.classList.remove('vid','img','mov');m.classList.add('pre');f.src='about:blank';
 if(pk)pp.className=pk.p+' '+pk.f;
 pc.innerHTML='';pp.scrollTop=0;
 fetch(href).then(function(r){if(!r.ok)throw 0;return r.text()}).then(function(h){
@@ -741,7 +756,7 @@ var sy=0,lk=false;
 function lockOn(){if(lk)return;lk=true;sy=window.pageYOffset||0;var b=document.body.style;b.position='fixed';b.top=(-sy)+'px';b.left='0';b.right='0';root.classList.add('lock')}
 function lockOff(){if(!lk)return;lk=false;var b=document.body.style;b.position='';b.top='';b.left='';b.right='';root.classList.remove('lock');window.scrollTo(0,sy)}
 function reveal(){m.classList.add('on');lockOn();setTimeout(spinDate,30)}
-function close(){m.classList.remove('on');lockOff();setTimeout(function(){if(!m.classList.contains('on')){m.classList.remove('pre','vid','img');f.src='about:blank';mi.removeAttribute('src');pc.innerHTML='';tok++}busy=false},220)}
+function close(){m.classList.remove('on');try{mv.pause()}catch(e){}lockOff();setTimeout(function(){if(!m.classList.contains('on')){m.classList.remove('pre','vid','img','mov');f.src='about:blank';mi.removeAttribute('src');try{mv.pause()}catch(e){}mv.removeAttribute('src');pc.innerHTML='';tok++}busy=false},220)}
 function mark(h){if(read.indexOf(h)<0){read.push(h);save()}var c=g.querySelector('a[href="'+h+'"]');if(c){applyRead(c,true)}}
 /* the short drop-and-fade used for every card or piece that lets go: starts at (ox,oy) and angle rot (degrees), drops a little then away to D px below, tilting to one side s (+1/-1) and fading out; returns the animation */
 function fadeDrop(el,ox,oy,rot,D,s){
@@ -832,7 +847,7 @@ var seq=0,FALL_ON_NAV=false;/* nav switches only: true = filtered-out cards drop
 function apply(k,anim){
 if(anim)scrollTo({top:0,left:0,behavior:'instant'});
 if(anim&&window.__resetBoard)__resetBoard();
-cur=k;document.documentElement.classList.toggle('tvp',k===''||k==='p');if(window.__tvHold)__tvHold(!!anim&&k==='p');
+cur=k;document.documentElement.classList.toggle('tvp',k===''||k==='p');if(window.__tvHold)__tvHold(!!anim&&k==='p');if(anim&&(k===''||k==='p')&&window.__tvReset)__tvReset();
 var cards=[].filter.call(g.children,function(c){return c.classList.contains('t')}),H=innerHeight,info=cards.map(function(c){var r=c.getBoundingClientRect();return {c:c,top:r.top,left:r.left,on:r.bottom>0&&r.top<H}});
 var shown=[],fell=[],pend=[],my=++seq;
 info.forEach(function(o){var c=o.c,was=c.classList.contains('hid'),hide=hides(c,k);
@@ -1546,7 +1561,7 @@ g.classList.add('crawl');seqA=mqt.animate([{transform:'translate3d('+cw+'px,0,0)
 seqA.onfinish=endTest;
 seqB=setTimeout(endTest,dur+250)},1000)}
 window.__tvForce=function(landMs){forceUntil=performance.now()+1600;
-if(landMs!=null){fallMode=true;
+if(landMs!=null){if(window.__tvReset)__tvReset();needIntro=false;fallMode=true;
 if(started){vs.forEach(function(v){if(!v.paused)v.pause()});osd.classList.remove('show')}
 runTest()}
 upd()};
@@ -1576,9 +1591,15 @@ var n=+b.getAttribute('data-ch');
 /* pressing a channel button during the intro (bars or crawl) skips the rest of it and goes straight to that channel */
 if(!seqDone){stopTest();seqDone=true;fallMode=false;introDone=true;mq.classList.remove('on');g.classList.remove('crawl');g.classList.add('on');go(n,true);if(n!==0)burst();return}
 go(n)})});
+/* clicking the picture opens the current channel's recording in the popup, with a caption in the white strip under it (like the photos on the WAM board) */
+var CAPS=['Project99 v1, 2000','Project99 v2, 2001','Project99 v3, 2002'];
+g.addEventListener('click',function(e){
+if(!g.classList.contains('on')||g.classList.contains('off')||powerBusy||!window.__openMovie)return;
+if(g.getBoundingClientRect().bottom<(parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--nbh'))||0))return;
+e.preventDefault();e.stopPropagation();__openMovie(vs[cur].getAttribute('data-src'),CAPS[cur]||'')});
 /* power button: off = dark glass, everything stops; on = the current channel comes back with a burst of static, or, if the intro had not finished, the intro starts again */
 /* the CRT shut-off, quick and with no flare: the picture squashes vertically to the middle (0.15s), a plain white line holds for a beat, then snaps in from the sides and is gone (0.3s in all) */
-var powerBusy=false,w0=g.querySelector('.tvw0'),ln=g.querySelector('.tvln');
+var powerBusy=false,powerGen=0,needIntro=false,w0=g.querySelector('.tvw0'),ln=g.querySelector('.tvln');
 function collapse(done){
 if(!w0.animate||!ln.animate){done();return}
 powerBusy=true;var fin=false,a1,a2;
@@ -1596,11 +1617,18 @@ a2=ln.animate([
 {opacity:1,transform:'scaleX(.02)',offset:.94},
 {opacity:0,transform:'scaleX(0)',offset:1}],{duration:300,fill:'forwards'});
 a2.onfinish=end;setTimeout(end,460)}
+/* every time the TV is brought back (going to All or Projects, or a new fall) it starts switched ON and back at the colour test card: a power-off, a half-finished shut-off or a channel change from an earlier visit is forgotten */
+window.__tvReset=function(){powerGen++;
+[w0,ln].forEach(function(el){if(el.getAnimations)el.getAnimations().forEach(function(a){try{a.cancel()}catch(e){}})});
+powerBusy=false;g.classList.remove('off');pw.classList.remove('dim');stopTest();seqDone=true;introDone=false;
+g.classList.remove('on');vs.forEach(function(v){if(!v.paused)v.pause()});osd.classList.remove('show');clearTimeout(ot);
+if(zanim){try{zanim.cancel()}catch(e){}zanim=null}zap.style.opacity='0';
+needIntro=started}
 function power(){
 if(!started||powerBusy)return;
 var off=!g.classList.contains('off');
 if(off){if(powerBusy)return;stopTest();seqDone=true;fallMode=false;pw.classList.add('dim');vs.forEach(function(v){if(!v.paused)v.pause()});clearTimeout(ot);if(zanim){try{zanim.cancel()}catch(e){}zanim=null}zap.style.opacity='0';
-collapse(function(){g.classList.add('off');osd.classList.remove('show');mq.classList.remove('on')})}
+var gen=powerGen;collapse(function(){if(gen!==powerGen)return;g.classList.add('off');osd.classList.remove('show');mq.classList.remove('on')})}
 else{g.classList.remove('off');pw.classList.remove('dim');
 if(introDone){g.classList.add('on');go(cur,true);burst()}else{runTest()}upd()}}
 if(pw){pw.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();if(pw.getBoundingClientRect().bottom<(parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--nbh'))||0))return;power()});
@@ -1609,6 +1637,7 @@ function upd(){
 if(!show()){if(started&&!vs[cur].paused)vs[cur].pause();return}
 if(!started){started=true;vs.forEach(function(v){if(!v.getAttribute('src')){v.src=v.getAttribute('data-src');v.preload='auto';v.load()}});
 if(!fallMode)runTest();return}
+if(needIntro&&!fallMode){needIntro=false;runTest();return}
 if(g.classList.contains('on')&&vs[cur].paused)play(vs[cur])}
 if(window.MutationObserver)new MutationObserver(upd).observe(document.documentElement,{attributes:true,attributeFilter:['class']});
 document.addEventListener('visibilitychange',upd);addEventListener('scroll',function(){upd()},{passive:true});addEventListener('resize',upd);setInterval(upd,700);upd()})();
